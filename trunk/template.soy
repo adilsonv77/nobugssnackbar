@@ -1,0 +1,145 @@
+{namespace nobugspage}
+
+/**
+ * This is a Closure Template.
+ *
+ * To regenerate just en.js, run this command:
+ * java -jar ../_soy/SoyToJsSrcCompiler.jar --outputPathFormat generated/en.js --srcs ../common.soy,template.soy
+ *
+ * To regenerate all files, see: trunk/apps/common.soy
+ */
+
+/**
+ * Translated messages for use in JavaScript.
+ */
+{template .messages}
+  {call apps.messages /}
+  <div style="display: none">
+    // Block text and their associated tooltips and URLs (interleaved to
+    // assist with translation).
+    
+    <span id="SnackMan_goToConsumerTooltip">{msg meaning="SnackMan.goToConsumerTooltip" desc=""}Moves the snack man to the consumer.{/msg}</span>
+    <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc=""}Asks the customer about his order.{/msg}</span>
+    <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc=""}Moves the snack man to the display.{/msg}</span>
+
+    // Misc text.
+    <span id="NoBugs_unloadWarning">{msg meaning="NoBugs.unloadWarning" desc="alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress."}Leaving this page will result in the loss of your work.{/msg}</span>
+  </div>
+{/template}
+
+/**
+ * Web page structure.
+ */
+{template .start}
+  {call .messages /}
+  <table width="100%">
+    <tr>
+      <td>
+        <h1>
+          <span id="title">
+            {msg meaning="NoBugs.title" desc="Adilson Vahldick PhD project"}
+              NoBug's SnackBar
+            {/msg}
+          </span>
+        </h1>
+      </td>
+      <td class="farSide">
+         <select style="visibility: hidden;" id="languageMenu"></select>
+      </td>
+    </tr>
+  </table>
+  <div id="visualization">
+  	<canvas id="display" width="367" height="415"></canvas>
+  </div>
+  <table style="padding-top: 1em;">
+    <tr>
+      <td style="width: 15px;">
+        <img id="spinner" style="visibility: hidden;" src="images/loading.gif" height=15 width=15>
+      </td>
+
+      <td style="width: 190px; text-align: center">
+        <button id="debugButton" class="primary" title="{msg meaning="NoBugs.debugTooltip" desc=""}Makes the snack man do what the next block say.{/msg}">
+          <img src="media/1x1.gif" class="debug icon21">{msg meaning="Apps.debugProgram" desc=""}Step{/msg}
+        </button>
+      </td>
+       
+      <td style="width: 190px; text-align: center">
+        <button id="runButton" class="primary" title="{msg meaning="NoBugs.runTooltip" desc=""}Makes the snack man do what the blocks say.{/msg}">
+          <img src="media/1x1.gif" class="run icon21">{msg meaning="Apps.runProgram" desc=""}Run Program{/msg}
+        </button>
+        <button id="resetButton" class="primary"  style="display: none">
+          <img src="media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc=""}Reset{/msg}
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <div id="toolbarDiv">
+  </div>
+
+  <script type="text/javascript" src="blockly_compressed.js">
+      
+  </script>
+  
+  <script type="text/javascript" src="blocks_compressed.js"></script>
+  <script type="text/javascript" src="javascript_compressed.js"></script>
+  <script type="text/javascript" src="python_compressed.js"></script>
+  <script type="text/javascript" src="{$ij.langSrc}"></script>
+  <script type="text/javascript" src="language.js"></script>
+  {call .toolbox /}
+  <div id="blockly"></div>
+
+  {call apps.dialog /}
+  {call apps.codeDialog /}
+  {call apps.storageDialog /}
+{/template}
+
+/**
+ * Toolbox.
+ */
+{template .toolbox}
+  <xml id="toolbox" style="display: none">
+    <category name="{msg meaning="SnackMan.catSnackMan" desc=""}SnackMan{/msg}">
+      <block type="move_goToConsumer">
+        <value name="VALUE">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+      <block type="ask_askForFood"> </block>
+      <block type="move_goToDisplay"> </block>
+    </category>
+    <category name="{msg meaning="Apps.catLogic" desc=""}Logic{/msg}">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+    </category>
+    <category name="{msg meaning="Apps.catLoops" desc=""}Loops{/msg}">
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="math_number">
+            <field name="NUM">10</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+      </block>
+    </category>
+    <category name="{msg meaning="Apps.catMath" desc=""}Math{/msg}">
+          <block type="math_number"></block>
+    </category>
+    <category name="{msg meaning="Apps.catVariables" desc=""}Variables{/msg}" custom="VARIABLE"></category>
+  </xml>
+{/template}
