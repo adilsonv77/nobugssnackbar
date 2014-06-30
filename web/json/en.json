@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"author": "Adilson Vahldick <adilsonv77@gmail.com>",
+		"lastupdated": "2014-06-30",
+		"locale": "en",
+		"messagedocumentation" : "qqq"
+	},
+	
+	"Apps.catLogic": "Logic",
+	"Apps.catLoops": "Loops",
+	"Apps.catVariables": "Variables",
+	"Apps.catMath": "Math",
+	"SnackMan.catSnackMan": "SnackMan",
+	
+	"Apps.runProgram" : "Run Program",
+	"Apps.resetProgram" : "Reset",
+	"Apps.debugProgram" : "Step",  
+	
+	"NoBugs.title": "NoBug's Snack Bar",
+	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
+	"NoBugs.runTooltip" : "Makes the snack man do what the blocks say.",
+	"NoBugs.debugTooltip" : "Makes the snack man do what the next block say.",
+	
+	"SnackMan.goToConsumerTooltip": "Moves the snack man to the consumer.",
+	"SnackMan.askForFoodTooltip": "Asks the customer about his order.",
+	"SnackMan.goToDisplayTooltip": "Moves the snack man to the display."
+}
