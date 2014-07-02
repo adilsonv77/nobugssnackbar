@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project name="Utility-Tasks" default="soy" basedir=".">
+	
+	<property name="blockly.dir" location="D:\\doutoramento\\blockly" />
+	<property name="dest.dir" location="web" />
+	
+	<target name="copy" depends="">
+		<description>Copy files from Blockly Project to this project</description>
+		
+		<delete dir="${dest.dir}/blocks"/>
+		<delete dir="${dest.dir}/commons"/>
+		<delete dir="${dest.dir}/core"/>
+		<delete dir="${dest.dir}/generators"/>
+		<delete dir="${dest.dir}/media"/>
+		<delete dir="${dest.dir}/msg"/>
+
+		
+		<copy todir="${dest.dir}/blocks">
+			<fileset dir="${blockly.dir}/blocks"/>
+		</copy>
+		
+		<copy todir="${dest.dir}/commons">
+			<fileset dir="${blockly.dir}/apps">
+				<include name="**/common.*"/>
+				<exclude name="**/*.soy"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${dest.dir}/core">
+			<fileset dir="${blockly.dir}/core"/>
+		</copy>
+		
+		<copy todir="${dest.dir}/generators">
+			<fileset dir="${blockly.dir}/generators" excludes="dart/">
+				<exclude name="**/dart*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${dest.dir}/media">
+			<fileset dir="${blockly.dir}/media"/>
+		</copy>
+		
+		<copy todir="${dest.dir}/msg">
+			<fileset dir="${blockly.dir}/msg"/>
+		</copy>
+		
+		<copy todir="${dest.dir}">
+			<fileset dir="${blockly.dir}" 
+				includes="blockly_compressed.js blocks_compressed.js javascript_compressed.js python_compressed.js"/>
+		</copy>
+		
+		<copy todir="${dest.dir}">
+			<fileset dir="${blockly.dir}/apps" 
+				includes="**/prettify.*"/>
+		</copy>
+	</target>
+
+	<target name="soy" depends="">
+		<description>Creates the pages based on a template</description>
+		<java jar="_soy/SoyToJsSrcCompiler.jar" fork="true">
+			<arg line="--outputPathFormat web/generated/en.js --srcs common.soy,template.soy"/>
+		</java>
+	</target>
+	
+</project>
