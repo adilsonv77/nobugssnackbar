@@ -18,9 +18,10 @@
     // Block text and their associated tooltips and URLs (interleaved to
     // assist with translation).
     
-    <span id="SnackMan_goToConsumerTooltip">{msg meaning="SnackMan.goToConsumerTooltip" desc=""}Moves the snack man to the consumer.{/msg}</span>
+    <span id="SnackMan_goToCustomerTooltip">{msg meaning="SnackMan.goToCustomerTooltip" desc=""}Moves the snack man to the customer.{/msg}</span>
     <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc=""}Asks the customer about his order.{/msg}</span>
     <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc=""}Moves the snack man to the display.{/msg}</span>
+    <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc=""}Moves the snack man to the cooler.{/msg}</span>
 
     // Misc text.
     <span id="NoBugs_unloadWarning">{msg meaning="NoBugs.unloadWarning" desc="alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress."}Leaving this page will result in the loss of your work.{/msg}</span>
@@ -49,15 +50,11 @@
     </tr>
   </table>
   <div id="visualization">
-  	<canvas id="display" width="367" height="415"></canvas>
+  	<canvas id="display" width="352" height="448"></canvas>
   </div>
   <table style="padding-top: 1em;">
     <tr>
-      <td style="width: 15px;">
-        <img id="spinner" style="visibility: hidden;" src="images/loading.gif" height=15 width=15>
-      </td>
-
-      <td style="width: 190px; text-align: center">
+      <td style="width: 120px; text-align: center">
         <button id="debugButton" class="primary" title="{msg meaning="NoBugs.debugTooltip" desc=""}Makes the snack man do what the next block say.{/msg}">
           <img src="media/1x1.gif" class="debug icon21">{msg meaning="Apps.debugProgram" desc=""}Step{/msg}
         </button>
@@ -100,7 +97,7 @@
 {template .toolbox}
   <xml id="toolbox" style="display: none">
     <category name="{msg meaning="SnackMan.catSnackMan" desc=""}SnackMan{/msg}">
-      <block type="move_goToConsumer">
+      <block type="move_goToCustomer">
         <value name="VALUE">
           <block type="math_number">
             <field name="NUM">1</field>
@@ -109,6 +106,7 @@
       </block>
       <block type="ask_askForFood"> </block>
       <block type="move_goToDisplay"> </block>
+      <block type="move_goToCooler"> </block>
     </category>
     <category name="{msg meaning="Apps.catLogic" desc=""}Logic{/msg}">
       <block type="controls_if"></block>
