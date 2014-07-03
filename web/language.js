@@ -25,27 +25,66 @@
 
 // Extensions to Blockly's language and JavaScript generator.
 
-Blockly.Blocks['move_goToConsumer'] = {
-		  // Block for moving forward or backwards.
+Blockly.Blocks['move_goToCustomer'] = {
+		  // Block for moving to a specific customer in the counter.
 		  init: function() {
 		    this.setColour(160);
 		    this.appendValueInput('VALUE')
 		        .setCheck('Number')
-		        .appendField('goToConsumer');
+		        .appendField('goToCustomer');
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToConsumerTooltip'));
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCustomerTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['move_goToConsumer'] = function(block) {
-	  // Generate JavaScript for moving forward or backwards.
+Blockly.JavaScript['move_goToCustomer'] = function(block) {
+	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'SnackMan.goToConsumer' +
+	  return 'hero.goToCustomer' +
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
 
+Blockly.Blocks['move_goToDisplay'] = {
+		  // Block for moving to the display.
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendDummyInput()
+		        .appendField('goToDisplay');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToDisplayTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['move_goToDisplay'] = function(block) {
+	  // Generate JavaScript for moving to the display.
+	  return 'hero.goToDisplay' +
+	      '( \'block_id_' + block.id + '\');\n';
+	};
+
+Blockly.Blocks['move_goToCooler'] = {
+		  // Block for moving to the cooler.
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendDummyInput()
+		        .appendField('goToCooler');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCoolerTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['move_goToCooler'] = function(block) {
+	  // Generate JavaScript for moving to the cooler.
+	  return 'hero.goToCooler' +
+	      '( \'block_id_' + block.id + '\');\n';
+	};
+
+	
 Blockly.Blocks['ask_askForFood'] = {
 		  // Block for moving forward or backwards.
 		  init: function() {
@@ -65,23 +104,3 @@ Blockly.JavaScript['ask_askForFood'] = function(block) {
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
 
-Blockly.Blocks['move_goToDisplay'] = {
-		  // Block for moving forward or backwards.
-		  init: function() {
-		    this.setColour(160);
-		   
-		    this.appendDummyInput()
-		        .appendField('goToDisplay');
-		    this.setPreviousStatement(true);
-		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToDisplayTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['move_goToDisplay'] = function(block) {
-	  // Generate JavaScript for moving forward or backwards.
-	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'Turtle.' + block.getFieldValue('DIR') +
-	      '(' + value + ', \'block_id_' + block.id + '\');\n';
-	};

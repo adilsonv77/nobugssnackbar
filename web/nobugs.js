@@ -1,8 +1,8 @@
 /**
- * Meteoric Snack Bar
+ * NoBug's Snack Bar
  *
  * Copyright 2014 Adilson Vahldick.
- * https://meteoricsnackbar.googlecode.com/
+ * https://nobugssnackbar.googlecode.com/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,69 +18,54 @@
  */
 
 /**
- * @fileoverview JavaScript for Meteoric Snack Bar application.
+ * This code is based on Mazed application
+ * 
+ * @fileoverview JavaScript for NoBugs Snack Bar application.
  * @author adilsonv77@gmail.com (Adilson Vahldick)
  */
 'use strict';
-
-/**
- * Create a namespace for the application.
- */
-var Meteoric = {};
-
-/**
- * The hero.
- */
-var SnackMan = {};
-SnackMan.X = 280;
-SnackMan.Y = 320;
-
-
-var Cust1 = {};
-Cust1.X = 100;
-Cust1.Y = 320;
-
-var Cust2 = {};
-Cust2.X = 100;
-Cust2.Y = 360;
 
 // Supported languages.
 BlocklyApps.LANGUAGES =
     [ 'en' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
-Meteoric.student = BlocklyApps.getStringParamFromUrl('student', null);
-Meteoric.level;
+//Game.student = BlocklyApps.getStringParamFromUrl('student', null);
 
 document.write('<script type="text/javascript" src="generated/' +
                BlocklyApps.LANG + '.js"></script>\n');
+
+/**
+ * Create a namespace for the application.
+ */
+var Game = {};
+
+var hero = new SnackMan();
+Game.mission = 0;
 
 
 /**
  * PID of animation task currently executing.
  */
-Meteoric.pid = 0;
+Game.pidList = [];
+
+
+Game.lastErrorData;
 
 /**
- * Should the turtle be drawn?
+ * Initialize Blockly and SnackBar. Called on page load.
  */
-Meteoric.visible = true;
-
-Meteoric.lastErrorData;
-
-/**
- * Initialize Blockly and the turtle.  Called on page load.
- */
-Meteoric.init = function() {
+Game.init = function() {
   BlocklyApps.init();
 
-  var rtl = BlocklyApps.isRtl();
-  var blocklyDiv = document.getElementById('blockly');
-  var visualization = document.getElementById('visualization');
+  var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
+    
   var onresize = function(e) {
-    var top = visualization.offsetTop;
+	var blocklyDiv = document.getElementById('blockly'); // the Block Graphics edition area
+	var visualization = document.getElementById('visualization'); // the animation area
+	var top = visualization.offsetTop;
     blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-    blocklyDiv.style.left = rtl ? '10px' : '420px';
-    blocklyDiv.style.width = (window.innerWidth - 440) + 'px';
+    blocklyDiv.style.left = rtl ? '10px' : '380px';
+    blocklyDiv.style.width = (window.innerWidth - 400) + 'px';
   };
   window.addEventListener('scroll', function() {
       onresize();
@@ -89,7 +74,7 @@ Meteoric.init = function() {
   window.addEventListener('resize', onresize);
   onresize();
 
-  var toolbox = document.getElementById('toolbox');
+  var toolbox = document.getElementById('toolbox'); // xml definition of the available commands
   Blockly.inject(document.getElementById('blockly'),
       {path: '',
        rtl: rtl,
@@ -98,173 +83,148 @@ Meteoric.init = function() {
 
   Blockly.JavaScript.INFINITE_LOOP_TRAP = '  BlocklyApps.checkTimeout(%1);\n';
 
-  // Add to reserved word list: API, local variables in execution evironment
+  // Add to reserved word list: API, local variables in execution environment
   // (execute) and the infinite loop detection function.
-  Blockly.JavaScript.addReservedWords('Meteoric,code');
+  Blockly.JavaScript.addReservedWords('Game,code');
 
   window.addEventListener('beforeunload', function(e) {
     if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
-      e.returnValue = BlocklyApps.getMsg('Turtle_unloadWarning');  // Gecko.
-      return BlocklyApps.getMsg('Turtle_unloadWarning');  // Webkit.
+      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
+      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
     }
     return null;
   });
 
-  // Hide download button if browser lacks support
-  // (http://caniuse.com/#feat=download).
-  if (!(goog.userAgent.GECKO ||
-       (goog.userAgent.WEBKIT && !goog.userAgent.SAFARI))) {
-    document.getElementById('captureButton').className = 'disabled';
-  } else {
-    BlocklyApps.bindClick('captureButton', Meteoric.createImageLink);
-  }
-
-  // Initialize the slider.
-  var sliderSvg = document.getElementById('slider');
-  //Meteoric.speedSlider = new Slider(10, 35, 130, sliderSvg);
+  // Example how can assign a method to a button
+  //  BlocklyApps.bindClick('captureButton', Game.createImageLink);
 
   var defaultXml =
+	  /*
       '<xml>' +
-      /*
-      '  <block type="move_gotoConsumer" x="70" y="70">' +
-      '    <value name="VALUE">' +
+      '  <block type="controls_for" x="70" y="70">'+
+      '    <value name="FROM">'+
       '      <block type="math_number">' +
       '        <field name="NUM">1</field>' +
       '      </block>' +
       '    </value>' +
-      '  </block>' +*/
+      '    <value name="TO">'+
+      '      <block type="math_number">' +
+      '        <field name="NUM">3</field>' +
+      '      </block>' +
+      '    </value>' +
+      '    <value name="BY">'+
+      '      <block type="math_number">' +
+      '        <field name="NUM">1</field>' +
+      '      </block>' +
+      '    </value>' +
+      '    <statement name="DO">' +
+		  '  <block type="move_goToCustomer">' +
+		  '    <value name="VALUE">' +
+		  '      <block type="variables_get">' +
+		  '        <field name="VAR">i</field>' +
+		  '      </block>' +
+		  '    </value>' +
+		  '    <next>'+
+			  '  <block type="move_goToDisplay">' +
+			  '  </block>' +
+		  '   </next>' +
+		  '  </block>' +
+
+      '    </statement>' + 
+      '  </block>' +
       '</xml>';
+      */
+  '<xml>' +
+  '  <block type="move_goToDisplay">' +
+  '  </block>' +
+  '</xml>';
+
   BlocklyApps.loadBlocks(defaultXml);
 
-  BlocklyApps.bindClick('runButton', Meteoric.runButtonClick);
-  BlocklyApps.bindClick('resetButton', Meteoric.resetButtonClick);
+  BlocklyApps.bindClick('runButton', Game.runButtonClick);
+  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
 
-  Meteoric.ctxDisplay = document.getElementById('display').getContext('2d');
+  Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
-  Cust1.img = new Image();
-  Cust1.img.src = '$customer01.png';
-
-  Cust2.img = new Image();
-  Cust2.img.src = '$customer02.png';
-
-  SnackMan.img = new Image();
-  SnackMan.img.src = 'snackman.png';
-  
-  Meteoric.imgBackground = new Image();
-  Meteoric.imgBackground.onload = function() {
-	  Meteoric.reset();
+  Game.imgBackground = new Image();
+  Game.imgBackground.onload = function() {
+	  Game.reset();
 
 	  // Lazy-load the syntax-highlighting.
-	  window.setTimeout(BlocklyApps.importPrettify, 1);
-        //  Blockly.addChangeListener(function() {Meteoric.changed();});
+	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
 	
   };
   
-  Meteoric.lastErrorData = new Object();
-  Meteoric.lastErrorData.count = 0;
-  Meteoric.lastErrorData.comm = 0;
+  Game.lastErrorData = new Object();
+  Game.lastErrorData.count = 0;
+  Game.lastErrorData.comm = 0;
   
   var loginLoaded = function(data) {
       
-      Meteoric.level = data;
-      Meteoric.imgBackground.src = 'fundo.png';	  
+      Game.mission = data;
+      Game.imgBackground.src = 'images/fundo.png';	  
   
   };
   
-  // esse faz como um trabalho da disciplina de TAMC. 
-  // Posso seguir a mesma ideia do momento de login e carregamento:
-  //     AgStudent.login(Meteoric.student, loginLoaded);
-  
-  
+  loginLoaded(1); // in the future the game must load the parameter from another place
   
 };
 
-window.addEventListener('load', Meteoric.init);
+window.addEventListener('load', Game.init);
 
-Meteoric.lastComandSize = 0;
+// I dont know what this feature do in the game. 
+// This is a copy from commons.js importPrettify function. Because my prettify files are in another
+//   place, I need to overwrite this function.
+Game.importPrettify = function() {
+	  //<link rel="stylesheet" type="text/css" href="../prettify.css">
+	  //<script type="text/javascript" src="../prettify.js"></script>
+	  var link = document.createElement('link');
+	  link.setAttribute('rel', 'stylesheet');
+	  link.setAttribute('type', 'text/css');
+	  link.setAttribute('href', 'prettify.css');
+	  document.head.appendChild(link);
+	  var script = document.createElement('script');
+	  script.setAttribute('type', 'text/javascript');
+	  script.setAttribute('src', 'prettify.js');
+	  document.head.appendChild(script);
+	};
 
-Meteoric.changed = function() {
-    var w = Blockly.mainWorkspace;
-    
-    if (w.topBlocks_.length === Meteoric.lastComandSize)
-        return;
-    
-    Meteoric.lastComandSize = w.topBlocks_.length;
-    var comms = new Array(w.topBlocks_.length);
-    for (var i = 0; i < w.topBlocks_.length; i++) {
-        comms[i] = w.topBlocks_[i].type;
-    }
-    
-    var f = function(r) { 
-        if (r === "ok") {
-            BlocklyApps.hideDialog(false);
-            return;   
-        }
-        
-        var div = document.getElementById('iframeOneTopBlock');
 
-        div.innerHTML = r;
-        var content = document.getElementById('dialogHelp');
-        var style = {width: '370px', top: '120px'};
-        style[Blockly.RTL ? 'right' : 'left'] = '215px';
-        var origin = Blockly.mainWorkspace.topBlocks_[Blockly.mainWorkspace.topBlocks_.length-1].getSvgRoot();;
+/**
+ * Reset the game to the start position, clear the display, and kill any
+ * pending tasks.
+ */
+Game.reset = function() {
+	
+  hero.reset();
 
-        BlocklyApps.showDialog(content, origin, true, false, style, null);
-        
-    };
-    
-   // AgTeacher.evaluate(comms, Meteoric.student, f);
+  Game.display();
+
+  // Kill any task.
+  // Kill all tasks.
+  for (var x = 0; x < Game.pidList.length; x++) {
+    window.clearTimeout(Game.pidList[x]);
+  }
+  Game.pidList = [];
+
 };
 
 /**
- * Reset the turtle to the start position, clear the display, and kill any
- * pending tasks.
+ * Just draw the states of objects. Other of this function happens the events that changes
+ *     the states.
  */
-Meteoric.reset = function() {
-  // Starting location of the snackman
-  SnackMan.x = SnackMan.X;
-  SnackMan.y = SnackMan.Y;
-
-  Cust1.x = Cust1.X;
-  Cust1.y = Cust1.Y;
-
-  Cust2.x = Cust2.X;
-  Cust2.y = Cust2.Y;
-
-  Meteoric.heading = 0;
-  Meteoric.penDownValue = true;
-  Meteoric.visible = true;
-
-  Meteoric.display();
-
-  // Kill any task.
-  if (Meteoric.pid) {
-    window.clearTimeout(Meteoric.pid);
-  }
-  Meteoric.pid = 0;
-};
-
-Meteoric.display = function() {
+Game.display = function() {
 	
-	var level = Meteoric.level;
-
-	Meteoric.ctxDisplay.drawImage( Meteoric.imgBackground, 0 , 0, 367, 415 );
-	Meteoric.ctxDisplay.drawImage( SnackMan.img, SnackMan.x, SnackMan.y );
-
-	//Meteoric.ctxDisplay.drawImage( Cust1.img, Cust1.x, Cust1.y, 32, 32 );
-	Meteoric.ctxDisplay.drawImage( Cust1.img, 32, 64, 32, 32, Cust1.x, Cust1.y, 32, 32 );
+	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
+	hero.draw(Game.ctxDisplay);
 	
-	if (level === "ex2") {
-		
-		Meteoric.ctxDisplay.drawImage( Cust2.img, 32, 64, 32, 32, Cust2.x, Cust2.y, 32, 32 );
-	}
 	
 };
 
 /**
  * Click the run button.  Start the program.
  */
-Meteoric.runButtonClick = function() {
+Game.runButtonClick = function() {
   var runButton = document.getElementById('runButton');
   var resetButton = document.getElementById('resetButton');
   // Ensure that Reset button is at least as wide as Run button.
@@ -273,27 +233,29 @@ Meteoric.runButtonClick = function() {
   }
   runButton.style.display = 'none';
   resetButton.style.display = 'inline';
-//  document.getElementById('spinner').style.visibility = 'visible';
-  Blockly.mainWorkspace.traceOn(true);
-  Meteoric.execute();
+  Blockly.mainWorkspace.traceOn(true); // I dont know what this do. Probably shows the current line
+  Game.execute();
 };
 
 /**
- * Click the reset button.  Reset the Meteoric.
+ * Click the reset button.  Reset the Game.
  */
-Meteoric.resetButtonClick = function() {
-  document.getElementById('runButton').style.display = 'inline';
-  document.getElementById('resetButton').style.display = 'none';
-//  document.getElementById('spinner').style.visibility = 'hidden';
-  Blockly.mainWorkspace.traceOn(false);
-  Meteoric.reset();
+Game.resetButtonClick = function() {
+  Game.resetButtons();
+  Game.reset();
+};
+
+Game.resetButtons = function() {
+	document.getElementById('runButton').style.display = 'inline';
+	document.getElementById('resetButton').style.display = 'none';
+	Blockly.mainWorkspace.traceOn(false); // I dont know what this do
 };
 
 
 /**
  * Execute the user's code.  Heaven help us...
  */
-Meteoric.execute = function() {
+Game.execute = function() {
   BlocklyApps.log = [];
   BlocklyApps.ticks = 1000000;
 
@@ -305,80 +267,53 @@ Meteoric.execute = function() {
     // Otherwise, abnormal termination is a user error.
     if (e !== Infinity) {
       alert(e);
+      Game.resetButtons();
+      return;
     }
   }
 
   // BlocklyApps.log now contains a transcript of all the user's actions.
   // Reset the graphic and animate the transcript.
-  Meteoric.reset();
-  Meteoric.pid = window.setTimeout(Meteoric.animate, 100);
+  Game.reset();
+  Game.pidList.push( window.setTimeout(function() {Game.animate();}, 100) );
 };
 
 /**
- * Iterate through the recorded path and animate the turtle's actions.
+ * Iterate through the recorded path and animate the actions.
  */
-Meteoric.animate = function() {
+Game.animate = function() {
   // All tasks should be complete now.  Clean up the PID list.
-  Meteoric.pid = 0;
+//  Game.pid = 0;
 
   var tuple = BlocklyApps.log.shift();
   if (!tuple) {
+	Game.resetButtons();
     Blockly.mainWorkspace.highlightBlock(null);
     return;
   }
   var command = tuple.shift();
   BlocklyApps.highlight(tuple.pop());
   
-  Meteoric.step(command, tuple);
+  Game.stepSpeed = 1000 * Math.pow(0.5, 3);
+  var t = Game.step(command, tuple) + 1;
 
-  var stepSpeed = 1000 * Math.pow(0.5, 2);
-  Meteoric.pid = window.setTimeout(Meteoric.animate, stepSpeed);
+  // call the next animate when the animation of the last command has finished
+  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed*t) );
 };
 
 /**
- * Execute one step.
- * @param {string} command Logo-style command (e.g. 'FD' or 'RT').
+ * Execute one step in the solution. Returns amount of time consumed by this step
+ * @param {string} command 
  * @param {!Array} values List of arguments for the command.
  */
-Meteoric.step = function(command, values) {
+Game.step = function(command, values) {
   switch (command) {
   case 'GTC' :
-	  SnackMan.animateGoToConsumer(values);
-	  break;
+	  return hero.animateGoToConsumer(values);
+  case 'GTD':
+	  return hero.animateGoToDisplay();
+  case 'GTCO':
+	  return hero.animateGoToCooler();
   }
 };
 
-/**
- * Save an image of the SVG canvas.
- */
-Meteoric.createImageLink = function() {
-  var imgLink = document.getElementById('downloadImageLink');
-  imgLink.setAttribute('href',
-      document.getElementById('display').toDataURL('image/png'));
-  var temp = window.onbeforeunload;
-  window.onbeforeunload = null;
-  imgLink.click();
-  window.onbeforeunload = temp;
-};
-
-// Meteoric API.
-
-SnackMan.goToConsumer = function(consumer, id) {
-  BlocklyApps.log.push(['GTC', consumer, id]);
-};
-
-SnackMan.moveOneStep = function(id) {
-  BlocklyApps.log.push(['GTC', id]);
-};
-
-
-SnackMan.animateGoToConsumer = function(values) {
-	//TODO precisa existir um grafo com os caminhos, e ele busca o caminho mais curto e cria a rota
-	
-	if (SnackMan.x > 200) {
-		SnackMan.x = SnackMan.x - 10; 
-		Meteoric.display();
-		//Meteoric.pid = window.setTimeout(SnackMan.animateGoToConsumer, Meteoric.stepSpeed);
-	}
-	
-};

@@ -2,6 +2,7 @@
     <wb-module deploy-name="nobugssnackbar">
         <wb-resource deploy-path="/" source-path="/web" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/utils"/>
         <property name="context-root" value="nobugssnackbar"/>
         <property name="java-output-path" value="/nobugssnackbar/build/classes"/>
     </wb-module>

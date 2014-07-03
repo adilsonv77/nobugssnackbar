@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+function vai() {
+	
+	var info = document.getElementById("info");
+	var dados = ["-", "a", "b", "c", "d", "e"];
+	
+	for (var x = 1; x < 6; x++) {
+		
+		
+		window.setTimeout(function(z, xule){
+			
+			info.innerHTML = xule[z];
+			
+		}.bind(this, x, dados), 1000*x);
+		
+	}
+	
+}
+
+
+</script>
+</head>
+<body>
+
+
+<input type="button" value="Click" onclick="vai()"/> 
+<span id="info"></span>
+
+</body>
+</html>
