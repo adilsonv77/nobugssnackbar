@@ -11,8 +11,18 @@ SnackMan = function() {
 	this.currentNode = this.snackManFinalPath[0];
 
 	  
-	this.img = new Image();
-	this.img.src = 'images/snackman.png';
+	this.img = new Sprite({
+			ticksPerFrame: 0,
+			numberOfFrames: 3,
+			horzSeq: true,
+			x: 100,
+			y: 100,
+			width: 96,
+			height: 32,
+			sourceY: 0,
+			imgSrc : "images/$cooker.png"
+	});
+	
 
 };
 
@@ -31,14 +41,17 @@ SnackMan.prototype.reset = function() {
 };
 
 SnackMan.prototype.draw = function(ctx) {
-	ctx.drawImage( this.img, this.currentNode.x , this.currentNode.y - 32);
+	this.img.x = this.currentNode.x;
+	this.img.y = this.currentNode.y - 32;
+	
+	this.img.draw(ctx);
 };
 
 /**********************************************************/
-/**          creates the commands to evaluate             */
+/**          create the commands to evaluate             */
 /**********************************************************/
-SnackMan.prototype.goToCustomer = function(consumer, id) {
-  BlocklyApps.log.push(['GTC', consumer, id]);
+SnackMan.prototype.goToCustomer = function(customer, id) {
+  BlocklyApps.log.push(['GTC', customer, id]);
 };
 
 SnackMan.prototype.goToDisplay = function(id) {
@@ -79,12 +92,29 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 			}.bind(this, i, solution), Game.stepSpeed*(i+1)) );
 		
 	}
-
-	return solution.length;
+	
+	// turns forward the cooker's image  
+	Game.pidList.push( window.setTimeout( function(i, solution){
+		that.changeSnackManPosition(that.nodes[solution[i]]);
+		}.bind(this, solution.length-1, solution), Game.stepSpeed*(solution.length+1)) );
+	
+	return solution.length+1;
 
 };
 
 SnackMan.prototype.changeSnackManPosition = function(node) {
+	if (node.x < this.currentNode.x)
+		this.img.sourceY = 32;
+	else
+		if (node.x > this.currentNode.x)
+			this.img.sourceY = 64;
+		else if (node.y < this.currentNode.y)
+			    this.img.sourceY = 128;
+			 else
+				this.img.sourceY = 0;
+	
+	this.img.update();
 	this.currentNode = node;
+	
 	Game.display();
 };
