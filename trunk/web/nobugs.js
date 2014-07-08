@@ -42,12 +42,6 @@ var Game = {};
 var hero = new SnackMan();
 Game.mission = 0;
 
-/**
- * Options to customize the customers behaviour in snackbar .
- */
-var CustomerOptions = {};
-var customers = [];
-
 
 /**
  * PID of animation task currently executing.
@@ -171,10 +165,6 @@ Game.init = function() {
   var loginLoaded = function(data) {
       
       Game.mission = data;
-      
-      // loads based on the mission
-      CustomerOptions.totalQtd = 1;
-      
       Game.imgBackground.src = 'images/fundo.png';	  
   
   };
@@ -212,7 +202,7 @@ Game.importPrettify = function() {
 Game.reset = function() {
 	
   hero.reset();
-  customers = [];
+  CustomerManager.reset();
 
   Game.display();
 
@@ -233,9 +223,7 @@ Game.display = function() {
 	
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
 	hero.draw(Game.ctxDisplay);
-	for (var i = 0; i < customers.length; i++)
-		customers[i].draw(Game.ctxDisplay); 
-	
+	CustomerManager.draw(Game.ctxDisplay);
 	
 };
 
@@ -314,7 +302,6 @@ Game.animate = function() {
   
   Game.stepSpeed = 1000 * Math.pow(0.5, 3);
   
-  Game.customerLoop();
   var t = Game.step(command, tuple) + 1;
 
   // call the next animate when the animation of the last command has finished
@@ -337,19 +324,3 @@ Game.step = function(command, values) {
   }
 };
 
-/**
- * Controls the customer life: when enter and when exit the snackbar.
- * 
- */
-Game.customerLoop = function() {
-	if (customers.length < CustomerOptions.totalQtd) {
-		customers[0] = new Customer({
-			id: "01",
-			place: "counter1"
-		});
-		
-		customers[0].animateGoToPlace();
-	} else {
-		
-	}
-};
