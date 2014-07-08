@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"author": "Adilson Vahldick <adilsonv77@gmail.com>"
+
+	},
+	
+	"Apps.catLogic": "Condicionais",
+	"Apps.catLoops": "Lacos",
+	"Apps.catVariables": "Variaveis",
+	"Apps.catMath": "Math",
+	"SnackMan.catSnackMan": "SnackMan",
+	
+	"Apps.runProgram" : "Executar",
+	"Apps.resetProgram" : "Reiniciar",
+	"Apps.debugProgram" : "Passo",  
+	
+	"NoBugs.title": "NoBug's Snack Bar",
+	"NoBugs.unloadWarning": "Deixar essa pagina resulta em perdas no trabalho.",
+	"NoBugs.runTooltip" : "Executar o programa.",
+	"NoBugs.debugTooltip" : "Executar somente um passo.",
+	
+	"SnackMan.goToCustomerTooltip": "Move o cozinheiro ate o balcao.",
+	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
+	"SnackMan.goToDisplayTooltip": "Move o cozinheiro ate o mostrador."
+}

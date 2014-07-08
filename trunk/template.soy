@@ -18,10 +18,13 @@
     // Block text and their associated tooltips and URLs (interleaved to
     // assist with translation).
     
-    <span id="SnackMan_goToCustomerTooltip">{msg meaning="SnackMan.goToCustomerTooltip" desc=""}Moves the snack man to the customer.{/msg}</span>
-    <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc=""}Asks the customer about his order.{/msg}</span>
-    <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc=""}Moves the snack man to the display.{/msg}</span>
-    <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc=""}Moves the snack man to the cooler.{/msg}</span>
+    <span id="SnackMan_goToCustomerTooltip">{msg meaning="SnackMan.goToCustomerTooltip" desc="--"}Moves the snack man to the customer.{/msg}</span>
+    <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc="--"}Asks the customer about his order.{/msg}</span>
+    <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc="--"}Moves the snack man to the display.{/msg}</span>
+    <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc="--"}Moves the snack man to the cooler.{/msg}</span>
+
+	//Errors
+	<span id="SnackMan_doesntExistCustomer">{msg meaning="SnackMan.doesntExistCustomer" desc="--"}Wrong position{/msg}</span>
 
     // Misc text.
     <span id="NoBugs_unloadWarning">{msg meaning="NoBugs.unloadWarning" desc="alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress."}Leaving this page will result in the loss of your work.{/msg}</span>
@@ -55,17 +58,17 @@
   <table style="padding-top: 1em;">
     <tr>
       <td style="width: 120px; text-align: center">
-        <button id="debugButton" class="primary" title="{msg meaning="NoBugs.debugTooltip" desc=""}Makes the snack man do what the next block say.{/msg}">
-          <img src="media/1x1.gif" class="debug icon21">{msg meaning="Apps.debugProgram" desc=""}Step{/msg}
+        <button id="debugButton" class="primary" title="{msg meaning="NoBugs.debugTooltip" desc="--"}Makes the snack man do what the next block say.{/msg}">
+          <img src="media/1x1.gif" class="debug icon21">{msg meaning="Apps.debugProgram" desc="--"}Step{/msg}
         </button>
       </td>
        
       <td style="width: 190px; text-align: center">
-        <button id="runButton" class="primary" title="{msg meaning="NoBugs.runTooltip" desc=""}Makes the snack man do what the blocks say.{/msg}">
-          <img src="media/1x1.gif" class="run icon21">{msg meaning="Apps.runProgram" desc=""}Run Program{/msg}
+        <button id="runButton" class="primary" title="{msg meaning="NoBugs.runTooltip" desc="--"}Makes the snack man do what the blocks say.{/msg}">
+          <img src="media/1x1.gif" class="run icon21">{msg meaning="Apps.runProgram" desc="--"}Run Program{/msg}
         </button>
         <button id="resetButton" class="primary"  style="display: none">
-          <img src="media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc=""}Reset{/msg}
+          <img src="media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc="--"}Reset{/msg}
         </button>
       </td>
     </tr>
@@ -96,7 +99,7 @@
  */
 {template .toolbox}
   <xml id="toolbox" style="display: none">
-    <category name="{msg meaning="SnackMan.catSnackMan" desc=""}SnackMan{/msg}">
+    <category name="{msg meaning="SnackMan.catSnackMan" desc="--"}SnackMan{/msg}">
       <block type="move_goToCustomer">
         <value name="VALUE">
           <block type="math_number">
@@ -108,14 +111,14 @@
       <block type="move_goToDisplay"> </block>
       <block type="move_goToCooler"> </block>
     </category>
-    <category name="{msg meaning="Apps.catLogic" desc=""}Logic{/msg}">
+    <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
       <block type="logic_operation"></block>
       <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
     </category>
-    <category name="{msg meaning="Apps.catLoops" desc=""}Loops{/msg}">
+    <category name="{msg meaning="Apps.catLoops" desc="--"}Loops{/msg}">
       <block type="controls_whileUntil"></block>
       <block type="controls_for">
         <value name="FROM">
@@ -135,9 +138,9 @@
         </value>
       </block>
     </category>
-    <category name="{msg meaning="Apps.catMath" desc=""}Math{/msg}">
+    <category name="{msg meaning="Apps.catMath" desc="--"}Math{/msg}">
           <block type="math_number"></block>
     </category>
-    <category name="{msg meaning="Apps.catVariables" desc=""}Variables{/msg}" custom="VARIABLE"></category>
+    <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
   </xml>
 {/template}

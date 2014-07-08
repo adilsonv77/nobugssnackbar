@@ -57,9 +57,29 @@
 
 	<target name="soy" depends="">
 		<description>Creates the pages based on a template</description>
-		<java jar="_soy/SoyToJsSrcCompiler.jar" fork="true">
-			<arg line="--outputPathFormat web/generated/en.js --srcs common.soy,template.soy"/>
+		<java jar="_soy/SoyMsgExtractor.jar" fork="true">
+			<arg line="--outputFile extracted_msgs.xlf --srcs common.soy,template.soy"/>
 		</java>
+		
+		<exec executable="python">
+			<arg value="i18n\xliff_to_json.py"/>
+			<arg value="--xlf"/>
+			<arg value="extracted_msgs.xlf"/>
+			<arg value="--templates"/>
+			<arg value="common.soy"/>
+			<arg value="template.soy"/>
+		</exec>
+		
+		<exec executable="python">
+			<arg value="i18n\json_to_js.py"/>
+			<arg value="--path_to_jar=.\_soy"/>
+			<arg value="--output_dir=web\generated"/>
+			<arg value="--template"/>
+			<arg value="common.soy,template.soy"/>
+			<arg value="json\*.json"/>
+		</exec>
+		
 	</target>
+	
 	
 </project>
