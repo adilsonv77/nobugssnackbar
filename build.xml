@@ -13,7 +13,16 @@
 		<delete dir="${dest.dir}/generators"/>
 		<delete dir="${dest.dir}/media"/>
 		<delete dir="${dest.dir}/msg"/>
+		<delete dir="${dest.dir}/../_soy"/>
+		<delete dir="${dest.dir}/../i18n"/>
 
+		<copy todir="${dest.dir}/../_soy">
+			<fileset dir="${blockly.dir}/apps/_soy"/>
+		</copy>
+
+		<copy todir="${dest.dir}/../i18n">
+			<fileset dir="${blockly.dir}/i18n"/>
+		</copy>
 		
 		<copy todir="${dest.dir}/blocks">
 			<fileset dir="${blockly.dir}/blocks"/>
