@@ -27,7 +27,7 @@
 
 // Supported languages.
 BlocklyApps.LANGUAGES =
-    [ 'en' ];
+    [ 'pt-br' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 //Game.student = BlocklyApps.getStringParamFromUrl('student', null);
 

@@ -67,9 +67,15 @@ SnackMan.prototype.goToCooler = function(id) {
 /**********************************************************/
 SnackMan.prototype.animateGoToConsumer = function(values) {
 	
-	var cust = values[0];
-	// TODO precisa antes fazer a consistencia
-	return this.animateSnackMan( this.snackManFinalPath[cust+1] );
+	var cust = values[0]+1;
+
+	if (cust > 2 || cust < 0) {
+		Game.scheduleError();
+		return -1;
+	}
+		
+	
+	return this.animateSnackMan( this.snackManFinalPath[cust] );
 	
 };
 
