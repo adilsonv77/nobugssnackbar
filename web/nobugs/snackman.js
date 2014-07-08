@@ -109,12 +109,13 @@ SnackMan.prototype.changeSnackManPosition = function(node) {
 		if (node.x > this.currentNode.x)
 			this.img.sourceY = 64;
 		else if (node.y < this.currentNode.y)
-			    this.img.sourceY = 128;
+			    this.img.sourceY = 96;
 			 else
 				this.img.sourceY = 0;
 	
 	this.img.update();
 	this.currentNode = node;
 	
+	CustomerManager.update();
 	Game.display();
 };
