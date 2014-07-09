@@ -24,7 +24,7 @@
     <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc="--"}Moves the snack man to the cooler.{/msg}</span>
 
 	//Errors
-	<span id="SnackMan_doesntExistCustomer">{msg meaning="SnackMan.doesntExistCustomer" desc="--"}Wrong position{/msg}</span>
+	<span id="Error_doesntExistCustomer">{msg meaning="Error.doesntExistCustomer" desc="--"}This position is invalid.{/msg}</span>
 
     // Misc text.
     <span id="NoBugs_unloadWarning">{msg meaning="NoBugs.unloadWarning" desc="alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress."}Leaving this page will result in the loss of your work.{/msg}</span>
@@ -92,6 +92,22 @@
   {call apps.dialog /}
   {call apps.codeDialog /}
   {call apps.storageDialog /}
+  
+  <div id="dialogError" class="dialogHiddenContent">
+    <table>
+	    <tr>
+		    <td>
+		      <img src="images/error.png" height="50%" width="50%">
+		    </td>
+		    <td id="dialogErrorText"></td>
+		    <td>
+ 		      {call apps.ok /}
+		    </td>
+	    </tr>
+    </table>
+  </div>
+  
+  
 {/template}
 
 /**

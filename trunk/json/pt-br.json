@@ -5,9 +5,9 @@
 	},
 	
 	"Apps.catLogic": "Condicionais",
-	"Apps.catLoops": "Lacos",
-	"Apps.catVariables": "Variaveis",
-	"Apps.catMath": "Math",
+	"Apps.catLoops": "La&#231;os",
+	"Apps.catVariables": "Vari&#225;veis",
+	"Apps.catMath": "Matem&#225;tica",
 	"SnackMan.catSnackMan": "SnackMan",
 	
 	"Apps.runProgram" : "Executar",
@@ -15,11 +15,13 @@
 	"Apps.debugProgram" : "Passo",  
 	
 	"NoBugs.title": "NoBug's Snack Bar",
-	"NoBugs.unloadWarning": "Deixar essa pagina resulta em perdas no trabalho.",
+	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa.",
 	"NoBugs.debugTooltip" : "Executar somente um passo.",
 	
-	"SnackMan.goToCustomerTooltip": "Move o cozinheiro ate o balcao.",
+	"SnackMan.goToCustomerTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
-	"SnackMan.goToDisplayTooltip": "Move o cozinheiro ate o mostrador."
+	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
+	
+	"Error.doesntExistCustomer": "Esta posi&#231;&#227;o &#233; inv&#225;lida."
 }

@@ -81,6 +81,7 @@ public class GenerateSnackManPath {
 		// do nC2 até ponto de origem
 		for (int i=1; i<20; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			// o custo ficou em 0.5 para dar uma chance a esse caminho
 			if (i == 19) {
 				s.append("n" + (contaN+1) + ":{n"+(contaN)+":0.5, n"+(1)+":0.5}, ");
 			} else
@@ -107,12 +108,31 @@ public class GenerateSnackManPath {
 		createNode(n, nCooler, 300, 430);
 		k.append("'n"+nCooler+"' ");
 		
+		// do nC2 até o cooler
+		int nc2_Cooler = contaN+1;
+		int contaAnt = nC2;
+		
+		x = 100; y = 410; xd = 10; yd= 1;
+		for (int i=1; i<20; i++) {
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			
+			if (i == 19) {
+				s.append("n" + (contaN+1) + ":{n"+(contaAnt)+":1, n"+(nCooler)+":1}, ");
+			} else {
+				s.append("n" + (contaN+1) + ":{n"+(contaAnt)+":1, n"+(contaN+2)+":1}, ");
+			}
+			contaAnt = contaN+1;
+			contaN++;
+		}
+		int nc2_Cooler_2 = contaN;
+
+		
 		// ligacoes entre os nós principais
 		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1}, ");
 		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1 }, ");
 		s.append("n" + (nC1) + ":{n"+(nC1-1)+":1, n"+(nC1+1)+":1}, ");
-		s.append("n" + (nC2) + ":{n"+(nC2-1)+":1, n"+(nC2+1)+":1, n"+(nC2_Display+1)+":1}, ");
-		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1}, ");
+		s.append("n" + (nC2) + ":{n"+(nC2-1)+":1, n"+(nC2+1)+":1, n"+(nC2_Display+1)+":1, n"+(nc2_Cooler)+":1}, ");
+		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1, n"+(nc2_Cooler_2)+":1}, ");
 		
 		/*node = new Node(110, 370);
 		snackManFinalPath[3] = node;
