@@ -27,7 +27,7 @@
 
 // Supported languages.
 BlocklyApps.LANGUAGES =
-    [ 'pt-br' ];
+    [  'pt-br' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 //Game.student = BlocklyApps.getStringParamFromUrl('student', null);
 
@@ -288,9 +288,7 @@ Game.execute = function() {
  * Iterate through the recorded path and animate the actions.
  */
 Game.animate = function() {
-  // All tasks should be complete now.  Clean up the PID list.
-//  Game.pid = 0;
-
+ 
   var tuple = BlocklyApps.log.shift();
   if (!tuple) {
 	Game.resetButtons();
@@ -303,6 +301,10 @@ Game.animate = function() {
   Game.stepSpeed = 1000 * Math.pow(0.5, 3);
   
   var t = Game.step(command, tuple) + 1;
+  if (t == 0) { // something wrong happened
+	 // all processing of the wrong was scheduled
+	  return; 
+  }
 
   // call the next animate when the animation of the last command has finished
   Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed*t) );
@@ -324,3 +326,22 @@ Game.step = function(command, values) {
   }
 };
 
+Game.scheduleError = function(iderror) {
+	
+	var content = document.getElementById('dialogError');
+	var container = document.getElementById('dialogErrorText');
+	container.textContent = BlocklyApps.getMsg(iderror);
+	
+    var style = {width: '370px', top: '120px'};
+	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+	var origin = Blockly.mainWorkspace.topBlocks_[Blockly.mainWorkspace.topBlocks_.length-1].getSvgRoot();
+	
+	Game.pidList.push( window.setTimeout(
+			function(content, origin, style) {
+				BlocklyApps.showDialog(content, origin, true, true, style, null);
+			}.bind(this, content, origin, style), Game.stepSpeed) );
+	
+	
+   
+	
+};

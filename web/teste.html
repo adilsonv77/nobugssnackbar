@@ -7,30 +7,43 @@
 
 function vai() {
 	
-	var info = document.getElementById("info");
-	var dados = ["-", "a", "b", "c", "d", "e"];
+	var m = [];
+	if (!m[0])
+		m[0] = new Array();
 	
-	for (var x = 1; x < 6; x++) {
-		
-		
-		window.setTimeout(function(z, xule){
-			
-			info.innerHTML = xule[z];
-			
-		}.bind(this, x, dados), 1000*x);
-		
-	}
+	m[0].push({f:function(msg){document.getElementById("info").innerHTML = msg}.bind(this, "f00---")});
+	
+	m[0].push({f:function(){document.getElementById("info2").innerHTML = "f01"}});
+	
+	var l = m.shift();
+	var x = l.shift();
+	
+	x.f();
+	
+x = l.shift();
+	
+	x.f();
 	
 }
 
+function vai2() {
+
+	var i = 10;
+	if (i in [5..15])
+		alert("yep");
+	else
+		alert("nop");
+}
 
 </script>
 </head>
 <body>
 
+La&#199;os
 
+<input type="button" value="Testa Numero" onclick="vai2()"/>
 <input type="button" value="Click" onclick="vai()"/> 
-<span id="info"></span>
+<span id="info"></span> <span id="info2"></span>
 
 </body>
 </html>
