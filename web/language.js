@@ -84,6 +84,23 @@ Blockly.JavaScript['move_goToCooler'] = function(block) {
 	      '( \'block_id_' + block.id + '\');\n';
 	};
 
+Blockly.Blocks['ask_isThereACustomer'] = {
+		  // Verify if at this position there is a customer
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "Boolean");
+		    this.appendDummyInput()
+		        .appendField("isThereACustomer");
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_isThereACustomerTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
+     
+	  return ['hero.isThereACustomer( \'block_id_' + block.id + '\')', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	
+	};
+
 	
 Blockly.Blocks['ask_askForFood'] = {
 		  // Block for moving forward or backwards.
@@ -103,4 +120,23 @@ Blockly.JavaScript['ask_askForFood'] = function(block) {
 	  return 'Turtle.' + block.getFieldValue('DIR') +
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
+
+Blockly.Blocks['alert'] = {
+
+  init: function() {
+    this.setColour(160);
+   
+    this.appendValueInput('VALUE')
+        .appendField('alert');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    
+  }
+};
+
+Blockly.JavaScript['alert'] = function(block) {
+    var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+   return 'hero.alert(' + value + ', \'block_id_' + block.id + '\');\n';
+};
 

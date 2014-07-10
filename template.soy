@@ -19,11 +19,13 @@
     // assist with translation).
     
     <span id="SnackMan_goToCustomerTooltip">{msg meaning="SnackMan.goToCustomerTooltip" desc="--"}Moves the snack man to the customer.{/msg}</span>
-    <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc="--"}Asks the customer about his order.{/msg}</span>
     <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc="--"}Moves the snack man to the display.{/msg}</span>
     <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc="--"}Moves the snack man to the cooler.{/msg}</span>
+    <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc="--"}Asks the customer about his order.{/msg}</span>
+    <span id="SnackMan_isThereACustomerTooltip">{msg meaning="SnackMan.isThereACustomerTooltip" desc="--"}Verify if there is a customer in the currently position.{/msg}</span>
 
 	//Errors
+	<span id="Error_infinityLoopDetected">{msg meaning="Error.infinityLoopDetected" desc="--"}Infinity loop detected by system.{/msg}</span>
 	<span id="Error_doesntExistCustomer">{msg meaning="Error.doesntExistCustomer" desc="--"}This position is invalid.{/msg}</span>
 
     // Misc text.
@@ -70,6 +72,10 @@
         <button id="resetButton" class="primary"  style="display: none">
           <img src="media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc="--"}Reset{/msg}
         </button>
+/**
+        <button id="xmlButton">
+        	<img src="media/1x1.gif" class="stop icon21">
+        </button> */
       </td>
     </tr>
   </table>
@@ -123,9 +129,12 @@
           </block>
         </value>
       </block>
-      <block type="ask_askForFood"> </block>
       <block type="move_goToDisplay"> </block>
       <block type="move_goToCooler"> </block>
+
+      <block type="ask_askForFood"> </block>
+      <block type="ask_isThereACustomer"> </block>
+      <block type="alert"> </block>
     </category>
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
@@ -158,5 +167,6 @@
           <block type="math_number"></block>
     </category>
     <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
+    <category name="{msg meaning="Apps.catProcedures" desc="IBID"}Functions{/msg}" custom="PROCEDURE"></category>
   </xml>
 {/template}
