@@ -31,7 +31,7 @@ Blockly.Blocks['move_goToCustomer'] = {
 		    this.setColour(160);
 		    this.appendValueInput('VALUE')
 		        .setCheck('Number')
-		        .appendField('goToCustomer');
+		        .appendField('goToBarCounter');
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
 		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCustomerTooltip'));
@@ -42,7 +42,7 @@ Blockly.JavaScript['move_goToCustomer'] = function(block) {
 	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'hero.goToCustomer' +
+	  return 'hero.goToBarCounter' +
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
 

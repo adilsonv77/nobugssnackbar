@@ -27,7 +27,7 @@
 
 // Supported languages.
 BlocklyApps.LANGUAGES =
-    [  'pt-br' ];
+    [  'en' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 //Game.student = BlocklyApps.getStringParamFromUrl('student', null);
 
@@ -38,6 +38,8 @@ document.write('<script type="text/javascript" src="generated/' +
  * Create a namespace for the application.
  */
 var Game = {};
+
+Game.runningStatus = 0;
 
 var hero = new SnackMan();
 Game.mission = BlocklyApps.getStringParamFromUrl('mission', '1');
@@ -57,6 +59,9 @@ Game.lastErrorData;
 Game.init = function() {
   BlocklyApps.init();
 
+  Blockly.Msg.CONTROLS_IF_MSG_THEN = "then"; // changing "do" to "then"
+  // TODO how can I generalize this change ? 
+  
   var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
     
   var onresize = function(e) {
@@ -65,7 +70,15 @@ Game.init = function() {
 	var top = visualization.offsetTop;
     blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
     blocklyDiv.style.left = rtl ? '10px' : '380px';
-    blocklyDiv.style.width = (window.innerWidth - 400) + 'px';
+    var w = window.innerWidth - 600;
+    blocklyDiv.style.width = (w) + 'px';
+    
+    var variables = document.getElementById("variableBox");
+    variables.style.top = blocklyDiv.style.top;
+    variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
+    variables.style.height = '89%';
+    
+    //variables.style.width = (window.innerWidth - blocklyDiv.style.width) + 'px';
   };
   window.addEventListener('scroll', function() {
       onresize();
@@ -229,6 +242,7 @@ Game.init = function() {
 
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
+  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
   //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
@@ -334,8 +348,10 @@ Game.runButtonClick = function() {
   }
   runButton.style.display = 'none';
   resetButton.style.display = 'inline';
-  Blockly.mainWorkspace.traceOn(true); // I dont know what this do. Probably shows the current line
-  Game.execute();
+  // TODO desabilitar o botao debug
+  
+  Blockly.mainWorkspace.traceOn(true);
+  Game.execute(1);
 };
 
 /**
@@ -346,39 +362,58 @@ Game.resetButtonClick = function() {
   Game.reset();
 };
 
+/**
+ * Click the debug button.  Start the program/go to next line.
+ */
+Game.debugButtonClick = function() {
+	 
+	// TODO mudar o status de alguma coisa para que quando clicar em Run continuará a execucao de onde parou
+	Blockly.mainWorkspace.traceOn(true); 
+	Game.execute(2);
+};
+
 Game.resetButtons = function() {
 	document.getElementById('runButton').style.display = 'inline';
 	document.getElementById('resetButton').style.display = 'none';
-	Blockly.mainWorkspace.traceOn(false); // I dont know what this do
+	Blockly.mainWorkspace.traceOn(false); 
+	
+	Game.runningStatus = 0;
 };
 
 
 /**
  * Execute the user's code.  Heaven help us...
  */
-Game.execute = function() {
-  BlocklyApps.log = [];
-  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
-
-  // Reset the graphic.
-  Game.reset();
-
-  var code = Blockly.JavaScript.workspaceToCode();
-  try {
-    eval(code);
-  } catch (e) {
+Game.execute = function(debug) {
+	
+  if (Game.runningStatus === 0) {
+	  Game.runningStatus = debug;
 	  
-	  if (e == Infinity) { 
-		  Game.showError("Error_infinityLoopDetected");
-	      Game.resetButtons();
-	      return;
+	  BlocklyApps.log = [];
+	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
+	  // Reset the graphic.
+	  Game.reset();
+
+	  var code = Blockly.JavaScript.workspaceToCode();
+	  try {
+	    eval(code);
+	  } catch (e) {
+		  
+		  if (e == Infinity) { 
+			  Game.showError("Error_infinityLoopDetected");
+		      Game.resetButtons();
+		      return;
+		  }
+		  
 	  }
+
+	  // BlocklyApps.log now contains a transcript of all the user's actions.
+	  Game.stepSpeed = 1000 * Math.pow(0.5, 3);
 	  
   }
-
-  // BlocklyApps.log now contains a transcript of all the user's actions.
-  Game.stepSpeed = 1000 * Math.pow(0.5, 3);
+  
   Game.pidList.push( window.setTimeout(function() {Game.animate();}, 100) );
+
 };
 
 /**
@@ -394,11 +429,16 @@ Game.animate = function() {
   }
   var command = tuple.shift();
   BlocklyApps.highlight(tuple.pop());
+  // TODO por causa do debug temos que inserir um comando especial após cada comando. assim um clique do
+  //                debug faz funcionar um conjunto de instrucoes
+    
   
-  if (Game.step(command, tuple))
+  if (Game.step(command, tuple)) {
+
 	  // call the next animate when the animation of the last command has finished
-	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
-  else {
+	  if (Game.runningStatus === 1) 
+		  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
+   } else {
 
 	  Game.resetButtons();
 	  Blockly.mainWorkspace.highlightBlock(null);
