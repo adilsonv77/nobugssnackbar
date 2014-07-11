@@ -70,3 +70,12 @@ html[dir="RTL"] button.primary {
 .stop {
   background-position: -63px 0px;
 }
+
+/* Variable box */
+#variableBox {
+	width: 200px;
+	position: absolute;
+	display: block;
+	background-color: #FDD9DC;
+	
+}

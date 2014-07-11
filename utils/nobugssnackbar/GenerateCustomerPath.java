@@ -14,9 +14,9 @@ public class GenerateCustomerPath {
 		 */
 				PrintWriter pw = new PrintWriter("customer.txt");
 				
-				StringBuffer s = new StringBuffer("this.path = {");
-				StringBuffer n = new StringBuffer("this.nodes = {");
-				StringBuffer k = new StringBuffer("this.keynodes = [");
+				StringBuffer s = new StringBuffer("CustOpt.path = {");
+				StringBuffer n = new StringBuffer("CustOpt.nodes = {");
+				StringBuffer k = new StringBuffer("CustOpt.keynodes = [");
 				
 				int x = 14, y = 96;
 				// where the customer borns
@@ -25,14 +25,14 @@ public class GenerateCustomerPath {
 				
 				int contaN = 1;
 				
-				int xd = 0, yd = 9;
+				int xd = 0, yd = 6;
 				for (int i=1; i<30; i++) {
 					createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 					s.append("n" + (contaN+1) + ":{n"+(i)+":1, n"+(i+2)+":1}, ");
 					contaN++;
 				}
 				
-				y = 366;
+				y = 290;
 				xd = 3; yd = 0;
 				for (int i=1; i<10; i++) {
 					createNode(n, contaN+1, x+(xd*i), y+(yd*i));
@@ -41,10 +41,10 @@ public class GenerateCustomerPath {
 				}
 				
 				contaN++;
-				// in front of counter 1 (50, 370)
+				// in front of counter 1 (44, 290)
 				k.append("'n"+contaN+"', ");
 				int nCounter1 = contaN;
-				createNode(n, nCounter1, 50, 370);
+				createNode(n, nCounter1, 44, 290);
 				
 				// ligacoes entre os nós principais
 				s.append("n1:{n2:1}, ");

@@ -79,7 +79,7 @@
       </td>
     </tr>
   </table>
-
+  
   <div id="toolbarDiv">
   </div>
 
@@ -94,6 +94,10 @@
   <script type="text/javascript" src="language.js"></script>
   {call .toolbox /}
   <div id="blockly"></div>
+
+  <div id="variableBox">
+  Variaveis
+  </div>
 
   {call apps.dialog /}
   {call apps.codeDialog /}
@@ -165,6 +169,7 @@
     </category>
     <category name="{msg meaning="Apps.catMath" desc="--"}Math{/msg}">
           <block type="math_number"></block>
+          <block type="math_arithmetic"></block>
     </category>
     <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
     <category name="{msg meaning="Apps.catProcedures" desc="IBID"}Functions{/msg}" custom="PROCEDURE"></category>
