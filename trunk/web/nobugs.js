@@ -27,7 +27,7 @@
 
 // Supported languages.
 BlocklyApps.LANGUAGES =
-    [  'en' ];
+    [  'pt-br' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 //Game.student = BlocklyApps.getStringParamFromUrl('student', null);
 
@@ -64,29 +64,19 @@ Game.init = function() {
   
   var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
     
-  var onresize = function(e) {
-	var blocklyDiv = document.getElementById('blockly'); // the Block Graphics edition area
-	var visualization = document.getElementById('visualization'); // the animation area
-	var top = visualization.offsetTop;
-    blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-    blocklyDiv.style.left = rtl ? '10px' : '380px';
-    var w = window.innerWidth - 600;
-    blocklyDiv.style.width = (w) + 'px';
-    
-    var variables = document.getElementById("variableBox");
-    variables.style.top = blocklyDiv.style.top;
-    variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
-    variables.style.height = '89%';
-    
-    //variables.style.width = (window.innerWidth - blocklyDiv.style.width) + 'px';
+  Game.optResize = {
+	blocklyDivW: 600,
+	blocklyDivH: "90%",
+	varBoxT: true,
+	varBoxH: "90%"
   };
+  
   window.addEventListener('scroll', function() {
-      onresize();
+      Game.resizeWindow(null);
       Blockly.fireUiEvent(window, 'resize');
     });
-  window.addEventListener('resize', onresize);
-  onresize();
-
+  window.addEventListener('resize',  Game.resizeWindow);
+  
   var toolbox = document.getElementById('toolbox'); // xml definition of the available commands
   Blockly.inject(document.getElementById('blockly'),
       {path: '',
@@ -245,6 +235,12 @@ Game.init = function() {
   BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
   //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
+  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+  
+  Game.variableBox = document.getElementById('variableBox');
+  Game.blockly = document.getElementById('blockly');
+  
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
   Game.imgBackground = new Image();
@@ -294,8 +290,66 @@ Game.importPrettify = function() {
 	  script.setAttribute('src', 'prettify.js');
 	  document.head.appendChild(script);
 	};
+	
+Game.resizeWindow = function(e) {
+	
+	var rtl = BlocklyApps.isRtl();
+	
+	var blocklyDiv = document.getElementById('blockly'); // the Block Graphics edition area
+	var visualization = document.getElementById('visualization'); // the animation area
+	var top = visualization.offsetTop;
+    blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
+    blocklyDiv.style.left = rtl ? '10px' : '380px';
+    blocklyDiv.style.height = Game.optResize.blocklyDivH;
+    var w = window.innerWidth - Game.optResize.blocklyDivW; 
+    blocklyDiv.style.width = (w) + 'px';
+    
+    var variables = document.getElementById("variableBox");
+    variables.style.top = (Game.optResize.varBoxT?blocklyDiv.style.top:(blocklyDiv.offsetTop+blocklyDiv.offsetHeight+10)+"px");
+    if (Game.optResize.varBoxT) {
+    	variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
+    	variables.style.width = "200px";
+    }
+    else {
+    	variables.style.left = blocklyDiv.style.left;
+        variables.style.width =  blocklyDiv.style.width;
+    }
+    variables.style.height = Game.optResize.varBoxH;
+    
+    //variables.style.width = (window.innerWidth - blocklyDiv.style.width) + 'px';
+  };
 
 
+Game.moveDownButtonClick = function() {
+	document.getElementById("moveDown").style.display = 'none';
+	document.getElementById("moveRight").style.display = 'inline-block';
+	
+	  Game.optResize = {
+		blocklyDivW: 400,
+		blocklyDivH: "70%",
+		varBoxT: false,
+		varBoxH: "20%"
+	  };
+			  
+     Game.resizeWindow(null);
+     Blockly.fireUiEvent(window, 'resize');
+};
+
+Game.moveRightButtonClick = function() {
+      document.getElementById("moveRight").style.display = 'none';
+	  document.getElementById("moveDown").style.display = 'inline-block';
+	
+	  Game.optResize = {
+				blocklyDivW: 600,
+				blocklyDivH: "90%",
+				varBoxT: true,
+				varBoxH: "90%"
+			  };
+			  
+     Game.resizeWindow(null);
+     Blockly.fireUiEvent(window, 'resize');
+};
+	
 /**
  * Reset the game to the start position, clear the display, and kill any
  * pending tasks.
