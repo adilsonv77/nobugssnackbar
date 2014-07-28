@@ -77,5 +77,55 @@ html[dir="RTL"] button.primary {
 	position: absolute;
 	display: block;
 	background-color: #FDD9DC;
+}
 	
+.move-header {
+	background: linear-gradient(to bottom, #EFF5FF 0px, #E0ECFF 100%) repeat-x scroll 0% 0% transparent;
+	border-color: #95B8E7;
+	padding: 5px;
+	position:  relative;
+    border-width: 1px;
+    border-style: solid;
+}	
+	
+.move-title {
+	font-size:12px;
+	font-weight:bold;
+	height: 16px;
+	line-height: 16px;
+}
+
+.move-panel {
+	right: 5px;
+	width: auto;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.move-panel a {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin: 0px 0px 0px 2px;
+	vertical-align: top;
+	opacity: 0.6
+}
+
+.move-panel a:hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	background-color: #EAF2FF;
+    -moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+}
+.move-down {
+	background: url('images/panel_tools.png') no-repeat scroll -32px -16px transparent;
+}
+
+.move-right {
+	background: url('images/panel_tools.png') no-repeat scroll -48px 0px transparent;
 }
