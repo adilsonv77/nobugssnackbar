@@ -97,11 +97,23 @@
 
   <div id="variableBox">
   	<div class="move-header">
-	  	<div class="move-title">Variaveis</div>
+	  	<div class="move-title">{msg meaning="NoBugs.variables" desc="--"}Variables{/msg}</div>
 	  	<div class="move-panel">
 	  		<a id="moveDown" class="move-down" href="javascript:void(0)"></a>
 	  		<a id="moveRight" class="move-right" style="display:none" href="javascript:void(0)"></a>
 	  	</div>
+  	</div>
+  	<div class="var-content">
+  	<table id="vars" class="easyui-datagrid" data-options="singleSelect:true">
+		<thead>
+			<tr>
+				<th data-options="field:'name', width:50">{msg meaning="NoBugs.varname" desc="--"}Name{/msg}</th>
+				<th data-options="field:'value', width: 100">{msg meaning="NoBugs.varvalue" desc="--"}Value{/msg}</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
   	</div>
   </div>
 

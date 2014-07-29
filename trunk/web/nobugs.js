@@ -52,6 +52,7 @@ Game.pidList = [];
 
 
 Game.lastErrorData;
+Game.jsInterpreter;
 
 /**
  * Initialize Blockly and SnackBar. Called on page load.
@@ -84,7 +85,7 @@ Game.init = function() {
        toolbox: toolbox,
        trashcan: true});
 
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = '  BlocklyApps.checkTimeout(%1);\n';
+  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
 
   // Add to reserved word list: API, local variables in execution environment
   // (execute) and the infinite loop detection function.
@@ -211,6 +212,40 @@ Game.init = function() {
 '</xml>';
   } else {
 	  defaultXml =
+'    <xml xmlns="http://www.w3.org/1999/xhtml">' +
+'	  <block type="controls_for" inline="true" x="116">' +
+'	    <field name="VAR">i</field>' +
+'	    <value name="FROM">' +
+'	      <block type="math_number">' +
+'	        <field name="NUM">1</field>' +
+'	      </block>' +
+'	    </value>' +
+'	    <value name="TO">' +
+'	      <block type="math_number" >' +
+'	        <field name="NUM">2</field>' +
+'	      </block>' +
+'	    </value>' +
+'	    <value name="BY">' +
+'	      <block type="math_number" >' +
+'	        <field name="NUM">1</field>' +
+'	      </block>' +
+'	    </value>' +
+'       <statement name="DO">' +
+'  <block type="move_goToCustomer">' +
+'    <value name="VALUE">' +
+'      <block type="variables_get" id="52">' +
+'                <field name="VAR">i</field>' +
+ '             </block>' +
+'    </value>' +
+'    <next>'+
+	  '  <block type="move_goToDisplay">' +
+	  '  </block>' +
+'   </next>' +
+'  </block>' +
+'       </statement>' +
+'	  </block>' +
+'	</xml>';
+		  /*
 	  '<xml>' +
 	  '  <block type="move_goToCustomer">' +
 	  '    <value name="VALUE">' +
@@ -224,6 +259,7 @@ Game.init = function() {
 	  '   </next>' +
 	  '  </block>' +
 	  '</xml>';
+	  */
   }
   
 
@@ -402,6 +438,7 @@ Game.runButtonClick = function() {
   }
   runButton.style.display = 'none';
   resetButton.style.display = 'inline';
+  document.getElementById('debugButton').style.display = 'none';
   // TODO desabilitar o botao debug
   
   Blockly.mainWorkspace.traceOn(true);
@@ -427,6 +464,7 @@ Game.debugButtonClick = function() {
 };
 
 Game.resetButtons = function() {
+	document.getElementById('debugButton').style.display = 'inline';
 	document.getElementById('runButton').style.display = 'inline';
 	document.getElementById('resetButton').style.display = 'none';
 	Blockly.mainWorkspace.traceOn(false); 
@@ -441,7 +479,6 @@ Game.resetButtons = function() {
 Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
-	  Game.runningStatus = debug;
 	  
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
@@ -449,8 +486,13 @@ Game.execute = function(debug) {
 	  Game.reset();
 
 	  var code = Blockly.JavaScript.workspaceToCode();
+	  
 	  try {
-	    eval(code);
+	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
+
+		// BlocklyApps.log now contains a transcript of all the user's actions.
+        Game.stepSpeed = 1000 * Math.pow(0.5, 3);
+	    
 	  } catch (e) {
 		  
 		  if (e == Infinity) { 
@@ -460,14 +502,99 @@ Game.execute = function(debug) {
 		  }
 		  
 	  }
-
-	  // BlocklyApps.log now contains a transcript of all the user's actions.
-	  Game.stepSpeed = 1000 * Math.pow(0.5, 3);
 	  
   }
-  
-  Game.pidList.push( window.setTimeout(function() {Game.animate();}, 100) );
 
+  Game.runningStatus = debug;
+  window.setTimeout(function(){Game.nextStep();},2); // nothing in callstack
+  
+};
+
+Game.updateVariables = function() {
+	
+	var totalrows = Game.jsInterpreter.variables.length;
+	var rows = [];
+	
+	Game.jsInterpreter.variables.forEach(function(entry) {
+		var data = entry.scope.properties[entry.name].data;
+		if (data) {
+			rows.push({"name":entry.name, "value": data});
+		}
+	});
+	
+	$('#vars').datagrid('loadData', {
+		"total": totalrows, "rows": rows
+	});
+};
+
+Game.nextStep = function() {
+	
+	while (true) {
+		if (Game.jsInterpreter.step()) {
+			
+			if (BlocklyApps.log.length > 0 || Game.highlightPause) {
+				
+				if (Game.runningStatus != 2 || Game.highlightPause === false)
+					BlocklyApps.log.push(['nextStep']);
+				else 
+					Game.highlightPause = false;
+				
+				window.setTimeout(function(){Game.animate();},10); // nothing in callstack 
+				return;
+			}
+			
+		} else {
+			
+			// if there isn't more lines to evaluate
+			Game.resetButtons();
+		    Blockly.mainWorkspace.highlightBlock(null);
+		    return;
+			
+		}
+	}
+};
+
+Game.initApi = function(interpreter, scope) {
+    var wrapper = function(id) {
+        id = id ? id.toString() : '';
+        return interpreter.createPrimitive(Game.highlightBlock(id));
+      };
+    
+    interpreter.setProperty(scope, 'highlightBlock',
+          interpreter.createNativeFunction(wrapper));
+
+    // Move commands
+	wrapper = function(n) {
+      return interpreter.createPrimitive(hero.goToBarCounter(n));
+    };
+    
+    interpreter.setProperty(scope, 'goToBarCounter',
+        interpreter.createNativeFunction(wrapper));
+
+	wrapper = function() {
+	      return interpreter.createPrimitive(hero.goToDisplay());
+	    };
+	    
+    interpreter.setProperty(scope, 'goToDisplay',
+        interpreter.createNativeFunction(wrapper));
+
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.goToCooler());
+	    };
+	    
+    interpreter.setProperty(scope, 'goToCooler',
+      interpreter.createNativeFunction(wrapper));
+};
+
+Game.highlightPause = false;
+
+Game.highlightBlock = function(id) {
+    Blockly.mainWorkspace.highlightBlock(id);
+	if (Game.runningStatus === 2) { // if runs, doesnt need to update the variables
+		Game.updateVariables();	
+		//BlocklyApps.log.push(['high']);
+	}
+    Game.highlightPause = true;
 };
 
 /**
@@ -477,23 +604,23 @@ Game.animate = function() {
  
   var tuple = BlocklyApps.log.shift();
   if (!tuple) {
-	Game.resetButtons();
-    Blockly.mainWorkspace.highlightBlock(null);
+	
     return;
   }
   var command = tuple.shift();
-  BlocklyApps.highlight(tuple.pop());
-  // TODO por causa do debug temos que inserir um comando especial após cada comando. assim um clique do
-  //                debug faz funcionar um conjunto de instrucoes
-    
+  
+  if (command === "nextStep") {
+	  window.setTimeout(Game.nextStep, 1);
+	  return;
+  }
   
   if (Game.step(command, tuple)) {
 
 	  // call the next animate when the animation of the last command has finished
-	  if (Game.runningStatus === 1) 
-		  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
+	  //if (Game.runningStatus === 1) 
+	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
-
+	   // TODO
 	  Game.resetButtons();
 	  Blockly.mainWorkspace.highlightBlock(null);
 	  

@@ -42,8 +42,8 @@ Blockly.JavaScript['move_goToCustomer'] = function(block) {
 	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'hero.goToBarCounter' +
-	      '(' + value + ', \'block_id_' + block.id + '\');\n';
+	  return 'highlightBlock(' +  block.id + '); \n '+
+	  		 'goToBarCounter(' + value + ');\n';
 	};
 
 Blockly.Blocks['move_goToDisplay'] = {
@@ -61,8 +61,8 @@ Blockly.Blocks['move_goToDisplay'] = {
 
 Blockly.JavaScript['move_goToDisplay'] = function(block) {
 	  // Generate JavaScript for moving to the display.
-	  return 'hero.goToDisplay' +
-	      '( \'block_id_' + block.id + '\');\n';
+	  return 'highlightBlock(' +  block.id + '); \n '+
+	  		 'goToDisplay();\n';
 	};
 
 Blockly.Blocks['move_goToCooler'] = {
@@ -80,8 +80,8 @@ Blockly.Blocks['move_goToCooler'] = {
 
 Blockly.JavaScript['move_goToCooler'] = function(block) {
 	  // Generate JavaScript for moving to the cooler.
-	  return 'hero.goToCooler' +
-	      '( \'block_id_' + block.id + '\');\n';
+	  return 'highlightBlock(' +  block.id + '); \n '+ 
+	  		 'goToCooler();\n';
 	};
 
 Blockly.Blocks['ask_isThereACustomer'] = {

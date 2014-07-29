@@ -41,6 +41,10 @@ SnackMan.prototype.createGraph = function() {
 
 SnackMan.prototype.reset = function() {
 	this.currentNode = this.snackManFinalPath[0];
+	this.img.x = this.currentNode.x;
+	this.img.y = this.currentNode.y;
+	this.img.sourceY = 0;
+	this.img.update();
 };
 
 SnackMan.prototype.draw = function(ctx) {
@@ -51,24 +55,25 @@ SnackMan.prototype.draw = function(ctx) {
 /**********************************************************/
 /**          create the commands to evaluate             */
 /**********************************************************/
-SnackMan.prototype.goToBarCounter = function(cust, id) {
+SnackMan.prototype.goToBarCounter = function(cust) {
 	
 	
-	if (cust != 2 && cust != 1) {
+	if (cust < 1 || cust > 4) {
+		//TODO id ?
 		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
 		throw false;
 	}
 	
-	this.animateSnackMan( this.snackManFinalPath[cust+1], id );
+	this.animateSnackMan( this.snackManFinalPath[cust+1] );
   
 };
 
-SnackMan.prototype.goToDisplay = function(id) {
-	this.animateSnackMan( this.snackManFinalPath[1], id );
+SnackMan.prototype.goToDisplay = function() {
+	this.animateSnackMan( this.snackManFinalPath[1] );
 };
 
-SnackMan.prototype.goToCooler = function(id) {
-	this.animateSnackMan( this.snackManFinalPath[4], id );
+SnackMan.prototype.goToCooler = function() {
+	this.animateSnackMan( this.snackManFinalPath[4] );
 };
 
 SnackMan.prototype.alert = function(txt, id) {
@@ -92,7 +97,7 @@ SnackMan.prototype.isThereACustomer = function(id) {
 	return false;
 };
 
-SnackMan.prototype.animateSnackMan = function(dest, id) {
+SnackMan.prototype.animateSnackMan = function(dest) {
 
 	var solution = this.graph.findShortestPath(this.currentNode.id, dest.id);
 	for (var i=0;i<solution.length;i++) {
@@ -100,13 +105,13 @@ SnackMan.prototype.animateSnackMan = function(dest, id) {
 		var node = this.nodes[solution[i]];
 		
 		BlocklyApps.log.push(['MS', this.currentNode.x, this.currentNode.y,
-		                      		node.x, node.y, id]);
+		                      		node.x, node.y]);
 		
 		this.currentNode = node;
 		
 		CustomerManager.update();
 	}
-	BlocklyApps.log.push(['IM', 0, id]);
+	BlocklyApps.log.push(['IM', 0]);
 
 };
 
