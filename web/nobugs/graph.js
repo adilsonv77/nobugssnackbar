@@ -1,17 +1,19 @@
+'use strict';
+
 // adapted https://github.com/andrewhayward/dijkstra
 var Graph = (function (undefined) {
 
 	var extractKeys = function (obj) {
-		var keys = [], key;
+		var keys = [], key = null;
 		for (key in obj) {
 		    Object.prototype.hasOwnProperty.call(obj,key) && keys.push(key);
 		}
 		return keys;
-	}
+	};
 
 	var sorter = function (a, b) {
 		return parseFloat (a) - parseFloat (b);
-	}
+	};
 
 	var findPaths = function (map, start, end, infinity) {
 		infinity = infinity || Infinity;
@@ -25,7 +27,7 @@ var Graph = (function (undefined) {
 			var key = "" + cost;
 			if (!open[key]) open[key] = [];
 			open[key].push(vertex);
-		}
+		};
 
 		costs[start] = 0;
 
@@ -63,7 +65,7 @@ var Graph = (function (undefined) {
 			return predecessors;
 		}
 
-	}
+	};
 
 	var extractShortest = function (predecessors, end) {
 		var nodes = [],
@@ -71,13 +73,13 @@ var Graph = (function (undefined) {
 
 		while (u) {
 			nodes.push(u);
-			predecessor = predecessors[u];
+			//predecessor = predecessors[u];
 			u = predecessors[u];
 		}
 
 		nodes.reverse();
 		return nodes;
-	}
+	};
 
 	var findShortestPath = function (map, nodes) {
 		var start = nodes.shift(),
@@ -103,7 +105,7 @@ var Graph = (function (undefined) {
 
 			start = end;
 		}
-	}
+	};
 
 	var toArray = function (list, offset) {
 		try {
@@ -115,11 +117,11 @@ var Graph = (function (undefined) {
 			}
 			return a;
 		}
-	}
+	};
 
 	var Graph = function (map) {
 		this.map = map;
-	}
+	};
 
 	Graph.prototype.findShortestPath = function (start, end) {
 		if (Object.prototype.toString.call(start) === '[object Array]') {
@@ -129,7 +131,7 @@ var Graph = (function (undefined) {
 		} else {
 			return findShortestPath(this.map, toArray(arguments));
 		}
-	}
+	};
 
 	Graph.findShortestPath = function (map, start, end) {
 		if (Object.prototype.toString.call(start) === '[object Array]') {
@@ -139,7 +141,7 @@ var Graph = (function (undefined) {
 		} else {
 			return findShortestPath(map, toArray(arguments, 1));
 		}
-	}
+	};
 
 	return Graph;
 

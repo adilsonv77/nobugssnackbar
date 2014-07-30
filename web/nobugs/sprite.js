@@ -1,4 +1,7 @@
+'use strict';
+
 // based in http://blocksjs.com/
+var Sprite = {};
 
 Sprite = function(options) {
 	this.frameIndex = 0 ;
