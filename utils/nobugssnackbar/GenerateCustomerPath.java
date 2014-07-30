@@ -26,7 +26,7 @@ public class GenerateCustomerPath {
 				int contaN = 1;
 				
 				int xd = 0, yd = 6;
-				for (int i=1; i<30; i++) {
+				for (int i=1; i<=32; i++) {
 					createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 					s.append("n" + (contaN+1) + ":{n"+(i)+":1, n"+(i+2)+":1}, ");
 					contaN++;

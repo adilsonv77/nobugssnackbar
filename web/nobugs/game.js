@@ -19,13 +19,6 @@ Game.pidList = [];
 Game.lastErrorData;
 Game.jsInterpreter;
 
-var xFunc;
-
-function addHighlightBlock(block) {
-	var s = xFunc(block);
-	return 'highlightBlock('+block.id+');\n' + s;
-};
-
 /**
  * Initialize Blockly and SnackBar. Called on page load.
  */
@@ -35,8 +28,7 @@ Game.init = function() {
   Blockly.Msg.CONTROLS_IF_MSG_THEN = "then"; // changing "do" to "then"
   // TODO how can I generalize this change ? 
   
-  xFunc = Blockly.JavaScript['variables_set'];
-  Blockly.JavaScript['variables_set'] = addHighlightBlock;
+  NoBugsJavaScript.redirect();
   
   var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
     
@@ -186,7 +178,7 @@ Game.init = function() {
 '  </block>' +
 '</xml>';
   } else {
-	  defaultXml =
+	  defaultXml =/*
 '    <xml xmlns="http://www.w3.org/1999/xhtml">' +
 '	  <block type="controls_for" inline="true" x="116">' +
 '	    <field name="VAR">i</field>' +
@@ -219,8 +211,8 @@ Game.init = function() {
 '  </block>' +
 '       </statement>' +
 '	  </block>' +
-'	</xml>';
-		  /*
+'	</xml>';*/
+		  
 	  '<xml>' +
 	  '  <block type="move_goToCustomer">' +
 	  '    <value name="VALUE">' +
@@ -234,7 +226,7 @@ Game.init = function() {
 	  '   </next>' +
 	  '  </block>' +
 	  '</xml>';
-	  */
+	  
   }
   
 
