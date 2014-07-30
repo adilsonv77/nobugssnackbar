@@ -1,3 +1,5 @@
+'use strict';
+
 var CustomerManager = {};
 var customers = [];
 

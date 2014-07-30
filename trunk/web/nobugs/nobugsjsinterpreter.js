@@ -1,3 +1,5 @@
+'use strict';
+
 NoBugsInterpreter.prototype = new Interpreter;
 NoBugsInterpreter.prototype.constructor = NoBugsInterpreter;
 NoBugsInterpreter.prototype.parent = Interpreter.prototype;

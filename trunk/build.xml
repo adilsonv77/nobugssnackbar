@@ -7,10 +7,11 @@
 	<target name="copy" depends="">
 		<description>Copy files from Blockly Project to this project</description>
 		
-		<delete dir="${dest.dir}/blocks"/>
+		<delete dir="blocks"/>
+		<delete dir="core"/>
+		<delete dir="generators"/>
+		
 		<delete dir="${dest.dir}/commons"/>
-		<delete dir="${dest.dir}/core"/>
-		<delete dir="${dest.dir}/generators"/>
 		<delete dir="${dest.dir}/media"/>
 		<delete dir="${dest.dir}/msg"/>
 		<delete dir="${dest.dir}/../_soy"/>
@@ -24,7 +25,7 @@
 			<fileset dir="${blockly.dir}/i18n"/>
 		</copy>
 		
-		<copy todir="${dest.dir}/blocks">
+		<copy todir="blocks">
 			<fileset dir="${blockly.dir}/blocks"/>
 		</copy>
 		
@@ -35,11 +36,11 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${dest.dir}/core">
+		<copy todir="core">
 			<fileset dir="${blockly.dir}/core"/>
 		</copy>
 		
-		<copy todir="${dest.dir}/generators">
+		<copy todir="generators">
 			<fileset dir="${blockly.dir}/generators" excludes="dart/">
 				<exclude name="**/dart*"/>
 			</fileset>
