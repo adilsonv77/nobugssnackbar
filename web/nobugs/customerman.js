@@ -14,7 +14,7 @@ CustomerManager.reset = function() {
 CustomerManager.update = function() {
 	if (customers.length == 0)
 		customers[0] = new Customer({
-			place: CustOpt.counter1,
+			place: CustOpt.counter[0],
 			id: "01"
 		});
 	
@@ -35,21 +35,14 @@ CustomerManager.draw = function(ctx) {
 		customers[i].draw(ctx);
 };
 
-CustomerManager.isThereACustomerCounter1 = function() {
+CustomerManager.isThereACustomerCounter = function(id) {
+	
+	id = id - 1;
 	
 	for (var i=0; i<customers.length; i++)
-		if (customers[i].currentNode.id === CustOpt.counter1)
-			return true;
+	  if (customers[i].currentNode.id === CustOpt.counter[id])
+		return true;
 	
 	return false;
 };
 
-CustomerManager.isThereACustomerCounter2 = function() {
-	
-	for (var i=0; i<customers.length; i++)
-		if (customers[i].currentNode.id === CustOpt.counter2)
-			return true;
-	
-	return false;
-	
-};
