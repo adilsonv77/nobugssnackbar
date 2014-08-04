@@ -83,18 +83,22 @@ SnackMan.prototype.alertRun = function(txt) {
 };
 
 SnackMan.prototype.isThereACustomer = function() {
+	
+	var achou = false;
+	for (var i=0; i<this.counter.length;i++)
+		if (this.currentNode.id === this.counter[i].id) {
+			achou = CustomerManager.isThereACustomerCounter(i+1);
+			break;
+		}
+	
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
 	BlocklyApps.log.push(['IM', 32]); // turn to left to find a customer in the counter
 	CustomerManager.update();
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
-	
-	for (var i=0; i<this.counter.length;i++)
-		if (this.currentNode.id === this.counter[i].id)
-			return CustomerManager.isThereACustomerCounter(i+1);
-	
-	return false;
+
+	return achou;
 };
 
 SnackMan.prototype.animateSnackMan = function(dest) {

@@ -66,8 +66,7 @@ Game.init = function() {
   };
   
   window.addEventListener('scroll', function() {
-      Game.resizeWindow(null);
-      Blockly.fireUiEvent(window, 'resize');
+      Game.doResizeWindow();
     });
   window.addEventListener('resize',  Game.resizeWindow);
   
@@ -247,8 +246,21 @@ Game.init = function() {
 	  '      </block>' +
 	  '    </value>' +
 	  '    <next>'+
-		  '  <block type="move_goToDisplay">' +
-		  '  </block>' +
+			  '<block type="controls_whileUntil" id="17" inline="false" x="111" y="58">'+
+			  '  <field name="MODE">WHILE</field>'+
+			  '  <value name="BOOL">'+
+			  '    <block type="logic_negate" id="25" inline="false">'+
+			  '      <value name="BOOL">' +
+			  '  <block type="ask_isThereACustomer">' +
+			  '  </block>' +
+			  '      </value>'+
+			  '    </block>'+
+			  '  </value>'+
+			  '  <next>'+
+			    '  <block type="move_goToDisplay">' +
+			    '  </block>' +
+		     '   </next>' +
+			  '</block>'+
 	  '   </next>' +
 	  '  </block>' +
 	  '</xml>';
@@ -318,43 +330,48 @@ Game.importPrettify = function() {
 	  script.setAttribute('type', 'text/javascript');
 	  script.setAttribute('src', 'prettify.js');
 	  document.head.appendChild(script);
-	};
-	
+};
+
+Game.doResizeWindow = function(style) {
+	if (style != undefined) {
+	  Game.variableBox.style.display = style;
+	}
+	Game.resizeWindow(null);
+    Blockly.fireUiEvent(window, 'resize');
+};
+
 Game.resizeWindow = function(e) {
 	
 	var rtl = BlocklyApps.isRtl();
 	
-	var blocklyDiv = document.getElementById('blockly'); // the Block Graphics edition area
-    var variables = document.getElementById("variableBox");
-
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
 
-	blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-    blocklyDiv.style.left = rtl ? '10px' : '380px';
+	Game.blockly.style.top = Math.max(10, top - window.pageYOffset) + 'px';
+	Game.blockly.style.left = rtl ? '10px' : '380px';
     var w = window.innerWidth;
-    if (variables.style.display === "none") {
-        blocklyDiv.style.height = "90%";
+    if (Game.variableBox.style.display === "none") {
+    	Game.blockly.style.height = "90%";
         w -= 400;
     	
     } else {
-        blocklyDiv.style.height = Game.optResize.blocklyDivH;
+    	Game.blockly.style.height = Game.optResize.blocklyDivH;
         w -= Game.optResize.blocklyDivW;
     	
-        variables.style.top = (Game.optResize.varBoxT?blocklyDiv.style.top:(blocklyDiv.offsetTop+blocklyDiv.offsetHeight+10)+"px");
+        Game.variableBox.style.top = (Game.optResize.varBoxT?Game.blockly.style.top:(Game.blockly.offsetTop+Game.blockly.offsetHeight+10)+"px");
         if (Game.optResize.varBoxT) {
-        	variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
-        	variables.style.width = "200px";
+        	Game.variableBox.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
+        	Game.variableBox.style.width = "200px";
         }
         else {
-        	variables.style.left = blocklyDiv.style.left;
-            variables.style.width =  blocklyDiv.style.width;
+        	Game.variableBox.style.left = Game.blockly.style.left;
+        	Game.variableBox.style.width =  Game.blockly.style.width;
         }
-        variables.style.height = Game.optResize.varBoxH;
+        Game.variableBox.style.height = Game.optResize.varBoxH;
         
     }
-    blocklyDiv.style.width = (w) + 'px';
-    
+    Game.blockly.style.width = (w) + 'px';
+
   };
 
 
@@ -369,8 +386,7 @@ Game.moveDownButtonClick = function() {
 		varBoxH: "20%"
 	  };
 			  
-     Game.resizeWindow(null);
-     Blockly.fireUiEvent(window, 'resize');
+     Game.doResizeWindow();
 };
 
 Game.moveRightButtonClick = function() {
@@ -384,8 +400,7 @@ Game.moveRightButtonClick = function() {
 				varBoxH: "90%"
 			  };
 			  
-     Game.resizeWindow(null);
-     Blockly.fireUiEvent(window, 'resize');
+	  Game.doResizeWindow();
 };
 	
 /**
@@ -432,17 +447,13 @@ Game.xmlButtonClick = function() {
  * Click the run button.  Start the program.
  */
 Game.runButtonClick = function() {
-  var runButton = document.getElementById('runButton');
-  var resetButton = document.getElementById('resetButton');
-  // Ensure that Reset button is at least as wide as Run button.
-  if (!resetButton.style.minWidth) {
-    resetButton.style.minWidth = runButton.offsetWidth + 'px';
-  }
-  runButton.style.display = 'none';
-  resetButton.style.display = 'inline';
-  document.getElementById('debugButton').style.display = 'none';
-  // TODO desabilitar o botao debug
+
+  Game.disableButton("runButton");
+  Game.enableButton("resetButton");
+  Game.disableButton("debugButton");
   
+  Game.doResizeWindow("none");
+    
   Blockly.mainWorkspace.traceOn(true);
   Game.execute(1);
 };
@@ -451,8 +462,24 @@ Game.runButtonClick = function() {
  * Click the reset button.  Reset the Game.
  */
 Game.resetButtonClick = function() {
+
   Game.resetButtons();
   Game.reset();
+  
+  Game.doResizeWindow("none");
+  
+};
+
+Game.enableButton = function(buttonName) {
+   var button = document.getElementById(buttonName);
+   button.disabled = "";
+   button.className = "primary";
+};
+
+Game.disableButton = function(buttonName) {
+   var button = document.getElementById(buttonName);
+   button.disabled = "disabled";
+   button.className = "notEnabled";
 };
 
 /**
@@ -460,21 +487,25 @@ Game.resetButtonClick = function() {
  */
 Game.debugButtonClick = function() {
 	 
-	// TODO mudar o status de alguma coisa para que quando clicar em Run continuará a execucao de onde parou
-	document.getElementById("variableBox").style.display = "inline";
-	$('#vars').datagrid('resize');
+	if (Game.variableBox.style.display != "inline") {
+		Game.enableButton('resetButton');
+
+		Game.doResizeWindow("inline");
+	    
+		$('#vars').datagrid('resize');
+		
+		Blockly.mainWorkspace.traceOn(true);
+	}
 	
-	Game.resizeWindow(null);
-    Blockly.fireUiEvent(window, 'resize');
-    
-	Blockly.mainWorkspace.traceOn(true); 
 	Game.execute(2);
 };
 
 Game.resetButtons = function() {
-	document.getElementById('debugButton').style.display = 'inline';
-	document.getElementById('runButton').style.display = 'inline';
-	document.getElementById('resetButton').style.display = 'none';
+	
+	Game.disableButton('resetButton');
+	Game.enableButton('debugButton');
+	Game.enableButton('runButton');
+	
 	Blockly.mainWorkspace.traceOn(false); 
 	
 	Game.runningStatus = 0;
@@ -525,7 +556,7 @@ Game.updateVariables = function() {
 	
 	Game.jsInterpreter.variables.forEach(function(entry) {
 		var data = entry.scope.properties[entry.name].data;
-		if (data) {
+		if (data != undefined) {
 			rows.push({"name":entry.name, "value": data});
 		}
 	});
@@ -604,7 +635,10 @@ Game.initApi = function(interpreter, scope) {
 Game.highlightPause = false;
 
 Game.highlightBlock = function(id) {
+	
+	BlocklyApps.log.push(['IM', 0]);
 	CustomerManager.update();
+	
     Blockly.mainWorkspace.highlightBlock(id);
 	if (Game.runningStatus === 2) { // if runs, doesnt need to update the variables
 		Game.updateVariables();	

@@ -1,7 +1,8 @@
 body {
   background-color: #fff;
   font-family: sans-serif;
-  margin-top: 0;
+  margin-top: 0px;
+  margin-left: 0px;
 }
 h1 {
   font-weight: normal;
@@ -19,8 +20,8 @@ html[dir="RTL"] .farSide {
 
 /* Buttons */
 button {
-  margin: 5px;
-  padding: 10px;
+  margin: 0px;
+  padding: 5px;
   border-radius: 4px;
   border: 1px solid #ddd;
   font-size: large;
@@ -37,8 +38,14 @@ button.secondary {
   background-color: #4d90fe;
   color: #fff;
 }
+button.notEnabled {
+  border: 1px solid #707070;
+  background-color: #707070;
+  color: #fff;
+}
 button.primary>img,
-button.secondary>img {
+button.secondary>img,
+button.notEnabled>img {
   opacity: 1;
 }
 button>img {
@@ -54,6 +61,10 @@ button:active {
 button:hover {
   box-shadow: 2px 2px 5px #888;
 }
+button.notEnabled:hover {
+	box-shadow: 0px 0px 0px ;
+}
+
 button.disabled:hover>img {
   opacity: 0.6;
 }
