@@ -97,7 +97,7 @@ Blockly.Blocks['ask_isThereACustomer'] = {
 
 Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
      
-	  return ['hero.isThereACustomer( \'block_id_' + block.id + '\')', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	  return ['isThereACustomer( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	
 	};
 
@@ -120,23 +120,4 @@ Blockly.JavaScript['ask_askForFood'] = function(block) {
 	  return 'Turtle.' + block.getFieldValue('DIR') +
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
-
-Blockly.Blocks['alert'] = {
-
-  init: function() {
-    this.setColour(160);
-   
-    this.appendValueInput('VALUE')
-        .appendField('alert');
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    
-  }
-};
-
-Blockly.JavaScript['alert'] = function(block) {
-    var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-	      Blockly.JavaScript.ORDER_NONE) || '0';
-   return 'hero.alert(' + value + ', \'block_id_' + block.id + '\');\n';
-};
 

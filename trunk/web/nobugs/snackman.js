@@ -11,7 +11,8 @@ SnackMan = function() {
 	this.mapGraph = {};
 	
 	this.createGraph();
-	this.counter = [this.snackManFinalPath[2], this.snackManFinalPath[3], this.snackManFinalPath[5], this.snackManFinalPath[6]];
+	this.counter = [this.snackManFinalPath[2], this.snackManFinalPath[3], // n21, n31, n79, n89
+	                this.snackManFinalPath[5], this.snackManFinalPath[6]];
 
 	this.currentNode = this.snackManFinalPath[0];
 	  
@@ -77,23 +78,21 @@ SnackMan.prototype.goToCooler = function() {
 	this.animateSnackMan( this.snackManFinalPath[4] );
 };
 
-SnackMan.prototype.alert = function(txt, id) {
-	BlocklyApps.log.push(['AL', txt, id]);
-};
-
 SnackMan.prototype.alertRun = function(txt) {
 	alert(txt);
 };
 
-SnackMan.prototype.isThereACustomer = function(id) {
-	BlocklyApps.log.push(['IM', 32, id]);
+SnackMan.prototype.isThereACustomer = function() {
+	BlocklyApps.log.push(['IM', 0]); // turn to front
+	CustomerManager.update();
+	BlocklyApps.log.push(['IM', 32]); // turn to left to find a customer in the counter
+	CustomerManager.update();
+	BlocklyApps.log.push(['IM', 0]); // turn to front
+	CustomerManager.update();
 	
-	if (this.currentNode.id === this.counter1 || this.currentNode.id === this.counter2 ) {
-		if (this.currentNode.id === this.counter1)
-			return CustomerManager.isThereACustomerCounter1();
-		else
-			return CustomerManager.isThereACustomerCounter2();
-	}
+	for (var i=0; i<this.counter.length;i++)
+		if (this.currentNode.id === this.counter[i].id)
+			return CustomerManager.isThereACustomerCounter(i+1);
 	
 	return false;
 };
@@ -114,10 +113,6 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 	}
 	BlocklyApps.log.push(['IM', 0]);
 
-};
-
-SnackMan.prototype.askIsThereACustomer= function() {
-	
 };
 
 SnackMan.prototype.changeSnackManImage = function(id) {

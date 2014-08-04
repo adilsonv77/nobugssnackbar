@@ -1,3 +1,29 @@
+/**
+ * NoBug's Snack Bar
+ *
+ * Copyright 2014 Adilson Vahldick.
+ * https://nobugssnackbar.googlecode.com/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * This code is based on Mazed application
+ * 
+ * @fileoverview Game management for NoBugs Snack Bar application.
+ * @author adilsonv77@gmail.com (Adilson Vahldick)
+ */
+'use strict';
 
 /**
  * Create a namespace for the application.
@@ -299,27 +325,36 @@ Game.resizeWindow = function(e) {
 	var rtl = BlocklyApps.isRtl();
 	
 	var blocklyDiv = document.getElementById('blockly'); // the Block Graphics edition area
+    var variables = document.getElementById("variableBox");
+
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
-    blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
+
+	blocklyDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
     blocklyDiv.style.left = rtl ? '10px' : '380px';
-    blocklyDiv.style.height = Game.optResize.blocklyDivH;
-    var w = window.innerWidth - Game.optResize.blocklyDivW; 
+    var w = window.innerWidth;
+    if (variables.style.display === "none") {
+        blocklyDiv.style.height = "90%";
+        w -= 400;
+    	
+    } else {
+        blocklyDiv.style.height = Game.optResize.blocklyDivH;
+        w -= Game.optResize.blocklyDivW;
+    	
+        variables.style.top = (Game.optResize.varBoxT?blocklyDiv.style.top:(blocklyDiv.offsetTop+blocklyDiv.offsetHeight+10)+"px");
+        if (Game.optResize.varBoxT) {
+        	variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
+        	variables.style.width = "200px";
+        }
+        else {
+        	variables.style.left = blocklyDiv.style.left;
+            variables.style.width =  blocklyDiv.style.width;
+        }
+        variables.style.height = Game.optResize.varBoxH;
+        
+    }
     blocklyDiv.style.width = (w) + 'px';
     
-    var variables = document.getElementById("variableBox");
-    variables.style.top = (Game.optResize.varBoxT?blocklyDiv.style.top:(blocklyDiv.offsetTop+blocklyDiv.offsetHeight+10)+"px");
-    if (Game.optResize.varBoxT) {
-    	variables.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
-    	variables.style.width = "200px";
-    }
-    else {
-    	variables.style.left = blocklyDiv.style.left;
-        variables.style.width =  blocklyDiv.style.width;
-    }
-    variables.style.height = Game.optResize.varBoxH;
-    
-    //variables.style.width = (window.innerWidth - blocklyDiv.style.width) + 'px';
   };
 
 
@@ -426,6 +461,12 @@ Game.resetButtonClick = function() {
 Game.debugButtonClick = function() {
 	 
 	// TODO mudar o status de alguma coisa para que quando clicar em Run continuará a execucao de onde parou
+	document.getElementById("variableBox").style.display = "inline";
+	$('#vars').datagrid('resize');
+	
+	Game.resizeWindow(null);
+    Blockly.fireUiEvent(window, 'resize');
+    
 	Blockly.mainWorkspace.traceOn(true); 
 	Game.execute(2);
 };
@@ -551,11 +592,19 @@ Game.initApi = function(interpreter, scope) {
 	    
     interpreter.setProperty(scope, 'goToCooler',
       interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.isThereACustomer());
+	    };
+	    
+  interpreter.setProperty(scope, 'isThereACustomer',
+    interpreter.createNativeFunction(wrapper));
 };
 
 Game.highlightPause = false;
 
 Game.highlightBlock = function(id) {
+	CustomerManager.update();
     Blockly.mainWorkspace.highlightBlock(id);
 	if (Game.runningStatus === 2) { // if runs, doesnt need to update the variables
 		Game.updateVariables();	
