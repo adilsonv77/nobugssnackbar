@@ -6,7 +6,10 @@ var Sprite = {};
 Sprite = function(options) {
 	this.frameIndex = 0 ;
     this.tickCount = 0;
-    this.ticksPerFrame = options.ticksPerFrame || 1;
+    if (options.ticksPerFrame === undefined)
+    	this.ticksPerFrame = 1;
+    else
+    	this.ticksPerFrame = options.ticksPerFrame;
     this.numberOfFrames = options.numberOfFrames || 1;
     this.horzSeq = options.horzSeq;
     

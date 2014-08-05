@@ -121,3 +121,35 @@ Blockly.JavaScript['ask_askForFood'] = function(block) {
 	      '(' + value + ', \'block_id_' + block.id + '\');\n';
 	};
 
+Blockly.Blocks['ask_askForDrink'] = {
+		  // Block for moving forward or backwards.
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "DrinkOrder");
+		    this.appendDummyInput()
+		        .appendField('askForDrink');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askForDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askForDrink'] = function(block) {
+	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['prepare_catchDrink'] = {
+		  // Block for moving forward or backwards.
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "Drinks");
+		    this.appendValueInput("VALUE")
+		        .setCheck("DrinkOrder")
+		        .appendField('catchDrink');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_catchDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['prepare_catchDrink'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	return ['catchDrink( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};

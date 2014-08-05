@@ -28,7 +28,20 @@ SnackMan = function() {
 			imgSrc : "images/$cooker.png"
 	});
 	
-
+	this.showCooler = false;
+	this.cooler = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 4,
+		horzSeq: true,
+		x: 288,
+		y: 384,
+		width: 256,
+		height: 64,
+		sourceX: 0,
+		sourceY: 0,
+		imgSrc : "images/cooler.png"
+	});
+	
 };
 
 // extracts some important information and creates the graph
@@ -46,12 +59,17 @@ SnackMan.prototype.reset = function() {
 	this.img.x = this.currentNode.x;
 	this.img.y = this.currentNode.y  - 32;
 	this.img.sourceY = 0;
-	this.img.update();
+	this.img.frameIndex = 0;
+	
+	this.cooler.sourceX = 0;
+	this.cooler.frameIndex = 0;
 };
 
 SnackMan.prototype.draw = function(ctx) {
 	
 	this.img.draw(ctx);
+	this.cooler.draw(ctx);
+	
 };
 
 /**********************************************************/
@@ -87,7 +105,7 @@ SnackMan.prototype.isThereACustomer = function() {
 	var achou = false;
 	for (var i=0; i<this.counter.length;i++)
 		if (this.currentNode.id === this.counter[i].id) {
-			achou = CustomerManager.isThereACustomerCounter(i+1);
+			achou = (CustomerManager.getCustomerCounter(i+1) != null);
 			break;
 		}
 	
@@ -99,6 +117,62 @@ SnackMan.prototype.isThereACustomer = function() {
 	CustomerManager.update();
 
 	return achou;
+};
+
+SnackMan.prototype.askForDrink = function() {
+	var achou = null;
+	for (var i=0; i<this.counter.length;i++)
+		if (this.currentNode.id === this.counter[i].id) {
+			achou = CustomerManager.getCustomerCounter(i+1);
+			break;
+		}
+	
+	if (!achou) {
+		//TODO id ?
+		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
+		throw false;
+	}
+	
+	
+	return achou.askForDrink();
+};
+
+SnackMan.prototype.catchDrink = function(order) {
+	
+	//TODO verificar se está em frente da geladeira
+	
+	if (order == null || order.qt != undefined) {
+		//TODO verificar se tem algum pedido
+		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
+		throw false;
+	}
+
+	var drink = order.type; 
+	//TODO verificar se o tipo é uma bebida
+	
+	// open the cooler three times because there are three slides
+	BlocklyApps.log.push(['OC']); 
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['OC']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['OC']);
+	CustomerManager.update();
+	
+	// close the cooler 
+	BlocklyApps.log.push(['CC']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['CC']);
+	CustomerManager.update();
+
+	BlocklyApps.log.push(['CC']);
+	CustomerManager.update();
+	
+	// TODO devolver o que foi pedido
+	return null;
+	
 };
 
 SnackMan.prototype.animateSnackMan = function(dest) {
@@ -118,6 +192,10 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 	BlocklyApps.log.push(['IM', 0]);
 
 };
+
+/**********************************************************/
+/**                    draw methods                       */
+/**********************************************************/
 
 SnackMan.prototype.changeSnackManImage = function(id) {
 	this.img.sourceY = id;
@@ -145,7 +223,28 @@ SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	Game.display();
 };
 
+SnackMan.prototype.nextOpenCoolerImage = function() {
+	
+	if (this.cooler.invert == true)
+		this.cooler.invertDirection();
 
-/**********************************************************/
-/**              execute the commands                     */
-/**********************************************************/
+	this.updateCoolerImage();
+	
+};
+
+SnackMan.prototype.nextCloseCoolerImage = function() {
+	
+	if (this.cooler.invert == false)
+		this.cooler.invertDirection();
+
+	this.updateCoolerImage();
+	
+};
+
+SnackMan.prototype.updateCoolerImage = function() {
+	this.cooler.update();
+	this.showCooler = true;
+	Game.display();
+	this.showCooler = false;
+	
+};

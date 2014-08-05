@@ -83,6 +83,7 @@ Game.init = function() {
   // (execute) and the infinite loop detection function.
   Blockly.JavaScript.addReservedWords('Game, code');
 
+  /* enabled this in future
   window.addEventListener('beforeunload', function(e) {
     if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
       e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
@@ -90,10 +91,8 @@ Game.init = function() {
     }
     return null;
   });
-
-  // Example how can assign a method to a button
-  //  BlocklyApps.bindClick('captureButton', Game.createImageLink);
-
+ */
+  
   var defaultXml = "";
   if (Game.mission === '2') {
 	  defaultXml =
@@ -251,14 +250,23 @@ Game.init = function() {
 			  '  <value name="BOOL">'+
 			  '    <block type="logic_negate" id="25" inline="false">'+
 			  '      <value name="BOOL">' +
-			  '  <block type="ask_isThereACustomer">' +
-			  '  </block>' +
+					  '  <block type="ask_isThereACustomer">' +
+					  '  </block>' +
 			  '      </value>'+
 			  '    </block>'+
 			  '  </value>'+
 			  '  <next>'+
-			    '  <block type="move_goToDisplay">' +
-			    '  </block>' +
+			  '     <block type="variables_set" inline="true">' +
+			  '        <field name="VAR">drink</field>' +
+			  '            <value name="VALUE">' +
+						  '  <block type="ask_askForDrink">' +
+						  '  </block>' +
+			  '            </value>' +
+			  '         <next>'+
+					    '  <block type="move_goToCooler">' +
+					    '  </block>' +
+  			        '   </next>' +
+			  '     </block>' +
 		     '   </next>' +
 			  '</block>'+
 	  '   </next>' +
@@ -557,6 +565,10 @@ Game.updateVariables = function() {
 	Game.jsInterpreter.variables.forEach(function(entry) {
 		var data = entry.scope.properties[entry.name].data;
 		if (data != undefined) {
+			if (data.type != undefined) {
+				data = "<p>" + data.qt + " X <img style='vertical-align: middle;' src='images/"+ data.type + ".png'/></p>";
+			}
+				
 			rows.push({"name":entry.name, "value": data});
 		}
 	});
@@ -628,8 +640,23 @@ Game.initApi = function(interpreter, scope) {
 	      return interpreter.createPrimitive(hero.isThereACustomer());
 	    };
 	    
-  interpreter.setProperty(scope, 'isThereACustomer',
-    interpreter.createNativeFunction(wrapper));
+    interpreter.setProperty(scope, 'isThereACustomer',
+      interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.askForDrink());
+	    };
+	    
+    interpreter.setProperty(scope, 'askForDrink',
+      interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.catchDrink(o));
+	    };
+	    
+    interpreter.setProperty(scope, 'catchDrink',
+	  interpreter.createNativeFunction(wrapper));
+
 };
 
 Game.highlightPause = false;
@@ -642,7 +669,6 @@ Game.highlightBlock = function(id) {
     Blockly.mainWorkspace.highlightBlock(id);
 	if (Game.runningStatus === 2) { // if runs, doesnt need to update the variables
 		Game.updateVariables();	
-		//BlocklyApps.log.push(['high']);
 	}
     Game.highlightPause = true;
 };
@@ -694,6 +720,14 @@ Game.step = function(command, values) {
   
   	case 'MS' :
   		hero.changeSnackManPosition(values.shift(), values.shift(), values.shift(), values.shift());
+  		break;
+  		
+  	case 'OC' :
+  		hero.nextOpenCoolerImage();
+  		break;
+  		
+  	case 'CC' :
+  		hero.nextCloseCoolerImage();
   		break;
   		
   	case 'fail':
