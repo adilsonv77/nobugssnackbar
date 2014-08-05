@@ -35,14 +35,14 @@ CustomerManager.draw = function(ctx) {
 		customers[i].draw(ctx);
 };
 
-CustomerManager.isThereACustomerCounter = function(id) {
+CustomerManager.getCustomerCounter = function(id) {
 	
 	id = id - 1;
 	
 	for (var i=0; i<customers.length; i++)
 	  if (customers[i].currentNode.id === CustOpt.counter[id])
-		return true;
+		return customers[i];
 	
-	return false;
+	return null;
 };
 

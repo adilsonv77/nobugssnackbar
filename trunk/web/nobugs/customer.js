@@ -153,3 +153,7 @@ Customer.prototype.draw = function(ctx) {
 	}
 		
 };
+
+Customer.prototype.askForDrink = function() {
+	return {qt:1, type:"$$coke"};
+};
