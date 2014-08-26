@@ -86,6 +86,15 @@ Blockly.HSV_SATURATION = 0.45;
 Blockly.HSV_VALUE = 0.65;
 
 /**
+ * Sprited icons and images.
+ */
+Blockly.SPRITE = {
+  width: 64,
+  height: 92,
+  url: 'media/sprites.png'
+};
+
+/**
  * Convert a hue (HSV model) into an RGB hex triplet.
  * @param {number} hue Hue on a colour wheel (0-360).
  * @return {string} RGB code, e.g. '#5ba65b'.
@@ -183,25 +192,21 @@ Blockly.localConnection_ = null;
 
 /**
  * Number of pixels the mouse must move before a drag starts.
- * @const
  */
 Blockly.DRAG_RADIUS = 5;
 
 /**
  * Maximum misalignment between connections for them to snap together.
- * @const
  */
 Blockly.SNAP_RADIUS = 20;
 
 /**
  * Delay in ms between trigger and bumping unconnected block out of alignment.
- * @const
  */
 Blockly.BUMP_DELAY = 250;
 
 /**
  * Number of characters to truncate a collapsed block to.
- * @const
  */
 Blockly.COLLAPSE_CHARS = 30;
 
@@ -217,6 +222,13 @@ Blockly.mainWorkspace = null;
  * @private
  */
 Blockly.clipboard_ = null;
+
+/**
+ * Wrapper function called when a touch mouseUp occurs during a drag operation.
+ * @type {Array.<!Array>}
+ * @private
+ */
+Blockly.onTouchUpWrapper_ = null;
 
 /**
  * Returns the dimensions of the current SVG image.
@@ -257,7 +269,7 @@ Blockly.svgResize = function() {
  */
 Blockly.onMouseDown_ = function(e) {
   Blockly.svgResize();
-  Blockly.terminateDrag_(); // In case mouse-up event was lost.
+  Blockly.terminateDrag_();  // In case mouse-up event was lost.
   Blockly.hideChaff();
   var isTargetSvg = e.target && e.target.nodeName &&
       e.target.nodeName.toLowerCase() == 'svg';
@@ -280,6 +292,15 @@ Blockly.onMouseDown_ = function(e) {
         Blockly.mainWorkspace.getMetrics();
     Blockly.mainWorkspace.startScrollX = Blockly.mainWorkspace.scrollX;
     Blockly.mainWorkspace.startScrollY = Blockly.mainWorkspace.scrollY;
+
+    // If this is a touch event then bind to the mouseup so workspace drag mode
+    // is turned off and double move events are not performed on a block.
+    // See comment in inject.js Blockly.init_ as to why mouseup events are
+    // bound to the document instead of the SVG's surface.
+    if ('mouseup' in Blockly.bindEvent_.TOUCH_MAP) {
+      Blockly.onTouchUpWrapper_ =
+          Blockly.bindEvent_(document, 'mouseup', null, Blockly.onMouseUp_);
+    }
   }
 };
 
@@ -291,6 +312,12 @@ Blockly.onMouseDown_ = function(e) {
 Blockly.onMouseUp_ = function(e) {
   Blockly.setCursorHand_(false);
   Blockly.mainWorkspace.dragMode = false;
+
+  // Unbind the touch event if it exists.
+  if (Blockly.onTouchUpWrapper_) {
+    Blockly.unbindEvent_(Blockly.onTouchUpWrapper_);
+    Blockly.onTouchUpWrapper_ = null;
+  }
 };
 
 /**
@@ -316,6 +343,7 @@ Blockly.onMouseMove_ = function(e) {
     // Move the scrollbars and the page will scroll automatically.
     Blockly.mainWorkspace.scrollbar.set(-x - metrics.contentLeft,
                                         -y - metrics.contentTop);
+    e.stopPropagation();
   }
 };
 
@@ -347,7 +375,8 @@ Blockly.onKeyDown_ = function(e) {
       e.preventDefault();
     }
   } else if (e.altKey || e.ctrlKey || e.metaKey) {
-    if (Blockly.selected && Blockly.selected.isDeletable() &&
+    if (Blockly.selected &&
+        Blockly.selected.isDeletable() && Blockly.selected.isMovable() &&
         Blockly.selected.workspace == Blockly.mainWorkspace) {
       Blockly.hideChaff();
       if (e.keyCode == 67) {
@@ -552,6 +581,11 @@ Blockly.preloadAudio_ = function() {
     sound.volume = .01;
     sound.play();
     sound.pause();
+    // iOS can only process one sound at a time.  Trying to load more than one
+    // corrupts the earlier ones.  Just load one and leave the others uncached.
+    if (goog.userAgent.IPAD || goog.userAgent.IPHONE) {
+      break;
+    }
   }
 };
 
@@ -735,7 +769,9 @@ Blockly.getMainWorkspace = function() {
 };
 
 // Export symbols that would otherwise be renamed by Closure compiler.
-window['Blockly'] = Blockly;
-Blockly['getMainWorkspace'] = Blockly.getMainWorkspace;
-Blockly['addChangeListener'] = Blockly.addChangeListener;
-Blockly['removeChangeListener'] = Blockly.removeChangeListener;
+if (!window['Blockly']) {
+  window['Blockly'] = {};
+}
+window['Blockly']['getMainWorkspace'] = Blockly.getMainWorkspace;
+window['Blockly']['addChangeListener'] = Blockly.addChangeListener;
+window['Blockly']['removeChangeListener'] = Blockly.removeChangeListener;

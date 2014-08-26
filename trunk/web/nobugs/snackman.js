@@ -14,6 +14,8 @@ SnackMan = function() {
 	this.counter = [this.snackManFinalPath[2], this.snackManFinalPath[3], // n21, n31, n79, n89
 	                this.snackManFinalPath[5], this.snackManFinalPath[6]];
 
+	this.coolerNode = this.snackManFinalPath[4];
+	
 	this.currentNode = this.snackManFinalPath[0];
 	  
 	this.img = new Sprite({
@@ -79,8 +81,7 @@ SnackMan.prototype.goToBarCounter = function(cust) {
 	
 	
 	if (cust < 1 || cust > 4) {
-		//TODO id ?
-		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
+		BlocklyApps.log.push(["fail", "Error_doesntExistCounter"]);
 		throw false;
 	}
 	
@@ -102,12 +103,19 @@ SnackMan.prototype.alertRun = function(txt) {
 
 SnackMan.prototype.isThereACustomer = function() {
 	
-	var achou = false;
+	var found = false;
+	var enter = false;
 	for (var i=0; i<this.counter.length;i++)
 		if (this.currentNode.id === this.counter[i].id) {
-			achou = (CustomerManager.getCustomerCounter(i+1) != null);
+			enter = true;
+			found = (CustomerManager.getCustomerCounter(i+1) != null);
 			break;
 		}
+	
+	if (!enter) {
+		BlocklyApps.log.push(["fail", "Error_isntCloseToCounter"]);
+		throw false;
+	}
 	
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
@@ -116,39 +124,51 @@ SnackMan.prototype.isThereACustomer = function() {
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
 
-	return achou;
+	return found;
 };
 
 SnackMan.prototype.askForDrink = function() {
-	var achou = null;
+	var found = null;
+	var enter = false;
 	for (var i=0; i<this.counter.length;i++)
 		if (this.currentNode.id === this.counter[i].id) {
-			achou = CustomerManager.getCustomerCounter(i+1);
+			enter = true;
+			found = CustomerManager.getCustomerCounter(i+1);
 			break;
 		}
 	
-	if (!achou) {
-		//TODO id ?
-		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
+	if (!enter) {
+		BlocklyApps.log.push(["fail", "Error_isntCloseToCounter"]);
 		throw false;
 	}
 	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomerToCounter"]);
+		throw false;
+	}
 	
-	return achou.askForDrink();
+	return found.askForDrink();
 };
 
 SnackMan.prototype.catchDrink = function(order) {
+
+	// is he in front of the cooler ?
+	if (this.currentNode.id != this.coolerNode.id) {
+		BlocklyApps.log.push(["fail", "Error_isntFrontCooler"]);
+		throw false;
+	}
 	
-	//TODO verificar se está em frente da geladeira
-	
-	if (order == null || order.qt != undefined) {
-		//TODO verificar se tem algum pedido
-		BlocklyApps.log.push(["fail", "Error_doesntExistCustomer", id]);
+	// does he have any order ? 
+	if (order == null || order.qt === undefined) {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
-	var drink = order.type; 
-	//TODO verificar se o tipo é uma bebida
+	// does the order have drinks ?
+	if (order.type != "drink") {
+		BlocklyApps.log.push(["fail", "Error_doesntOrderDrink"]);
+		throw false;
+	}
 	
 	// open the cooler three times because there are three slides
 	BlocklyApps.log.push(['OC']); 
@@ -170,8 +190,8 @@ SnackMan.prototype.catchDrink = function(order) {
 	BlocklyApps.log.push(['CC']);
 	CustomerManager.update();
 	
-	// TODO devolver o que foi pedido
-	return null;
+	// TODO in future version, maybe the cooler has limited stock
+	return {qt:order.qt, type: "drink", descr:order.descr}; 
 	
 };
 
@@ -246,5 +266,9 @@ SnackMan.prototype.updateCoolerImage = function() {
 	this.showCooler = true;
 	Game.display();
 	this.showCooler = false;
+	
+};
+
+SnackMan.prototype.deliver = function(item) {
 	
 };

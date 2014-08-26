@@ -1,0 +1,105 @@
+  <xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="variables_set" id="43" inline="true" x="116" y="-17">
+    <field name="VAR">i</field>
+    <value name="VALUE">
+      <block type="math_number" id="45">
+        <field name="NUM">1</field>
+      </block>
+    </value>
+    <next>
+      <block type="variables_set" id="6" inline="true">
+        <field name="VAR">sair</field>
+        <value name="VALUE">
+          <block type="logic_boolean" id="12">
+            <field name="BOOL">FALSE</field>
+          </block>
+        </value>
+        <next>
+          <block type="controls_whileUntil" id="18" inline="false">
+            <field name="MODE">WHILE</field>
+            <value name="BOOL">
+              <block type="logic_negate" id="33" inline="false">
+                <value name="BOOL">
+                  <block type="variables_get" id="38">
+                    <field name="VAR">sair</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO">
+              <block type="move_goToCustomer" id="1" inline="false">
+                <value name="VALUE">
+                  <block type="variables_get" id="52">
+                    <field name="VAR">i</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="controls_if" id="65" inline="false">
+                    <mutation else="1"></mutation>
+                    <value name="IF0">
+                      <block type="ask_isThereACustomer" id="85"></block>
+                    </value>
+                    <statement name="DO0">
+                      <block type="move_goToCooler" id="93">
+                        <next>
+                          <block type="variables_set" id="100" inline="true">
+                            <field name="VAR">sair</field>
+                            <value name="VALUE">
+                              <block type="logic_boolean" id="106">
+                                <field name="BOOL">TRUE</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <statement name="ELSE">
+                      <block type="controls_if" id="116" inline="false">
+                        <mutation else="1"></mutation>
+                        <value name="IF0">
+                          <block type="logic_compare" id="128" inline="true">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="135">
+                                <field name="VAR">i</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="137">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="variables_set" id="144" inline="true">
+                            <field name="VAR">i</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="145">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                        <statement name="ELSE">
+                          <block type="variables_set" id="150" inline="true">
+                            <field name="VAR">i</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="151">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

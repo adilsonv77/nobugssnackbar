@@ -26,7 +26,14 @@
 
 	//Errors
 	<span id="Error_infinityLoopDetected">{msg meaning="Error.infinityLoopDetected" desc="--"}Infinity loop detected by system.{/msg}</span>
-	<span id="Error_doesntExistCustomer">{msg meaning="Error.doesntExistCustomer" desc="--"}This position is invalid.{/msg}</span>
+	<span id="Error_doesntExistCounter">{msg meaning="Error.doesntExistCounter" desc="--"}This position is invalid.{/msg}</span>
+	<span id="Error_isntCloseToCounter">{msg meaning="Error.isntCloseToCounter" desc="--"}The cooker is not close to any customer.{/msg}</span>
+	<span id="Error_thereIsntCustomerToCounter">{msg meaning="Error.thereIsntCustomerToCounter" desc="--"}There isn't any customer in this position of the counter.{/msg}</span>
+	<span id="Error_isntFrontCooler">{msg meaning="Error.isntFrontCooler" desc="--"}The cooker is not in front of the cooler.{/msg}</span>
+	
+	<span id="Error_doesntHaveOrder">{msg meaning="Error.doesntHaveOrder" desc="--"}The cooker forget to request the order.{/msg}</span>
+	<span id="Error_doesntOrderDrink">{msg meaning="Error.doesntOrderDrink" desc="--"}There isn't any drink in the order.{/msg}</span>
+	
 
     // Misc text.
     <span id="NoBugs_unloadWarning">{msg meaning="NoBugs.unloadWarning" desc="alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress."}Leaving this page will result in the loss of your work.{/msg}</span>
@@ -51,6 +58,7 @@
   <script type="text/javascript" src="nobugs/sprite.js"></script>
   <script type="text/javascript" src="nobugs/nobugsjsinterpreter.js"></script>
   <script type="text/javascript" src="nobugs/nobugsblocklygeneratorjavascript.js"></script>
+  <script type="text/javascript" src="nobugs/xml.js"></script>
   
   <script type="text/javascript" src="nobugs/game.js"></script>
 
@@ -177,6 +185,8 @@
       <block type="move_goToCooler"> </block>
       <block type="ask_askForDrink"> </block>
       <block type="prepare_catchDrink"> </block>
+      
+      <block type="do_deliver"> </block>
 
     </category>
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">

@@ -1,0 +1,36 @@
+<xml>
+	<block type="move_goToCustomer">
+		<value name="VALUE">
+			<block type="math_number">
+				<field name="NUM">1</field>
+			</block>
+		</value>
+		<next>
+			<block type="controls_whileUntil" id="17" inline="false" x="111"
+				y="58">
+				<field name="MODE">WHILE</field>
+				<value name="BOOL">
+					<block type="logic_negate" id="25" inline="false">
+						<value name="BOOL">
+							<block type="ask_isThereACustomer">
+							</block>
+						</value>
+					</block>
+				</value>
+				<next>
+					<block type="variables_set" inline="true">
+						<field name="VAR">drink</field>
+						<value name="VALUE">
+							<block type="ask_askForDrink">
+							</block>
+						</value>
+						<next>
+							<block type="move_goToCooler">
+							</block>
+						</next>
+					</block>
+				</next>
+			</block>
+		</next>
+	</block>
+</xml>
