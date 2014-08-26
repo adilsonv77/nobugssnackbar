@@ -42,8 +42,7 @@ Blockly.JavaScript['move_goToCustomer'] = function(block) {
 	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'highlightBlock(' +  block.id + '); \n '+
-	  		 'goToBarCounter(' + value + ');\n';
+	  return 'goToBarCounter(' + value + ');\n';
 	};
 
 Blockly.Blocks['move_goToDisplay'] = {
@@ -61,8 +60,7 @@ Blockly.Blocks['move_goToDisplay'] = {
 
 Blockly.JavaScript['move_goToDisplay'] = function(block) {
 	  // Generate JavaScript for moving to the display.
-	  return 'highlightBlock(' +  block.id + '); \n '+
-	  		 'goToDisplay();\n';
+	  return 'goToDisplay();\n';
 	};
 
 Blockly.Blocks['move_goToCooler'] = {
@@ -80,8 +78,7 @@ Blockly.Blocks['move_goToCooler'] = {
 
 Blockly.JavaScript['move_goToCooler'] = function(block) {
 	  // Generate JavaScript for moving to the cooler.
-	  return 'highlightBlock(' +  block.id + '); \n '+ 
-	  		 'goToCooler();\n';
+	  return 'goToCooler();\n';
 	};
 
 Blockly.Blocks['ask_isThereACustomer'] = {
@@ -114,11 +111,7 @@ Blockly.Blocks['ask_askForFood'] = {
 		};
 
 Blockly.JavaScript['ask_askForFood'] = function(block) {
-	  // Generate JavaScript for moving forward or backwards.
-	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'Turtle.' + block.getFieldValue('DIR') +
-	      '(' + value + ', \'block_id_' + block.id + '\');\n';
+	  return ['askForFood( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 
 Blockly.Blocks['ask_askForDrink'] = {
@@ -153,3 +146,23 @@ Blockly.JavaScript['prepare_catchDrink'] = function(block) {
 		      Blockly.JavaScript.ORDER_NONE) || 'null';
 	return ['catchDrink( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
+
+Blockly.Blocks['do_deliver'] = {
+		  // Block for moving to a specific customer in the counter.
+		  init: function() {
+		    this.setColour(160);
+		    this.appendValueInput('VALUE')
+		        .appendField('deliver');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_deliverTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['do_deliver'] = function(block) {
+	  // Generate JavaScript for moving to a specific customer in the counter.
+	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+	  return 'deliver(' + value + ');\n';
+	};
+

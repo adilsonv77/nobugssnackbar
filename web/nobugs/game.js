@@ -51,10 +51,7 @@ Game.jsInterpreter;
 Game.init = function() {
   BlocklyApps.init();
 
-  Blockly.Msg.CONTROLS_IF_MSG_THEN = "then"; // changing "do" to "then"
-  // TODO how can I generalize this change ? 
-  
-  NoBugsJavaScript.redirect();
+  NoBugsJavaScript.redefine();
   
   var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
     
@@ -77,6 +74,7 @@ Game.init = function() {
        toolbox: toolbox,
        trashcan: true});
 
+  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
   Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
 
   // Add to reserved word list: API, local variables in execution environment
@@ -93,189 +91,7 @@ Game.init = function() {
   });
  */
   
-  var defaultXml = "";
-  if (Game.mission === '2') {
-	  defaultXml =
-  '<xml xmlns="http://www.w3.org/1999/xhtml">' +
-  '<block type="variables_set" id="43" inline="true" x="116" y="-17">' +
-   ' <field name="VAR">i</field>' +
-    '<value name="VALUE">' +
-     ' <block type="math_number" id="45">' +
-      '  <field name="NUM">1</field>' +
-      '</block>' +
-'    </value>' +
- '   <next>' +
-  '    <block type="variables_set" id="6" inline="true">' +
-   '     <field name="VAR">sair</field>' +
-    '    <value name="VALUE">' +
-     '     <block type="logic_boolean" id="12">' +
-      '      <field name="BOOL">FALSE</field>' +
-       '   </block>' +
-        '</value>' +
-'        <next>' +
- '         <block type="controls_whileUntil" id="18" inline="false">' +
-  '          <field name="MODE">WHILE</field>' +
-   '         <value name="BOOL">' +
-    '          <block type="logic_negate" id="33" inline="false">' +
-     '           <value name="BOOL">' +
-      '            <block type="variables_get" id="38">' +
-       '             <field name="VAR">sair</field>' +
-        '          </block>' +
-         '       </value>' +
-          '    </block>' +
-           ' </value>' +
-'            <statement name="DO">' +
- '             <block type="move_goToCustomer" id="1" inline="false">' +
-  '              <value name="VALUE">' +
-   '               <block type="variables_get" id="52">' +
-    '                <field name="VAR">i</field>' +
-     '             </block>' +
-      '          </value>' +
-       '         <next>' +
-        '          <block type="controls_if" id="65" inline="false">' +
-         '           <mutation else="1"></mutation>' +
-          '          <value name="IF0">' +
-           '           <block type="ask_isThereACustomer" id="85"></block>' +
-            '        </value>' +
-             '       <statement name="DO0">' +
-              '        <block type="move_goToCooler" id="93">' +
-               '         <next>' +
-                '          <block type="variables_set" id="100" inline="true">' +
-                 '           <field name="VAR">sair</field>' +
-                  '          <value name="VALUE">' +
-                   '           <block type="logic_boolean" id="106">' +
-                    '            <field name="BOOL">TRUE</field>' +
-                     '         </block>' +
-                      '      </value>' +
-                       '   </block>' +
-                        '</next>' +
-'                      </block>' +
- '                   </statement>' +
-  '                  <statement name="ELSE">' +
-   '                   <block type="controls_if" id="116" inline="false">' +
-    '                    <mutation else="1"></mutation>' +
-     '                   <value name="IF0">' +
-      '                    <block type="logic_compare" id="128" inline="true">' +
-       '                     <field name="OP">EQ</field>' +
-        '                    <value name="A">' +
-         '                     <block type="variables_get" id="135">' +
-          '                      <field name="VAR">i</field>' +
-           '                   </block>' +
-           '                 </value>' +
-            '                <value name="B">' +
-             '                 <block type="math_number" id="137">' +
-              '                  <field name="NUM">1</field>' +
-               '               </block>' +
-                '            </value>' +
-                 '         </block>' +
-                  '      </value>' +
-                   '     <statement name="DO0">' +
-                    '      <block type="variables_set" id="144" inline="true">' +
-                     '       <field name="VAR">i</field>' +
-                      '      <value name="VALUE">' +
-                       '       <block type="math_number" id="145">' +
-                        '        <field name="NUM">2</field>' +
-                         '     </block>' +
-                          '  </value>' +
-'                          </block>' +
- '                       </statement>' +
-  '                      <statement name="ELSE">' +
-   '                       <block type="variables_set" id="150" inline="true">' +
-    '                        <field name="VAR">i</field>' +
-     '                       <value name="VALUE">' +
-      '                        <block type="math_number" id="151">' +
-       '                         <field name="NUM">1</field>' +
-        '                      </block>' +
-         '                   </value>' +
-          '                </block>' +
-           '             </statement>' +
-            '          </block>' +
-             '       </statement>' +
-              '    </block>' +
-               ' </next>' +
-'              </block>' +
- '           </statement>' +
-  '        </block>' +
-   '     </next>' +
-    '  </block>' +
-'    </next>' +
-'  </block>' +
-'</xml>';
-  } else {
-	  defaultXml =/*
-'    <xml xmlns="http://www.w3.org/1999/xhtml">' +
-'	  <block type="controls_for" inline="true" x="116">' +
-'	    <field name="VAR">i</field>' +
-'	    <value name="FROM">' +
-'	      <block type="math_number">' +
-'	        <field name="NUM">1</field>' +
-'	      </block>' +
-'	    </value>' +
-'	    <value name="TO">' +
-'	      <block type="math_number" >' +
-'	        <field name="NUM">2</field>' +
-'	      </block>' +
-'	    </value>' +
-'	    <value name="BY">' +
-'	      <block type="math_number" >' +
-'	        <field name="NUM">1</field>' +
-'	      </block>' +
-'	    </value>' +
-'       <statement name="DO">' +
-'  <block type="move_goToCustomer">' +
-'    <value name="VALUE">' +
-'      <block type="variables_get" id="52">' +
-'                <field name="VAR">i</field>' +
- '             </block>' +
-'    </value>' +
-'    <next>'+
-	  '  <block type="move_goToDisplay">' +
-	  '  </block>' +
-'   </next>' +
-'  </block>' +
-'       </statement>' +
-'	  </block>' +
-'	</xml>';*/
-		  
-	  '<xml>' +
-	  '  <block type="move_goToCustomer">' +
-	  '    <value name="VALUE">' +
-	  '      <block type="math_number">' +
-	  '        <field name="NUM">1</field>' +
-	  '      </block>' +
-	  '    </value>' +
-	  '    <next>'+
-			  '<block type="controls_whileUntil" id="17" inline="false" x="111" y="58">'+
-			  '  <field name="MODE">WHILE</field>'+
-			  '  <value name="BOOL">'+
-			  '    <block type="logic_negate" id="25" inline="false">'+
-			  '      <value name="BOOL">' +
-					  '  <block type="ask_isThereACustomer">' +
-					  '  </block>' +
-			  '      </value>'+
-			  '    </block>'+
-			  '  </value>'+
-			  '  <next>'+
-			  '     <block type="variables_set" inline="true">' +
-			  '        <field name="VAR">drink</field>' +
-			  '            <value name="VALUE">' +
-						  '  <block type="ask_askForDrink">' +
-						  '  </block>' +
-			  '            </value>' +
-			  '         <next>'+
-					    '  <block type="move_goToCooler">' +
-					    '  </block>' +
-  			        '   </next>' +
-			  '     </block>' +
-		     '   </next>' +
-			  '</block>'+
-	  '   </next>' +
-	  '  </block>' +
-	  '</xml>';
-	  
-  }
-  
-
+  var defaultXml = loadXML("default.xml");
 
   BlocklyApps.loadBlocks(defaultXml);
 
@@ -532,9 +348,9 @@ Game.execute = function(debug) {
 	  // Reset the graphic.
 	  Game.reset();
 
-	  var code = Blockly.JavaScript.workspaceToCode();
 	  
 	  try {
+  	    var code = Blockly.JavaScript.workspaceToCode();
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
@@ -566,7 +382,7 @@ Game.updateVariables = function() {
 		var data = entry.scope.properties[entry.name].data;
 		if (data != undefined) {
 			if (data.type != undefined) {
-				data = "<p>" + data.qt + " X <img style='vertical-align: middle;' src='images/"+ data.type + ".png'/></p>";
+				data = "<p>" + data.qt + " X <img style='vertical-align: middle;' src='images/"+ data.descr + ".png'/></p>";
 			}
 				
 			rows.push({"name":entry.name, "value": data});
@@ -581,25 +397,32 @@ Game.updateVariables = function() {
 Game.nextStep = function() {
 	
 	while (true) {
-		if (Game.jsInterpreter.step()) {
-			
-			if (BlocklyApps.log.length > 0 || Game.highlightPause) {
+		try {
+			if (Game.jsInterpreter.step()) {
 				
-				if (Game.runningStatus != 2 || Game.highlightPause === false)
-					BlocklyApps.log.push(['nextStep']);
-				else 
-					Game.highlightPause = false;
+				if (BlocklyApps.log.length > 0 || Game.highlightPause) {
+					
+					if (Game.runningStatus != 2 || Game.highlightPause === false)
+						BlocklyApps.log.push(['nextStep']);
+					else 
+						Game.highlightPause = false;
+					
+					Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
+					return;
+				}
 				
-				Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
-				return;
+			} else {
+				
+				// if there isn't more lines to evaluate
+				Game.resetButtons();
+			    Blockly.mainWorkspace.highlightBlock(null);
+			    return;
+				
 			}
-			
-		} else {
-			
-			// if there isn't more lines to evaluate
-			Game.resetButtons();
-		    Blockly.mainWorkspace.highlightBlock(null);
-		    return;
+		} catch (ex) {
+			// when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
+			  Game.animate();
+		      return;
 			
 		}
 	}
@@ -657,6 +480,13 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'catchDrink',
 	  interpreter.createNativeFunction(wrapper));
 
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.deliver(o));
+	    };
+	    
+    interpreter.setProperty(scope, 'deliver',
+      interpreter.createNativeFunction(wrapper));
+  
 };
 
 Game.highlightPause = false;

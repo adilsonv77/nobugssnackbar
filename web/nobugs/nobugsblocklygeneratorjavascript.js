@@ -1,7 +1,8 @@
 var NoBugsJavaScript = {};
 
-NoBugsJavaScript.redirect = function() {
-	
+NoBugsJavaScript.redefine = function() {
+    Blockly.Msg.CONTROLS_IF_MSG_THEN = "then"; // changing "do" to "then"
+	  
 	NoBugsJavaScript.oldVarSet = Blockly.JavaScript['variables_set'];
     Blockly.JavaScript['variables_set'] = NoBugsJavaScript.newVarSet;
     
