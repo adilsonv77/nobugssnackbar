@@ -59,30 +59,42 @@ Sprite.prototype.invertDirection = function() {
 	this.frameIndex = (this.invert?this.numberOfFrames - 1:0);
 };
 
-Sprite.prototype.draw = function(ctx) {
+Sprite.prototype.draw = function(ctx, dw, dh) {
 
-    var numberOfFrames = this.numberOfFrames;
+	var numberOfFrames = this.numberOfFrames;
     var frameIndex = this.frameIndex;
     
-    var sx, sy, sw, sh, dw, dh;
+    var sx, sy, sw, sh; 
     if (this.horzSeq) {
+    	
     	sx = frameIndex * this.width / numberOfFrames;
     	sy = this.sourceY;
 
     	sw = this.width / numberOfFrames;
     	sh = this.height;
 
-    	dw = this.width / numberOfFrames;
-    	dh = this.height;
+    	if (dw === undefined) {
+
+    		dw = this.width / numberOfFrames;
+	    	dh = this.height;
+  		
+    	}
+    	
     } else {
+    	
     	sx = this.sourceX;
     	sy = frameIndex * this.height / numberOfFrames;
     	
     	sw = this.width;
     	sh = this.height / numberOfFrames;
     	
-    	dw = this.width;
-    	dh = this.height / numberOfFrames;
+    	if (dw === undefined) {
+    		
+	    	dw = this.width;
+	    	dh = this.height / numberOfFrames;
+  		
+    	}
+    	
     }
     
 	// Draw the animation

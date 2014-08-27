@@ -53,11 +53,12 @@ Customer = function(options) {
 	this.dest = CustOpt.nodes[options.place];
 	
 	this.place = options.place;
-	this.showDoor = true;
+
 	// if he is in the door, then he is in state = 0 else state = 7
 	this.state = (this.currentNode.id === CustOpt.customerFinalPath[0].id?0:7);
 	this.showCustomer = this.state !== 0;
-	
+	this.showDoor = !this.showCustomer;
+
 	this.log = [];
 	
 	this.img = new Sprite({
@@ -83,8 +84,16 @@ Customer = function(options) {
 		imgSrc : "images/doors.png"
 	});
 	
-	this.coin =new Image();
-	this.coin.src = "images/coin.png";
+	this.coin =new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 10,
+		horzSeq: true,
+		width: 440,
+		height: 40,
+		sourceY: 0,
+		imgSrc : "images/coin.png"
+		
+	});
 	
 	this.showCoin = false;
 
@@ -129,6 +138,26 @@ Customer.prototype.update = function() {
 			
 	// finish state: nothing to do on this moment
 	case 8: return;
+	
+	case  9: ;
+	case 10: ;
+	case 11: ;
+	case 12: ;
+	case 13: ;
+	case 14: ;
+	case 15: ;
+	case 16: ;
+	case 17: ;
+	case 18: ;
+	case 19: ;
+		     this.log.push(['UC', true]); // update coin
+			 break;
+			 
+	case 20:
+			this.showCoin = false;
+			this.state = 8;
+			return;
+			
 	}
 
 	this.state++;
@@ -145,15 +174,21 @@ Customer.prototype.animate = function() {
 			case 'MC' : 
 				this.changeCustomerPosition(tuple);
 				break;
+				
 			case 'SC' :
 				this.showCustomer = tuple.shift();
 				break;
+				
 			case 'SD' :
 				this.showDoor = tuple.shift();
 				break;
 				
 			case 'UD' :
 				this.door.update();
+				break;
+
+			case 'UC' :
+				this.coin.update();
 				break;
 		}
 		
@@ -180,14 +215,16 @@ Customer.prototype.changeCustomerPosition = function(pos) {
 
 Customer.prototype.draw = function(ctx) {
 	
-	if (this.showDoor) 	this.door.draw(ctx);
+	if (this.showDoor) {
+		this.door.draw(ctx);
+	}
 	
 	if (this.showCustomer) {
 		this.img.draw(ctx);
 	}
 		
 	if (this.showCoin) {
-		ctx.drawImage(this.coin, this.img.x, this.img.y-8, 8, 8);
+		this.coin.draw(ctx, 22, 20); 
 	}
 		
 };
@@ -208,8 +245,8 @@ Customer.prototype.deliver = function(item) {
 	
 	if (happy) {
 		this.showCoin = true;
+		this.coin.x = this.img.x+5;
+		this.coin.y = this.img.y-20;
+		this.state = 9;
 	}
-	
-	this.draw();
-	
 };

@@ -198,7 +198,14 @@ SnackMan.prototype.deliver = function(item) {
 		throw false;
 	}
 	
-	var amount = found.deliver(item.data); // also animate the customer
+	var amount = found.deliver(item.data); 
+
+	// 10 times to execute the coin animation
+	for (var i=0; i<10; i++) {
+		BlocklyApps.log.push(['IM', 0]);
+		CustomerManager.update();
+	}
+
 	if (amount == 0) {
 		
 		
