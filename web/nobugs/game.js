@@ -105,7 +105,8 @@ Game.init = function() {
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
   var mission = loadMission("mission1.xml");
-  BlocklyApps.loadBlocks(mission.childNodes[0].getElementsByTagName("xml")[0].outerHTML);
+  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+  BlocklyApps.loadBlocks(sourceXML.outerHTML);
 
 
   var loginLoaded = function(data) {
