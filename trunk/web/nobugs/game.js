@@ -33,7 +33,7 @@ var Game = {};
 Game.runningStatus = 0;
 
 var hero = new SnackMan();
-Game.mission = BlocklyApps.getStringParamFromUrl('mission', '1');
+Game.mission = null;
 
 
 /**
@@ -91,10 +91,6 @@ Game.init = function() {
   });
  */
   
-  var defaultXml = loadXML("default.xml");
-
-  BlocklyApps.loadBlocks(defaultXml);
-
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
   BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
@@ -108,8 +104,21 @@ Game.init = function() {
   
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
+  var mission = loadMission("mission1.xml");
+  BlocklyApps.loadBlocks(mission.childNodes[0].getElementsByTagName("xml")[0].outerHTML);
+
+
+  var loginLoaded = function(data) {
+      
+      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
+      Game.mission = data;
+      Game.imgBackground.src = 'images/fundo.png';	  
+  
+  };
+
   Game.imgBackground = new Image();
   Game.imgBackground.onload = function() {
+	  
 	  Game.reset();
 
 	  // Lazy-load the syntax-highlighting.
@@ -124,16 +133,7 @@ Game.init = function() {
   Game.lastErrorData.count = 0;
   Game.lastErrorData.comm = 0;
   
-  var loginLoaded = function(data) {
-      
-      Game.mission = data;
-      Game.imgBackground.src = 'images/fundo.png';	  
-  
-  };
-  
-  
-  
-  loginLoaded(1); // in the future the game must load the parameter from another place
+  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
   
 };
 
@@ -526,7 +526,7 @@ Game.animate = function() {
 	  //if (Game.runningStatus === 1) 
 	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
-	   // TODO
+	   // TODO ???
 	  Game.resetButtons();
 	  Blockly.mainWorkspace.highlightBlock(null);
 	  

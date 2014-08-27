@@ -101,21 +101,26 @@ SnackMan.prototype.alertRun = function(txt) {
 	alert(txt);
 };
 
-SnackMan.prototype.isThereACustomer = function() {
+SnackMan.prototype.getCustomer = function() {
 	
-	var found = false;
 	var enter = false;
 	for (var i=0; i<this.counter.length;i++)
 		if (this.currentNode.id === this.counter[i].id) {
 			enter = true;
-			found = (CustomerManager.getCustomerCounter(i+1) != null);
-			break;
+			return (CustomerManager.getCustomerCounter(i+1));
 		}
 	
 	if (!enter) {
-		BlocklyApps.log.push(["fail", "Error_isntCloseToCounter"]);
+		BlocklyApps.log.push(["fail", "Error_isntCloseToCustomer"]);
 		throw false;
 	}
+	
+	return null;
+};
+
+SnackMan.prototype.isThereACustomer = function() {
+	
+	var found = this.getCustomer();
 	
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
@@ -124,26 +129,15 @@ SnackMan.prototype.isThereACustomer = function() {
 	BlocklyApps.log.push(['IM', 0]); // turn to front
 	CustomerManager.update();
 
-	return found;
+	return found != null;
 };
 
 SnackMan.prototype.askForDrink = function() {
-	var found = null;
-	var enter = false;
-	for (var i=0; i<this.counter.length;i++)
-		if (this.currentNode.id === this.counter[i].id) {
-			enter = true;
-			found = CustomerManager.getCustomerCounter(i+1);
-			break;
-		}
 	
-	if (!enter) {
-		BlocklyApps.log.push(["fail", "Error_isntCloseToCounter"]);
-		throw false;
-	}
+	var found = this.getCustomer();
 	
 	if (!found) {
-		BlocklyApps.log.push(["fail", "Error_thereIsntCustomerToCounter"]);
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
 		throw false;
 	}
 	
@@ -159,13 +153,13 @@ SnackMan.prototype.catchDrink = function(order) {
 	}
 	
 	// does he have any order ? 
-	if (order == null || order.qt === undefined) {
+	if (order.data == null || order.data.qt === undefined) {
 		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
 	// does the order have drinks ?
-	if (order.type != "drink") {
+	if (order.data.type != "drink") {
 		BlocklyApps.log.push(["fail", "Error_doesntOrderDrink"]);
 		throw false;
 	}
@@ -191,7 +185,27 @@ SnackMan.prototype.catchDrink = function(order) {
 	CustomerManager.update();
 	
 	// TODO in future version, maybe the cooler has limited stock
-	return {qt:order.qt, type: "drink", descr:order.descr}; 
+	return {qt:order.data.qt, type: "drink", descr:order.data.descr}; 
+	
+};
+
+SnackMan.prototype.deliver = function(item) {
+	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var amount = found.deliver(item.data); // also animate the customer
+	if (amount == 0) {
+		
+		
+	} else {
+		
+		
+	}
 	
 };
 
@@ -269,6 +283,3 @@ SnackMan.prototype.updateCoolerImage = function() {
 	
 };
 
-SnackMan.prototype.deliver = function(item) {
-	
-};

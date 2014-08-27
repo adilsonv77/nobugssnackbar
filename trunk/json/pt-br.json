@@ -29,9 +29,9 @@
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",
 	
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
-	"Error.isntCloseToCounter": "N&#227;o est&#225; junto de um cliente.",
+	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",
-	"Error.thereIsntCustomerToCounter": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
+	"Error.thereIsntCustomer": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
 	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; geladeira.",
 	"Error.doesntHaveOrder": "O cozinheiro esqueceu de anotar o pedido.",
 	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido."

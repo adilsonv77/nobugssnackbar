@@ -2,7 +2,7 @@
  * NoBug's Snack Bar
  *
  * Copyright 2014 Adilson Vahldick.
- * https://meteoricsnackbar.googlecode.com/
+ * https://nobugssnackbar.googlecode.com/
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,21 +26,37 @@
 var CustomerManager = {};
 var customers = [];
 
-CustomerManager.init = function() {
-	
+CustomerManager.init = function(customers) {
+	this.optCustomers = customers;
 };
 
 CustomerManager.reset = function() {
 	customers = [];
+	
+	for (var i = 0; i < this.optCustomers.children.length; i++) {
+		var init = this.optCustomers.children[i].getElementsByTagName("init")[0].textContent.toString();
+		if (init === "door") {
+			init = CustOpt.door;
+		} else {
+			if (init.indexOf("counter") == 0) {
+				init = CustOpt.counter[parseInt(init.substring(7)) - 1];
+			}
+		}
+		var dest = this.optCustomers.children[i].getElementsByTagName("dest")[0];
+		if (dest != null) {
+			dest = dest.textContent.toString();
+			if (dest.indexOf("counter") == 0) {
+				dest = CustOpt.counter[parseInt(dest.substring(7)) - 1];
+			}
+		}
+			
+		var id = this.optCustomers.children[i].getElementsByTagName("id")[0].textContent.toString();
+		customers[i] = new Customer({init: init, place: dest, id: id});
+		
+	}
 };
 
 CustomerManager.update = function() {
-	if (customers.length == 0)
-		customers[0] = new Customer({
-			place: CustOpt.counter[0],
-			id: "01"
-		});
-	
 	for (var i = 0; i < customers.length; i++)
 		customers[i].update();
 	
