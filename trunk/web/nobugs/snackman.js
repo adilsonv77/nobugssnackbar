@@ -200,8 +200,8 @@ SnackMan.prototype.deliver = function(item) {
 	
 	var amount = found.deliver(item.data); 
 
-	// 10 times to execute the coin animation
-	for (var i=0; i<10; i++) {
+	// 11 times to execute the coin animation and erase de coin
+	for (var i=0; i<12; i++) {
 		BlocklyApps.log.push(['IM', 0]);
 		CustomerManager.update();
 	}
