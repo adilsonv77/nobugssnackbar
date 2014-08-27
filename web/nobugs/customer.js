@@ -154,7 +154,7 @@ Customer.prototype.update = function() {
 			 break;
 			 
 	case 20:
-			this.showCoin = false;
+			this.log.push(['UC', false]); // hide the coin
 			this.state = 8;
 			return;
 			
@@ -188,6 +188,7 @@ Customer.prototype.animate = function() {
 				break;
 
 			case 'UC' :
+				this.showCoin = tuple.shift();
 				this.coin.update();
 				break;
 		}
