@@ -561,6 +561,14 @@ Game.step = function(command, values) {
   		hero.nextCloseCoolerImage();
   		break;
   		
+  	case 'IP' :
+  		hero.changeImagePlatter();
+  		break;
+  		
+  	case 'IO' :
+  		hero.changeImageOriginal();
+  		break;
+  		
   	case 'fail':
   		Game.showError(values);
   		return false;
