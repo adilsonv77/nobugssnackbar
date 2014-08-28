@@ -54,8 +54,8 @@ Customer = function(options) {
 	
 	this.place = options.place;
 
-	// if he is in the door, then he is in state = 0 else state = 7
-	this.state = (this.currentNode.id === CustOpt.customerFinalPath[0].id?0:7);
+	// if he is in the door, then he is in state = 0 else state = 8
+	this.state = (this.currentNode.id === CustOpt.customerFinalPath[0].id?0:8);
 	this.showCustomer = this.state !== 0;
 	this.showDoor = !this.showCustomer;
 
@@ -73,6 +73,12 @@ Customer = function(options) {
 		imgSrc : "images/$customer" +options.id+ ".png"
     });
 	
+	if (this.state === 8)
+		this.img.update();
+	
+	this.imgCustAnger = new Image();
+	this.imgCustAnger.src = "images/$customer" +options.id+ "_anger.png";
+	
 	this.door = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 4,
@@ -84,7 +90,7 @@ Customer = function(options) {
 		imgSrc : "images/doors.png"
 	});
 	
-	this.coin =new Sprite({
+	this.coin = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 10,
 		horzSeq: true,
@@ -92,10 +98,19 @@ Customer = function(options) {
 		height: 40,
 		sourceY: 0,
 		imgSrc : "images/coin.png"
-		
 	});
-	
 	this.showCoin = false;
+	
+	this.fire = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 10,
+		horzSeq: true,
+		width: 160,
+		height: 32,
+		sourceY: 0,
+		imgSrc : "images/anger.png"
+	});
+	this.showFire = false;
 
 };
 
@@ -158,6 +173,23 @@ Customer.prototype.update = function() {
 			this.state = 8;
 			return;
 			
+	case 21: ;
+	case 22: ;
+	case 23: ;
+	case 24: ;
+	case 25: ;
+	case 26: ;
+	case 27: ;
+	case 28: ;
+	case 29: ;
+	
+	case 30: this.log.push(['UF', true]); // update fire
+			 break;
+			
+	case 31:
+			 this.log.push(['UF', false]); // hide the coin
+			 this.state = 8;
+			 return;			 
 	}
 
 	this.state++;
@@ -191,6 +223,11 @@ Customer.prototype.animate = function() {
 				this.showCoin = tuple.shift();
 				this.coin.update();
 				break;
+
+			case 'UF' :
+				this.showFire = tuple.shift();
+				this.fire.update();
+				break;
 		}
 		
 	}
@@ -221,11 +258,19 @@ Customer.prototype.draw = function(ctx) {
 	}
 	
 	if (this.showCustomer) {
-		this.img.draw(ctx);
+		if (this.showFire) {
+			ctx.drawImage(this.imgCustAnger, this.img.x, this.img.y);
+		} else {
+			this.img.draw(ctx);
+		}
 	}
 		
 	if (this.showCoin) {
 		this.coin.draw(ctx, 22, 20); 
+	} else {
+		if (this.showFire) {
+			this.fire.draw(ctx);
+		}
 	}
 		
 };
@@ -241,7 +286,6 @@ Customer.prototype.deliver = function(item) {
 	if (item.type === "drink") {
 	
 		happy = (item.descr === "$$coke") && (item.qt === 1);
-		
 	}
 	
 	if (happy) {
@@ -249,5 +293,14 @@ Customer.prototype.deliver = function(item) {
 		this.coin.x = this.img.x+5;
 		this.coin.y = this.img.y-20;
 		this.state = 9;
+	} else {
+		
+		this.showFire = true;
+		this.fire.x = this.img.x+8;
+		this.fire.y = this.img.y-32;
+		this.state = 21;
+		
 	}
+	
+	return 0;
 };
