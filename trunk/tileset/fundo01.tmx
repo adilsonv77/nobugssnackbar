@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="15" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="wizardofoza_by_nicnubill-d6pr1v6" tilewidth="32" tileheight="32">
+  <image source="wizardofoza_by_nicnubill-d6pr1v6.png" width="256" height="512"/>
+ </tileset>
+ <tileset firstgid="129" name="portas" tilewidth="32" tileheight="32">
+  <image source="portas.png" width="64" height="256"/>
+ </tileset>
+ <tileset firstgid="145" name="janela" tilewidth="32" tileheight="32">
+  <image source="janela.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="149" name="parede" tilewidth="32" tileheight="32">
+  <image source="parede.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="150" name="piso" tilewidth="32" tileheight="32">
+  <image source="piso.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="151" name="banco" tilewidth="32" tileheight="32">
+  <image source="banco.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="152" name="cadeiras" tilewidth="32" tileheight="32">
+  <image source="cadeiras.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="156" name="mesa" tilewidth="32" tileheight="32">
+  <image source="mesa.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="160" name="$cookerwom" tilewidth="32" tileheight="32">
+  <image source="$cookerwom.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="172" name="$cooker" tilewidth="32" tileheight="32">
+  <image source="$cooker.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="184" name="$customer01" tilewidth="32" tileheight="32">
+  <image source="$customer01.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="196" name="$customer02" tilewidth="32" tileheight="32">
+  <image source="$customer02.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="208" name="$customer03" tilewidth="32" tileheight="32">
+  <image source="$customer03.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="220" name="$customer04" tilewidth="32" tileheight="32">
+  <image source="$customer04.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="232" name="$customer05" tilewidth="32" tileheight="32">
+  <image source="$customer05.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="244" name="rpg_maker_tiles_by_ayene_chan-d48exyx" tilewidth="32" tileheight="32">
+  <image source="rpg_maker_tiles_by_ayene_chan-d48exyx.png" width="256" height="192"/>
+ </tileset>
+ <tileset firstgid="292" name="balcao" tilewidth="32" tileheight="32">
+  <image source="balcao.png" width="64" height="96"/>
+ </tileset>
+ <tileset firstgid="298" name="balcaocanto" tilewidth="32" tileheight="32">
+  <image source="balcaocanto.png" width="192" height="32"/>
+ </tileset>
+ <layer name="ambiente" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJybysDAMHWIYUbGUTyKRzEIAwCUahu4
+  </data>
+ </layer>
+ <layer name="balcao" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2BoAC1GBgZ9INZDorUZIXI6QFqXEbdeNTxyIKA+CPVqENCrCZQHAALiArE=
+  </data>
+ </layer>
+ <layer name="janelas" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfNAJxE5Q9EYgnkcBuBuIWKHsyEE8hgT0KRsEogAAA5kgLMw==
+  </data>
+ </layer>
+ <layer name="cadeiras" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi6YAYSeyYRfGQwC4k9mwj+SLZ3FAxeAACZmhWX
+  </data>
+ </layer>
+ <layer name="mobilia" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBjaYA4QzyWBjwzmAfF8Evgj2d5RMDgBAOtxFic=
+  </data>
+ </layer>
+ <layer name="cozinheiro" width="15" height="16" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkgTUD7QAqAQCKIACt
+  </data>
+ </layer>
+ <layer name="banquinhos" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2B4g+lDUC+xAAAe7wHG
+  </data>
+ </layer>
+ <layer name="clientes" width="15" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF1AbvkNiX6WjvYzraNQoGBwAA9O8CpQ==
+  </data>
+ </layer>
+</map>
