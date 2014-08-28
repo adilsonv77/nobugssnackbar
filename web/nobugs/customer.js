@@ -282,10 +282,12 @@ Customer.prototype.askForDrink = function() {
 Customer.prototype.deliver = function(item) {
 	
 	var happy = false;
+	var money = 0;
 	
 	if (item.type === "drink") {
 	
 		happy = (item.descr === "$$coke") && (item.qt === 1);
+		money = 2;
 	}
 	
 	if (happy) {
@@ -302,5 +304,5 @@ Customer.prototype.deliver = function(item) {
 		
 	}
 	
-	return 0;
+	return money;
 };

@@ -41,6 +41,8 @@ Game.mission = null;
  */
 Game.pidList = [];
 
+Game.money = 789;
+Game.currentlyMoney = Game.money;
 
 Game.lastErrorData;
 Game.jsInterpreter;
@@ -259,6 +261,7 @@ Game.display = function() {
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
 	hero.draw(Game.ctxDisplay);
 	CustomerManager.draw(Game.ctxDisplay);
+	showMoney(Game.money, Game.ctxDisplay);
 	
 };
 
@@ -278,7 +281,9 @@ Game.runButtonClick = function() {
   Game.disableButton("debugButton");
   
   Game.doResizeWindow("none");
-    
+  
+  Game.saveMoney();
+  
   Blockly.mainWorkspace.traceOn(true);
   Game.execute(1);
 };
@@ -319,6 +324,7 @@ Game.debugButtonClick = function() {
 	    
 		$('#vars').datagrid('resize');
 		
+  	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
 	}
 	
@@ -566,6 +572,7 @@ Game.step = function(command, values) {
   		break;
   		
   	case 'IO' :
+  		Game.money += values.shift();
   		hero.changeImageOriginal();
   		break;
   		
@@ -590,3 +597,8 @@ Game.showError = function(iderror) {
 	BlocklyApps.showDialog(content, origin, true, true, style, null);
 
 };
+
+Game.saveMoney = function() {
+	this.currentlyMoney = this.money;
+};
+

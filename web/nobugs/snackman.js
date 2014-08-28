@@ -219,16 +219,8 @@ SnackMan.prototype.deliver = function(item) {
 		CustomerManager.update();
 	}
 
-	BlocklyApps.log.push(['IO', 0]);
+	BlocklyApps.log.push(['IO', amount]);
 	CustomerManager.update();
-	
-	if (amount == 0) {
-		
-		
-	} else {
-		
-		
-	}
 	
 };
 
