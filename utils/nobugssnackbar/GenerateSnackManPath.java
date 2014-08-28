@@ -171,14 +171,32 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		
+		// do c4 ao cooler (100, 410) -> (300, 430)
+		int nC4_Cooler = contaN+1;
+		x = 100; y= 410;
+		xd = 10; yd = 1;
+		for (int i=1; i<=20; i++) {
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			if (i == 1) {
+				s.append("n" + (contaN+1) + ":{n"+(nC4)+":1, n"+(contaN+2)+":1}, ");
+			} else {
+				if (i == 20) {
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n" + (nCooler)+ ":1}, ");
+				} else
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			}
+			contaN++;
+		}
+		
+		
 		// ligacoes entre os nós principais
 		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1, n"+(nC3_Origem+19)+":1, n"+(nC4_Origem+19)+":1}, ");
 		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1 }, ");
 		s.append("n" + (nC1) + ":{n"+(nC1-1)+":1, n"+(nC1+1)+":1}, ");
 		s.append("n" + (nC2) + ":{n"+(nC2-1)+":1, n"+(nC2+1)+":1, n"+(nC2_Display+1)+":1, n"+(nC3-9)+":1}, ");
 		s.append("n" + (nC3) + ":{n"+(nC3-1)+":1, n"+(nC3+1)+":1, n"+nC3_Origem+":1}, ");
-		s.append("n" + (nC4) + ":{n"+(nC4-1)+":1, n"+nC4_Origem+":1}, ");
-		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1} ");
+		s.append("n" + (nC4) + ":{n"+(nC4-1)+":1, n"+nC4_Origem+":1, n"+nC4_Cooler+":1}, ");
+		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1, n"+(nC4_Cooler+19) + ":1} ");
 		
 		/*node = new Node(110, 370);
 		snackManFinalPath[3] = node;
