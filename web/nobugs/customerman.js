@@ -51,9 +51,26 @@ CustomerManager.reset = function() {
 		}
 			
 		var id = this.optCustomers.children[i].getElementsByTagName("id")[0].textContent.toString();
-		customers[i] = new Customer({init: init, place: dest, id: id});
+		
+		var foods = CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("foods")[0]);
+		var drinks =  CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("drinks")[0]);
+		customers[i] = new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks});
 		
 	}
+};
+
+CustomerManager.extractItems = function(list) {
+	
+	var items = [];
+	for (var j=0; j < list.children.length; j++) {
+		var item = list.children[j];
+		var theItem = item.childNodes[0].nodeValue;
+		var theQtd = item.getAttribute("qt");
+		items.push({item: theItem, qt: theQtd});
+	} 
+	
+	return items;
+	
 };
 
 CustomerManager.update = function() {

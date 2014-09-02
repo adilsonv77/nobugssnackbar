@@ -49,6 +49,12 @@ var Customer = {};
 
 Customer = function(options) {
 	
+	this.drinks = options.drinks;
+	this.dUnfulfilled = 0;
+	
+	this.foods = options.foods;
+	this.fUnfulfilled = 0;
+	
 	this.currentNode = CustOpt.nodes[options.init];
 	this.dest = CustOpt.nodes[options.place];
 	
@@ -276,7 +282,15 @@ Customer.prototype.draw = function(ctx) {
 };
 
 Customer.prototype.askForDrink = function() {
-	return {qt:1, type: "drink", descr:"$$coke"};
+	if (this.dUnfulfilled >= this.drinks.length)
+		return null;
+	
+	var d = this.drinks[this.dUnfulfilled];
+	return {qt:d.qt, type: "drink", descr:"$$" + d.item};
+};
+
+Customer.prototype.isThirsty = function() {
+	return (this.dUnfulfilled < this.drinks.length);
 };
 
 Customer.prototype.deliver = function(item) {
@@ -284,17 +298,25 @@ Customer.prototype.deliver = function(item) {
 	var happy = false;
 	var money = 0;
 	
-	if (item.type === "drink") {
+	if (item.type === "drink" && (this.dUnfulfilled < this.drinks.length)) {
+		
+		var d = this.drinks[this.dUnfulfilled];
 	
-		happy = (item.descr === "$$coke") && (item.qt === 1);
-		money = 2;
+		happy = (item.descr === "$$" + d.item) && (item.qt == d.qt);
+		if (happy) {
+			this.dUnfulfilled++;
+		
+			money = 2 * d.qt;
+		}
 	}
 	
 	if (happy) {
+		
 		this.showCoin = true;
 		this.coin.x = this.img.x+5;
 		this.coin.y = this.img.y-20;
 		this.state = 9;
+		
 	} else {
 		
 		this.showFire = true;

@@ -106,7 +106,7 @@ Game.init = function() {
   
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
-  var mission = loadMission("mission1.xml");
+  var mission = loadMission("mission0.xml");
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   BlocklyApps.loadBlocks(sourceXML.outerHTML);
 
@@ -472,6 +472,13 @@ Game.initApi = function(interpreter, scope) {
 	    
     interpreter.setProperty(scope, 'isThereACustomer',
       interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.isThirsty());
+	    };
+		    
+    interpreter.setProperty(scope, 'isThirsty',
+  	      interpreter.createNativeFunction(wrapper));
     
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.askForDrink());
