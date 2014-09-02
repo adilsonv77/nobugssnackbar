@@ -5,6 +5,12 @@
 			<id>01</id>
 			<init>door</init>
 			<dest>counter4</dest>
+			<foods>
+				<food qt="2">hotdog</food>
+			</foods>
+			<drinks>
+				<drink qt="1">coke</drink>
+			</drinks>
 		</customer>
 	</customers>
 	<xml>

@@ -202,6 +202,18 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 };
 
+SnackMan.prototype.isThirsty = function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	return found.isThirsty();
+	
+};
+
 SnackMan.prototype.deliver = function(item) {
 	
 	var found = this.getCustomer();

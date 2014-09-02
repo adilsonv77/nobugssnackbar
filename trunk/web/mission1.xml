@@ -5,6 +5,8 @@
 			<id>01</id>
 			<init>counter4</init>
 			<dest>counter4</dest>
+			<foods></foods>
+			<drinks></drinks>
 		</customer>
 	</customers>
 	<xml>

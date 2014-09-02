@@ -100,7 +100,6 @@ Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
 
 	
 Blockly.Blocks['ask_askForFood'] = {
-		  // Block for moving forward or backwards.
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true);
@@ -111,11 +110,10 @@ Blockly.Blocks['ask_askForFood'] = {
 		};
 
 Blockly.JavaScript['ask_askForFood'] = function(block) {
-	  return ['askForFood( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	  return ['askForFood()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 
 Blockly.Blocks['ask_askForDrink'] = {
-		  // Block for moving forward or backwards.
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true, "DrinkOrder");
@@ -129,8 +127,22 @@ Blockly.JavaScript['ask_askForDrink'] = function(block) {
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['ask_isThirsty'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askIsThirsty');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askIsThirstyTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_isThirsty'] = function(block) {
+	return ['isThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+
 Blockly.Blocks['prepare_catchDrink'] = {
-		  // Block for moving forward or backwards.
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true, "Drinks");
@@ -148,7 +160,6 @@ Blockly.JavaScript['prepare_catchDrink'] = function(block) {
 };
 
 Blockly.Blocks['do_deliver'] = {
-		  // Block for moving to a specific customer in the counter.
 		  init: function() {
 		    this.setColour(160);
 		    this.appendValueInput('VALUE')
@@ -160,7 +171,6 @@ Blockly.Blocks['do_deliver'] = {
 		};
 
 Blockly.JavaScript['do_deliver'] = function(block) {
-	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
 	  return 'deliver(' + value + ');\n';
