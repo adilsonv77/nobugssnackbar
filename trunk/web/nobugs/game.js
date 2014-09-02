@@ -474,10 +474,31 @@ Game.initApi = function(interpreter, scope) {
       interpreter.createNativeFunction(wrapper));
     
     wrapper = function() {
-	      return interpreter.createPrimitive(hero.isThirsty());
+	      return interpreter.createPrimitive(hero.hasHunger());
 	    };
 		    
-    interpreter.setProperty(scope, 'isThirsty',
+  interpreter.setProperty(scope, 'hasHunger',
+	      interpreter.createNativeFunction(wrapper));
+  
+  wrapper = function() {
+      return interpreter.createPrimitive(hero.askForFood());
+    };
+    
+   interpreter.setProperty(scope, 'askForFood',
+     interpreter.createNativeFunction(wrapper));
+
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.catchFood(o));
+	    };
+	    
+    interpreter.setProperty(scope, 'catchFood',
+	  interpreter.createNativeFunction(wrapper));
+
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.hasThirsty());
+	    };
+		    
+    interpreter.setProperty(scope, 'hasThirsty',
   	      interpreter.createNativeFunction(wrapper));
     
     wrapper = function() {
@@ -574,7 +595,15 @@ Game.step = function(command, values) {
   		hero.nextCloseCoolerImage();
   		break;
   		
-  	case 'IP' :
+  	case 'OD' :
+  		hero.nextOpenDisplayImage();
+  		break;
+  		
+  	case 'CD' :
+  		hero.nextCloseDisplayImage();
+  		break;
+  		
+ 	case 'IP' :
   		hero.changeImagePlatter();
   		break;
   		

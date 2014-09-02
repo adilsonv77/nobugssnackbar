@@ -20,6 +20,7 @@ SnackMan = function() {
 	                this.snackManFinalPath[5], this.snackManFinalPath[6]];
 
 	this.coolerNode = this.snackManFinalPath[4];
+	this.displayNode = this.snackManFinalPath[1];
 	
 	this.currentNode = this.snackManFinalPath[0];
 	  
@@ -54,6 +55,20 @@ SnackMan = function() {
 		imgSrc : "images/cooler.png"
 	});
 	
+	this.showDisplay = false;
+	this.display = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 4,
+		horzSeq: true,
+		x: 160,
+		y: 256,
+		width: 128,
+		height: 32,
+		sourceX: 0,
+		sourceY: 0,
+		imgSrc : "images/display.png"
+	});
+	
 };
 
 // extracts some important information and creates the graph
@@ -79,6 +94,7 @@ SnackMan.prototype.reset = function() {
 
 SnackMan.prototype.draw = function(ctx) {
 	
+	this.display.draw(ctx);
 	this.img.draw(ctx);
 	this.cooler.draw(ctx);
 	
@@ -202,7 +218,7 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 };
 
-SnackMan.prototype.isThirsty = function() {
+SnackMan.prototype.hasThirsty = function() {
 	var found = this.getCustomer();
 	
 	if (!found) {
@@ -210,9 +226,82 @@ SnackMan.prototype.isThirsty = function() {
 		throw false;
 	}
 	
-	return found.isThirsty();
+	return found.hasThirsty();
 	
 };
+
+SnackMan.prototype.askForFood = function() {
+	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	return found.askForFood();
+};
+
+SnackMan.prototype.hasHunger = function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	return found.hasHunger();
+	
+};
+
+SnackMan.prototype.catchFood = function(order) {
+
+	// is he in front of the display ?
+	if (this.currentNode.id != this.displayNode.id) {
+		BlocklyApps.log.push(["fail", "Error_isntFrontDisplay"]);
+		throw false;
+	}
+	
+	// does he have any order ? 
+	if (order.data == null || order.data.qt === undefined) {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
+		throw false;
+	}
+
+	// does the order have food ?
+	if (order.data.type != "food") {
+		BlocklyApps.log.push(["fail", "Error_doesntOrderFood"]);
+		throw false;
+	}
+	
+	// open the display three times because there are three slides
+	BlocklyApps.log.push(['OD']); 
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['OD']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['OD']);
+	CustomerManager.update();
+	
+	// close the display 
+	BlocklyApps.log.push(['CD']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['CD']);
+	CustomerManager.update();
+
+	BlocklyApps.log.push(['CD']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['IP']);
+	
+	
+	// TODO in future version, maybe the display has limited stock
+	return {qt:order.data.qt, type: "food", descr:order.data.descr}; 
+	
+};
+
 
 SnackMan.prototype.deliver = function(item) {
 	
@@ -307,6 +396,32 @@ SnackMan.prototype.updateCoolerImage = function() {
 	this.showCooler = true;
 	Game.display();
 	this.showCooler = false;
+	
+};
+
+SnackMan.prototype.nextOpenDisplayImage = function() {
+	
+	if (this.display.invert == true)
+		this.display.invertDirection();
+
+	this.updateDisplayImage();
+	
+};
+
+SnackMan.prototype.nextCloseDisplayImage = function() {
+	
+	if (this.display.invert == false)
+		this.display.invertDirection();
+
+	this.updateDisplayImage();
+	
+};
+
+SnackMan.prototype.updateDisplayImage = function() {
+	this.display.update();
+	this.showDisplay = true;
+	Game.display();
+	this.showDisplay = false;
 	
 };
 

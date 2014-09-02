@@ -4,12 +4,12 @@
 		<customer>
 			<id>01</id>
 			<init>door</init>
-			<dest>counter4</dest>
+			<dest>counter1</dest>
 			<foods>
-				<food qt="2">hotdog</food>
+				<food qt="2" price="1">hotdog</food>
 			</foods>
 			<drinks>
-				<drink qt="1">coke</drink>
+				<drink qt="1" price="1">coke</drink>
 			</drinks>
 		</customer>
 	</customers>
@@ -17,7 +17,7 @@
 		<block type="move_goToCustomer">
 			<value name="VALUE">
 				<block type="math_number">
-					<field name="NUM">2</field>
+					<field name="NUM">1</field>
 				</block>
 			</value>
 			<next>
@@ -33,21 +33,21 @@
 					</value>
 					<next>
 						<block type="variables_set" inline="true">
-							<field name="VAR">orderDrink</field>
+							<field name="VAR">orderFood</field>
 							<value name="VALUE">
-								<block type="ask_askForDrink">
+								<block type="ask_askForFood">
 								</block>
 							</value>
 							<next>
-								<block type="move_goToCooler">
+								<block type="move_goToDisplay">
 									<next>
 										<block type="variables_set" inline="true">
-											<field name="VAR">drink</field>
+											<field name="VAR">food</field>
 											<value name="VALUE">
-												<block type="prepare_catchDrink">
+												<block type="prepare_catchFood">
 													<value name="VALUE">
 														<block type="variables_get">
-															<field name="VAR">orderDrink</field>
+															<field name="VAR">orderFood</field>
 														</block>
 													</value>
 												</block>
@@ -63,7 +63,7 @@
 														<block type="do_deliver">
 															<value name="VALUE">
 																<block type="variables_get">
-																	<field name="VAR">drink</field>
+																	<field name="VAR">food</field>
 																</block>
 															</value>
 														</block>

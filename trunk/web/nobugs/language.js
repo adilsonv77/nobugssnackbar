@@ -127,18 +127,49 @@ Blockly.JavaScript['ask_askForDrink'] = function(block) {
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Blocks['ask_isThirsty'] = {
+Blockly.Blocks['ask_hasThirsty'] = {
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true);
 		    this.appendDummyInput()
-		        .appendField('askIsThirsty');
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askIsThirstyTooltip'));
+		        .appendField('askHasThirsty');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askHasThirstyTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['ask_isThirsty'] = function(block) {
-	return ['isThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+Blockly.JavaScript['ask_hasThirsty'] = function(block) {
+	return ['hasThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['ask_hasHunger'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askHasHunger');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askHasHungerTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_hasHunger'] = function(block) {
+	return ['hasHunger( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['prepare_catchFood'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "Foods");
+		    this.appendValueInput("VALUE")
+		        .setCheck("FoodOrder")
+		        .appendField('catchFood');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_catchFoodTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['prepare_catchFood'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	return ['catchFood( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 

@@ -66,7 +66,8 @@ CustomerManager.extractItems = function(list) {
 		var item = list.children[j];
 		var theItem = item.childNodes[0].nodeValue;
 		var theQtd = item.getAttribute("qt");
-		items.push({item: theItem, qt: theQtd});
+		var thePrice = item.getAttribute("price");
+		items.push({item: theItem, qt: theQtd, price: thePrice});
 	} 
 	
 	return items;
