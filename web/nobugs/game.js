@@ -126,7 +126,9 @@ Game.init = function() {
 
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
-	
+	  
+	  Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  
   };
   
   Game.imgDoor = new Image();
@@ -634,6 +636,100 @@ Game.showError = function(iderror) {
 
 };
 
+Game.showInfo = function(explanation) {
+	
+	var statement = 0;
+	var firstStatement = -1;
+	for (var i = 0; i < explanation.children.length; i++) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "statement") {
+			if (statement == 0)
+				firstStatement = i;
+			statement++;
+		}
+	}
+
+	if (firstStatement == -1) // this will happen if is something wrong in the mission's statement
+		return;
+	
+    var content = document.getElementById('dialogInfo');
+	var container = document.getElementById('dialogInfoText');
+	container.textContent = explanation.children[firstStatement].childNodes[0].nodeValue;
+	
+	var buttons = document.getElementById('dialogInfoButton');
+	if (statement == 1)
+		buttons.innerHTML = apps.ok(null, null, null);
+	else
+		buttons.innerHTML = nobugspage.nextButton(null, null, null);
+	
+	var style = {top: '120px'}; 
+	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+	  
+	Game.pageNumber = 0;
+	Game.explanation = explanation;
+	
+	BlocklyApps.showDialog(content, null, false, true, style, null);
+	
+};
+
+Game.nextStatement = function() {
+	var explanation = Game.explanation;
+	var i = Game.pageNumber + 1; Game.pageNumber = -1;
+	var hasMorePages = false;
+	for (; i < explanation.children.length; i++) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "statement") {
+			if (Game.pageNumber == -1)
+				Game.pageNumber = i;
+			else {
+				hasMorePages = true;
+				break;
+			}
+		}
+	}
+	
+	var buttons = document.getElementById('dialogInfoButton');
+	buttons.innerHTML =  nobugspage.previousButton(null, null, null);
+	if (!hasMorePages)
+		buttons.innerHTML += apps.ok(null, null, null);
+	else
+		buttons.innerHTML += nobugspage.nextButton(null, null, null);
+	
+	var container = document.getElementById('dialogInfoText');
+	container.textContent = explanation.children[Game.pageNumber].childNodes[0].nodeValue;
+
+};
+
+Game.previousStatement = function() {
+	var explanation = Game.explanation;
+	var i = Game.pageNumber - 1; Game.pageNumber = -1;
+	var hasMorePages = false;
+	for (; i >= 0; i--) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "statement") {
+			if (Game.pageNumber == -1)
+				Game.pageNumber = i;
+			else {
+				hasMorePages = true;
+				break;
+			}
+		}
+	}
+	
+	var buttons = document.getElementById('dialogInfoButton');
+	if (!hasMorePages)
+		buttons.innerHTML = "";
+	else
+		buttons.innerHTML = nobugspage.previousButton(null, null, null);
+	buttons.innerHTML += nobugspage.nextButton(null, null, null);
+	
+	if (Game.pageNumber == -1)
+		Game.pageNumber = 0;
+
+	var container = document.getElementById('dialogInfoText');
+	container.textContent = explanation.children[Game.pageNumber].childNodes[0].nodeValue;
+
+};
 Game.saveMoney = function() {
 	this.currentlyMoney = this.money;
 };

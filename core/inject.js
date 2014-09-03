@@ -274,7 +274,6 @@ Blockly.createDom_ = function(container) {
       Blockly.mainWorkspace.flyout_ = new Blockly.Flyout();
       var flyout = Blockly.mainWorkspace.flyout_;
       var flyoutSvg = flyout.createDom();
-      flyout.init(Blockly.mainWorkspace, true);
       flyout.autoClose = false;
       // Insert the flyout behind the workspace so that blocks appear on top.
       goog.dom.insertSiblingBefore(flyoutSvg, Blockly.mainWorkspace.svgGroup_);
@@ -320,8 +319,7 @@ Blockly.createDom_ = function(container) {
               }
               // Delete any block that's sitting on top of the flyout.
               if (block.isDeletable() && (Blockly.RTL ?
-                  blockXY.x - metrics.viewWidth :
-                  -blockXY.x) > MARGIN * 2) {
+                  blockXY.x - metrics.viewWidth : -blockXY.x) > MARGIN * 2) {
                 block.dispose(false, true);
               }
             }
@@ -360,8 +358,10 @@ Blockly.init_ = function() {
     Blockly.preloadAudio_();
   };
   // Android ignores any sound not loaded as a result of a user action.
-  soundBinds.push(Blockly.bindEvent_(document, 'mousemove', null, unbindSounds));
-  soundBinds.push(Blockly.bindEvent_(document, 'touchstart', null, unbindSounds));
+  soundBinds.push(
+      Blockly.bindEvent_(document, 'mousemove', null, unbindSounds));
+  soundBinds.push(
+      Blockly.bindEvent_(document, 'touchstart', null, unbindSounds));
 
   // Bind events for scrolling the workspace.
   // Most of these events should be bound to the SVG's surface.
@@ -370,7 +370,6 @@ Blockly.init_ = function() {
   // Also, 'keydown' has to be on the whole document since the browser doesn't
   // understand a concept of focus on the SVG image.
   Blockly.bindEvent_(Blockly.svg, 'mousedown', null, Blockly.onMouseDown_);
-  Blockly.bindEvent_(Blockly.svg, 'mousemove', null, Blockly.onMouseMove_);
   Blockly.bindEvent_(Blockly.svg, 'contextmenu', null, Blockly.onContextMenu_);
   Blockly.bindEvent_(Blockly.WidgetDiv.DIV, 'contextmenu', null,
                      Blockly.onContextMenu_);
@@ -398,7 +397,7 @@ Blockly.init_ = function() {
       Blockly.Toolbox.init();
     } else {
       // Build a fixed flyout with the root blocks.
-      Blockly.mainWorkspace.flyout_.init(Blockly.mainWorkspace, true);
+      Blockly.mainWorkspace.flyout_.init(Blockly.mainWorkspace);
       Blockly.mainWorkspace.flyout_.show(Blockly.languageTree.childNodes);
       // Translate the workspace sideways to avoid the fixed flyout.
       Blockly.mainWorkspace.scrollX = Blockly.mainWorkspace.flyout_.width_;
