@@ -13,6 +13,8 @@
 	"Apps.runProgram" : "Executar",
 	"Apps.resetProgram" : "Reiniciar",
 	"Apps.debugProgram" : "Passo",  
+	"Apps.dialogNext": "Pr&#243;ximo",
+	"Apps.dialogPrevious": "Anterior",
 	
 	"NoBugs.title": "NoBug's Snack Bar",
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",

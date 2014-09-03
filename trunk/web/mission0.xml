@@ -1,5 +1,22 @@
 <?xml version='1.0'?>
 <mission>
+	<explanation>
+		<page type="statement">
+		Vai entrar um cliente com fome e sede.
+		</page>
+		
+		<page type="statement">
+		Página 2.
+		</page>
+	
+		<page type="statement">
+		Página 3.
+		</page>
+	
+		<page type="hint">
+		Isso é um hint
+		</page>
+	</explanation>
 	<customers>
 		<customer>
 			<id>01</id>
