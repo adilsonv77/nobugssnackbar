@@ -17,6 +17,7 @@
 		Isso é um hint
 		</page>
 	</explanation>
+	<cooker>initial</cooker>
 	<customers>
 		<customer>
 			<id>01</id>

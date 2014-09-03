@@ -32,7 +32,7 @@ var Game = {};
 
 Game.runningStatus = 0;
 
-var hero = new SnackMan();
+var hero;
 Game.mission = null;
 
 
@@ -107,6 +107,7 @@ Game.init = function() {
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
   var mission = loadMission("mission0.xml");
+  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   BlocklyApps.loadBlocks(sourceXML.outerHTML);
 
@@ -127,7 +128,7 @@ Game.init = function() {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
 	  
-	  Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  //Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
 	  
   };
   
