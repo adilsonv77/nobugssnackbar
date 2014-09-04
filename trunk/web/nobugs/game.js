@@ -68,8 +68,12 @@ Game.init = function() {
       Game.doResizeWindow();
     });
   window.addEventListener('resize',  Game.resizeWindow);
+
+  var mission = loadMission("mission0.xml");
   
-  var toolbox = document.getElementById('toolbox'); // xml definition of the available commands
+  var toolbox = nobugspage.toolbox(null, null, 
+		  {enabled: Game.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
+  
   Blockly.inject(document.getElementById('blockly'),
       {path: '',
        rtl: rtl,
@@ -106,7 +110,6 @@ Game.init = function() {
   
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
   
-  var mission = loadMission("mission0.xml");
   hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   BlocklyApps.loadBlocks(sourceXML.outerHTML);
@@ -128,7 +131,7 @@ Game.init = function() {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
 	  
-	  //Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
 	  
   };
   
@@ -659,7 +662,7 @@ Game.showInfo = function(explanation) {
 	
 	var buttons = document.getElementById('dialogInfoButton');
 	if (statement == 1)
-		buttons.innerHTML = apps.ok(null, null, null);
+		buttons.innerHTML = nobugspage.finishButton(null, null, null);
 	else
 		buttons.innerHTML = nobugspage.nextButton(null, null, null);
 	
@@ -668,6 +671,8 @@ Game.showInfo = function(explanation) {
 	  
 	Game.pageNumber = 0;
 	Game.explanation = explanation;
+	
+	Game.hintNumber = -1;
 	
 	BlocklyApps.showDialog(content, null, false, true, style, null);
 	
@@ -692,7 +697,7 @@ Game.nextStatement = function() {
 	var buttons = document.getElementById('dialogInfoButton');
 	buttons.innerHTML =  nobugspage.previousButton(null, null, null);
 	if (!hasMorePages)
-		buttons.innerHTML += apps.ok(null, null, null);
+		buttons.innerHTML += nobugspage.finishButton(null, null, null);
 	else
 		buttons.innerHTML += nobugspage.nextButton(null, null, null);
 	
@@ -731,6 +736,64 @@ Game.previousStatement = function() {
 	container.textContent = explanation.children[Game.pageNumber].childNodes[0].nodeValue;
 
 };
+
+Game.finishStatement = function() {
+	BlocklyApps.hideDialog(false);
+	
+	var origin = null;
+	var lastHint = Game.hintNumber + 1;
+	
+	Blockly.mainWorkspace.traceOn(false);
+	
+	Game.hintNumber = -1;
+	var explanation = Game.explanation;
+	for (var i=lastHint; i<explanation.children.length; i++) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "hint") {
+			var idhint = explanation.children[i].getAttribute("id");
+			var originhint = explanation.children[i].getAttribute("origin");
+			
+			Game.hintNumber = i;
+			if (originhint === "code") {
+				origin = Blockly.mainWorkspace.topBlocks_[0].getSvgRoot();
+				
+				Blockly.mainWorkspace.traceOn(true);
+				Blockly.mainWorkspace.highlightBlock(idhint);
+			}
+			
+		}
+	}
+	
+	if (Game.hintNumber == -1)
+		return;
+		
+	var buttons = document.getElementById('dialogInfoButton');
+	buttons.innerHTML = nobugspage.finishButton(null, null, null);
+	
+	var container = document.getElementById('dialogInfoText');
+	container.textContent = explanation.children[Game.hintNumber].childNodes[0].nodeValue;
+	
+	var style = {top: '120px'}; 
+	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+	  
+	BlocklyApps.showDialog(document.getElementById('dialogInfo'), origin, true, true, style, null);
+};
+
+Game.selectCommands = function(commands) {
+	
+	var ret = {"loop": true, "logic": true, "math": true, "vars": true, "function": true };
+	var comms = commands.children;
+	for (var i=0; i < comms.length; i++) {
+		var group = comms[i];
+		var show = group.getAttribute("show");
+		if (show != null) {
+			ret[group.getAttribute("name")] = show === "true";
+		}
+	}
+		
+	return ret;
+};
+
 Game.saveMoney = function() {
 	this.currentlyMoney = this.money;
 };
