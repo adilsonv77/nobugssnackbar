@@ -25,7 +25,7 @@
 	"NoBugs.varname" : "Nome",
 	"NoBugs.varvalue" : "Valor",
 	
-	"SnackMan.goToCustomerTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
+	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
 	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",

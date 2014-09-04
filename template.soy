@@ -18,7 +18,7 @@
     // Block text and their associated tooltips and URLs (interleaved to
     // assist with translation).
     
-    <span id="SnackMan_goToCustomerTooltip">{msg meaning="SnackMan.goToCustomerTooltip" desc="--"}Moves the snack man to the customer.{/msg}</span>
+    <span id="SnackMan_goToBarCounterTooltip">{msg meaning="SnackMan.goToBarCounterTooltip" desc="--"}Moves the snack man to the customer.{/msg}</span>
     <span id="SnackMan_goToDisplayTooltip">{msg meaning="SnackMan.goToDisplayTooltip" desc="--"}Moves the snack man to the display.{/msg}</span>
     <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc="--"}Moves the snack man to the cooler.{/msg}</span>
     <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc="--"}Asks the customer about his order.{/msg}</span>
@@ -119,7 +119,7 @@
   <script type="text/javascript" src="python_compressed.js"></script>
   <script type="text/javascript" src="{$ij.langSrc}"></script>
   <script type="text/javascript" src="nobugs/language.js"></script>
-  {call .toolbox /}
+  /** {call .toolbox /} **/
   <div id="blockly"></div>
 
   <div id="variableBox" style="display:none">
@@ -171,7 +171,8 @@
 	    </tr>
 	     <tr><td></td></tr>
     </table>
-    <div id="dialogInfoButton"></div>
+    <div id="dialogInfoButton" class="farSide" style="padding: 1ex 3ex 0">
+    </div>
   </div>
   
 {/template}
@@ -182,28 +183,31 @@
 {template .toolbox}
   <xml id="toolbox" style="display: none">
     <category name="{msg meaning="SnackMan.catSnackMan" desc="--"}SnackMan{/msg}">
-      <block type="move_goToCustomer">
+      {if $ij.enabled['goToBarCounter'] == null}
+      <block type="move_goToBarCounter">
         <value name="VALUE">
           <block type="math_number">
             <field name="NUM">1</field>
           </block>
         </value>
       </block>
-      <block type="ask_isThereACustomer"> </block>
+      {/if}
+      {if $ij.enabled['isThereACustomer'] == null}<block type="ask_isThereACustomer"> </block>{/if}
 
-      <block type="ask_hasHunger"> </block>
-      <block type="ask_askForFood"> </block>
-      <block type="move_goToDisplay"> </block>
-      <block type="prepare_catchFood"> </block>
+      {if $ij.enabled['askHasHunger'] == null}<block type="ask_askHasHunger"> </block>{/if}
+      {if $ij.enabled['askForFood'] == null}<block type="ask_askForFood"> </block>{/if}
+      {if $ij.enabled['goToDisplay'] == null}<block type="move_goToDisplay"> </block>{/if}
+      {if $ij.enabled['catchFood'] == null}<block type="prepare_catchFood"> </block>{/if}
 
-      <block type="ask_hasThirsty"> </block>
-      <block type="ask_askForDrink"> </block>
-      <block type="move_goToCooler"> </block>
-      <block type="prepare_catchDrink"> </block>
+      {if $ij.enabled['askHasThirsty'] == null}<block type="ask_askHasThirsty"> </block>{/if}
+      {if $ij.enabled['askForDrink'] == null}<block type="ask_askForDrink"> </block>{/if}
+      {if $ij.enabled['goToCooler'] == null}<block type="move_goToCooler"> </block>{/if}
+      {if $ij.enabled['catchDrink'] == null}<block type="prepare_catchDrink"> </block>{/if}
       
-      <block type="do_deliver"> </block>
+      {if $ij.enabled['deliver'] == null}<block type="do_deliver"> </block>{/if}
 
     </category>
+    {if $ij.enabled['logic']}
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
@@ -211,8 +215,12 @@
       <block type="logic_negate"></block>
       <block type="logic_boolean"></block>
     </category>
+    {/if}
+    {if $ij.enabled['loop']}
     <category name="{msg meaning="Apps.catLoops" desc="--"}Loops{/msg}">
-      <block type="controls_whileUntil"></block>
+      {if $ij.enabled['whileUntil'] == null}<block type="controls_whileUntil"></block>{/if}
+      
+      {if $ij.enabled['for'] == null}
       <block type="controls_for">
         <value name="FROM">
           <block type="math_number">
@@ -230,13 +238,21 @@
           </block>
         </value>
       </block>
+      {/if}
     </category>
+    {/if}
+    {if $ij.enabled['math']}
     <category name="{msg meaning="Apps.catMath" desc="--"}Math{/msg}">
           <block type="math_number"></block>
           <block type="math_arithmetic"></block>
     </category>
+    {/if}
+    {if $ij.enabled['vars']}
     <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
+    {/if}
+    {if $ij.enabled['function']}
     <category name="{msg meaning="Apps.catProcedures" desc="IBID"}Functions{/msg}" custom="PROCEDURE"></category>
+    {/if}
   </xml>
 {/template}
 
@@ -244,22 +260,25 @@
  * Next button in information dialogs.
  */
 {template .nextButton private="true"}
-  <div class="farSide" style="padding: 1ex 3ex 0">
     <button class="secondary" onclick="Game.nextStatement()">
       {{msg meaning="Apps.dialogNext" desc="---"}}Next{{/msg}}
     </button>
-  </div>
 {/template}
  
 /**
- * Preivous button in information dialogs.
+ * Previous button in information dialogs.
  */
 {template .previousButton private="true"}
-  <div class="farSide" style="padding: 1ex 3ex 0">
     <button class="secondary" onclick="Game.previousStatement()">
       {{msg meaning="Apps.dialogPrevious" desc="---"}}Previous{{/msg}}
     </button>
-  </div>
 {/template}
  
- 
+/**
+ * Finish button in information dialogs.
+ */
+{template .finishButton private="true"}
+    <button class="secondary" onclick="Game.finishStatement()">
+      {{msg meaning="Apps.dialogOk" desc="---"}}OK{{/msg}}
+    </button>
+{/template}

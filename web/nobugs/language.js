@@ -25,7 +25,7 @@
 
 // Extensions to Blockly's language and JavaScript generator.
 
-Blockly.Blocks['move_goToCustomer'] = {
+Blockly.Blocks['move_goToBarCounter'] = {
 		  // Block for moving to a specific customer in the counter.
 		  init: function() {
 		    this.setColour(160);
@@ -34,11 +34,11 @@ Blockly.Blocks['move_goToCustomer'] = {
 		        .appendField('goToBarCounter');
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCustomerTooltip'));
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToBarCounterTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['move_goToCustomer'] = function(block) {
+Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
@@ -127,7 +127,7 @@ Blockly.JavaScript['ask_askForDrink'] = function(block) {
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Blocks['ask_hasThirsty'] = {
+Blockly.Blocks['ask_askHasThirsty'] = {
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true);
@@ -137,11 +137,11 @@ Blockly.Blocks['ask_hasThirsty'] = {
 		  }
 		};
 
-Blockly.JavaScript['ask_hasThirsty'] = function(block) {
+Blockly.JavaScript['ask_askHasThirsty'] = function(block) {
 	return ['hasThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Blocks['ask_hasHunger'] = {
+Blockly.Blocks['ask_askHasHunger'] = {
 		  init: function() {
 		    this.setColour(160);
 		    this.setOutput(true);
@@ -151,7 +151,7 @@ Blockly.Blocks['ask_hasHunger'] = {
 		  }
 		};
 
-Blockly.JavaScript['ask_hasHunger'] = function(block) {
+Blockly.JavaScript['ask_askHasHunger'] = function(block) {
 	return ['hasHunger( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 

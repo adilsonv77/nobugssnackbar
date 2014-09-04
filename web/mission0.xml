@@ -4,7 +4,7 @@
 		<page type="statement">
 		Vai entrar um cliente com fome e sede.
 		</page>
-		
+	<!-- 	
 		<page type="statement">
 		Página 2.
 		</page>
@@ -12,11 +12,17 @@
 		<page type="statement">
 		Página 3.
 		</page>
-	
-		<page type="hint">
+		<page type="hint" id="8" origin="code">
 		Isso é um hint
 		</page>
+ -->	
 	</explanation>
+	<commands>
+		<category name="logic" show="false"/>
+		<category name="function" show="false"/>
+		
+		<category name="askHasHunger" show="false"/>
+	</commands>
 	<cooker>initial</cooker>
 	<customers>
 		<customer>
@@ -32,7 +38,7 @@
 		</customer>
 	</customers>
 	<xml>
-		<block type="move_goToCustomer">
+		<block type="move_goToBarCounter" >
 			<value name="VALUE">
 				<block type="math_number">
 					<field name="NUM">1</field>
@@ -71,7 +77,7 @@
 												</block>
 											</value>
 											<next>
-												<block type="move_goToCustomer">
+												<block type="move_goToBarCounter">
 													<value name="VALUE">
 														<block type="math_number">
 															<field name="NUM">1</field>
