@@ -12,10 +12,14 @@
 		<page type="statement">
 		Página 3.
 		</page>
-		<page type="hint" id="8" origin="code">
-		Isso é um hint
-		</page>
  -->	
+		<page type="hint" origin="command" id="1#1" dir="up">
+		
+		<img src="images/help_up.png"></img> 
+		Isso é um hint
+		
+		</page>
+
 	</explanation>
 	<commands>
 		<category name="logic" show="false"/>

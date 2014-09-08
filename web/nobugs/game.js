@@ -745,6 +745,9 @@ Game.finishStatement = function() {
 	
 	Blockly.mainWorkspace.traceOn(false);
 	
+	var style = {top: '120px'}; 
+	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+	
 	Game.hintNumber = -1;
 	var explanation = Game.explanation;
 	for (var i=lastHint; i<explanation.children.length; i++) {
@@ -752,6 +755,7 @@ Game.finishStatement = function() {
 		if (type === "hint") {
 			var idhint = explanation.children[i].getAttribute("id");
 			var originhint = explanation.children[i].getAttribute("origin");
+			var dir = explanation.children[i].getAttribute("dir");
 			
 			Game.hintNumber = i;
 			if (originhint === "code") {
@@ -759,6 +763,30 @@ Game.finishStatement = function() {
 				
 				Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(idhint);
+				break;
+			} else {
+				if (originhint === "command") {
+					
+					var separator = idhint.indexOf("#");
+					var children = Blockly.Toolbox.tree_.children_;
+					var node;
+					if (separator == -1) {
+						
+						node = parseInt(idhint);
+						Blockly.Toolbox.tree_.setSelectedItem(children[node]);
+						
+					} else {
+						
+						node = parseInt(idhint.substring(0, separator));
+						Blockly.Toolbox.tree_.setSelectedItem(children[node]); // must be here because the last line in this block depends of this
+
+						var nodeItem = parseInt(idhint.substring(idhint.indexOf("#")+1));
+						origin = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[nodeItem].getSvgRoot();
+						var bbBox = BlocklyApps.getBBox_(origin);
+						style.top = bbBox.y + "px";
+						style.left = bbBox.x + "px";
+					}
+				}
 			}
 			
 		}
@@ -767,16 +795,14 @@ Game.finishStatement = function() {
 	if (Game.hintNumber == -1)
 		return;
 		
-	var buttons = document.getElementById('dialogInfoButton');
+	var buttons = document.getElementById('dialogHintButton');
 	buttons.innerHTML = nobugspage.finishButton(null, null, null);
 	
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[Game.hintNumber].childNodes[0].nodeValue;
+	var container = document.getElementById('dialogHintText');
+	container.innerHTML = explanation.children[Game.hintNumber].innerHTML;
 	
-	var style = {top: '120px'}; 
-	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 	  
-	BlocklyApps.showDialog(document.getElementById('dialogInfo'), origin, true, true, style, null);
+	BlocklyApps.showDialog(document.getElementById('dialogHint'), origin, true, true, style, null);
 };
 
 Game.selectCommands = function(commands) {
