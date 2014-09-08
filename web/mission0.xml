@@ -12,10 +12,10 @@
 		<page type="statement">
 		Página 3.
 		</page>
- -->	
-		<page type="hint" origin="command" id="1#1" dir="up">
+		<page type="hint" origin="command" id="1#1" dir="down">Hint</page>
 		
-		<img src="images/help_up.png"></img> 
+ -->	
+		<page type="hint" origin="code" id="14" dir="down">
 		Isso é um hint
 		
 		</page>

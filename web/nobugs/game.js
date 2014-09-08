@@ -743,27 +743,31 @@ Game.finishStatement = function() {
 	var origin = null;
 	var lastHint = Game.hintNumber + 1;
 	
+	var dialog = document.getElementById('dialogHint');
+	
 	Blockly.mainWorkspace.traceOn(false);
 	
 	var style = {top: '120px'}; 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 	
 	Game.hintNumber = -1;
+	var originH = 0;
+	var originW = 0;
 	var explanation = Game.explanation;
 	for (var i=lastHint; i<explanation.children.length; i++) {
 		var type = explanation.children[i].getAttribute("type");
 		if (type === "hint") {
 			var idhint = explanation.children[i].getAttribute("id");
 			var originhint = explanation.children[i].getAttribute("origin");
-			var dir = explanation.children[i].getAttribute("dir");
-			
 			Game.hintNumber = i;
+			
 			if (originhint === "code") {
-				origin = Blockly.mainWorkspace.topBlocks_[0].getSvgRoot();
+				origin = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).getSvgRoot();
+				originH = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.height;
+				originW = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.width;
 				
 				Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(idhint);
-				break;
 			} else {
 				if (originhint === "command") {
 					
@@ -782,13 +786,11 @@ Game.finishStatement = function() {
 
 						var nodeItem = parseInt(idhint.substring(idhint.indexOf("#")+1));
 						origin = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[nodeItem].getSvgRoot();
-						var bbBox = BlocklyApps.getBBox_(origin);
-						style.top = bbBox.y + "px";
-						style.left = bbBox.x + "px";
 					}
 				}
 			}
-			
+
+			break;
 		}
 	}
 	
@@ -801,8 +803,53 @@ Game.finishStatement = function() {
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = explanation.children[Game.hintNumber].innerHTML;
 	
-	  
-	BlocklyApps.showDialog(document.getElementById('dialogHint'), origin, true, true, style, null);
+	if (origin != null) {
+		
+		var dir = explanation.children[i].getAttribute("dir");
+		if (dir != null) {
+
+			var imgId = 'imgHint';
+			if (dir === "stack") {
+				imgId += "After";
+				document.getElementById('beforetd').style.display = "none";
+			} else {
+				imgId += "Before";
+				document.getElementById('aftertd').style.display = "none";
+			}
+			
+			var imgHint = document.getElementById(imgId);
+			imgHint.src = "images/help_" + dir + ".png";
+
+			var bbBox = BlocklyApps.getBBox_(origin);
+			if (originH == 0) {
+				originH = bbBox.height;
+				originW = bbBox.width;
+			}
+			switch (dir) {
+				  case "up" :
+					style.top = (bbBox.y + originH) + "px";
+					style.left = bbBox.x + "px";
+					break;
+				
+				  case "down":
+					style.top = (bbBox.y - (dialog.clientHeight + originH)) + "px";
+					style.left = bbBox.x + "px";
+					break;
+					
+				  case "run":
+					style.top = (bbBox.y - (dialog.clientHeight/2)) + "px";
+					style.left = (bbBox.x + originW) + "px";
+					break;
+					
+				  case "stack":
+					style.top = (bbBox.y - (dialog.clientHeight/2)) + "px";
+					style.left = (bbBox.x - dialog.clientWidth - 20) + "px";
+					break;
+			}
+		}
+	}
+	
+	BlocklyApps.showDialog(dialog, origin, true, true, style, null);
 };
 
 Game.selectCommands = function(commands) {
