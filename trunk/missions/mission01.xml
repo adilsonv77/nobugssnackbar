@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="statement">
+		V&#225; at&#233; 1, 3 e 4 do balc&#227;o.
+		</page>
+		<page type="hint" origin="command" id="0#0" dir="stack">
+		Arraste o comando da barra de ferramentas para a &#225;rea de programa&#231;&#227;o.
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="logic" show="false"/>
+		<category name="loop" show="false"/>
+		<category name="math" show="false"/>
+		<category name="vars" show="false"/>
+		<category name="function" show="false"/>
+		
+		<category name="goToDisplay" show="false"/>
+		<category name="goToCooler" show="false"/>
+		<category name="isThereACustomer" show="false"/>
+		<category name="askForFood" show="false"/>
+		<category name="askForDrink" show="false"/>
+		<category name="askHasThirsty" show="false"/>
+		<category name="askHasHunger" show="false"/>
+		<category name="catchFood" show="false"/>
+		<category name="catchDrink" show="false"/>
+		<category name="deliver" show="false"/>
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+	</customers>
+	<objectives>
+		<objective>counter1</objective>
+		<objective>counter3</objective>
+		<objective>counter4</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

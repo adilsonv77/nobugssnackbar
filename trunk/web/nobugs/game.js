@@ -41,7 +41,7 @@ Game.mission = null;
  */
 Game.pidList = [];
 
-Game.money = 789;
+Game.money = 0;
 Game.currentlyMoney = Game.money;
 
 Game.lastErrorData;
@@ -51,6 +51,9 @@ Game.jsInterpreter;
  * Initialize Blockly and SnackBar. Called on page load.
  */
 Game.init = function() {
+  UserControl.retrieveMoney(function(ret) {
+	  Game.money = ret;
+  });
   BlocklyApps.init();
 
   NoBugsJavaScript.redefine();
@@ -69,80 +72,88 @@ Game.init = function() {
     });
   window.addEventListener('resize',  Game.resizeWindow);
 
-  var mission = loadMission("mission0.xml");
-  
-  var toolbox = nobugspage.toolbox(null, null, 
-		  {enabled: Game.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
-  
-  Blockly.inject(document.getElementById('blockly'),
-      {path: '',
-       rtl: rtl,
-       toolbox: toolbox,
-       trashcan: true});
-
-  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
-
-  // Add to reserved word list: API, local variables in execution environment
-  // (execute) and the infinite loop detection function.
-  Blockly.JavaScript.addReservedWords('Game, code');
-
-  /* enabled this in future
-  window.addEventListener('beforeunload', function(e) {
-    if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
-      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
-      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
-    }
-    return null;
-  });
- */
-  
-  BlocklyApps.bindClick('runButton', Game.runButtonClick);
-  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
-  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
-  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
-
-  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
-  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
-  
-  Game.variableBox = document.getElementById('variableBox');
-  Game.blockly = document.getElementById('blockly');
-  
-  Game.ctxDisplay = document.getElementById('display').getContext('2d');
-  
-  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue);
-  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
-  BlocklyApps.loadBlocks(sourceXML.outerHTML);
-
-
-  var loginLoaded = function(data) {
-      
-      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
-      Game.mission = data;
-      Game.imgBackground.src = 'images/fundo.png';	  
-  
-  };
-
-  Game.imgBackground = new Image();
-  Game.imgBackground.onload = function() {
+  UserControl.loadMission(function(ret){
 	  
-	  Game.reset();
+	  var mission = transformStrToXml(ret); 
+		  
+	  var toolbox = nobugspage.toolbox(null, null, 
+			  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
+	  
+	  Blockly.inject(document.getElementById('blockly'),
+	      {path: '',
+	       rtl: rtl,
+	       toolbox: toolbox,
+	       trashcan: true});
 
-	  // Lazy-load the syntax-highlighting.
-	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
+	  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+	  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
+
+	  // Add to reserved word list: API, local variables in execution environment
+	  // (execute) and the infinite loop detection function.
+	  Blockly.JavaScript.addReservedWords('Game, code');
+
+	  /* enabled this in future
+	  window.addEventListener('beforeunload', function(e) {
+	    if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
+	      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
+	      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
+	    }
+	    return null;
+	  });
+	 */
 	  
-	  Game.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
+	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
+	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
+	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
+
+	  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  
-  };
+	  Game.variableBox = document.getElementById('variableBox');
+	  Game.blockly = document.getElementById('blockly');
+	  
+	  Game.ctxDisplay = document.getElementById('display').getContext('2d');
+	  
+	  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
+			              mission.childNodes[0].getElementsByTagName("objectives")[0].children);
+	  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+	  BlocklyApps.loadBlocks(sourceXML.outerHTML);
+
+
+	  var loginLoaded = function(data) {
+	      
+	      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
+	      Game.mission = data;
+	      Game.imgBackground.src = 'images/fundo.png';	  
+	  
+	  };
+
+	  Game.imgBackground = new Image();
+	  Game.imgBackground.onload = function() {
+		  
+		  Game.reset();
+
+		  // Lazy-load the syntax-highlighting.
+		  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
+		  
+		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+		  
+	  };
+	  
+	  Game.imgDoor = new Image();
+	  Game.imgDoor.src = "images/doors.png";
+	  
+	  Game.lastErrorData = new Object();
+	  Game.lastErrorData.count = 0;
+	  Game.lastErrorData.comm = 0;
+	  
+	  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
+	  
+	  
+  }); 
   
-  Game.imgDoor = new Image();
-  Game.imgDoor.src = "images/doors.png";
-  
-  Game.lastErrorData = new Object();
-  Game.lastErrorData.count = 0;
-  Game.lastErrorData.comm = 0;
-  
-  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
+  //var mission = loadMission("mission0.xml");
   
 };
 
@@ -638,233 +649,6 @@ Game.showError = function(iderror) {
 	
 	BlocklyApps.showDialog(content, origin, true, true, style, null);
 
-};
-
-Game.showInfo = function(explanation) {
-	
-	var statement = 0;
-	var firstStatement = -1;
-	for (var i = 0; i < explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "statement") {
-			if (statement == 0)
-				firstStatement = i;
-			statement++;
-		}
-	}
-
-	if (firstStatement == -1) // this will happen if is something wrong in the mission's statement
-		return;
-	
-    var content = document.getElementById('dialogInfo');
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[firstStatement].childNodes[0].nodeValue;
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	if (statement == 1)
-		buttons.innerHTML = nobugspage.finishButton(null, null, null);
-	else
-		buttons.innerHTML = nobugspage.nextButton(null, null, null);
-	
-	var style = {top: '120px'}; 
-	style[Blockly.RTL ? 'right' : 'left'] = '215px';
-	  
-	Game.pageNumber = 0;
-	Game.explanation = explanation;
-	
-	Game.hintNumber = -1;
-	
-	BlocklyApps.showDialog(content, null, false, true, style, null);
-	
-};
-
-Game.nextStatement = function() {
-	var explanation = Game.explanation;
-	var i = Game.pageNumber + 1; Game.pageNumber = -1;
-	var hasMorePages = false;
-	for (; i < explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Game.pageNumber == -1)
-				Game.pageNumber = i;
-			else {
-				hasMorePages = true;
-				break;
-			}
-		}
-	}
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	buttons.innerHTML =  nobugspage.previousButton(null, null, null);
-	if (!hasMorePages)
-		buttons.innerHTML += nobugspage.finishButton(null, null, null);
-	else
-		buttons.innerHTML += nobugspage.nextButton(null, null, null);
-	
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[Game.pageNumber].childNodes[0].nodeValue;
-
-};
-
-Game.previousStatement = function() {
-	var explanation = Game.explanation;
-	var i = Game.pageNumber - 1; Game.pageNumber = -1;
-	var hasMorePages = false;
-	for (; i >= 0; i--) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Game.pageNumber == -1)
-				Game.pageNumber = i;
-			else {
-				hasMorePages = true;
-				break;
-			}
-		}
-	}
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	if (!hasMorePages)
-		buttons.innerHTML = "";
-	else
-		buttons.innerHTML = nobugspage.previousButton(null, null, null);
-	buttons.innerHTML += nobugspage.nextButton(null, null, null);
-	
-	if (Game.pageNumber == -1)
-		Game.pageNumber = 0;
-
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[Game.pageNumber].childNodes[0].nodeValue;
-
-};
-
-Game.finishStatement = function() {
-	BlocklyApps.hideDialog(false);
-	
-	var origin = null;
-	var lastHint = Game.hintNumber + 1;
-	
-	var dialog = document.getElementById('dialogHint');
-	
-	Blockly.mainWorkspace.traceOn(false);
-	
-	var style = {top: '120px'}; 
-	style[Blockly.RTL ? 'right' : 'left'] = '215px';
-	
-	Game.hintNumber = -1;
-	var originH = 0;
-	var originW = 0;
-	var explanation = Game.explanation;
-	for (var i=lastHint; i<explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "hint") {
-			var idhint = explanation.children[i].getAttribute("id");
-			var originhint = explanation.children[i].getAttribute("origin");
-			Game.hintNumber = i;
-			
-			if (originhint === "code") {
-				origin = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).getSvgRoot();
-				originH = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.height;
-				originW = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.width;
-				
-				Blockly.mainWorkspace.traceOn(true);
-				Blockly.mainWorkspace.highlightBlock(idhint);
-			} else {
-				if (originhint === "command") {
-					
-					var separator = idhint.indexOf("#");
-					var children = Blockly.Toolbox.tree_.children_;
-					var node;
-					if (separator == -1) {
-						
-						node = parseInt(idhint);
-						Blockly.Toolbox.tree_.setSelectedItem(children[node]);
-						
-					} else {
-						
-						node = parseInt(idhint.substring(0, separator));
-						Blockly.Toolbox.tree_.setSelectedItem(children[node]); // must be here because the last line in this block depends of this
-
-						var nodeItem = parseInt(idhint.substring(idhint.indexOf("#")+1));
-						origin = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[nodeItem].getSvgRoot();
-					}
-				}
-			}
-
-			break;
-		}
-	}
-	
-	if (Game.hintNumber == -1)
-		return;
-		
-	var buttons = document.getElementById('dialogHintButton');
-	buttons.innerHTML = nobugspage.finishButton(null, null, null);
-	
-	var container = document.getElementById('dialogHintText');
-	container.innerHTML = explanation.children[Game.hintNumber].innerHTML;
-	
-	if (origin != null) {
-		
-		var dir = explanation.children[i].getAttribute("dir");
-		if (dir != null) {
-
-			var imgId = 'imgHint';
-			if (dir === "stack") {
-				imgId += "After";
-				document.getElementById('beforetd').style.display = "none";
-			} else {
-				imgId += "Before";
-				document.getElementById('aftertd').style.display = "none";
-			}
-			
-			var imgHint = document.getElementById(imgId);
-			imgHint.src = "images/help_" + dir + ".png";
-
-			var bbBox = BlocklyApps.getBBox_(origin);
-			if (originH == 0) {
-				originH = bbBox.height;
-				originW = bbBox.width;
-			}
-			switch (dir) {
-				  case "up" :
-					style.top = (bbBox.y + originH) + "px";
-					style.left = bbBox.x + "px";
-					break;
-				
-				  case "down":
-					style.top = (bbBox.y - (dialog.clientHeight + originH)) + "px";
-					style.left = bbBox.x + "px";
-					break;
-					
-				  case "run":
-					style.top = (bbBox.y - (dialog.clientHeight/2)) + "px";
-					style.left = (bbBox.x + originW) + "px";
-					break;
-					
-				  case "stack":
-					style.top = (bbBox.y - (dialog.clientHeight/2)) + "px";
-					style.left = (bbBox.x - dialog.clientWidth - 20) + "px";
-					break;
-			}
-		}
-	}
-	
-	BlocklyApps.showDialog(dialog, origin, true, true, style, null);
-};
-
-Game.selectCommands = function(commands) {
-	
-	var ret = {"loop": true, "logic": true, "math": true, "vars": true, "function": true };
-	var comms = commands.children;
-	for (var i=0; i < comms.length; i++) {
-		var group = comms[i];
-		var show = group.getAttribute("show");
-		if (show != null) {
-			ret[group.getAttribute("name")] = show === "true";
-		}
-	}
-		
-	return ret;
 };
 
 Game.saveMoney = function() {

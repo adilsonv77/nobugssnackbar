@@ -48,6 +48,8 @@
   <link rel="stylesheet" type="text/css" href="easyui/icon.css">
   <script type="text/javascript" src="easyui/jquery.min.js"></script>
   <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+  <script src="jquery.growl/jquery.growl.js" type="text/javascript"></script>
+  <link href="jquery.growl/jquery.growl.css" rel="stylesheet" type="text/css" />
   
   <script type="text/javascript" src="jsinterpreter/acorn_interpreter.js"></script>
 
@@ -61,7 +63,11 @@
   <script type="text/javascript" src="nobugs/xml.js"></script>
   <script type="text/javascript" src="nobugs/money.js"></script>
   
+  <script type="text/javascript" src="nobugs/explanation.js"></script>
   <script type="text/javascript" src="nobugs/game.js"></script>
+
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
 
   {call .messages /}
   <table width="100%">
@@ -276,7 +282,7 @@
  * Next button in information dialogs.
  */
 {template .nextButton private="true"}
-    <button class="secondary" onclick="Game.nextStatement()">
+    <button class="secondary" onclick="Explanation.nextStatement()">
       {{msg meaning="Apps.dialogNext" desc="---"}}Next{{/msg}}
     </button>
 {/template}
@@ -285,7 +291,7 @@
  * Previous button in information dialogs.
  */
 {template .previousButton private="true"}
-    <button class="secondary" onclick="Game.previousStatement()">
+    <button class="secondary" onclick="Explanation.previousStatement()">
       {{msg meaning="Apps.dialogPrevious" desc="---"}}Previous{{/msg}}
     </button>
 {/template}
@@ -294,7 +300,7 @@
  * Finish button in information dialogs.
  */
 {template .finishButton private="true"}
-    <button class="secondary" onclick="Game.finishStatement()">
+    <button class="secondary" onclick="Explanation.finishStatement()">
       {{msg meaning="Apps.dialogOk" desc="---"}}OK{{/msg}}
     </button>
 {/template}
