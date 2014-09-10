@@ -49,7 +49,7 @@ Explanation.showInfo = function(explanation) {
 	
 	Explanation.hintNumber = -1;
 	
-	BlocklyApps.showDialog(content, null, false, true, style, null);
+	MyBlocklyApps.showDialog(content, null, false, true, true, null, style, null);
 	
 };
 
@@ -178,58 +178,61 @@ Explanation.finishStatement = function() {
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = explanation.children[Explanation.hintNumber].innerHTML;
 	
+	var dir = explanation.children[i].getAttribute("dir");
+	var imgId = 'imgHint';
+	if (dir === "stack") {
+		imgId += "After";
+		document.getElementById('beforetd').style.display = "none";
+		document.getElementById('aftertd').style.display = "inline";
+	} else {
+		imgId += "Before";
+		document.getElementById('beforetd').style.display = "inline";
+		document.getElementById('aftertd').style.display = "none";
+	}
+	
+	var imgHint = document.getElementById(imgId);
+	imgHint.src = "images/help_" + dir + ".png";
+
+	var bY = 0;
+	var bX = 0;
 	if (origin != null) {
 		
-		var dir = explanation.children[i].getAttribute("dir");
-		if (dir != null) {
-
-			var imgId = 'imgHint';
-			if (dir === "stack") {
-				imgId += "After";
-				document.getElementById('beforetd').style.display = "none";
-			} else {
-				imgId += "Before";
-				document.getElementById('aftertd').style.display = "none";
-			}
-			
-			var imgHint = document.getElementById(imgId);
-			imgHint.src = "images/help_" + dir + ".png";
-
-			var bbBox = BlocklyApps.getBBox_(origin);
-			if (originH == 0) {
-				originH = bbBox.height;
-				originW = bbBox.width;
-			}
-			switch (dir) {
-				  case "up" :
-					style.top = (bbBox.y + originH);
-					style.left = bbBox.x;
-					break;
-				
-				  case "down":
-					style.top = (bbBox.y - (dialog.clientHeight + originH));
-					style.left = bbBox.x;
-					break;
-					
-				  case "run":
-					style.top = (bbBox.y - (dialog.clientHeight/2));
-					style.left = (bbBox.x + originW);
-					break;
-					
-				  case "stack":
-					style.top = (bbBox.y - (dialog.clientHeight/2));
-					style.left = (bbBox.x - dialog.clientWidth - 20);
-					break;
-			}
-			
-			if (style.left < 0) {
-				style.width = (dialog.clientWidth + style.left) + "px"; // because left is minus then you can add this value
-				style.left = 0;
-			}
-			style.top = style.top + "px";
-			style.left = style.left + "px";
+		var bbBox = BlocklyApps.getBBox_(origin);
+		if (originH == 0) {
+			originH = bbBox.height;
+			originW = bbBox.width;
 		}
+		bY = bbBox.y;
+		bX = bbBox.x;
 	}
+	switch (dir) {
+		  case "up" :
+			style.top = (bY + originH);
+			style.left = bX;
+			break;
+		
+		  case "down":
+			style.top = (bY - (dialog.clientHeight + originH));
+			style.left = bX;
+			break;
+			
+		  case "run":
+			style.top = (bY - (dialog.clientHeight/2));
+			style.left = (bX + originW);
+			break;
+			
+		  case "stack":
+			style.top = (bY - (dialog.clientHeight/2));
+			style.left = (bX - dialog.clientWidth - 20);
+			break;
+	}
+	
+	if (style.left < 0) {
+		style.width = (dialog.clientWidth + style.left) + "px"; // because left is minus then you can add this value
+		style.left = 0;
+	}
+	style.top = style.top + "px";
+	style.left = style.left + "px";
 	
 	BlocklyApps.showDialog(dialog, origin, true, true, style, null);
 };

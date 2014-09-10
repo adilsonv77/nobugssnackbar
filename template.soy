@@ -71,6 +71,14 @@
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
 
+  <script type="text/javascript" src="blockly_compressed.js"></script>
+  
+  <script type="text/javascript" src="blocks_compressed.js"></script>
+  <script type="text/javascript" src="javascript_compressed.js"></script>
+  <script type="text/javascript" src="python_compressed.js"></script>
+  <script type="text/javascript" src="{$ij.langSrc}"></script>
+  <script type="text/javascript" src="nobugs/language.js"></script>
+
   <div id="initialBackground" style="display: none">
   	<table width="100%" height="100%">
   		<tr>
@@ -128,42 +136,45 @@
 	        </button> */
 	      </td>
 	    </tr>
+	    <tr>
+	    	<td>
+		    	<button id="nextMissionButton">
+		        	<img src="media/1x1.gif" class="stop icon21">
+		        </button>
+		    	<button id="logoffButton">
+		        	<img src="media/1x1.gif" class="code icon21">
+		        </button>
+	    	</td>
+	    </tr>
 	  </table>
 	  
 	  <div id="toolbarDiv">
 	  </div>
-  </div>
   
-  <script type="text/javascript" src="blockly_compressed.js"></script>
-  
-  <script type="text/javascript" src="blocks_compressed.js"></script>
-  <script type="text/javascript" src="javascript_compressed.js"></script>
-  <script type="text/javascript" src="python_compressed.js"></script>
-  <script type="text/javascript" src="{$ij.langSrc}"></script>
-  <script type="text/javascript" src="nobugs/language.js"></script>
-  /** {call .toolbox /} **/
-  <div id="blockly"></div>
-
-  <div id="variableBox" style="display:none">
-  	<div class="move-header">
-	  	<div class="move-title">{msg meaning="NoBugs.variables" desc="--"}Variables{/msg}</div>
-	  	<div class="move-panel">
-	  		<a id="moveDown" class="move-down" href="javascript:void(0)"></a>
-	  		<a id="moveRight" class="move-right" style="display:none" href="javascript:void(0)"></a>
+	  /** {call .toolbox /} **/
+	  <div id="blockly"></div>
+	
+	  <div id="variableBox" style="display:none">
+	  	<div class="move-header">
+		  	<div class="move-title">{msg meaning="NoBugs.variables" desc="--"}Variables{/msg}</div>
+		  	<div class="move-panel">
+		  		<a id="moveDown" class="move-down" href="javascript:void(0)"></a>
+		  		<a id="moveRight" class="move-right" style="display:none" href="javascript:void(0)"></a>
+		  	</div>
 	  	</div>
-  	</div>
-  	<div class="var-content">
-  	<table id="vars" class="easyui-datagrid" data-options="singleSelect:true">
-		<thead>
-			<tr>
-				<th data-options="field:'name', width:50">{msg meaning="NoBugs.varname" desc="--"}Name{/msg}</th>
-				<th data-options="field:'value', width: 100">{msg meaning="NoBugs.varvalue" desc="--"}Value{/msg}</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-  	</div>
+	  	<div class="var-content">
+	  	<table id="vars" class="easyui-datagrid" data-options="singleSelect:true">
+			<thead>
+				<tr>
+					<th data-options="field:'name', width:50">{msg meaning="NoBugs.varname" desc="--"}Name{/msg}</th>
+					<th data-options="field:'value', width: 100">{msg meaning="NoBugs.varvalue" desc="--"}Value{/msg}</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	  	</div>
+	  </div>
   </div>
 
   {call apps.dialog /}
@@ -174,7 +185,7 @@
     <table>
 	    <tr>
 		    <td style="width: 20%" align="center" rowspan="2">
-		      <img src="images/error.png" height="80%" width="80%">
+		      <img src="images/error.png">
 		    </td>
 		    <td id="dialogErrorText" style="width: 80%"></td>
 	    </tr>
@@ -187,7 +198,7 @@
     <table>
 	    <tr>
 		    <td style="width: 20%" align="center" rowspan="2">
-		      <img src="images/info.png" height="80%" width="80%">
+		      <img src="images/info.png">
 		    </td>
 		    <td id="dialogInfoText" style="width: 80%"></td>
 	    </tr>

@@ -16,7 +16,7 @@ public class PopulateMissions {
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		StringBuffer xml = new StringBuffer();
-		BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission01.xml")));
+		BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission02.xml")));
 		do {
 			
 			String line = arq.readLine();
@@ -28,7 +28,7 @@ public class PopulateMissions {
 		} while (true);
 		arq.close();
 		
-		NoBugsConnection.getConnection().insertMission("Learn to move", xml.toString());
+		NoBugsConnection.getConnection().insertMission("Learn to create variables", xml.toString());
 	}
 
 }
