@@ -16,10 +16,16 @@ public class UserControl {
 
 	private static Logger log = Logger.getGlobal();
 	private User user;
+	private int mission;
 	
 	@RemoteMethod
 	public boolean verifyLogged() {
 		return user != null;
+	}
+	
+	@RemoteMethod
+	public void logoff() {
+		this.user = null;
 	}
 	
 	@RemoteMethod
@@ -36,6 +42,7 @@ public class UserControl {
 			}
 			
 			this.user = NoBugsConnection.getConnection().login(nick, sb.toString());
+			this.mission = 1;
 			
 			return null; // no errors
 			
@@ -49,11 +56,14 @@ public class UserControl {
 	
 	@RemoteMethod
 	public String loadMission() throws SQLException {
-		return NoBugsConnection.getConnection().loadMission(1);
+		return  NoBugsConnection.getConnection().loadMission(this.mission++);
 	}
 	
 	@RemoteMethod
 	public long retrieveMoney() {
+		if (this.user == null)
+			return 0;
+		
 		return this.user.getMoney();
 	}
 }

@@ -57,9 +57,10 @@ Game.init = function() {
 		if (ret) 
 			Game.logged();
 		else {
+  		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
 			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
-					null, false, true, true, "Login", null, null);
+					null, false, true, true, "Login", {width: "270px"}, null);
 		}
 	});
 
@@ -74,6 +75,9 @@ Game.login = function() {
     UserControl.login(user, passw, 
 		  function(ret) {
 	  		if (ret == null) {
+	  			document.getElementById('loginuser').value = "";
+	  			document.getElementById('loginpassw').value = "";
+	  			
 	  			BlocklyApps.hideDialog(true);
 	  			Game.logged();
 	  		} else {
@@ -93,11 +97,10 @@ Game.logged = function() {
   UserControl.retrieveMoney(function(ret) {
 	  Game.money = ret;
   });
-  BlocklyApps.init();
 
   NoBugsJavaScript.redefine();
   
-  var rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
+  Game.rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
     
   Game.optResize = {
 	blocklyDivW: 600,
@@ -111,71 +114,41 @@ Game.logged = function() {
     });
   window.addEventListener('resize',  Game.resizeWindow);
 
-  UserControl.loadMission(function(ret){
-	  
-	  var mission = transformStrToXml(ret); 
-		  
-	  var toolbox = nobugspage.toolbox(null, null, 
-			  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
-	  
-	  Blockly.inject(document.getElementById('blockly'),
-	      {path: '',
-	       rtl: rtl,
-	       toolbox: toolbox,
-	       trashcan: true});
+  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
 
-	  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-	  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
+  // Add to reserved word list: API, local variables in execution environment
+  // (execute) and the infinite loop detection function.
+  Blockly.JavaScript.addReservedWords('Game, code');
 
-	  // Add to reserved word list: API, local variables in execution environment
-	  // (execute) and the infinite loop detection function.
-	  Blockly.JavaScript.addReservedWords('Game, code');
+  /* enabled this in future
+  window.addEventListener('beforeunload', function(e) {
+    if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
+      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
+      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
+    }
+    return null;
+  });
+ */
+  
+  BlocklyApps.bindClick('runButton', Game.runButtonClick);
+  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
+  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 
-	  /* enabled this in future
-	  window.addEventListener('beforeunload', function(e) {
-	    if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
-	      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
-	      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
-	    }
-	    return null;
-	  });
-	 */
-	  
-	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
+  BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
+  BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
+  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
-	  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
-	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
-	  
-	  Game.variableBox = document.getElementById('variableBox');
-	  Game.blockly = document.getElementById('blockly');
-	  
-	  Game.ctxDisplay = document.getElementById('display').getContext('2d');
-	  
-	  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
-			              mission.childNodes[0].getElementsByTagName("objectives")[0].children);
-	  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
-	  BlocklyApps.loadBlocks(sourceXML.outerHTML);
-
-
-	  var loginLoaded = function(data) {
-	      
-	      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
-	      Game.mission = data;
-	      Game.imgBackground.src = 'images/fundo.png';	  
-	  
-	  };
-
-	  Game.imgBackground = new Image();
-	  Game.imgBackground.onload = function() {
-		  
-		  Game.reset();
-
-		  // Lazy-load the syntax-highlighting.
-		  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
-		  
-		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
-		  
-	  };
+  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+  
+  Game.variableBox = document.getElementById('variableBox');
+  Game.blockly = document.getElementById('blockly');
+  
+  Game.ctxDisplay = document.getElementById('display').getContext('2d');
+  Game.imgBackground = new Image();
+  Game.imgBackground.src = 'images/fundo.png';	
+  Game.imgBackground.onload = function() {
 	  
 	  Game.imgDoor = new Image();
 	  Game.imgDoor.src = "images/doors.png";
@@ -184,14 +157,49 @@ Game.logged = function() {
 	  Game.lastErrorData.count = 0;
 	  Game.lastErrorData.comm = 0;
 	  
-	  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
+	  UserControl.loadMission(Game.missionLoaded);
 	  
-	  
-  }); 
-  
-  //var mission = loadMission("mission0.xml");
+  };
   
 };
+
+Game.missionLoaded = function(ret){
+	  
+  var mission = transformStrToXml(ret); 
+	  
+  var toolbox = nobugspage.toolbox(null, null, 
+		  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
+  
+  document.getElementById('blockly').innerHTML = ""; // clean the editor
+  Blockly.inject(document.getElementById('blockly'),
+      {path: '',
+       rtl: Game.rtl,
+       toolbox: toolbox,
+       trashcan: true});
+
+
+  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
+		              mission.childNodes[0].getElementsByTagName("objectives")[0].children);
+  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+  BlocklyApps.loadBlocks(sourceXML.outerHTML);
+  var loginLoaded = function(data) {
+      
+      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
+      Game.mission = data;
+	  Game.reset();
+
+	  // Lazy-load the syntax-highlighting.
+	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
+	  
+	  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  
+  };
+
+  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
+	  
+	  
+}; 
+  
 
 window.addEventListener('load', Game.init);
 
@@ -222,13 +230,11 @@ Game.doResizeWindow = function(style) {
 
 Game.resizeWindow = function(e) {
 	
-	var rtl = BlocklyApps.isRtl();
-	
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
 
 	Game.blockly.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-	Game.blockly.style.left = rtl ? '10px' : '380px';
+	Game.blockly.style.left = Game.rtl ? '10px' : '380px';
     var w = window.innerWidth;
     if (Game.variableBox.style.display === "none") {
     	Game.blockly.style.height = "90%";
@@ -240,7 +246,7 @@ Game.resizeWindow = function(e) {
     	
         Game.variableBox.style.top = (Game.optResize.varBoxT?Game.blockly.style.top:(Game.blockly.offsetTop+Game.blockly.offsetHeight+10)+"px");
         if (Game.optResize.varBoxT) {
-        	Game.variableBox.style.left = ((rtl ? 10 : 380) + w + 5) + 'px';
+        	Game.variableBox.style.left = ((Game.rtl ? 10 : 380) + w + 5) + 'px';
         	Game.variableBox.style.width = "200px";
         }
         else {
@@ -316,6 +322,18 @@ Game.display = function() {
 	CustomerManager.draw(Game.ctxDisplay);
 	showMoney(Game.money, Game.ctxDisplay);
 	
+};
+
+Game.nextMissionButtonClick = function() {
+	UserControl.loadMission(Game.missionLoaded);
+};
+
+Game.logoffButtonClick = function() {
+	UserControl.logoff(function(){
+		// because is synchronous, we need wait to finish the last request 
+		Game.init();
+		
+	});
 };
 
 Game.xmlButtonClick = function() {
