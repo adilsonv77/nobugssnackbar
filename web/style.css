@@ -151,3 +151,11 @@ button.notEnabled {
 .move-right {
 	background: url('images/panel_tools.png') no-repeat scroll -48px 0px transparent;
 }
+
+#initialBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}

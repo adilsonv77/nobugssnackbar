@@ -16,10 +16,10 @@ public class UserControl {
 
 	private static Logger log = Logger.getGlobal();
 	private User user;
-
+	
 	@RemoteMethod
-	public void log() {
-		log.info(user + "");
+	public boolean verifyLogged() {
+		return user != null;
 	}
 	
 	@RemoteMethod

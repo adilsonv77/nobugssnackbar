@@ -1,33 +1,23 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="dwr/engine.js"></script>
-  <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
+  <meta charset="utf-8">
   
-  <script type="text/javascript">
-  
-  function login() {
-	  
-	  UserControl.login(document.forms[0].user.value, document.forms[0].passw.value, 
-			  function(ret) {
-		  		if (ret == null) {
-		  			window.location = "index2.html";
-		  		} else {
-		  			alert(ret);
-		  		}
-	  		  }
-	  );
-	  
-  }
-  
-  </script>
-  
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>NoBug's Snack Bar</title>
+
+  <link rel="stylesheet" type="text/css" href="commons/common.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script type="text/javascript" src="_soy/soyutils.js"></script>
+  <script type="text/javascript" src="commons/common.js"></script>
+  <script type="text/javascript" src="nobugs.js"></script>
 </head>
 <body>
- <form>
- User : <input type="text" name="user"/> <br/>
- Password : <input type="password" name="passw"/> <br/>
- <input type="button" value="Login" onclick="login()"/> 
- </form>
-
+  <script type="text/javascript">
+    document.write(nobugspage.start({}, null,
+        {lang: BlocklyApps.LANG,
+         langSrc: BlocklyApps.languagePack()}));
+  </script>
 </body>
 </html>

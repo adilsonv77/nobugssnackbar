@@ -51,6 +51,45 @@ Game.jsInterpreter;
  * Initialize Blockly and SnackBar. Called on page load.
  */
 Game.init = function() {
+	
+	UserControl.verifyLogged(function(ret) {
+		
+		if (ret) 
+			Game.logged();
+		else {
+		    document.getElementById("initialBackground").style.display = "inline";
+			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
+					null, false, true, true, "Login", null, null);
+		}
+	});
+
+
+};
+
+Game.login = function() {
+	
+	var user = document.getElementById('loginuser').value;
+	var passw = document.getElementById('loginpassw').value;
+	
+    UserControl.login(user, passw, 
+		  function(ret) {
+	  		if (ret == null) {
+	  			BlocklyApps.hideDialog(true);
+	  			Game.logged();
+	  		} else {
+	  			alert(ret);
+	  		}
+  		  }
+    );
+	
+};
+
+Game.logged = function() {
+  document.getElementById("initialBackground").style.display = "none";
+  document.getElementById("mainBody").style.display = "inline";
+	  			
+  BlocklyApps.init();
+	
   UserControl.retrieveMoney(function(ret) {
 	  Game.money = ret;
   });
@@ -102,9 +141,6 @@ Game.init = function() {
 	  });
 	 */
 	  
-	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
-	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
-	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
 	  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
