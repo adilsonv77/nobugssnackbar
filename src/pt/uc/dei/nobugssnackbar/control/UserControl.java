@@ -56,7 +56,7 @@ public class UserControl {
 	
 	@RemoteMethod
 	public String loadMission() throws SQLException {
-		return  NoBugsConnection.getConnection().loadMission(this.mission++);
+		return  NoBugsConnection.getConnection().loadMission(1);
 	}
 	
 	@RemoteMethod

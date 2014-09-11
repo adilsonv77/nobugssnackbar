@@ -10,9 +10,6 @@
 	"Apps.catMath": "Matem&#225;tica",
 	"SnackMan.catSnackMan": "SnackMan",
 	
-	"Apps.runProgram" : "Executar",
-	"Apps.resetProgram" : "Reiniciar",
-	"Apps.debugProgram" : "Passo",  
 	"Apps.dialogNext": "Pr&#243;ximo",
 	"Apps.dialogPrevious": "Anterior",
 	
@@ -28,6 +25,12 @@
 	"NoBugs.goalAchieved": "Novo Objetivo Cumprido",
 	"NoBugs.achieved": "Cumprido(s)",
 	"NoBugs.of": "de",
+	"NoBugs.logoffTooltip": "Sair do jogo",
+	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
+	
+	"Apps.dialogLogin": "Entrar",
+	"NoBugs.user": "Usu&#225;rio",
+	"NoBugs.password" : "Senha",
 	
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
