@@ -108,6 +108,10 @@
 	      </td>
 	      <td class="farSide">
 	         <select style="visibility: hidden;" id="languageMenu"></select>
+  	     	 <button id="logoffButton" style="background-color: white" title="{msg meaning="NoBugs.logoffTooltip" desc="--"}Logoff the game.{/msg}">
+	        	<img src="images/logoff.png" style="width:32px; height:32px"/>
+	         </button>
+	         
 	      </td>
 	    </tr>
 	  </table>
@@ -118,36 +122,31 @@
 	  <table style="padding-top: 1em;" class="buttons">
 	    <tr>
 	      <td style="width: 120px; text-align: center">
-	        <button id="debugButton" class="primary" title="{msg meaning="NoBugs.debugTooltip" desc="--"}Makes the snack man do what the next block say.{/msg}">
-	          <img src="media/1x1.gif" class="debug icon21">{msg meaning="Apps.debugProgram" desc="--"}Step{/msg}
+	        <button id="debugButton" class="primary" style="margin:5px" title="{msg meaning="NoBugs.debugTooltip" desc="--"}Makes the snack man do what the next block say.{/msg}">
+	          <img src="media/1x1.gif" class="debug icon21">
 	        </button>
 	      </td>
 	       
 	      <td style="width: 120px; text-align: center">
-	        <button id="runButton" class="primary" title="{msg meaning="NoBugs.runTooltip" desc="--"}Makes the snack man do what the blocks say.{/msg}">
-	          <img src="media/1x1.gif" class="run icon21">{msg meaning="Apps.runProgram" desc="--"}Run Program{/msg}
+	        <button id="runButton" class="primary" style="margin:5px" title="{msg meaning="NoBugs.runTooltip" desc="--"}Makes the snack man do what the blocks say.{/msg}">
+	          <img src="media/1x1.gif" class="run icon21">
 	        </button>
-	      </td>
-	       
-	      <td style="width: 120px; text-align: center">
-	        <button id="resetButton" class="notEnabled" disable="disabled" title="{msg meaning="NoBugs.resetTooltip" desc="--"}Restarts the execution.{/msg}">
-	          <img src="media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc="--"}Reset{/msg}
+
+	        <button id="resetButton" class="notEnabled" style="margin:5px" disable="disabled" title="{msg meaning="NoBugs.resetTooltip" desc="--"}Restarts the execution.{/msg}">
+	          <img src="media/1x1.gif" class="stop icon21">
 	        </button>
 	/**
 	        <button id="xmlButton">
 	        	<img src="media/1x1.gif" class="stop icon21">
 	        </button> */
 	      </td>
-	    </tr>
-	    <tr>
-	    	<td>
-		    	<button id="nextMissionButton">
-		        	<img src="media/1x1.gif" class="stop icon21">
-		        </button>
-		    	<button id="logoffButton">
-		        	<img src="media/1x1.gif" class="code icon21">
-		        </button>
-	    	</td>
+
+	      <td style="width: 120px; text-align: center">
+	        <button id="goalButton" class="primary" style="margin:5px" title="{msg meaning="NoBugs.goalsTooltip" desc="--"}See the objectives of this mission.{/msg}">
+	          <img src="media/1x1.gif" class="code icon21">
+	        </button>
+	      </td>
+	       
 	    </tr>
 	  </table>
 	  
@@ -232,16 +231,16 @@
     <form>
 	    <table>
 		    <tr>
-			    <td>User :</td>
+			    <td>{msg meaning="NoBugs.user" desc="--"}User{/msg} :</td>
 			    <td><input type="text" id="loginuser"/></td>
 		    </tr>
 		    <tr>
-		        <td>Password :</td>
+		        <td>{msg meaning="NoBugs.password" desc="--"}Password{/msg} :</td>
 		        <td><input type="password" id="loginpassw"/></td>
 		    </tr>
 	    </table>
 	 </form>
-	 <div>
+	 <div class="farSide" >
 	    <button class="secondary" onclick="Game.login()">
 	      {{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
 	    </button>

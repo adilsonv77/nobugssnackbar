@@ -135,7 +135,8 @@ Game.logged = function() {
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
   BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 
-  BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
+  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
+  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
   BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
   //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
@@ -191,7 +192,7 @@ Game.missionLoaded = function(ret){
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
 	  
-	  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
 	  
   };
 
@@ -326,6 +327,11 @@ Game.display = function() {
 
 Game.nextMissionButtonClick = function() {
 	UserControl.loadMission(Game.missionLoaded);
+};
+
+Game.goalButtonClick = function() {
+	
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
 };
 
 Game.logoffButtonClick = function() {

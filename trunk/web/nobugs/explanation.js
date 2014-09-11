@@ -15,7 +15,7 @@ Explanation.selectCommands = function(commands) {
 	return ret;
 };
 
-Explanation.showInfo = function(explanation) {
+Explanation.showInfo = function(explanation, withHint) {
 	
 	var statement = 0;
 	var firstStatement = -1;
@@ -47,9 +47,10 @@ Explanation.showInfo = function(explanation) {
 	Explanation.pageNumber = 0;
 	Explanation.explanation = explanation;
 	
+	Explanation.showHint = withHint;
 	Explanation.hintNumber = -1;
 	
-	MyBlocklyApps.showDialog(content, null, false, true, true, null, style, null);
+	MyBlocklyApps.showDialog(content, document.getElementById('goalButton'), true, true, true, null, style, null);
 	
 };
 
@@ -113,7 +114,10 @@ Explanation.previousStatement = function() {
 };
 
 Explanation.finishStatement = function() {
-	BlocklyApps.hideDialog(false);
+	BlocklyApps.hideDialog(true);
+	
+	if (!Explanation.showHint)
+		return;
 	
 	var origin = null;
 	var lastHint = Explanation.hintNumber + 1;
