@@ -129,6 +129,9 @@ Explanation.finishStatement = function() {
 	var originH = 0;
 	var originW = 0;
 	var explanation = Explanation.explanation;
+	var bY = 0;
+	var bX = 0;
+
 	for (var i=lastHint; i<explanation.children.length; i++) {
 		var type = explanation.children[i].getAttribute("type");
 		if (type === "hint") {
@@ -137,9 +140,10 @@ Explanation.finishStatement = function() {
 			Explanation.hintNumber = i;
 			
 			if (originhint === "code") {
-				origin = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).getSvgRoot();
-				originH = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.height;
-				originW = Blockly.mainWorkspace.getBlockById(parseInt(idhint)).svg_.width;
+				var e = Blockly.mainWorkspace.getBlockById(parseInt(idhint));
+				
+				origin = e.getSvgRoot();
+				originH = e.svg_.height; originW = e.svg_.width;
 				
 				Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(idhint);
@@ -153,6 +157,11 @@ Explanation.finishStatement = function() {
 						
 						node = parseInt(idhint);
 						Blockly.Toolbox.tree_.setSelectedItem(children[node]);
+						
+						var e = children[node].element_;
+						bY = e.offsetTop + e.offsetParent.offsetTop + e.offsetParent.offsetParent.offsetTop;
+						bX = e.offsetLeft + e.offsetParent.offsetLeft + e.offsetParent.offsetParent.offsetLeft;
+						originH = e.clientHeight; originW = e.clientWidth;
 						
 					} else {
 						
@@ -193,18 +202,13 @@ Explanation.finishStatement = function() {
 	var imgHint = document.getElementById(imgId);
 	imgHint.src = "images/help_" + dir + ".png";
 
-	var bY = 0;
-	var bX = 0;
 	if (origin != null) {
 		
 		var bbBox = BlocklyApps.getBBox_(origin);
-		if (originH == 0) {
-			originH = bbBox.height;
-			originW = bbBox.width;
-		}
 		bY = bbBox.y;
 		bX = bbBox.x;
 	}
+	
 	switch (dir) {
 		  case "up" :
 			style.top = (bY + originH);
