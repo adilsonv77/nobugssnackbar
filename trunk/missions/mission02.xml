@@ -2,10 +2,10 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		V&#225; at&#233; o cliente no balc&#227;o e pergunte o que ele quer comer.
+		V&#225; at&#233; 1, 3 e 4 do balc&#227;o.
 		</page>
-		<page type="hint" origin="command" id="1" dir="up">
-		Esse bot&#227;o server para criar vari&#225;veis.
+		<page type="hint" origin="command" id="0#0" dir="stack">
+		Arraste o comando da barra de ferramentas para a &#225;rea de programa&#231;&#227;o.
 		</page>
 
 	</explanation>
@@ -13,11 +13,13 @@
 		<category name="logic" show="false"/>
 		<category name="loop" show="false"/>
 		<category name="math" show="false"/>
+		<category name="vars" show="false"/>
 		<category name="function" show="false"/>
 		
 		<category name="goToDisplay" show="false"/>
 		<category name="goToCooler" show="false"/>
 		<category name="isThereACustomer" show="false"/>
+		<category name="askForFood" show="false"/>
 		<category name="askForDrink" show="false"/>
 		<category name="askHasThirsty" show="false"/>
 		<category name="askHasHunger" show="false"/>
@@ -27,17 +29,11 @@
 	</commands>
 	<cooker>initial</cooker>
 	<customers>
-		<customer>
-			<id>01</id>
-			<init>counter1</init>
-			<dest>counter1</dest>
-			<foods></foods>
-			<drinks></drinks>
-		</customer>
 	</customers>
-	<objectives>
+	<objectives ordered="false">
 		<objective>counter1</objective>
-		<objective>askForFood</objective>
+		<objective>counter3</objective>
+		<objective>counter4</objective>
 	</objectives>
 	<xml>
 	</xml>

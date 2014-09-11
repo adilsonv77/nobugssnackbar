@@ -1,3 +1,27 @@
+/**
+ * NoBug's Snack Bar
+ *
+ * Copyright 2014 Adilson Vahldick.
+ * https://nobugssnackbar.googlecode.com/
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @fileoverview Cooker 'intelligence'.
+ * @author adilsonv77@gmail.com (Adilson Vahldick)
+ */
+
 'use strict';
 
 var SnackMan = {};
@@ -80,12 +104,15 @@ SnackMan = function(position, objectives) {
 	});
 	
 	this.objectives = [];
-	for (var i = 0; i < objectives.length; i++) {
-		var obj = objectives[i].childNodes[0].nodeValue;
-		this.objectives.push(obj);
+	this.objectivesOrdered = objectives.getAttribute("ordered") === "true";
+	
+	for (var i = 0; i < objectives.children.length; i++) {
+		var obj = objectives.children[i].childNodes[0].nodeValue;
+		this.objectives.push({objective:obj, achieved:false});
 	}
 	
-	this.objectivesAchieved = [];
+	this.lastObjectiveAchieved = -1;
+	this.allObjectivesAchieved = false;
 
 };
 
@@ -108,6 +135,12 @@ SnackMan.prototype.reset = function() {
 	
 	this.cooler.sourceX = 0;
 	this.cooler.frameIndex = 0;
+	
+	this.lastObjectiveAchieved = -1;
+	this.allObjectivesAchieved = false;
+	for (var i=0; i<this.objectives.length; i++)
+		this.objectives[i].achieved = false;
+
 };
 
 SnackMan.prototype.draw = function(ctx) {
@@ -357,7 +390,7 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 		
 		CustomerManager.update();
 	}
-	BlocklyApps.log.push(['IM', 0]);
+	BlocklyApps.log.push(['CO', 0]);
 
 };
 
@@ -388,21 +421,63 @@ SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	this.img.x = nx;
 	this.img.y = ny - 32;
 	
-	if (this.objectives.length - this.objectivesAchieved.length > 0) {
-		var obj = this.objectives[this.objectivesAchieved.length];
-		if (obj.indexOf("counter") == 0) {
-			var posObj = this.counter[parseInt(obj.substring(7)) - 1];
-			if (nx == posObj.x && ny == posObj.y) {
-				this.objectivesAchieved.push(obj);
-				$.growl({ title: "Objetivo atingido", 
-					message: "Cumprido(s) " + this.objectivesAchieved.length + 
-									 " de " +  this.objectives.length});
+	Game.display();
+};
+
+SnackMan.prototype.checkObjectives = function() {
+	this.verifyCheckPointObjectives({nx: this.img.x, ny: this.img.y+32});
+};
+
+SnackMan.prototype.verifyCheckPointObjectives = function(options) {
+
+	if (this.allObjectivesAchieved)
+		return;
+	
+	if (this.objectivesOrdered) {
+		var obj = this.objectives[this.lastObjectiveAchieved + 1].objective;
+		if (obj.indexOf("counter") == -1)
+			return;
+		
+		if (!this.goToCounterObjective(options, obj, this.lastObjectiveAchieved + 1))
+			return;
+		
+	} else {
+		var found = false;
+		for (var i = 0; i < this.objectives.length; i++) {
+			if (this.objectives[i].objective.indexOf("counter") == 0 && !this.objectives[i].achieved) {
+				
+				if (this.goToCounterObjective(options, this.objectives[i].objective, i)) {
+					found = true;
+					break;
+					
+				}
 			}
 		}
+		if (!found)
+			return;
 		
 	}
+
+	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
+		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
+						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objectives.length});
+
+};
+
+SnackMan.prototype.goToCounterObjective = function(options, obj, objIndex) {
 	
-	Game.display();
+	var posObj = this.counter[parseInt(obj.substring(7)) - 1];
+	if (options.nx == posObj.x && options.ny == posObj.y) {
+		
+		this.objectives[objIndex].achieved = true;
+		this.lastObjectiveAchieved++;
+		
+		this.allObjectivesAchieved = this.lastObjectiveAchieved == this.objectives.length;
+		return true;
+	} else {
+		return false; 
+	}
+	
 };
 
 SnackMan.prototype.nextOpenCoolerImage = function() {
