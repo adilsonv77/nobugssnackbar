@@ -30,7 +30,7 @@
 	<cooker>initial</cooker>
 	<customers>
 	</customers>
-	<objectives>
+	<objectives ordered="true">
 		<objective>counter1</objective>
 		<objective>counter3</objective>
 		<objective>counter4</objective>

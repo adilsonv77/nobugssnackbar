@@ -179,7 +179,7 @@ Game.missionLoaded = function(ret){
 
 
   hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
-		              mission.childNodes[0].getElementsByTagName("objectives")[0].children);
+		              mission.childNodes[0].getElementsByTagName("objectives")[0]);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   BlocklyApps.loadBlocks(sourceXML.outerHTML);
   var loginLoaded = function(data) {
@@ -650,6 +650,8 @@ Game.step = function(command, values) {
     	hero.alertRun(values);
     	break;
     	
+    case 'CO':
+    	hero.checkObjectives();
   	case 'IM' :
   		hero.changeSnackManImage(values);
   		break;

@@ -15,20 +15,28 @@ public class PopulateMissions {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
-		StringBuffer xml = new StringBuffer();
-		BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission02.xml")));
-		do {
+		StringBuffer xml; 
+		BufferedReader arq; 
+
+		for (int i = 1; i < 3; i++) {
 			
-			String line = arq.readLine();
-			if (line == null)
-				break;
+			xml = new StringBuffer();
+			arq = new BufferedReader(new FileReader(new File("missions/mission0" + i + ".xml")));
+			do {
+				
+				String line = arq.readLine();
+				if (line == null)
+					break;
+				
+				xml.append(line);
+				
+			} while (true);
+			arq.close();
 			
-			xml.append(line);
+			NoBugsConnection.getConnection().insertMission("Learn to create variables", xml.toString());
 			
-		} while (true);
-		arq.close();
+		}
 		
-		NoBugsConnection.getConnection().insertMission("Learn to create variables", xml.toString());
 	}
 
 }

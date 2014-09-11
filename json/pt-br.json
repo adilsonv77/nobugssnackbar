@@ -25,6 +25,10 @@
 	"NoBugs.varname" : "Nome",
 	"NoBugs.varvalue" : "Valor",
 	
+	"NoBugs.goalAchieved": "Novo Objetivo Cumprido",
+	"NoBugs.achieved": "Cumprido(s)",
+	"NoBugs.of": "de",
+	
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
 	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
