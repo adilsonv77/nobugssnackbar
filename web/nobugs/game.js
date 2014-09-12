@@ -366,10 +366,6 @@ Game.display = function() {
 	
 };
 
-Game.nextMissionButtonClick = function() {
-	UserControl.loadMission(Game.missionLoaded);
-};
-
 Game.goalButtonClick = function() {
 	
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
@@ -541,6 +537,18 @@ Game.nextStep = function() {
 				// if there isn't more lines to evaluate
 				Game.resetButtons();
 			    Blockly.mainWorkspace.highlightBlock(null);
+			    
+			    if (hero.allObjectivesAchieved) {
+			    	
+			    	//TODO animar o cooker no final da missao
+			    	// adicionar o premio da missao
+			    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+			    			Game.nextMission);
+			    	
+			    } else {
+			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
+			    }
+			    
 			    return;
 				
 			}
@@ -551,6 +559,10 @@ Game.nextStep = function() {
 			
 		}
 	}
+};
+
+Game.nextMission = function() {
+	UserControl.nextMission(Game.missionLoaded);
 };
 
 Game.initApi = function(interpreter, scope) {
