@@ -51,12 +51,16 @@ public class UserControl {
 			return "Error_login";
 		}
 		
-		
 	}
 	
 	@RemoteMethod
 	public String loadMission() throws SQLException {
 		return  NoBugsConnection.getConnection().loadMission(1);
+	}
+	
+	@RemoteMethod
+	public String nextMission() throws SQLException {
+		return  NoBugsConnection.getConnection().loadMission(2);
 	}
 	
 	@RemoteMethod

@@ -477,7 +477,7 @@ SnackMan.prototype.goToCounterObjective = function(options, obj, objIndex) {
 		this.objectives[objIndex].achieved = true;
 		this.lastObjectiveAchieved++;
 		
-		this.allObjectivesAchieved = this.lastObjectiveAchieved == this.objectives.length;
+		this.allObjectivesAchieved = (this.lastObjectiveAchieved+1) == this.objectives.length;
 		return true;
 	} else {
 		return false; 
