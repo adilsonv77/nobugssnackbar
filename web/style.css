@@ -159,3 +159,10 @@ button.notEnabled {
   height: 100%;
   width: 100%;
 }
+li.goalok {
+	list-style-image: url("images/goal_ok.png")
+}
+
+li.goalcancel {
+	list-style-image: url("images/goal_cancel.png")
+}

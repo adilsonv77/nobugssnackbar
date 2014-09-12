@@ -25,6 +25,8 @@ Explanation.showInfo = function(explanation, withHint) {
 			if (statement == 0)
 				firstStatement = i;
 			statement++;
+			
+			Explanation.lastStatement = i;
 		}
 	}
 
@@ -41,6 +43,8 @@ Explanation.showInfo = function(explanation, withHint) {
 	else
 		buttons.innerHTML = nobugspage.nextButton(null, null, null);
 	
+	Explanation.evaluateObjectives(firstStatement, container);
+	
 	var style = {top: '120px'}; 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 	  
@@ -51,6 +55,32 @@ Explanation.showInfo = function(explanation, withHint) {
 	Explanation.hintNumber = -1;
 	
 	MyBlocklyApps.showDialog(content, document.getElementById('goalButton'), true, true, true, null, style, null);
+	
+};
+
+Explanation.evaluateObjectives = function(statement, container) {
+	
+	if (statement != Explanation.lastStatement)
+		return
+		
+	var ul = document.createElement("ul");
+	container.appendChild(ul);
+	var os = hero.objectives;
+	for (var i=0; i<os.length; i++) {
+		
+		var obj = document.createElement("li");
+		var text = os[i].objective;
+		obj.className = "goal" + (os[i].achieved?"ok":"cancel");
+		if (text.indexOf("counter") == 0) {
+			text = BlocklyApps.getMsg(text.substring(0, 7));
+			
+			text = text.split(/%\d/)[0] + os[i].objective.substring(7);
+		}
+		
+		obj.innerHTML = text;
+		
+		ul.appendChild(obj);
+	}
 	
 };
 
@@ -80,6 +110,7 @@ Explanation.nextStatement = function() {
 	var container = document.getElementById('dialogInfoText');
 	container.textContent = explanation.children[Explanation.pageNumber].childNodes[0].nodeValue;
 
+	Explanation.evaluateObjectives(firstStatement, container);
 };
 
 Explanation.previousStatement = function() {
