@@ -25,7 +25,9 @@
     <span id="SnackMan_isThereACustomerTooltip">{msg meaning="SnackMan.isThereACustomerTooltip" desc="--"}Verify if there is a customer in the currently position.{/msg}</span>
 
 	//Errors
+	<span id="Error_login">{msg meaning="Error.login" desc="--"}User not found.{/msg}</span>
 	<span id="Error_infinityLoopDetected">{msg meaning="Error.infinityLoopDetected" desc="--"}Infinity loop detected by system.{/msg}</span>
+
 	<span id="Error_doesntExistCounter">{msg meaning="Error.doesntExistCounter" desc="--"}This position is invalid.{/msg}</span>
 	<span id="Error_isntCloseToCustomer">{msg meaning="Error.isntCloseToCustomer" desc="--"}The cooker is not close to any customer.{/msg}</span>
 	<span id="Error_thereIsntCustomer">{msg meaning="Error.thereIsntCustomer" desc="--"}There isn't any customer in this position of the counter.{/msg}</span>
@@ -54,6 +56,11 @@
   <script src="jquery.growl/jquery.growl.js" type="text/javascript"></script>
   <link href="jquery.growl/jquery.growl.css" rel="stylesheet" type="text/css" />
   
+  <script type="text/javascript" src="nobugs/explanation.js"></script>
+  <script type="text/javascript" src="nobugs/game.js"></script>
+
+  <script type="text/javascript" src="nobugs/blockly.js"></script>
+
   <script type="text/javascript" src="jsinterpreter/acorn_interpreter.js"></script>
 
   <script type="text/javascript" src="nobugs/graph.js"></script>
@@ -66,10 +73,6 @@
   <script type="text/javascript" src="nobugs/xml.js"></script>
   <script type="text/javascript" src="nobugs/money.js"></script>
   
-  <script type="text/javascript" src="nobugs/explanation.js"></script>
-  <script type="text/javascript" src="nobugs/game.js"></script>
-
-  <script type="text/javascript" src="nobugs/blockly.js"></script>
   
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
@@ -230,6 +233,9 @@
   <div id="dialogLogin" class="dialogHiddenContent">
     <form>
 	    <table>
+			<tr>
+				<td colspan="2"><div id="errorLogin" style="color: red"></div></td>
+			</tr>
 		    <tr>
 			    <td>{msg meaning="NoBugs.user" desc="--"}User{/msg} :</td>
 			    <td><input type="text" id="loginuser"/></td>
