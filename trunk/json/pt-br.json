@@ -44,5 +44,7 @@
 	"Error.thereIsntCustomer": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
 	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; geladeira.",
 	"Error.doesntHaveOrder": "O cozinheiro esqueceu de anotar o pedido.",
-	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido."
+	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido.",
+	
+	"GoTo.Counter":"V&#225; para o balc&#227;o %1."
 }
