@@ -34,6 +34,13 @@ CustOpt.door = 'n1';
 
 CustOpt.customerFinalPath = new Array();
 
+Game.preloadImgs.push('images/$customer01.png');
+Game.preloadImgs.push('images/$customer01_anger.png');
+Game.preloadImgs.push('images/$customer02.png');
+Game.preloadImgs.push('images/coin.png');
+Game.preloadImgs.push('images/anger.png');
+
+
 // acts as a state machine
 CustOpt.createCustomerPath = function() {
 	for (var key = 0; key < CustOpt.keynodes.length; key++)

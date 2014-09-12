@@ -37,6 +37,7 @@
 	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",
 	
+	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",

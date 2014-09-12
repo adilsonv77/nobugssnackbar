@@ -48,7 +48,7 @@ public class UserControl {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return e.getMessage();
+			return "Error_login";
 		}
 		
 		

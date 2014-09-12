@@ -41,6 +41,12 @@ Game.mission = null;
  */
 Game.pidList = [];
 
+/**
+ * All the imgs will added in this array. Anyone that uses an image, must 
+ * before add in this array.
+ */
+Game.preloadImgs = []; 
+
 Game.money = 0;
 Game.currentlyMoney = Game.money;
 
@@ -52,6 +58,9 @@ Game.jsInterpreter;
  */
 Game.init = function() {
 	
+    Game.preloadImgs.push('images/fundo.png');
+    Game.preloadImgs.push('images/doors.png');
+	
 	UserControl.verifyLogged(function(ret) {
 		
 		if (ret) 
@@ -59,12 +68,38 @@ Game.init = function() {
 		else {
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
+		    
+		    Game.loadImgs();
+		    
 			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
-					null, false, true, true, "Login", {width: "270px"}, null);
+					null, false, true, true, "Login", {width: "270px"}, 
+					document.body.removeEventListener('keydown',loginKeyDown, true));
+			
+			var loginKeyDown = function (e) {
+			    if (e.keyCode == 13 ) {
+			    	Game.login();
+			    	e.stopPropagation();
+			    	e.preventDefault();
+			    }
+
+			};
+			
+			  document.body.addEventListener('keydown',
+					  loginKeyDown, true);
 		}
 	});
 
 
+};
+
+/**
+ * Without this some draws don't work. 
+ */
+Game.loadImgs = function() {
+	for (var i = 0; i < Game.preloadImgs.length; i++) {
+	    var preload = new Image();
+	    preload.src = Game.preloadImgs[i];
+	}
 };
 
 Game.login = function() {
@@ -74,14 +109,17 @@ Game.login = function() {
 	
     UserControl.login(user, passw, 
 		  function(ret) {
-	  		if (ret == null) {
+			var error = document.getElementById("errorLogin");
+
+			if (ret == null) {
 	  			document.getElementById('loginuser').value = "";
 	  			document.getElementById('loginpassw').value = "";
 	  			
 	  			BlocklyApps.hideDialog(true);
+	  			error.innerHTML = "";
 	  			Game.logged();
 	  		} else {
-	  			alert(ret);
+	  			error.innerHTML = BlocklyApps.getMsg(ret);
 	  		}
   		  }
     );
@@ -182,7 +220,10 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
 		              mission.childNodes[0].getElementsByTagName("objectives")[0]);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
-  BlocklyApps.loadBlocks(sourceXML.outerHTML);
+  
+  var xml = Blockly.Xml.textToDom(sourceXML.outerHTML);
+  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+
   var loginLoaded = function(data) {
       
       CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
@@ -190,7 +231,7 @@ Game.missionLoaded = function(ret){
 	  Game.reset();
 
 	  // Lazy-load the syntax-highlighting.
-	  window.setTimeout(Game.importPrettify, 1); // I dont know what this do :(
+	  window.setTimeout(Game.importPrettify, 1);
 	  
 	  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
 	  
