@@ -366,9 +366,28 @@ Game.display = function() {
 	
 };
 
+Game.countInstructions = function(c) {
+	
+	var conta = 0;
+	while (c != null) {
+		var a = c;
+		c = c.childNodes[c.childElementCount-1];
+		conta++;
+		if (c.nodeName === "NEXT" || c.nodeName === "STATEMENT")  {
+			if (a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT")
+				conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-2].childNodes[0]);
+			c  = c.childNodes[0];
+		} else
+			break;
+	}
+	
+	return conta;
+	
+};
+
 Game.goalButtonClick = function() {
 	
-	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+  Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
 };
 
 Game.logoffButtonClick = function() {
@@ -541,9 +560,17 @@ Game.nextStep = function() {
 			    if (hero.allObjectivesAchieved) {
 			    	
 			    	//TODO animar o cooker no final da missao
-			    	// adicionar o premio da missao
-			    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
-			    			Game.nextMission);
+
+			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+			    	var count = Game.countInstructions(xml.childNodes[0]);
+			    	 
+			    	Game.money += hero.addReward(count);
+			    	// TODO 10 substituir pelo tempo dispendido
+			    	UserControl.nextMission(Game.money, 10, function(ret){
+				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+				    			function(){Game.missionLoaded(ret);});
+			    	});
+			    	
 			    	
 			    } else {
 			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
@@ -559,10 +586,6 @@ Game.nextStep = function() {
 			
 		}
 	}
-};
-
-Game.nextMission = function() {
-	UserControl.nextMission(Game.missionLoaded);
 };
 
 Game.initApi = function(interpreter, scope) {

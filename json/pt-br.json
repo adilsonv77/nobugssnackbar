@@ -49,5 +49,7 @@
 	"Error.doesntHaveOrder": "O cozinheiro esqueceu de anotar o pedido.",
 	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido.",
 	
-	"GoTo.Counter":"V&#225; para o balc&#227;o %1."
+	"Single.Counter" : "no balc&#227;o",
+	"GoTo.Counter":"V&#225; para o balc&#227;o %1.",
+	"AskFor.Food":"Pergunta pelo que o cliente %1 deseja comer."
 }

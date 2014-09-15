@@ -26,7 +26,13 @@
 var CustomerManager = {};
 var customers = [];
 
+Game.preloadImgs.push('images/banco.png');
+
 CustomerManager.init = function(customers) {
+	
+    this.banco = new Image();
+	this.banco.src = 'images/banco.png';
+
 	this.optCustomers = customers;
 };
 
@@ -88,8 +94,34 @@ CustomerManager.animation = function() {
 };
 
 CustomerManager.draw = function(ctx) {
-	for (var i=0; i<customers.length; i++)
+	
+	var counters = [true, true, true, true];
+	
+	for (var i=0; i<customers.length; i++) {
 		customers[i].draw(ctx);
+		var nId = customers[i].currentNode.id;
+		for (var j=0; j<CustOpt.counter.length; j++) {
+			if (nId === CustOpt.counter[j]) {
+				counters[j] = false;
+				break;
+			}
+		}
+		
+	}
+	
+	CustomerManager.drawCounters(ctx, counters);
+	
+};
+
+CustomerManager.drawCounters = function(ctx, counters) {
+	
+	for (var i= 0; i < counters.length; i++) {
+		if (counters[i]) {
+			var n = CustOpt.nodes[CustOpt.counter[i]];
+			ctx.drawImage(this.banco, n.x, n.y-32);
+		}
+	}
+	
 };
 
 CustomerManager.getCustomerCounter = function(id) {

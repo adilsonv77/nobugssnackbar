@@ -2,7 +2,6 @@ package pt.uc.dei.nobugssnackbar.control;
 
 import java.security.MessageDigest;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -14,7 +13,7 @@ import pt.uc.dei.nobugssnackbar.model.User;
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
 
-	private static Logger log = Logger.getGlobal();
+//	private static Logger log = Logger.getGlobal();
 	private User user;
 	private int mission;
 	
@@ -42,7 +41,6 @@ public class UserControl {
 			}
 			
 			this.user = NoBugsConnection.getConnection().login(nick, sb.toString());
-			this.mission = 1;
 			
 			return null; // no errors
 			
@@ -55,12 +53,18 @@ public class UserControl {
 	
 	@RemoteMethod
 	public String loadMission() throws SQLException {
-		return  NoBugsConnection.getConnection().loadMission(1);
+		String[][] r = NoBugsConnection.getConnection().loadMission(this.user);
+		this.mission = Integer.parseInt(r[0][0]);
+		return  r[0][1];
 	}
 	
 	@RemoteMethod
-	public String nextMission() throws SQLException {
-		return  NoBugsConnection.getConnection().loadMission(2);
+	public String nextMission(int money, int timeSpend) throws SQLException {
+		this.user.setMoney(this.user.getMoney() + money);
+		
+		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend);
+		
+		return loadMission();
 	}
 	
 	@RemoteMethod

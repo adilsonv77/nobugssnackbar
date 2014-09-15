@@ -2,7 +2,9 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		V&#225; at&#233; 1, 3 e 4 do balc&#227;o.
+		Nessa miss&#227;o voc&#234; vai aprender a caminhar entre as quatro posi&#231;&#245;es do balc&#227;o.  <br/>
+		Ande com o cozinheiro at&#233; as posi&#231;&#245;es 1, 3 e 4 do balc&#227;o (respeitando essa ordem). <br/>
+		A posi&#231;&#227;o 1 &#233; a mais superior delas.
 		</page>
 		<page type="hint" origin="command" id="0#0" dir="stack">
 		Arraste o comando da barra de ferramentas para a &#225;rea de programa&#231;&#227;o.
@@ -30,10 +32,10 @@
 	<cooker>initial</cooker>
 	<customers>
 	</customers>
-	<objectives ordered="true">
-		<objective>counter1</objective>
-		<objective>counter3</objective>
-		<objective>counter4</objective>
+	<objectives ordered="true" reward="5" maxCommands="3" maxCommandsReward="10">
+		<objective pos="1">counter</objective>
+		<objective pos="3">counter</objective>
+		<objective pos="4">counter</objective>
 	</objectives>
 	<xml>
 	</xml>

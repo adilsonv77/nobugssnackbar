@@ -68,18 +68,68 @@ public class NoBugsConnection {
 		ps.close();
 	}
 
-	public String loadMission(long id) throws SQLException {
+	public String[][] loadMission(User user) throws SQLException {
 		
-		Statement st = bdCon.createStatement();
+		String query =
+				"SELECT cm.missionid, cm.classid"+ 
+			    "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"+ 
+			    "    WHERE ma.missionid IS NULL AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"+ 
+			    "    ORDER BY missionorder";
+			
+		PreparedStatement ps = bdCon.prepareStatement(query);
+		ps.setLong(1, user.getId());
+		ps.setLong(2, user.getId());
 		
-		ResultSet rs = st.executeQuery("select missioncontent from missions where missionid = " + id);
+		ResultSet rs = ps.executeQuery();
 		rs.next();
-		String xml = rs.getString(1);
+		long missionId = rs.getLong(1);
+		ps.close();
 		
+		// TODO se o usuario pertence a mais de uma classe, ele precisa selecionar quais das missoes ele deseja fazer
+		Statement st = bdCon.createStatement();
+		rs = st.executeQuery("SELECT missioncontent FROM missions WHERE missionid = " + missionId);
+		rs.next();
+		
+		String xml = rs.getString(1);
 		st.close();
 		
-		return xml;
+		String[][] ret = new String[1][2];
+		ret[0][0] = missionId + "";
+		ret[0][1] = xml;
 		
+		return ret;
+		
+	}
+
+	public void finishMission(User user, long idMission, int money, int timeSpend) throws SQLException {
+		
+		PreparedStatement ps = bdCon.prepareStatement("insert into missionsaccomplished "
+				+ "(missionid, userid, timespend, achieved, money) values (?, ?, ?, ?, ?)");
+		
+		ps.setLong(1, idMission);
+		ps.setLong(2, user.getId());
+		ps.setLong(3, timeSpend);
+		ps.setString(4, "S");
+		ps.setInt(5, money);
+		
+		ps.executeUpdate();
+		ps.close();
+		
+		ps = bdCon.prepareStatement("update users set usermoney = ? where userid = ?");
+		ps.setLong(1, user.getMoney());
+		ps.setLong(2, user.getId());
+		ps.executeUpdate();
+		ps.close();
+		
+	}
+
+	public void updateMission(int idMission, String xml) throws SQLException {
+		PreparedStatement ps = bdCon.prepareStatement("update missions set missioncontent = ? where missionid = ?");
+		ps.setString(1, xml);
+		ps.setInt(2, idMission);
+		
+		ps.executeUpdate();
+		ps.close();		
 	}
 	
 }
