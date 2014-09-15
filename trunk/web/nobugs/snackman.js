@@ -108,12 +108,26 @@ SnackMan = function(position, objectives) {
 		imgSrc : "images/display.png"
 	});
 	
-	this.objectives = [];
-	this.objectivesOrdered = objectives.getAttribute("ordered") === "true";
+	this.objective = {};
+	
+	this.objective.objectives = [];
+	this.objective.ordered = objectives.getAttribute("ordered") === "true";
+	this.objective.reward = objectives.getAttribute("reward"); 
+	this.objective.maxCommands = objectives.getAttribute("maxCommands"); 
+	this.objective.maxCommandsReward = objectives.getAttribute("maxCommandsReward"); 
 	
 	for (var i = 0; i < objectives.children.length; i++) {
 		var obj = objectives.children[i].childNodes[0].nodeValue;
-		this.objectives.push({objective:obj, achieved:false});
+		var p = {objective:obj, achieved:false};
+		if (obj === "counter")
+			p.pos = objectives.children[i].getAttribute("pos");
+		else 
+			if (obj.indexOf("askFor") == 0) {
+				p.pos = objectives.children[i].getAttribute("pos");
+				p.place = objectives.children[i].getAttribute("place");
+				p.distinct = objectives.children[i].getAttribute("distinct") === "true";
+			}
+		this.objective.objectives.push(p);
 	}
 	
 	this.lastObjectiveAchieved = -1;
@@ -143,8 +157,8 @@ SnackMan.prototype.reset = function() {
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
-	for (var i=0; i<this.objectives.length; i++)
-		this.objectives[i].achieved = false;
+	for (var i=0; i<this.objective.objectives.length; i++)
+		this.objective.objectives[i].achieved = false;
 
 };
 
@@ -295,6 +309,8 @@ SnackMan.prototype.askForFood = function() {
 		throw false;
 	}
 	
+	this.verifyAskForFoodObjectives(found);
+	
 	return found.askForFood();
 };
 
@@ -429,6 +445,56 @@ SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	Game.display();
 };
 
+SnackMan.prototype.verifyAskForFoodObjectives = function(cust) {
+	
+	if (this.allObjectivesAchieved)
+		return;
+	
+	if (this.objective.ordered) {
+		if (!this.objective.objectives[this.lastObjectiveAchieved + 1].objective === "askForFood")
+			return;
+		
+		if (!this.askForFoodObjective(this.objective.objectives[this.lastObjectiveAchieved + 1].objective, cust))
+			return;
+		
+	} else {
+		var found = false;
+		for (var i = 0; i < this.objective.objectives.length; i++) {
+			if (this.objective.objectives[i].objective === "askForFood" && !this.objective.objectives[i].achieved) {
+				
+				if (this.askForFoodObjective(this.objective.objectives[i], cust)) {
+					found = true;
+					break;
+					
+				}
+			}
+		}
+		if (!found)
+			return;
+		
+	}
+	
+	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
+		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
+						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
+};
+
+SnackMan.prototype.askForFoodObjective = function(objIndex, obj, cust) {		
+	var poscust = obj.substring(11);
+	if (poscust.indexOf("counter") == 0) {
+		if (cust.currentNode.id === CustOpt.keynodes[poscust.substring(8)]) {
+			this.objective.objectives[objIndex].achieved = true;
+			this.lastObjectiveAchieved++;
+			
+			this.allObjectivesAchieved = (this.lastObjectiveAchieved+1) == this.objective.objectives.length;
+	
+			return true;
+		}
+	}
+	
+	return false;
+};
+
 SnackMan.prototype.checkObjectives = function() {
 	this.verifyCheckPointObjectives({nx: this.img.x, ny: this.img.y+32});
 };
@@ -438,20 +504,19 @@ SnackMan.prototype.verifyCheckPointObjectives = function(options) {
 	if (this.allObjectivesAchieved)
 		return;
 	
-	if (this.objectivesOrdered) {
-		var obj = this.objectives[this.lastObjectiveAchieved + 1].objective;
-		if (obj.indexOf("counter") == -1)
+	if (this.objective.ordered) {
+		if (!this.objective.objectives[this.lastObjectiveAchieved + 1].objective === "counter")
 			return;
 		
-		if (!this.goToCounterObjective(options, obj, this.lastObjectiveAchieved + 1))
+		if (!this.goToCounterObjective(options, this.objective.objectives[this.lastObjectiveAchieved + 1]))
 			return;
 		
 	} else {
 		var found = false;
-		for (var i = 0; i < this.objectives.length; i++) {
-			if (this.objectives[i].objective.indexOf("counter") == 0 && !this.objectives[i].achieved) {
+		for (var i = 0; i < this.objective.objectives.length; i++) {
+			if (this.objective.objectives[i].objective === "counter" && !this.objective.objectives[i].achieved) {
 				
-				if (this.goToCounterObjective(options, this.objectives[i].objective, i)) {
+				if (this.goToCounterObjective(options, this.objective.objectives[i])) {
 					found = true;
 					break;
 					
@@ -465,23 +530,37 @@ SnackMan.prototype.verifyCheckPointObjectives = function(options) {
 
 	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
 		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
-						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objectives.length});
+						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
 
 };
 
 SnackMan.prototype.goToCounterObjective = function(options, obj, objIndex) {
 	
-	var posObj = this.counter[parseInt(obj.substring(7)) - 1];
+	var posObj = this.counter[obj.pos-1];
 	if (options.nx == posObj.x && options.ny == posObj.y) {
 		
-		this.objectives[objIndex].achieved = true;
+		obj.achieved = true;
 		this.lastObjectiveAchieved++;
 		
-		this.allObjectivesAchieved = (this.lastObjectiveAchieved+1) == this.objectives.length;
+		this.allObjectivesAchieved = (this.lastObjectiveAchieved+1) == this.objective.objectives.length;
 		return true;
 	} else {
 		return false; 
 	}
+	
+};
+
+SnackMan.prototype.addReward = function(count) {
+	
+	if (this.allObjectivesAchieved) {
+		
+		if (count <= this.objective.maxCommands) {
+			return this.objective.maxCommandsReward;
+		} else
+			return this.objective.reward;
+	}
+	
+	return 0;
 	
 };
 

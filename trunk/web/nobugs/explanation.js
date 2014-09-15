@@ -18,43 +18,85 @@ Explanation.selectCommands = function(commands) {
 Explanation.showInfo = function(explanation, withHint) {
 	
 	var statement = 0;
-	var firstStatement = -1;
+	Explanation.firstStatement = -1;
 	for (var i = 0; i < explanation.children.length; i++) {
 		var type = explanation.children[i].getAttribute("type");
 		if (type === "statement") {
 			if (statement == 0)
-				firstStatement = i;
+				Explanation.firstStatement = i;
 			statement++;
 			
 			Explanation.lastStatement = i;
 		}
 	}
 
-	if (firstStatement == -1) // this will happen if is something wrong in the mission's statement
+	if (Explanation.firstStatement == -1) // this will happen if is something wrong in the mission's statement
 		return;
 	
-    var content = document.getElementById('dialogInfo');
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[firstStatement].childNodes[0].nodeValue;
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	if (statement == 1)
-		buttons.innerHTML = nobugspage.finishButton(null, null, null);
-	else
-		buttons.innerHTML = nobugspage.nextButton(null, null, null);
-	
-	Explanation.evaluateObjectives(firstStatement, container);
-	
-	var style = {top: '120px'}; 
-	style[Blockly.RTL ? 'right' : 'left'] = '215px';
-	  
 	Explanation.pageNumber = 0;
 	Explanation.explanation = explanation;
+
+	Explanation.createDialog(Explanation.firstStatement);
 	
 	Explanation.showHint = withHint;
 	Explanation.hintNumber = -1;
+};
+
+Explanation.nextStatement = function() {
 	
-	MyBlocklyApps.showDialog(content, document.getElementById('goalButton'), true, true, true, null, style, null);
+	BlocklyApps.hideDialog(false);
+	var explanation = Explanation.explanation;
+	var i = Explanation.pageNumber + 1; Explanation.pageNumber = -1;
+	for (; i <= Explanation.lastStatement; i++) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "statement") {
+			if (Explanation.pageNumber == -1)
+				Explanation.pageNumber = i;
+		}
+	}
+	Explanation.createDialog(Explanation.pageNumber);
+	
+};
+
+Explanation.previousStatement = function() {
+	
+	BlocklyApps.hideDialog(false);
+	
+	var explanation = Explanation.explanation;
+	var i = Explanation.pageNumber - 1; Explanation.pageNumber = -1;
+	for (; i >= 0; i--) {
+		var type = explanation.children[i].getAttribute("type");
+		if (type === "statement") {
+			if (Explanation.pageNumber == -1)
+				Explanation.pageNumber = i;
+		}
+	}
+	Explanation.createDialog(Explanation.pageNumber);
+
+};
+
+Explanation.createDialog = function(nrPage) {
+    var content = document.getElementById('dialogInfo');
+	var container = document.getElementById('dialogInfoText');
+	container.innerHTML = Explanation.explanation.children[nrPage].innerHTML;  // .childNodes[0].nodeValue;
+	
+	var buttons = document.getElementById('dialogInfoButton');
+	
+	var justOnePage = Explanation.firstStatement == Explanation.lastStatement;
+	
+	buttons.innerHTML = 
+		(justOnePage?nobugspage.finishButton(null, null, null):
+			(nrPage == Explanation.firstStatement?nobugspage.nextButton(null, null, null)
+					:nobugspage.previousButton(null, null, null) + (nrPage == Explanation.lastStatement?nobugspage.finishButton(null, null, null):nobugspage.nextButton(null, null, null))));
+		 
+	
+	Explanation.evaluateObjectives(nrPage, container);
+	
+	var style = {top: '120px'}; 
+	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+
+	MyBlocklyApps.showDialog(content, (nrPage==0?document.getElementById('goalButton'):null),
+							 true, true, true, null, style, null);
 	
 };
 
@@ -65,17 +107,21 @@ Explanation.evaluateObjectives = function(statement, container) {
 		
 	var ul = document.createElement("ul");
 	container.appendChild(ul);
-	var os = hero.objectives;
+	var os = hero.objective.objectives;
 	for (var i=0; i<os.length; i++) {
 		
 		var obj = document.createElement("li");
 		var text = os[i].objective;
 		obj.className = "goal" + (os[i].achieved?"ok":"cancel");
-		if (text.indexOf("counter") == 0) {
-			text = BlocklyApps.getMsg(text.substring(0, 7));
-			
-			text = text.split(/%\d/)[0] + os[i].objective.substring(7);
+		
+		var key = "";
+		
+		if (text.indexOf("askFor") == 0) {
+			key = BlocklyApps.getMsg("_"+os[i].place);
 		}
+		text = BlocklyApps.getMsg(text);
+		var parts = text.split(/%\d/);
+		text = parts[0] + key  + " " + os[i].pos + parts[1];
 		
 		obj.innerHTML = text;
 		
@@ -84,68 +130,8 @@ Explanation.evaluateObjectives = function(statement, container) {
 	
 };
 
-Explanation.nextStatement = function() {
-	var explanation = Explanation.explanation;
-	var i = Explanation.pageNumber + 1; Explanation.pageNumber = -1;
-	var hasMorePages = false;
-	for (; i < explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Explanation.pageNumber == -1)
-				Explanation.pageNumber = i;
-			else {
-				hasMorePages = true;
-				break;
-			}
-		}
-	}
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	buttons.innerHTML =  nobugspage.previousButton(null, null, null);
-	if (!hasMorePages)
-		buttons.innerHTML += nobugspage.finishButton(null, null, null);
-	else
-		buttons.innerHTML += nobugspage.nextButton(null, null, null);
-	
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[Explanation.pageNumber].childNodes[0].nodeValue;
-
-	Explanation.evaluateObjectives(firstStatement, container);
-};
-
-Explanation.previousStatement = function() {
-	var explanation = Explanation.explanation;
-	var i = Explanation.pageNumber - 1; Explanation.pageNumber = -1;
-	var hasMorePages = false;
-	for (; i >= 0; i--) {
-		var type = explanation.children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Explanation.pageNumber == -1)
-				Explanation.pageNumber = i;
-			else {
-				hasMorePages = true;
-				break;
-			}
-		}
-	}
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	if (!hasMorePages)
-		buttons.innerHTML = "";
-	else
-		buttons.innerHTML = nobugspage.previousButton(null, null, null);
-	buttons.innerHTML += nobugspage.nextButton(null, null, null);
-	
-	if (Explanation.pageNumber == -1)
-		Explanation.pageNumber = 0;
-
-	var container = document.getElementById('dialogInfoText');
-	container.textContent = explanation.children[Explanation.pageNumber].childNodes[0].nodeValue;
-
-};
-
 Explanation.finishStatement = function() {
-	BlocklyApps.hideDialog(true);
+	BlocklyApps.hideDialog(false);
 	
 	if (!Explanation.showHint)
 		return;
@@ -273,6 +259,6 @@ Explanation.finishStatement = function() {
 	style.top = style.top + "px";
 	style.left = style.left + "px";
 	
-	BlocklyApps.showDialog(dialog, origin, true, true, style, null);
+	BlocklyApps.showDialog(dialog, null, false, true, style, null);
 };
 
