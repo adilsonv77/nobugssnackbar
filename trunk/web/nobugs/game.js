@@ -568,7 +568,11 @@ Game.nextStep = function() {
 			    	// TODO 10 substituir pelo tempo dispendido
 			    	UserControl.nextMission(Game.money, 10, function(ret){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
-				    			function(){Game.missionLoaded(ret);});
+				    			function(){
+				    				
+				    				window.setTimeout(Game.missionLoaded.bind(undefined, ret), 100);
+				    		
+				    				});
 			    	});
 			    	
 			    	

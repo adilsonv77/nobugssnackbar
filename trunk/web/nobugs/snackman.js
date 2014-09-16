@@ -118,15 +118,9 @@ SnackMan = function(position, objectives) {
 	
 	for (var i = 0; i < objectives.children.length; i++) {
 		var obj = objectives.children[i].childNodes[0].nodeValue;
-		var p = {objective:obj, achieved:false};
-		if (obj === "counter")
-			p.pos = objectives.children[i].getAttribute("pos");
-		else 
-			if (obj.indexOf("askFor") == 0) {
-				p.pos = objectives.children[i].getAttribute("pos");
-				p.place = objectives.children[i].getAttribute("place");
-				p.distinct = objectives.children[i].getAttribute("distinct") === "true";
-			}
+		
+		var o = Objective.factory(obj);
+		var p = o.init(objectives.children[i]);
 		this.objective.objectives.push(p);
 	}
 	
