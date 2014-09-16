@@ -15,7 +15,7 @@ public class UpdateMission {
 				"com.mysql.jdbc.Driver", "root", "root");
 
 		StringBuffer xml = new StringBuffer();
-		BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission02.xml")));
+		BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission01.xml")));
 		do {
 			
 			String line = arq.readLine();
@@ -27,7 +27,7 @@ public class UpdateMission {
 		} while (true);
 		arq.close();
 		
-		NoBugsConnection.getConnection().updateMission(13, xml.toString());
+		NoBugsConnection.getConnection().updateMission(12, xml.toString());
 		
 	}
 

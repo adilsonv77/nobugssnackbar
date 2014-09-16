@@ -37,6 +37,7 @@ CustOpt.customerFinalPath = new Array();
 Game.preloadImgs.push('images/$customer01.png');
 Game.preloadImgs.push('images/$customer01_anger.png');
 Game.preloadImgs.push('images/$customer02.png');
+Game.preloadImgs.push('images/$customer02_anger.png');
 Game.preloadImgs.push('images/coin.png');
 Game.preloadImgs.push('images/anger.png');
 

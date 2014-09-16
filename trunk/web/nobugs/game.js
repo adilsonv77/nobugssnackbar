@@ -203,6 +203,12 @@ Game.logged = function() {
 };
 
 Game.missionLoaded = function(ret){
+	
+  if (ret == null) {
+	  MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, null, null, 
+			  function() {Game.logoffButtonClick();});
+	  return;
+  }
 	  
   var mission = transformStrToXml(ret); 
 	  
@@ -564,9 +570,10 @@ Game.nextStep = function() {
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 			    	var count = Game.countInstructions(xml.childNodes[0]);
 			    	 
-			    	Game.money += hero.addReward(count);
+			    	var reward = hero.addReward(count);
+			    	Game.money = parseInt(Game.money) + reward;
 			    	// TODO 10 substituir pelo tempo dispendido
-			    	UserControl.nextMission(Game.money, 10, function(ret){
+			    	UserControl.nextMission(reward, 10, function(ret){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				

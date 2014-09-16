@@ -46,6 +46,7 @@
     <span id="counter">{msg meaning="GoTo.Counter" desc="--"}Go to counter %1.{/msg}</span>
     <span id="askForFood">{msg meaning="AskFor.Food" desc="--"}Ask the client %1 what he wants to eat.{/msg}</span>
     <span id="_counter">{msg meaning="Single.Counter" desc="--"}in the counter{/msg}</span>
+    <span id="rewardExplanation">{msg meaning="NoBugs.rewardExplanation" desc="--"}Reward of %1 if you achieve all the objectives above. You'll receive a bonus of %2 if accomplish this mission in %3 commands or less.{/msg}</span>
     
     
     
@@ -261,7 +262,20 @@
 	 </div>
   </div>
   
-    <div id="dialogVictory" class="dialogHiddenContent">
+  <div id="dialogNoMoreMissions" class="dialogHiddenContent">
+    <table>
+	    <tr>
+		    <td align="center" rowspan="2">
+		      <img src="images/expert.png" style="margin: 10px"/>
+		    </td>
+		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! There aren't more missions for you.{/msg}</td>
+	    </tr>
+	     <tr><td></td></tr>
+    </table>
+	{call apps.ok /}
+  </div>
+  
+   <div id="dialogVictory" class="dialogHiddenContent">
     <table>
 	    <tr>
 		    <td style="width: 20%" align="center" rowspan="2">

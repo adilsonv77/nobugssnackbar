@@ -473,11 +473,10 @@ SnackMan.prototype.verifyAskForFoodObjectives = function(cust) {
 						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
 };
 
-SnackMan.prototype.askForFoodObjective = function(objIndex, obj, cust) {		
-	var poscust = obj.substring(11);
-	if (poscust.indexOf("counter") == 0) {
-		if (cust.currentNode.id === CustOpt.keynodes[poscust.substring(8)]) {
-			this.objective.objectives[objIndex].achieved = true;
+SnackMan.prototype.askForFoodObjective = function(obj, cust) {		
+	if (obj.place === "counter") {
+		if (cust.currentNode.id === CustOpt.counter[obj.pos-1]) {
+			obj.achieved = true;
 			this.lastObjectiveAchieved++;
 			
 			this.allObjectivesAchieved = (this.lastObjectiveAchieved+1) == this.objective.objectives.length;
@@ -548,10 +547,12 @@ SnackMan.prototype.addReward = function(count) {
 	
 	if (this.allObjectivesAchieved) {
 		
+		var ret = this.objective.reward;
 		if (count <= this.objective.maxCommands) {
-			return this.objective.maxCommandsReward;
-		} else
-			return this.objective.reward;
+			ret += this.objective.maxCommandsReward;
+		} 
+		
+		return ret; 
 	}
 	
 	return 0;

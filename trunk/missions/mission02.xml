@@ -23,8 +23,7 @@
 			Repita para os dois clientes. <b>Cada pedido guarde em uma vari&#225;vel distinta.</b>
 		</page>
 		<page type="hint" origin="command" id="1" dir="stack">
-			Essa &#233; a
-			op&#231;&#227;o para criar vari&#225;veis.
+			Essa &#233; a op&#231;&#227;o para criar vari&#225;veis.
 		</page>
 
 	</explanation>
@@ -67,7 +66,7 @@
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="10" maxCommands="4"
-		maxCommandsReward="20">
+		maxCommandsReward="5">
 		<objective pos="1" place="counter" distinct="true">askForFood</objective>
 		<objective pos="4" place="counter" distinct="true">askForFood</objective>
 	</objectives>
@@ -80,5 +79,19 @@
 			</value>
 		</block>
 
+		<block type="move_goToBarCounter" x = "300" y = "50">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" x = "300" y = "100">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">4</field>
+				</block>
+			</value>
+		</block>
 	</xml>
 </mission>
