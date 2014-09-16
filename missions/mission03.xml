@@ -1,0 +1,84 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="statement">
+			Que tal observar os valores das vari&#225;veis enquanto executa o jogo ?
+			<br />
+			&#201; muito simples: existe um bot&#227;o que lhe permite executar um passo por vez.
+			<br />
+			&#201; aquele no canto esquerdo. Com os mesmos objetivos da miss&#227;o anterior, 
+			por&#233;m <br/> <b>para cumprir essa miss&#227;o use esse bot&#227;o de execuc&#227;o passo-a-passo</b>.
+		</page>
+		<page type="hint" origin="button" id="debugButton" dir="down">
+			Esse &#233; o bot&#227;o para executar passo-a-passo.
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="logic" show="false" />
+		<category name="loop" show="false" />
+		<category name="math" show="false" />
+		<category name="vars" show="true" />
+		<category name="function" show="false" />
+
+		<category name="goToDisplay" show="false" />
+		<category name="goToCooler" show="false" />
+		<category name="isThereACustomer" show="false" />
+		<category name="askForDrink" show="false" />
+		<category name="askHasThirsty" show="false" />
+		<category name="askHasHunger" show="false" />
+		<category name="catchFood" show="false" />
+		<category name="catchDrink" show="false" />
+		<category name="deliver" show="false" />
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<foods>
+				<food qt="1" price="3">hotdog</food>
+			</foods>
+			<drinks></drinks>
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter4</init>
+			<dest>counter4</dest>
+			<foods>
+				<food qt="1" price="3">hotdog</food>
+			</foods>
+			<drinks></drinks>
+		</customer>
+	</customers>
+	<objectives ordered="false" reward="10" maxCommands="4"
+		maxCommandsReward="5" debug="true">
+		<objective pos="1" place="counter" distinct="true">askForFood</objective>
+		<objective pos="4" place="counter" distinct="true">askForFood</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set" inline="true" x = "300" y = "1">
+			<field name="VAR">orderFood</field>
+			<value name="VALUE">
+				<block type="ask_askForFood">
+				</block>
+			</value>
+		</block>
+
+		<block type="move_goToBarCounter" x = "300" y = "50">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" x = "300" y = "100">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">4</field>
+				</block>
+			</value>
+		</block>
+	</xml>
+</mission>

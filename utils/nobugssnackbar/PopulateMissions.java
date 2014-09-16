@@ -13,11 +13,13 @@ public class PopulateMissions {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
-		String titles[] = {"Movimentar cozinheiro", "Perguntar ao cliente e criar variáveis"};
+		String titles[] = {"Usar comandos de depuração"}; //{"Movimentar cozinheiro", "Perguntar ao cliente e criar variáveis"};
 		StringBuffer xml; 
 		BufferedReader arq; 
+		
+		int j = 0;
 
-		for (int i = 1; i < 3; i++) {
+		for (int i = 3; i < 4; i++) {
 			
 			xml = new StringBuffer();
 			arq = new BufferedReader(new FileReader(new File("missions/mission0" + i + ".xml")));
@@ -32,7 +34,8 @@ public class PopulateMissions {
 			} while (true);
 			arq.close();
 			
-			NoBugsConnection.getConnection().insertMission(titles[i-1], xml.toString());
+			NoBugsConnection.getConnection().insertMission(titles[j], xml.toString());
+			j++;
 			
 		}
 		

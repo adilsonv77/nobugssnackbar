@@ -132,7 +132,9 @@ Explanation.evaluateObjectives = function(statement, container) {
 	var tr = document.createElement("tr");
 	var div = document.createElement("td");
 	
-	div.style = "border: 1px solid #FF0; padding: 3px; background-color: #F3F3CA";
+	div.style['border'] = "1px solid #FF0";
+	div.style['padding'] = "3px";
+	div.style.backgroundColor = "#F3F3CA";
 	
 	tr.appendChild(div);
 	table.appendChild(tr);
@@ -207,6 +209,11 @@ Explanation.finishStatement = function() {
 						var nodeItem = parseInt(idhint.substring(idhint.indexOf("#")+1));
 						origin = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[nodeItem].getSvgRoot();
 					}
+				} else {
+					if (originhint === "button") {
+						origin = document.getElementById(idhint);
+						originH = origin.offsetHeight; originW = origin.offsetWidth;
+					}
 				}
 			}
 
@@ -245,6 +252,9 @@ Explanation.finishStatement = function() {
 		bX = bbBox.x;
 	}
 	
+	var dialogClientHeight = dialog.clientHeight + 25 + 15 + 10 + 2; // 25 - header; 15 - header's margin; 10 - dialog's padding
+	var dialogClientWidth = dialog.clientWidth + 20 + 2;
+	
 	switch (dir) {
 		  case "up" :
 			style.top = (bY + originH);
@@ -252,23 +262,23 @@ Explanation.finishStatement = function() {
 			break;
 		
 		  case "down":
-			style.top = (bY - (dialog.clientHeight + originH));
+			style.top = (bY - dialogClientHeight);
 			style.left = bX;
 			break;
 			
 		  case "run":
-			style.top = (bY - (dialog.clientHeight/2));
+			style.top = (bY - (dialogClientHeight/2));
 			style.left = (bX + originW);
 			break;
 			
 		  case "stack":
-			style.top = (bY - (dialog.clientHeight/2));
-			style.left = (bX - dialog.clientWidth - 20);
+			style.top = (bY - (dialogClientHeight/2));
+			style.left = (bX - dialogClientWidth - 20);
 			break;
 	}
 	
 	if (style.left < 0) {
-		style.width = (dialog.clientWidth + style.left) + "px"; // because left is minus then you can add this value
+		style.width = (dialogClientWidth + style.left) + "px"; // because left is minus then you can add this value
 		style.left = 0;
 	}
 	style.top = style.top + "px";

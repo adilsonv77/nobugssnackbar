@@ -61,15 +61,15 @@ Game.init = function() {
     Game.preloadImgs.push('images/fundo.png');
     Game.preloadImgs.push('images/doors.png');
 	
-	UserControl.verifyLogged(function(ret) {
+    Game.loadImgs(); // if the user's key is stored in cookies, then the system will not show the login dialog
+
+    UserControl.verifyLogged(function(ret) {
 		
 		if (ret) 
 			Game.logged();
 		else {
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
-		    
-		    Game.loadImgs();
 		    
 			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
 					null, false, true, true, "Login", {width: "270px"}, 
@@ -496,7 +496,10 @@ Game.execute = function(debug) {
 
 	  
 	  try {
-  	    var code = Blockly.JavaScript.workspaceToCode();
+		  
+		var js = new MyBlocklyGenerator('JavaScript');
+		  
+  	    var code = js.workspaceToCode();
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
@@ -509,6 +512,8 @@ Game.execute = function(debug) {
 		      Game.resetButtons();
 		      return;
 		  }
+		  
+		  console.log(e);
 		  
 	  }
 	  
