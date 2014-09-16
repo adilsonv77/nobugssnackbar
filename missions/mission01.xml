@@ -32,7 +32,7 @@
 	<cooker>initial</cooker>
 	<customers>
 	</customers>
-	<objectives ordered="true" reward="5" maxCommands="3" maxCommandsReward="10">
+	<objectives ordered="true" reward="5" maxCommands="3" maxCommandsReward="2">
 		<objective pos="1">counter</objective>
 		<objective pos="3">counter</objective>
 		<objective pos="4">counter</objective>

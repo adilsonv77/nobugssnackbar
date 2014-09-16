@@ -54,6 +54,10 @@ public class UserControl {
 	@RemoteMethod
 	public String loadMission() throws SQLException {
 		String[][] r = NoBugsConnection.getConnection().loadMission(this.user);
+		
+		if (r == null)
+			return null;
+		
 		this.mission = Integer.parseInt(r[0][0]);
 		return  r[0][1];
 	}

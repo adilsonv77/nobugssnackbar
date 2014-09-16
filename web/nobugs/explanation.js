@@ -128,6 +128,21 @@ Explanation.evaluateObjectives = function(statement, container) {
 		ul.appendChild(obj);
 	}
 	
+	var table = document.createElement("table");
+	var tr = document.createElement("tr");
+	var div = document.createElement("td");
+	
+	div.style = "border: 1px solid #FF0; padding: 3px; background-color: #F3F3CA";
+	
+	tr.appendChild(div);
+	table.appendChild(tr);
+	container.appendChild(table);
+	
+	var msg = BlocklyApps.getMsg("rewardExplanation");
+	parts = msg.split(/%\d/);
+	div.innerHTML = parts[0] + hero.objective.reward + "<img style='vertical-align: middle;' src='images/coin2.png'/>" + parts[1] + "<br/>"  + hero.objective.maxCommandsReward+ 
+	                "<img style='vertical-align: middle;' src='images/coin2.png'/>" + parts[2] + hero.objective.maxCommands + parts[3];
+	
 };
 
 Explanation.finishStatement = function() {

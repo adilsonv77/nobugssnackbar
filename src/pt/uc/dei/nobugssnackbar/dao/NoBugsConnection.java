@@ -81,7 +81,12 @@ public class NoBugsConnection {
 		ps.setLong(2, user.getId());
 		
 		ResultSet rs = ps.executeQuery();
-		rs.next();
+		boolean hasMoreMissions = rs.next();
+		if (!hasMoreMissions) {
+			ps.close();
+			return null;
+		}
+		
 		long missionId = rs.getLong(1);
 		ps.close();
 		

@@ -29,7 +29,9 @@
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. O jogo carregar&#225; uma nova miss&#227;o.",
-	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.", 
+	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.",
+	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. N&#227;o existem mais miss&#245;es para si.", 
+	"NoBugs.rewardExplanation" : "Receba %1 se cumprir todos os objetivos acima. Voc&#234; receber&#225; um b&#244;nus de %2 se cumprir a miss&#227;o com %3 comandos ou menos.",
 	
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
