@@ -58,6 +58,8 @@ Game.jsInterpreter;
  */
 Game.init = function() {
 	
+	Game.currTime = new Date().getTime();
+	
     Game.preloadImgs.push('images/fundo.png');
     Game.preloadImgs.push('images/doors.png');
 	
@@ -68,6 +70,8 @@ Game.init = function() {
 		if (ret) 
 			Game.logged();
 		else {
+			window.removeEventListener('unload', Game.unload);
+
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
 		    
@@ -159,15 +163,8 @@ Game.logged = function() {
   // (execute) and the infinite loop detection function.
   Blockly.JavaScript.addReservedWords('Game, code');
 
-  /* enabled this in future
-  window.addEventListener('beforeunload', function(e) {
-    if (Blockly.mainWorkspace.getAllBlocks().length > 2) {
-      e.returnValue = BlocklyApps.getMsg('NoBugs_unloadWarning');  // Gecko.
-      return BlocklyApps.getMsg('NoBugs_unloadWarning');  // Webkit.
-    }
-    return null;
-  });
- */
+  window.addEventListener('unload', Game.unload);
+ 
   
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
@@ -200,6 +197,15 @@ Game.logged = function() {
 	  
   };
   
+};
+
+Game.unload = function(e) {
+
+	var now = new Date().getTime();
+	UserControl.nextMission(0, Math.floor((now - Game.currTime)/1000), false, 
+			{callback:function(ret) {}, async:false});
+	
+    return null;
 };
 
 Game.missionLoaded = function(ret){
@@ -394,22 +400,26 @@ Game.countInstructions = function(c) {
 Game.goalButtonClick = function() {
 	
   Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+  
 };
 
 Game.logoffButtonClick = function() {
-	UserControl.logoff(function(){
+	var now = new Date().getTime();
+	
+	UserControl.logoff(Math.floor((now - Game.currTime)/1000), function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
 	});
 };
 
+/*
 Game.xmlButtonClick = function() {
 	//var code = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 	var code = Blockly.JavaScript.workspaceToCode();
 	alert(code);
 };
-
+*/
 /**
  * Click the run button.  Start the program.
  */
@@ -577,8 +587,10 @@ Game.nextStep = function() {
 			    	 
 			    	var reward = hero.addReward(count);
 			    	Game.money = parseInt(Game.money) + reward;
-			    	// TODO 10 substituir pelo tempo dispendido
-			    	UserControl.nextMission(reward, 10, function(ret){
+
+			    	var now = new Date().getTime();
+			    	
+			    	UserControl.nextMission(reward, Math.floor((now - Game.currTime)/1000), true, function(ret){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				

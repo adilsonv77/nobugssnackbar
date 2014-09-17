@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.control;
 
 import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -13,9 +14,9 @@ import pt.uc.dei.nobugssnackbar.model.User;
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
 
-//	private static Logger log = Logger.getGlobal();
+	private static Logger log = Logger.getGlobal();
 	private User user;
-	private int mission;
+	private int mission = 0;
 	
 	@RemoteMethod
 	public boolean verifyLogged() {
@@ -23,7 +24,12 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void logoff() {
+	public void logoff(int timeSpend) throws SQLException {
+		
+		log.info("logoff " + timeSpend);
+		if (this.mission != 0)
+			NoBugsConnection.getConnection().finishMission(this.user, this.mission, 0, timeSpend, false);
+		
 		this.user = null;
 	}
 	
@@ -55,18 +61,23 @@ public class UserControl {
 	public String loadMission() throws SQLException {
 		String[][] r = NoBugsConnection.getConnection().loadMission(this.user);
 		
-		if (r == null)
+		if (r == null) {
+			this.mission = 0;
 			return null;
+		}
 		
 		this.mission = Integer.parseInt(r[0][0]);
 		return  r[0][1];
 	}
 	
 	@RemoteMethod
-	public String nextMission(int money, int timeSpend) throws SQLException {
+	public String nextMission(int money, int timeSpend, boolean achieved) throws SQLException {
+		
+		log.info("nextMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
+		
 		this.user.setMoney(this.user.getMoney() + money);
 		
-		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend);
+		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend, achieved);
 		
 		return loadMission();
 	}

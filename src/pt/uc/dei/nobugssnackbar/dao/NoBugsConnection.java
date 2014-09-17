@@ -73,7 +73,7 @@ public class NoBugsConnection {
 		String query =
 				"SELECT cm.missionid, cm.classid"+ 
 			    "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"+ 
-			    "    WHERE ma.missionid IS NULL AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"+ 
+			    "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"+ 
 			    "    ORDER BY missionorder";
 			
 		PreparedStatement ps = bdCon.prepareStatement(query);
@@ -106,25 +106,39 @@ public class NoBugsConnection {
 		
 	}
 
-	public void finishMission(User user, long idMission, int money, int timeSpend) throws SQLException {
+	public void finishMission(User user, long idMission, int money, int timeSpend, boolean achieved) throws SQLException {
 		
-		PreparedStatement ps = bdCon.prepareStatement("insert into missionsaccomplished "
-				+ "(missionid, userid, timespend, achieved, money) values (?, ?, ?, ?, ?)");
+		Statement st = bdCon.createStatement();
+		ResultSet rs = st.executeQuery("select timespend from missionsaccomplished where missionid = "+idMission+" and userid = "+user.getId());
+		boolean found = (rs.next());
+		if (found)
+			timeSpend += rs.getInt(1);
+		st.close();
 		
-		ps.setLong(1, idMission);
-		ps.setLong(2, user.getId());
-		ps.setLong(3, timeSpend);
-		ps.setString(4, "S");
-		ps.setInt(5, money);
+		PreparedStatement ps;
+		if (found) {
+			ps = bdCon.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ? "
+					+ "where missionid = ? and userid = ?");
+		} else {
+			ps = bdCon.prepareStatement("insert into missionsaccomplished "
+					+ "(timespend, achieved, money, missionid, userid) values (?, ?, ?, ?, ?)");
+		}
+		
+		ps.setLong(1, timeSpend);
+		ps.setString(2, (achieved?"T":"F"));
+		ps.setInt(3, money);
+		ps.setLong(4, idMission);
+		ps.setLong(5, user.getId());
 		
 		ps.executeUpdate();
 		ps.close();
-		
-		ps = bdCon.prepareStatement("update users set usermoney = ? where userid = ?");
-		ps.setLong(1, user.getMoney());
-		ps.setLong(2, user.getId());
-		ps.executeUpdate();
-		ps.close();
+		if (achieved) {
+			ps = bdCon.prepareStatement("update users set usermoney = ? where userid = ?");
+			ps.setLong(1, user.getMoney());
+			ps.setLong(2, user.getId());
+			ps.executeUpdate();
+			ps.close();
+		}
 		
 	}
 
