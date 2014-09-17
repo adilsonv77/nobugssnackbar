@@ -221,6 +221,7 @@ Explanation.finishStatement = function() {
 		}
 	}
 	
+	Game.currTime = new Date().getTime();
 	if (Explanation.hintNumber == -1)
 		return;
 		
@@ -284,6 +285,9 @@ Explanation.finishStatement = function() {
 	style.top = style.top + "px";
 	style.left = style.left + "px";
 	
-	BlocklyApps.showDialog(dialog, null, false, true, style, null);
+	BlocklyApps.showDialog(dialog, null, false, true, style, 
+			function(){
+				Game.currTime = new Date().getTime();
+			});
 };
 
