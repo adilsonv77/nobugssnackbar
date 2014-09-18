@@ -404,6 +404,13 @@ Game.goalButtonClick = function() {
 };
 
 Game.logoffButtonClick = function() {
+	
+	$('#vars').datagrid('loadData', {
+		"total": 0, "rows": []
+	});
+    Game.doResizeWindow("none");
+
+	
 	var now = new Date().getTime();
 	
 	UserControl.logoff(Math.floor((now - Game.currTime)/1000), function(){
@@ -489,6 +496,10 @@ Game.resetButtons = function() {
 	Blockly.mainWorkspace.traceOn(false); 
 	
 	Game.runningStatus = 0;
+	
+	$('#vars').datagrid('loadData', {
+		"total": 0, "rows": []
+	});
 };
 
 
@@ -502,6 +513,11 @@ Game.execute = function(debug) {
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
 	  // Reset the graphic.
+		
+		$('#vars').datagrid('loadData', {
+			"total": 0, "rows": []
+		});
+
 	  Game.reset();
 
 	  
