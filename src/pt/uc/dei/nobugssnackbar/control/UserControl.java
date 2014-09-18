@@ -89,4 +89,9 @@ public class UserControl {
 		
 		return this.user.getMoney();
 	}
+	
+	@RemoteMethod
+	public void registerExecution() throws SQLException {
+		NoBugsConnection.getConnection().addExecutionInMission(this.user, this.mission);
+	}
 }

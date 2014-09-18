@@ -105,23 +105,32 @@ public class NoBugsConnection {
 		return ret;
 		
 	}
+	
+	private int loadMissionAccomplished(long idMission, long idUser) throws SQLException {
+		
+		Statement st = bdCon.createStatement();
+		ResultSet rs = st.executeQuery("select timespend from missionsaccomplished where missionid = "+idMission+" and userid = "+idUser);
+		int timeSpend = -1;
+		if (rs.next())
+			timeSpend = rs.getInt(1);
+		st.close();
+		
+		return timeSpend;
+		
+	}
 
 	public void finishMission(User user, long idMission, int money, int timeSpend, boolean achieved) throws SQLException {
 		
-		Statement st = bdCon.createStatement();
-		ResultSet rs = st.executeQuery("select timespend from missionsaccomplished where missionid = "+idMission+" and userid = "+user.getId());
-		boolean found = (rs.next());
-		if (found)
-			timeSpend += rs.getInt(1);
-		st.close();
+		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
 		
 		PreparedStatement ps;
-		if (found) {
+		if (localTimeSpend == -1) {
+			ps = bdCon.prepareStatement("insert into missionsaccomplished "
+					+ "(timespend, achieved, money, missionid, userid, executions) values (?, ?, ?, ?, ?, 1)");
+		} else {
 			ps = bdCon.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ? "
 					+ "where missionid = ? and userid = ?");
-		} else {
-			ps = bdCon.prepareStatement("insert into missionsaccomplished "
-					+ "(timespend, achieved, money, missionid, userid) values (?, ?, ?, ?, ?)");
+			timeSpend += localTimeSpend;
 		}
 		
 		ps.setLong(1, timeSpend);
@@ -149,6 +158,25 @@ public class NoBugsConnection {
 		
 		ps.executeUpdate();
 		ps.close();		
+	}
+
+	public void addExecutionInMission(User user, int idMission) throws SQLException {
+		
+		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
+		PreparedStatement ps;
+		if (localTimeSpend == -1) {
+			ps = bdCon.prepareStatement("insert into missionsaccomplished "+
+					"(timespend, achieved, money, missionid, userid, executions) values (0, 'F', 0, ?, ?, 1)");
+		} else {
+			ps = bdCon.prepareStatement("update missionsaccomplished set executions = executions + 1 "
+					+ "where missionid = ? and userid = ?");
+		}
+		
+		ps.setLong(1, idMission);
+		ps.setLong(2, user.getId());
+
+		ps.executeUpdate();
+		ps.close();
 	}
 	
 }

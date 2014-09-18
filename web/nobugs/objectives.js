@@ -102,6 +102,22 @@ AskForFood.prototype.init = function(elem) {
 
 AskForFood.prototype.checkObjective = function(customer, objective)  {
 
+	if (objective.distinct) {
+		// the variable must not be initialized
+		var vars = Game.jsInterpreter.variables;
+		
+		// always the first variable is NoBugsJavaScript.varName
+		var NoBugsJavaScript_varName = vars[0].scope.properties["NoBugsJavaScript"].properties["varName"].data;
+		
+		for (var i=1; i<vars.length; i++)
+			if (vars[i].name === NoBugsJavaScript_varName) {
+				if (vars[i].scope.properties[NoBugsJavaScript_varName].data != undefined)
+					return;
+				else
+					break;
+			}
+		
+	}
 	if (objective.place === "counter") {
 		if (customer.currentNode.id === CustOpt.counter[objective.pos-1]) {
 	

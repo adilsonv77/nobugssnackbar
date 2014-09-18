@@ -508,8 +508,11 @@ Game.execute = function(debug) {
 	  try {
 		  
 		var js = new MyBlocklyGenerator('JavaScript');
+		
+		UserControl.registerExecution();
 		  
-  	    var code = js.workspaceToCode();
+  	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
+  	    
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
