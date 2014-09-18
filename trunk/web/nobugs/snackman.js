@@ -112,9 +112,9 @@ SnackMan = function(position, objectives) {
 	
 	this.objective.objectives = [];
 	this.objective.ordered = objectives.getAttribute("ordered") === "true";
-	this.objective.reward = objectives.getAttribute("reward"); 
-	this.objective.maxCommands = objectives.getAttribute("maxCommands"); 
-	this.objective.maxCommandsReward = objectives.getAttribute("maxCommandsReward"); 
+	this.objective.reward = parseInt( objectives.getAttribute("reward") ); 
+	this.objective.maxCommands = parseInt( objectives.getAttribute("maxCommands") ); 
+	this.objective.maxCommandsReward = parseInt( objectives.getAttribute("maxCommandsReward") ); 
 	
 	this.objective.debug = objectives.getAttribute("debug") === "true"; 
 	
