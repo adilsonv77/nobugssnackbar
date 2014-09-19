@@ -411,7 +411,8 @@ Game.logoffButtonClick = function() {
 		"total": 0, "rows": []
 	});
     Game.doResizeWindow("none");
-
+    Game.reset();
+    Game.runningStatus = 0;
 	
 	var now = new Date().getTime();
 	
@@ -580,6 +581,8 @@ Game.updateVariables = function() {
 };
 
 Game.nextStep = function() {
+	if (Game.runningStatus == 0)
+		return;
 	
 	while (true) {
 		try {
