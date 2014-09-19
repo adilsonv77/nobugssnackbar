@@ -88,8 +88,7 @@ Game.init = function() {
 
 			};
 			
-			  document.body.addEventListener('keydown',
-					  loginKeyDown, true);
+			  document.body.addEventListener('keydown', loginKeyDown, false);
 		}
 	});
 
