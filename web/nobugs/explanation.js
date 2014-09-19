@@ -36,8 +36,11 @@ Explanation.showInfo = function(explanation, withHint) {
 	Explanation.pageNumber = 0;
 	Explanation.explanation = explanation;
 
-	Explanation.createDialog(Explanation.firstStatement);
-	
+	if (withHint)
+		Explanation.createDialog(Explanation.firstStatement);
+	else
+		Explanation.createDialog(Explanation.lastStatement);
+		
 	Explanation.showHint = withHint;
 	Explanation.hintNumber = -1;
 };
