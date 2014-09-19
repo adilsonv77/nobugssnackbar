@@ -71,7 +71,7 @@ public class NoBugsConnection {
 	public String[][] loadMission(User user) throws SQLException {
 		
 		String query =
-				"SELECT cm.missionid, cm.classid"+ 
+				"SELECT cm.missionid, cm.classid, cm.missionorder"+ 
 			    "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"+ 
 			    "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"+ 
 			    "    ORDER BY missionorder";
@@ -88,6 +88,7 @@ public class NoBugsConnection {
 		}
 		
 		long missionId = rs.getLong(1);
+		int missionOrder = rs.getInt(3);
 		ps.close();
 		
 		// TODO se o usuario pertence a mais de uma classe, ele precisa selecionar quais das missoes ele deseja fazer
@@ -98,9 +99,10 @@ public class NoBugsConnection {
 		String xml = rs.getString(1);
 		st.close();
 		
-		String[][] ret = new String[1][2];
+		String[][] ret = new String[1][3];
 		ret[0][0] = missionId + "";
-		ret[0][1] = xml;
+		ret[0][2] = xml;
+		ret[0][1] = missionOrder + "";
 		
 		return ret;
 		

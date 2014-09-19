@@ -99,7 +99,7 @@ Explanation.createDialog = function(nrPage) {
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 
 	MyBlocklyApps.showDialog(content, (nrPage==0?document.getElementById('goalButton'):null),
-							 true, true, true, null, style, null);
+							 true, true, true, Game.missionTitle, style, null);
 	
 };
 

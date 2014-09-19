@@ -54,6 +54,7 @@
 	"Error.isntThirsty": "O cliente n&#227;o est&#225; com sede.",
 	
 	"Single.Counter" : "no balc&#227;o",
+	"Single.Mission" : "miss&#227;o",
 	"GoTo.Counter":"V&#225; para o balc&#227;o %1.",
 	"AskFor.Food":"Pergunta pelo que o cliente %1 deseja comer."
 }
