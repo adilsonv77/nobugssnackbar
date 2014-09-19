@@ -482,6 +482,9 @@ Game.debugButtonClick = function() {
 		
   	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
+	} else {
+		if (!Blockly.mainWorkspace.traceOn_) // the second complete debug didn't show the highlight on the blocks 
+			Blockly.mainWorkspace.traceOn(true);
 	}
 	
 	Game.execute(2);
@@ -636,6 +639,14 @@ Game.nextStep = function() {
 };
 
 Game.initApi = function(interpreter, scope) {
+    // utilities commands
+	var wrapper = function() {
+        return interpreter.createPrimitive(Game.updateVariables());
+      };
+    
+    interpreter.setProperty(scope, 'updateVariables',
+          interpreter.createNativeFunction(wrapper));
+
     var wrapper = function(id) {
         id = id ? id.toString() : '';
         return interpreter.createPrimitive(Game.highlightBlock(id));
@@ -670,13 +681,15 @@ Game.initApi = function(interpreter, scope) {
 	      return interpreter.createPrimitive(hero.isThereACustomer());
 	    };
 	    
+	// see commands
     interpreter.setProperty(scope, 'isThereACustomer',
       interpreter.createNativeFunction(wrapper));
     
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.hasHunger());
 	    };
-		    
+		  
+  // ask the customer commands
   interpreter.setProperty(scope, 'hasHunger',
 	      interpreter.createNativeFunction(wrapper));
   
@@ -686,13 +699,6 @@ Game.initApi = function(interpreter, scope) {
     
    interpreter.setProperty(scope, 'askForFood',
      interpreter.createNativeFunction(wrapper));
-
-    wrapper = function(o) {
-	      return interpreter.createPrimitive(hero.catchFood(o));
-	    };
-	    
-    interpreter.setProperty(scope, 'catchFood',
-	  interpreter.createNativeFunction(wrapper));
 
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.hasThirsty());
@@ -708,6 +714,14 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'askForDrink',
       interpreter.createNativeFunction(wrapper));
     
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.catchFood(o));
+	    };
+	    
+	// other commands
+    interpreter.setProperty(scope, 'catchFood',
+		  interpreter.createNativeFunction(wrapper));
+	
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.catchDrink(o));
 	    };

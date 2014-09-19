@@ -233,7 +233,14 @@ SnackMan.prototype.askForDrink = function() {
 		throw false;
 	}
 	
-	return found.askForDrink();
+	var drink = found.askForDrink();
+	if (drink == null) {
+		BlocklyApps.log.push(["fail", "Error_isntThirsty"]);
+		throw false;
+	}
+
+	
+	return drink;
 };
 
 SnackMan.prototype.catchDrink = function(order) {
@@ -305,9 +312,15 @@ SnackMan.prototype.askForFood = function() {
 		throw false;
 	}
 	
+	var food = found.askForFood();
+	if (food == null) {
+		BlocklyApps.log.push(["fail", "Error_isntHunger"]);
+		throw false;
+	}
+	
 	this.verifyObjectives("askForFood", found);
 	
-	return found.askForFood();
+	return food;
 };
 
 SnackMan.prototype.hasHunger = function() {
@@ -382,7 +395,9 @@ SnackMan.prototype.deliver = function(item) {
 	
 	var amount = found.deliver(item.data); 
 
-	// 11 times to execute the coin animation and erase de coin
+	item.data = null; // was deliver, then it's null
+	
+	// 11 times to execute the coin animation and erase the coin
 	for (var i=0; i<11; i++) {
 		BlocklyApps.log.push(['IM', 0]);
 		CustomerManager.update();

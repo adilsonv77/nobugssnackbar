@@ -204,6 +204,7 @@ Blockly.Blocks['do_deliver'] = {
 Blockly.JavaScript['do_deliver'] = function(block) {
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'highlightBlock('+block.id+'); \n deliver(' + value + ');\n';
+	  //
+	  return 'highlightBlock('+block.id+'); \n deliver(' + value + ');\n updateVariables(); \n ';
 	};
 

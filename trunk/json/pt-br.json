@@ -50,6 +50,8 @@
 	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; geladeira.",
 	"Error.doesntHaveOrder": "O cozinheiro esqueceu de anotar o pedido.",
 	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido.",
+	"Error.isntHunger": "O cliente n&#227;o est&#225; com fome.",
+	"Error.isntThirsty": "O cliente n&#227;o est&#225; com sede.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"GoTo.Counter":"V&#225; para o balc&#227;o %1.",
