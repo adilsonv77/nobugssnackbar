@@ -58,7 +58,7 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public String loadMission() throws SQLException {
+	public String[] loadMission() throws SQLException {
 		String[][] r = NoBugsConnection.getConnection().loadMission(this.user);
 		
 		if (r == null) {
@@ -67,11 +67,11 @@ public class UserControl {
 		}
 		
 		this.mission = Integer.parseInt(r[0][0]);
-		return  r[0][1];
+		return  new String[]{r[0][1], r[0][2]} ;
 	}
 	
 	@RemoteMethod
-	public String nextMission(int money, int timeSpend, boolean achieved) throws SQLException {
+	public String[] nextMission(int money, int timeSpend, boolean achieved) throws SQLException {
 		
 		log.info("nextMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
 		

@@ -216,7 +216,10 @@ Game.missionLoaded = function(ret){
 	  return;
   }
 	  
-  var mission = transformStrToXml(ret); 
+  var xml = ret[1];
+  var mission = transformStrToXml(xml);
+  var t = BlocklyApps.getMsg("_mission");
+  Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
