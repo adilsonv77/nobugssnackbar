@@ -200,8 +200,10 @@ Game.logged = function() {
 
 Game.unload = function(e) {
 
+    var answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 	var now = new Date().getTime();
-	UserControl.nextMission(0, Math.floor((now - Game.currTime)/1000), false, 
+	
+	UserControl.nextMission(0, Math.floor((now - Game.currTime)/1000), false, answer, 
 			{callback:function(ret) {}, async:false});
 	
     return null;
@@ -235,7 +237,13 @@ Game.missionLoaded = function(ret){
 		              mission.childNodes[0].getElementsByTagName("objectives")[0]);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   
-  var xml = Blockly.Xml.textToDom(sourceXML.outerHTML);
+  var previousWork = ret[2];
+  
+  var xml;
+  if (previousWork == null)
+	  xml = Blockly.Xml.textToDom(sourceXML.outerHTML);
+  else
+	  xml = Blockly.Xml.textToDom(previousWork);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
 
   var loginLoaded = function(data) {
@@ -414,9 +422,12 @@ Game.logoffButtonClick = function() {
     Game.reset();
     Game.runningStatus = 0;
 	
+    document.getElementById('blockly').innerHTML = ""; // clean the editor
+    
+    var answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 	var now = new Date().getTime();
 	
-	UserControl.logoff(Math.floor((now - Game.currTime)/1000), function(){
+	UserControl.logoff(Math.floor((now - Game.currTime)/1000), answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
@@ -615,9 +626,10 @@ Game.nextStep = function() {
 			    	var reward = hero.addReward(count);
 			    	Game.money = parseInt(Game.money) + reward;
 
+			        var answer = Blockly.Xml.domToText(xml);
 			    	var now = new Date().getTime();
 			    	
-			    	UserControl.nextMission(reward, Math.floor((now - Game.currTime)/1000), true, function(ret){
+			    	UserControl.nextMission(reward, Math.floor((now - Game.currTime)/1000), true, answer, function(ret){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				

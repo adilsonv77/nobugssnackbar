@@ -2,7 +2,7 @@ var Explanation = {};
 
 Explanation.selectCommands = function(commands) {
 	
-	var ret = {"loop": true, "logic": true, "math": true, "vars": true, "function": true };
+	var ret = {"snackMan": true, "loop": true, "logic": true, "math": true, "vars": true, "function": true, "const": true };
 	var comms = commands.children;
 	for (var i=0; i < comms.length; i++) {
 		var group = comms[i];

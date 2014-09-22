@@ -23,6 +23,8 @@
     <span id="SnackMan_goToCoolerTooltip">{msg meaning="SnackMan.goToCoolerTooltip" desc="--"}Moves the snack man to the cooler.{/msg}</span>
     <span id="SnackMan_askForFoodTooltip">{msg meaning="SnackMan.askForFoodTooltip" desc="--"}Asks the customer about his order.{/msg}</span>
     <span id="SnackMan_isThereACustomerTooltip">{msg meaning="SnackMan.isThereACustomerTooltip" desc="--"}Verify if there is a customer in the currently position.{/msg}</span>
+    <span id="SnackMan_catchFoodTooltip">{msg meaning="SnackMan.catchFoodTooltip" desc="--"}Catches the food from the display and put it on a platter ready will deliver to the customer.{/msg}</span>
+    <span id="SnackMan_deliverTooltip">{msg meaning="SnackMan.deliverTooltip" desc="--"}Delivers the food or drink to the customer near the cooker.{/msg}</span>
 
 	//Errors
 	<span id="Error_login">{msg meaning="Error.login" desc="--"}User not found.{/msg}</span>
@@ -312,31 +314,56 @@
  */
 {template .toolbox}
   <xml id="toolbox" style="display: none">
-    <category name="{msg meaning="SnackMan.catSnackMan" desc="--"}SnackMan{/msg}">
-      {if $ij.enabled['goToBarCounter'] == null}
-      <block type="move_goToBarCounter">
-        <value name="VALUE">
-          <block type="math_number">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-      </block>
-      {/if}
-      {if $ij.enabled['isThereACustomer'] == null}<block type="ask_isThereACustomer"> </block>{/if}
-
-      {if $ij.enabled['askHasHunger'] == null}<block type="ask_askHasHunger"> </block>{/if}
-      {if $ij.enabled['askForFood'] == null}<block type="ask_askForFood"> </block>{/if}
-      {if $ij.enabled['goToDisplay'] == null}<block type="move_goToDisplay"> </block>{/if}
-      {if $ij.enabled['catchFood'] == null}<block type="prepare_catchFood"> </block>{/if}
-
-      {if $ij.enabled['askHasThirsty'] == null}<block type="ask_askHasThirsty"> </block>{/if}
-      {if $ij.enabled['askForDrink'] == null}<block type="ask_askForDrink"> </block>{/if}
-      {if $ij.enabled['goToCooler'] == null}<block type="move_goToCooler"> </block>{/if}
-      {if $ij.enabled['catchDrink'] == null}<block type="prepare_catchDrink"> </block>{/if}
-      
-      {if $ij.enabled['deliver'] == null}<block type="do_deliver"> </block>{/if}
-
-    </category>
+    {if $ij.enabled['snackMan']}
+	    <category name="{msg meaning="SnackMan.catSnackMan" desc="--"}SnackMan{/msg}">
+	      {if $ij.enabled['goToBarCounter'] == null}
+	      <block type="move_goToBarCounter">
+	        <value name="VALUE">
+	          <block type="math_number">
+	            <field name="NUM">1</field>
+	          </block>
+	        </value>
+	      </block>
+	      {/if}
+	      {if $ij.enabled['isThereACustomer'] == null}<block type="ask_isThereACustomer"> </block>{/if}
+	
+	      {if $ij.enabled['askHasHunger'] == null}<block type="ask_askHasHunger"> </block>{/if}
+	      {if $ij.enabled['askForFood'] == null}<block type="ask_askForFood"> </block>{/if}
+	      {if $ij.enabled['goToDisplay'] == null}<block type="move_goToDisplay"> </block>{/if}
+	      {if $ij.enabled['catchFood'] == null}<block type="prepare_catchFood"> </block>{/if}
+	
+	      {if $ij.enabled['askHasThirsty'] == null}<block type="ask_askHasThirsty"> </block>{/if}
+	      {if $ij.enabled['askForDrink'] == null}<block type="ask_askForDrink"> </block>{/if}
+		  {if $ij.enabled['isTypeOfDrink'] == null}<block type="compare_isTypeOfDrink"> </block>{/if}
+	      
+	      {if $ij.enabled['goToCooler'] == null}<block type="move_goToCooler"> </block>{/if}
+	      
+	      {if $ij.enabled['goToBoxOfFruits'] == null}
+	       <block type="move_goToBoxOfFruits">
+		       <value name="VALUE">
+		          <block type="const_orange">
+		          </block>
+	           </value>
+	       </block>
+	       {/if}
+	       
+	      {if $ij.enabled['catchFruits'] == null}<block type="prepare_catchFruits"> </block>{/if}
+	      {if $ij.enabled['goToJuiceMachine'] == null}<block type="move_goToJuiceMachine"> </block>{/if}
+	      {if $ij.enabled['prepareAndCatchJuice'] == null}<block type="prepare_prepareAndCatchJuice"> </block>{/if}
+	      
+	      {if $ij.enabled['catchDrink'] == null}<block type="prepare_catchDrink"> </block>{/if}
+	      
+	      {if $ij.enabled['deliver'] == null}<block type="do_deliver"> </block>{/if}
+	
+	    </category>
+    {/if}
+    {if $ij.enabled['const']}
+    	<category name="{msg meaning="SnackMan.constSnackMan" desc="--"}Constants{/msg}">
+    	 {if $ij.enabled['const.orange'] == null}<block type="const_orange"> </block>{/if}
+    	 {if $ij.enabled['const.softDrink'] == null}<block type="const_softDrink"> </block>{/if}
+        </category>
+    {/if}
+    	
     {if $ij.enabled['logic']}
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>

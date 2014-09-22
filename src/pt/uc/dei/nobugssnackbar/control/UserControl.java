@@ -24,11 +24,11 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void logoff(int timeSpend) throws SQLException {
+	public void logoff(int timeSpend, String answer) throws SQLException {
 		
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
-			NoBugsConnection.getConnection().finishMission(this.user, this.mission, 0, timeSpend, false);
+			NoBugsConnection.getConnection().finishMission(this.user, this.mission, 0, timeSpend, false, answer);
 		
 		this.user = null;
 	}
@@ -67,17 +67,19 @@ public class UserControl {
 		}
 		
 		this.mission = Integer.parseInt(r[0][0]);
-		return  new String[]{r[0][1], r[0][2]} ;
+		return  new String[]{r[0][1], r[0][2], r[0][3]} ;
 	}
 	
 	@RemoteMethod
-	public String[] nextMission(int money, int timeSpend, boolean achieved) throws SQLException {
+	public String[] nextMission(int money, int timeSpend, boolean achieved, String answer) throws SQLException {
+		if (this.user == null)
+			return null;
 		
 		log.info("nextMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
 		
 		this.user.setMoney(this.user.getMoney() + money);
 		
-		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend, achieved);
+		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend, achieved, answer);
 		
 		return loadMission();
 	}
