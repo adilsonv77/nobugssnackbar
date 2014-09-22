@@ -25,6 +25,9 @@
 
 // Extensions to Blockly's language and JavaScript generator.
 
+/******************************************************************************
+ *                          Snackman General
+ ******************************************************************************/	
 Blockly.Blocks['move_goToBarCounter'] = {
 		  // Block for moving to a specific customer in the counter.
 		  init: function() {
@@ -45,40 +48,22 @@ Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  return 'highlightBlock('+block.id+'); \n goToBarCounter(' + value + ');\n';
 	};
 
-Blockly.Blocks['move_goToDisplay'] = {
-		  // Block for moving to the display.
+Blockly.Blocks['do_deliver'] = {
 		  init: function() {
 		    this.setColour(160);
-		   
-		    this.appendDummyInput()
-		        .appendField('goToDisplay');
+		    this.appendValueInput('VALUE')
+		        .appendField('deliver');
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToDisplayTooltip'));
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_deliverTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['move_goToDisplay'] = function(block) {
-	  // Generate JavaScript for moving to the display.
-	  return 'highlightBlock('+block.id+'); \n goToDisplay();\n';
-	};
-
-Blockly.Blocks['move_goToCooler'] = {
-		  // Block for moving to the cooler.
-		  init: function() {
-		    this.setColour(160);
-		   
-		    this.appendDummyInput()
-		        .appendField('goToCooler');
-		    this.setPreviousStatement(true);
-		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCoolerTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['move_goToCooler'] = function(block) {
-	  // Generate JavaScript for moving to the cooler.
-	  return 'highlightBlock('+block.id+'); \n goToCooler();\n';
+Blockly.JavaScript['do_deliver'] = function(block) {
+	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+	  //
+	  return 'highlightBlock('+block.id+'); \n deliver(' + value + ');\n updateVariables(); \n ';
 	};
 
 Blockly.Blocks['ask_isThereACustomer'] = {
@@ -97,7 +82,28 @@ Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
 	  return ['isThereACustomer( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	
 	};
+	
+/******************************************************************************
+ *                          Snackman Food
+ ******************************************************************************/	
+	
+Blockly.Blocks['move_goToDisplay'] = {
+		  // Block for moving to the display.
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendDummyInput()
+		        .appendField('goToDisplay');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToDisplayTooltip'));
+		  }
+		};
 
+Blockly.JavaScript['move_goToDisplay'] = function(block) {
+	  // Generate JavaScript for moving to the display.
+	  return 'highlightBlock('+block.id+'); \n goToDisplay();\n';
+	};
 	
 Blockly.Blocks['ask_askForFood'] = {
 		  init: function() {
@@ -112,34 +118,6 @@ Blockly.Blocks['ask_askForFood'] = {
 Blockly.JavaScript['ask_askForFood'] = function(block) {
 	  return ['askForFood()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
-
-Blockly.Blocks['ask_askForDrink'] = {
-		  init: function() {
-		    this.setColour(160);
-		    this.setOutput(true, "DrinkOrder");
-		    this.appendDummyInput()
-		        .appendField('askForDrink');
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askForDrinkTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['ask_askForDrink'] = function(block) {
-	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
-
-Blockly.Blocks['ask_askHasThirsty'] = {
-		  init: function() {
-		    this.setColour(160);
-		    this.setOutput(true);
-		    this.appendDummyInput()
-		        .appendField('askHasThirsty');
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askHasThirstyTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['ask_askHasThirsty'] = function(block) {
-	return ['hasThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
 
 Blockly.Blocks['ask_askHasHunger'] = {
 		  init: function() {
@@ -172,6 +150,155 @@ Blockly.JavaScript['prepare_catchFood'] = function(block) {
 	return ['catchFood( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+	
+/******************************************************************************
+ *                          Snackman Drinks
+ ******************************************************************************/	
+
+Blockly.Blocks['move_goToCooler'] = {
+		  // Block for moving to the cooler.
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendDummyInput()
+		        .appendField('goToCooler');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCoolerTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['move_goToCooler'] = function(block) {
+	  // Generate JavaScript for moving to the cooler.
+	  return 'highlightBlock('+block.id+'); \n goToCooler();\n';
+	};
+
+Blockly.Blocks['move_goToBoxOfFruits'] = {
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendValueInput("VALUE")
+		        .appendField('goToBoxOfFruits');
+		    
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToBoxOfFruitsTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['move_goToBoxOfFruits'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+
+	  return 'highlightBlock('+block.id+'); \n goToBoxOfFruits(' +  value +');\n';
+	};
+
+Blockly.Blocks['prepare_catchFruits'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendValueInput("VALUE")
+		        .appendField('catchFruits');
+		    
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_catchFruitsTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['prepare_catchFruits'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+
+	  return ['catchFruits(' +  value +')', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+	
+Blockly.Blocks['move_goToJuiceMachine'] = {
+		  init: function() {
+		    this.setColour(160);
+		   
+		    this.appendDummyInput()
+		        .appendField('goToJuiceMachine');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_goToJuiceMachineTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['move_goToJuiceMachine'] = function(block) {
+	  return 'highlightBlock('+block.id+'); \n goToJuiceMachine();\n';
+	};
+	
+Blockly.Blocks['prepare_prepareAndCatchJuice'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendValueInput("VALUE")
+		        .appendField('prepareAndCatchJuice');
+		    
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_prepareAndCatchJuiceTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['prepare_prepareAndCatchJuice'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+
+	  return ['prepareAndCatchJuice(' +  value +')', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+	
+	
+Blockly.Blocks['ask_askForDrink'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "DrinkOrder");
+		    this.appendDummyInput()
+		        .appendField('askForDrink');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askForDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askForDrink'] = function(block) {
+	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['compare_isTypeOfDrink'] = {
+		  // Verify if at this position there is a customer
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "Boolean");
+		    this.appendDummyInput()
+		        .appendField("isTypeOfDrink");
+		    this.appendValueInput("VALUE1")
+	        	.appendField("order");
+		    this.appendValueInput("VALUE2")
+        		.appendField("type");
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_isTypeOfDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['compare_isTypeOfDrink'] = function(block) {
+   
+	 var value1 = Blockly.JavaScript.valueToCode(block, 'VALUE1',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	 var value2 = Blockly.JavaScript.valueToCode(block, 'VALUE2',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	 
+	  return [value1+'.type === '+value2, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	
+	};
+
+Blockly.Blocks['ask_askHasThirsty'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askHasThirsty');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askHasThirstyTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askHasThirsty'] = function(block) {
+	return ['hasThirsty( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
 
 Blockly.Blocks['prepare_catchDrink'] = {
 		  init: function() {
@@ -190,21 +317,34 @@ Blockly.JavaScript['prepare_catchDrink'] = function(block) {
 	return ['catchDrink( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Blocks['do_deliver'] = {
+/******************************************************************************
+ *                          Snackman Constants
+ ******************************************************************************/	
+	
+Blockly.Blocks['const_orange'] = {
 		  init: function() {
-		    this.setColour(160);
-		    this.appendValueInput('VALUE')
-		        .appendField('deliver');
-		    this.setPreviousStatement(true);
-		    this.setNextStatement(true);
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_deliverTooltip'));
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('orange');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_constOrangeTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['do_deliver'] = function(block) {
-	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  //
-	  return 'highlightBlock('+block.id+'); \n deliver(' + value + ');\n updateVariables(); \n ';
-	};
+Blockly.JavaScript['const_orange'] = function(block) {
+	return ['\"orange\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
 
+Blockly.Blocks['const_softDrink'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('softDrink');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_constSoftDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['const_softDrink'] = function(block) {
+	return ['\"softDrink\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};

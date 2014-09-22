@@ -55,6 +55,13 @@ public class NoBugsConnection {
 		u.setMoney(rs.getLong(4));
 		
 		ps.close();
+		
+		
+		ps = bdCon.prepareStatement("update users set userlasttime = ? where userid = ?");
+		ps.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+		ps.setLong(2, u.getId());
+		ps.executeUpdate();
+		
 		return u;
 	}
 
@@ -71,7 +78,7 @@ public class NoBugsConnection {
 	public String[][] loadMission(User user) throws SQLException {
 		
 		String query =
-				"SELECT cm.missionid, cm.classid, cm.missionorder"+ 
+				"SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer"+ 
 			    "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"+ 
 			    "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"+ 
 			    "    ORDER BY missionorder";
@@ -89,6 +96,7 @@ public class NoBugsConnection {
 		
 		long missionId = rs.getLong(1);
 		int missionOrder = rs.getInt(3);
+		String answer = rs.getString(4);
 		ps.close();
 		
 		// TODO se o usuario pertence a mais de uma classe, ele precisa selecionar quais das missoes ele deseja fazer
@@ -99,10 +107,11 @@ public class NoBugsConnection {
 		String xml = rs.getString(1);
 		st.close();
 		
-		String[][] ret = new String[1][3];
+		String[][] ret = new String[1][4];
 		ret[0][0] = missionId + "";
-		ret[0][2] = xml;
 		ret[0][1] = missionOrder + "";
+		ret[0][2] = xml;
+		ret[0][3] = answer;
 		
 		return ret;
 		
@@ -121,16 +130,16 @@ public class NoBugsConnection {
 		
 	}
 
-	public void finishMission(User user, long idMission, int money, int timeSpend, boolean achieved) throws SQLException {
+	public void finishMission(User user, long idMission, int money, int timeSpend, boolean achieved, String answer) throws SQLException {
 		
 		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
 		
 		PreparedStatement ps;
 		if (localTimeSpend == -1) {
 			ps = bdCon.prepareStatement("insert into missionsaccomplished "
-					+ "(timespend, achieved, money, missionid, userid, executions) values (?, ?, ?, ?, ?, 1)");
+					+ "(timespend, achieved, money, answer, missionid, userid, executions) values (?, ?, ?, ?, ?, ?, 1)");
 		} else {
-			ps = bdCon.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ? "
+			ps = bdCon.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ? "
 					+ "where missionid = ? and userid = ?");
 			timeSpend += localTimeSpend;
 		}
@@ -138,8 +147,9 @@ public class NoBugsConnection {
 		ps.setLong(1, timeSpend);
 		ps.setString(2, (achieved?"T":"F"));
 		ps.setInt(3, money);
-		ps.setLong(4, idMission);
-		ps.setLong(5, user.getId());
+		ps.setString(4, answer);
+		ps.setLong(5, idMission);
+		ps.setLong(6, user.getId());
 		
 		ps.executeUpdate();
 		ps.close();

@@ -17,6 +17,7 @@
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa.",
 	"NoBugs.debugTooltip" : "Executar somente um passo.",
+	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o.",
 	
 	"NoBugs.variables" : "Vari&#225;veis",
 	"NoBugs.varname" : "Nome",
