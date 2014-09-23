@@ -2,47 +2,17 @@
 <mission>
 	<explanation>
 		<page type="statement">
-			J&#225; que sabes como ir ao balc&#227;o, agora ter&#225;s dois
-			clientes para treinar o atendimento.
-			<br />
-			Em [SnackMan] ter&#225;s um novo comando a disposi&#231;&#227;o para
-			perguntar ao cliente o que ele deseja comer: [askForFood].
-			<br />
-			Mas a resposta dele precisa ser anotada em algum local, e para isso
-			utilizar&#225;s as vari&#225;veis.
-			<br />
-			Vais precisar de uma vari&#225;vel para cada cliente. Uma delas
-			j&#225; criamos para si.
-			<br />
+		Blablablablablabla
 		</page>
-		<page type="statement">
-			Existem dois clientes &#224; espera. V&#225; at&#233; o cliente,
-			pergunte o que ele deseja comer e guarde essa informa&#231;&#227;o em
-			uma vari&#225;vel.
-			<br />
-			Repita para os dois clientes. <b>Cada pedido guarde em uma vari&#225;vel distinta.</b>
-		</page>
-		<page type="hint" origin="command" id="1" dir="stack">
-			Essa &#233; a op&#231;&#227;o para criar vari&#225;veis.
+		<page type="hint" origin="button" id="debugButton" dir="down">
+			Esse &#233; o bot&#227;o para executar passo-a-passo.
 		</page>
 
 	</explanation>
 	<commands>
-		<category name="logic" show="false" />
-		<category name="loop" show="false" />
-		<category name="math" show="false" />
-		<category name="vars" show="true" />
-		<category name="function" show="false" />
-
-		<category name="goToDisplay" show="false" />
-		<category name="goToCooler" show="false" />
-		<category name="isThereACustomer" show="false" />
-		<category name="askForDrink" show="false" />
-		<category name="askHasThirsty" show="false" />
-		<category name="askHasHunger" show="false" />
-		<category name="catchFood" show="false" />
-		<category name="catchDrink" show="false" />
-		<category name="deliver" show="false" />
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
 	</commands>
 	<cooker>initial</cooker>
 	<customers>
@@ -51,7 +21,6 @@
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<foods>
-				<food qt="1" price="3">hotdog</food>
 			</foods>
 			<drinks></drinks>
 		</customer>
@@ -60,38 +29,31 @@
 			<init>counter4</init>
 			<dest>counter4</dest>
 			<foods>
-				<food qt="1" price="3">hotdog</food>
 			</foods>
 			<drinks></drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="10" maxCommands="4"
-		maxCommandsReward="5">
-		<objective pos="1" place="counter" distinct="true">askForFood</objective>
-		<objective pos="4" place="counter" distinct="true">askForFood</objective>
+	<objectives ordered="true" reward="5" buttonRun="false" variableWindow="false">
+		<objective pos="1">counter</objective>
+		<objective pos="4">counter</objective>
 	</objectives>
 	<xml>
-		<block type="variables_set" inline="true" x = "300" y = "1">
-			<field name="VAR">orderFood</field>
-			<value name="VALUE">
-				<block type="ask_askForFood">
-				</block>
-			</value>
-		</block>
-
 		<block type="move_goToBarCounter" x = "300" y = "50">
 			<value name="VALUE">
 				<block type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
-		</block>
-		<block type="move_goToBarCounter" x = "300" y = "100">
-			<value name="VALUE">
-				<block type="math_number">
-					<field name="NUM">4</field>
+			<next>
+				<block type="move_goToBarCounter">
+					<value name="VALUE">
+						<block type="math_number">
+							<field name="NUM">4</field>
+						</block>
+					</value>
 				</block>
-			</value>
+			</next>
 		</block>
+	
 	</xml>
 </mission>

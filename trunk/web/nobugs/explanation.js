@@ -2,7 +2,7 @@ var Explanation = {};
 
 Explanation.selectCommands = function(commands) {
 	
-	var ret = {"snackMan": true, "loop": true, "logic": true, "math": true, "vars": true, "function": true, "const": true };
+	var ret = {}; // = {"snackMan": true, "loop": true, "logic": true, "math": true, "vars": true, "function": true, "const": true };
 	var comms = commands.children;
 	for (var i=0; i < comms.length; i++) {
 		var group = comms[i];
@@ -117,16 +117,7 @@ Explanation.evaluateObjectives = function(statement, container) {
 		var text = os[i].objective;
 		obj.className = "goal" + (os[i].achieved?"ok":"cancel");
 		
-		var key = "";
-		
-		if (text.indexOf("askFor") == 0) {
-			key = BlocklyApps.getMsg("_"+os[i].place);
-		}
-		text = BlocklyApps.getMsg(text);
-		var parts = text.split(/%\d/);
-		text = parts[0] + key  + " " + os[i].pos + parts[1];
-		
-		obj.innerHTML = text;
+		obj.innerHTML = Objective.factory(text).createExplanationItem(os[i]);
 		
 		ul.appendChild(obj);
 	}
@@ -144,9 +135,17 @@ Explanation.evaluateObjectives = function(statement, container) {
 	container.appendChild(table);
 	
 	var msg = BlocklyApps.getMsg("rewardExplanation");
-	parts = msg.split(/%\d/);
-	div.innerHTML = parts[0] + hero.objective.reward + "<img style='vertical-align: middle;' src='images/coin2.png'/>" + parts[1] + "<br/>"  + hero.objective.maxCommandsReward+ 
-	                "<img style='vertical-align: middle;' src='images/coin2.png'/>" + parts[2] + hero.objective.maxCommands + parts[3];
+	var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+	var out = msg.format(hero.objective.reward + coin2)+ "<br/>";
+	
+	if (hero.objective.maxCommandsReward > 0) {
+
+		msg = BlocklyApps.getMsg("commandBonusExplanation");
+		out = out + msg.format(hero.objective.maxCommandsReward+coin2, hero.objective.maxCommands);
+		
+	}
+	div.innerHTML = out;
+	
 	
 };
 

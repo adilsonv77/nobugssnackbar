@@ -33,7 +33,7 @@ public class Startup implements ServletContextListener {
     	
         try {
 			NoBugsConnection.buildConnection(url, className, username, password);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }

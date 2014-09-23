@@ -4,10 +4,10 @@
 		<page type="statement">
 		Blablablablablabla
 		</page>
-		<page type="hint" origin="button" id="debugButton" dir="down">
-			Esse &#233; o bot&#227;o para executar passo-a-passo.
-		</page>
 
+		<page type="hint" origin="command" id="1" dir="up">
+		Esse bot&#227;o server para criar vari&#225;veis.
+		</page>
 	</explanation>
 	<commands>
 		<category name="snackMan" show="true"/>
@@ -39,9 +39,9 @@
 			<drinks></drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="5" buttonRun="false">
-		<objective pos="1" place="counter">askForFood</objective>
-		<objective pos="4">counter</objective>
+	<objectives ordered="false" reward="7">
+		<objective pos="1" place="counter" distinct="true">askForFood</objective>
+		<objective pos="4" place="counter" distinct="true">askForFood</objective>
 	</objectives>
 	<xml>
 		<block type="variables_set" inline="true" x = "300" y = "1">
@@ -52,19 +52,5 @@
 			</value>
 		</block>
 
-		<block type="move_goToBarCounter" x = "300" y = "50">
-			<value name="VALUE">
-				<block type="math_number">
-					<field name="NUM">1</field>
-				</block>
-			</value>
-		</block>
-		<block type="move_goToBarCounter" x = "300" y = "100">
-			<value name="VALUE">
-				<block type="math_number">
-					<field name="NUM">4</field>
-				</block>
-			</value>
-		</block>
 	</xml>
 </mission>
