@@ -1,0 +1,85 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="statement">
+		Blablablablablabla
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="catchFood" show="true" />
+		<category name="deliver" show="true" />
+		
+
+		<category name="vars" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<foods>
+				<food qt="1" price="3">hotdog</food>
+			</foods>
+			<drinks></drinks>
+		</customer>
+	</customers>
+	<objectives ordered="false" reward="7">
+		<objective pos="3" place="counter">askForFood</objective>
+		<objective pos="3" place="counter">catchFood</objective>
+		<objective pos="3" place="counter">deliver</objective>
+		
+	</objectives>
+	<xml>
+		<block type="variables_set" inline="true" x = "300" y = "1">
+			<field name="VAR">orderFood</field>
+			<value name="VALUE">
+				<block type="ask_askForFood">
+				</block>
+			</value>
+		</block>
+		<block type="variables_set" inline="true" x = "300" y = "50">
+			<field name="VAR">food</field>
+			<value name="VALUE">
+				<block type="prepare_catchFood">
+					<value name="VALUE">
+						<block type="variables_get">
+						   <field name="VAR">orderFood</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" x = "300" y = "100">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" x = "300" y = "150">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToDisplay" x = "300" y = "200">
+		</block>
+		<block type="do_deliver" x = "300" y = "250">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">food</field>
+				</block>
+			</value>
+		</block>
+
+	</xml>
+</mission>

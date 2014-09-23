@@ -47,10 +47,14 @@
     <span id="NoBugs_achieved">{msg meaning="NoBugs.achieved" desc="--"}Achieved{/msg}</span>
     <span id="NoBugs_of">{msg meaning="NoBugs.of" desc="--"}of{/msg}</span>
     
-    <span id="counter">{msg meaning="GoTo.Counter" desc="--"}Go to counter %1.{/msg}</span>
-    <span id="askForFood">{msg meaning="AskFor.Food" desc="--"}Ask the client %1 what he wants to eat.{/msg}</span>
+    <span id="explanation_counter">{msg meaning="Explane.Counter" desc="--"}Go to counter {0}.{/msg}</span>
+    <span id="explanation_askForFood">{msg meaning="Explane.AskForFood" desc="--"}Ask the customer at {0} what he wants to eat.{/msg}</span>
+    <span id="explanation_catchFood">{msg meaning="Explane.CatchFood" desc="--"}Catch the food that the customer at {0} ordered.{/msg}</span>
+    <span id="explanation_deliver">{msg meaning="Explane.Deliver" desc="--"}Deliver what the customer at {0} ordered.{/msg}</span>
+    
     <span id="_counter">{msg meaning="Single.Counter" desc="--"}in the counter{/msg}</span>
-    <span id="rewardExplanation">{msg meaning="NoBugs.rewardExplanation" desc="--"}Reward of %1 if you achieve all the objectives above. You'll receive a bonus of %2 if accomplish this mission in %3 commands or less.{/msg}</span>
+    <span id="rewardExplanation">{msg meaning="NoBugs.rewardExplanation" desc="--"}Reward of {0} if you achieve all the objectives above.{/msg}</span>
+    <span id="commandBonusExplanation">{msg meaning="NoBugs.commandBonusExplanation" desc="--"}You'll receive a bonus of {0} if accomplish this mission in {1} commands or less.{/msg}</span>
     <span id="_mission">{msg meaning="Single.Mission" desc="--"}Mission{/msg}</span>
     
     
@@ -316,7 +320,7 @@
   <xml id="toolbox" style="display: none">
     {if $ij.enabled['snackMan']}
 	    <category name="{msg meaning="SnackMan.catSnackMan" desc="--"}SnackMan{/msg}">
-	      {if $ij.enabled['goToBarCounter'] == null}
+	      {if $ij.enabled['goToBarCounter']}
 	      <block type="move_goToBarCounter">
 	        <value name="VALUE">
 	          <block type="math_number">
@@ -325,20 +329,20 @@
 	        </value>
 	      </block>
 	      {/if}
-	      {if $ij.enabled['isThereACustomer'] == null}<block type="ask_isThereACustomer"> </block>{/if}
+	      {if $ij.enabled['isThereACustomer']}<block type="ask_isThereACustomer"> </block>{/if}
 	
-	      {if $ij.enabled['askHasHunger'] == null}<block type="ask_askHasHunger"> </block>{/if}
-	      {if $ij.enabled['askForFood'] == null}<block type="ask_askForFood"> </block>{/if}
-	      {if $ij.enabled['goToDisplay'] == null}<block type="move_goToDisplay"> </block>{/if}
-	      {if $ij.enabled['catchFood'] == null}<block type="prepare_catchFood"> </block>{/if}
+	      {if $ij.enabled['askHasHunger']}<block type="ask_askHasHunger"> </block>{/if}
+	      {if $ij.enabled['askForFood']}<block type="ask_askForFood"> </block>{/if}
+	      {if $ij.enabled['goToDisplay']}<block type="move_goToDisplay"> </block>{/if}
+	      {if $ij.enabled['catchFood']}<block type="prepare_catchFood"> </block>{/if}
 	
-	      {if $ij.enabled['askHasThirsty'] == null}<block type="ask_askHasThirsty"> </block>{/if}
-	      {if $ij.enabled['askForDrink'] == null}<block type="ask_askForDrink"> </block>{/if}
-		  {if $ij.enabled['isTypeOfDrink'] == null}<block type="compare_isTypeOfDrink"> </block>{/if}
+	      {if $ij.enabled['askHasThirsty']}<block type="ask_askHasThirsty"> </block>{/if}
+	      {if $ij.enabled['askForDrink']}<block type="ask_askForDrink"> </block>{/if}
+		  {if $ij.enabled['isTypeOfDrink']}<block type="compare_isTypeOfDrink"> </block>{/if}
 	      
-	      {if $ij.enabled['goToCooler'] == null}<block type="move_goToCooler"> </block>{/if}
+	      {if $ij.enabled['goToCooler']}<block type="move_goToCooler"> </block>{/if}
 	      
-	      {if $ij.enabled['goToBoxOfFruits'] == null}
+	      {if $ij.enabled['goToBoxOfFruits']}
 	       <block type="move_goToBoxOfFruits">
 		       <value name="VALUE">
 		          <block type="const_orange">
@@ -347,20 +351,20 @@
 	       </block>
 	       {/if}
 	       
-	      {if $ij.enabled['catchFruits'] == null}<block type="prepare_catchFruits"> </block>{/if}
-	      {if $ij.enabled['goToJuiceMachine'] == null}<block type="move_goToJuiceMachine"> </block>{/if}
-	      {if $ij.enabled['prepareAndCatchJuice'] == null}<block type="prepare_prepareAndCatchJuice"> </block>{/if}
+	      {if $ij.enabled['catchFruits']}<block type="prepare_catchFruits"> </block>{/if}
+	      {if $ij.enabled['goToJuiceMachine']}<block type="move_goToJuiceMachine"> </block>{/if}
+	      {if $ij.enabled['prepareAndCatchJuice']}<block type="prepare_prepareAndCatchJuice"> </block>{/if}
 	      
-	      {if $ij.enabled['catchDrink'] == null}<block type="prepare_catchDrink"> </block>{/if}
+	      {if $ij.enabled['catchDrink']}<block type="prepare_catchDrink"> </block>{/if}
 	      
-	      {if $ij.enabled['deliver'] == null}<block type="do_deliver"> </block>{/if}
+	      {if $ij.enabled['deliver']}<block type="do_deliver"> </block>{/if}
 	
 	    </category>
     {/if}
     {if $ij.enabled['const']}
     	<category name="{msg meaning="SnackMan.constSnackMan" desc="--"}Constants{/msg}">
-    	 {if $ij.enabled['const.orange'] == null}<block type="const_orange"> </block>{/if}
-    	 {if $ij.enabled['const.softDrink'] == null}<block type="const_softDrink"> </block>{/if}
+    	 {if $ij.enabled['const.orange']}<block type="const_orange"> </block>{/if}
+    	 {if $ij.enabled['const.softDrink']}<block type="const_softDrink"> </block>{/if}
         </category>
     {/if}
     	
@@ -375,9 +379,9 @@
     {/if}
     {if $ij.enabled['loop']}
     <category name="{msg meaning="Apps.catLoops" desc="--"}Loops{/msg}">
-      {if $ij.enabled['whileUntil'] == null}<block type="controls_whileUntil"></block>{/if}
+      {if $ij.enabled['whileUntil']}<block type="controls_whileUntil"></block>{/if}
       
-      {if $ij.enabled['for'] == null}
+      {if $ij.enabled['for']}
       <block type="controls_for">
         <value name="FROM">
           <block type="math_number">

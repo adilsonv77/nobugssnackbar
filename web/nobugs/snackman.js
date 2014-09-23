@@ -112,9 +112,13 @@ SnackMan = function(position, objectives) {
 	
 	this.objective.objectives = [];
 	this.objective.ordered = objectives.getAttribute("ordered") === "true";
-	this.objective.reward = parseInt( objectives.getAttribute("reward") ); 
-	this.objective.maxCommands = parseInt( objectives.getAttribute("maxCommands") ); 
-	this.objective.maxCommandsReward = parseInt( objectives.getAttribute("maxCommandsReward") ); 
+	this.objective.reward = parseInt( objectives.getAttribute("reward") );
+	
+	var m = objectives.getAttribute("maxCommands");
+	this.objective.maxCommands = parseInt( (m == null?"0":m) ); 
+	
+	var m = objectives.getAttribute("maxCommandsReward")
+	this.objective.maxCommandsReward = parseInt( (m == null?"0":m)  ); 
 	
 	this.objective.debug = objectives.getAttribute("debug") === "true"; 
 	
@@ -394,7 +398,10 @@ SnackMan.prototype.deliver = function(item) {
 	}
 	
 	var amount = found.deliver(item.data); 
-
+	if (amount > 0) {
+		
+	}
+	
 	item.data = null; // was deliver, then it's null
 	
 	// 11 times to execute the coin animation and erase the coin
@@ -454,37 +461,6 @@ SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	this.img.y = ny - 32;
 	
 	Game.display();
-};
-
-SnackMan.prototype.checkObjectives = function() {
-	
-	this.verifyObjectives("counter", {nx: this.img.x, ny: this.img.y+32});
-};
-
-SnackMan.prototype.verifyObjectives = function(key, options) {
-	if (!Objective.verifyObjectives(key, options))
-		return;
-	
-	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
-		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
-						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
-	
-};
-
-SnackMan.prototype.addReward = function(count) {
-	
-	if (this.allObjectivesAchieved) {
-		
-		var ret = this.objective.reward;
-		if (count <= this.objective.maxCommands) {
-			ret += this.objective.maxCommandsReward;
-		} 
-		
-		return ret; 
-	}
-	
-	return 0;
-	
 };
 
 SnackMan.prototype.nextOpenCoolerImage = function() {
@@ -548,3 +524,39 @@ SnackMan.prototype.changeImageOriginal = function() {
 	this.img.image = this.imgCooker;
 	Game.display();
 };
+
+/**********************************************************/
+/**                    util methods                       */
+/**********************************************************/
+
+SnackMan.prototype.checkObjectives = function() {
+	
+	this.verifyObjectives("counter", {nx: this.img.x, ny: this.img.y+32});
+};
+
+SnackMan.prototype.verifyObjectives = function(key, options) {
+	if (!Objective.verifyObjectives(key, options))
+		return;
+	
+	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
+		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
+						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
+	
+};
+
+SnackMan.prototype.addReward = function(count) {
+	
+	if (this.allObjectivesAchieved) {
+		
+		var ret = this.objective.reward;
+		if (count <= this.objective.maxCommands) {
+			ret += this.objective.maxCommandsReward;
+		} 
+		
+		return ret; 
+	}
+	
+	return 0;
+	
+};
+

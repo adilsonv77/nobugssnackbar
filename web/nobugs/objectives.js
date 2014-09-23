@@ -1,3 +1,11 @@
+String.prototype.format = function() {
+    var formatted = this;
+    for (var i = 0; i < arguments.length; i++) {
+        var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+        formatted = formatted.replace(regexp, arguments[i]);
+    }
+    return formatted;
+};
 
 var Objective = {
 	factories : []
@@ -60,25 +68,44 @@ Objective.factory = function(key) {
 	switch (key) {
 	
 	case "counter": 
-		this.factories[key] = new Counter();
+		this.factories[key] = new Objective.Counter();
 		break;
 
 	case "askForFood":
-		this.factories[key] = new AskForFood();
+		this.factories[key] = new Objective.AskForFood();
 		break;
+
+	case "catchFood": 
+		this.factories[key] = new Objective.CatchFood();
+		break;
+
+	case "deliver": 
+		this.factories[key] = new Objective.Deliver();
+		break;
+
 	}
 	
 	return this.factories[key];
 };
 
-Counter = function() {};
-Counter.prototype.init = function(elem) {
+Objective.createExplanationItemPlacePos = function(msgKey, objective) {
+	var key = BlocklyApps.getMsg("_"+objective.place);
+	var text = BlocklyApps.getMsg(msgKey);
+	return text.format(key  + " " + objective.pos);
+};
+
+/******************************************************************************
+ *                                Counter
+ ******************************************************************************/
+
+Objective.Counter = function() {};
+Objective.Counter.prototype.init = function(elem) {
 	var p = Objective.init(elem, this);
 	p.pos = elem.getAttribute("pos");
 	return p;
 };
 
-Counter.prototype.checkObjective = function(options, objective)  {
+Objective.Counter.prototype.checkObjective = function(options, objective)  {
 	var posObj = hero.counter[objective.pos-1];
 	if (options.nx == posObj.x && options.ny == posObj.y) {
 		
@@ -89,8 +116,17 @@ Counter.prototype.checkObjective = function(options, objective)  {
 
 };
 
-AskForFood = function() {};
-AskForFood.prototype.init = function(elem) {
+Objective.Counter.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_counter");
+	return text.format(objective.pos);
+};
+
+/******************************************************************************
+ *                                AskForFood
+ ******************************************************************************/
+
+Objective.AskForFood = function() {};
+Objective.AskForFood.prototype.init = function(elem) {
 	var p = Objective.init(elem, this);
 	
 	p.pos = elem.getAttribute("pos");
@@ -100,22 +136,28 @@ AskForFood.prototype.init = function(elem) {
 	return p;
 };
 
-AskForFood.prototype.checkObjective = function(customer, objective)  {
+function findVariable(){
+	// the variable must not be initialized
+	var vars = Game.jsInterpreter.variables;
+	
+	// always the first variable is NoBugsJavaScript.varName
+	var varname = vars[0].scope.properties["NoBugsJavaScript"].properties["varName"].data;
+	
+	for (var i=1; i<vars.length; i++)
+		if (vars[i].name === varname) {
+			return vars[i].scope.properties[varname].data;
+		}
+	
+	return null;
+}
+
+Objective.AskForFood.prototype.checkObjective = function(customer, objective)  {
 
 	if (objective.distinct) {
-		// the variable must not be initialized
-		var vars = Game.jsInterpreter.variables;
 		
-		// always the first variable is NoBugsJavaScript.varName
-		var NoBugsJavaScript_varName = vars[0].scope.properties["NoBugsJavaScript"].properties["varName"].data;
-		
-		for (var i=1; i<vars.length; i++)
-			if (vars[i].name === NoBugsJavaScript_varName) {
-				if (vars[i].scope.properties[NoBugsJavaScript_varName].data != undefined)
-					return;
-				else
-					break;
-			}
+		var varData = findVariable();
+		if (varData != undefined)
+			return false;
 		
 	}
 	if (objective.place === "counter") {
@@ -127,3 +169,83 @@ AskForFood.prototype.checkObjective = function(customer, objective)  {
 	
 	return false;
 };
+
+Objective.AskForFood.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_askForFood", objective);
+};
+
+
+/******************************************************************************
+ *                                CatchFood
+ ******************************************************************************/
+Objective.CatchFood = function() {}; 
+
+Objective.CatchFood.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	
+	return p;
+};
+
+Objective.CatchFood.prototype.checkObjective = function(options, objective)  {
+	
+	var cust = null;
+	if (objective.place === "counter") {
+		cust = CustomerManager.getCustomerCounter(objective.pos);
+	}
+	if (cust == null)
+		return false;
+	
+	// catchFood need to be store in a variable
+	var varData = findVariable();
+	if (varData != undefined && varData != null) {
+
+		var custFood = cust.askForFood();
+		return varData.descr === custFood.descr;
+		
+	}
+	
+	return false;
+	
+};
+
+Objective.CatchFood.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_catchFood", objective);
+};
+
+/******************************************************************************
+ *                                 Deliver
+ ******************************************************************************/
+
+Objective.Deliver = function() {};
+
+Objective.Deliver.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	
+	return p;
+};
+
+Objective.Deliver.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		cust = CustomerManager.getCustomerCounter(objective.pos);
+	}
+	if (cust == null)
+		return false;
+	
+	
+	var closeCust = hero.getCustomer();
+	return (closeCust.currentNode.id == cust.currentNode.id);
+
+};
+
+Objective.Deliver.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_deliver", objective);
+};
+
+

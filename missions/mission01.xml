@@ -2,9 +2,7 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		Nessa miss&#227;o voc&#234; vai aprender a caminhar entre as quatro posi&#231;&#245;es do balc&#227;o.  <br/>
-		Ande com o cozinheiro at&#233; as posi&#231;&#245;es 1, 3 e 4 do balc&#227;o (respeitando essa ordem). <br/>
-		A posi&#231;&#227;o 1 &#233; a mais superior delas.
+		Blablablablablabla
 		</page>
 		<page type="hint" origin="command" id="0#0" dir="stack">
 		Arraste o comando da barra de ferramentas para a &#225;rea de programa&#231;&#227;o.
@@ -12,29 +10,31 @@
 
 	</explanation>
 	<commands>
-		<category name="logic" show="false"/>
-		<category name="loop" show="false"/>
-		<category name="math" show="false"/>
-		<category name="vars" show="false"/>
-		<category name="function" show="false"/>
+		<category name="snackMan" show="true"/>
 		
-		<category name="goToDisplay" show="false"/>
-		<category name="goToCooler" show="false"/>
-		<category name="isThereACustomer" show="false"/>
-		<category name="askForFood" show="false"/>
-		<category name="askForDrink" show="false"/>
-		<category name="askHasThirsty" show="false"/>
-		<category name="askHasHunger" show="false"/>
-		<category name="catchFood" show="false"/>
-		<category name="catchDrink" show="false"/>
-		<category name="deliver" show="false"/>
+		<category name="goToBarCounter" show="true"/>
 	</commands>
 	<cooker>initial</cooker>
 	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<foods>
+			</foods>
+			<drinks></drinks>
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter4</init>
+			<dest>counter4</dest>
+			<foods>
+			</foods>
+			<drinks></drinks>
+		</customer>
 	</customers>
-	<objectives ordered="true" reward="5" maxCommands="3" maxCommandsReward="2">
+	<objectives ordered="true" reward="5" buttonDebug="false">
 		<objective pos="1">counter</objective>
-		<objective pos="3">counter</objective>
 		<objective pos="4">counter</objective>
 	</objectives>
 	<xml>

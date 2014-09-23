@@ -95,6 +95,9 @@ Game.init = function() {
 
 };
 
+window.addEventListener('load', Game.init);
+
+
 /**
  * Without this some draws don't work. 
  */
@@ -200,7 +203,9 @@ Game.logged = function() {
 
 Game.unload = function(e) {
 
-    var answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+	var answer = null;
+	if (Blockly.mainWorkspace != null) 
+		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 	var now = new Date().getTime();
 	
 	UserControl.nextMission(0, Math.floor((now - Game.currTime)/1000), false, answer, 
@@ -225,6 +230,9 @@ Game.missionLoaded = function(ret){
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
   
+  var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
+  Game.verifyButtons(objectives);
+  
   document.getElementById('blockly').innerHTML = ""; // clean the editor
   Blockly.inject(document.getElementById('blockly'),
       {path: '',
@@ -234,7 +242,7 @@ Game.missionLoaded = function(ret){
 
 
   hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
-		              mission.childNodes[0].getElementsByTagName("objectives")[0]);
+		              objectives);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   
   var previousWork = ret[2];
@@ -263,9 +271,20 @@ Game.missionLoaded = function(ret){
 	  
 	  
 }; 
-  
 
-window.addEventListener('load', Game.init);
+Game.verifyButtons = function(objectives) {
+	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";
+	Game.enabledRun = objectives.getAttribute("buttonRun") !== "false";
+	Game.enabledVarWindow = objectives.getAttribute("variableWindow") !== "false";
+	
+	if (!Game.enabledDebug)
+		Game.disableButton('debugButton');
+	
+	if (!Game.enabledRun)
+		Game.disableButton('runButton');
+
+	Game.resetButtons();
+};
 
 // I dont know what this feature do in the game. 
 // This is a copy from commons.js importPrettify function. Because my prettify files are in another
@@ -364,6 +383,10 @@ Game.reset = function() {
 
   Game.display();
 
+  Game.killAll();
+};
+
+Game.killAll = function() {
   // Kill any task.
   // Kill all tasks.
   for (var x = 0; x < Game.pidList.length; x++) {
@@ -419,7 +442,7 @@ Game.logoffButtonClick = function() {
 		"total": 0, "rows": []
 	});
     Game.doResizeWindow("none");
-    Game.reset();
+    Game.killAll();
     Game.runningStatus = 0;
 	
     document.getElementById('blockly').innerHTML = ""; // clean the editor
@@ -471,6 +494,11 @@ Game.resetButtonClick = function() {
 };
 
 Game.enableButton = function(buttonName) {
+
+	if ((buttonName === "debugButton" && !Game.enabledDebug) ||
+		(buttonName === "runButton" && !Game.enabledRun))
+		return;
+	
    var button = document.getElementById(buttonName);
    button.disabled = "";
    button.className = "primary";
@@ -487,12 +515,13 @@ Game.disableButton = function(buttonName) {
  */
 Game.debugButtonClick = function() {
 	 
-	if (Game.variableBox.style.display != "inline") {
+	if (Game.runningStatus === 0) {
 		Game.enableButton('resetButton');
 
-		Game.doResizeWindow("inline");
-	    
-		$('#vars').datagrid('resize');
+		if (Game.enabledVarWindow) {
+			Game.doResizeWindow("inline");
+			$('#vars').datagrid('resize');
+		}
 		
   	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
@@ -507,10 +536,13 @@ Game.debugButtonClick = function() {
 Game.resetButtons = function() {
 	
 	Game.disableButton('resetButton');
+	
 	Game.enableButton('debugButton');
+	
 	Game.enableButton('runButton');
 	
-	Blockly.mainWorkspace.traceOn(false); 
+	if (Blockly.mainWorkspace != null)
+		Blockly.mainWorkspace.traceOn(false); 
 	
 	Game.runningStatus = 0;
 	
@@ -529,12 +561,12 @@ Game.execute = function(debug) {
 	  
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
-	  // Reset the graphic.
 		
 		$('#vars').datagrid('loadData', {
 			"total": 0, "rows": []
 		});
 
+	  // Reset the graphic.
 	  Game.reset();
 
 	  
@@ -561,7 +593,7 @@ Game.execute = function(debug) {
 		  
 		  console.log(e);
 		  
-	  }
+	  };
 	  
   }
 
