@@ -217,6 +217,7 @@ Game.unload = function(e) {
 Game.missionLoaded = function(ret){
 	
   if (ret == null) {
+	  Game.currTime = 0;
 	  MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, null, null, 
 			  function() {Game.logoffButtonClick();});
 	  return;
@@ -244,14 +245,23 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
 		              objectives);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+  if (ret[2] != null) // the user try this mission before, than load the previous code
+	  Game.nextPartOfMissionLoaded(ret[2], mission);
+  else {
+      var preload = sourceXML.getAttribute("preload");
+	  if (preload != null) {
+		  UserControl.loadAnswer(preload, function (ret) {
+			  Game.nextPartOfMissionLoaded(ret, mission);
+		  });
+	  }
+	  else
+		  Game.nextPartOfMissionLoaded(sourceXML.outerHTML, mission);
+  }
+};
   
-  var previousWork = ret[2];
-  
-  var xml;
-  if (previousWork == null)
-	  xml = Blockly.Xml.textToDom(sourceXML.outerHTML);
-  else
-	  xml = Blockly.Xml.textToDom(previousWork);
+Game.nextPartOfMissionLoaded = function(answer, mission) {
+	
+  var xml = Blockly.Xml.textToDom(answer);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
 
   var loginLoaded = function(data) {
@@ -446,11 +456,16 @@ Game.logoffButtonClick = function() {
     Game.runningStatus = 0;
 	
     document.getElementById('blockly').innerHTML = ""; // clean the editor
-    
-    var answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-	var now = new Date().getTime();
+    var answer = null;
+    var timeSpent = 0;
+    if (Game.currTime != 0) {
+        answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+    	var now = new Date().getTime();
+    	timeSpent = Math.floor((now - Game.currTime)/1000);
+    	
+    }
 	
-	UserControl.logoff(Math.floor((now - Game.currTime)/1000), answer, function(){
+	UserControl.logoff(timeSpent, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		

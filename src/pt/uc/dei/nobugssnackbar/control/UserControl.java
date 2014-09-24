@@ -96,4 +96,10 @@ public class UserControl {
 	public void registerExecution() throws SQLException {
 		NoBugsConnection.getConnection().addExecutionInMission(this.user, this.mission);
 	}
+	
+	@RemoteMethod
+	public String loadAnswer(int idMission) throws SQLException {
+		return NoBugsConnection.getConnection().loadAnswer(idMission, this.user.getId());
+	}
+	
 }
