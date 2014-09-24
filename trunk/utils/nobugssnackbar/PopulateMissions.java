@@ -15,12 +15,10 @@ public class PopulateMissions {
 		StringBuffer xml; 
 		BufferedReader arq; 
 		
-		int j = 0;
-
-		for (int i = 1; i < 2; i++) {
+		for (int i = 9; i <= 11; i++) {
 			
 			xml = new StringBuffer();
-			arq = new BufferedReader(new FileReader(new File("missions/mission08.xml")));
+			arq = new BufferedReader(new FileReader(new File("missions/mission"+(i<10?"0"+i:i)+".xml")));
 			do {
 				
 				String line = arq.readLine();
@@ -33,7 +31,6 @@ public class PopulateMissions {
 			arq.close();
 			
 			NoBugsConnection.getConnection().insertMission("Mission default", xml.toString());
-			j++;
 			
 		}
 		

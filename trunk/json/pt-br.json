@@ -65,5 +65,6 @@
 	"Explane.CatchFood":"Pegue a comida solicitada pelo cliente {0}.",
 	"Explane.Deliver":"Entregue o pedido do cliente {0}.",
 	"Explane.AskForDrink":"Pergunta pelo que o cliente {0} deseja beber.",
-	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente {0}."
+	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente {0}.",
+	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;veis aceitas &#233;(s&#227;o) {0}."
 }

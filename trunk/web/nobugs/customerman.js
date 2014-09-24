@@ -28,18 +28,33 @@ var customers = [];
 
 Game.preloadImgs.push('images/banco.png');
 
-CustomerManager.init = function(customers) {
+CustomerManager.init = function(customers, sn) {
 	
     this.banco = new Image();
 	this.banco.src = 'images/banco.png';
 
 	this.optCustomers = customers;
+	
+	this.randomization = {};
+
+	if (sn != undefined)
+		this.parseSN(sn);
+};
+
+CustomerManager.parseSN = function(sn) {
+	var random = sn.getElementsByTagName("randomization")[0];
+
+	if (random != null) {
+		this.randomization.qtd = random.getAttribute("qtd");
+		this.randomization.type = random.textContent.toString();
+	}
 };
 
 CustomerManager.reset = function() {
 	customers = [];
 	
 	for (var i = 0; i < this.optCustomers.children.length; i++) {
+		
 		var init = this.optCustomers.children[i].getElementsByTagName("init")[0].textContent.toString();
 		if (init === "door") {
 			init = CustOpt.door;
@@ -63,6 +78,44 @@ CustomerManager.reset = function() {
 		customers[i] = new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks});
 		
 	}
+	
+	this.transformSN();
+};
+
+CustomerManager.transformSN = function() {
+	
+	if (this.randomization.qtd != undefined) {
+		
+		switch (this.randomization.type) {
+			case "thirsty":
+				
+				var custSelected = this.selectCustomers(customers.length - this.randomization.qtd);
+				// how many will not have thirsty
+				for (var i=0; i < custSelected.length; i++) {
+					customers[custSelected[i]].drinks = [];
+				}
+				console.log(custSelected);
+				break;
+		}
+		
+	}
+	
+};
+
+CustomerManager.selectCustomers = function(howMany) {
+	var available = [];
+	for (var i=0; i < customers.length; i++)
+		available[i] = i;
+	
+	var ret = [];
+	for (var i=0; i < howMany; i++) {
+		var selected = Math.floor((Math.random() * (available.length)));
+		ret[i] = available[selected];
+		available.splice(selected, 1);
+	}
+	
+	return ret;
+	
 };
 
 CustomerManager.extractItems = function(list) {
