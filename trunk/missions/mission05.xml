@@ -26,7 +26,7 @@
 			<init>counter3</init>
 			<dest>counter3</dest>
 			<foods>
-				<food qt="1" price="3">hotdog</food>
+				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks></drinks>
 		</customer>
