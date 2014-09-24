@@ -117,7 +117,7 @@ SnackMan = function(position, objectives) {
 	var m = objectives.getAttribute("maxCommands");
 	this.objective.maxCommands = parseInt( (m == null?"0":m) ); 
 	
-	var m = objectives.getAttribute("maxCommandsReward")
+	var m = objectives.getAttribute("maxCommandsReward");
 	this.objective.maxCommandsReward = parseInt( (m == null?"0":m)  ); 
 	
 	this.objective.debug = objectives.getAttribute("debug") === "true"; 
@@ -359,6 +359,12 @@ SnackMan.prototype.catchFood = function(order) {
 		throw false;
 	}
 	
+	// does the order have the food of this place ?
+	if (order.data.descr.indexOf("hotdog") == 1) {
+		BlocklyApps.log.push(["fail", "Error_onlyHotDog"]);
+		throw false;
+	}
+	
 	// open the display three times because there are three slides
 	BlocklyApps.log.push(['OD']); 
 	CustomerManager.update();
@@ -383,7 +389,10 @@ SnackMan.prototype.catchFood = function(order) {
 	
 	
 	// TODO in future version, maybe the display has limited stock
-	return {qt:order.data.qt, type: "food", descr:order.data.descr}; 
+	var item = {qt:order.data.qt, type: "food", descr:order.data.descr};
+	this.verifyObjectives("catchFood", item);
+	
+	return item; 
 	
 };
 
@@ -398,8 +407,8 @@ SnackMan.prototype.deliver = function(item) {
 	}
 	
 	var amount = found.deliver(item.data); 
-	if (amount > 0) {
-		
+	if (amount != null) {
+		this.verifyObjectives("deliver", null);
 	}
 	
 	item.data = null; // was deliver, then it's null

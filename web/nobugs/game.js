@@ -657,6 +657,7 @@ Game.nextStep = function() {
 			    	 
 			    	var reward = hero.addReward(count);
 			    	Game.money = parseInt(Game.money) + reward;
+			    	Game.display();
 
 			        var answer = Blockly.Xml.domToText(xml);
 			    	var now = new Date().getTime();
@@ -873,7 +874,9 @@ Game.step = function(command, values) {
   		break;
   		
   	case 'IO' :
-  		Game.money += values.shift();
+  		var value = values.shift();
+  		if (value != null)
+  			Game.money += value;
   		hero.changeImageOriginal();
   		break;
   		

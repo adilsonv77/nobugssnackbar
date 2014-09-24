@@ -189,7 +189,7 @@ Objective.CatchFood.prototype.init = function(elem) {
 	return p;
 };
 
-Objective.CatchFood.prototype.checkObjective = function(options, objective)  {
+Objective.CatchFood.prototype.checkObjective = function(itemCatched, objective)  {
 	
 	var cust = null;
 	if (objective.place === "counter") {
@@ -198,16 +198,10 @@ Objective.CatchFood.prototype.checkObjective = function(options, objective)  {
 	if (cust == null)
 		return false;
 	
-	// catchFood need to be store in a variable
-	var varData = findVariable();
-	if (varData != undefined && varData != null) {
 
-		var custFood = cust.askForFood();
-		return varData.descr === custFood.descr;
+	var custFood = cust.askForFood();
+	return itemCatched.descr === custFood.descr;
 		
-	}
-	
-	return false;
 	
 };
 
