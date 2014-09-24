@@ -1,3 +1,7 @@
+/******************************************************************************
+ *                                Utility functions
+ ******************************************************************************/
+
 String.prototype.format = function() {
     var formatted = this;
     for (var i = 0; i < arguments.length; i++) {
@@ -6,6 +10,37 @@ String.prototype.format = function() {
     }
     return formatted;
 };
+
+function findVariable(){
+	// the variable must not be initialized
+	var vars = Game.jsInterpreter.variables;
+	
+	// always the first variable is NoBugsJavaScript.varName
+	var varname = vars[0].scope.properties["NoBugsJavaScript"].properties["varName"].data;
+	
+	for (var i=1; i<vars.length; i++)
+		if (vars[i].name === varname) {
+			return vars[i].scope.properties[varname].data;
+		}
+	
+	return null;
+}
+
+// Based on Professional JavaScript for Web Developers (Nicholas C. Zakas)
+var inherits = function(parent, inherited){
+    // makes a copy of the parent prototype
+    var parentCopy = Object.create(parent.prototype);
+ 
+    // inherits from the parent
+    inherited.prototype = parentCopy; 
+ 
+    // fixs the inherited constructor
+    inherited.prototype.constructor = inherited;
+};
+
+/******************************************************************************
+ *                                Objective
+ ******************************************************************************/
 
 var Objective = {
 	factories : []
@@ -79,6 +114,14 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.CatchFood();
 		break;
 
+	case "askForDrink":
+		this.factories[key] = new Objective.AskForDrink();
+		break;
+
+	case "catchDrink": 
+		this.factories[key] = new Objective.CatchDrink();
+		break;
+	
 	case "deliver": 
 		this.factories[key] = new Objective.Deliver();
 		break;
@@ -136,21 +179,6 @@ Objective.AskForFood.prototype.init = function(elem) {
 	return p;
 };
 
-function findVariable(){
-	// the variable must not be initialized
-	var vars = Game.jsInterpreter.variables;
-	
-	// always the first variable is NoBugsJavaScript.varName
-	var varname = vars[0].scope.properties["NoBugsJavaScript"].properties["varName"].data;
-	
-	for (var i=1; i<vars.length; i++)
-		if (vars[i].name === varname) {
-			return vars[i].scope.properties[varname].data;
-		}
-	
-	return null;
-}
-
 Objective.AskForFood.prototype.checkObjective = function(customer, objective)  {
 
 	if (objective.distinct) {
@@ -174,13 +202,14 @@ Objective.AskForFood.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_askForFood", objective);
 };
 
-
 /******************************************************************************
- *                                CatchFood
+ *                                Catch... Something
  ******************************************************************************/
-Objective.CatchFood = function() {}; 
+Objective.CatchSomething = function(explanationKey) {
+	this.key = explanationKey;
+}; 
 
-Objective.CatchFood.prototype.init = function(elem) {
+Objective.CatchSomething.prototype.init = function(elem) {
 	var p = Objective.init(elem, this);
 	
 	p.pos = elem.getAttribute("pos");
@@ -189,7 +218,7 @@ Objective.CatchFood.prototype.init = function(elem) {
 	return p;
 };
 
-Objective.CatchFood.prototype.checkObjective = function(itemCatched, objective)  {
+Objective.CatchSomething.prototype.checkObjective = function(itemCatched, objective)  {
 	
 	var cust = null;
 	if (objective.place === "counter") {
@@ -199,14 +228,63 @@ Objective.CatchFood.prototype.checkObjective = function(itemCatched, objective) 
 		return false;
 	
 
-	var custFood = cust.askForFood();
-	return itemCatched.descr === custFood.descr;
+	var something = this.askSomething(cust);
+	return itemCatched.descr === something.descr;
 		
 	
 };
 
-Objective.CatchFood.prototype.createExplanationItem = function(objective) {
-	return Objective.createExplanationItemPlacePos("explanation_catchFood", objective);
+Objective.CatchSomething.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos(this.key, objective);
+};
+
+Objective.CatchSomething.prototype.askSomething = function(cust) {
+	// the child class must implement this method
+	
+	return {descr: "nothing"};
+};
+
+
+/******************************************************************************
+ *                                CatchFood
+ ******************************************************************************/
+Objective.CatchFood = function() {
+	Objective.CatchSomething.call(this, "explanation_catchFood");
+}; 
+
+inherits(Objective.CatchSomething, Objective.CatchFood);
+
+Objective.CatchFood.prototype.askSomething = function(cust) {
+		
+	return cust.askForFood();
+};
+
+/******************************************************************************
+ *                                CatchDrink
+ ******************************************************************************/
+Objective.CatchDrink = function() {
+	Objective.CatchSomething.call(this, "explanation_catchDrink");
+}; 
+
+inherits(Objective.CatchSomething, Objective.CatchDrink);
+
+Objective.CatchDrink.prototype.askSomething = function(cust) {
+		
+	return cust.askForDrink();
+};
+
+/******************************************************************************
+ *                                AskForDrink
+ ******************************************************************************/
+
+Objective.AskForDrink = function() {
+	Objective.AskForFood.call(this);
+};
+
+inherits(Objective.AskForFood, Objective.AskForDrink);
+
+Objective.AskForDrink.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_askForDrink", objective);
 };
 
 /******************************************************************************
