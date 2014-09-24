@@ -20,7 +20,7 @@ public class PopulateMissions {
 		for (int i = 1; i < 2; i++) {
 			
 			xml = new StringBuffer();
-			arq = new BufferedReader(new FileReader(new File("missions/mission07.xml")));
+			arq = new BufferedReader(new FileReader(new File("missions/mission08.xml")));
 			do {
 				
 				String line = arq.readLine();

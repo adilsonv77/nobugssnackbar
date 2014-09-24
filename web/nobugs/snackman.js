@@ -243,6 +243,7 @@ SnackMan.prototype.askForDrink = function() {
 		throw false;
 	}
 
+	this.verifyObjectives("askForDrink", found);
 	
 	return drink;
 };
@@ -264,6 +265,12 @@ SnackMan.prototype.catchDrink = function(order) {
 	// does the order have drinks ?
 	if (order.data.type != "drink") {
 		BlocklyApps.log.push(["fail", "Error_doesntOrderDrink"]);
+		throw false;
+	}
+	
+	// does the order have the drink of this place ?
+	if (order.data.descr.indexOf("coke") == 1) {
+		BlocklyApps.log.push(["fail", "Error_wrongPlaceForDrink"]);
 		throw false;
 	}
 	
@@ -289,9 +296,11 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 	BlocklyApps.log.push(['IP']);
 	
+	var item = {qt:order.data.qt, type: "drink", descr:order.data.descr}; 
+	this.verifyObjectives("catchDrink", item);
 	
 	// TODO in future version, maybe the cooler has limited stock
-	return {qt:order.data.qt, type: "drink", descr:order.data.descr}; 
+	return item;
 	
 };
 

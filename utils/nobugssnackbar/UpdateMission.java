@@ -12,7 +12,7 @@ public class UpdateMission {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 
-		for (int i = 1; i < 8; i++) {
+		for (int i = 1; i < 9; i++) {
 			StringBuffer xml = new StringBuffer();
 			BufferedReader arq = new BufferedReader(new FileReader(new File("missions/mission0"+i+".xml")));
 			do {
