@@ -286,4 +286,29 @@ public class NoBugsConnection {
 		}
 	}
 
+	public String loadAnswer(int idMission, long idUser) throws SQLException {
+		Connection bdCon = null;
+		String answer = null;
+		try {
+			bdCon = dataSource.getConnection();
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st
+					.executeQuery("select answer from missionsaccomplished where missionid = "
+							+ idMission + " and userid = " + idUser);
+			if (rs.next())
+				answer = rs.getString(1);
+			st.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		
+		
+		return answer;
+	}
+
 }
