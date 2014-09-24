@@ -126,6 +126,9 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.Deliver();
 		break;
 
+	case "varQtd": 
+		this.factories[key] = new Objective.VarQtd();
+		break;
 	}
 	
 	return this.factories[key];
@@ -205,6 +208,7 @@ Objective.AskForFood.prototype.createExplanationItem = function(objective) {
 /******************************************************************************
  *                                Catch... Something
  ******************************************************************************/
+
 Objective.CatchSomething = function(explanationKey) {
 	this.key = explanationKey;
 }; 
@@ -318,6 +322,31 @@ Objective.Deliver.prototype.checkObjective = function(options, objective)  {
 
 Objective.Deliver.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_deliver", objective);
+};
+
+/******************************************************************************
+ *                          Quantity of Variables
+ ******************************************************************************/
+
+Objective.VarQtd = function() {};
+Objective.VarQtd.prototype.init = function(qtd) {
+	var p = {objective:"varQtd", achieved:false, trata:this};
+	
+	p.qtd = qtd;
+	
+	return p;
+};
+
+Objective.VarQtd.prototype.checkObjective = function(options, objective)  {
+	// -1 because there is a special variable
+	return (Game.jsInterpreter.variables.length-1) <= objective.qtd;
+};
+
+Objective.VarQtd.prototype.createExplanationItem = function(objective) {
+	
+	var text = BlocklyApps.getMsg("explanation_varQtd");
+	return text.format(objective.qtd);
+	
 };
 
 

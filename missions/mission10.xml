@@ -1,0 +1,79 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="statement">
+		Blablablablablabla
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="catchFood" show="true" />
+
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="catchDrink" show="true" />
+
+		<category name="deliver" show="true" />
+		
+
+		<category name="vars" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<foods>
+				<food qt="1" price="0">hotdog</food>
+			</foods>
+			<drinks>
+			</drinks>
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<foods>
+				<food qt="1" price="0">hotdog</food>
+			</foods>
+			<drinks>
+			</drinks>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<foods>
+			</foods>
+			<drinks>
+				<drink qt="1" price="0">coke</drink>
+			</drinks>
+		</customer>
+		<customer>
+			<id>04</id>
+			<init>counter4</init>
+			<dest>counter4</dest>
+			<foods>
+			</foods>
+			<drinks>
+				<drink qt="1" price="0">coke</drink>
+			</drinks>
+		</customer>
+	</customers>
+	<objectives ordered="false" reward="7" bonusTime="120" bonusTimeReward="25 50" varQtd="2">
+		<objective pos="1" place="counter">deliver</objective>
+		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
+		<objective pos="4" place="counter">deliver</objective>
+	</objectives>
+	<xml preload="9">
+	</xml>
+</mission>
+

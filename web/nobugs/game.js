@@ -266,7 +266,8 @@ Game.nextPartOfMissionLoaded = function(answer, mission) {
 
   var loginLoaded = function(data) {
       
-      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0]);
+      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0],
+    		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
       Game.mission = data;
 	  Game.reset();
 
@@ -662,6 +663,8 @@ Game.nextStep = function() {
 				// if there isn't more lines to evaluate
 				Game.resetButtons();
 			    Blockly.mainWorkspace.highlightBlock(null);
+			    
+			    hero.verifyObjectives("varQtd", null);
 			    
 			    if (hero.allObjectivesAchieved) {
 			    	
