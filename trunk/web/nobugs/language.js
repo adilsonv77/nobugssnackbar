@@ -348,3 +348,23 @@ Blockly.Blocks['const_softDrink'] = {
 Blockly.JavaScript['const_softDrink'] = function(block) {
 	return ['\"softDrink\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
+
+/******************************************************************************
+ *                          Modification of set variable 
+ ******************************************************************************/	
+
+
+Blockly.Blocks['variables_set'].init = function() {
+    this.setHelpUrl(Blockly.Msg.VARIABLES_SET_HELPURL);
+    this.setColour(330);
+    this.interpolateMsg(
+    	BlocklyApps.getMsg('Blockly_variableSet'),
+    	['VALUE', null, Blockly.ALIGN_RIGHT],
+        ['VAR', new Blockly.FieldVariable(Blockly.Msg.VARIABLES_SET_ITEM)],
+        Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
+    this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
+    this.contextMenuType_ = 'variables_get';
+  }

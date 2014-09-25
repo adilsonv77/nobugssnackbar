@@ -13,6 +13,8 @@
 	"Apps.dialogNext": "Pr&#243;ximo",
 	"Apps.dialogPrevious": "Anterior",
 	
+	"Blockly.variableSet":"%1 a guardar em %2",
+	
 	"NoBugs.title": "NoBug's Snack Bar",
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa.",
@@ -66,5 +68,6 @@
 	"Explane.Deliver":"Entregue o pedido do cliente {0}.",
 	"Explane.AskForDrink":"Pergunta pelo que o cliente {0} deseja beber.",
 	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente {0}.",
-	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;veis aceitas &#233;(s&#227;o) {0}."
+	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) {0}.",
+	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o {0}."
 }

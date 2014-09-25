@@ -430,8 +430,12 @@ Game.countInstructions = function(c) {
 		c = c.childNodes[c.childElementCount-1];
 		conta++;
 		if (c.nodeName === "NEXT" || c.nodeName === "STATEMENT")  {
-			if (a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT")
+			if (a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT") {
+				if (a.childNodes[0].nodeName === "MUTATION")
+					conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-3].childNodes[0]);
 				conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-2].childNodes[0]);
+				
+			}
 			c  = c.childNodes[0];
 		} else
 			break;
@@ -664,7 +668,9 @@ Game.nextStep = function() {
 				Game.resetButtons();
 			    Blockly.mainWorkspace.highlightBlock(null);
 			    
+			    hero.verifyObjectives("deliver", {allCustomers:true});
 			    hero.verifyObjectives("varQtd", null);
+			    hero.verifyObjectives("commQtd", null);
 			    
 			    if (hero.allObjectivesAchieved) {
 			    	

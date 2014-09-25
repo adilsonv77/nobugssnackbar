@@ -56,6 +56,7 @@ Objective.verifyObjectives = function(key, options) {
 	
 	var dest = Objective.factory(key);
 
+	var ret = false;
 	if (hero.objective.ordered) {
 		if (!hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective === key)
 			return false;
@@ -74,7 +75,10 @@ Objective.verifyObjectives = function(key, options) {
 				if (dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					return true;
+					if (key === "deliver" && options.allCustomers) {
+						ret = true;
+					} else
+						return true;
 					
 				}
 			}
@@ -82,7 +86,7 @@ Objective.verifyObjectives = function(key, options) {
 		
 	}
 
-	return false;
+	return ret;
 };
 
 Objective.markAchieved = function(objective) {
@@ -128,6 +132,10 @@ Objective.factory = function(key) {
 
 	case "varQtd": 
 		this.factories[key] = new Objective.VarQtd();
+		break;
+
+	case "commQtd": 
+		this.factories[key] = new Objective.CommsQtd();
 		break;
 	}
 	
@@ -309,15 +317,19 @@ Objective.Deliver.prototype.init = function(elem) {
 Objective.Deliver.prototype.checkObjective = function(options, objective)  {
 	var cust = null;
 	if (objective.place === "counter") {
-		cust = CustomerManager.getCustomerCounter(objective.pos);
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
 	}
 	if (cust == null)
 		return false;
 	
-	
-	var closeCust = hero.getCustomer();
-	return (closeCust.currentNode.id == cust.currentNode.id);
-
+	return !(cust.hasThirsty() || cust.hasHunger());
 };
 
 Objective.Deliver.prototype.createExplanationItem = function(objective) {
@@ -345,6 +357,35 @@ Objective.VarQtd.prototype.checkObjective = function(options, objective)  {
 Objective.VarQtd.prototype.createExplanationItem = function(objective) {
 	
 	var text = BlocklyApps.getMsg("explanation_varQtd");
+	return text.format(objective.qtd);
+	
+};
+
+
+/******************************************************************************
+ *                          Quantity of Commands
+ ******************************************************************************/
+
+Objective.CommsQtd = function() {};
+Objective.CommsQtd.prototype.init = function(qtd) {
+	var p = {objective:"commQtd", achieved:false, trata:this};
+	
+	p.qtd = qtd;
+	
+	return p;
+};
+
+Objective.CommsQtd.prototype.checkObjective = function(options, objective)  {
+
+	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+	var count = Game.countInstructions(xml.childNodes[0]);
+
+	return count <= objective.qtd;
+};
+
+Objective.CommsQtd.prototype.createExplanationItem = function(objective) {
+	
+	var text = BlocklyApps.getMsg("explanation_commsQtd");
 	return text.format(objective.qtd);
 	
 };
