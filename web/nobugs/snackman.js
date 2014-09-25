@@ -130,20 +130,25 @@ SnackMan = function(position, objectives) {
 		this.objective.objectives.push(p);
 	}
 	
-	m = objectives.getAttribute("varQtd");
-	if (m != null) {
-
-		var o = Objective.factory("varQtd");
-		var p = o.init(m);
-		this.objective.objectives.push(p);
-		
-	}
+	this.createAditionalObjective(objectives, "varQtd");
+	this.createAditionalObjective(objectives, "commQtd");
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
 
 };
 
+
+SnackMan.prototype.createAditionalObjective = function(objectives, key) {
+	var m = objectives.getAttribute(key);
+	if (m != null) {
+
+		var o = Objective.factory(key);
+		var p = o.init(m);
+		this.objective.objectives.push(p);
+		
+	}
+};
 // extracts some important information and creates the graph
 SnackMan.prototype.createGraph = function() {
 
@@ -426,7 +431,7 @@ SnackMan.prototype.deliver = function(item) {
 	
 	var amount = found.deliver(item.data); 
 	if (amount != null) {
-		this.verifyObjectives("deliver", null);
+		this.verifyObjectives("deliver", {allCustomers:false, customer:found});
 	}
 	
 	item.data = null; // was deliver, then it's null

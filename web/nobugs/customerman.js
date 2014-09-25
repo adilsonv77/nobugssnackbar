@@ -35,19 +35,28 @@ CustomerManager.init = function(customers, sn) {
 
 	this.optCustomers = customers;
 	
-	this.randomization = {};
+	this.randomization = [];
 
 	if (sn != undefined)
 		this.parseSN(sn);
 };
 
 CustomerManager.parseSN = function(sn) {
-	var random = sn.getElementsByTagName("randomization")[0];
-
-	if (random != null) {
-		this.randomization.qtd = random.getAttribute("qtd");
-		this.randomization.type = random.textContent.toString();
+	
+	var randoms = sn.getElementsByTagName("randomization");
+	for (var i=0; i<randoms.length; i++) {
+		
+		var random = randoms[i];
+		var r = {};
+		r.qtd = random.getAttribute("qtd");
+		r.type = random.textContent.toString();
+		r.set = random.getAttribute("set");
+		if (r.set == null)
+			r.set = "new";
+		
+		this.randomization[i] = r;
 	}
+
 };
 
 CustomerManager.reset = function() {
@@ -84,28 +93,52 @@ CustomerManager.reset = function() {
 
 CustomerManager.transformSN = function() {
 	
-	if (this.randomization.qtd != undefined) {
+	if (this.randomization.length > 0) {
 		
-		switch (this.randomization.type) {
-			case "thirsty":
-				
-				var custSelected = this.selectCustomers(customers.length - this.randomization.qtd);
-				// how many will not have thirsty
-				for (var i=0; i < custSelected.length; i++) {
-					customers[custSelected[i]].drinks = [];
-				}
-				console.log(custSelected);
-				break;
+		var custSelected = null;
+		for (var j=0; j<this.randomization.length; j++) {
+			
+			switch (this.randomization[j].set) {
+				case "new":
+					custSelected = this.selectCustomers(customers.length - this.randomization[j].qtd, []);
+					break;
+				case "notTheSame":
+					custSelected = this.selectCustomers(customers.length - this.randomization[j].qtd, custSelected);
+					break;
+					
+			}
+			
+			switch (this.randomization[j].type) {
+				case "thirsty":
+					
+					// how many will not have thirsty
+					for (var i=0; i < custSelected.length; i++) {
+						customers[custSelected[i]].drinks = [];
+					}
+					break;
+				case "hungry":
+					
+					// how many will not have thirsty
+					for (var i=0; i < custSelected.length; i++) {
+						customers[custSelected[i]].foods = [];
+					}
+					break;
+			}
 		}
 		
 	}
 	
 };
 
-CustomerManager.selectCustomers = function(howMany) {
+CustomerManager.selectCustomers = function(howMany, previous) {
 	var available = [];
-	for (var i=0; i < customers.length; i++)
-		available[i] = i;
+	var j=0;
+	for (var i=0; i < customers.length; i++) {
+		if (previous.indexOf(i) == -1) {
+			available[j] = i;
+			j++;
+		}
+	}
 	
 	var ret = [];
 	for (var i=0; i < howMany; i++) {
