@@ -428,15 +428,22 @@ Game.countInstructions = function(c) {
 	while (c != null) {
 		var a = c;
 		c = c.childNodes[c.childElementCount-1];
-		conta++;
-		if (c.nodeName === "NEXT" || c.nodeName === "STATEMENT")  {
-			if (a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT") {
-				if (a.childNodes[0].nodeName === "MUTATION")
-					conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-3].childNodes[0]);
-				conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-2].childNodes[0]);
-				
-			}
+		if (!a.attributes["disabled"])
+			conta++;
+		if (!a.attributes["disabled"] && 
+			 ((a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT") ||
+					 (a.childNodes[0].nodeName === "STATEMENT"))) {
+			var offset = 1;
+			if (c.nodeName === "NEXT")
+				offset = 2;
+			if (a.childNodes[0].nodeName === "MUTATION")
+				conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-(offset+1)].childNodes[0]);
+			conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-offset].childNodes[0]);
+			
+		}
+		if (c.nodeName === "NEXT") {
 			c  = c.childNodes[0];
+			
 		} else
 			break;
 	}
@@ -447,7 +454,7 @@ Game.countInstructions = function(c) {
 
 Game.goalButtonClick = function() {
 	
-  Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
   
 };
 
