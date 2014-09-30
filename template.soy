@@ -17,6 +17,7 @@
   <div style="display: none">
   
     <span id="Blockly_variableSet">{msg meaning="Blockly.variableSet" desc="--"}%1 store in %2{/msg}</span>
+    <span id="Blockly_ifThen">{msg meaning="Blockly.ifThen" desc="--"}then{/msg}</span>
   
     // Block text and their associated tooltips and URLs (interleaved to
     // assist with translation).
@@ -76,15 +77,26 @@
  * Web page structure.
  */
 {template .start}
+
+  <script type="text/javascript" src="blockly_compressed.js"></script>
+  
+  <script type="text/javascript" src="blocks_compressed.js"></script>
+  <script type="text/javascript" src="javascript_compressed.js"></script>
+  <script type="text/javascript" src="{$ij.langSrc}"></script>
+  <script type="text/javascript" src="nobugs/language.js"></script>
+
   <link rel="stylesheet" type="text/css" href="easyui/easyui.css">
   <link rel="stylesheet" type="text/css" href="easyui/icon.css">
   <script type="text/javascript" src="easyui/jquery.min.js"></script>
   <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
   <script src="jquery.growl/jquery.growl.js" type="text/javascript"></script>
   <link href="jquery.growl/jquery.growl.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="nobugs/utils.js"></script>
+
+  <script type="text/javascript" src="nobugs/game.js"></script>
   
   <script type="text/javascript" src="nobugs/explanation.js"></script>
-  <script type="text/javascript" src="nobugs/game.js"></script>
 
   <script type="text/javascript" src="nobugs/blockly.js"></script>
 
@@ -98,20 +110,12 @@
   <script type="text/javascript" src="nobugs/nobugsjsinterpreter.js"></script>
   <script type="text/javascript" src="nobugs/nobugsblocklygeneratorjavascript.js"></script>
   <script type="text/javascript" src="nobugs/xml.js"></script>
-  <script type="text/javascript" src="nobugs/money.js"></script>
   <script type="text/javascript" src="nobugs/objectives.js"></script>
+  <script type="text/javascript" src="nobugs/money.js"></script>
   
   
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
-
-  <script type="text/javascript" src="blockly_compressed.js"></script>
-  
-  <script type="text/javascript" src="blocks_compressed.js"></script>
-  <script type="text/javascript" src="javascript_compressed.js"></script>
-  <script type="text/javascript" src="python_compressed.js"></script>
-  <script type="text/javascript" src="{$ij.langSrc}"></script>
-  <script type="text/javascript" src="nobugs/language.js"></script>
 
   <div id="initialBackground" style="display: none">
   	<table width="100%" height="100%">
@@ -352,14 +356,7 @@
 	      
 	      {if $ij.enabled['goToCooler']}<block type="move_goToCooler"> </block>{/if}
 	      
-	      {if $ij.enabled['goToBoxOfFruits']}
-	       <block type="move_goToBoxOfFruits">
-		       <value name="VALUE">
-		          <block type="const_orange">
-		          </block>
-	           </value>
-	       </block>
-	       {/if}
+	      {if $ij.enabled['goToBoxOfFruits']}<block type="move_goToBoxOfFruits"></block>{/if}
 	       
 	      {if $ij.enabled['catchFruits']}<block type="prepare_catchFruits"> </block>{/if}
 	      {if $ij.enabled['goToJuiceMachine']}<block type="move_goToJuiceMachine"> </block>{/if}
