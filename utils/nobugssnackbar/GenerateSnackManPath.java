@@ -66,7 +66,7 @@ public class GenerateSnackManPath {
 		x = 100; y = 330; xd = +7; yd = -4; 
 		createNode(n, nC2, x, y);
 		
-		// do nC2 até display (100,330)->(170,290)
+		// do nC2 até display (100, 330)->(170, 290)
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 9) {
@@ -93,7 +93,7 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		int nC2_Origem = contaN;
-		
+
 		// em frente ao cooler (300, 430)
 		x = 260; y = 390; xd = +4; yd = +4;
 		for (int i=1; i<10; i++) {
@@ -193,9 +193,9 @@ public class GenerateSnackManPath {
 		// do boxoffruits ao ponto origem (160, 410) -> (260, 390)
 		int nBoxOfFruits_Origem = contaN+1;
 		x = 160; y= 410;
-		xd = 10; yd = 2;
+		xd = 10; yd = -2;
 		for (int i=1; i<=10; i++) {
-			createNode(n, contaN+1, x+(xd*i), y-(yd*i));
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
 				s.append("n" + (contaN+1) + ":{n"+(nBoxOfFruits)+":1, n"+(contaN+2)+":1}, ");
 			} else {
@@ -207,16 +207,55 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		
+		int nJuiceMachine = contaN+1;
+		k.append("'n"+nJuiceMachine+"', ");
+		createNode(n, nJuiceMachine, 300, 290);
+		contaN++;
+
+		// da maquina de sumos ao ponto de origem   (300, 290) -> (260, 290)
+		int nJuiceMachine_Origem = contaN+1;
+		x = 300; y= 290;
+		xd = -4; yd = 10;
+		for (int i=1; i<=10; i++) {
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			if (i == 1) {
+				s.append("n" + (contaN+1) + ":{n"+(nJuiceMachine)+":1, n"+(contaN+2)+":1}, ");
+			} else {
+				if (i == 10) {
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n1:1}, ");
+				} else
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			}
+			contaN++;
+		}		
 		
+		// da maquina de sumos ao display (300, 290) -> (170, 290)
+		int nJuiceMachine_Display = contaN+1;
+		x = 300; y= 290;
+		xd = -13; yd = 0;
+		for (int i=1; i<=10; i++) {
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			if (i == 1) {
+				s.append("n" + (contaN+1) + ":{n"+(nJuiceMachine)+":1, n"+(contaN+2)+":1}, ");
+			} else {
+				if (i == 10) {
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(nDisplay)+":1}, ");
+				} else
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			}
+			contaN++;
+		}		
 		
 		// ligacoes entre os nós principais
-		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1, n"+(nC3_Origem+19)+":1, n"+(nC4_Origem+19)+":1, n"+(nBoxOfFruits_Origem+9)+":1}, ");
-		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1 }, ");
+		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1, n"+(nC3_Origem+19)+":1, n"+(nC4_Origem+19)+":1,"
+				+ " n"+(nBoxOfFruits_Origem+9)+":1, n" + (nJuiceMachine_Origem+9) + ":1}, ");
+		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1, n"+(nJuiceMachine_Display+9) + ":1 }, ");
 		s.append("n" + (nC1) + ":{n"+(nC1-1)+":1, n"+(nC1+1)+":1}, ");
 		s.append("n" + (nC2) + ":{n"+(nC2-1)+":1, n"+(nC2+1)+":1, n"+(nC2_Display+1)+":1, n"+(nC3-9)+":1}, ");
 		s.append("n" + (nC3) + ":{n"+(nC3-1)+":1, n"+(nC3+1)+":1, n"+nC3_Origem+":1}, ");
 		s.append("n" + (nC4) + ":{n"+(nC4-1)+":1, n"+nC4_Origem+":1, n"+nC4_BoxOfFruits+":1}, ");
 		s.append("n" + (nBoxOfFruits) + ":{n"+(nBoxOfFruits-1)+":1, n"+(nBoxOfFruits+1) + ":1}, ");
+		s.append("n" + (nJuiceMachine) + ":{n"+(nJuiceMachine_Origem)+":1, n"+(nJuiceMachine_Display) + ":1}, ");
 		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1} ");
 		
 		/*node = new Node(110, 370);
