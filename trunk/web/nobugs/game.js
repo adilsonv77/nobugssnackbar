@@ -810,6 +810,13 @@ Game.initApi = function(interpreter, scope) {
 	interpreter.setProperty(scope, 'goToBoxOfFruits',
 		  interpreter.createNativeFunction(wrapper));
 	
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.goToJuiceMachine());
+	    };
+
+	interpreter.setProperty(scope, 'goToJuiceMachine',
+		  interpreter.createNativeFunction(wrapper));
+	
 	    
 	// other commands
     wrapper = function(o) {
