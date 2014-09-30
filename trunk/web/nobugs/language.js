@@ -177,7 +177,7 @@ Blockly.Blocks['move_goToBoxOfFruits'] = {
 		  init: function() {
 		    this.setColour(160);
 		   
-		    this.appendValueInput("VALUE")
+		    this.appendDummyInput()
 		        .appendField('goToBoxOfFruits');
 		    
 		    this.setPreviousStatement(true);
@@ -187,10 +187,7 @@ Blockly.Blocks['move_goToBoxOfFruits'] = {
 		};
 
 Blockly.JavaScript['move_goToBoxOfFruits'] = function(block) {
-	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-		      Blockly.JavaScript.ORDER_NONE) || 'null';
-
-	  return 'highlightBlock('+block.id+'); \n goToBoxOfFruits(' +  value +');\n';
+	  return 'highlightBlock('+block.id+'); \n goToBoxOfFruits();\n';
 	};
 
 Blockly.Blocks['prepare_catchFruits'] = {
@@ -332,7 +329,7 @@ Blockly.Blocks['const_orange'] = {
 		};
 
 Blockly.JavaScript['const_orange'] = function(block) {
-	return ['\"orange\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"$$orange\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['const_softDrink'] = {
@@ -346,13 +343,12 @@ Blockly.Blocks['const_softDrink'] = {
 		};
 
 Blockly.JavaScript['const_softDrink'] = function(block) {
-	return ['\"softDrink\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"$$coke\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 /******************************************************************************
- *                          Modification of set variable 
+ *                          Modification of default language 
  ******************************************************************************/	
-
 
 Blockly.Blocks['variables_set'].init = function() {
     this.setHelpUrl(Blockly.Msg.VARIABLES_SET_HELPURL);
@@ -367,4 +363,5 @@ Blockly.Blocks['variables_set'].init = function() {
     this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
     this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
     this.contextMenuType_ = 'variables_get';
-  }
+  };
+

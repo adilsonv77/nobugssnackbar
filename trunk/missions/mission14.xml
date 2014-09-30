@@ -13,30 +13,29 @@
 		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="catchFood" show="true" />
-		<category name="askHasHungry" show="true" />
+		<category name="askHasHunger" show="true" />
 
 		<category name="askForDrink" show="true" />
 		<category name="goToCooler" show="true" />
 		<category name="catchDrink" show="true" />
 		<category name="askHasThirsty" show="true" />
 
-		<category name="isTypeOfDrink" show="true" />
 		<category name="goToBoxOfFruits" show="true" />
 		<category name="catchFruits" show="true" />
 		<category name="goToJuiceMachine" show="true" />
 		<category name="prepareAndCatchJuice" show="true" />
-		
+
 		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.orange" show="true" />
 		<category name="logic" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
 	<customersSN>
-		<randomization qtd="1">thirsty</randomization>
-		<randomization qtd="1">hungry</randomization>
 	</customersSN>
 	<customers>
 		<customer>
@@ -44,29 +43,119 @@
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<foods>
-				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks>
+			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">orange</drink>
 			</drinks>
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<foods>
-				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks>
+			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">orange</drink>
 			</drinks>
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="15">
 		<objective pos="1" place="counter">deliver</objective>
-		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="11">
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="variables_set" id="3" inline="true" x="300" y="1">
+			<field name="VAR">d</field>
+			<value name="VALUE">
+				<block type="ask_askForDrink" id="4"></block>
+			</value>
+		</block>
+		<block type="variables_set" id="14" inline="true" x="300" y="50">
+			<field name="VAR">d</field>
+			<value name="VALUE">
+				<block type="prepare_catchFruits" id="15" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="16">
+							<field name="VAR">d</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="variables_set" id="18" inline="true" x="300" y="100">
+			<field name="VAR">d</field>
+			<value name="VALUE">
+				<block type="prepare_prepareAndCatchJuice" id="19" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="20">
+							<field name="VAR">d</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="variables_set" id="10" inline="true" x="300" y="150">
+			<field name="VAR">d</field>
+			<value name="VALUE">
+				<block type="prepare_catchDrink" id="11" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="12">
+							<field name="VAR">d</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="do_deliver" id="23" inline="false" x="300" y="200">
+			<value name="VALUE">
+				<block type="variables_get" id="24">
+					<field name="VAR">d</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToCooler" id="9" x="300" y="250">
+		</block>
+		<block type="move_goToBoxOfFruits" id="13" x="300" y="300">
+		</block>
+		<block type="move_goToJuiceMachine" id="17" x="300" y="350">
+		</block>
+		<block type="move_goToBarCounter" id="1" x="300" inline="false" y="400">
+			<value name="VALUE">
+				<block type="math_number" id="2">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" id="21" x="300" inline="false" y="450">
+			<value name="VALUE">
+				<block type="math_number" id="22">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="controls_if" id="5" inline="false" x="300" y="500">
+			<mutation else="1"></mutation>
+			<value name="IF0">
+				<block type="logic_compare" id="6" inline="true">
+					<field name="OP">EQ</field>
+					<value name="A">
+						<block type="variables_get" id="7">
+							<field name="VAR">d</field>
+						</block>
+					</value>
+					<value name="B">
+						<block type="const_softDrink" id="8"></block>
+					</value>
+				</block>
+			</value>
+			<statement name="DO0">
+			</statement>
+			<statement name="ELSE">
+			</statement>
+		</block>
 	</xml>
+
 </mission>
 

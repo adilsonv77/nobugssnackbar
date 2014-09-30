@@ -13,7 +13,7 @@ public class UpdateMission {
 				"com.mysql.jdbc.Driver", "root", "root");
 
 		int j = 0;
-		for (int i = 1; i <= 13; i++) {
+		for (int i = 1; i <= 15; i++) {
 			StringBuffer xml = new StringBuffer();
 			BufferedReader arq = null;
 			try {

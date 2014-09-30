@@ -228,8 +228,9 @@ Game.missionLoaded = function(ret){
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
+  var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
   var toolbox = nobugspage.toolbox(null, null, 
-		  {enabled: Explanation.selectCommands(mission.childNodes[0].getElementsByTagName("commands")[0])}); // xml definition of the available commands
+		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
@@ -242,8 +243,7 @@ Game.missionLoaded = function(ret){
        trashcan: true});
 
 
-  hero = new SnackMan(mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue,
-		              objectives);
+  hero = new SnackMan(objectives, mission);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (ret[2] != null) // the user try this mission before, than load the previous code
 	  Game.nextPartOfMissionLoaded(ret[2], mission);
@@ -599,7 +599,7 @@ Game.execute = function(debug) {
 	  
 	  try {
 		  
-		var js = new MyBlocklyGenerator('JavaScript');
+		var js = Blockly.JavaScript;
 		
 		UserControl.registerExecution();
 		  
@@ -736,6 +736,13 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'highlightBlock',
           interpreter.createNativeFunction(wrapper));
 
+	var wrapper = function(a0, a1, op) {
+        return interpreter.createPrimitive(nobugsComparison(a0, a1, op));
+      };
+    
+    interpreter.setProperty(scope, 'nobugsComparison',
+          interpreter.createNativeFunction(wrapper));
+
     // Move commands
 	wrapper = function(n) {
       return interpreter.createPrimitive(hero.goToBarCounter(n));
@@ -795,12 +802,21 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'askForDrink',
       interpreter.createNativeFunction(wrapper));
     
+    // about juice
+    wrapper = function() {
+	      return interpreter.createPrimitive(hero.goToBoxOfFruits());
+	    };
+
+	interpreter.setProperty(scope, 'goToBoxOfFruits',
+		  interpreter.createNativeFunction(wrapper));
+	
+	    
+	// other commands
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.catchFood(o));
 	    };
-	    
-	// other commands
-    interpreter.setProperty(scope, 'catchFood',
+
+	interpreter.setProperty(scope, 'catchFood',
 		  interpreter.createNativeFunction(wrapper));
 	
     wrapper = function(o) {

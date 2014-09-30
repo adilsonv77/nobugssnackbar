@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="statement">
+			Blablablablablabla
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="catchFood" show="true" />
+		<category name="askHasHunger" show="true" />
+
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="catchDrink" show="true" />
+		<category name="askHasThirsty" show="true" />
+
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="catchFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndCatchJuice" show="true" />
+
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="const" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.orange" show="true" />
+		<category name="logic" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<customersSN>
+	</customersSN>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<foods>
+			</foods>
+			<drinks randomize="1">
+				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">orange</drink>
+			</drinks>
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<foods>
+			</foods>
+			<drinks randomize="1">
+				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">orange</drink>
+			</drinks>
+		</customer>
+	</customers>
+	<objectives ordered="false" reward="15">
+		<objective pos="1" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
+	</objectives>
+	<xml preload="14">
+	</xml>
+
+</mission>
+
