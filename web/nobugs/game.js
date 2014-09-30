@@ -818,6 +818,13 @@ Game.initApi = function(interpreter, scope) {
 		  interpreter.createNativeFunction(wrapper));
 	
 	    
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.catchFruits(o));
+	    };
+
+	interpreter.setProperty(scope, 'catchFruits',
+		  interpreter.createNativeFunction(wrapper));
+	
 	// other commands
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.catchFood(o));
@@ -933,6 +940,15 @@ Game.step = function(command, values) {
   			Game.money += value;
   		hero.changeImageOriginal();
   		break;
+
+ 	case 'SF' :
+  		hero.nextShowFruitImage();
+  		break;
+  		
+ 	case 'HF' :
+  		hero.nextHideFruitImage();
+  		break;
+  		
   		
   	case 'fail':
   		Game.showError(values);

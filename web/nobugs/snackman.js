@@ -116,8 +116,18 @@ SnackMan = function(objectives, mission) {
 	var juice = mission.evaluate("count(//mission/commands/category[@name='goToBoxOfFruits'])", mission, null,  XPathResult.ANY_TYPE, null);
 	this.showJuice = juice.numberValue > 0; 
 	if (this.showJuice) {
-		this.boxOfFruits = new Image();
-		this.boxOfFruits.src = "images/boxoffruits.png";
+		this.boxOfFruits = new Sprite({
+			ticksPerFrame: 0,
+			numberOfFrames: 3,
+			horzSeq: true,
+			x: 160,
+			y: 416,
+			width: 96,
+			height: 32,
+			sourceX: 0,
+			sourceY: 0,
+			imgSrc :  "images/boxoffruits.png"
+		});
 		
 		this.juiceMachine = new Sprite({
 			ticksPerFrame: 0,
@@ -204,7 +214,7 @@ SnackMan.prototype.reset = function() {
 SnackMan.prototype.draw = function(ctx) {
 	
 	if (this.showJuice) {
-		ctx.drawImage(this.boxOfFruits, 160, 416);
+		this.boxOfFruits.draw(ctx);
 		this.juiceMachine.draw(ctx);
 	}
 		
@@ -477,6 +487,8 @@ SnackMan.prototype.deliver = function(item) {
 	
 };
 
+
+
 SnackMan.prototype.goToBoxOfFruits = function() {
 	
 	this.animateSnackMan( this.boxOfFruitsNode );
@@ -488,6 +500,51 @@ SnackMan.prototype.goToJuiceMachine = function() {
 	this.animateSnackMan( this.juiceMachineNode );
 
 };
+
+SnackMan.prototype.catchFruits = function(order) {
+
+	// is he in front of the display ?
+	if (this.currentNode.id != this.boxOfFruitsNode.id) {
+		BlocklyApps.log.push(["fail", "Error_isntFrontBoxOfFruits"]);
+		throw false;
+	}
+	
+	// does he have any order ? 
+	if (order == null || order === undefined) {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
+		throw false;
+	}
+
+	// does the order have the food of this place ?
+	if (order != "$$orange") {
+		BlocklyApps.log.push(["fail", "Error_onlyFruits"]);
+		throw false;
+	}
+	
+	// show a fruit two times because there are two slides
+	BlocklyApps.log.push(['SF']); 
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['SF']);
+	CustomerManager.update();
+	
+	// hide  the fruit 
+	BlocklyApps.log.push(['HF']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['HF']);
+	CustomerManager.update();
+
+	BlocklyApps.log.push(['IP']);
+	
+	// TODO in future version, maybe the display has limited stock
+	var item = order;
+	//this.verifyObjectives("catchFruits", item);
+	
+	return item; 
+	
+};
+
 
 
 SnackMan.prototype.animateSnackMan = function(dest) {
@@ -562,6 +619,27 @@ SnackMan.prototype.updateCoolerImage = function() {
 	Game.display();
 	this.showCooler = false;
 	
+};
+
+SnackMan.prototype.nextShowFruitImage = function() {
+	if (this.boxOfFruits.invert == true)
+		this.boxOfFruits.invertDirection();
+
+	this.updateBoxOfFruitsImage();
+
+};
+
+SnackMan.prototype.nextHideFruitImage = function() {
+	if (this.boxOfFruits.invert == false)
+		this.boxOfFruits.invertDirection();
+
+	this.updateBoxOfFruitsImage();
+
+};
+
+SnackMan.prototype.updateBoxOfFruitsImage = function() {
+	this.boxOfFruits.update();
+	Game.display();
 };
 
 SnackMan.prototype.nextOpenDisplayImage = function() {
