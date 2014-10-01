@@ -427,9 +427,14 @@ Game.countInstructions = function(c) {
 	var conta = 0;
 	while (c != null) {
 		var a = c;
-		c = c.childNodes[c.childElementCount-1];
 		if (!a.attributes["disabled"])
 			conta++;
+
+		if (c.childNodes.length == 0)
+			break;
+		else
+			c = c.childNodes[c.childElementCount-1];
+		
 		if (!a.attributes["disabled"] && 
 			 ((a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT") ||
 					 (a.childNodes[0].nodeName === "STATEMENT"))) {
@@ -453,8 +458,10 @@ Game.countInstructions = function(c) {
 };
 
 Game.goalButtonClick = function() {
-	
-	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+	var count = Game.countInstructions(xml.childNodes[0]);
+	alert(count);
+	//Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
   
 };
 
@@ -946,7 +953,9 @@ Game.step = function(command, values) {
   		var value = values.shift();
   		if (value != null)
   			Game.money += value;
-  		hero.changeImageOriginal();
+  		value = values.shift();
+  		if (value == 0)
+  			hero.changeImageOriginal();
   		break;
 
  	case 'SF' :

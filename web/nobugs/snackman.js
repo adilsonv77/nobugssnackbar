@@ -170,6 +170,9 @@ SnackMan = function(objectives, mission) {
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
+	
+	this.catched = 0;
+	this.delivered = 0;
 
 };
 
@@ -346,6 +349,7 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink"}; 
 	this.verifyObjectives("catchDrink", item);
+	this.catched++;
 	
 	// TODO in future version, maybe the cooler has limited stock
 	return item;
@@ -449,6 +453,7 @@ SnackMan.prototype.catchFood = function(order) {
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food"};
 	
 	this.verifyObjectives("catchFood", item);
+	this.catched++;
 	
 	return item; 
 	
@@ -471,14 +476,19 @@ SnackMan.prototype.deliver = function(item) {
 	
 	item.data = null; // was deliver, then it's null
 	
-	// 11 times to execute the coin animation and erase the coin
-	for (var i=0; i<11; i++) {
-		BlocklyApps.log.push(['IM', 0]);
+	if (amount.happy >= Customer.DELIVERED_PARTIAL)
+		this.delivered++;
+	
+	if (amount.happy != Customer.DELIVERED_PARTIAL) {
+		// 11 times to execute the coin animation and erase the coin
+		for (var i=0; i<11; i++) {
+			BlocklyApps.log.push(['IM', 0]);
+			CustomerManager.update();
+		}
+		
+		BlocklyApps.log.push(['IO', amount, this.catched - this.delivered]);
 		CustomerManager.update();
 	}
-
-	BlocklyApps.log.push(['IO', amount]);
-	CustomerManager.update();
 	
 };
 
@@ -511,7 +521,7 @@ SnackMan.prototype.catchFruits = function(order) {
 	}
 
 	// does the order have the food of this place ?
-	if (order.data.descr != "$$orange") {
+	if (!(order.data.type === "order" && order.data.descr.indexOf("$$juiceof") == 0)) {
 		BlocklyApps.log.push(["fail", "Error_onlyFruits"]);
 		throw false;
 	}
@@ -533,7 +543,7 @@ SnackMan.prototype.catchFruits = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink"};
+	var item = {type: "item", descr:"$$"+order.data.descr.substring(9), drinkOrFood: "drink"};
 	//this.verifyObjectives("catchFruits", item);
 	
 	return item; 
@@ -582,8 +592,9 @@ SnackMan.prototype.prepareAndCatchJuice = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = order;
+	var item = {type: "item", descr:"$$juiceof"+order.data.descr.substring(2), drinkOrFood: "drink"};
 	//this.verifyObjectives("catchFruits", item);
+	this.catched++;
 	
 	return item; 
 	
