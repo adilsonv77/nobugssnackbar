@@ -2,15 +2,6 @@
  *                                Utility functions
  ******************************************************************************/
 
-String.prototype.format = function() {
-    var formatted = this;
-    for (var i = 0; i < arguments.length; i++) {
-        var regexp = new RegExp('\\{'+i+'\\}', 'gi');
-        formatted = formatted.replace(regexp, arguments[i]);
-    }
-    return formatted;
-};
-
 function findVariable(){
 	// the variable must not be initialized
 	var vars = Game.jsInterpreter.variables;

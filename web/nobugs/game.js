@@ -638,7 +638,7 @@ Game.updateVariables = function() {
 		var data = entry.scope.properties[entry.name].data;
 		if (data != undefined) {
 			if (data.type != undefined) {
-				data = "<p>" + data.qt + " X <img style='vertical-align: middle;' src='images/"+ data.descr + ".png'/></p>";
+				data = "<p class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>";
 			}
 				
 			rows.push({"name":entry.name, "value": data});
@@ -816,7 +816,6 @@ Game.initApi = function(interpreter, scope) {
 
 	interpreter.setProperty(scope, 'goToJuiceMachine',
 		  interpreter.createNativeFunction(wrapper));
-	
 	    
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.catchFruits(o));
@@ -824,6 +823,15 @@ Game.initApi = function(interpreter, scope) {
 
 	interpreter.setProperty(scope, 'catchFruits',
 		  interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.prepareAndCatchJuice(o));
+	    };
+
+	interpreter.setProperty(scope, 'prepareAndCatchJuice',
+		  interpreter.createNativeFunction(wrapper));
+	
+	
 	
 	// other commands
     wrapper = function(o) {
@@ -949,6 +957,13 @@ Game.step = function(command, values) {
   		hero.nextHideFruitImage();
   		break;
   		
+ 	case 'MJ':
+ 		hero.nextShowJuiceMachineImage();
+ 		break;
+  		
+ 	case 'HJ':
+ 		hero.nextHideJuiceMachineImage();
+ 		break;
   		
   	case 'fail':
   		Game.showError(values);

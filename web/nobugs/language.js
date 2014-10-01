@@ -318,18 +318,18 @@ Blockly.JavaScript['prepare_catchDrink'] = function(block) {
  *                          Snackman Constants
  ******************************************************************************/	
 	
-Blockly.Blocks['const_orange'] = {
+Blockly.Blocks['const_juiceOfOrange'] = {
 		  init: function() {
 		    this.setColour(50);
 		    this.setOutput(true);
 		    this.appendDummyInput()
-		        .appendField('orange');
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_constOrangeTooltip'));
+		        .appendField('juiceOfOrange');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_constjuiceOfOrangeTooltip'));
 		  }
 		};
 
-Blockly.JavaScript['const_orange'] = function(block) {
-	return ['\"$$orange\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+Blockly.JavaScript['const_juiceOfOrange'] = function(block) {
+	return ['\"\\\"$$juiceoforange\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['const_softDrink'] = {
@@ -343,7 +343,7 @@ Blockly.Blocks['const_softDrink'] = {
 		};
 
 Blockly.JavaScript['const_softDrink'] = function(block) {
-	return ['\"$$coke\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$coke\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 /******************************************************************************

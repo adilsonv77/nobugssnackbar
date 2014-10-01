@@ -311,19 +311,13 @@ SnackMan.prototype.catchDrink = function(order) {
 	}
 	
 	// does he have any order ? 
-	if (order.data == null || order.data.qt === undefined) {
+	if (order.data == null || order.data === undefined || order.data.type != "order") {
 		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
-	// does the order have drinks ?
-	if (order.data.type != "drink") {
-		BlocklyApps.log.push(["fail", "Error_doesntOrderDrink"]);
-		throw false;
-	}
-	
 	// does the order have the drink of this place ?
-	if (order.data.descr.indexOf("coke") == 1) {
+	if (order.data.descr.indexOf("coke") == -1) {
 		BlocklyApps.log.push(["fail", "Error_wrongPlaceForDrink"]);
 		throw false;
 	}
@@ -350,7 +344,7 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 	BlocklyApps.log.push(['IP']);
 	
-	var item = {qt:order.data.qt, type: "drink", descr:order.data.descr}; 
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink"}; 
 	this.verifyObjectives("catchDrink", item);
 	
 	// TODO in future version, maybe the cooler has limited stock
@@ -411,13 +405,13 @@ SnackMan.prototype.catchFood = function(order) {
 	}
 	
 	// does he have any order ? 
-	if (order.data == null || order.data.qt === undefined) {
+	if (order.data == null || order.data === undefined || order.data.type != "order") {
 		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
 	// does the order have food ?
-	if (order.data.type != "food") {
+	if (order.data.type != "order") {
 		BlocklyApps.log.push(["fail", "Error_doesntOrderFood"]);
 		throw false;
 	}
@@ -452,7 +446,8 @@ SnackMan.prototype.catchFood = function(order) {
 	
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = {qt:order.data.qt, type: "food", descr:order.data.descr};
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food"};
+	
 	this.verifyObjectives("catchFood", item);
 	
 	return item; 
@@ -503,20 +498,20 @@ SnackMan.prototype.goToJuiceMachine = function() {
 
 SnackMan.prototype.catchFruits = function(order) {
 
-	// is he in front of the display ?
+	// is he in front of the box of fruits ?
 	if (this.currentNode.id != this.boxOfFruitsNode.id) {
 		BlocklyApps.log.push(["fail", "Error_isntFrontBoxOfFruits"]);
 		throw false;
 	}
 	
 	// does he have any order ? 
-	if (order == null || order === undefined) {
+	if (order.data == null || order.data === undefined || order.data.type != "order") {
 		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
 	// does the order have the food of this place ?
-	if (order != "$$orange") {
+	if (order.data.descr != "$$orange") {
 		BlocklyApps.log.push(["fail", "Error_onlyFruits"]);
 		throw false;
 	}
@@ -538,14 +533,61 @@ SnackMan.prototype.catchFruits = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = order;
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink"};
 	//this.verifyObjectives("catchFruits", item);
 	
 	return item; 
 	
 };
 
+SnackMan.prototype.prepareAndCatchJuice = function(order) {
+	// is he in front of the juice machine ?
+	if (this.currentNode.id != this.juiceMachineNode.id) {
+		BlocklyApps.log.push(["fail", "Error_isntFrontJuiceMachine"]);
+		throw false;
+	}
+	
+	// does he have an item ? 
+	if (order.data == null || order.data === undefined || order.data.type != "item") {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveItem"]);
+		throw false;
+	}
 
+	// does the order have the food of this place ?
+	if (order.data.descr != "$$orange") {
+		BlocklyApps.log.push(["fail", "Error_onlyFruits"]);
+		throw false;
+	}
+	
+	// make juice three times because there are three slides
+	BlocklyApps.log.push(['MJ']); 
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['MJ']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['MJ']);
+	CustomerManager.update();
+	
+	// hide  the fruit 
+	BlocklyApps.log.push(['HJ']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['HJ']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['HJ']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['IP']);
+	
+	// TODO in future version, maybe the display has limited stock
+	var item = order;
+	//this.verifyObjectives("catchFruits", item);
+	
+	return item; 
+	
+};
 
 SnackMan.prototype.animateSnackMan = function(dest) {
 
@@ -639,6 +681,27 @@ SnackMan.prototype.nextHideFruitImage = function() {
 
 SnackMan.prototype.updateBoxOfFruitsImage = function() {
 	this.boxOfFruits.update();
+	Game.display();
+};
+
+SnackMan.prototype.nextShowJuiceMachineImage = function() {
+	if (this.juiceMachine.invert == true)
+		this.juiceMachine.invertDirection();
+
+	this.updateJuiceMachineImage();
+
+};
+
+SnackMan.prototype.nextHideJuiceMachineImage = function() {
+	if (this.juiceMachine.invert == false)
+		this.juiceMachine.invertDirection();
+
+	this.updateJuiceMachineImage();
+
+};
+
+SnackMan.prototype.updateJuiceMachineImage = function() {
+	this.juiceMachine.update();
 	Game.display();
 };
 

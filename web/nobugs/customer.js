@@ -298,7 +298,7 @@ Customer.prototype.askForDrink = function() {
 		return null;
 	
 	var d = this.drinks[this.dUnfulfilled];
-	return {qt:d.qt, type: "drink", descr:"$$" + d.item};
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink"};
 };
 
 Customer.prototype.hasThirsty = function() {
@@ -310,7 +310,7 @@ Customer.prototype.askForFood = function() {
 		return null;
 	
 	var d = this.foods[this.fUnfulfilled];
-	return {qt:d.qt, type: "food", descr:"$$" + d.item};
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food"};
 };
 
 Customer.prototype.hasHunger = function() {
@@ -325,21 +325,22 @@ Customer.prototype.deliver = function(item) {
 	var happy = false;
 	var money = 0;
 	
-	if ((item.type === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
-			(item.type === "food" && (this.fUnfulfilled < this.foods.length))) {
+	if  ((item.type === "item") &&
+	    ((item.drinkOrFood === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
+			(item.drinkOrFood === "food" && (this.fUnfulfilled < this.foods.length)))) {
 		
-		var d = (item.type === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
+		var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
 		// d is the "ordered item"
 		
-		happy = (item.descr === "$$" + d.item) && (item.qt == d.qt);
+		happy = (item.descr === "$$" + d.item);
 		if (happy) {
 			
-			if (item.type === "drink")
+			if (item.drinkOrFood === "drink")
 				this.dUnfulfilled++;
 			else
 				this.fUnfulfilled++;
 			
-			money = d.price * item.qt;
+			money = d.price;
 		}
 	}
 	
