@@ -317,12 +317,15 @@ Customer.prototype.hasHunger = function() {
 	return (this.fUnfulfilled < this.foods.length);
 };
 
+Customer.DELIVERED_BAD = 0;
+Customer.DELIVERED_PARTIAL = 1;
+Customer.DELIVERED_TOTAL = 2;
 
 Customer.prototype.deliver = function(item) {
 	
 	// item is the "delivered item"
 	
-	var happy = false;
+	var happy = Customer.DELIVERED_BAD;
 	var money = 0;
 	
 	if  ((item.type === "item") &&
@@ -332,8 +335,8 @@ Customer.prototype.deliver = function(item) {
 		var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
 		// d is the "ordered item"
 		
-		happy = (item.descr === "$$" + d.item);
-		if (happy) {
+		
+		if (item.descr === "$$" + d.item) {
 			
 			if (item.drinkOrFood === "drink")
 				this.dUnfulfilled++;
@@ -341,24 +344,27 @@ Customer.prototype.deliver = function(item) {
 				this.fUnfulfilled++;
 			
 			money = d.price;
+			happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
 		}
+		
 	}
 	
-	if (happy) {
+	if (happy ===  Customer.DELIVERED_TOTAL) {
 		
 		this.showCoin = true;
 		this.coin.x = this.img.x+5;
 		this.coin.y = this.img.y-20;
 		this.state = 9;
 		
-	} else {
-		
-		this.showFire = true;
-		this.fire.x = this.img.x+8;
-		this.fire.y = this.img.y-32;
-		this.state = 21;
-		
-	}
+	} else 
+		if (happy == Customer.DELIVERED_BAD){
+			
+			this.showFire = true;
+			this.fire.x = this.img.x+8;
+			this.fire.y = this.img.y-32;
+			this.state = 21;
+			
+		}
 	
-	return money;
+	return {money: money, happy: happy};
 };
