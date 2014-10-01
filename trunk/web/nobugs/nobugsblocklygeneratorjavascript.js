@@ -52,7 +52,8 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 	  var argument0 = Blockly.JavaScript.valueToCode(block, 'A', order) || '0';
 	  var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
 
-	  var code = "nobugsComparison("+argument0+", "+argument1+", '"+blockOperator+"')"; 
+	  var code = 'nobugsComparison({0}, {1}, "{2}")'.format(argument0, argument1, blockOperator); 
+	  code = 'nobugsComparison(order, "\\"$$coke\\"", "EQ")';
       return [code, order];
 };
 
@@ -62,9 +63,9 @@ function nobugsComparison(arg0, arg1, operator) {
 	operator = NoBugsJavaScript.OPERATORS[operator.data];
 	
 	if (arg0.type != undefined) {
-		arg0 = arg0.descr;
+		arg0 = '\"' + arg0.descr + '\"';
 	} else if (arg1.type != undefined) {
-		arg1 = arg1.descr;
+		arg1 = '\"' + arg1.descr + '\"';
 	}
 	var ret = eval(arg0 + ' ' + operator + ' ' + arg1);
 	return ret;

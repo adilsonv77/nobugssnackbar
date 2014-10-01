@@ -153,9 +153,26 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 
 CustomerManager.extractItems = function(list) {
 	
+	var randomize = list.getAttribute("randomize");
+	
+	var selected = [];
+	for(var j=0; j < list.children.length; j++) {
+		selected[j] = j;
+	}
+	
+	if (randomize != null) {
+		randomize = parseInt(randomize);
+		while (selected.length > randomize) {
+			var s = Math.floor((Math.random() * (selected.length)));
+			selected.splice(s, 1);
+		}
+	}
+	
 	var items = [];
-	for (var j=0; j < list.children.length; j++) {
-		var item = list.children[j];
+	for (var j=0; j < selected.length; j++) {
+		
+		var item = list.children[selected[j]];
+		
 		var theItem = item.childNodes[0].nodeValue;
 		var theQtd = item.getAttribute("qt");
 		var thePrice = item.getAttribute("price");

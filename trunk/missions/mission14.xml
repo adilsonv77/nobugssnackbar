@@ -30,7 +30,7 @@
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
 		<category name="const.softDrink" show="true" />
-		<category name="const.orange" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
 		<category name="logic" show="true" />
 
 	</commands>
@@ -46,7 +46,7 @@
 			</foods>
 			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">orange</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 		<customer>
@@ -57,7 +57,7 @@
 			</foods>
 			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">orange</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
