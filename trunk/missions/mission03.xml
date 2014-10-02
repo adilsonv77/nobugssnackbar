@@ -2,10 +2,18 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		Blablablablablabla
+		Agora que j&#225; sabes ir at&#233; o balc&#227;o &#233; o momento de aprenderes a anotar o <br/>
+		que o cliente deseja comer (askForFood). Toda a informa&#231;&#227;o &#233; guardada  <br/>
+		em vari&#225;veis. Uma vari&#225;vel serve para armazenar informa&#231;&#227;o para mais  <br/>
+		tarde se aceder.
 		</page>
-		<page type="hint" origin="button" id="debugButton" dir="down">
-			Esse &#233; o bot&#227;o para executar passo-a-passo.
+		<page type="statement">
+		A tua miss&#227;o &#233; ir at&#233; ao cliente na posi&#231;&#227;o 1 e perguntar e anotar o <br/>
+		que ele deseja e depois ir ao cliente na posi&#231;&#227;o 4. Ainda vais usar o <br/>
+		bot&#227;o de depurar e, agora, observa uma lista de vari&#225;veis que v&#227;o ser <br/>
+		disponibilizadas para observares o que est&#225; nelas armazenado. <br/>
+		 <br/>
+		Os comandos est&#227;o dispon&#237;veis na &#225;rea de trabalho, mas n&#227;o na ordem correta.
 		</page>
 
 	</explanation>
@@ -45,7 +53,7 @@
 	</objectives>
 	<xml>
 		<block type="variables_set" inline="true" x = "300" y = "1">
-			<field name="VAR">orderFood</field>
+			<field name="VAR">pedido</field>
 			<value name="VALUE">
 				<block type="ask_askForFood">
 				</block>

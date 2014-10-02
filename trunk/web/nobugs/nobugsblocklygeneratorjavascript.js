@@ -29,7 +29,7 @@ NoBugsJavaScript.newVarSet = function(block) {
 	
 	var s = NoBugsJavaScript.oldVarSet(block);
 	
-	return 'highlightBlock('+block.id+');\n' + 'NoBugsJavaScript.varName="'+block.getFieldValue('VAR')+'";\n' + s +
+	return  'NoBugsJavaScript.varName="'+block.getFieldValue('VAR')+'";\n' + s +
 				'\nNoBugsJavaScript.varName=null;\n';
 };
 

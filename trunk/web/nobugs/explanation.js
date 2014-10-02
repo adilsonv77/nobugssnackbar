@@ -1,5 +1,4 @@
 var Explanation = {};
-var userLogged = null;
 
 Explanation.selectCommands = function(commands) {
 	

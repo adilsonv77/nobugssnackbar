@@ -25,6 +25,7 @@
  */
 'use strict';
 
+var userLogged = null;
 /**
  * Create a namespace for the application.
  */
@@ -67,8 +68,8 @@ Game.init = function() {
 
     UserControl.verifyLogged(function(ret) {
 		
-		if (ret) 
-			Game.logged();
+		if (ret[0]) 
+			Game.logged(ret[1]);
 		else {
 			window.removeEventListener('unload', Game.unload);
 
@@ -119,23 +120,24 @@ Game.login = function() {
 
 			if (ret[0] == null) {
 				
-				userLogged = ret[1];
-				
 	  			document.getElementById('loginuser').value = "";
 	  			document.getElementById('loginpassw').value = "";
 	  			
 	  			BlocklyApps.hideDialog(true);
 	  			error.innerHTML = "";
-	  			Game.logged();
+	  			Game.logged(ret[1]);
 	  		} else {
-	  			error.innerHTML = BlocklyApps.getMsg(ret);
+	  			error.innerHTML = BlocklyApps.getMsg(ret[0]);
 	  		}
   		  }
     );
 	
 };
 
-Game.logged = function() {
+Game.logged = function(u) {
+	
+  userLogged = u;
+  
   document.getElementById("initialBackground").style.display = "none";
   document.getElementById("mainBody").style.display = "inline";
 	  			
@@ -158,8 +160,7 @@ Game.logged = function() {
   
   window.addEventListener('scroll', function() {
       Game.doResizeWindow();
-    });
-  window.addEventListener('resize',  Game.resizeWindow);
+    });  window.addEventListener('resize',  Game.resizeWindow);
 
   Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
   Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
@@ -615,6 +616,7 @@ Game.execute = function(debug) {
 		  
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
+  	    alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.

@@ -73,9 +73,9 @@ public class NoBugsConnection {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("update users set userlasttime = ? where userid = ?");
-			ps.setDate(1, new java.sql.Date(System.currentTimeMillis()));
-			ps.setLong(2, u.getId());
+					.prepareStatement("update users set userlasttime = now() where userid = ?");
+			//ps.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
+			ps.setLong(1, u.getId());
 			ps.executeUpdate();
 		} finally {
 			if (bdCon != null)
