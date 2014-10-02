@@ -34,7 +34,7 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public String login(String nick, String passw) {
+	public Object[] login(String nick, String passw) {
 		
 		MessageDigest md;
 		try {
@@ -48,11 +48,11 @@ public class UserControl {
 			
 			this.user = NoBugsConnection.getConnection().login(nick, sb.toString());
 			
-			return null; // no errors
+			return new Object[]{null, this.user}; // no errors
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error_login";
+			return new Object[]{"Error_login"};
 		}
 		
 	}

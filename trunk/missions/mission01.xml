@@ -2,8 +2,28 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		Blablablablablabla
+		Ol&#225; $${userLogged.name} !!! <br/>
+		Deixa que te apresente o ambiente que tens dispon&#237;vel para te tornares $${(userLogged.sex=="M"?"o Rei":"a Rainha")} das Esplanadas.
 		</page>
+		
+		<page type="statement">
+		&#192; tua esquerda est&#225; a esplanada. Um ambiente ainda simples, sem muitos equipamentos, pois <br/>
+		as portas foram abertas recentemente. &#201;s o primeiro  e o &#250;nico empregado. Aqui vais observar <br/>
+		os teus clientes indo e vindo satisfeitos pelo excelente trabalho que vais desempenhar. Observa <br/>
+		o teu personagem de uniforme branco.
+		</page>		
+		
+		<page type="statement">
+		&#192; tua direita est&#225; a &#225;rea de trabalho. Aqui vais dar todas as ordens &#224; tua personagem. Ela <br/>
+		precisa ser programada para atender todos os objetivos da miss&#227;o.
+		</page>
+		
+		<page type="statement">
+		A tua primeira miss&#227;o &#233; encaminhares-te at&#233; aos clientes sentados na posi&#231;&#227;o 1 e 4 do balc&#227;o. <br/>
+		&#201; simples, n&#227;o ? &#201; s&#243; arrastar o comando at&#233; a &#225;rea de trabalho, ligar um ao outro, alterar os <br/>
+		par&#226;metros (o valor 1 &#233; o padr&#227;o) e clicar no bot&#227;o executar.
+		</page>
+		
 		<page type="hint" origin="command" id="0#0" dir="stack">
 		Arraste o comando da barra de ferramentas para a &#225;rea de programa&#231;&#227;o.
 		</page>

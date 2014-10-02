@@ -1,11 +1,25 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.sql.Time;
+
+import org.directwebremoting.annotations.DataTransferObject;
+import org.directwebremoting.annotations.RemoteProperty;
+
+@DataTransferObject()
 public class User {
 
 	private long id;
 	private String nick;
 	private String passw;
 	private long money;
+	
+	@RemoteProperty
+	private String sex;
+	
+	@RemoteProperty
+	private String name;
+	
+	private Time lastTime;
 
 	public long getId() {
 		return id;
@@ -43,5 +57,31 @@ public class User {
 	public String toString() {
 		return nick;
 	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Time getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(Time lastTime) {
+		this.lastTime = lastTime;
+	}
+	
+	
 
 }
