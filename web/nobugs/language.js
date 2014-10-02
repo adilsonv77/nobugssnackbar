@@ -45,7 +45,7 @@ Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  // Generate JavaScript for moving to a specific customer in the counter.
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
-	  return 'highlightBlock('+block.id+'); \n goToBarCounter(' + value + ');\n';
+	  return 'goToBarCounter(' + value + ');\n';
 	};
 
 Blockly.Blocks['do_deliver'] = {
@@ -63,7 +63,7 @@ Blockly.JavaScript['do_deliver'] = function(block) {
 	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
 	      Blockly.JavaScript.ORDER_NONE) || '0';
 	  //
-	  return 'highlightBlock('+block.id+'); \n deliver(' + value + ');\n updateVariables(); \n ';
+	  return 'deliver(' + value + ');\n updateVariables(); \n ';
 	};
 
 Blockly.Blocks['ask_isThereACustomer'] = {
@@ -102,7 +102,7 @@ Blockly.Blocks['move_goToDisplay'] = {
 
 Blockly.JavaScript['move_goToDisplay'] = function(block) {
 	  // Generate JavaScript for moving to the display.
-	  return 'highlightBlock('+block.id+'); \n goToDisplay();\n';
+	  return 'goToDisplay();\n';
 	};
 	
 Blockly.Blocks['ask_askForFood'] = {
@@ -170,7 +170,7 @@ Blockly.Blocks['move_goToCooler'] = {
 
 Blockly.JavaScript['move_goToCooler'] = function(block) {
 	  // Generate JavaScript for moving to the cooler.
-	  return 'highlightBlock('+block.id+'); \n goToCooler();\n';
+	  return 'goToCooler();\n';
 	};
 
 Blockly.Blocks['move_goToBoxOfFruits'] = {
@@ -187,7 +187,7 @@ Blockly.Blocks['move_goToBoxOfFruits'] = {
 		};
 
 Blockly.JavaScript['move_goToBoxOfFruits'] = function(block) {
-	  return 'highlightBlock('+block.id+'); \n goToBoxOfFruits();\n';
+	  return 'goToBoxOfFruits();\n';
 	};
 
 Blockly.Blocks['prepare_catchFruits'] = {
@@ -221,7 +221,7 @@ Blockly.Blocks['move_goToJuiceMachine'] = {
 		};
 
 Blockly.JavaScript['move_goToJuiceMachine'] = function(block) {
-	  return 'highlightBlock('+block.id+'); \n goToJuiceMachine();\n';
+	  return 'goToJuiceMachine();\n';
 	};
 	
 Blockly.Blocks['prepare_prepareAndCatchJuice'] = {
@@ -256,32 +256,6 @@ Blockly.Blocks['ask_askForDrink'] = {
 Blockly.JavaScript['ask_askForDrink'] = function(block) {
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
-
-Blockly.Blocks['compare_isTypeOfDrink'] = {
-		  // Verify if at this position there is a customer
-		  init: function() {
-		    this.setColour(160);
-		    this.setOutput(true, "Boolean");
-		    this.appendDummyInput()
-		        .appendField("isTypeOfDrink");
-		    this.appendValueInput("VALUE1")
-	        	.appendField("order");
-		    this.appendValueInput("VALUE2")
-        		.appendField("type");
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_isTypeOfDrinkTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['compare_isTypeOfDrink'] = function(block) {
-   
-	 var value1 = Blockly.JavaScript.valueToCode(block, 'VALUE1',
-		      Blockly.JavaScript.ORDER_NONE) || 'null';
-	 var value2 = Blockly.JavaScript.valueToCode(block, 'VALUE2',
-		      Blockly.JavaScript.ORDER_NONE) || 'null';
-	 
-	  return [value1+'.type === '+value2, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-	
-	};
 
 Blockly.Blocks['ask_askHasThirsty'] = {
 		  init: function() {

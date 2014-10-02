@@ -2,7 +2,7 @@
 <mission>
 	<explanation>
 		<page type="statement">
-		Ol&#225; $${userLogged.name} !!! <br/>
+		Ol&#225; $${userLogged.name} !!! <br/><br/>
 		Deixa que te apresente o ambiente que tens dispon&#237;vel para te tornares $${(userLogged.sex=="M"?"o Rei":"a Rainha")} das Esplanadas.
 		</page>
 		

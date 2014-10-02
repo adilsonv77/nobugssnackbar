@@ -19,8 +19,8 @@ public class UserControl {
 	private int mission = 0;
 	
 	@RemoteMethod
-	public boolean verifyLogged() {
-		return user != null;
+	public Object[] verifyLogged() {
+		return new Object[]{user != null, this.user};
 	}
 	
 	@RemoteMethod

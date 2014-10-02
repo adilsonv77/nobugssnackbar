@@ -55,7 +55,7 @@ public class GenerateSnackManPath {
 		createNode(n, contaN, x, y);
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
-			s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			s.append("n" + (contaN+1) + ":{n"+(contaN)+":0.5, n"+(contaN+2)+":0.5}, ");
 			contaN++;
 		}
 		contaN++;
@@ -114,9 +114,9 @@ public class GenerateSnackManPath {
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1)
-			  s.append("n" + (contaN+1) + ":{n"+(nC2)+":1, n"+(contaN+2)+":1}, ");
+			  s.append("n" + (contaN+1) + ":{n"+(nC2)+":0.5, n"+(contaN+2)+":0.5}, ");
 			else
-			  s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			  s.append("n" + (contaN+1) + ":{n"+(contaN)+":0.5, n"+(contaN+2)+":0.5}, ");
 			
 			contaN++;
 		}
@@ -129,7 +129,7 @@ public class GenerateSnackManPath {
 		x = 100; y = 370;
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
-			s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			s.append("n" + (contaN+1) + ":{n"+(contaN)+":0.5, n"+(contaN+2)+":0.5}, ");
 			contaN++;
 		}
 		int nC4 = contaN+1;

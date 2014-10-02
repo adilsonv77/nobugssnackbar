@@ -14,7 +14,7 @@
 	"Apps.dialogNext": "Pr&#243;ximo",
 	"Apps.dialogPrevious": "Anterior",
 	
-	"Blockly.variableSet":"%1 a guardar em %2",
+	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
 	
 	"NoBugs.title": "NoBug's Snack Bar",
@@ -44,9 +44,15 @@
 	"NoBugs.password" : "Senha",
 	
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
-	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja.",
+	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja comer.",
 	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",
+	"SnackMan.catchFoodTooltip" : "Pega a comida do mostrador e coloca na bandeja pronto para ser entregue ao cliente.",
+	"SnackMan.deliverTooltip" : "Entrega a comida ou bebida ao cliente na posi&#231;&#227;o atual.",
+	"SnackMan.goToCoolerTooltip" : "Move o cozinheiro at&#233; o frigor&#237;fico." ,
+	"SnackMan.askForDrinkTooltip" : "Pergunto ao cliente o que ele deseja beber.",
+	"SnackMan.catchDrinkTooltip" : "Pega a bebida do frigor&#237;fico e coloca na bandeja pronto para ser entregue ao cliente.",
+	
 	
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
