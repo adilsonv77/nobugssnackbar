@@ -1,4 +1,5 @@
 var Explanation = {};
+var userLogged = null;
 
 Explanation.selectCommands = function(commands) {
 	
@@ -291,5 +292,28 @@ Explanation.finishStatement = function() {
 			function(){
 				Game.currTime = new Date().getTime();
 			});
+};
+
+Explanation.parseUserLogged = function(explanations) {
+	for (var j=0; j<explanations.children.length; j++) {
+		
+		var e = explanations.children[j].innerHTML;
+		
+		do {
+			var i = e.indexOf("$${") ;
+			if (i == -1)
+				break;
+
+			var e1 = e.substring(i+3);
+			var e2 = e1.substring(0, e1.indexOf("}"));
+			var e3 = eval(e2);
+			
+			e = e.substring(0, i) + e3 + e.substring(e.indexOf("}")+1);
+			
+		} while (true) ;
+		
+		explanations.children[j].innerHTML = e;
+	}
+	return explanations;
 };
 

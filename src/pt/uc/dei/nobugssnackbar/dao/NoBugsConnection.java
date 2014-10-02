@@ -52,7 +52,7 @@ public class NoBugsConnection {
 			bdCon = dataSource.getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney from users where usernick = ? and userpassw = ?");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime from users where usernick = ? and userpassw = ?");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
@@ -66,6 +66,9 @@ public class NoBugsConnection {
 			u.setNick(nick);
 			u.setPassw(passw);
 			u.setMoney(rs.getLong(4));
+			u.setName(rs.getString(5));
+			u.setSex(rs.getString(6));
+			u.setLastTime(rs.getTime(7));
 
 			ps.close();
 

@@ -38,7 +38,8 @@
 		<init-param>
 			<param-name>classes</param-name>
 			<param-value>
-			pt.uc.dei.nobugssnackbar.control.UserControl
+			pt.uc.dei.nobugssnackbar.control.UserControl,
+			pt.uc.dei.nobugssnackbar.model.User
 			</param-value>
 		</init-param>
 		<init-param>

@@ -117,7 +117,10 @@ Game.login = function() {
 		  function(ret) {
 			var error = document.getElementById("errorLogin");
 
-			if (ret == null) {
+			if (ret[0] == null) {
+				
+				userLogged = ret[1];
+				
 	  			document.getElementById('loginuser').value = "";
 	  			document.getElementById('loginpassw').value = "";
 	  			
@@ -274,7 +277,9 @@ Game.nextPartOfMissionLoaded = function(answer, mission) {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
-	  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
+	  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  
+	  Explanation.showInfo(explanation, true);
 	  
   };
 
@@ -458,10 +463,8 @@ Game.countInstructions = function(c) {
 };
 
 Game.goalButtonClick = function() {
-	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-	var count = Game.countInstructions(xml.childNodes[0]);
-	alert(count);
-	//Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+  
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
   
 };
 
