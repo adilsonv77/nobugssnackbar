@@ -110,7 +110,7 @@ public class NoBugsConnection {
 
 	public String[][] loadMission(User user) throws SQLException {
 		String[][] ret = null;
-		String query = "SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer"
+		String query = "SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer, ma.timespend"
 				+ "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"
 				+ "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"
 				+ "    ORDER BY missionorder";
@@ -133,6 +133,7 @@ public class NoBugsConnection {
 			long missionId = rs.getLong(1);
 			int missionOrder = rs.getInt(3);
 			String answer = rs.getString(4);
+			String timeSpent = rs.getString(5);
 			ps.close();
 
 			// TODO se o usuario pertence a mais de uma classe, ele precisa
@@ -145,11 +146,12 @@ public class NoBugsConnection {
 			String xml = rs.getString(1);
 			st.close();
 
-			ret = new String[1][4];
+			ret = new String[1][5];
 			ret[0][0] = missionId + "";
 			ret[0][1] = missionOrder + "";
 			ret[0][2] = xml;
 			ret[0][3] = answer;
+			ret[0][4] = timeSpent;
 
 		} finally {
 			if (bdCon != null)

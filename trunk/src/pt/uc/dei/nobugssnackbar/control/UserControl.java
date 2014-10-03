@@ -67,7 +67,7 @@ public class UserControl {
 		}
 		
 		this.mission = Integer.parseInt(r[0][0]);
-		return  new String[]{r[0][1], r[0][2], r[0][3]} ;
+		return  new String[]{r[0][1], r[0][2], r[0][3], r[0][4]} ;
 	}
 	
 	@RemoteMethod
