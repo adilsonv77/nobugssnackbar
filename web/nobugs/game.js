@@ -236,9 +236,6 @@ Game.missionLoaded = function(ret){
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
-  var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
-  Game.verifyButtons(objectives);
-  
   document.getElementById('blockly').innerHTML = ""; // clean the editor
   Blockly.inject(document.getElementById('blockly'),
       {path: '',
@@ -247,23 +244,26 @@ Game.missionLoaded = function(ret){
        trashcan: true});
 
 
+  var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
+  Game.verifyButtons(objectives);
+  
   hero = new SnackMan(objectives, mission);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (ret[2] != null) // the user try this mission before, than load the previous code
-	  Game.nextPartOfMissionLoaded(ret[2], mission);
+	  Game.nextPartOfMissionLoaded(ret[2], mission, ret[3]);
   else {
       var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
-			  Game.nextPartOfMissionLoaded(ret, mission);
+			  Game.nextPartOfMissionLoaded(ret, mission, 0);
 		  });
 	  }
 	  else
-		  Game.nextPartOfMissionLoaded(sourceXML.outerHTML, mission);
+		  Game.nextPartOfMissionLoaded(sourceXML.outerHTML, mission, 0);
   }
 };
   
-Game.nextPartOfMissionLoaded = function(answer, mission) {
+Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
@@ -272,9 +272,12 @@ Game.nextPartOfMissionLoaded = function(answer, mission) {
       
       CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
+      
       Game.mission = data;
 	  Game.reset();
 
+	  Game.addCronometro( data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime"), timeSpent );
+	  
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
@@ -284,7 +287,7 @@ Game.nextPartOfMissionLoaded = function(answer, mission) {
 	  
   };
 
-  window.setTimeout(loginLoaded(mission), 1000); // in the future the game must load the parameter from another place
+  window.setTimeout(function(){loginLoaded(mission);}, 1000); 
 	  
 	  
 }; 
@@ -301,6 +304,39 @@ Game.verifyButtons = function(objectives) {
 		Game.disableButton('runButton');
 
 	Game.resetButtons();
+};
+
+Game.addCronometro = function(bonusTime, timeSpent) {
+
+	$('#timerCountUp').empty();
+	Game.cronometro = null;
+	
+	if (bonusTime != null) {
+		$('#timerCountUp').append("<span></span>");;
+		Game.cronometro = CountUp($('#timerCountUp span'), {start:parseInt(timeSpent), stopped: true});
+		
+		$('#timerCountUp').css("right", $('#logoffButton').width()); 
+		$('#timerCountUp').css("right", $('#timerCountUp').width()); 
+		var newTop = document.getElementById("logoffButton").offsetTop + 
+					(($('td:has(#timerCountUp)').height() - $('#timerCountUp').height())/2);
+		$('#timerCountUp').css("top", newTop);
+	}
+	
+};
+
+Game.initCronometro = function() {
+	if (Game.cronometro != null)
+		Game.cronometro.restart();
+};
+
+Game.cleanCronometro = function() {
+	if (Game.cronometro != null) {
+		Game.cronometro.stop();
+		
+		$('#timerCountUp').empty();
+		Game.cronometro = null;
+		
+	}
 };
 
 // I dont know what this feature do in the game. 
@@ -471,6 +507,9 @@ Game.goalButtonClick = function() {
 
 Game.logoffButtonClick = function() {
 	
+	var now = new Date().getTime();
+	Game.cleanCronometro();
+
 	$('#vars').datagrid('loadData', {
 		"total": 0, "rows": []
 	});
@@ -483,7 +522,6 @@ Game.logoffButtonClick = function() {
     var timeSpent = 0;
     if (Game.currTime != 0) {
         answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-    	var now = new Date().getTime();
     	timeSpent = Math.floor((now - Game.currTime)/1000);
     	
     }

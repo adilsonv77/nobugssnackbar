@@ -224,6 +224,7 @@ Explanation.finishStatement = function() {
 	}
 	
 	Game.currTime = new Date().getTime();
+	Game.initCronometro();
 	if (Explanation.hintNumber == -1)
 		return;
 		
