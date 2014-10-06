@@ -8,7 +8,7 @@
         <br/>
         Mas agora para tornar mais interessante a miss&#227;o, vou-te limitar o tempo que tens para<br/>
         resolver o problema. Quanto menos tempo gastares, maior ser&#225; a tua bonifica&#231;&#227;o. Se <br/>
-        conseguires resolv&#234;-la at&#233; 2 minutos receber&#225;s mais $50.
+        conseguires resolv&#234;-la at&#233; 8 minutos receber&#225;s mais $60.
 		</page>
 
 	</explanation>
@@ -73,7 +73,7 @@
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" bonusTime="120" bonusTimeReward="25 50">
+	<objectives ordered="false" reward="7" bonusTime="420" bonusTimeReward="15 30 45 60">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

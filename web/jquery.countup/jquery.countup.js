@@ -24,7 +24,8 @@ var CountUp;
 			this.options = $.extend({
 				callback	: function(){},
 				start		: 0,
-				stopped		: false
+				stopped		: false,
+				cssDigit	: 'static'
 			},prop);
 			
 			this.stopped = this.options.stopped;
@@ -54,7 +55,7 @@ var CountUp;
 					</span>\
 					<span class="position">\
 						<span class="digit static">0</span>\
-					</span>'+(this==="Minutes"?s+s+s:"")
+					</span>'+(this==="Minutes"?s:"")
 				).appendTo(elem);
 				
 				if(this!="Seconds"){
@@ -65,13 +66,15 @@ var CountUp;
 		},
 
 		tick: function(t){
+			t
+			
 			// Number of minutes left
 			var m = Math.floor(t.passed / 60);
-			t.updateThree(0, 1, 2, m);
+			t.updateThree(0, 1, 2, m, t);
 			
 			// Number of seconds left
 			var s = t.passed - (m*60);
-			t.updateDuo(3, 4, s);
+			t.updateDuo(3, 4, s, t);
 			
 			// Calling an optional user supplied callback
 			t.options.callback(m, s);
@@ -87,20 +90,20 @@ var CountUp;
 		},
 		
 		// This function updates two digit positions at once
-		updateDuo: function (minor,major,value){
-			this.switchDigit(this.positions.eq(minor),Math.floor(value/10)%10);
-			this.switchDigit(this.positions.eq(major),value%10);
+		updateDuo: function (minor,major,value,t){
+			this.switchDigit(this.positions.eq(minor),Math.floor(value/10)%10,t);
+			this.switchDigit(this.positions.eq(major),value%10,t);
 		},
 	
 		// This function updates two digit positions at once
-		updateThree: function (v1,v2,v3,value){
-			this.switchDigit(this.positions.eq(v1),Math.floor(value/100)%100);
-			this.switchDigit(this.positions.eq(v2),Math.floor(value/10)%10);
-			this.switchDigit(this.positions.eq(v3),value%10);
+		updateThree: function (v1,v2,v3,value,t){
+			this.switchDigit(this.positions.eq(v1),Math.floor(value/100)%100,t);
+			this.switchDigit(this.positions.eq(v2),Math.floor(value/10)%10,t);
+			this.switchDigit(this.positions.eq(v3),value%10,t);
 		},
 	
 		// Creates an animated transition between the two numbers
-		switchDigit: function (position,number){
+		switchDigit: function (position,number,t){
 			
 			var digit = position.find('.digit');
 			
@@ -118,6 +121,7 @@ var CountUp;
 			var replacement = $('<span>',{
 				'class':'digit',
 				css:{
+					backgroundColor: $('.digit').css('background-color'),
 					top:'-2.1em',
 					opacity:0
 				},
@@ -129,7 +133,7 @@ var CountUp;
 			
 			digit
 				.before(replacement)
-				.removeClass('static')
+				.removeClass(t.options.cssDigit)
 				.animate({top:'2.5em',opacity:0},'fast',function(){
 					digit.remove();
 				});
@@ -137,7 +141,7 @@ var CountUp;
 			replacement
 				.delay(100)
 				.animate({top:0,opacity:1},'fast',function(){
-					replacement.addClass('static');
+					replacement.addClass(t.options.cssDigit);
 				});
 		},
 		
