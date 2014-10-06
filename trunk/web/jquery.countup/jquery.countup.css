@@ -43,6 +43,42 @@
 	);
 }
 
+.alert{
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+	
+	background-image: linear-gradient(bottom, rgba(216,7,36,1) 50%, rgba(230,9,40,1) 50%);
+	background-image: -o-linear-gradient(bottom, rgba(216,7,36,1) 50%, rgba(230,9,40,1) 50%);
+	background-image: -moz-linear-gradient(bottom, rgba(216,7,36,1) 50%, rgba(230,9,40,1) 50%);
+	background-image: -webkit-linear-gradient(bottom, rgba(216,7,36,1) 50%, rgba(230,9,40,1) 50%);
+	background-image: -ms-linear-gradient(bottom, rgba(216,7,36,1) 50%, rgba(230,9,40,1) 50%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.5, rgba(216,7,36,1)),
+		color-stop(0.5, rgba(230,9,40,1))
+	);
+	}
+	
+.over {
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+	
+	background-image: linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	background-image: -o-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	background-image: -moz-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	background-image: -webkit-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	background-image: -ms-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.5, rgba(242, 232, 23, 1)),
+		color-stop(0.5, rgba(234, 224, 15, 1))
+	);
+	
+}
 /**
  * You can use these classes to hide parts
  * of the countdown that you don't need.

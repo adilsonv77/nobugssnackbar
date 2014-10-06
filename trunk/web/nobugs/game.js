@@ -59,7 +59,7 @@ Game.jsInterpreter;
  */
 Game.init = function() {
 	
-	Game.currTime = new Date().getTime();
+	Game.currTime = 0;
 	
     Game.preloadImgs.push('images/fundo.png');
     Game.preloadImgs.push('images/doors.png');
@@ -210,9 +210,11 @@ Game.unload = function(e) {
 	var answer = null;
 	if (Blockly.mainWorkspace != null) 
 		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-	var now = new Date().getTime();
+	var timeSpent = 0;
+	if (Game.currTime != 0)
+		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.nextMission(0, Math.floor((now - Game.currTime)/1000), false, answer, 
+	UserControl.nextMission(0, timeSpent, false, answer, 
 			{callback:function(ret) {}, async:false});
 	
     return null;
@@ -275,8 +277,11 @@ Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
       
       Game.mission = data;
 	  Game.reset();
-
-	  Game.addCronometro( data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime"), timeSpent );
+	  
+	  Game.totalTimeSpent = timeSpent;
+	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
+	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
+	  Game.addCronometro(Game.bonusTime , timeSpent );
 	  
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
@@ -306,20 +311,63 @@ Game.verifyButtons = function(objectives) {
 	Game.resetButtons();
 };
 
+Game.timesUp = function (m, s) {
+	if (((m*60 + s)+30) == Game.bonusTime) {
+		Game.changeCSSAlertCronometro();
+	} else {
+		if (((m*60 + s)) == Game.bonusTime) {
+			Game.changeCSSOverCronometro();
+		}
+	}
+};
+
+Game.changeCSSAlertCronometro = function() {
+
+	var o = $('.digit');
+	o.removeClass('static');
+	o.addClass('alert');
+
+
+	o.css('background-color', 'rgba(230,9,40,1)');
+
+	Game.cronometro.options.cssDigit = 'alert';
+	
+};
+
+Game.changeCSSOverCronometro = function() {
+
+	var o = $('.digit');
+	o.removeClass('alert');
+	o.addClass('over');
+	
+	o.css('background-color', 'rgba(234, 224, 15, 1)');
+	
+	Game.cronometro.options.cssDigit = 'over';
+	Game.cronometro.options.callback =  function(){}; // it's not still necessary call this method
+	
+};
+
 Game.addCronometro = function(bonusTime, timeSpent) {
 
 	$('#timerCountUp').empty();
 	Game.cronometro = null;
 	
 	if (bonusTime != null) {
+		timeSpent = parseInt(timeSpent);
 		$('#timerCountUp').append("<span></span>");;
-		Game.cronometro = CountUp($('#timerCountUp span'), {start:parseInt(timeSpent), stopped: true});
+		Game.cronometro = CountUp($('#timerCountUp span'), {start:timeSpent, stopped: true, callback:Game.timesUp});
 		
 		$('#timerCountUp').css("right", $('#logoffButton').width()); 
 		$('#timerCountUp').css("right", $('#timerCountUp').width()); 
 		var newTop = document.getElementById("logoffButton").offsetTop + 
 					(($('td:has(#timerCountUp)').height() - $('#timerCountUp').height())/2);
 		$('#timerCountUp').css("top", newTop);
+		if (timeSpent > Game.bonusTime) {
+			Game.changeCSSOverCronometro();
+		}
+		else
+			if (timeSpent+30 >= Game.bonusTime)
+				Game.changeCSSAlertCronometro();
 	}
 	
 };
@@ -336,6 +384,12 @@ Game.cleanCronometro = function() {
 		$('#timerCountUp').empty();
 		Game.cronometro = null;
 		
+	}
+};
+
+Game.stopCronometro = function() {
+	if (Game.cronometro != null) {
+		Game.cronometro.stop();
 	}
 };
 
@@ -729,21 +783,25 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
 			    
+			    Game.stopCronometro();
+			    
 			    if (hero.allObjectivesAchieved) {
 			    	
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 			    	var count = Game.countInstructions(xml.childNodes[0]);
-			    	 
-			    	var reward = hero.addReward(count);
+
+			    	var now = new Date().getTime();
+			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
+			    	
+			    	var reward = hero.addReward(count, Game.totalTimeSpent + timeSpent, Game.bonusTime, Game.bonusTimeReward);
 			    	Game.money = parseInt(Game.money) + reward;
 			    	Game.display();
 
 			        var answer = Blockly.Xml.domToText(xml);
-			    	var now = new Date().getTime();
 			    	
-			    	UserControl.nextMission(reward, Math.floor((now - Game.currTime)/1000), true, answer, function(ret){
+			    	UserControl.nextMission(reward, timeSpent, true, answer, function(ret){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				

@@ -776,7 +776,7 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 	
 };
 
-SnackMan.prototype.addReward = function(count) {
+SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward) {
 	
 	if (this.allObjectivesAchieved) {
 		
@@ -784,6 +784,17 @@ SnackMan.prototype.addReward = function(count) {
 		if (count <= this.objective.maxCommands) {
 			ret += this.objective.maxCommandsReward;
 		} 
+		
+		if (timeSpent <= timeLimit) {
+			timeReward = timeReward.split(" ");
+			var timePart = Math.floor(timeLimit / timeReward.length);
+			for (var i=1; i<=timeReward.length; i++) {
+				if (timeSpent <= timePart*i) {
+					ret += parseInt(timeReward[timeReward.length-i]);
+					break;
+				}
+			}
+		}
 		
 		return ret; 
 	}
