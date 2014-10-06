@@ -181,6 +181,10 @@ Explanation.finishStatement = function() {
 			
 			if (originhint === "code") {
 				var e = Blockly.mainWorkspace.getBlockById(parseInt(idhint));
+				if (e == null) {
+					e = Blockly.mainWorkspace.topBlocks_[parseInt(idhint)-1];
+					idhint = e.id;
+				}
 				
 				origin = e.getSvgRoot();
 				originH = e.svg_.height; originW = e.svg_.width;

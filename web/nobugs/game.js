@@ -278,7 +278,7 @@ Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
       Game.mission = data;
 	  Game.reset();
 	  
-	  Game.totalTimeSpent = timeSpent;
+	  Game.totalTimeSpent = parseInt(timeSpent);
 	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
 	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
 	  Game.addCronometro(Game.bonusTime , timeSpent );
