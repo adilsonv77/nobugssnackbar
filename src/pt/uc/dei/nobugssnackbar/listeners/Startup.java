@@ -1,7 +1,5 @@
 package pt.uc.dei.nobugssnackbar.listeners;
 
-import java.sql.SQLException;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
