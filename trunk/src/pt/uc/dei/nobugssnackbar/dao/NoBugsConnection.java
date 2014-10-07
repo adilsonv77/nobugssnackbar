@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import pt.uc.dei.nobugssnackbar.model.User;
@@ -14,7 +16,13 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 public class NoBugsConnection {
 
 	private static Logger log = Logger.getGlobal();
-
+	
+	private final static String SQL_MISSIONSAVAILABLE =
+			"SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer, ma.timespend"
+					+ "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"
+					+ "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"
+					+ "    ORDER BY missionorder";
+	
 	public static NoBugsConnection getConnection() {
 		return conn;
 	}
@@ -110,10 +118,7 @@ public class NoBugsConnection {
 
 	public String[][] loadMission(User user) throws SQLException {
 		String[][] ret = null;
-		String query = "SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer, ma.timespend"
-				+ "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"
-				+ "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"
-				+ "    ORDER BY missionorder";
+		String query = SQL_MISSIONSAVAILABLE;
 
 		Connection bdCon = null;
 		try {
@@ -314,6 +319,56 @@ public class NoBugsConnection {
 		
 		
 		return answer;
+	}
+
+	public Object[][] countMissions(long idUser) throws SQLException  {
+		Connection bdCon = null;
+		Object[][] ret = null;
+		try {
+			bdCon = dataSource.getConnection();
+						
+			PreparedStatement ps = bdCon.prepareStatement("select classid from classesusers where userid = ?");
+			ps.setLong(1, idUser);
+
+			List<Long> classes = new ArrayList<Long>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				classes.add(rs.getLong(1));
+			}
+			ps.close();
+
+			ps = bdCon.prepareStatement(
+					"select c.classname, classlevelname, qtasmissoes, qtasresolvidas from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
+					   +  " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
+					   +  " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
+					   +     " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)" 
+					   +     "   where ma.userid = ? and ma.achieved = 'T' group by classid, classlevelid) maz " 
+					   +     "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
+					   + " order by c.classname");
+			
+			ps.setString(1,  classes.toString().replace("[", "").replace("]", "").replace(" ", ""));
+			ps.setLong(2, idUser);
+			
+			List<Object[]> l = new ArrayList<>(); 
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)};
+				l.add(li);
+			}
+			ps.close();
+			
+			ret = new Object[l.size()][4];
+			for (int i=0; i<l.size(); i++)
+				ret[i] = l.get(i);
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
 	}
 
 }

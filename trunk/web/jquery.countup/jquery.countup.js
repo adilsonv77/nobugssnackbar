@@ -66,8 +66,6 @@ var CountUp;
 		},
 
 		tick: function(t){
-			t
-			
 			// Number of minutes left
 			var m = Math.floor(t.passed / 60);
 			t.updateThree(0, 1, 2, m, t);
