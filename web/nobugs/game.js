@@ -125,7 +125,7 @@ Game.login = function() {
 	  			
 	  			BlocklyApps.hideDialog(true);
 	  			error.innerHTML = "";
-	  			Game.logged(ret[1]);
+	  			Game.logged(ret[1], ret[2]);
 	  		} else {
 	  			error.innerHTML = BlocklyApps.getMsg(ret[0]);
 	  		}
@@ -134,11 +134,179 @@ Game.login = function() {
 	
 };
 
-Game.logged = function(u) {
+Game.logged = function(u, missionsHistorical) {
+	
+	userLogged = u;
+	var idRoot = Game.missionsRetrieved(missionsHistorical);
+	var content = $("<div/>")
+			.append($("#" + idRoot));
+
+	MyBlocklyApps.showDialog(content[0], null, false, true, true,
+				BlocklyApps.getMsg("_missions"), null, null);
+	
+	
+};
+
+Game.missionsRetrieved = function(missions) {
+	var s = [];
+	
+	var data = [];
+	for (var i= 0; i<missions.length; i++){
+		var rec = null;
+		var idx = s.indexOf(missions[i][0]);
+		if (idx == -1) {
+			s.push(missions[i][0]);
+			
+			rec = {clazz: missions[i][0], levels:[]};
+			data.push(rec); 
+			
+		} else {
+			rec = data[idx];
+		}
+		
+		var l = {name: missions[i][1], howManyMissions: missions[i][2], howManyAchieved: missions[i][3]};
+		rec.levels.push(l);
+	}
+	
+	var useAccordion = data.length > 1;
+	if (useAccordion) {
+		if (document.getElementById("aa") != null) {
+			$( "#aa" ).remove();
+		}
+			
+		var ac = $('<div id="aa"/>').addClass("easyui-accordion").addClass("accordion").appendTo("body");
+		
+		ac.accordion({
+		    animate:false
+		});
+		
+	}
+	
+	var wMax = 0;
+	for (var i = 0; i <data.length; i++) {
+		
+		var lastAllAchieved = true;
+		
+		var appendTo = "body";
+		if (useAccordion) {
+			
+			$('#aa').accordion('add', {
+				title: data[i].clazz
+			} );
+			
+			appendTo = $('#aa').accordion('getPanel', i);
+		}
+		
+		var idTabs = "tt" + i;
+		var tabs = $('<div id = "'+idTabs+'"/>')
+						.addClass('easyui-tabs')
+						.addClass('tabs-container')
+						.appendTo(appendTo);
+		
+		$('#'+idTabs).tabs();
+		
+		for (var j = 0; j < data[i].levels.length; j++) {
+
+			var id = 'selectMissionPanel' + i + j;
+			var div = $('<div id = "'+id+'"/>')
+				  			.addClass('selectMissionPanel');
+			
+			$('#'+idTabs).tabs('add',{
+			    title: data[i].levels[j].name,
+			    content: div
+			});
+			
+			var mm = parseInt(data[i].levels[j].howManyMissions);
+			var ma = parseInt((lastAllAchieved?data[i].levels[j].howManyAchieved:"-1"));
+			var w = Game.createGridView("#" + id , mm, ma);
+			
+			lastAllAchieved = ma == mm;
+				
+			if (w > wMax)
+				wMax = w;
+			
+		}
+		
+	}
+
+	for (var i = 0; i <data.length; i++) {
+		$('#tt'+i).tabs({
+		    width: wMax + 50,
+			border:false
+		});
+	}
+		
+	$('#aa').accordion({
+	    animate:false,
+	    border:false,
+	    width: wMax + 50
+	});
+	
+	return (useAccordion?"aa": "tt0");
+	
+	
+};
+
+Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved) {
+    var missionTarget = missionsAchieved + 1;
+    for (var i=1; i<=numberOfMissions; i++) {
+    	var imgs = generateImages(i, 2);
+    	var div = $('<div />')
+    	    .attr("idx", i)
+  			.addClass('gridViewChild')
+  			.addClass('missionSquare')
+  			.html($.each(imgs, function(i){
+  				   imgs[i] = "<img src='images/"+this+"'/>";
+			         }));
+			if (i < missionTarget) {
+				div.addClass('missionEnabled');
+			} else
+	    	if (i == missionTarget) {
+	    		div.addClass('missionTarget');
+	    	} else 
+	    		div.addClass('missionDisabled');
+    	
+	        $(missionPanel).append(div);
+    }
+	 var l = Math.ceil(Math.sqrt(numberOfMissions));
+	 
+	 var onPosition = function(i, zoomedChild, margin) { 
+		 return {x: (70 * (i%l)) + margin, 
+			 	 y: (70 * Math.floor(i/l)) + margin}; 
+		};
+	 
+	 $(missionPanel).gridview({
+		 						draggable: false,
+		 						scrollToZoom: false, 
+		 						animationSpeed: 0,
+								width: (l*70)+10,
+		 						height: (l*70)+10,
+		 						onPosition: onPosition
+		 					});
+	 
+	 $(missionPanel).gridview("zoom",
+			 {level: l});
+	 
+	 // without unbind, i need this code must appear just in one loop
+	 $('.missionSquare').unbind('click').click(function (evt) {
+		 if (evt.currentTarget.className.indexOf("missionDisabled") == -1) {
+			    alert(evt.currentTarget.getAttribute("idx"));
+			 
+		 }
+	 });
+
+	 return $(missionPanel).width();
+	
+};
+
+Game.loggedX = function(u) {
 	
   userLogged = u;
   
   document.getElementById("initialBackground").style.display = "none";
+  
+  
+  
   document.getElementById("mainBody").style.display = "inline";
 	  			
   BlocklyApps.init();

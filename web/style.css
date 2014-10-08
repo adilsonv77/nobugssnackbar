@@ -181,3 +181,54 @@ p.item {
     padding-top: 4px;
 	
 }
+
+.missionSquare {
+	width: 30px; height: 30px;	
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #088231;
+	-webkit-box-shadow: #B3B3B3 7px 7px 7px;
+	-moz-box-shadow: #B3B3B3 7px 7px 7px;
+	box-shadow: #B3B3B3 7px 7px 7px;
+}
+
+.missionEnabled, .missionTarget {
+	cursor: pointer;
+	background-image: url('images/unlock.png');
+	background-repeat: no-repeat;
+	background-position: bottom; 
+}
+
+.missionEnabled {
+	background-color: #77DD77;
+}
+
+.missionEnabled:hover {
+	background-color: #BBEEBB;
+}
+
+.missionTarget {
+	background-color: #7777DD;
+}
+
+.missionTarget:hover {
+	background-color: #BBBBEE;
+}
+
+.missionDisabled {
+	cursor: default;
+	background-image: url('images/lock.png');
+	background-repeat: no-repeat;
+	background-position: bottom; 
+	background-color: #FF6961;
+}
+
+ .selectMissionPanel {
+     margin: 0 auto;
+   }
+
+   .gridViewChild {
+     padding: 10px;
+     text-align: center;
+   }   

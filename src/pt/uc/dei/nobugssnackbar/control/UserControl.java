@@ -48,7 +48,7 @@ public class UserControl {
 			
 			this.user = NoBugsConnection.getConnection().login(nick, sb.toString());
 			
-			return new Object[]{null, this.user}; // no errors
+			return new Object[]{null, this.user, retrieveMissions()}; // no errors
 			
 		} catch (Exception e) {
 			e.printStackTrace();
