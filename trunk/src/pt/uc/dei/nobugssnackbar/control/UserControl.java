@@ -17,10 +17,13 @@ public class UserControl {
 	private static Logger log = Logger.getGlobal();
 	private User user;
 	private int mission = 0;
+	private long classid = 0;
+	private long levelid = 0;
+	private int missionidx;
 	
 	@RemoteMethod
-	public Object[] verifyLogged() {
-		return new Object[]{user != null, this.user};
+	public Object[] verifyLogged() throws SQLException {
+		return new Object[]{user != null, this.user, (user == null?null:retrieveMissions()), this.classid, this.levelid , this.missionidx};
 	}
 	
 	@RemoteMethod
@@ -28,9 +31,12 @@ public class UserControl {
 		
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
-			NoBugsConnection.getConnection().finishMission(this.user, this.mission, 0, timeSpend, false, answer);
+			NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, 0, timeSpend, false, answer);
 		
 		this.user = null;
+		this.classid = 0;
+		this.levelid = 0;
+		this.missionidx = 0;
 	}
 	
 	@RemoteMethod
@@ -58,30 +64,37 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public String[] loadMission() throws SQLException {
-		String[][] r = NoBugsConnection.getConnection().loadMission(this.user);
-		
-		if (r == null) {
-			this.mission = 0;
-			return null;
-		}
+	public String[] loadMission(int clazzId, int levelId, int missionIdx) throws SQLException {
+		String[][] r = NoBugsConnection.getConnection().loadMission(this.user, clazzId, levelId, missionIdx);
 		
 		this.mission = Integer.parseInt(r[0][0]);
+		this.classid = clazzId;
+		this.levelid = levelId;
+		this.missionidx = missionIdx;
+
 		return  new String[]{r[0][1], r[0][2], r[0][3], r[0][4]} ;
 	}
 	
 	@RemoteMethod
-	public String[] nextMission(int money, int timeSpend, boolean achieved, String answer) throws SQLException {
-		if (this.user == null)
-			return null;
+	public void saveMission(int money, int timeSpend, boolean achieved, String answer) throws SQLException {
 		
-		log.info("nextMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
+		if (this.user == null)
+			return;
+		
+		log.info("saveMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
 		
 		this.user.setMoney(this.user.getMoney() + money);
 		
-		NoBugsConnection.getConnection().finishMission(this.user, this.mission, money, timeSpend, achieved, answer);
+		NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, money, timeSpend, achieved, answer);
+
+		if (achieved) {
+			// when saveMission is called with achieved = true, this means that finished the mission
+			this.classid = 0;
+			this.levelid = 0;
+			this.missionidx = 0;
+			this.mission = 0;
+		}
 		
-		return loadMission();
 	}
 	
 	@RemoteMethod
@@ -104,6 +117,6 @@ public class UserControl {
 	
 	@RemoteMethod
 	public Object[][] retrieveMissions() throws SQLException {
-		return NoBugsConnection.getConnection().countMissions(this.user.getId());
+		return NoBugsConnection.getConnection().retrieveMissions(this.user.getId());
 	}
 }

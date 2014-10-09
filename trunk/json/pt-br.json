@@ -13,6 +13,7 @@
 	
 	"Apps.dialogNext": "Pr&#243;ximo",
 	"Apps.dialogPrevious": "Anterior",
+	"Apps.dialogLogoff" : "Sair",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",

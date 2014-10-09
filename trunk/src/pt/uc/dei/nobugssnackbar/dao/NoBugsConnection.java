@@ -17,12 +17,6 @@ public class NoBugsConnection {
 
 	private static Logger log = Logger.getGlobal();
 	
-	private final static String SQL_MISSIONSAVAILABLE =
-			"SELECT cm.missionid, cm.classid, cm.missionorder, ma.answer, ma.timespend"
-					+ "    FROM classesmissions cm LEFT OUTER JOIN missionsaccomplished ma ON cm.missionid = ma.missionid AND ma.userid = ?"
-					+ "    WHERE  (ma.missionid IS NULL OR ma.achieved = 'F')  AND cm.classid IN (SELECT classid FROM classesusers uc WHERE uc.userid = ?)"
-					+ "    ORDER BY missionorder";
-	
 	public static NoBugsConnection getConnection() {
 		return conn;
 	}
@@ -116,44 +110,52 @@ public class NoBugsConnection {
 		}
 	}
 
-	public String[][] loadMission(User user) throws SQLException {
+	public String[][] loadMission(User user, int clazzId, int levelId, int missionIdx) throws SQLException {
 		String[][] ret = null;
-		String query = SQL_MISSIONSAVAILABLE;
 
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
 
-			PreparedStatement ps = bdCon.prepareStatement(query);
-			ps.setLong(1, user.getId());
-			ps.setLong(2, user.getId());
+			PreparedStatement ps = bdCon.prepareStatement("select missionid, missioncontent from classesmissions cm join "
+															+ "missions m using (missionid) "
+															+ "where classid = ? and classlevelid = ? order by missionorder "
+															+ "limit ?, 1");
+			
+			log.info("loadMission " + clazzId + " " + levelId + " " + missionIdx);
+			
+			ps.setLong(1, clazzId);
+			ps.setLong(2, levelId);
+			ps.setLong(3, missionIdx-1);
 
 			ResultSet rs = ps.executeQuery();
-			boolean hasMoreMissions = rs.next();
-			if (!hasMoreMissions) {
-				ps.close();
-				return null;
-			}
-
-			long missionId = rs.getLong(1);
-			int missionOrder = rs.getInt(3);
-			String answer = rs.getString(4);
-			String timeSpent = rs.getString(5);
-			ps.close();
-
-			// TODO se o usuario pertence a mais de uma classe, ele precisa
-			// selecionar quais das missoes ele deseja fazer
-			Statement st = bdCon.createStatement();
-			rs = st.executeQuery("SELECT missioncontent FROM missions WHERE missionid = "
-					+ missionId);
 			rs.next();
 
-			String xml = rs.getString(1);
-			st.close();
+			long missionId = rs.getLong(1);
+			String xml = rs.getString(2);
+			ps.close();
+			
+			ps = bdCon.prepareStatement("select timespend, answer from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+			
+			ps.setLong(1, missionId);
+			ps.setLong(2, clazzId);
+			ps.setLong(3, user.getId());
+			
+			rs = ps.executeQuery();
+			String answer = null;
+			String timeSpent = null;
+			if (rs.next()) {
+				
+				timeSpent = rs.getString(1);
+				answer = rs.getString(2);
+
+			}
+
+			ps.close();
 
 			ret = new String[1][5];
 			ret[0][0] = missionId + "";
-			ret[0][1] = missionOrder + "";
+			ret[0][1] = missionIdx + "";
 			ret[0][2] = xml;
 			ret[0][3] = answer;
 			ret[0][4] = timeSpent;
@@ -196,7 +198,7 @@ public class NoBugsConnection {
 
 	}
 
-	public void finishMission(User user, long idMission, int money,
+	public void finishMission(User user, long idMission, long idClazz, int money,
 			int timeSpend, boolean achieved, String answer) throws SQLException {
 
 		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
@@ -208,11 +210,11 @@ public class NoBugsConnection {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, answer, missionid, userid, executions) values (?, ?, ?, ?, ?, ?, 1)");
+								+ "(timespend, achieved, money, answer, missionid, classid, userid, executions) values (?, ?, ?, ?, ?, ?, ?, 1)");
 			} else {
 				ps = bdCon
 						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ? "
-								+ "where missionid = ? and userid = ?");
+								+ "where missionid = ? and classid = ? and  userid = ?");
 				timeSpend += localTimeSpend;
 			}
 
@@ -221,7 +223,8 @@ public class NoBugsConnection {
 			ps.setInt(3, money);
 			ps.setString(4, answer);
 			ps.setLong(5, idMission);
-			ps.setLong(6, user.getId());
+			ps.setLong(6, idClazz);
+			ps.setLong(7, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
@@ -321,7 +324,7 @@ public class NoBugsConnection {
 		return answer;
 	}
 
-	public Object[][] countMissions(long idUser) throws SQLException  {
+	public Object[][] retrieveMissions(long idUser) throws SQLException  {
 		Connection bdCon = null;
 		Object[][] ret = null;
 		try {
@@ -338,7 +341,7 @@ public class NoBugsConnection {
 			ps.close();
 
 			ps = bdCon.prepareStatement(
-					"select c.classname, classlevelname, qtasmissoes, qtasresolvidas from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
+					"select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
 					   +  " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					   +  " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					   +     " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)" 
@@ -352,7 +355,7 @@ public class NoBugsConnection {
 			List<Object[]> l = new ArrayList<>(); 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)};
+				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6)};
 				l.add(li);
 			}
 			ps.close();

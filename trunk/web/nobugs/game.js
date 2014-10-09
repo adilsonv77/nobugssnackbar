@@ -36,7 +36,6 @@ Game.runningStatus = 0;
 var hero;
 Game.mission = null;
 
-
 /**
  * PID of animation task currently executing.
  */
@@ -53,6 +52,7 @@ Game.currentlyMoney = Game.money;
 
 Game.lastErrorData;
 Game.jsInterpreter;
+Game.variableBox = null;
 
 /**
  * Initialize Blockly and SnackBar. Called on page load.
@@ -69,7 +69,7 @@ Game.init = function() {
     UserControl.verifyLogged(function(ret) {
 		
 		if (ret[0]) 
-			Game.logged(ret[1]);
+			Game.logged(ret[1], ret[2], ret[3], ret[4], ret[5]);
 		else {
 			window.removeEventListener('unload', Game.unload);
 
@@ -134,15 +134,27 @@ Game.login = function() {
 	
 };
 
-Game.logged = function(u, missionsHistorical) {
+Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
 	
-	userLogged = u;
-	var idRoot = Game.missionsRetrieved(missionsHistorical);
-	var content = $("<div/>")
-			.append($("#" + idRoot));
+	if (clazzId == undefined || clazzId == 0) {
 
-	MyBlocklyApps.showDialog(content[0], null, false, true, true,
-				BlocklyApps.getMsg("_missions"), null, null);
+		// this is necessary when unloads
+	    document.getElementById("mainBody").style.display = "none";
+	    document.getElementById("initialBackground").style.display = "inline";
+
+		userLogged = u;
+		var idRoot = Game.missionsRetrieved(missionsHistorical);
+		var content = $("<div/>")
+				.append($("#" + idRoot))
+				.append(nobugspage.logoffDlgButton(null, null, null));
+
+		MyBlocklyApps.showDialog(content[0], null, false, true, true,
+					BlocklyApps.getMsg("_missions"), null, 
+					function() { $("#" + idRoot).remove();});
+		 
+	} else {
+		Game.missionSelected(clazzId, levelId, missionIdx);
+	}
 	
 	
 };
@@ -157,14 +169,14 @@ Game.missionsRetrieved = function(missions) {
 		if (idx == -1) {
 			s.push(missions[i][0]);
 			
-			rec = {clazz: missions[i][0], levels:[]};
+			rec = {clazz: missions[i][0], clazzId: missions[i][4], levels:[]};
 			data.push(rec); 
 			
 		} else {
 			rec = data[idx];
 		}
 		
-		var l = {name: missions[i][1], howManyMissions: missions[i][2], howManyAchieved: missions[i][3]};
+		var l = {name: missions[i][1], id: missions[i][5], howManyMissions: missions[i][2], howManyAchieved: missions[i][3]};
 		rec.levels.push(l);
 	}
 	
@@ -211,14 +223,15 @@ Game.missionsRetrieved = function(missions) {
 			var div = $('<div id = "'+id+'"/>')
 				  			.addClass('selectMissionPanel');
 			
-			$('#'+idTabs).tabs('add',{
-			    title: data[i].levels[j].name,
-			    content: div
-			});
-			
 			var mm = parseInt(data[i].levels[j].howManyMissions);
 			var ma = parseInt((lastAllAchieved?data[i].levels[j].howManyAchieved:"-1"));
-			var w = Game.createGridView("#" + id , mm, ma);
+			$('#'+idTabs).tabs('add',{
+			    title: data[i].levels[j].name,
+			    content: div,
+			    selected: (ma < mm && lastAllAchieved)
+			});
+			
+			var w = Game.createGridView("#" + id , mm, ma, data[i].clazzId, data[i].levels[j].id);
 			
 			lastAllAchieved = ma == mm;
 				
@@ -247,12 +260,14 @@ Game.missionsRetrieved = function(missions) {
 	
 };
 
-Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved) {
+Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved, clazzId, levelId) {
     var missionTarget = missionsAchieved + 1;
     for (var i=1; i<=numberOfMissions; i++) {
     	var imgs = generateImages(i, 2);
     	var div = $('<div />')
-    	    .attr("idx", i)
+    	    .attr("idclazz", clazzId)
+    		.attr("idmission", i)
+    	    .attr("idlevel", levelId)
   			.addClass('gridViewChild')
   			.addClass('missionSquare')
   			.html($.each(imgs, function(i){
@@ -289,8 +304,13 @@ Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved
 	 
 	 // without unbind, i need this code must appear just in one loop
 	 $('.missionSquare').unbind('click').click(function (evt) {
-		 if (evt.currentTarget.className.indexOf("missionDisabled") == -1) {
-			    alert(evt.currentTarget.getAttribute("idx"));
+		 if (this.className.indexOf("missionTarget") >= 0) {
+			 var clazzId = this.getAttribute("idclazz");
+			 var missionIdx = this.getAttribute("idmission");
+	    	 var levelId = this.getAttribute("idlevel");
+	    	 BlocklyApps.hideDialog(true);
+			 
+			 Game.missionSelected(clazzId, levelId, missionIdx);
 			 
 		 }
 	 });
@@ -299,13 +319,9 @@ Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved
 	
 };
 
-Game.loggedX = function(u) {
+Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	
-  userLogged = u;
-  
   document.getElementById("initialBackground").style.display = "none";
-  
-  
   
   document.getElementById("mainBody").style.display = "inline";
 	  			
@@ -367,7 +383,7 @@ Game.loggedX = function(u) {
 	  Game.lastErrorData.count = 0;
 	  Game.lastErrorData.comm = 0;
 	  
-	  UserControl.loadMission(Game.missionLoaded);
+	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
 	  
   };
   
@@ -382,21 +398,14 @@ Game.unload = function(e) {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.nextMission(0, timeSpent, false, answer, 
-			{callback:function(ret) {}, async:false});
+	UserControl.saveMission(0, timeSpent, false, answer, 
+			{callback:function() {}, async:false});
 	
     return null;
 };
 
 Game.missionLoaded = function(ret){
 	
-  if (ret == null) {
-	  Game.currTime = 0;
-	  MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, null, null, 
-			  function() {Game.logoffButtonClick();});
-	  return;
-  }
-	  
   var xml = ret[1];
   var mission = transformStrToXml(xml);
   var t = BlocklyApps.getMsg("_mission");
@@ -579,6 +588,9 @@ Game.importPrettify = function() {
 };
 
 Game.doResizeWindow = function(style) {
+	if (Game.variableBox == null)
+		return; // this happens in the select mission dialog
+	
 	if (style != undefined) {
 	  Game.variableBox.style.display = style;
 	}
@@ -728,6 +740,8 @@ Game.goalButtonClick = function() {
 };
 
 Game.logoffButtonClick = function() {
+	
+	window.removeEventListener('unload', Game.unload);
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
@@ -969,13 +983,16 @@ Game.nextStep = function() {
 
 			        var answer = Blockly.Xml.domToText(xml);
 			    	
-			    	UserControl.nextMission(reward, timeSpent, true, answer, function(ret){
+			    	UserControl.saveMission(reward, timeSpent, true, answer, function(){
 				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				
-				    				window.setTimeout(Game.missionLoaded.bind(undefined, ret), 100);
-				    		
+				    				window.removeEventListener('unload', Game.unload);				    				
+				    				UserControl.retrieveMissions(function(ret) {
+				    					Game.logged(userLogged, ret);
 				    				});
+				    		
+		    				});
 			    	});
 			    	
 			    	

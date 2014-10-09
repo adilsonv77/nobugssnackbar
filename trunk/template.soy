@@ -459,3 +459,14 @@
       {{msg meaning="Apps.dialogOk" desc="---"}}OK{{/msg}}
     </button>
 {/template}
+
+/**
+ * Logoff button in select mission dialog.
+ */
+{template .logoffDlgButton private="true"}
+	<div class="farSide" >
+	    <button class="secondary" onclick="Game.logoffButtonClick()">
+	      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
+	    </button>
+	</div>
+{/template}

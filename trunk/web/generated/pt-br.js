@@ -63,3 +63,8 @@ nobugspage.previousButton = function(opt_data, opt_ignored, opt_ijData) {
 nobugspage.finishButton = function(opt_data, opt_ignored, opt_ijData) {
   return '<button class="secondary" onclick="Explanation.finishStatement()">OK</button>';
 };
+
+
+nobugspage.logoffDlgButton = function(opt_data, opt_ignored, opt_ijData) {
+  return '\t<div class="farSide" ><button class="secondary" onclick="Game.logoffButtonClick()">Sair</button></div>';
+};
