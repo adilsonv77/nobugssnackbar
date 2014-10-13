@@ -55,6 +55,7 @@
     <span id="NoBugs_goalAchieved">{msg meaning="NoBugs.goalAchieved" desc="--"}New Goal Achieved{/msg}</span>
     <span id="NoBugs_achieved">{msg meaning="NoBugs.achieved" desc="--"}Achieved{/msg}</span>
     <span id="NoBugs_of">{msg meaning="NoBugs.of" desc="--"}of{/msg}</span>
+    <span id="NoBugs_goalAchievedVictory">{msg meaning="NoBugs.goalAchievedVictory" desc="--"}You achieved this mission. You win {0}.{/msg}</span>
     
     <span id="explanation_counter">{msg meaning="Explane.Counter" desc="--"}Go to counter {0}.{/msg}</span>
     <span id="explanation_askForFood">{msg meaning="Explane.AskForFood" desc="--"}Ask the customer at {0} what he wants to eat.{/msg}</span>
@@ -70,7 +71,6 @@
     <span id="commandBonusExplanation">{msg meaning="NoBugs.commandBonusExplanation" desc="--"}You'll receive a bonus of {0} if accomplish this mission in {1} commands or less.{/msg}</span>
     <span id="_mission">{msg meaning="Single.Mission" desc="--"}Mission{/msg}</span>
     <span id="_missions">{msg meaning="Single.Missions" desc="--"}Missions{/msg}</span>
-    
     
   </div>
 {/template}
@@ -125,12 +125,25 @@
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
 
   <div id="initialBackground" style="display: none">
+  	<div>
+  		<form class="farSide" onsubmit="return false">
+	  		<fieldset style="border: 0px none">
+	  			<label class="user">
+	  				<input type="text" id="loginuser" placeHolder="{msg meaning="NoBugs.user" desc="--"}User{/msg}"/>
+	  			</label>
+	  			<label class="password">
+	  			    <input type="password" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"/>
+	  			</label>
+	  			<button class="secondary" onclick="Game.login()">
+	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
+	    		</button>
+	  		</fieldset>
+  		</form>
+  		<div id="errorLogin" style="color: red; position: absolute"></div>
+  	</div>
   	<table width="100%" height="100%">
   		<tr>
-  			<td align="center"><img src="images/nobugs.gif"/></td>
-  		</tr>
-  		<tr>
-  			<td align="center"><img src="images/snackbar.gif"/></td>
+  			<td align="center"><img src="images/logotipo.png"/></td>
   		</tr>
   	</table>
   </div>
@@ -179,10 +192,6 @@
 	        <button id="resetButton" class="notEnabled" style="margin:5px" disable="disabled" title="{msg meaning="NoBugs.resetTooltip" desc="--"}Restarts the execution.{/msg}">
 	          <img src="media/1x1.gif" class="stop icon21">
 	        </button>
-	/**
-	        <button id="xmlButton">
-	        	<img src="media/1x1.gif" class="stop icon21">
-	        </button> */
 	      </td>
 
 	      <td style="width: 120px; text-align: center">
@@ -271,29 +280,6 @@
     </div>
   </div>
   
-  <div id="dialogLogin" class="dialogHiddenContent">
-    <form>
-	    <table>
-			<tr>
-				<td colspan="2"><div id="errorLogin" style="color: red"></div></td>
-			</tr>
-		    <tr>
-			    <td>{msg meaning="NoBugs.user" desc="--"}User{/msg} :</td>
-			    <td><input type="text" id="loginuser"/></td>
-		    </tr>
-		    <tr>
-		        <td>{msg meaning="NoBugs.password" desc="--"}Password{/msg} :</td>
-		        <td><input type="password" id="loginpassw"/></td>
-		    </tr>
-	    </table>
-	 </form>
-	 <div class="farSide" >
-	    <button class="secondary" onclick="Game.login()">
-	      {{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
-	    </button>
-	 </div>
-  </div>
-  
   <div id="dialogNoMoreMissions" class="dialogHiddenContent">
     <table>
 	    <tr>
@@ -306,20 +292,6 @@
     </table>
 	{call apps.ok /}
   </div>
-  
-   <div id="dialogVictory" class="dialogHiddenContent">
-    <table>
-	    <tr>
-		    <td style="width: 20%" align="center" rowspan="2">
-		      <img src="images/victory.png">
-		    </td>
-		    <td>{msg meaning="NoBugs.goalAchievedVictory" desc="--"}You achieved this mission. The game will load a new mission.{/msg}</td>
-	    </tr>
-	    <tr><td></td></tr>
-    </table>
-     {call apps.ok /}
-  </div>
-  
   
   <div id="dialogFail" class="dialogHiddenContent">
     <table>

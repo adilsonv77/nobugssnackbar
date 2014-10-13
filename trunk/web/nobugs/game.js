@@ -75,7 +75,11 @@ Game.init = function() {
 
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
-		    
+
+	    	var lu = document.getElementById("loginuser");
+		    document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
+
+		    /*
 			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
 					null, false, true, true, "Login", {width: "270px"}, 
 					document.body.removeEventListener('keydown',loginKeyDown, true));
@@ -90,6 +94,7 @@ Game.init = function() {
 			};
 			
 			  document.body.addEventListener('keydown', loginKeyDown, false);
+			  */
 		}
 	});
 
@@ -123,7 +128,7 @@ Game.login = function() {
 	  			document.getElementById('loginuser').value = "";
 	  			document.getElementById('loginpassw').value = "";
 	  			
-	  			BlocklyApps.hideDialog(true);
+	  			//BlocklyApps.hideDialog(true);
 	  			error.innerHTML = "";
 	  			Game.logged(ret[1], ret[2]);
 	  		} else {
@@ -984,7 +989,15 @@ Game.nextStep = function() {
 			        var answer = Blockly.Xml.domToText(xml);
 			    	
 			    	UserControl.saveMission(reward, timeSpent, true, answer, function(){
-				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+			    		
+			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
+			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+			    		var out = msg.format(reward + coin2)+ "<br/>";
+			    		
+			    		var div = document.createElement("div");
+			    		div.innerHTML = out + apps.ok(null, null, null);
+			    		
+				    	MyBlocklyApps.showDialog(div, null, true, true, true, null, null, 
 				    			function(){
 				    				
 				    				window.removeEventListener('unload', Game.unload);				    				

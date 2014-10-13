@@ -159,6 +159,13 @@ button.notEnabled {
   height: 100%;
   width: 100%;
 }
+
+#initialBackground input[type="text"], input[type="password"] {
+	font-size: large;
+	margin: 5px;
+	padding: 10px;
+}
+
 li.goalok {
 	list-style-image: url("images/goal_ok.png")
 }

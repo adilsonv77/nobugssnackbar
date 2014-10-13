@@ -16,7 +16,7 @@ public class UserControl {
 
 	private static Logger log = Logger.getGlobal();
 	private User user;
-	private int mission = 0;
+	private long mission = 0;
 	private long classid = 0;
 	private long levelid = 0;
 	private int missionidx;
@@ -107,7 +107,7 @@ public class UserControl {
 	
 	@RemoteMethod
 	public void registerExecution() throws SQLException {
-		NoBugsConnection.getConnection().addExecutionInMission(this.user, this.mission);
+		NoBugsConnection.getConnection().addExecutionInMission(this.user, this.mission, this.classid);
 	}
 	
 	@RemoteMethod
