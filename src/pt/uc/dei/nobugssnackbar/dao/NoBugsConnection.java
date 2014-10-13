@@ -266,7 +266,7 @@ public class NoBugsConnection {
 		}
 	}
 
-	public void addExecutionInMission(User user, int idMission)
+	public void addExecutionInMission(User user, long idMission, long idClass)
 			throws SQLException {
 
 		Connection bdCon = null;
@@ -278,15 +278,16 @@ public class NoBugsConnection {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, missionid, userid, executions) values (0, 'F', 0, ?, ?, 1)");
+								+ "(timespend, achieved, money, missionid, classid, userid, executions) values (0, 'F', 0, ?, ?, ?, 1)");
 			} else {
 				ps = bdCon
 						.prepareStatement("update missionsaccomplished set executions = executions + 1 "
-								+ "where missionid = ? and userid = ?");
+								+ "where missionid = ? and classid = ? and userid = ?");
 			}
 
 			ps.setLong(1, idMission);
-			ps.setLong(2, user.getId());
+			ps.setLong(2, idClass);
+			ps.setLong(3, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
