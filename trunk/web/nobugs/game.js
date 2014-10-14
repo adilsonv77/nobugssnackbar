@@ -544,9 +544,9 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 		
 		$('#timerCountUp').css("right", $('#logoffButton').width()); 
 		$('#timerCountUp').css("right", $('#timerCountUp').width()); 
-		var newTop = document.getElementById("logoffButton").offsetTop + 
-					(($('td:has(#timerCountUp)').height() - $('#timerCountUp').height())/2);
-		$('#timerCountUp').css("top", newTop);
+		var logoff = document.getElementById("logoffButton");
+		var newTop = logoff.offsetTop + ((logoff.clientHeight - $('.countdownHolder').height())/2);
+		$('#timerCountUp').css("top", newTop + "px");
 		if (timeSpent > Game.bonusTime) {
 			Game.changeCSSOverCronometro();
 		}
@@ -974,10 +974,10 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
 			    
-			    Game.stopCronometro();
-			    
 			    if (hero.allObjectivesAchieved) {
 			    	
+				    Game.stopCronometro();
+				    
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
