@@ -159,7 +159,6 @@ Explanation.finishStatement = function() {
 	var lastHint = Explanation.hintNumber + 1;
 	
 	var dialog = document.getElementById('dialogHint');
-	console.log(dialog.clientHeight);
 	
 	Blockly.mainWorkspace.traceOn(false);
 	
@@ -233,17 +232,11 @@ Explanation.finishStatement = function() {
 	if (Explanation.hintNumber == -1)
 		return;
 		
-	console.log(dialog.clientHeight);
-	
 	var buttons = document.getElementById('dialogHintButton');
 	buttons.innerHTML = nobugspage.finishButton(null, null, null);
 	
-	console.log(dialog.clientHeight);
-	
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = explanation.children[Explanation.hintNumber].innerHTML;
-	
-	console.log(dialog.clientHeight);
 	
 	var dir = explanation.children[i].getAttribute("dir");
 	var imgId = 'imgHint';
@@ -267,12 +260,8 @@ Explanation.finishStatement = function() {
 		bX = bbBox.x;
 	}
 
-	console.log(dialog.clientHeight);
-	
 	var dialogClientHeight = dialog.clientHeight + 25 + 15 + 10 + 2; // 25 - header; 15 - header's margin; 10 - dialog's padding
 	var dialogClientWidth = dialog.clientWidth + 20 + 2;
-
-	console.log(dialogClientHeight);
 
 	switch (dir) {
 		  case "up" :

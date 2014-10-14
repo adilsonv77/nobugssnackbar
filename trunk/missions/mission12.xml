@@ -3,8 +3,8 @@
 	<explanation>
 		<page type="statement">
 			J&#225; est&#225;s a come&#231;ar a ter o poder da decis&#227;o. Mas agora os nossos clientes v&#234;m com fome, com sede<br/>
-			ou com fome e sede. Ent&#227;o vais perguntar e atender uma opç&#227;o primeiro, e depois a outra, de cada<br/>
-			um dos clientes.
+			ou com fome e sede. Ent&#227;o vais perguntar e atender uma op&#231;&#227;o primeiro, e depois a outra, de cada<br/>
+			um dos clientes.<br/>
             <br/>
 			Para facilitar trouxe-te a tua solu&#231;&#227;o da &#250;ltima miss&#227;o.
 		</page>
@@ -31,12 +31,8 @@
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-		<randomization qtd="1">thirsty</randomization>
-		<randomization qtd="1">hungry</randomization>
-	</customersSN>
 	<customers>
-		<customer>
+		<customer randomMinFood="0" randomMaxFood="1" randomMinDrink="0" randomMaxDrink="1" randomType="atLeastOne">
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
@@ -47,7 +43,7 @@
 				<drink qt="1" price="0">coke</drink>
 			</drinks>
 		</customer>
-		<customer>
+		<customer randomMinFood="0" randomMaxFood="1" randomMinDrink="0" randomMaxDrink="1" randomType="atLeastOne">
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>

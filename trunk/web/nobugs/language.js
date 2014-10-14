@@ -303,7 +303,7 @@ Blockly.Blocks['const_juiceOfOrange'] = {
 		};
 
 Blockly.JavaScript['const_juiceOfOrange'] = function(block) {
-	return ['\"\\\"$$juiceoforange\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$$juiceoforange\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['const_softDrink'] = {
@@ -317,7 +317,7 @@ Blockly.Blocks['const_softDrink'] = {
 		};
 
 Blockly.JavaScript['const_softDrink'] = function(block) {
-	return ['\"\\\"$$coke\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$$coke\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 /******************************************************************************

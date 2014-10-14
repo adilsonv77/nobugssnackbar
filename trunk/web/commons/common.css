@@ -26,6 +26,7 @@ button {
   font-size: large;
   background-color: #eee;
   color: #000;
+  cursor: pointer;
 }
 button.primary {
   border: 1px solid #dd4b39;

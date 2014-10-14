@@ -18,7 +18,6 @@
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
 	
-	"NoBugs.title": "NoBug's Snack Bar",
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa.",
 	"NoBugs.debugTooltip" : "Executar somente um passo.",

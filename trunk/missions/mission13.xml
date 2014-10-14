@@ -2,7 +2,15 @@
 <mission>
 	<explanation>
 		<page type="statement">
-			Blablablablablabla
+Os nossos clientes querem uma op&#231;&#227;o ou outra, e n&#227;o mais ambas. Podes perguntar <br/>
+se t&#234;m sede e realizar um conjunto de a&#231;&#245;es, <b>sen&#227;o</b>, realiza outro conjunto de <br/>
+a&#231;&#245;es. Clica na estrela do bloco de comando "se" e adiciona o bloco sen&#227;o.<br/>
+<br/>
+Parece mais f&#225;cil n&#227;o, &#233; ? Mas para te desafiar, atende os dois clientes com <br/>
+no m&#225;ximo 20 comandos.
+		</page>
+		<page type="hint" origin="command" id="1#1" dir="up">
+		No bloco de condicional existe uma estrela. Clica nela para adicionar a op&#231;&#227;o do sen&#227;o.
 		</page>
 
 	</explanation>
@@ -55,7 +63,7 @@
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15"  commQtd="22" >
+	<objectives ordered="false" reward="15" commQtd="20" >
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 	</objectives>

@@ -64,18 +64,18 @@
 .over {
 	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
 	
-	background-image: linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
-	background-image: -o-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
-	background-image: -moz-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
-	background-image: -webkit-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
-	background-image: -ms-linear-gradient(bottom, rgba(242, 232, 23, 1) 50%, rgba(234, 224, 15, 1) 50%);
+	background-image: linear-gradient(bottom, #D3D3D3 50%, #CFCFC4 50%);
+	background-image: -o-linear-gradient(bottom, #D3D3D3 50%, #CFCFC4 50%);
+	background-image: -moz-linear-gradient(bottom, #D3D3D3 50%, #CFCFC4 50%);
+	background-image: -webkit-linear-gradient(bottom, #D3D3D3 50%, #CFCFC4 50%);
+	background-image: -ms-linear-gradient(bottom, #D3D3D3 50%, #CFCFC4 50%);
 	
 	background-image: -webkit-gradient(
 		linear,
 		left bottom,
 		left top,
-		color-stop(0.5, rgba(242, 232, 23, 1)),
-		color-stop(0.5, rgba(234, 224, 15, 1))
+		color-stop(0.5, #D3D3D3),
+		color-stop(0.5, #CFCFC4)
 	);
 	
 }
