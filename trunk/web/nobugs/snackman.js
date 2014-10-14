@@ -570,7 +570,7 @@ SnackMan.prototype.prepareAndCatchJuice = function(order) {
 
 	// does the order have the food of this place ?
 	if (order.data.descr != "$$orange") {
-		BlocklyApps.log.push(["fail", "Error_onlyFruits"]);
+		BlocklyApps.log.push(["fail", "Error_onlyPutFruits"]);
 		throw false;
 	}
 	

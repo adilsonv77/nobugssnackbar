@@ -2,7 +2,10 @@
 <mission>
 	<explanation>
 		<page type="statement">
-			Blablablablablabla
+Agora os nossos clientes podem ter sede OU fome. E, se t&#234;m sede, podem pedir<br/>
+refrigerante ou sumo.<br/><br/>
+Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de outro.<br/>
+
 		</page>
 
 	</explanation>
@@ -36,6 +39,8 @@
 	</commands>
 	<cooker>initial</cooker>
 	<customersSN>
+		<randomization qtd="1">thirsty</randomization>
+		<randomization qtd="1" set="notTheSame">hungry</randomization>
 	</customersSN>
 	<customers>
 		<customer>
@@ -43,10 +48,11 @@
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<foods>
+				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">orange</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 		<customer>
@@ -54,14 +60,15 @@
 			<init>counter3</init>
 			<dest>counter3</dest>
 			<foods>
+				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks randomize="1">
 				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">orange</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15">
+	<objectives ordered="false" reward="20" maxCommands="30" maxCommandsReward="20">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
