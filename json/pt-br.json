@@ -66,6 +66,13 @@
 	"Error.isntThirsty": "O cliente n&#227;o est&#225; com sede.",
 	"Error.onlyHotDog":"Aqui s&#243; tem cachorro-quente. O cliente n&#227;o pediu esse tipo de comida.",
 	"Error.wrongPlaceForDrink" : "Aqui n&#243; tem a bebida pedida pelo cliente.",
+	"Error.isntFrontDisplay" : "O cozinheiro n&#227;o est&#225; em frente ao mostrador aquecido.",
+	"Error.doesntOrderFood" : "N&#227;o existe comida anotada no pedido.",
+	"Error.isntFrontBoxOfFruits" : "O cozinheiro n&#227;o est&#225; em frente &#224; caixa de frutas.",
+	"Error.onlyFruits" : "Aqui o cozinheiro somente consegue obter frutas.",
+	"Error.isntFrontJuiceMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de sumos.",
+	"Error.doesntHaveItem" : ""O cozinheiro n&#227;o trouxe qualquer fruta para inserir na m&#225;quina de sumos.",
+	"Error.onlyPutFruits" : "A m&#225;quina de sumos s&#243; aceita frutas.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.Mission" : "miss&#227;o",
