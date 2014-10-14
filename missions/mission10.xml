@@ -43,6 +43,7 @@
 				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks>
+				<drink qt="1" price="0">coke</drink>
 			</drinks>
 		</customer>
 		<customer>
@@ -53,6 +54,7 @@
 				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks>
+				<drink qt="1" price="0">coke</drink>
 			</drinks>
 		</customer>
 		<customer>
@@ -60,6 +62,7 @@
 			<init>counter3</init>
 			<dest>counter3</dest>
 			<foods>
+				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks>
 				<drink qt="1" price="0">coke</drink>
@@ -70,6 +73,7 @@
 			<init>counter4</init>
 			<dest>counter4</dest>
 			<foods>
+				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks>
 				<drink qt="1" price="0">coke</drink>

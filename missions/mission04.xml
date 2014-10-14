@@ -4,8 +4,8 @@
 		<page type="statement">
 		J&#225; sabes ir ao cliente e perguntar e anotar o seu pedido. Teu pr&#243;ximo objetivo &#233; <br/>
 		anotar os pedidos dos dois clientes. Uma vari&#225;vel s&#243; consegue guardar uma <br/>
-		informa&#231;&#227;o de cada vez. Por isso, vais precisar de criar uma segunda vari&#225;vel. As <br/>
-		vari&#225;veis s&#227;o identificadas pelo nome. Ent&#227;o usa nomes distintos para vari&#225;veis <br/>
+		informa&#231;&#227;o de cada vez. <b>Por isso, vais precisar de criar uma segunda vari&#225;vel. </b> <br/>
+		As vari&#225;veis s&#227;o identificadas pelo nome. Ent&#227;o usa nomes distintos para vari&#225;veis <br/>
 		diferentes, caso contr&#225;rio, referencias a mesma.
 		</page>
 

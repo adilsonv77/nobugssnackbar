@@ -43,24 +43,28 @@ var CountUp;
 		init: function (elem){
 			elem.addClass('countdownHolder');
 
-			var s = '<span class="position">\
-						<span class="digit static">0</span>\
-					</span>';
+			$.each(['Minutes', 'Seconds'],function(i){
+				var span = $('<span/>').addClass('count'+this);
+				span.appendTo(elem);
 
-			// Creating the markup inside the container
-			$.each(['Minutes','Seconds'],function(i){
-				$('<span class="count'+this+'">').html(
-					'<span class="position">\
-						<span class="digit static">0</span>\
-					</span>\
-					<span class="position">\
-						<span class="digit static">0</span>\
-					</span>'+(this==="Minutes"?s:"")
-				).appendTo(elem);
+				var spanPosition1 = $('<span/>').addClass('position');
+				spanPosition1.append($('<span/>').addClass('digit').addClass('static').html('0'));
+				
+				var spanPosition2 = $('<span/>').addClass('position');
+				spanPosition2.append($('<span/>').addClass('digit').addClass('static').html('0'));
+
+				span.append(spanPosition1);
+				span.append(spanPosition2);
 				
 				if(this!="Seconds"){
+					
+					var spanPosition3 = $('<span/>').addClass('position');
+					spanPosition3.append($('<span/>').addClass('digit').addClass('static').html('0'));
+					span.append(spanPosition3);
+
 					elem.append('<span class="countDiv countDiv'+i+'"></span>');
 				}
+
 			});
 
 		},

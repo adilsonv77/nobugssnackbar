@@ -141,6 +141,9 @@ Game.login = function() {
 
 Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
 	
+	if (Game.variableBox != null)
+		Game.variableBox.style.display = "none";
+	
 	if (clazzId == undefined || clazzId == 0) {
 
 		// this is necessary when unloads
@@ -522,7 +525,7 @@ Game.changeCSSOverCronometro = function() {
 	o.removeClass('alert');
 	o.addClass('over');
 	
-	o.css('background-color', 'rgba(234, 224, 15, 1)');
+	o.css('background-color', '#CFCFC4');
 	
 	Game.cronometro.options.cssDigit = 'over';
 	Game.cronometro.options.callback =  function(){}; // it's not still necessary call this method
@@ -746,6 +749,7 @@ Game.goalButtonClick = function() {
 
 Game.logoffButtonClick = function() {
 	
+	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
 	
 	var now = new Date().getTime();

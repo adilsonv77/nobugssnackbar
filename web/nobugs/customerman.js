@@ -84,11 +84,42 @@ CustomerManager.reset = function() {
 		
 		var foods = CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("foods")[0]);
 		var drinks =  CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("drinks")[0]);
+		
+		CustomerManager.randomizeFoodAndDrink(foods, drinks, this.optCustomers.children[i]);
+		
 		customers[i] = new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks});
 		
 	}
 	
 	this.transformSN();
+};
+
+CustomerManager.randomizeFoodAndDrink = function(foods, drinks, customer) {
+	
+	var randomType = customer.getAttribute("randomType");
+
+	if (randomType == null)
+		return;
+	
+	var minFood = parseInt(customer.getAttribute("randomMinFood"));
+	var maxFood = parseInt(customer.getAttribute("randomMaxFood"));
+	
+	var minDrink = parseInt(customer.getAttribute("randomMinDrink"));
+	var maxDrink = parseInt(customer.getAttribute("randomMaxDrink"));
+	
+	var selectedFood = Math.floor((Math.random() * ((maxFood-minFood)+1))) + minFood;
+	var selectedDrink = Math.floor((Math.random() * ((maxDrink-minDrink)+1))) + minDrink;
+	
+	if (selectedFood == 0 && selectedDrink == 0 && randomType === "atLeastOne")
+		selectedDrink = maxDrink;
+	
+	while (foods.length > selectedFood)
+		foods.pop();
+	
+	while (drinks.length > selectedDrink)
+		drinks.pop();
+	
+	
 };
 
 CustomerManager.transformSN = function() {

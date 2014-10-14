@@ -53,7 +53,7 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 	  var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
 
 	  var code = 'nobugsComparison({0}, {1}, "{2}")'.format(argument0, argument1, blockOperator); 
-	  code = 'nobugsComparison(order, "\\"$$coke\\"", "EQ")';
+	  //code = 'nobugsComparison(order, "\\"$$coke\\"", "EQ")';
       return [code, order];
 };
 

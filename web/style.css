@@ -201,7 +201,6 @@ p.item {
 }
 
 .missionEnabled, .missionTarget {
-	cursor: pointer;
 	background-image: url('images/unlock.png');
 	background-repeat: no-repeat;
 	background-position: bottom; 
@@ -211,12 +210,10 @@ p.item {
 	background-color: #77DD77;
 }
 
-.missionEnabled:hover {
-	background-color: #BBEEBB;
-}
 
 .missionTarget {
 	background-color: #7777DD;
+	cursor: pointer;
 }
 
 .missionTarget:hover {
