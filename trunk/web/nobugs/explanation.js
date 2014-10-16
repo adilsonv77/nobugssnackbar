@@ -3,15 +3,15 @@ var Explanation = {};
 Explanation.selectCommands = function(commands) {
 	
 	var ret = {}; // = {"snackMan": true, "loop": true, "logic": true, "math": true, "vars": true, "function": true, "const": true };
-	var comms = commands.children;
-	for (var i=0; i < comms.length; i++) {
-		var group = comms[i];
+	var group = commands.firstElementChild;
+	while (group != null) {
+		
 		var show = group.getAttribute("show");
 		if (show != null) {
 			ret[group.getAttribute("name")] = show === "true";
 		}
+		group = group.nextElementSibling;
 	}
-		
 	return ret;
 };
 
@@ -19,8 +19,12 @@ Explanation.showInfo = function(explanation, withHint) {
 	
 	var statement = 0;
 	Explanation.firstStatement = -1;
-	for (var i = 0; i < explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
+	
+	var expla = explanation.firstElementChild;
+	var i = 0;
+	while (expla != null) {
+		
+		var type = expla.getAttribute("type");
 		if (type === "statement") {
 			if (statement == 0)
 				Explanation.firstStatement = i;
@@ -28,8 +32,9 @@ Explanation.showInfo = function(explanation, withHint) {
 			
 			Explanation.lastStatement = i;
 		}
+		expla = expla.nextElementSibling; i++;
 	}
-
+	
 	if (Explanation.firstStatement == -1) // this will happen if is something wrong in the mission's statement
 		return;
 	
@@ -48,10 +53,13 @@ Explanation.showInfo = function(explanation, withHint) {
 Explanation.nextStatement = function() {
 	
 	BlocklyApps.hideDialog(false);
+	
 	var explanation = Explanation.explanation;
+	var children = explanation.getElementsByTagName("page");
+	
 	var i = Explanation.pageNumber + 1; Explanation.pageNumber = -1;
 	for (; i <= Explanation.lastStatement; i++) {
-		var type = explanation.children[i].getAttribute("type");
+		var type = children[i].getAttribute("type");
 		if (type === "statement") {
 			if (Explanation.pageNumber == -1)
 				Explanation.pageNumber = i;
@@ -66,9 +74,11 @@ Explanation.previousStatement = function() {
 	BlocklyApps.hideDialog(false);
 	
 	var explanation = Explanation.explanation;
+	var children = explanation.getElementsByTagName("page");
+	
 	var i = Explanation.pageNumber - 1; Explanation.pageNumber = -1;
 	for (; i >= 0; i--) {
-		var type = explanation.children[i].getAttribute("type");
+		var type = children[i].getAttribute("type");
 		if (type === "statement") {
 			if (Explanation.pageNumber == -1)
 				Explanation.pageNumber = i;
@@ -81,7 +91,9 @@ Explanation.previousStatement = function() {
 Explanation.createDialog = function(nrPage) {
     var content = document.getElementById('dialogInfo');
 	var container = document.getElementById('dialogInfoText');
-	container.innerHTML = Explanation.explanation.children[nrPage].innerHTML;  // .childNodes[0].nodeValue;
+	var children = Explanation.explanation.getElementsByTagName("page");
+
+	container.innerHTML = children[nrPage].innerHTML || children[nrPage].textContent;
 	
 	var buttons = document.getElementById('dialogInfoButton');
 	
@@ -172,11 +184,14 @@ Explanation.finishStatement = function() {
 	var bY = 0;
 	var bX = 0;
 
-	for (var i=lastHint; i<explanation.children.length; i++) {
-		var type = explanation.children[i].getAttribute("type");
+	var children = explanation.getElementsByTagName("page");
+
+
+	for (var i=lastHint; i<children.length; i++) {
+		var type = children[i].getAttribute("type");
 		if (type === "hint") {
-			var idhint = explanation.children[i].getAttribute("id");
-			var originhint = explanation.children[i].getAttribute("origin");
+			var idhint = children[i].getAttribute("id");
+			var originhint = children[i].getAttribute("origin");
 			Explanation.hintNumber = i;
 			
 			if (originhint === "code") {
@@ -195,14 +210,14 @@ Explanation.finishStatement = function() {
 				if (originhint === "command") {
 					
 					var separator = idhint.indexOf("#");
-					var children = Blockly.Toolbox.tree_.children_;
+					var children_ = Blockly.Toolbox.tree_.children_;
 					var node;
 					if (separator == -1) {
 						
 						node = parseInt(idhint);
-						Blockly.Toolbox.tree_.setSelectedItem(children[node]);
+						Blockly.Toolbox.tree_.setSelectedItem(children_[node]);
 						
-						var e = children[node].element_;
+						var e = children_[node].element_;
 						bY = e.offsetTop + e.offsetParent.offsetTop + e.offsetParent.offsetParent.offsetTop;
 						bX = e.offsetLeft + e.offsetParent.offsetLeft + e.offsetParent.offsetParent.offsetLeft;
 						originH = e.clientHeight; originW = e.clientWidth;
@@ -210,7 +225,7 @@ Explanation.finishStatement = function() {
 					} else {
 						
 						node = parseInt(idhint.substring(0, separator));
-						Blockly.Toolbox.tree_.setSelectedItem(children[node]); // must be here because the last line in this block depends of this
+						Blockly.Toolbox.tree_.setSelectedItem(children_[node]); // must be here because the last line in this block depends of this
 
 						var nodeItem = parseInt(idhint.substring(idhint.indexOf("#")+1));
 						origin = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[nodeItem].getSvgRoot();
@@ -236,9 +251,9 @@ Explanation.finishStatement = function() {
 	buttons.innerHTML = nobugspage.finishButton(null, null, null);
 	
 	var container = document.getElementById('dialogHintText');
-	container.innerHTML = explanation.children[Explanation.hintNumber].innerHTML;
+	container.innerHTML = children[Explanation.hintNumber].innerHTML || children[Explanation.hintNumber].textContent; 
 	
-	var dir = explanation.children[i].getAttribute("dir");
+	var dir = children[Explanation.hintNumber].getAttribute("dir");
 	var imgId = 'imgHint';
 	if (dir === "stack") {
 		imgId += "After";
@@ -299,9 +314,11 @@ Explanation.finishStatement = function() {
 };
 
 Explanation.parseUserLogged = function(explanations) {
-	for (var j=0; j<explanations.children.length; j++) {
+	var children = explanations.getElementsByTagName("page");
+
+	for (var j=0; j< children.length; j++) {
 		
-		var e = explanations.children[j].innerHTML;
+		var e = innerXML ( children[j] ); 
 		
 		do {
 			var i = e.indexOf("$${") ;
@@ -316,7 +333,10 @@ Explanation.parseUserLogged = function(explanations) {
 			
 		} while (true) ;
 		
-		explanations.children[j].innerHTML = e;
+		if (children[j].innerHTML)
+			children[j].innerHTML = e;
+		else
+			children[j].textContent = e;
 	}
 	return explanations;
 };

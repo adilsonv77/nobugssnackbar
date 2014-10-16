@@ -64,6 +64,7 @@
     <span id="NoBugs_achieved">{msg meaning="NoBugs.achieved" desc="--"}Achieved{/msg}</span>
     <span id="NoBugs_of">{msg meaning="NoBugs.of" desc="--"}of{/msg}</span>
     <span id="NoBugs_goalAchievedVictory">{msg meaning="NoBugs.goalAchievedVictory" desc="--"}You achieved this mission. You win {0}.{/msg}</span>
+    <span id="NoBugs_intro2">{msg meaning="NoBugs.intro2" desc="--"}TODO {0}{/msg}</span>
     
     <span id="explanation_counter">{msg meaning="Explane.Counter" desc="--"}Go to counter {0}.{/msg}</span>
     <span id="explanation_askForFood">{msg meaning="Explane.AskForFood" desc="--"}Ask the customer at {0} what he wants to eat.{/msg}</span>
@@ -79,6 +80,9 @@
     <span id="commandBonusExplanation">{msg meaning="NoBugs.commandBonusExplanation" desc="--"}You'll receive a bonus of {0} if accomplish this mission in {1} commands or less.{/msg}</span>
     <span id="_mission">{msg meaning="Single.Mission" desc="--"}Mission{/msg}</span>
     <span id="_missions">{msg meaning="Single.Missions" desc="--"}Missions{/msg}</span>
+    
+    <span id="King">{msg meaning="Single.King" desc="--"}King{/msg}</span>
+    <span id="Queen">{msg meaning="Single.Queen" desc="--"}Queen{/msg}</span>
     
   </div>
 {/template}
@@ -242,6 +246,27 @@
   {call apps.codeDialog /}
   {call apps.storageDialog /}
   
+   <div id="dialogIntro" class="dialogHiddenContent">
+    <table>
+	    <tr>
+		    <td align="center">
+		      <img src="images/info.png" style="margin: 10px"/>
+		    </td>
+		    <td>
+		    <span id="userCompleteName"></span><br/><br/>
+		    {msg meaning="NoBugs.intro1" desc="--"}TODO{/msg}<br/>
+		    <br/>
+		    <span id="NoBugsIntro2"></span><br/>
+		    </td>
+	    </tr>
+    </table>
+    <div class="farSide" style="padding: 1ex 3ex 0">
+	    <button class="secondary" onclick="Game.finishIntro()">
+	      {{msg meaning="Apps.dialogOk" desc="IBID"}}OK{{/msg}}
+	    </button>
+	</div>
+  </div> 
+  
   <div id="dialogError" class="dialogHiddenContent">
     <table>
 	    <tr>
@@ -258,12 +283,11 @@
   <div id="dialogInfo" class="dialogHiddenContent">
     <table>
 	    <tr>
-		    <td align="center" rowspan="2">
+		    <td align="center">
 		      <img src="images/info.png" style="margin: 10px"/>
 		    </td>
 		    <td id="dialogInfoText"></td>
 	    </tr>
-	     <tr><td></td></tr>
     </table>
     <div id="dialogInfoButton" class="farSide" style="padding: 1ex 3ex 0">
     </div>
@@ -289,12 +313,11 @@
   <div id="dialogNoMoreMissions" class="dialogHiddenContent">
     <table>
 	    <tr>
-		    <td align="center" rowspan="2">
+		    <td align="center">
 		      <img src="images/expert.png" style="margin: 10px"/>
 		    </td>
 		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! There aren't more missions for you.{/msg}</td>
 	    </tr>
-	     <tr><td></td></tr>
     </table>
 	{call apps.ok /}
   </div>
@@ -302,12 +325,11 @@
   <div id="dialogFail" class="dialogHiddenContent">
     <table>
 	    <tr>
-		    <td style="width: 20%" align="center" rowspan="2">
+		    <td style="width: 20%" align="center">
 		      <img src="images/fail.png">
 		    </td>
 		    <td>{msg meaning="NoBugs.goalAchievedFail" desc="--"}You don't achieved this mission. You need to try again.{/msg}</td>
 	    </tr>
-	    <tr><td></td></tr>
     </table>
      {call apps.ok /}
   </div>

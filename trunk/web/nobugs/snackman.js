@@ -162,11 +162,13 @@ SnackMan = function(objectives, mission) {
 	
 	this.objective.debug = objectives.getAttribute("debug") === "true"; 
 	
-	for (var i = 0; i < objectives.children.length; i++) {
-		var obj = objectives.children[i].childNodes[0].nodeValue;
+	var children = objectives.getElementsByTagName("objective");
+	
+	for (var i = 0; i < children.length; i++) {
+		var obj = children[i].childNodes[0].nodeValue;
 		
 		var o = Objective.factory(obj);
-		var p = o.init(objectives.children[i]);
+		var p = o.init(children[i]);
 		this.objective.objectives.push(p);
 	}
 	
@@ -204,6 +206,9 @@ SnackMan.prototype.createGraph = function() {
 
 SnackMan.prototype.reset = function() {
 	this.currentNode = this.initialPosition;
+	
+	this.img.image = this.imgCooker;
+	
 	this.img.x = this.currentNode.x;
 	this.img.y = this.currentNode.y  - 32;
 	this.img.sourceY = 0;

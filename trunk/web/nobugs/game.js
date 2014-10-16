@@ -26,6 +26,7 @@
 'use strict';
 
 var userLogged = null;
+var missionHist = null;
 /**
  * Create a namespace for the application.
  */
@@ -79,22 +80,6 @@ Game.init = function() {
 	    	var lu = document.getElementById("loginuser");
 		    document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
 
-		    /*
-			MyBlocklyApps.showDialog(document.getElementById('dialogLogin'), 
-					null, false, true, true, "Login", {width: "270px"}, 
-					document.body.removeEventListener('keydown',loginKeyDown, true));
-			
-			var loginKeyDown = function (e) {
-			    if (e.keyCode == 13 ) {
-			    	Game.login();
-			    	e.stopPropagation();
-			    	e.preventDefault();
-			    }
-
-			};
-			
-			  document.body.addEventListener('keydown', loginKeyDown, false);
-			  */
 		}
 	});
 
@@ -128,9 +113,28 @@ Game.login = function() {
 	  			document.getElementById('loginuser').value = "";
 	  			document.getElementById('loginpassw').value = "";
 	  			
-	  			//BlocklyApps.hideDialog(true);
 	  			error.innerHTML = "";
-	  			Game.logged(ret[1], ret[2]);
+	  			if (ret[1].lastTime == null) {
+	  				
+	  				var userName = document.getElementById("userCompleteName");
+	  				userName.innerHTML = ret[1].name;
+	  				
+	  				var intro2 = BlocklyApps.getMsg("NoBugs_intro2");
+	  				intro2 = intro2.format((ret[1].sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
+	  				
+	  				
+	  				var intro2Span = document.getElementById("NoBugsIntro2");
+	  				intro2Span.innerHTML = intro2;
+	  				
+	  				userLogged = ret[1];
+	  				missionHist = ret[2];
+	  				
+	  				MyBlocklyApps.showDialog(document.getElementById('dialogIntro'), 
+	  						null, false, true, true, "Intro", {width: "540px"},null);
+	  				
+	  			} else 
+	  				Game.logged(ret[1], ret[2]);
+	  			
 	  		} else {
 	  			error.innerHTML = BlocklyApps.getMsg(ret[0]);
 	  		}
@@ -139,10 +143,17 @@ Game.login = function() {
 	
 };
 
+Game.finishIntro = function() {
+	BlocklyApps.hideDialog(false);
+	Game.logged(userLogged, missionHist);
+};
+
 Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
 	
 	if (Game.variableBox != null)
 		Game.variableBox.style.display = "none";
+	
+	userLogged = u;
 	
 	if (clazzId == undefined || clazzId == 0) {
 
@@ -150,7 +161,6 @@ Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
 	    document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "inline";
 
-		userLogged = u;
 		var idRoot = Game.missionsRetrieved(missionsHistorical);
 		var content = $("<div/>")
 				.append($("#" + idRoot))
@@ -445,16 +455,19 @@ Game.missionLoaded = function(ret){
 			  Game.nextPartOfMissionLoaded(ret, mission, 0);
 		  });
 	  }
-	  else
-		  Game.nextPartOfMissionLoaded(sourceXML.outerHTML, mission, 0);
+	  else {
+		  var outerHTML = sourceXML.outerHTML || (new XMLSerializer()).serializeToString(sourceXML);
+		  Game.nextPartOfMissionLoaded(outerHTML, mission, 0);
+	  }
   }
 };
   
 Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
-  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-
+  MyDomToWorkspace(Blockly.mainWorkspace, xml);
+  
+  
   var loginLoaded = function(data) {
       
       CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0],
@@ -899,7 +912,7 @@ Game.execute = function(debug) {
 		  
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
-  	    alert(code);
+  	   // alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.

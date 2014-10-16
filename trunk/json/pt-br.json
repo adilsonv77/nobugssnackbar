@@ -49,9 +49,9 @@
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",
 	"SnackMan.catchFoodTooltip" : "Pega a comida do mostrador e coloca na bandeja pronto para ser entregue ao cliente.",
 	"SnackMan.deliverTooltip" : "Entrega a comida ou bebida ao cliente na posi&#231;&#227;o atual.",
-	"SnackMan.goToCoolerTooltip" : "Move o cozinheiro at&#233; o frigor&#237;fico." ,
+	"SnackMan.goToCoolerTooltip" : "Move o cozinheiro at&#233; o refrigerador." ,
 	"SnackMan.askForDrinkTooltip" : "Pergunto ao cliente o que ele deseja beber.",
-	"SnackMan.catchDrinkTooltip" : "Pega a bebida do frigor&#237;fico e coloca na bandeja pronto para ser entregue ao cliente.",
+	"SnackMan.catchDrinkTooltip" : "Pega a bebida do refrigerador e coloca na bandeja pronto para ser entregue ao cliente.",
 	
 	
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
@@ -59,24 +59,26 @@
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",
 	"Error.thereIsntCustomer": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
-	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; geladeira.",
+	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; refrigerador.",
 	"Error.doesntHaveOrder": "O cozinheiro esqueceu de anotar o pedido.",
 	"Error.doesntOrderDrink": "N&#227;o existem bebidas nesse pedido.",
 	"Error.isntHunger": "O cliente n&#227;o est&#225; com fome.",
 	"Error.isntThirsty": "O cliente n&#227;o est&#225; com sede.",
 	"Error.onlyHotDog":"Aqui s&#243; tem cachorro-quente. O cliente n&#227;o pediu esse tipo de comida.",
-	"Error.wrongPlaceForDrink" : "Aqui n&#243; tem a bebida pedida pelo cliente.",
+	"Error.wrongPlaceForDrink" : "Aqui n&#227;o tem a bebida pedida pelo cliente.",
 	"Error.isntFrontDisplay" : "O cozinheiro n&#227;o est&#225; em frente ao mostrador aquecido.",
 	"Error.doesntOrderFood" : "N&#227;o existe comida anotada no pedido.",
 	"Error.isntFrontBoxOfFruits" : "O cozinheiro n&#227;o est&#225; em frente &#224; caixa de frutas.",
 	"Error.onlyFruits" : "Aqui o cozinheiro somente consegue obter frutas.",
 	"Error.isntFrontJuiceMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de sumos.",
-	"Error.doesntHaveItem" : ""O cozinheiro n&#227;o trouxe qualquer fruta para inserir na m&#225;quina de sumos.",
+	"Error.doesntHaveItem" : "O cozinheiro n&#227;o trouxe qualquer fruta para inserir na m&#225;quina de sumos.",
 	"Error.onlyPutFruits" : "A m&#225;quina de sumos s&#243; aceita frutas.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.Mission" : "miss&#227;o",
 	"Single.Missions": "Miss&#245;es",
+	"Single.King" : "o Rei",
+	"Single.Queen" : "a Rainha",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",
@@ -85,5 +87,8 @@
 	"Explane.AskForDrink":"Pergunta pelo que o cliente {0} deseja beber.",
 	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente {0}.",
 	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) {0}.",
-	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o {0}."
+	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o {0}.",
+	
+	"NoBugs.intro1": "O ramo das esplanadas &#233; muito competitivo: como os lanches s&#227;o id&#234;nticos em todos os estabelecimentos os melhores s&#227;o aqueles em que o cliente &#233; melhor atendido e que possuem um clima agrad&#225;vel para se estar algumas horas. Por&#233;m, podes ter um ingrediente secreto nos lanches servidos e a tua esplanada se tornar aquela a que toda gente gostaria de ir pelo menos uma vez por semana. Come&#231;a como aprendiz na esplanada e evolui at&#233; teres condi&#231;&#245;es de adquirir o teu estabelecimento. Vou estar a acompanhar-te ao longo de v&#225;rias miss&#245;es at&#233; te tornares auto-suficiente.",
+	"NoBugs.intro2": "Desenvolve o teu ingrediente secreto e s&#234; a esplanada que atende mais r&#225;pido, atrai mais clientes e gera mais dinheiro. Torna-te {0} das Esplanadas."
 }

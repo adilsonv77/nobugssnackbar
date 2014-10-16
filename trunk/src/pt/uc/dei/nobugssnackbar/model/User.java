@@ -19,6 +19,7 @@ public class User {
 	@RemoteProperty
 	private String name;
 	
+	@RemoteProperty
 	private Time lastTime;
 
 	public long getId() {
