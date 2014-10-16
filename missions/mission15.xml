@@ -50,7 +50,7 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<foods>
 				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks randomize="1">
+			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
@@ -62,7 +62,7 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<foods>
 				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks randomize="1">
+			<drinks  randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>

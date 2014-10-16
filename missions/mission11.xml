@@ -32,12 +32,8 @@
 		</page>
 		<page type="hint" origin="code" id="1" dir="up">
 			Ao selecionar um bloco podes utilizar as teclas Ctr+C e Ctrl+V para
-			duplicar um bloco. Selecionando o
-			<br />
-			bloco condicional, vais copiar esse bloco e todos os outros blocos
-			dentro dele. Resolve primeiro para
-			<br />
-			um cliente e depois utiliza esse recurso para reaproveitar o
+			duplicar um bloco. Selecionando obloco condicional, vais copiar esse bloco e todos os outros blocos
+			dentro dele. Resolve primeiro para	um cliente e depois utiliza esse recurso para reaproveitar o
 			c&#243;digo para outro cliente.
 		</page>
 	</explanation>

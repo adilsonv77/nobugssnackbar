@@ -11,7 +11,7 @@
 		
 		<page type="statement">
 		O &#250;ltimo desafio antes de se completar o n&#237;vel Aprendiz de Atendedor: os quatro clientes t&#234;m fome e sede. <br/>
-		Atende todos os clientes com apenas duas vari&#225;veis. Ganhas $30 extra se resolves o problema em tr&#234;s minutos.
+		Atende todos os clientes com apenas duas vari&#225;veis. Ganhas $30 extra se resolves o problema em cinco minutos.
 		</page>
 
 	</explanation>
@@ -80,7 +80,7 @@
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" bonusTime="180" bonusTimeReward="10 20 30" varQtd="2">
+	<objectives ordered="false" reward="7" bonusTime="300" bonusTimeReward="50 40 30" varQtd="2">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

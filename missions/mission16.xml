@@ -2,11 +2,11 @@
 <mission>
 	<explanation>
 		<page type="statement">
-			J&#225; est&#225;s a come&#231;ar a ter o poder da decis&#227;o. Mas agora os nossos clientes v&#234;m com fome, com sede<br/>
-			ou com fome e sede. Ent&#227;o vais perguntar e atender uma op&#231;&#227;o primeiro, e depois a outra, de cada<br/>
-			um dos clientes.<br/>
-            <br/>
-			Para facilitar trouxe-te a tua solu&#231;&#227;o da &#250;ltima miss&#227;o.
+Agora os nossos clientes podem ter sede E tamb&#233;m podem ter fome. E, se t&#234;m sede, podem pedir<br/>
+refrigerante ou sumo.<br/><br/>
+<b>Tens a limita&#231;&#227;o de 34 comandos</b> e a possibilidade de receber um b&#244;nus de $30 se resolver em 3 minutos.<br/><br/>
+Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.<br/>
+
 		</page>
 
 	</explanation>
@@ -24,42 +24,55 @@
 		<category name="catchDrink" show="true" />
 		<category name="askHasThirsty" show="true" />
 
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="catchFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndCatchJuice" show="true" />
+
 		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
+		<category name="const" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.orange" show="true" />
 		<category name="logic" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
+	<customersSN>
+	</customersSN>
 	<customers>
 		<customer randomType="atLeastOne">
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods randomMin="0" randomMax="1">
+			<foods randomMin="0" randomMax="1" >
 				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks randomMin="0" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 		<customer randomType="atLeastOne">
 			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<foods randomMin="0" randomMax="1">
 				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks randomMin="0" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
+				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15">
+	<objectives ordered="false" reward="30" commQtd="34" bonusTime="180" bonusTimeReward="45 30" >
 		<objective pos="1" place="counter">deliver</objective>
-		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="11">
+	<xml preload="15">
 	</xml>
+
 </mission>
 

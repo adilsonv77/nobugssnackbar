@@ -61,10 +61,10 @@ CustomerManager.parseSN = function(sn) {
 
 CustomerManager.reset = function() {
 	customers = [];
-	
-	for (var i = 0; i < this.optCustomers.children.length; i++) {
+	var customer = this.optCustomers.firstElementChild;
+	while (customer != null) {
+		var init = customer.getElementsByTagName("init")[0].textContent.toString();
 		
-		var init = this.optCustomers.children[i].getElementsByTagName("init")[0].textContent.toString();
 		if (init === "door") {
 			init = CustOpt.door;
 		} else {
@@ -72,54 +72,26 @@ CustomerManager.reset = function() {
 				init = CustOpt.counter[parseInt(init.substring(7)) - 1];
 			}
 		}
-		var dest = this.optCustomers.children[i].getElementsByTagName("dest")[0];
+		
+		var dest = customer.getElementsByTagName("dest")[0];
 		if (dest != null) {
 			dest = dest.textContent.toString();
 			if (dest.indexOf("counter") == 0) {
 				dest = CustOpt.counter[parseInt(dest.substring(7)) - 1];
 			}
 		}
-			
-		var id = this.optCustomers.children[i].getElementsByTagName("id")[0].textContent.toString();
 		
-		var foods = CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("foods")[0]);
-		var drinks =  CustomerManager.extractItems(this.optCustomers.children[i].getElementsByTagName("drinks")[0]);
+		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
-		CustomerManager.randomizeFoodAndDrink(foods, drinks, this.optCustomers.children[i]);
+		var foods = CustomerManager.extractItems("food", customer.getElementsByTagName("foods")[0]);
+		var drinks =  CustomerManager.extractItems("drink", customer.getElementsByTagName("drinks")[0], customer.getAttribute("randomType"), foods.length);
 		
-		customers[i] = new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks});
+		customers.push(new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks}));
 		
+		customer = customer.nextElementSibling;
 	}
 	
 	this.transformSN();
-};
-
-CustomerManager.randomizeFoodAndDrink = function(foods, drinks, customer) {
-	
-	var randomType = customer.getAttribute("randomType");
-
-	if (randomType == null)
-		return;
-	
-	var minFood = parseInt(customer.getAttribute("randomMinFood"));
-	var maxFood = parseInt(customer.getAttribute("randomMaxFood"));
-	
-	var minDrink = parseInt(customer.getAttribute("randomMinDrink"));
-	var maxDrink = parseInt(customer.getAttribute("randomMaxDrink"));
-	
-	var selectedFood = Math.floor((Math.random() * ((maxFood-minFood)+1))) + minFood;
-	var selectedDrink = Math.floor((Math.random() * ((maxDrink-minDrink)+1))) + minDrink;
-	
-	if (selectedFood == 0 && selectedDrink == 0 && randomType === "atLeastOne")
-		selectedDrink = maxDrink;
-	
-	while (foods.length > selectedFood)
-		foods.pop();
-	
-	while (drinks.length > selectedDrink)
-		drinks.pop();
-	
-	
 };
 
 CustomerManager.transformSN = function() {
@@ -182,18 +154,26 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 	
 };
 
-CustomerManager.extractItems = function(list) {
+CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 	
-	var randomize = list.getAttribute("randomize");
+	var randomMin = list.getAttribute("randomMin");
+	var children = list.getElementsByTagName(key);
 	
 	var selected = [];
-	for(var j=0; j < list.children.length; j++) {
+	for(var j=0; j < children.length; j++) {
 		selected[j] = j;
 	}
 	
-	if (randomize != null) {
-		randomize = parseInt(randomize);
-		while (selected.length > randomize) {
+	if (randomMin != null) {
+		randomMin = parseInt(randomMin);
+		var randomMax = parseInt(list.getAttribute("randomMax"));
+		
+		var howMany = Math.floor((Math.random() * ((randomMax-randomMin)+1))) + randomMin;
+		
+		if (foodsLen == 0 && howMany == 0 && randomType === "atLeastOne")
+			howMany = 1;
+		
+		while (selected.length > howMany) {
 			var s = Math.floor((Math.random() * (selected.length)));
 			selected.splice(s, 1);
 		}
@@ -202,7 +182,7 @@ CustomerManager.extractItems = function(list) {
 	var items = [];
 	for (var j=0; j < selected.length; j++) {
 		
-		var item = list.children[selected[j]];
+		var item = children[selected[j]];
 		
 		var theItem = item.childNodes[0].nodeValue;
 		var theQtd = item.getAttribute("qt");

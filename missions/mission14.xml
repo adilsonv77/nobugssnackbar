@@ -62,7 +62,7 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho.
 			<dest>counter1</dest>
 			<foods>
 			</foods>
-			<drinks randomize="1">
+			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
@@ -73,13 +73,13 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho.
 			<dest>counter3</dest>
 			<foods>
 			</foods>
-			<drinks randomize="1">
+			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15" bonusTime="180" bonusTimeReward="15 30">
+	<objectives ordered="false" reward="15" bonusTime="180" bonusTimeReward="45 30">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>

@@ -29,78 +29,78 @@ var BlocklyApps = {};
  * Lookup for names of languages.  Keys should be in ISO 639 format.
  */
 BlocklyApps.LANGUAGE_NAME = {
-  'ace': 'بهسا اچيه',
+  'ace': 'Ø¨Ù‡Ø³Ø§ Ø§Ú†ÙŠÙ‡',
   'af': 'Afrikaans',
-  'ar': 'العربية',
-  'az': 'Azərbaycanca',
-  'be-tarask': 'Taraškievica',
+  'ar': 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©',
+  'az': 'AzÉ™rbaycanca',
+  'be-tarask': 'TaraÅ¡kievica',
   'br': 'Brezhoneg',
-  'ca': 'Català',
-  'cdo': '閩東語',
-  'cs': 'Česky',
+  'ca': 'CatalÃ ',
+  'cdo': 'é–©æ�±èªž',
+  'cs': 'ÄŒesky',
   'da': 'Dansk',
   'de': 'Deutsch',
-  'el': 'Ελληνικά',
+  'el': 'Î•Î»Î»Î·Î½Î¹ÎºÎ¬',
   'en': 'English',
-  'es': 'Español',
+  'es': 'EspaÃ±ol',
   'eu': 'Euskara',
-  'fa': 'فارسی',
+  'fa': 'Ù�Ø§Ø±Ø³ÛŒ',
   'fi': 'Suomi',
-  'fo': 'Føroyskt',
-  'fr': 'Français',
+  'fo': 'FÃ¸royskt',
+  'fr': 'FranÃ§ais',
   'frr': 'Frasch',
   'gl': 'Galego',
-  'hak': '客家話',
-  'he': 'עברית',
-  'hi': 'हिन्दी',
+  'hak': 'å®¢å®¶è©±',
+  'he': '×¢×‘×¨×™×ª',
+  'hi': 'à¤¹à¤¿à¤¨à¥�à¤¦à¥€',
   'hrx': 'Hunsrik',
   'hu': 'Magyar',
   'ia': 'Interlingua',
   'id': 'Bahasa Indonesia',
-  'is': 'Íslenska',
+  'is': 'Ã�slenska',
   'it': 'Italiano',
-  'ja': '日本語',
-  'ka': 'ქართული',
-  'km': 'ភាសាខ្មែរ',
-  'ko': '한국어',
-  'ksh': 'Ripoarėsch',
-  'ky': 'Кыргызча',
+  'ja': 'æ—¥æœ¬èªž',
+  'ka': 'áƒ¥áƒ�áƒ áƒ—áƒ£áƒšáƒ˜',
+  'km': 'áž—áž¶ážŸáž¶áž�áŸ’áž˜áŸ‚ážš',
+  'ko': 'í•œêµ­ì–´',
+  'ksh': 'RipoarÄ—sch',
+  'ky': 'ÐšÑ‹Ñ€Ð³Ñ‹Ð·Ñ‡Ð°',
   'la': 'Latine',
-  'lb': 'Lëtzebuergesch',
-  'lt': 'Lietuvių',
-  'lv': 'Latviešu',
+  'lb': 'LÃ«tzebuergesch',
+  'lt': 'LietuviÅ³',
+  'lv': 'LatvieÅ¡u',
   'mg': 'Malagasy',
-  'ml': 'മലയാളം',
-  'mk': 'Македонски',
-  'mr': 'मराठी',
+  'ml': 'à´®à´²à´¯à´¾à´³à´‚',
+  'mk': 'ÐœÐ°ÐºÐµÐ´Ð¾Ð½Ñ�ÐºÐ¸',
+  'mr': 'à¤®à¤°à¤¾à¤ à¥€',
   'ms': 'Bahasa Melayu',
-  'mzn': 'مازِرونی',
-  'nb': 'Norsk Bokmål',
+  'mzn': 'Ù…Ø§Ø²Ù�Ø±ÙˆÙ†ÛŒ',
+  'nb': 'Norsk BokmÃ¥l',
   'nl': 'Nederlands, Vlaams',
-  'oc': 'Lenga d\'òc',
-  'pa': 'पंजाबी',
+  'oc': 'Lenga d\'Ã²c',
+  'pa': 'à¤ªà¤‚à¤œà¤¾à¤¬à¥€',
   'pl': 'Polski',
-  'pms': 'Piemontèis',
-  'ps': 'پښتو',
-  'pt': 'Português',
-  'ro': 'Română',
-  'pt-br': 'Português Brasileiro',
-  'ru': 'Русский',
+  'pms': 'PiemontÃ¨is',
+  'ps': 'Ù¾ÚšØªÙˆ',
+  'pt': 'PortuguÃªs',
+  'ro': 'RomÃ¢nÄƒ',
+  'pt-br': 'PortuguÃªs Brasileiro',
+  'ru': 'Ð ÑƒÑ�Ñ�ÐºÐ¸Ð¹',
   'sc': 'Sardu',
   'sco': 'Scots',
-  'si': 'සිංහල',
-  'sk': 'Slovenčina',
-  'sr': 'Српски',
+  'si': 'à·ƒà·’à¶‚à·„à¶½',
+  'sk': 'SlovenÄ�ina',
+  'sr': 'Ð¡Ñ€Ð¿Ñ�ÐºÐ¸',
   'sv': 'Svenska',
   'sw': 'Kishwahili',
-  'th': 'ภาษาไทย',
+  'th': 'à¸ à¸²à¸©à¸²à¹„à¸—à¸¢',
   'tl': 'Tagalog',
   'tlh': 'tlhIngan Hol',
-  'tr': 'Türkçe',
-  'uk': 'Українська',
-  'vi': 'Tiếng Việt',
-  'zh-hans': '簡體中文',
-  'zh-hant': '正體中文'
+  'tr': 'TÃ¼rkÃ§e',
+  'uk': 'Ð£ÐºÑ€Ð°Ñ—Ð½Ñ�ÑŒÐºÐ°',
+  'vi': 'Tiáº¿ng Viá»‡t',
+  'zh-hans': 'ç°¡é«”ä¸­æ–‡',
+  'zh-hant': 'æ­£é«”ä¸­æ–‡'
 };
 
 /**
@@ -295,7 +295,7 @@ BlocklyApps.init = function() {
     languages.push([BlocklyApps.LANGUAGE_NAME[lang], lang]);
   }
   var comp = function(a, b) {
-    // Sort based on first argument ('English', 'Русский', '简体字', etc).
+    // Sort based on first argument ('English', 'Ð ÑƒÑ�Ñ�ÐºÐ¸Ð¹', 'ç®€ä½“å­—', etc).
     if (a[0] > b[0]) return 1;
     if (a[0] < b[0]) return -1;
     return 0;
@@ -357,7 +357,7 @@ BlocklyApps.initReadonly = function() {
   // Add the blocks.
   var xml = BlocklyApps.getStringParamFromUrl('xml', '');
   xml = Blockly.Xml.textToDom('<xml>' + xml + '</xml>');
-  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+  MyDomToWorkspace(Blockly.mainWorkspace, xml);
 };
 
 /**
@@ -379,11 +379,11 @@ BlocklyApps.loadBlocks = function(defaultXml) {
     // Language switching stores the blocks during the reload.
     delete window.sessionStorage.loadOnceBlocks;
     var xml = Blockly.Xml.textToDom(loadOnce);
-    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+    MyDomToWorkspace(Blockly.mainWorkspace, xml);
   } else if (defaultXml) {
     // Load the editor with default starting blocks.
     var xml = Blockly.Xml.textToDom(defaultXml);
-    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+    MyDomToWorkspace(Blockly.mainWorkspace, xml);
   } else if ('BlocklyStorage' in window) {
     // Restore saved blocks in a separate thread so that subsequent
     // initialization is not affected from a failed load.
