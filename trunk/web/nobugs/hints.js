@@ -79,16 +79,18 @@ Hints.timeIsUp = function() {
 		if (ant[1] < ant[0].sequence.length)
 			Hints.now[ant[2]]++;
 		
-		e.onclick = function() { 
-			BlocklyApps.hideDialog(false); 
-			window.setTimeout(Hints.timeIsUp, 0);
-		};
-		
-		
+		Blockly.bindEvent_(e, 'mousedown', this, Hints.onMouseDown);	
 	}
 	
-	
 };
+
+Hints.onMouseDown = function() { 
+	BlocklyApps.hideDialog(false); 
+	window.setTimeout(Hints.timeIsUp, 0);
+};
+
+
+
 
 function calcTop (e) {
 	return e.offsetTop + e.offsetParent.offsetTop + e.offsetParent.offsetParent.offsetTop;
@@ -141,6 +143,6 @@ Hints.Categories["SelectCommand"] = function (param) {
 	style.left = (bX - (dialog.clientWidth/2)) + "px";
 
 	BlocklyApps.showDialog(dialog, null, false, false, style, null);
-	
-	return e.svg_.block_.flyoutRect_;
+            
+	return e.svg_.getRootElement();
 };
