@@ -14,6 +14,7 @@
  */
 {template .messages}
   {call apps.messages /}
+  {call hints.messages /}
   <div style="display: none">
   
     <span id="Blockly_variableSet">{msg meaning="Blockly.variableSet" desc="--"}%1 and store in %2{/msg}</span>
@@ -116,6 +117,7 @@
   <script type="text/javascript" src="nobugs/game.js"></script>
   
   <script type="text/javascript" src="nobugs/explanation.js"></script>
+  <script type="text/javascript" src="nobugs/hints.js"></script>
 
   <script type="text/javascript" src="nobugs/blockly.js"></script>
 
@@ -245,6 +247,7 @@
   {call apps.dialog /}
   {call apps.codeDialog /}
   {call apps.storageDialog /}
+  {call hints.dialogs /}
   
    <div id="dialogIntro" class="dialogHiddenContent">
     <table>
@@ -333,6 +336,8 @@
     </table>
      {call apps.ok /}
   </div>
+  
+  
   
 {/template}
 
