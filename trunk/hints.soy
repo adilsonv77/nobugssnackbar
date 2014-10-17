@@ -1,0 +1,47 @@
+{namespace hints}
+
+/**
+ * Translated messages for use in JavaScript.
+ */
+{template .messages}
+  <div style="display: none">
+    <span id="Hints_ChooseCategory">{msg meaning="Hints.ChooseCategory" desc="--"}Choose a category {0} to see the blocks.{/msg}</span>
+  
+    
+  </div>
+{/template}
+
+/**
+ * Dialogs.
+ */
+{template .dialogs}
+
+  <div id="ChooseCategory" class="dialogHiddenContent">
+    <table>
+	    <tr>
+		    <td >
+		      <img src="images/help_left.png" style="padding: 10px" />
+		    </td>
+		    <td id="ChooseCategoryText">
+		    	
+		    </td>
+	    </tr>
+    </table>
+  </div>
+  
+  <div id="SelectCommand" class="dialogHiddenContent">
+    <table>
+	    <tr>
+		    <td>
+		    	{msg meaning="Hints.SelectCommand" desc="--"}Drag a block to the workspace.{/msg}
+		    </td>
+		    <td >
+		      <img src="images/help_stack.png" style="padding: 10px" />
+		    </td>
+	    </tr>
+    </table>
+  </div>
+  
+  
+{/template}
+

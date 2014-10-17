@@ -164,8 +164,18 @@ Explanation.evaluateObjectives = function(statement, container) {
 Explanation.finishStatement = function() {
 	BlocklyApps.hideDialog(false);
 	
+	Hints.init(Game.mission.getElementsByTagName("hints")[0]);
+
+	Game.currTime = new Date().getTime();
+	Game.initCronometro();
+	
+	/*
+	
 	if (!Explanation.showHint)
 		return;
+
+	var explanation = Explanation.explanation;
+
 	
 	var origin = null;
 	var lastHint = Explanation.hintNumber + 1;
@@ -180,7 +190,6 @@ Explanation.finishStatement = function() {
 	Explanation.hintNumber = -1;
 	var originH = 0;
 	var originW = 0;
-	var explanation = Explanation.explanation;
 	var bY = 0;
 	var bX = 0;
 
@@ -307,10 +316,11 @@ Explanation.finishStatement = function() {
 	style.top = style.top + "px";
 	style.left = style.left + "px";
 	
-	BlocklyApps.showDialog(dialog, null, false, true, style, 
+	BlocklyApps.showDialog(dialog, null, false, false, style, 
 			function(){
 				Game.currTime = new Date().getTime();
 			});
+			*/
 };
 
 Explanation.parseUserLogged = function(explanations) {
