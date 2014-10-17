@@ -79,12 +79,14 @@ Hints.timeIsUp = function() {
 		if (ant[1] < ant[0].sequence.length)
 			Hints.now[ant[2]]++;
 		
-		Blockly.bindEvent_(e, 'mousedown', this, Hints.onMouseDown);	
+		Hints.ToUnbind = Blockly.bindEvent_(e, 'mousedown', this, Hints.onMouseDown);	
 	}
 	
 };
 
-Hints.onMouseDown = function() { 
+Hints.onMouseDown = function(evt) { 
+	
+	Blockly.unbindEvent_(Hints.ToUnbind);
 	BlocklyApps.hideDialog(false); 
 	window.setTimeout(Hints.timeIsUp, 0);
 };
