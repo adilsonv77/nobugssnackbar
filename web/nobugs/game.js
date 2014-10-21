@@ -825,6 +825,7 @@ Game.resetButtonClick = function() {
   
   Game.doResizeWindow("none");
   
+  Game.unlockBlockly();
 };
 
 Game.enableButton = function(buttonName) {
@@ -918,6 +919,7 @@ Game.execute = function(debug) {
 		// BlocklyApps.log now contains a transcript of all the user's actions.
         Game.stepSpeed = 1000 * Math.pow(0.5, 3);
 	    
+        Game.lockBlockly();
 	  } catch (e) {
 		  
 		  if (e == Infinity) { 
@@ -929,12 +931,38 @@ Game.execute = function(debug) {
 		  console.log(e);
 		  
 	  };
-	  
   }
 
   Game.runningStatus = debug;
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
-  
+};
+
+/**
+ * Lock block panel during running
+ */
+Game.lockBlockly = function() {
+	
+	var blockly = document.getElementById('blockly');
+	
+    var blocklyLock = document.createElement('div');
+    blocklyLock.id = 'blocklyLock';
+    blocklyLock.style.cssText = blockly.style.cssText;
+    blocklyLock.style.position = 'absolute';
+
+	var mainBody = document.getElementById('mainBody');
+	mainBody.appendChild(blocklyLock);
+};
+
+/**
+ * Unlock block panel after run
+ */
+Game.unlockBlockly = function() {
+	var blocklyLock = document.getElementById('blocklyLock');
+	
+	if (blocklyLock !== 'undefined' && blocklyLock !== undefined) {
+		var mainBody = document.getElementById('mainBody');
+		mainBody.removeChild(blocklyLock);
+	}
 };
 
 Game.updateVariables = function() {
@@ -1025,10 +1053,11 @@ Game.nextStep = function() {
 		    				});
 			    	});
 			    	
-			    	
 			    } else {
 			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
 			    }
+			    
+			    Game.unlockBlockly();
 			    
 			    return;
 				
@@ -1036,6 +1065,8 @@ Game.nextStep = function() {
 		} catch (ex) {
 			// when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
 			  Game.animate();
+			  
+			  Game.unlockBlockly();
 		      return;
 			
 		}
