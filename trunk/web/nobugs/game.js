@@ -1044,10 +1044,10 @@ Game.nextStep = function() {
 			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
 			    		var out = msg.format(reward + coin2)+ "<br/>";
 			    		
-			    		var div = document.createElement("div");
-			    		div.innerHTML = out + apps.ok(null, null, null);
+			    		var vicText = document.getElementById("victoyText");
+			    		vicText.innerHTML = out;
 			    		
-				    	MyBlocklyApps.showDialog(div, null, true, true, true, null, null, 
+				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				
 				    				window.removeEventListener('unload', Game.unload);				    				
