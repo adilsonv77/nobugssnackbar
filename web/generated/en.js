@@ -10,7 +10,7 @@ hints.messages = function(opt_data, opt_ignored, opt_ijData) {
 
 
 hints.dialogs = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div>';
+  return '<div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Stack a couple of this command blocks together to be more closer to reach the goal.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="RunProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Click in this button for track the cooker actions according your program.</td></tr></table></div><div id="DebugProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Click in this button for track the next cooker action according your program.</td></tr></table></div>';
 };
 
 ;

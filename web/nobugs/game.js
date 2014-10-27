@@ -33,6 +33,7 @@ var missionHist = null;
 var Game = {};
 
 Game.runningStatus = 0;
+Game.howManyRuns = 0; // in this session
 
 var hero;
 Game.mission = null;
@@ -423,6 +424,8 @@ Game.unload = function(e) {
 };
 
 Game.missionLoaded = function(ret){
+	
+  Game.howManyRuns = 0;
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -911,6 +914,8 @@ Game.execute = function(debug) {
 		
 		UserControl.registerExecution();
 		  
+		Game.howManyRuns++;
+		
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
   	   // alert(code);

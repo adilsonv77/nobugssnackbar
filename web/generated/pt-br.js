@@ -10,7 +10,7 @@ hints.messages = function(opt_data, opt_ignored, opt_ijData) {
 
 
 hints.dialogs = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Arraste um bloco para a área de trabalho.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div>';
+  return '<div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Arraste um bloco para a área de trabalho.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Empilhe um par desse bloco para ficar mais perto do objetivo.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="RunProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com seu programa.</td></tr></table></div><div id="DebugProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com o próximo comando do seu programa.</td></tr></table></div>';
 };
 
 ;

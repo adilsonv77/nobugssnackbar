@@ -93,7 +93,10 @@
 	"NoBugs.intro2": "Desenvolve o teu ingrediente secreto e s&#234; a esplanada que atende mais r&#225;pido, atrai mais clientes e gera mais dinheiro. Torna-te {0} das Esplanadas.",
 	
 	"Hints.ChooseCategory" : "Selecione a categoria {0} para ver os blocos.",
-	"Hints.SelectCommand"  : "Arraste um bloco para a &#225;rea de trabalho."
+	"Hints.SelectCommand"  : "Arraste um bloco para a &#225;rea de trabalho.",
+	"Hints.StackTogether"  : "Empilhe um par desse bloco para ficar mais perto do objetivo.",
+	"Hints.RunProgram"     : "Clique nesse bot&#227;o para acompanhar o cozinheiro movimentar-se de acordo com seu programa.",
+	"Hints.DebugProgram"   : "Clique nesse bot&#227;o para acompanhar o cozinheiro movimentar-se de acordo com o pr&#243;ximo comando do seu programa."
 	
 	
 }
