@@ -13,11 +13,14 @@
 		chamado bot&#227;o para Depurar) para veres o teu programa ser executado um comando <br/>
 		de cada vez. Faz isso at&#233; o programa encerrar.
 		</page>
-		<page type="hint" origin="button" id="debugButton" dir="down">
-			Esse &#233; o bot&#227;o para executar passo-a-passo.
-		</page>
 
 	</explanation>
+	<hints>
+		<sequence>
+			<hint time="5000">DebugProgram</hint>
+		</sequence>
+	</hints>
+	
 	<commands>
 		<category name="snackMan" show="true"/>
 		
