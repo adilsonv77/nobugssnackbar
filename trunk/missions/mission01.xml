@@ -27,10 +27,10 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint time="0">ChooseCategory(0)</hint>
-			<hint time="0">SelectCommand(0,0)</hint>
-			<hint event="Blockly.mainWorkspace.getTopBlocks(true).length > 1">StackTogether</hint>
-			<hint time="10000" event="Game.runningStatus == 0">RunProgram</hint>
+			<hint>ChooseCategory(0)</hint>
+			<hint>SelectCommand(0,0)</hint>
+			<hint time="5000">StackTogether(0,0,move_goToBarCounter)</hint>
+			<hint time="5000">RunProgram</hint>
 		</sequence>
 	</hints>
 	<commands>
