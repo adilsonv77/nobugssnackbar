@@ -39,7 +39,9 @@
 			<param-name>classes</param-name>
 			<param-value>
 			pt.uc.dei.nobugssnackbar.control.UserControl,
-			pt.uc.dei.nobugssnackbar.model.User
+			pt.uc.dei.nobugssnackbar.model.User,
+			pt.uc.dei.nobugssnackbar.model.Questionnaire,
+			pt.uc.dei.nobugssnackbar.model.Question
 			</param-value>
 		</init-param>
 		<init-param>

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import pt.uc.dei.nobugssnackbar.model.Question;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 
@@ -376,9 +377,65 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public Questionnaire retrieveQuestionnaire(long userid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Questionnaire retrieveQuestionnaire(long userid) throws SQLException {
+		
+		Connection bdCon = null;
+		Questionnaire ret = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			String questionnaire = 
+					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription from questionnaire " + 
+							" join questionsquestionnaire using (questionnaireid)"+
+							" join questions q using (questionid)"+
+							" left outer join questionoptions qo on (q.questionid = qo.questionid)"+
+							" where questionnaireid = 1" +
+							" order by questionorder, optionorder";
+			
+			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
+			
+			ResultSet rs = ps.executeQuery();
+			long lastQId = 0;
+			Question q = null;
+			while (rs.next()) {
+				if (ret == null) {
+					ret = new Questionnaire();
+					ret.setId(rs.getInt(1));
+					ret.setDescription(rs.getString(2));
+				}
+				
+				if (lastQId != rs.getInt(3)) {
+					
+					q = new Question();
+					q.setId(rs.getInt(3));
+					lastQId = q.getId();
+					
+					ret.setQuestions(new ArrayList<Question>());
+					ret.getQuestions().add(q);
+					q.setDescription(rs.getString(4));
+					q.setType(rs.getString(5));
+					q.setRequired(rs.getString(6).equals("T"));
+					
+					if (rs.getString(7) != null) {
+						q.setOptions(new ArrayList<String>());
+						q.getOptions().add(rs.getString(7));
+					}
+					
+				} else
+					q.getOptions().add(rs.getString(7));
+
+			}
+			
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
 	}
 
 }
