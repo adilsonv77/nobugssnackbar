@@ -121,6 +121,7 @@ public class UserControl {
 		return NoBugsConnection.getConnection().retrieveMissions(this.user.getId());
 	}
 	
+	@RemoteMethod
 	public Questionnaire retrieveQuestionnaire() throws SQLException {
 		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId());
 	}
