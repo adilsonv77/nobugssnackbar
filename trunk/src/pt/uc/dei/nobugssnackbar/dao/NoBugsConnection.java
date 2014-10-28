@@ -402,6 +402,7 @@ public class NoBugsConnection {
 					ret = new Questionnaire();
 					ret.setId(rs.getInt(1));
 					ret.setDescription(rs.getString(2));
+					ret.setQuestions(new ArrayList<Question>());
 				}
 				
 				if (lastQId != rs.getInt(3)) {
@@ -410,7 +411,7 @@ public class NoBugsConnection {
 					q.setId(rs.getInt(3));
 					lastQId = q.getId();
 					
-					ret.setQuestions(new ArrayList<Question>());
+					
 					ret.getQuestions().add(q);
 					q.setDescription(rs.getString(4));
 					q.setType(rs.getString(5));
