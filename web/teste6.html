@@ -1,0 +1,36 @@
+<html>
+<head>
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
+
+	<script type="text/javascript" src="nobugs/questionnaire.js"></script>
+
+<script type="text/javascript">
+
+var questionnaire;
+
+function loadQuestionnaire() {
+	
+	UserControl.login("1", "1", function() {
+		
+		UserControl.retrieveQuestionnaire(function(q) {
+			
+			var form = createForm(q);
+			document.appendChild(form);
+			
+		});
+		
+	});
+}
+
+
+</script>
+
+</head>
+
+<body >
+
+	<input type="button" value="Load" onclick="loadQuestionnaire()"/>
+	
+</body>
+</html>
