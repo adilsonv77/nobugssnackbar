@@ -691,6 +691,7 @@ Game.moveRightButtonClick = function() {
  */
 Game.reset = function() {
 	
+  Game.stopAlertGoalButton();
   hero.reset();
   CustomerManager.reset();
 
@@ -761,12 +762,13 @@ Game.countInstructions = function(c) {
 
 Game.goalButtonClick = function() {
   
+	Game.stopAlertGoalButton();
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
   
 };
 
 Game.logoffButtonClick = function() {
-	
+	Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
 	Game.stopSaveMissionEverySeconds();
@@ -832,6 +834,7 @@ Game.resetButtonClick = function() {
   Game.doResizeWindow("none");
   
   Game.unlockBlockly();
+  Game.stopAlertGoalButton();
 };
 
 Game.enableButton = function(buttonName) {
@@ -1050,7 +1053,9 @@ Game.nextStep = function() {
 			    		var vicText = document.getElementById("victoyText");
 			    		vicText.innerHTML = out;
 			    		
-				    	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+					    Game.stopAlertGoalButton();
+
+					    MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				
 				    				window.removeEventListener('unload', Game.unload);				    				
@@ -1075,6 +1080,7 @@ Game.nextStep = function() {
 			  Game.animate();
 			  
 			  Game.unlockBlockly();
+			  Game.stopAlertGoalButton();
 		      return;
 			
 		}
@@ -1392,3 +1398,33 @@ Game.saveMoney = function() {
 	this.currentlyMoney = this.money;
 };
 
+Game.alertColor = ["#DD4B39", "#E07c70", "#edcdc9", "#E07c70"];
+Game.handleAlertTimer = 0;
+
+Game.alertGoalButton = function() {
+	
+	if (Game.handleAlertTimer != 0)
+		return;
+	
+	Game.alertControl = 0;	
+	
+	Game.handleAlertTimer = 
+		window.setInterval(function() {
+			var gb = document.getElementById("goalButton");
+			Game.alertControl = (Game.alertControl + 1) % 4;
+			gb.style.backgroundColor = Game.alertColor[Game.alertControl];
+		}, 300);
+};
+
+Game.stopAlertGoalButton = function() {
+	
+	if (Game.handleAlertTimer == 0)
+		return;
+	
+	window.clearInterval(Game.handleAlertTimer);
+	Game.handleAlertTimer = 0;
+	
+	var gb = document.getElementById("goalButton");
+	gb.style.backgroundColor = "#DD4B39";
+	
+};
