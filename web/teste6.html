@@ -16,7 +16,7 @@ function loadQuestionnaire() {
 		UserControl.retrieveQuestionnaire(function(q) {
 			
 			var form = createForm(q);
-			document.appendChild(form);
+			document.getElementById("aquiVaiOForm").appendChild(form);
 			
 		});
 		
@@ -31,6 +31,7 @@ function loadQuestionnaire() {
 <body >
 
 	<input type="button" value="Load" onclick="loadQuestionnaire()"/>
+	<div id="aquiVaiOForm"></div>
 	
 </body>
 </html>
