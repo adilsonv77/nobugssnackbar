@@ -168,7 +168,7 @@ Explanation.finishStatement = function() {
 
 	Game.currTime = new Date().getTime();
 	Game.initCronometro();
-	
+	Game.startSaveMissionEverySeconds();
 	/*
 	
 	if (!Explanation.showHint)

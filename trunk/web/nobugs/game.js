@@ -410,6 +410,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
 Game.unload = function(e) {
 
+	Game.stopSaveMissionEverySeconds();
+	
 	var answer = null;
 	if (Blockly.mainWorkspace != null) 
 		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
@@ -767,6 +769,7 @@ Game.logoffButtonClick = function() {
 	
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
+	Game.stopSaveMissionEverySeconds();
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
@@ -1023,7 +1026,7 @@ Game.nextStep = function() {
 			    if (hero.allObjectivesAchieved) {
 			    	
 				    Game.stopCronometro();
-				    
+				    Game.stopSaveMissionEverySeconds();
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
@@ -1077,6 +1080,43 @@ Game.nextStep = function() {
 		}
 	}
 };
+
+/**********************************************************************
+ *  Block of function and variables to save the progress of the user  *
+ **********************************************************************/
+Game.taskIntervalForSave = null;
+Game.INTERVAL_FOR_SAVE = 30000;
+
+Game.startSaveMissionEverySeconds = function() {
+	if (Game.taskIntervalForSave == null) {
+		console.log('Starting save mission every ' + (Game.INTERVAL_FOR_SAVE / 1000) + ' seconds ');
+		Game.taskIntervalForSave = window.setInterval(function() {
+			var answer = null;
+			if (Blockly.mainWorkspace != null) 
+				answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+			
+			var timeSpent = 0;
+			var now = new Date().getTime();
+			if (Game.currTime != 0)
+				timeSpent = Math.floor(((now) - Game.currTime) / 1000);
+			
+			UserControl.saveMission(0, timeSpent, false, answer, function() {console.log('saved')});
+			
+			Game.currTime = now;
+		}, Game.INTERVAL_FOR_SAVE);
+	}
+};
+
+Game.stopSaveMissionEverySeconds = function() {
+	if (Game.taskIntervalForSave != null) {
+		window.clearInterval(Game.taskIntervalForSave);
+		Game.taskIntervalForSave = null;
+	}
+}; 
+
+/**********************************************************************
+ *                          Finish block                              *
+ **********************************************************************/
 
 Game.initApi = function(interpreter, scope) {
     // utilities commands
