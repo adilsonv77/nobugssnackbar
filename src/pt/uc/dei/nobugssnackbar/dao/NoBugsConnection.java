@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -373,6 +374,11 @@ public class NoBugsConnection {
 				}
 		}
 		return ret;
+	}
+
+	public Questionnaire retrieveQuestionnaire(long userid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

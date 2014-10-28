@@ -9,6 +9,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 @RemoteProxy(scope=ScriptScope.SESSION)
@@ -118,5 +119,9 @@ public class UserControl {
 	@RemoteMethod
 	public Object[][] retrieveMissions() throws SQLException {
 		return NoBugsConnection.getConnection().retrieveMissions(this.user.getId());
+	}
+	
+	public Questionnaire retrieveQuestionnaire() throws SQLException {
+		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId());
 	}
 }
