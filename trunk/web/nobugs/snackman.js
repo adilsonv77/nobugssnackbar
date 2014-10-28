@@ -778,6 +778,7 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
 		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
 						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
+	Game.alertGoalButton();
 	
 };
 
