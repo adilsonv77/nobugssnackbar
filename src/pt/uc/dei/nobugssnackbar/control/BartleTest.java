@@ -92,8 +92,6 @@ public class BartleTest {
 
 			}
 			
-			Collections.shuffle(l);
-			
 		} finally {
 			if (bdCon != null)
 				try {
