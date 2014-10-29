@@ -18,7 +18,14 @@ public class InsertBartleTestAnswer {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
+		String s = "asb %s asda";
+		System.out.println( String.format(s, "teste") );
+		
 		List<Long> list = BartleTest.selectQuestions();
+		String lista = list + "";
+		System.out.println(lista.substring(1, lista.length()-1));
+		
+		/*
 		NoBugsConnection nobugs = NoBugsConnection.getConnection();
 		
 		String sql = "select * from questionsquestionnaire join questions using (questionid) join questionoptions using (questionid) join bartletestoptions using (questionoptionsid) where questionnaireid = 2";
@@ -46,7 +53,7 @@ public class InsertBartleTestAnswer {
 		
 		for (Long k : sort.keySet())
 			nobugs.insertAnswer(2, k, 4, sort.get(k));
-			
+			*/
 	}
 	
 }

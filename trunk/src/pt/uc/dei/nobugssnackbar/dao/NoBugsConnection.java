@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+import pt.uc.dei.nobugssnackbar.control.BartleTest;
 import pt.uc.dei.nobugssnackbar.model.Question;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
@@ -387,57 +389,54 @@ public class NoBugsConnection {
 		List<Questionnaire> ret = new ArrayList<>();
 		try {
 			bdCon = dataSource.getConnection();
+			List<Long> qid = new ArrayList<>();
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select distinct questionnaireid from questionnaireanswer where userid = "+userid);
+			while (rs.next()) {
+				qid.add(rs.getLong(1));
+			}
+			boolean needQuestBartle = !qid.remove(2L);
+			qid.add(2L);
+			rs.close();
+			
+			String lista = (qid + "");
 			
 			String questionnaire = 
 					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription from questionnaire " + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
-							" left outer join questionoptions qo on (q.questionid = qo.questionid)"+
-							" where questionnaireid not in (" +
-							           "select distinct questionnaireid from questionnaireanswer where userid = "+userid+
-									")" +
+							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
+							" where %s"+
 							" order by questionnaireid, questionorder, optionorder";
 			
-			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
+			;
+			lista = String.format(questionnaire," questionnaireid not in (" +
+					lista.substring(1, lista.length()-1) +
+				     ")" );
+			PreparedStatement ps = bdCon.prepareStatement(lista);
+			rs = ps.executeQuery();
+			addQuestionnaires(ret, rs);
+			rs.close();
+			ps.close();
 			
-			ResultSet rs = ps.executeQuery();
-			long lastQuestionId = 0;
-			long lastQuestionnaireId = 0;
-			Question q = null;
-			Questionnaire quest = null;
-			while (rs.next()) {
-				if (quest == null || lastQuestionnaireId !=  rs.getInt(1)) {
-					quest = new Questionnaire();
-					lastQuestionnaireId = rs.getInt(1);
-					quest.setId(lastQuestionnaireId);
-					quest.setDescription(rs.getString(2));
-					quest.setQuestions(new ArrayList<Question>());
-					
-					ret.add(quest);
-				}
+			if (needQuestBartle) {
 				
-				if (lastQuestionId != rs.getInt(3)) {
-					
-					q = new Question();
-					q.setId(rs.getInt(3));
-					lastQuestionId = q.getId();
-					
-					
-					quest.getQuestions().add(q);
-					q.setDescription(rs.getString(4));
-					q.setType(rs.getString(5));
-					q.setRequired(rs.getString(6).equals("T"));
-					
-					if (rs.getString(7) != null) {
-						q.setOptions(new ArrayList<String>());
-						q.getOptions().add(rs.getString(7));
-					}
-					
-				} else
-					q.getOptions().add(rs.getString(7));
+				List<Long> list = BartleTest.selectQuestions();
+				lista = (list + "");
+
+				ps = bdCon.prepareStatement(
+						String.format(questionnaire,
+						            " q.questionid in (" +lista.substring(1, lista.length()-1) + ")"));
+				rs = ps.executeQuery();
+				addQuestionnaires(ret, rs);
+				rs.close();
+				ps.close();
+				
+				Collections.shuffle(ret.get(ret.size()-1).getQuestions());
 
 			}
 			
+				
 			
 		} finally {
 			if (bdCon != null)
@@ -448,6 +447,47 @@ public class NoBugsConnection {
 		}
 		
 		return (ret.size() == 0? null: ret);
+	}
+
+	private void addQuestionnaires(List<Questionnaire> ret, ResultSet rs) throws SQLException {
+
+		long lastQuestionId = 0;
+		long lastQuestionnaireId = 0;
+		Question q = null;
+		Questionnaire quest = null;
+		while (rs.next()) {
+			if (quest == null || lastQuestionnaireId !=  rs.getInt(1)) {
+				quest = new Questionnaire();
+				lastQuestionnaireId = rs.getInt(1);
+				quest.setId(lastQuestionnaireId);
+				quest.setDescription(rs.getString(2));
+				quest.setQuestions(new ArrayList<Question>());
+				
+				ret.add(quest);
+			}
+			
+			if (lastQuestionId != rs.getInt(3)) {
+				
+				q = new Question();
+				q.setId(rs.getInt(3));
+				lastQuestionId = q.getId();
+				
+				
+				quest.getQuestions().add(q);
+				q.setDescription(rs.getString(4));
+				q.setType(rs.getString(5));
+				q.setRequired(rs.getString(6).equals("T"));
+				
+				if (rs.getString(7) != null) {
+					q.setOptions(new ArrayList<String>());
+					q.getOptions().add(rs.getString(7));
+				}
+				
+			} else
+				q.getOptions().add(rs.getString(7));
+
+		}
+		
 	}
 
 	public long createQuestionnaire(long classId, String description) throws SQLException {
