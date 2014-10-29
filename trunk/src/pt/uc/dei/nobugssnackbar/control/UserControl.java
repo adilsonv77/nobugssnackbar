@@ -98,6 +98,7 @@ public class UserControl {
 		
 	}
 	
+	
 	@RemoteMethod
 	public long retrieveMoney() {
 		if (this.user == null)

@@ -81,6 +81,7 @@
     <span id="commandBonusExplanation">{msg meaning="NoBugs.commandBonusExplanation" desc="--"}You'll receive a bonus of {0} if accomplish this mission in {1} commands or less.{/msg}</span>
     <span id="_mission">{msg meaning="Single.Mission" desc="--"}Mission{/msg}</span>
     <span id="_missions">{msg meaning="Single.Missions" desc="--"}Missions{/msg}</span>
+    <span id="questionnaire">{msg meaning="Single.Questionnaire" desc="--"}Questionnaire{/msg}</span>
     
     <span id="King">{msg meaning="Single.King" desc="--"}King{/msg}</span>
     <span id="Queen">{msg meaning="Single.Queen" desc="--"}Queen{/msg}</span>
@@ -133,6 +134,7 @@
   <script type="text/javascript" src="nobugs/xml.js"></script>
   <script type="text/javascript" src="nobugs/objectives.js"></script>
   <script type="text/javascript" src="nobugs/money.js"></script>
+  <script type="text/javascript" src="nobugs/questionnaire.js"></script>
   
   
   <script type="text/javascript" src="dwr/engine.js"></script>
@@ -333,6 +335,16 @@
      {call apps.ok /}
   </div>
   
+  <div id="dialogQuestionnaire" class="dialogHiddenContent">
+  	<div id="contentQuestionnaire">
+  		
+  	</div>
+    <div class="farSide" style="padding: 1ex 3ex 0">
+	    <button class="secondary" onclick="Game.finishQuestionnaire()">
+	      {{msg meaning="Apps.dialogOk" desc="IBID"}}OK{{/msg}}
+	    </button>
+	</div>
+  </div> 
   
   
 {/template}
