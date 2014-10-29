@@ -15,7 +15,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
   var dialog = document.getElementById('dialog');
   dialog.style["width"] = "auto";
   dialog.style["height"] = "auto";
-  
+
   var shadow = document.getElementById('dialogShadow');
   var border = document.getElementById('dialogBorder');
 
@@ -36,6 +36,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
         Blockly.bindEvent_(header, 'mousedown', null,
                            BlocklyApps.dialogMouseDown_);
   }
+  
   dialog.appendChild(content);
   content.className = content.className.replace('dialogHiddenContent', '');
   

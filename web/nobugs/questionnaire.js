@@ -5,8 +5,16 @@
 function createForm(questionnaire) {
 	
 	var form = document.createElement("form");
+	var div = document.createElement("div");
+	
+	div.style["width"] = "600px";
+	div.style["height"] = "480px";
+	div.style["overflow"] = "scroll";
+	
 	var table = document.createElement("table");
-	form.appendChild(table);
+	
+	div.appendChild(table);
+	form.appendChild(div);
 	
 	for (var i = 0; i < questionnaire.questions.length; i++) {
 		
@@ -66,7 +74,7 @@ function createForm(questionnaire) {
 				if (questionnaire.questions[i].type.length == 1) {
 					input.type = "text";
 					input.name = "answer" + i;
-					input.style.width = "100px";
+					input.style["width"] = "100px";
 					td.appendChild(input);
 				} else {
 					var cont = questionnaire.questions[i].type.substring(1, questionnaire.questions[i].type.length);
@@ -75,8 +83,8 @@ function createForm(questionnaire) {
 						input = document.createElement("input");
 						input.type = "text";
 						input.name = "answer" + i + x;
-						input.style.width = "300px";
-						input.style.marginTop = "5px";
+						input.style["width"] = "300px";
+						input.style["marginTop"] = "5px";
 						
 						var label = document.createElement("label");
 						
@@ -96,6 +104,8 @@ function createForm(questionnaire) {
 		}
 		tr.appendChild(td);
 		table.appendChild(tr);
+		
+		div = document.createElement("div");
 	}
 	
 	return form;
