@@ -47,6 +47,10 @@ public class NoBugsConnection {
 		dataSource.setPassword(password);
 
 	}
+	
+	public ComboPooledDataSource getDataSource() {
+		return dataSource;
+	}
 
 	public User login(String nick, String passw) throws Exception {
 		User u = null;
@@ -389,7 +393,9 @@ public class NoBugsConnection {
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid)"+
-							" where questionnaireid = 5" +
+							" where questionnaireid not in (" +
+							           "select distinct questionnaireid from questionnaireanswer where userid = "+userid+
+									")" +
 							" order by questionorder, optionorder";
 			
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
@@ -506,7 +512,8 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public void insertOption(long idQuestion, String description, int order) throws SQLException {
+	public long insertOption(long idQuestion, String description, int order) throws SQLException {
+		long ret = 0;
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
@@ -517,6 +524,13 @@ public class NoBugsConnection {
 			ps.setInt(3, order);
 
 			ps.executeUpdate();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select last_insert_id()");
+			rs.next();
+			ret = rs.getLong(1);
+			st.close();
+			
 			ps.close();
 		} finally {
 			if (bdCon != null)
@@ -525,6 +539,7 @@ public class NoBugsConnection {
 				} catch (SQLException ignore) {
 				}
 		}
+		return ret;
 	}
 
 }
