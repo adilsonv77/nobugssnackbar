@@ -71,6 +71,7 @@
 			<arg line="--outputFile extracted_msgs.xlf --srcs hints.soy,common.soy,template.soy"/>
 		</java>
 		
+		<!-- Need Python version 2.7.8 -->
 		<exec executable="python">
 			<arg value="i18n\xliff_to_json.py"/>
 			<arg value="--xlf"/>
