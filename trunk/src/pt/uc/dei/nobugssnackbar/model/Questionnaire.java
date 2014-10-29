@@ -8,6 +8,7 @@ import org.directwebremoting.annotations.RemoteProperty;
 @DataTransferObject()
 public class Questionnaire {
 
+	@RemoteProperty
 	private long id;
 	
 	@RemoteProperty

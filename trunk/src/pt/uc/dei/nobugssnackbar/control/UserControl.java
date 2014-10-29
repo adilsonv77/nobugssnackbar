@@ -99,6 +99,15 @@ public class UserControl {
 		
 	}
 	
+	@RemoteMethod
+	public void saveQuestionnaire(String[][] answers) {
+		for(int i = 0;i< answers.length;i++) {
+			System.out.println(answers[i][1]);
+			System.out.println(answers[i][2]);
+			System.out.println(answers[i][3]);
+		}
+	}
+	
 	
 	@RemoteMethod
 	public long retrieveMoney() {
