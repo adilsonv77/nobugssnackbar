@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import pt.uc.dei.nobugssnackbar.control.BartleTest;
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
 
 public class InsertBartleTest {
@@ -30,8 +31,13 @@ public class InsertBartleTest {
 			
 			long idQuestion = NoBugsConnection.getConnection().insertQuestion(idQuest, order, question, "S", true);
 			
-			NoBugsConnection.getConnection().insertOption(idQuestion, answ1, 1);
-			NoBugsConnection.getConnection().insertOption(idQuestion, answ2, 2);
+			long idOpt = NoBugsConnection.getConnection().insertOption(idQuestion, answ1.substring(1), 1);
+			
+			BartleTest.addPlayerType(idOpt, answ1.substring(0, 1));
+			
+			idOpt = NoBugsConnection.getConnection().insertOption(idQuestion, answ2.substring(1), 2);
+			BartleTest.addPlayerType(idOpt, answ1.substring(0, 1));
+			
 			order++;
 		}
 		
