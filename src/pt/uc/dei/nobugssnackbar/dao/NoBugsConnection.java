@@ -396,7 +396,7 @@ public class NoBugsConnection {
 							" where questionnaireid not in (" +
 							           "select distinct questionnaireid from questionnaireanswer where userid = "+userid+
 									")" +
-							" order by questionorder, optionorder";
+							" order by questionnaireid, questionorder, optionorder";
 			
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
 			
