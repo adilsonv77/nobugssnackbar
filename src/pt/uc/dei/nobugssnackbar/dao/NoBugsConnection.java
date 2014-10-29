@@ -389,7 +389,7 @@ public class NoBugsConnection {
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid)"+
-							" where questionnaireid = 1" +
+							" where questionnaireid = 5" +
 							" order by questionorder, optionorder";
 			
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
@@ -437,6 +437,94 @@ public class NoBugsConnection {
 		}
 		
 		return ret;
+	}
+
+	public long createQuestionnaire(long classId, String description) throws SQLException {
+		long ret = 0;
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into questionnaire (classid, questionnairedescription) values (?, ?)");
+			ps.setLong(1, classId);
+			ps.setString(2, description);
+
+			ps.executeUpdate();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select last_insert_id()");
+			rs.next();
+			ret = rs.getLong(1);
+			st.close();
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
+		return ret;
+	}
+
+	public long insertQuestion(long idQuest, int order, String description,
+			String type, boolean required) throws SQLException {
+		long ret = 0;
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into questions (questiondescription, questiontype) values (?, ?)");
+			ps.setString(1, description);
+			ps.setString(2, type);
+
+			ps.executeUpdate();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select last_insert_id()");
+			rs.next();
+			ret = rs.getLong(1);
+			st.close();
+			
+			ps = bdCon.prepareStatement("insert into questionsquestionnaire (questionnaireid, questionid, questionorder, questionrequired) values (?,?,?,?)");
+			ps.setLong(1, idQuest);
+			ps.setLong(2, ret);
+			ps.setLong(3, order);
+			ps.setString(4, (required?"T":"F"));
+			ps.executeUpdate();
+			
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
+		return ret;
+	}
+
+	public void insertOption(long idQuestion, String description, int order) throws SQLException {
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into questionoptions (questionid, optiondescription, optionorder) values (?, ?, ?)");
+			ps.setLong(1, idQuestion);
+			ps.setString(2, description);
+			ps.setInt(3, order);
+
+			ps.executeUpdate();
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
 	}
 
 }
