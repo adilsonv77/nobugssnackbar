@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.control;
 
 import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.directwebremoting.annotations.RemoteMethod;
@@ -123,7 +124,7 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public Questionnaire retrieveQuestionnaire() throws SQLException {
+	public List<Questionnaire> retrieveQuestionnaire() throws SQLException {
 		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId());
 	}
 }

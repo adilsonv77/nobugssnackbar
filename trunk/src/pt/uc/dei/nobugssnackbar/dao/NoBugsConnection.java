@@ -381,10 +381,10 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public Questionnaire retrieveQuestionnaire(long userid) throws SQLException {
+	public List<Questionnaire> retrieveQuestionnaire(long userid) throws SQLException {
 		
 		Connection bdCon = null;
-		Questionnaire ret = null;
+		List<Questionnaire> ret = new ArrayList<>();
 		try {
 			bdCon = dataSource.getConnection();
 			
@@ -401,24 +401,29 @@ public class NoBugsConnection {
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
 			
 			ResultSet rs = ps.executeQuery();
-			long lastQId = 0;
+			long lastQuestionId = 0;
+			long lastQuestionnaireId = 0;
 			Question q = null;
+			Questionnaire quest = null;
 			while (rs.next()) {
-				if (ret == null) {
-					ret = new Questionnaire();
-					ret.setId(rs.getInt(1));
-					ret.setDescription(rs.getString(2));
-					ret.setQuestions(new ArrayList<Question>());
+				if (quest == null || lastQuestionnaireId !=  rs.getInt(1)) {
+					quest = new Questionnaire();
+					lastQuestionnaireId = rs.getInt(1);
+					quest.setId(lastQuestionnaireId);
+					quest.setDescription(rs.getString(2));
+					quest.setQuestions(new ArrayList<Question>());
+					
+					ret.add(quest);
 				}
 				
-				if (lastQId != rs.getInt(3)) {
+				if (lastQuestionId != rs.getInt(3)) {
 					
 					q = new Question();
 					q.setId(rs.getInt(3));
-					lastQId = q.getId();
+					lastQuestionId = q.getId();
 					
 					
-					ret.getQuestions().add(q);
+					quest.getQuestions().add(q);
 					q.setDescription(rs.getString(4));
 					q.setType(rs.getString(5));
 					q.setRequired(rs.getString(6).equals("T"));
@@ -442,7 +447,7 @@ public class NoBugsConnection {
 				}
 		}
 		
-		return ret;
+		return (ret.size() == 0? null: ret);
 	}
 
 	public long createQuestionnaire(long classId, String description) throws SQLException {
@@ -540,6 +545,30 @@ public class NoBugsConnection {
 				}
 		}
 		return ret;
+	}
+
+	public void insertAnswer(long questionnaireId, long questionId, long userId, String answer) throws SQLException {
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into questionnaireanswer (questionnaireid, questionid, userid, questionanswer) values (?, ?, ?, ?)");
+			
+			ps.setLong(1, questionnaireId);
+			ps.setLong(2, questionId);
+			ps.setLong(3, userId);
+			ps.setString(4, answer);
+			
+			ps.executeUpdate();
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
 	}
 
 }
