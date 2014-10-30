@@ -98,6 +98,33 @@ public class NoBugsConnection {
 		return u;
 	}
 
+	public void insertUser(String userNick, String userPassword, String userName, String sex) throws SQLException {
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermoney) values (?, ?, ?, ?, 0)");
+			
+			ps.setString(1, userNick);
+			ps.setString(2, userPassword);
+			ps.setString(3, sex);
+			ps.setString(4, userName);
+			
+			ps.executeUpdate();
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
+		
+	}
+
 	public void insertMission(String name, String xml) throws SQLException {
 
 		Connection bdCon = null;
@@ -624,6 +651,32 @@ public class NoBugsConnection {
 				}
 		}
 
+	}
+
+	public Long getUserId(String userNick) throws SQLException {
+		Connection bdCon = null;
+		Long ret = 0L;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select userid from users where usernick = ?");
+			ps.setString(1, userNick);
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			
+			ret = rs.getLong(1);
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
 	}
 
 }

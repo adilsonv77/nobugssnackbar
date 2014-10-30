@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.control;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -10,12 +11,27 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.BartleType;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
 
+	public static String encrypt(String passw) throws NoSuchAlgorithmException {
+		
+		MessageDigest md;
+		md = MessageDigest.getInstance("MD5");
+		md.update(passw.getBytes());
+		byte[] digest = md.digest();
+		StringBuffer sb = new StringBuffer();
+		for (byte b : digest) {
+			sb.append(String.format("%02x", b & 0xff));
+		}
+		return sb.toString();
+		
+	}
+	
 	private static Logger log = Logger.getGlobal();
 	private User user;
 	private long mission = 0;
@@ -45,17 +61,9 @@ public class UserControl {
 	@RemoteMethod
 	public Object[] login(String nick, String passw) {
 		
-		MessageDigest md;
 		try {
-			md = MessageDigest.getInstance("MD5");
-			md.update(passw.getBytes());
-			byte[] digest = md.digest();
-			StringBuffer sb = new StringBuffer();
-			for (byte b : digest) {
-				sb.append(String.format("%02x", b & 0xff));
-			}
 			
-			this.user = NoBugsConnection.getConnection().login(nick, sb.toString());
+			this.user = NoBugsConnection.getConnection().login(nick, encrypt(passw));
 			
 			return new Object[]{null, this.user, retrieveMissions()}; // no errors
 			
@@ -137,5 +145,10 @@ public class UserControl {
 	@RemoteMethod
 	public List<Questionnaire> retrieveQuestionnaire() throws SQLException {
 		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId());
+	}
+	
+	@RemoteMethod 
+	public List<BartleType> bartleClassification(String userName) throws SQLException {
+		return BartleTest.bartleClassification(NoBugsConnection.getConnection().getUserId(userName));
 	}
 }

@@ -1,19 +1,19 @@
 <?xml version='1.0'?>
 <mission>
 	<explanation>
-		<page type="statementx">
+		<page type="statement">
 		Ol&#225; $${userLogged.name} !!! <br/><br/>
 		Deixa que te apresente o ambiente que tens dispon&#237;vel para te tornares $${(userLogged.sex=="M"?"o Rei":"a Rainha")} das Esplanadas.
 		</page>
 		
-		<page type="statementx">
+		<page type="statement">
 		&#192; tua esquerda est&#225; a esplanada. Um ambiente ainda simples, sem muitos equipamentos, pois <br/>
 		as portas foram abertas recentemente. &#201;s o primeiro  e o &#250;nico empregado. Aqui vais observar <br/>
 		os teus clientes indo e vindo satisfeitos pelo excelente trabalho que vais desempenhar. Observa <br/>
 		o teu personagem de uniforme branco.
 		</page>		
 		
-		<page type="statementx">
+		<page type="statement">
 		&#192; tua direita est&#225; a &#225;rea de trabalho. Aqui vais dar todas as ordens &#224; tua personagem. Ela <br/>
 		precisa ser programada para atender todos os objetivos da miss&#227;o.
 		</page>
@@ -29,7 +29,7 @@
 		<sequence>
 			<hint>ChooseCategory(0)</hint>
 			<hint>SelectCommand(0,0)</hint>
-			<hint time="5000">StackTogether(0,0,move_goToBarCounter)</hint>
+			<hint time="3000">StackTogether(0,0,move_goToBarCounter)</hint>
 			<hint time="5000">RunProgram</hint>
 		</sequence>
 	</hints>

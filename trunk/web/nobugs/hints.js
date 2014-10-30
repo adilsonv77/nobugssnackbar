@@ -103,7 +103,8 @@ Hints.onMouseDown = function(evt) {
 	Blockly.unbindEvent_(Hints.ToUnbind);
 	BlocklyApps.hideDialog(false); 
 	if (Hints.now.length > 0)
-		window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[Hints.now[0]].sequence[Hints.now[1]].time);
+		if (Hints.now[1] < Hints.hints.sequence[Hints.now[0]].sequence.length)
+			window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[Hints.now[0]].sequence[Hints.now[1]].time);
 };
 
 

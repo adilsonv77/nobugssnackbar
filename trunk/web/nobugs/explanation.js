@@ -38,13 +38,16 @@ Explanation.showInfo = function(explanation, withHint) {
 	if (Explanation.firstStatement == -1) // this will happen if is something wrong in the mission's statement
 		return;
 	
-	Explanation.pageNumber = 0;
 	Explanation.explanation = explanation;
 
-	if (withHint)
+	if (withHint) {
+		Explanation.pageNumber = Explanation.firstStatement;
 		Explanation.createDialog(Explanation.firstStatement);
-	else
+	}
+	else {
+		Explanation.pageNumber = Explanation.lastStatement
 		Explanation.createDialog(Explanation.lastStatement);
+	}
 		
 	Explanation.showHint = withHint;
 	Explanation.hintNumber = -1;
@@ -328,6 +331,8 @@ Explanation.finishStatement = function() {
 Explanation.parseUserLogged = function(explanations) {
 	var children = explanations.getElementsByTagName("page");
 
+	var userLogged = Game.loginData.userLogged; // dont delete this line because is used in eval(e2) line
+	
 	for (var j=0; j< children.length; j++) {
 		
 		var e = innerXML ( children[j] ); 
