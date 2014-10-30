@@ -917,6 +917,7 @@ Game.debugButtonClick = function() {
 		Blockly.mainWorkspace.traceOn(true);
 		Game.firstClick = true;
 	} else {
+		Game.disableButton('debugButton');
 		Game.firstClick = false;
 		if (!Blockly.mainWorkspace.traceOn_) // the second complete debug didn't show the highlight on the blocks 
 			Blockly.mainWorkspace.traceOn(true);
@@ -1332,7 +1333,8 @@ Game.animate = function() {
  
   var tuple = BlocklyApps.log.shift();
   if (!tuple) {
-	
+	if (Game.runningStatus == 2)
+		Game.enableButton('debugButton');
     return;
   }
   var command = tuple.shift();
