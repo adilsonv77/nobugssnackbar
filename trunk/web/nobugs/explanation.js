@@ -163,12 +163,14 @@ Explanation.evaluateObjectives = function(statement, container) {
 
 Explanation.finishStatement = function() {
 	BlocklyApps.hideDialog(false);
+
+	if (!Explanation.showHint)
+		return;
+
 	
 	Hints.init(Game.mission.getElementsByTagName("hints")[0]);
 
-	Game.currTime = new Date().getTime();
-	Game.initCronometro();
-	Game.startSaveMissionEverySeconds();
+	Game.initTime();
 	/*
 	
 	if (!Explanation.showHint)

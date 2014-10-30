@@ -487,22 +487,22 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(objectives, mission);
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (ret[2] != null) // the user try this mission before, than load the previous code
-	  Game.nextPartOfMissionLoaded(ret[2], mission, ret[3]);
+	  Game.nextPartOfMissionLoaded(false, ret[2], mission, ret[3]);
   else {
       var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
-			  Game.nextPartOfMissionLoaded(ret, mission, 0);
+			  Game.nextPartOfMissionLoaded(true, ret, mission, 0);
 		  });
 	  }
 	  else {
 		  var outerHTML = sourceXML.outerHTML || (new XMLSerializer()).serializeToString(sourceXML);
-		  Game.nextPartOfMissionLoaded(outerHTML, mission, 0);
+		  Game.nextPartOfMissionLoaded(true, outerHTML, mission, 0);
 	  }
   }
 };
   
-Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
+Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
   MyDomToWorkspace(Blockly.mainWorkspace, xml);
@@ -524,9 +524,14 @@ Game.nextPartOfMissionLoaded = function(answer, mission, timeSpent) {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
-	  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+	  if (firstTime) {
+		  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
+		  
+		  Explanation.showInfo(explanation, true);
+	  } else {
+		  Game.initTime();
+	  }
 	  
-	  Explanation.showInfo(explanation, true);
 	  
   };
 
@@ -608,6 +613,14 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 				Game.changeCSSAlertCronometro();
 	}
 	
+};
+
+Game.initTime = function() {
+	
+	Game.currTime = new Date().getTime();
+	Game.initCronometro();
+	Game.startSaveMissionEverySeconds();
+
 };
 
 Game.initCronometro = function() {
@@ -889,6 +902,8 @@ Game.disableButton = function(buttonName) {
    button.className = "notEnabled";
 };
 
+Game.firstClick = true;
+
 /**
  * Click the debug button.  Start the program/go to next line.
  */
@@ -904,7 +919,9 @@ Game.debugButtonClick = function() {
 		
   	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
+		Game.firstClick = true;
 	} else {
+		Game.firstClick = false;
 		if (!Blockly.mainWorkspace.traceOn_) // the second complete debug didn't show the highlight on the blocks 
 			Blockly.mainWorkspace.traceOn(true);
 	}
@@ -1042,8 +1059,10 @@ Game.nextStep = function() {
 				
 				if (BlocklyApps.log.length > 0 || Game.highlightPause) {
 					
-					if (Game.runningStatus != 2 || Game.highlightPause === false)
+					if (Game.runningStatus != 2 || Game.firstClick || Game.highlightPause === false) {
+						Game.firstClick = !(Game.runningStatus == 2 && BlocklyApps.log.length > 1); // if there aren't lots of commands to interpret, while is debugging, then search another great command 
 						BlocklyApps.log.push(['nextStep']);
+					}
 					else 
 						Game.highlightPause = false;
 					
@@ -1130,7 +1149,6 @@ Game.INTERVAL_FOR_SAVE = 30000;
 
 Game.startSaveMissionEverySeconds = function() {
 	if (Game.taskIntervalForSave == null) {
-		console.log('Starting save mission every ' + (Game.INTERVAL_FOR_SAVE / 1000) + ' seconds ');
 		Game.taskIntervalForSave = window.setInterval(function() {
 			var answer = null;
 			if (Blockly.mainWorkspace != null) 
@@ -1141,7 +1159,7 @@ Game.startSaveMissionEverySeconds = function() {
 			if (Game.currTime != 0)
 				timeSpent = Math.floor(((now) - Game.currTime) / 1000);
 			
-			UserControl.saveMission(0, timeSpent, false, answer, function() {console.log('saved')});
+			UserControl.saveMission(0, timeSpent, false, answer);
 			
 			Game.currTime = now;
 		}, Game.INTERVAL_FOR_SAVE);

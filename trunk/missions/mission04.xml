@@ -15,6 +15,14 @@
 		menu com a op&#231;&#227;o [Nova vari&#225;vel].
 		</page>
 	</explanation>
+	<hints>
+		<sequence>
+			<hint consist="false">ChooseCategory(1)</hint>
+			<hint>SelectCommand(1,0)</hint>
+		</sequence>
+	</hints>
+		
+	
 	<commands>
 		<category name="snackMan" show="true"/>
 		
