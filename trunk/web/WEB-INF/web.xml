@@ -41,7 +41,8 @@
 			pt.uc.dei.nobugssnackbar.control.UserControl,
 			pt.uc.dei.nobugssnackbar.model.User,
 			pt.uc.dei.nobugssnackbar.model.Questionnaire,
-			pt.uc.dei.nobugssnackbar.model.Question
+			pt.uc.dei.nobugssnackbar.model.Question,
+			pt.uc.dei.nobugssnackbar.model.QuestionOption
 			</param-value>
 		</init-param>
 		<init-param>

@@ -21,7 +21,7 @@ public class Question {
 	private String type;
 	
 	@RemoteProperty
-	private List<String> options;
+	private List<QuestionOption> options;
 	
 	public long getId() {
 		return id;
@@ -47,10 +47,10 @@ public class Question {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public List<String> getOptions() {
+	public List<QuestionOption> getOptions() {
 		return options;
 	}
-	public void setOptions(List<String> options) {
+	public void setOptions(List<QuestionOption> options) {
 		this.options = options;
 	}
 	

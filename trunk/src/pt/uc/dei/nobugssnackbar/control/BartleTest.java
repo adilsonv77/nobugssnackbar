@@ -5,36 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
 
 public class BartleTest {
-
-	public static void addPlayerTypeOption(long idOpt, String playerType) throws SQLException {
-		Connection bdCon = null;
-		try {
-			bdCon = NoBugsConnection.getConnection().getDataSource().getConnection();
-			PreparedStatement ps = bdCon
-					.prepareStatement("insert into bartletestoptions (questionoptionsid, bartletesttype) values (?, ?)");
-			ps.setLong(1, idOpt);
-			ps.setString(2, playerType);
-			
-			ps.executeUpdate();
-			ps.close();
-			
-			
-		} finally {
-			if (bdCon != null)
-				try {
-					bdCon.close();
-				} catch (SQLException ignore) {
-				}
-		}
-			
-	}
 
 	public static void addPlayerTypeQuestion(long idQuestion, String playerTypes) throws SQLException {
 		Connection bdCon = null;
