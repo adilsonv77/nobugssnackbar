@@ -25,8 +25,6 @@
  */
 'use strict';
 
-var userLogged = null;
-var missionHist = null;
 /**
  * Create a namespace for the application.
  */
@@ -71,7 +69,7 @@ Game.init = function() {
     UserControl.verifyLogged(function(ret) {
 		
 		if (ret[0]) 
-			Game.logged(ret[1], ret[2], ret[3], ret[4], ret[5]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5]);
 		else {
 			window.removeEventListener('unload', Game.unload);
 
@@ -116,10 +114,7 @@ Game.login = function() {
 	  			
 	  			error.innerHTML = "";
 	  			
-	  			userLogged = ret[1];
-  				missionHist = ret[2];
-	  			
-  				Game.renderQuestionnaire();
+  				Game.renderQuestionnaire(ret[1], ret[2]);
 	  			
 	  				  			
 	  		} else {
@@ -129,7 +124,9 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function() {
+Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
+	
+	Game.loginData = {userLogged: u, missionHist: missionsHistorical, clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
 	UserControl.retrieveQuestionnaire(function(q) {
 		if (q != null) {
@@ -162,13 +159,13 @@ Game.finishQuestionnaire = function() {
 };
 
 Game.continueLoginProcess = function() {
-	if (userLogged.lastTime == null) {
+	if (Game.loginData.userLogged.lastTime == null) {
 		
 		var userName = document.getElementById("userCompleteName");
-		userName.innerHTML = userLogged.name;
+		userName.innerHTML = Game.loginData.userLogged.name;
 		
 		var intro2 = BlocklyApps.getMsg("NoBugs_intro2");
-		intro2 = intro2.format((userLogged.sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
+		intro2 = intro2.format((Game.loginData.userLogged.sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
 		
 		
 		var intro2Span = document.getElementById("NoBugsIntro2");
@@ -178,23 +175,22 @@ Game.continueLoginProcess = function() {
 				null, false, true, true, "Intro", {width: "540px"},null);
 		
 	} else 
-		Game.logged(userLogged, missionHist);
+		Game.logged(Game.loginData.missionHist);
 	
 };
 
 Game.finishIntro = function() {
 	BlocklyApps.hideDialog(false);
-	Game.logged(userLogged, missionHist);
+	Game.logged(Game.loginData.missionHist);
 };
 
-Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
+Game.logged = function(missionsHistorical) {
 	
 	if (Game.variableBox != null)
 		Game.variableBox.style.display = "none";
 	
-	userLogged = u;
 	
-	if (clazzId == undefined || clazzId == 0) {
+	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
 		// this is necessary when unloads
 	    document.getElementById("mainBody").style.display = "none";
@@ -209,7 +205,7 @@ Game.logged = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
 					BlocklyApps.getMsg("_missions"), null, 
 					function() { $("#" + idRoot).remove();});
 	} else {
-		Game.missionSelected(clazzId, levelId, missionIdx);
+		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
 };
 
@@ -1059,8 +1055,8 @@ Game.nextStep = function() {
 				
 				if (BlocklyApps.log.length > 0 || Game.highlightPause) {
 					
-					if (Game.runningStatus != 2 || Game.firstClick || Game.highlightPause === false) {
-						Game.firstClick = !(Game.runningStatus == 2 && BlocklyApps.log.length > 1); // if there aren't lots of commands to interpret, while is debugging, then search another great command 
+					if (Game.runningStatus != 2  || Game.highlightPause === false) {
+						Game.firstClick = Game.firstClick && !(Game.runningStatus == 2 && BlocklyApps.log.length > 1); // if there aren't lots of commands to interpret, while is debugging, then search another great command 
 						BlocklyApps.log.push(['nextStep']);
 					}
 					else 
@@ -1114,7 +1110,7 @@ Game.nextStep = function() {
 				    				
 				    				window.removeEventListener('unload', Game.unload);				    				
 				    				UserControl.retrieveMissions(function(ret) {
-				    					Game.logged(userLogged, ret);
+				    					Game.logged(ret);
 				    				});
 				    		
 		    				});

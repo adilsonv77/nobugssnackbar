@@ -46,7 +46,7 @@
 			<drinks></drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" maxCommands="11" maxCommandsReward="20" >
+	<objectives ordered="false" reward="7" commQtd="11"  >
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">catchFood</objective>
 		<objective pos="1" place="counter">deliver</objective>

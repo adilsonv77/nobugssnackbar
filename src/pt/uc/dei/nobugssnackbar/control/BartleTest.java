@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.BartleType;
 
 public class BartleTest {
 
@@ -68,6 +69,48 @@ public class BartleTest {
 
 			}
 			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+			
+		return l;
+	}
+
+	public static List<BartleType> bartleClassification(Long userId) throws SQLException {
+		List<BartleType> l = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = NoBugsConnection.getConnection().getDataSource().getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(
+				"select questionanswer, count(questionanswer) resp from questionnaireanswer "+
+			         "where questionid in (select questionid from bartletestquestions) and userid = ? "+
+				     "group by questionanswer "+
+			         "order by resp desc");
+			ps.setLong(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String type = rs.getString(1);
+				if (type.equals("A")) {
+					type = "Pontuador";
+				} else 
+					if (type.equals("K"))
+						type = "Assassino";
+					else
+						if (type.equals("E"))
+							type = "Explorador";
+						else
+							type = "Social";
+								
+				l.add(new BartleType(type, rs.getInt(2) * 100 / 30));
+							
+			}
+			ps.close();
+
 		} finally {
 			if (bdCon != null)
 				try {
