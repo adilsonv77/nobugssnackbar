@@ -49,6 +49,8 @@ Hints.traverseHints = function(hint) {
 				  h.time = "0";
 			  
 			  h.time = parseInt(h.time);
+			  
+			  h.consist = !(hint.getAttribute("consist") === "false");
 		  }
 	  }
 	  
@@ -70,6 +72,7 @@ Hints.timeIsUp = function() {
 		hint = hint.sequence[Hints.now[i]];
 	}
 	
+	Hints.hintSelected = hint;
 	var f = Hints.Categories[hint.content];
 	var e = f(hint.args);
 	
@@ -86,8 +89,10 @@ Hints.timeIsUp = function() {
 		
 	} else {
 		
-		if (Hints.now.length > 0)
-			window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[Hints.now[0]].sequence[Hints.now[1]].time);
+		if (Hints.now.length > 0) {
+			if (Hints.now[1] < Hints.hints.sequence[Hints.now[0]].sequence.length)
+				window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[Hints.now[0]].sequence[Hints.now[1]].time);
+		}
 		
 	}
 	
@@ -114,7 +119,7 @@ function calcLeft(e) {
 
 Hints.Categories["ChooseCategory"] = function (param) {
 
-	if (Blockly.mainWorkspace.getTopBlocks(true).length == 0) {
+	if (!Hints.hintSelected.consist || Blockly.mainWorkspace.getTopBlocks(true).length == 0) {
 	
 		var e = Blockly.Toolbox.tree_.children_[parseInt(param[0])].element_;
 		var menuText = e.firstChild.childNodes[2].textContent;
@@ -183,7 +188,7 @@ Hints.Categories["SelectCommand"] = function (param) {
 
 Hints.Categories["StackTogether"] = function (param) {
 	
-	if (Blockly.mainWorkspace.getTopBlocks(true).length > 0) {
+	if (!Hints.hintSelected.consist || Blockly.mainWorkspace.getTopBlocks(true).length > 0) {
 		
 		var dialog = document.getElementById("StackTogether");
 		
@@ -234,7 +239,7 @@ function createDlgButton(buttonId, dlgId) {
 
 Hints.Categories["RunProgram"] = function (param) {
 	
-	if (Game.howManyRuns == 0) {
+	if (!Hints.hintSelected.consist || Game.howManyRuns == 0) {
 		
 		return createDlgButton("runButton", "RunProgram");
 		
@@ -247,7 +252,7 @@ Hints.Categories["RunProgram"] = function (param) {
 	
 Hints.Categories["DebugProgram"] = function (param) {
 	
-	if (Game.howManyRuns == 0) {
+	if (!Hints.hintSelected.consist || Game.howManyRuns == 0) {
 		
 		return createDlgButton("debugButton", "DebugProgram");
 		

@@ -215,7 +215,19 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
-			PreparedStatement ps;
+			PreparedStatement ps, psLog;
+			
+			psLog = bdCon.prepareStatement("insert into logmissions "
+							+ "(timespend, answer, missionid, classid, userid, moment) values (?, ?, ?, ?, ?, now())");
+			
+			psLog.setLong(1, timeSpend);
+			psLog.setString(2, answer);
+			psLog.setLong(3, idMission);
+			psLog.setLong(4, idClazz);
+			psLog.setLong(5, user.getId());
+			psLog.executeUpdate();
+			psLog.close();
+			
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
@@ -237,6 +249,7 @@ public class NoBugsConnection {
 
 			ps.executeUpdate();
 			ps.close();
+			
 			if (achieved) {
 				ps = bdCon
 						.prepareStatement("update users set usermoney = ? where userid = ?");
