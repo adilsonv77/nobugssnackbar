@@ -339,8 +339,11 @@
   	<div id="contentQuestionnaire">
   		
   	</div>
-    <div class="farSide" style="padding: 1ex 3ex 0">
-	    <button class="secondary" onclick="Questionnaire.finishQuestionnaire()">
+    <div id="buttonsQuestionnaire" class="farSide" style="padding: 1ex 3ex 0">
+	    <button class="secondary" onclick="Game.logoffButtonClick()">
+	      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
+	    </button>
+	    <button class="secondary" onclick="Game.finishQuestionnaire()">
 	      {{msg meaning="Apps.dialogOk" desc="IBID"}}OK{{/msg}}
 	    </button>
 	</div>

@@ -61,7 +61,8 @@ Questionnaire.createForm = function (questionnaire) {
 						input.className = "answer";
 						input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
 						input.type = "radio";
-						input.value = questionnaire[j].questions[i].options[x];
+						input.value = questionnaire[j].questions[i].options[x].value;
+						input.id = questionnaire[j].id + "_" + questionnaire[j].questions[i].id + "_" + x;
 						
 						var label = document.createElement("label");
 						
@@ -72,7 +73,8 @@ Questionnaire.createForm = function (questionnaire) {
 						td.appendChild(input);
 						
 						label = document.createElement("label");
-						label.innerHTML = questionnaire[j].questions[i].options[x];
+						label.htmlFor = input.id;
+						label.innerHTML = questionnaire[j].questions[i].options[x].description;
 						td.appendChild(label);
 						
 						var br = document.createElement("br");
@@ -142,7 +144,7 @@ Questionnaire.handlingQuestionnaire = function() {
 					if (answerOptions[x].checked) {
 						var questionnaireId = answer.name.split("_")[0];
 						var questionId = answer.name.split("_")[1];
-						saveAnswers.push({qeId:questionnaireId, qnId:questionId, value:answerOptions[x].value});
+						saveAnswers.push([questionnaireId, questionId, answerOptions[x].value]);
 						
 					}
 					if (x != answerOptions.length-1) {
@@ -152,15 +154,15 @@ Questionnaire.handlingQuestionnaire = function() {
 				break;
 			}
 			case "NUMBER": {
-				saveAnswers.push({qeId:questionnaireId, qnId:questionId, value:answer.value});
+				saveAnswers.push([questionnaireId, questionId, answer.value]);
 				break;
 			}
 			case "TEXT": {
 				var answerOptions = document.getElementsByName(answer.name);
-				var aux = [];
+				var aux = "";
 				for (var x = 0;x < answerOptions.length;x++) {
 					if (answerOptions[x].value != "") {
-						aux.push(answerOptions[x].value);
+						aux = aux + "<answer><![CDATA[" + answerOptions[x].value + "]]></answer>";
 					}
 					
 					if (x != answerOptions.length-1) {
@@ -168,60 +170,13 @@ Questionnaire.handlingQuestionnaire = function() {
 					}
 				}
 				if (aux.length > 0) {
-					saveAnswers.push({qeId:questionnaireId, qnId:questionId, value:aux});
+					saveAnswers.push([questionnaireId, questionId, aux]);
 				}
 				break;
 			}
 		}
 	}
-	UserControl.saveQuestionnaire(saveAnswers, function() {
-		console.log("SALVOOOU");
-	});
+	UserControl.saveQuestionnaire(saveAnswers);
+	// it's not necessary waiting the answer... the next parts of the games don't depends on it. 
 };
 
-Questionnaire.renderQuestionnaire = function() {
-	
-	UserControl.retrieveQuestionnaire(function(q) {
-		if (q != null) {
-			var formQuestionnaire = Questionnaire.createForm(q);
-			$("#contentQuestionnaire").html("");
-			var content = $("#contentQuestionnaire").append(formQuestionnaire);
-			
-			MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, $("#questionnaire").get(0).firstChild.data, null, null);
-			
-			// /*BlocklyApps.getMsg("questionnaire");*/
-		}
-		
-	});
-};
-
-Questionnaire.finishQuestionnaire = function() {
-	//TODO consistir formulario
-
-	var consistido = true;
-	if (consistido) {
-		
-		Questionnaire.handlingQuestionnaire();
-		
-		BlocklyApps.hideDialog(false);
-
-		
-		if (userLogged.lastTime == null) {
-				
-			var userName = document.getElementById("userCompleteName");
-			userName.innerHTML = userLogged.name;
-			
-			var intro2 = BlocklyApps.getMsg("NoBugs_intro2");
-			intro2 = intro2.format((userLogged.sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
-			
-			
-			var intro2Span = document.getElementById("NoBugsIntro2");
-			intro2Span.innerHTML = intro2;
-			
-			MyBlocklyApps.showDialog(document.getElementById('dialogIntro'), 
-					null, false, true, true, "Intro", {width: "540px"},null);
-			
-		} else 
-			Game.logged(userLogged, missionHist);
-	}
-};

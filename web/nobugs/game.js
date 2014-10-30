@@ -119,7 +119,7 @@ Game.login = function() {
 	  			userLogged = ret[1];
   				missionHist = ret[2];
 	  			
-  				Questionnaire.renderQuestionnaire();
+  				Game.renderQuestionnaire();
 	  			
 	  				  			
 	  		} else {
@@ -129,6 +129,58 @@ Game.login = function() {
     );
 };
 
+Game.renderQuestionnaire = function() {
+	
+	UserControl.retrieveQuestionnaire(function(q) {
+		if (q != null) {
+			var formQuestionnaire = Questionnaire.createForm(q);
+			$("#contentQuestionnaire").html("");
+			$("#contentQuestionnaire").append(formQuestionnaire);
+			
+			MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, 
+					$("#questionnaire").get(0).firstChild.data, null, null);
+			
+		} else {
+			Game.continueLoginProcess();
+		}
+		
+	});
+};
+
+Game.finishQuestionnaire = function() {
+	//TODO consistir formulario
+
+	var consistido = true;
+	if (consistido) {
+		
+		Questionnaire.handlingQuestionnaire();
+		
+		BlocklyApps.hideDialog(false);
+
+		Game.continueLoginProcess();
+	}
+};
+
+Game.continueLoginProcess = function() {
+	if (userLogged.lastTime == null) {
+		
+		var userName = document.getElementById("userCompleteName");
+		userName.innerHTML = userLogged.name;
+		
+		var intro2 = BlocklyApps.getMsg("NoBugs_intro2");
+		intro2 = intro2.format((userLogged.sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
+		
+		
+		var intro2Span = document.getElementById("NoBugsIntro2");
+		intro2Span.innerHTML = intro2;
+		
+		MyBlocklyApps.showDialog(document.getElementById('dialogIntro'), 
+				null, false, true, true, "Intro", {width: "540px"},null);
+		
+	} else 
+		Game.logged(userLogged, missionHist);
+	
+};
 
 Game.finishIntro = function() {
 	BlocklyApps.hideDialog(false);

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import pt.uc.dei.nobugssnackbar.control.BartleTest;
 import pt.uc.dei.nobugssnackbar.model.Question;
+import pt.uc.dei.nobugssnackbar.model.QuestionOption;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 
@@ -402,7 +403,7 @@ public class NoBugsConnection {
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription from questionnaire " + 
+					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue from questionnaire " + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
@@ -479,12 +480,12 @@ public class NoBugsConnection {
 				q.setRequired(rs.getString(6).equals("T"));
 				
 				if (rs.getString(7) != null) {
-					q.setOptions(new ArrayList<String>());
-					q.getOptions().add(rs.getString(7));
+					q.setOptions(new ArrayList<QuestionOption>());
+					q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
 				}
 				
 			} else
-				q.getOptions().add(rs.getString(7));
+				q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
 
 		}
 		
@@ -557,16 +558,17 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public long insertOption(long idQuestion, String description, int order) throws SQLException {
+	public long insertOption(long idQuestion, String description, int order, String value) throws SQLException {
 		long ret = 0;
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into questionoptions (questionid, optiondescription, optionorder) values (?, ?, ?)");
+					.prepareStatement("insert into questionoptions (questionid, optiondescription, optionorder, optionvalue) values (?, ?, ?, ?)");
 			ps.setLong(1, idQuestion);
 			ps.setString(2, description);
 			ps.setInt(3, order);
+			ps.setString(4, value);
 
 			ps.executeUpdate();
 			

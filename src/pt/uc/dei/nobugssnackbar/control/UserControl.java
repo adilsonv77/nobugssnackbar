@@ -39,6 +39,7 @@ public class UserControl {
 		this.classid = 0;
 		this.levelid = 0;
 		this.missionidx = 0;
+		this.mission = 0;
 	}
 	
 	@RemoteMethod
@@ -100,11 +101,12 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void saveQuestionnaire(String[][] answers) {
+	public void saveQuestionnaire(String[][] answers) throws NumberFormatException, SQLException {
+		NoBugsConnection nobugs = NoBugsConnection.getConnection();
 		for(int i = 0;i< answers.length;i++) {
-			System.out.println(answers[i][1]);
-			System.out.println(answers[i][2]);
-			System.out.println(answers[i][3]);
+			
+			nobugs.insertAnswer(Long.parseLong(answers[i][0]), Long.parseLong(answers[i][1]), this.user.getId(), answers[i][2]);
+			
 		}
 	}
 	

@@ -32,12 +32,8 @@ public class InsertBartleTest {
 			long idQuestion = NoBugsConnection.getConnection().insertQuestion(idQuest, order, question.substring(2), "S", true);
 			BartleTest.addPlayerTypeQuestion(idQuestion, question.substring(0, 2));
 			
-			long idOpt = NoBugsConnection.getConnection().insertOption(idQuestion, answ1.substring(1), 1);
-			
-			BartleTest.addPlayerTypeOption(idOpt, answ1.substring(0, 1));
-			
-			idOpt = NoBugsConnection.getConnection().insertOption(idQuestion, answ2.substring(1), 2);
-			BartleTest.addPlayerTypeOption(idOpt, answ2.substring(0, 1));
+			NoBugsConnection.getConnection().insertOption(idQuestion, answ1.substring(1), 1, answ1.substring(0, 1));
+			NoBugsConnection.getConnection().insertOption(idQuestion, answ2.substring(1), 2, answ2.substring(0, 1));
 			
 			order++;
 		}
