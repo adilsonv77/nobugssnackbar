@@ -1011,6 +1011,8 @@ Game.lockBlockly = function() {
 
 	var mainBody = document.getElementById('mainBody');
 	mainBody.appendChild(blocklyLock);
+	
+	Game.stopSaveMissionEverySeconds();
 };
 
 /**
@@ -1023,6 +1025,10 @@ Game.unlockBlockly = function() {
 		var mainBody = document.getElementById('mainBody');
 		mainBody.removeChild(blocklyLock);
 	}
+	
+	Game.stopSaveMissionEverySeconds();
+	Game.startSaveMissionEverySeconds();
+	
 };
 
 Game.updateVariables = function() {
