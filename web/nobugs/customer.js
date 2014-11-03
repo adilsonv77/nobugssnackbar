@@ -205,7 +205,7 @@ Customer.prototype.update = function() {
 			 break;
 			
 	case 31:
-			 this.log.push(['UF', false]); // hide the coin
+			 this.log.push(['UF', false]); // hide the fire
 			 this.state = 8;
 			 return;			 
 	}
@@ -319,14 +319,14 @@ Customer.prototype.hasHunger = function() {
 
 Customer.DELIVERED_BAD = 0;
 Customer.DELIVERED_PARTIAL = 1;
-Customer.DELIVERED_TOTAL = 2;
+Customer.DELIVERED_TOTAL = 2; 
 
 Customer.prototype.deliver = function(item) {
 	
 	// item is the "delivered item"
-	
-	var happy = Customer.DELIVERED_BAD;
+
 	var money = 0;
+	var happy = Customer.DELIVERED_BAD;
 	
 	if  ((item.type === "item") &&
 	    ((item.drinkOrFood === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
@@ -364,7 +364,7 @@ Customer.prototype.deliver = function(item) {
 			this.fire.y = this.img.y-32;
 			this.state = 21;
 			
-		}
+		} 
 	
 	return {money: money, happy: happy};
 };

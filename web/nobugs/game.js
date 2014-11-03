@@ -806,6 +806,7 @@ Game.countInstructions = function(c) {
 
 Game.goalButtonClick = function() {
   
+	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
   
@@ -975,7 +976,7 @@ Game.execute = function(debug) {
 		
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
-  	   // alert(code);
+//  	    alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
