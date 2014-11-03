@@ -952,6 +952,8 @@ Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
 	  
+	  Blockly.WidgetDiv.hide();
+	  
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
 		
