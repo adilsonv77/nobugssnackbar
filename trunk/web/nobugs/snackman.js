@@ -472,6 +472,11 @@ SnackMan.prototype.catchFood = function(order) {
 
 SnackMan.prototype.deliver = function(item) {
 	
+	if (item.data === undefined || item.data === "undefined") {
+		BlocklyApps.log.push(["fail", "Error_variableHaventContentToDeliver"]);
+		throw false;
+	}
+	
 	var found = this.getCustomer();
 	
 	if (!found) {
@@ -480,6 +485,12 @@ SnackMan.prototype.deliver = function(item) {
 	}
 	
 	var amount = found.deliver(item.data); 
+	
+	if (amount.happy == Customer.DELIVERED_BAD) {
+		BlocklyApps.log.push(["fail", "Error_deliveredWrongRequest"]);
+		throw false;
+	}
+	
 	if (amount != null) {
 		this.verifyObjectives("deliver", {allCustomers:false, customer:found});
 	}
