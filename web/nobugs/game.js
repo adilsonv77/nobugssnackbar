@@ -976,7 +976,7 @@ Game.execute = function(debug) {
 		
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
-//  	    alert(code);
+  	    alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
@@ -1066,11 +1066,16 @@ Game.nextStep = function() {
 				if (BlocklyApps.log.length > 0 || Game.highlightPause) {
 					
 					if (Game.runningStatus != 2  || Game.highlightPause === false) {
-						Game.firstClick = Game.firstClick && !(Game.runningStatus == 2 && BlocklyApps.log.length > 1); // if there aren't lots of commands to interpret, while is debugging, then search another great command 
 						BlocklyApps.log.push(['nextStep']);
 					}
-					else 
+					else {
+
 						Game.highlightPause = false;
+						if (Game.firstClick && Game.runningStatus == 2) {
+							BlocklyApps.log.push(['nextStep']);
+							Game.firstClick = false;
+						}
+					}
 					
 					Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
 					return;
