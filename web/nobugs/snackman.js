@@ -472,7 +472,7 @@ SnackMan.prototype.catchFood = function(order) {
 
 SnackMan.prototype.deliver = function(item) {
 	
-	if (item.data === undefined || item.data === "undefined") {
+	if (item.data === undefined || item.data === "undefined" || item.type === "number") {
 		BlocklyApps.log.push(["fail", "Error_variableHaventContentToDeliver"]);
 		throw false;
 	}
