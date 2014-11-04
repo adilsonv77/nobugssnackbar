@@ -525,6 +525,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 		  
 		  Explanation.showInfo(explanation, true);
 	  } else {
+		  Hints.init(data.getElementsByTagName("hints")[0]);
 		  Game.initTime();
 	  }
 	  
@@ -771,6 +772,8 @@ Game.display = function() {
 
 Game.countInstructions = function(c) {
 	
+	// to count all the blocks return Blockly.mainWorkspace.getAllBlocks();
+	
 	var conta = 0;
 	while (c != null) {
 		var a = c;
@@ -801,6 +804,7 @@ Game.countInstructions = function(c) {
 	}
 	
 	return conta;
+
 	
 };
 
@@ -1133,7 +1137,8 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
-			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
+			    	//MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
+			    	Hints.showErrorHint();
 			    }
 			    
 			    Game.unlockBlockly();

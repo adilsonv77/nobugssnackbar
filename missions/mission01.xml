@@ -31,6 +31,11 @@
 			<hint>SelectCommand(0,0)</hint>
 			<hint time="3000">StackTogether(0,0,move_goToBarCounter)</hint>
 			<hint time="5000">RunProgram</hint>
+			
+			<hint whenError="true" condition="countInstructions >= 2">
+			   Preste aten&#231;&#227;o nas posi&#231;&#245;es para onde o cozinheiro est&#225; se deslocando.
+			   Clique no n&#250;mero e digite um valor de acordo com a cadeira em que o cliente est&#225; sentado. 
+			</hint>
 		</sequence>
 	</hints>
 	<commands>
