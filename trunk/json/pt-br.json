@@ -73,8 +73,8 @@
 	"Error.isntFrontJuiceMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de sumos.",
 	"Error.doesntHaveItem" : "O cozinheiro n&#227;o trouxe qualquer fruta para inserir na m&#225;quina de sumos.",
 	"Error.onlyPutFruits" : "A m&#225;quina de sumos s&#243; aceita frutas.",
-	"Error.variableHaventContentToDeliver" : "A varia&#769;vel na&#771;o tem conteu&#769;do para ser entregue.",
-	"Error.deliveredWrongRequest" : "O pedido entrege esta&#769; errado.",
+	"Error.variableHaventContentToDeliver" : "N&#227;o h&#225; nada a ser entregue.",
+	"Error.deliveredWrongRequest" : "A entrega n&#227;o corresponde ao que o cliente pediu.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.Mission" : "miss&#227;o",
