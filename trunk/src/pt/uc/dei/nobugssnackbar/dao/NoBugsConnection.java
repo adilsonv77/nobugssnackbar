@@ -447,7 +447,7 @@ public class NoBugsConnection {
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
-							" where %s"+
+							" where %s and questionnairefinish > now()"+
 							" order by questionnaireid, questionorder, optionorder";
 			
 			;
@@ -473,7 +473,8 @@ public class NoBugsConnection {
 				rs.close();
 				ps.close();
 				
-				Collections.shuffle(ret.get(ret.size()-1).getQuestions());
+				if (ret.size() > 1)
+					Collections.shuffle(ret.get(ret.size()-1).getQuestions());
 
 			}
 			
