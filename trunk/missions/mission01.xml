@@ -27,27 +27,28 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint>ChooseCategory(0)</hint>
-			<hint>SelectCommand(0,0)</hint>
-			<hint time="3000">StackTogether(0,0,move_goToBarCounter)</hint>
-			<hint time="5000">RunProgram</hint>
-			
-			<hint whenError="true" condition="countInstructions == 1" category="ChooseCategory(0)">
+			<hint category="ChooseCategory(0)"/>
+			<hint category="SelectCommand(0,0)"/>
+			<hint time="3000" category="StackTogether(0,0,move_goToBarCounter)"/>
+			<hint category="RunProgram"/>
+		</sequence>
+		
+		<errors>
+			<hint condition="countInstructions == 1 &amp;&amp; Game.howManyRuns &lt;= 2" category="ChooseCategory(0)">
 			   Clique em SnackMan e adicione mais um bloco goToBarCounter. Nesse novo bloco, n&#227;o esque&#231;a
 			   de mudar o n&#250;mero da cadeira onde o cliente est&#225; sentado.
 			</hint>
 			
-			<hint whenError="true" condition="countInstructions == 2" category="SourceCode">
+			<hint condition="countInstructions == 2 &amp;&amp; Game.howManyRuns &#60;= 2" category="SourceCode">
 			   Preste aten&#231;&#227;o nas posi&#231;&#245;es para onde o cozinheiro est&#225; se deslocando.
 			   Clique no n&#250;mero e digite um valor de acordo com a cadeira em que o cliente est&#225; sentado. 
 			</hint>
 
-			<hint whenError="true" condition="countInstructions > 2" category="SourceCode">
+			<hint condition="countInstructions > 2 &amp;&amp; Game.howManyRuns &#60;= 2" category="SourceCode">
 			  Existem mais blocos do que o necess&#225;rio. Clique no bot&#227;o que est&#225; piscando para
 			  relembrar as metas dessa miss&#227;o.
 			</hint>
-			
-		</sequence>
+		</errors>	
 	</hints>
 	<commands>
 		<category name="snackMan" show="true"/>
