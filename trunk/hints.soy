@@ -5,8 +5,12 @@
  */
 {template .messages}
   <div style="display: none">
+
     <span id="Hints_ChooseCategory">{msg meaning="Hints.ChooseCategory" desc="--"}Choose a category {0} to see the blocks.{/msg}</span>
-  
+	<span id="Hints_RunProgram">{msg meaning="Hints.RunProgram" desc="--"}Click in this button for track the cooker actions according your program.{/msg}</span>  
+	<span id="Hints_DebugProgram">{msg meaning="Hints.DebugProgram" desc="--"}Click in this button for track the next cooker action according your program.{/msg}</span>
+	<span id="Hints_GoalButton">{msg meaning="Hints.GoalButton" desc="--"}Click in this button for see which goals are you achieved.{/msg}</span>
+	<span id="Hints_GoalButtonError">{msg meaning="Hints.GoalButtonError" desc="--"}Click in this button for remember what you must do in this mission.{/msg}</span>
     
   </div>
 {/template}
@@ -15,10 +19,10 @@
  * Dialogs.
  */
 {template .dialogs}
-  <div id="GeneralLeftHint" class="dialogHiddenContent">
+  <div id="RightHint" class="dialogHiddenContent">
     <table>
 	    <tr>
-		    <td id="GeneralHintText">
+		    <td id="RightHintText">
 		    	
 		    </td>
 		    <td valign="top">
@@ -28,13 +32,13 @@
     </table>
   </div>
 
-  <div id="ChooseCategory" class="dialogHiddenContent">
+  <div id="LeftHint" class="dialogHiddenContent">
     <table>
 	    <tr>
 		    <td >
 		      <img src="images/help_left.png" style="padding: 10px" />
 		    </td>
-		    <td id="ChooseCategoryText">
+		    <td id="LeftHintText">
 		    	
 		    </td>
 	    </tr>
@@ -67,27 +71,14 @@
     </table>
   </div>
   
-  <div id="RunProgram" class="dialogHiddenContent">
+  <div id="DownHint" class="dialogHiddenContent">
     <table>
 	    <tr>
 		    <td >
 		      <img src="images/help_down.png" style="padding: 10px" />
 		    </td>
-		    <td>
-		    	{msg meaning="Hints.RunProgram" desc="--"}Click in this button for track the cooker actions according your program.{/msg}
-		    </td>
-		 </tr>
-    </table>
-  </div>
-  
-  <div id="DebugProgram" class="dialogHiddenContent">
-    <table>
-	    <tr>
-		    <td >
-		      <img src="images/help_down.png" style="padding: 10px" />
-		    </td>
-		    <td>
-		    	{msg meaning="Hints.DebugProgram" desc="--"}Click in this button for track the next cooker action according your program.{/msg}
+		    <td id="DownHintText">
+		    	
 		    </td>
 		 </tr>
     </table>

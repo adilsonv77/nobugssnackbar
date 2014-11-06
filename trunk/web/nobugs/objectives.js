@@ -357,7 +357,7 @@ Objective.CommsQtd.prototype.init = function(qtd) {
 Objective.CommsQtd.prototype.checkObjective = function(options, objective)  {
 
 	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-	var count = Game.countInstructions(xml.childNodes[0]);
+	var count = Game.countInstructions(xml.childNodes);
 
 	return count <= objective.qtd;
 };

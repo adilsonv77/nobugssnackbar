@@ -5,12 +5,12 @@ if (typeof hints == 'undefined') { var hints = {}; }
 
 
 hints.messages = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Hints_ChooseCategory">Selecione a categoria {0} para ver os blocos.</span></div>';
+  return '<div style="display: none"><span id="Hints_ChooseCategory">Selecione a categoria {0} para ver os blocos.</span><span id="Hints_RunProgram">Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com seu programa.</span><span id="Hints_DebugProgram">Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com o próximo comando do seu programa.</span><span id="Hints_GoalButton">Clique nesse botão quais objetivos você já finalizou.</span><span id="Hints_GoalButtonError">Clique nesse botão para relembrar o que precisas fazer nessa missão.</span></div>';
 };
 
 
 hints.dialogs = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="GeneralLeftHint" class="dialogHiddenContent"><table><tr><td id="GeneralHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Arraste um bloco para a área de trabalho.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Empilhe um par desse bloco para ficar mais perto do objetivo.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="RunProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com seu programa.</td></tr></table></div><div id="DebugProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Clique nesse botão para acompanhar o cozinheiro movimentar-se de acordo com o próximo comando do seu programa.</td></tr></table></div>';
+  return '<div id="RightHint" class="dialogHiddenContent"><table><tr><td id="RightHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="LeftHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="LeftHintText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Arraste um bloco para a área de trabalho.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Empilhe um par desse bloco para ficar mais perto do objetivo.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="DownHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td id="DownHintText"></td></tr></table></div>';
 };
 
 ;
@@ -41,7 +41,7 @@ apps.storageDialog = function(opt_data, opt_ignored, opt_ijData) {
 
 
 apps.ok = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div class="farSide" style="padding: 1ex 3ex 0"><button class="secondary" onclick="BlocklyApps.hideDialog(true)">OK</button></div>';
+  return '<div class="farSide" style="padding: 1ex 3ex 0"><button class="secondary" onclick="MyBlocklyApps.hideDialog(true)">OK</button></div>';
 };
 
 ;

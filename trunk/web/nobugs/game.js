@@ -753,9 +753,16 @@ Game.display = function() {
 
 Game.countInstructions = function(c) {
 	
-	// to count all the blocks return Blockly.mainWorkspace.getAllBlocks();
-	
 	var conta = 0;
+	if (c.length) {
+		
+		for (var i=0; i<c.length; i++)
+			conta += Game.countInstructions(c[i]);
+		
+		return conta;
+		
+	}
+	
 	while (c != null) {
 		var a = c;
 		if (!a.attributes["disabled"])
@@ -938,6 +945,8 @@ Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
 	  
+	  
+	  MyBlocklyApps.hideDialog(false);
 	  Blockly.WidgetDiv.hide();
 	  
 	  BlocklyApps.log = [];
@@ -1083,7 +1092,7 @@ Game.nextStep = function() {
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-			    	var count = Game.countInstructions(xml.childNodes[0]);
+			    	var count = Game.countInstructions(xml.childNodes);
 
 			    	var now = new Date().getTime();
 			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
@@ -1118,8 +1127,11 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
-			    	//MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null, null);
-			    	Hints.showErrorHint();
+			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null,
+			    			function() {
+				    			Hints.showErrorHint();
+			    			}
+			    	);
 			    }
 			    
 			    Game.unlockBlockly();
@@ -1146,6 +1158,7 @@ Game.taskIntervalForSave = null;
 Game.INTERVAL_FOR_SAVE = 30000;
 
 Game.startSaveMissionEverySeconds = function() {
+	/*
 	if (Game.taskIntervalForSave == null) {
 		Game.taskIntervalForSave = window.setInterval(function() {
 			var answer = null;
@@ -1162,6 +1175,7 @@ Game.startSaveMissionEverySeconds = function() {
 			Game.currTime = now;
 		}, Game.INTERVAL_FOR_SAVE);
 	}
+	*/
 };
 
 Game.stopSaveMissionEverySeconds = function() {

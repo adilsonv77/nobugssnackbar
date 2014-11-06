@@ -5,12 +5,12 @@ if (typeof hints == 'undefined') { var hints = {}; }
 
 
 hints.messages = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Hints_ChooseCategory">Choose a category 0 to see the blocks.</span></div>';
+  return '<div style="display: none"><span id="Hints_ChooseCategory">Choose a category 0 to see the blocks.</span><span id="Hints_RunProgram">Click in this button for track the cooker actions according your program.</span><span id="Hints_DebugProgram">Click in this button for track the next cooker action according your program.</span><span id="Hints_GoalButton">Click in this button for see which goals are you achieved.</span><span id="Hints_GoalButtonError">Click in this button for remember what you must do in this mission.</span></div>';
 };
 
 
 hints.dialogs = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="GeneralLeftHint" class="dialogHiddenContent"><table><tr><td id="GeneralHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="ChooseCategory" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="ChooseCategoryText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Stack a couple of this command blocks together to be more closer to reach the goal.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="RunProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Click in this button for track the cooker actions according your program.</td></tr></table></div><div id="DebugProgram" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td>Click in this button for track the next cooker action according your program.</td></tr></table></div>';
+  return '<div id="RightHint" class="dialogHiddenContent"><table><tr><td id="RightHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="LeftHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_left.png" style="padding: 10px" /></td><td id="LeftHintText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Stack a couple of this command blocks together to be more closer to reach the goal.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="DownHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td id="DownHintText"></td></tr></table></div>';
 };
 
 ;
@@ -41,7 +41,7 @@ apps.storageDialog = function(opt_data, opt_ignored, opt_ijData) {
 
 
 apps.ok = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div class="farSide" style="padding: 1ex 3ex 0"><button class="secondary" onclick="BlocklyApps.hideDialog(true)">OK</button></div>';
+  return '<div class="farSide" style="padding: 1ex 3ex 0"><button class="secondary" onclick="MyBlocklyApps.hideDialog(true)">OK</button></div>';
 };
 
 ;

@@ -21,6 +21,7 @@ Hints.init = function(hints) {
 	
     
     Hints.hints.whenError = resHints.errorHints;
+    Hints.addDefaultErrorHints();
 };
 
 Hints.traverseHints = function(hint) {
@@ -58,6 +59,9 @@ Hints.traverseHints = function(hint) {
 			  h.consist = !(hint.getAttribute("consist") === "false");
 			  h.whenError = (hint.getAttribute("whenError") === "true");
 			  h.condition = (hint.getAttribute("condition"));
+			  h.category = hint.getAttribute("category");
+			  
+			  h.consist = h.consist && !h.whenError;
 		  }
 	  }
 	  if (h.whenError)
@@ -75,33 +79,43 @@ Hints.traverseHints = function(hint) {
 Hints.showErrorHint = function() {
 	
 	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-	var countInstructions = Game.countInstructions(xml.childNodes[0]);
+	var countInstructions = Game.countInstructions(xml.childNodes);
 	
-	var addedHint = false;
+	var hintErrors = Hints.hints.whenError;
+	for (var i=0; i<hintErrors.length; i++) {
 	
-	Hints.hints.whenError.forEach(function(hint) {
+		var hint = hintErrors[i];
+		
 		var condition = eval(hint.condition);
 		if (condition) {
-			addedHint = true;
-			var dialog = document.getElementById("GeneralLeftHint");
 			
-			var hintText = document.getElementById("GeneralHintText");
-			hintText.innerHTML = hint.content;
+			Hints.hintSelected = hint;
+			hint.extraInfo = hint.content;
+			var f = Hints.formatCategory(hint);
+			f(hint.args);
 			
-			var bbBox = BlocklyApps.getBBox_(Blockly.mainWorkspace.topBlocks_[0].getSvgRoot());
-			var style = {};
-			style.width = "300px" 
-			style.top = bbBox.y + "px";
-			style.left = (bbBox.x - 320) + "px";
-			
-			BlocklyApps.showDialog(dialog, null, false, false, style, null);
+			break;
 			
 		}
 		
-	});
+	}
 	
-	if (addedHint)
-		Blockly.addChangeListener(function() {BlocklyApps.hideDialog(false)});
+};
+
+Hints.formatCategory = function(hint) {
+	
+	var category = hint.category;
+	if (category.indexOf("(") > 0) {
+	  
+	  hint.args = category.substring(category.indexOf("("));
+	  hint.args = hint.args.substring(1, hint.args.length-1);
+	  hint.args = hint.args.split(",");
+	  
+	  category = category.substring(0, category.indexOf("("));
+		  
+	}
+	
+	return Hints.Categories[category];
 	
 };
 
@@ -160,28 +174,42 @@ function calcLeft(e) {
 	return e.offsetLeft + e.offsetParent.offsetLeft + e.offsetParent.offsetParent.offsetLeft;
 }
 
+function createLeftDlg(e, dialogContent) {
+	document.getElementById("LeftHintText").innerHTML = dialogContent;
+	
+	var bY = calcTop(e);
+	var bX = calcLeft(e);
+	var originW = e.clientWidth;
+	
+	var style = {};
+	style.width = "300px";
+	style.top = bY + "px";
+	style.left = (bX + originW) + "px";
+
+	var dialog = document.getElementById("LeftHint");
+	
+	BlocklyApps.showDialog(dialog, null, false, false, style, null);
+	
+	
+}
+
 Hints.Categories["ChooseCategory"] = function (param) {
 
 	if (!Hints.hintSelected.consist || Blockly.mainWorkspace.getTopBlocks(true).length == 0) {
 	
 		var e = Blockly.Toolbox.tree_.children_[parseInt(param[0])].element_;
 		var menuText = e.firstChild.childNodes[2].textContent;
-		
-		var dialogContent = BlocklyApps.getMsg("Hints_ChooseCategory");
-		dialogContent = dialogContent.format(menuText);
-		document.getElementById("ChooseCategoryText").innerHTML = dialogContent;
-		
-		var bY = calcTop(e);
-		var bX = calcLeft(e);
-		var originW = e.clientWidth;
-		
-		var style = {};
-		style.top = bY + "px";
-		style.left = (bX + originW) + "px";
-	
-		var dialog = document.getElementById("ChooseCategory");
-		
-		BlocklyApps.showDialog(dialog, null, false, false, style, null);
+
+		var dialogContent = null
+		if (Hints.hintSelected.extraInfo)
+			dialogContent = Hints.hintSelected.extraInfo;
+		else {
+			
+			dialogContent = BlocklyApps.getMsg("Hints_ChooseCategory");
+			dialogContent = dialogContent.format(menuText);
+		}
+
+		createLeftDlg(e, dialogContent);
 		
 		Hints.chooseCategoryCalled = true;
 		
@@ -257,11 +285,14 @@ Hints.Categories["StackTogether"] = function (param) {
 	
 };
 
-function createDlgButton(buttonId, dlgId) {
+function createDownDlg(itemId, txtId) {
 	
-	var origin = document.getElementById(buttonId);
+	var origin = document.getElementById(itemId);
 	
-	var dialog = document.getElementById(dlgId);
+	var dialog = document.getElementById("DownHint");
+	
+	var text = document.getElementById("DownHintText");
+	text.innerHTML = document.getElementById("Hints_" + txtId).innerHTML;
 
 	var bbBox = BlocklyApps.getBBox_(origin);
 	var bY = bbBox.y;
@@ -284,7 +315,7 @@ Hints.Categories["RunProgram"] = function (param) {
 	
 	if (!Hints.hintSelected.consist ||Game.howManyRuns == 0) {
 		
-		return createDlgButton("runButton", "RunProgram");
+		return createDownDlg("runButton", (!param || param == null?"RunProgram":param));
 		
 	} 
 	
@@ -297,7 +328,7 @@ Hints.Categories["DebugProgram"] = function (param) {
 	
 	if (!Hints.hintSelected.consist ||Game.howManyRuns == 0) {
 		
-		return createDlgButton("debugButton", "DebugProgram");
+		return createDownDlg("debugButton", (!param || param == null?"DebugProgram":param));
 		
 	} 
 	
@@ -306,3 +337,51 @@ Hints.Categories["DebugProgram"] = function (param) {
 	
 };
 	
+Hints.Categories["SourceCode"] = function (param) {
+	
+	var dialog = document.getElementById("RightHint");
+	
+	var hintText = document.getElementById("RightHintText");
+	hintText.innerHTML = Hints.hintSelected.content;
+	
+	var bbBox = BlocklyApps.getBBox_(Blockly.mainWorkspace.topBlocks_[0].getSvgRoot());
+	var style = {};
+	style.width = "300px" ;
+	style.top = bbBox.y + "px";
+	style.left = (bbBox.x - 320) + "px";
+	
+	BlocklyApps.showDialog(dialog, null, false, false, style, null);
+
+	Hints.bindEvent = Blockly.addChangeListener(function() {
+		BlocklyApps.hideDialog(false);
+		Blockly.removeChangeListener(Hints.bindEvent);
+		Hints.bindEvent = null;
+	});
+
+	
+};
+
+Hints.Categories["GoalButton"] = function (param) {
+	
+	if (!Hints.hintSelected.consist) {
+		
+		return createDownDlg("goalButton", (!param || param == null?"GoalButton":param) );
+		
+	}
+	
+	return null;
+};
+
+Hints.addDefaultErrorHints = function() {
+	
+	var hint = {};
+	hint.args = "GoalButtonError";
+	hint.time = 0;
+	hint.consist = false;
+	hint.whenError = true;
+	hint.condition = "Game.howManyRuns > 2";
+	hint.category = "GoalButton";
+	
+	Hints.hints.whenError.unshift(hint);
+	
+};

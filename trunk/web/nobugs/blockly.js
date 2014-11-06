@@ -6,7 +6,7 @@ var MyBlocklyApps = {};
 MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, title, style,
                                   disposeFunc) {
   if (BlocklyApps.isDialogVisible_) {
-    BlocklyApps.hideDialog(false);
+	  MyBlocklyApps.hideDialog(false);
   }
   BlocklyApps.isDialogVisible_ = true;
   BlocklyApps.dialogOrigin_ = origin;
@@ -66,3 +66,51 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
     endResult();
   }
 };
+
+// the difference instead the original is, that here the disposeFunc is called at the end, after hidden the whole dialog
+MyBlocklyApps.hideDialog = function(opt_animate) {
+	  if (!BlocklyApps.isDialogVisible_) {
+	    return;
+	  }
+	  BlocklyApps.dialogUnbindDragEvents_();
+	  if (BlocklyApps.dialogMouseDownWrapper_) {
+	    Blockly.unbindEvent_(BlocklyApps.dialogMouseDownWrapper_);
+	    BlocklyApps.dialogMouseDownWrapper_ = null;
+	  }
+
+	  BlocklyApps.isDialogVisible_ = false;
+	  var origin = (opt_animate === false) ? null : BlocklyApps.dialogOrigin_;
+	  var dialog = document.getElementById('dialog');
+	  var shadow = document.getElementById('dialogShadow');
+	  var border = document.getElementById('dialogBorder');
+
+	  shadow.style.opacity = 0;
+
+	  function endResult() {
+	    shadow.style.visibility = 'hidden';
+	    border.style.visibility = 'hidden';
+	  }
+	  if (origin) {
+	    BlocklyApps.matchBorder_(dialog, false, 0.8);
+	    BlocklyApps.matchBorder_(origin, true, 0.2);
+	    // In 175ms hide both the shadow and the animated border.
+	    window.setTimeout(endResult, 175);
+	  } else {
+	    // No animation.  Just set the final state.
+	    endResult();
+	  }
+	  dialog.style.visibility = 'hidden';
+	  dialog.style.zIndex = -1;
+	  var header = document.getElementById('dialogHeader');
+	  if (header) {
+	    header.parentNode.removeChild(header);
+	  }
+	  while (dialog.firstChild) {
+	    var content = dialog.firstChild;
+	    content.className += ' dialogHiddenContent';
+	    document.body.appendChild(content);
+	  }
+	  BlocklyApps.dialogDispose_ && BlocklyApps.dialogDispose_();
+	  BlocklyApps.dialogDispose_ = null;
+	};
+
