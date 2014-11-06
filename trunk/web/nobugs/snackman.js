@@ -26,12 +26,12 @@
 
 var SnackMan = {};
 
-Game.preloadImgs.push('images/$cooker.png');
-Game.preloadImgs.push('images/$cooker_platter.png');
-Game.preloadImgs.push('images/cooler.png');
-Game.preloadImgs.push('images/display.png');
-Game.preloadImgs.push('images/boxoffruits.png');
-Game.preloadImgs.push('images/juicemachine.png');
+PreloadImgs.put('$cooker', 'images/$cooker.png');
+PreloadImgs.put('$cooker_platter', 'images/$cooker_platter.png');
+PreloadImgs.put('cooler', 'images/cooler.png');
+PreloadImgs.put('display', 'images/display.png');
+PreloadImgs.put('boxoffruits', 'images/boxoffruits.png');
+PreloadImgs.put('juicemachine', 'images/juicemachine.png');
 
 SnackMan = function(objectives, mission) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
@@ -82,13 +82,12 @@ SnackMan = function(objectives, mission) {
 			width: 96,
 			height: 32,
 			sourceY: 0,
-			imgSrc : "images/$cooker.png"
+			img : PreloadImgs.get("$cooker")
 	});
 
 	this.imgCooker = this.img.image;
 	
-	this.imgCookerPlatter = new Image();
-	this.imgCookerPlatter.src = "images/$cooker_platter.png";
+	this.imgCookerPlatter = PreloadImgs.get("$cooker_platter");
 	
 	this.showCooler = false;
 	this.cooler = new Sprite({
@@ -101,7 +100,7 @@ SnackMan = function(objectives, mission) {
 		height: 64,
 		sourceX: 0,
 		sourceY: 0,
-		imgSrc : "images/cooler.png"
+		img : PreloadImgs.get("cooler")
 	});
 	
 	this.showDisplay = false;
@@ -115,7 +114,7 @@ SnackMan = function(objectives, mission) {
 		height: 32,
 		sourceX: 0,
 		sourceY: 0,
-		imgSrc : "images/display.png"
+		img : PreloadImgs.get("display")
 	});
 	
 	var juice = mission.evaluate("count(//mission/commands/category[@name='goToBoxOfFruits'])", mission, null,  XPathResult.ANY_TYPE, null);
@@ -131,7 +130,7 @@ SnackMan = function(objectives, mission) {
 			height: 32,
 			sourceX: 0,
 			sourceY: 0,
-			imgSrc :  "images/boxoffruits.png"
+			img : PreloadImgs.get("boxoffruits")
 		});
 		
 		this.juiceMachine = new Sprite({
@@ -144,7 +143,7 @@ SnackMan = function(objectives, mission) {
 			height: 32,
 			sourceX: 0,
 			sourceY: 0,
-			imgSrc : "images/juicemachine.png"
+			img : PreloadImgs.get("juicemachine")
 		});
 	}
 	

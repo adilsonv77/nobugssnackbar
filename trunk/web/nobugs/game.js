@@ -41,11 +41,6 @@ Game.mission = null;
  */
 Game.pidList = [];
 
-/**
- * All the imgs will added in this array. Anyone that uses an image, must 
- * before add in this array.
- */
-Game.preloadImgs = []; 
 
 Game.money = 0;
 Game.currentlyMoney = Game.money;
@@ -61,11 +56,12 @@ Game.init = function() {
 	
 	Game.currTime = 0;
 	
-    Game.preloadImgs.push('images/fundo.png');
-    Game.preloadImgs.push('images/doors.png');
+	PreloadImgs.put('fundo', 'images/fundo.png');
+	PreloadImgs.put('doors', 'images/doors.png');
 	
-    Game.loadImgs(); // if the user's key is stored in cookies, then the system will not show the login dialog
-
+    PreloadImgs.loadImgs();
+    
+    // if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
 		
 		if (ret[0]) 
@@ -87,16 +83,6 @@ Game.init = function() {
 
 window.addEventListener('load', Game.init);
 
-
-/**
- * Without this some draws don't work. 
- */
-Game.loadImgs = function() {
-	for (var i = 0; i < Game.preloadImgs.length; i++) {
-	    var preload = new Image();
-	    preload.src = Game.preloadImgs[i];
-	}
-};
 
 Game.login = function() {
 	
@@ -422,21 +408,16 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.blockly = document.getElementById('blockly');
   
   Game.ctxDisplay = document.getElementById('display').getContext('2d');
-  Game.imgBackground = new Image();
-  Game.imgBackground.src = 'images/fundo.png';	
-  Game.imgBackground.onload = function() {
-	  
-	  Game.imgDoor = new Image();
-	  Game.imgDoor.src = "images/doors.png";
-	  
-	  Game.lastErrorData = new Object();
-	  Game.lastErrorData.count = 0;
-	  Game.lastErrorData.comm = 0;
-	  
-	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
-	  
-  };
+  Game.imgBackground = PreloadImgs.get("fundo");	
+
+  Game.imgDoor = PreloadImgs.get("doors");
   
+  Game.lastErrorData = new Object();
+  Game.lastErrorData.count = 0;
+  Game.lastErrorData.comm = 0;
+  
+  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
+
 };
 
 Game.unload = function(e) {
