@@ -754,7 +754,7 @@ Game.display = function() {
 Game.countInstructions = function(c) {
 	
 	var conta = 0;
-	if (c.length) {
+	if (c.length != undefined) {
 		
 		for (var i=0; i<c.length; i++)
 			conta += Game.countInstructions(c[i]);
@@ -798,6 +798,7 @@ Game.countInstructions = function(c) {
 
 Game.goalButtonClick = function() {
   
+	Hints.hideHints();
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
@@ -805,6 +806,8 @@ Game.goalButtonClick = function() {
 };
 
 Game.logoffButtonClick = function() {
+	
+	Hints.hideHints();
 	Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
@@ -870,6 +873,7 @@ Game.resetButtonClick = function() {
   
   Game.doResizeWindow("none");
   
+  Hints.startHints();
   Game.unlockBlockly();
   Game.stopAlertGoalButton();
 };
@@ -945,8 +949,8 @@ Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
 	  
-	  
-	  MyBlocklyApps.hideDialog(false);
+	  Blockly.hideChaff(true); Blockly.hideChaff(false);
+	  Hints.hideHints();
 	  Blockly.WidgetDiv.hide();
 	  
 	  BlocklyApps.log = [];
@@ -1145,6 +1149,8 @@ Game.nextStep = function() {
 			  
 			  Game.unlockBlockly();
 			  Game.stopAlertGoalButton();
+			  Hints.startHints();
+
 		      return;
 			
 		}
