@@ -21,8 +21,13 @@ Sprite = function(options) {
     this.width = options.width;
     this.height = options.height;
     
-    this.image = new Image();
-	this.image.src = options.imgSrc;
+    if (options.img) {
+    	this.image = options.img;
+    } else {
+        this.image = new Image();
+    	this.image.src = options.imgSrc;
+    	
+    }
 	
 	this.invert = false;
 };

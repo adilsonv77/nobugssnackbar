@@ -26,12 +26,11 @@
 var CustomerManager = {};
 var customers = [];
 
-Game.preloadImgs.push('images/banco.png');
+PreloadImgs.put('banco', 'images/banco.png');
 
 CustomerManager.init = function(customers, sn) {
 	
-    this.banco = new Image();
-	this.banco.src = 'images/banco.png';
+    this.banco = PreloadImgs.get("banco");
 
 	this.optCustomers = customers;
 	

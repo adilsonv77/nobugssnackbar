@@ -34,16 +34,16 @@ CustOpt.door = 'n1';
 
 CustOpt.customerFinalPath = new Array();
 
-Game.preloadImgs.push('images/$customer01.png');
-Game.preloadImgs.push('images/$customer01_anger.png');
-Game.preloadImgs.push('images/$customer02.png');
-Game.preloadImgs.push('images/$customer02_anger.png');
-Game.preloadImgs.push('images/$customer03.png');
-Game.preloadImgs.push('images/$customer03_anger.png');
-Game.preloadImgs.push('images/$customer04.png');
-Game.preloadImgs.push('images/$customer04_anger.png');
-Game.preloadImgs.push('images/coin.png');
-Game.preloadImgs.push('images/anger.png');
+PreloadImgs.put('$customer01', 'images/$customer01.png');
+PreloadImgs.put('$customer01_anger', 'images/$customer01_anger.png');
+PreloadImgs.put('$customer02', 'images/$customer02.png');
+PreloadImgs.put('$customer02_anger', 'images/$customer02_anger.png');
+PreloadImgs.put('$customer03', 'images/$customer03.png');
+PreloadImgs.put('$customer03_anger', 'images/$customer03_anger.png');
+PreloadImgs.put('$customer04', 'images/$customer04.png');
+PreloadImgs.put('$customer04_anger', 'images/$customer04_anger.png');
+PreloadImgs.put('coin', 'images/coin.png');
+PreloadImgs.put('anger', 'images/anger.png');
 
 
 // acts as a state machine
@@ -88,14 +88,13 @@ Customer = function(options) {
 		width: 96,
 		height: 32,
 		sourceY: 0,
-		imgSrc : "images/$customer" +options.id+ ".png"
+		img : PreloadImgs.get("$customer" +options.id)
     });
 	
 	if (this.state === 8)
 		this.img.update();
 	
-	this.imgCustAnger = new Image();
-	this.imgCustAnger.src = "images/$customer" +options.id+ "_anger.png";
+	this.imgCustAnger = PreloadImgs.get("$customer" +options.id+ "_anger");
 	
 	this.door = new Sprite({
 		ticksPerFrame: 0,
@@ -105,7 +104,7 @@ Customer = function(options) {
 		y: 32,
 		width: 64,
 		height: 256,
-		imgSrc : "images/doors.png"
+		img : PreloadImgs.get("doors")
 	});
 	
 	this.coin = new Sprite({
@@ -115,7 +114,7 @@ Customer = function(options) {
 		width: 440,
 		height: 40,
 		sourceY: 0,
-		imgSrc : "images/coin.png"
+		img : PreloadImgs.get("coin")
 	});
 	this.showCoin = false;
 	
@@ -126,7 +125,7 @@ Customer = function(options) {
 		width: 160,
 		height: 32,
 		sourceY: 0,
-		imgSrc : "images/anger.png"
+		img : PreloadImgs.get("anger")
 	});
 	this.showFire = false;
 
