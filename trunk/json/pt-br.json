@@ -103,6 +103,8 @@
 	"Hints.DebugButtonError": "Se est&#225; dif&#237;cil de finalizar a miss&#227;o, experimente utilizar esse bot&#227;o e preste aten&#231;&#227;o nas vari&#225;veis.",
 	
 	"Hints.GoalButton"     : "Clique nesse bot&#227;o para verificar quais objetivos voc&#234; j&#225; finalizou.",
-	"Hints.GoalButtonError": "Clique nesse bot&#227;o para relembrar o que precisas fazer nessa miss&#227;o."
+	"Hints.GoalButtonError": "Clique nesse bot&#227;o para relembrar o que precisas fazer nessa miss&#227;o.",
+	
+	"Hints.WhileDebugging" : "Cada vez que clica no bot&#227;o Depurar, o movimento do cozinheiro &#233; executado de acordo com um comando do seu programa. Observe que o bloco real&#231;ado &#233; o pr&#243;ximo a ser executado. Clique novamente no bot&#227;o Depurar."
 	
 }

@@ -6,6 +6,8 @@ Hints.bindEvent2 = null;
 
 Hints.TIMEINTERVAL = 3000;
 
+Hints.hndlTimer = 0;
+
 Hints.init = function(hints) {
 	
 	Hints.hints = {sequence:[], whenError:[]};
@@ -13,16 +15,16 @@ Hints.init = function(hints) {
 		return;
 	
 	var hs = hints.getElementsByTagName("sequence");
-	if (hs != null)
+	if (hs != null && hs.length > 0)
 		Hints.hints.sequence = Hints.traverseHints(hs[0].firstElementChild, false);
 	
 	hs = hints.getElementsByTagName("errors");
-	if (hs != null)
+	if (hs != null && hs.length > 0)
 		Hints.hints.whenError = Hints.traverseHints(hs[0].firstElementChild, true);
 
     if (Hints.hints.sequence.length > 0) {
     	
-    	window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[0].time);
+    	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[0].time);
     }
 	
     
@@ -136,12 +138,17 @@ Hints.showErrorHint = function() {
 
 Hints.timeIsUp = function() {
 
+	if (Hints.hndlTimer == 0)
+		return;
+	
+	Hints.hndlTimer = 0;
+	
 	var hints = Hints.hints.sequence;
 	if (hints.length == 0)
 		return;
 	
 	if (Blockly.Block.dragMode_ > 0) {
-		window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+		Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
 		return;
 	}
 	
@@ -166,7 +173,7 @@ Hints.timeIsUp = function() {
 		}
 	}
 	
-	window.setTimeout( Hints.timeIsUp, nextTime );
+	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, nextTime );
 
 };
 
@@ -184,7 +191,7 @@ Hints.associateHideEvents = function(bindEvent) {
 Hints.hideHintWithTimer = function () {
 	Hints.hideHints();
 	
-	window.setTimeout( Hints.timeIsUp, (Hints.hintSelected==null||Hints.hintSelected.next==null?Hints.TIMEINTERVAL:Hints.hintSelected.next.time) );
+	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, (Hints.hintSelected==null||Hints.hintSelected.next==null?Hints.TIMEINTERVAL:Hints.hintSelected.next.time) );
 };
 
 Hints.hideHints = function() {
@@ -207,7 +214,16 @@ Hints.hideHints = function() {
 };
 
 Hints.startHints = function() {
-	window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+	if (Hints.hndlTimer != 0)
+		return;
+	
+	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+};
+
+Hints.stopHints = function() {
+	window.clearTimeout(Hints.hndlTimer);
+	Hints.hideHints();
+	Hints.hndlTimer = 0;
 };
 
 /****************************************************************************************/
@@ -307,13 +323,11 @@ Hints.Categories["ChooseCategory"] = {
 			var menuText = e.firstChild.childNodes[2].textContent;
 
 			var dialogContent = null;
-			if (Hints.hintSelected.content != null)
-				dialogContent = Hints.hintSelected.content;
-			else {
-				
-				dialogContent = BlocklyApps.getMsg("Hints_ChooseCategory");
-				dialogContent = dialogContent.format(menuText);
+			if (Hints.hintSelected.content == null) {
+				Hints.hintSelected.content = BlocklyApps.getMsg("Hints_ChooseCategory");
+				Hints.hintSelected.content = dialogContent.format(menuText);
 			}
+			dialogContent = Hints.hintSelected.content;
 
 			createLeftDlg(e, dialogContent);
 			
@@ -385,13 +399,10 @@ Hints.Categories["RunProgram"] = {
 	show:
 		function (param) {
 
-			var content;
 			if (Hints.hintSelected.content == null)
-				content = document.getElementById("Hints_RunProgram").innerHTML;
-			else
-				content = Hints.hintSelected.content;
+				Hints.hintSelected.content = document.getElementById("Hints_RunProgram").innerHTML;
 		
-			return createDownDlg("runButton", content);
+			return createDownDlg("runButton", Hints.hintSelected.content);
 			
 		}, 
 	
@@ -405,13 +416,10 @@ Hints.Categories["DebugProgram"] = {
 	show:
 		function (param) {
 	
-			var content;
 			if (Hints.hintSelected.content == null)
-				content = document.getElementById("Hints_DebugProgram").innerHTML;
-			else
-				content = Hints.hintSelected.content;
+				Hints.hintSelected.content = document.getElementById("Hints_DebugProgram").innerHTML;
 			
-			return createDownDlg("debugButton", content);
+			return createDownDlg("debugButton", Hints.hintSelected.content);
 			
 		}, 
 	
@@ -424,13 +432,10 @@ Hints.Categories["GoalButton"] = {
 	show:
 		function (param) {
 	
-			var content;
 			if (Hints.hintSelected.content == null)
-				content = document.getElementById("Hints_GoalButton").innerHTML;
-			else
-				content = Hints.hintSelected.content;
+				Hints.hintSelected.content = document.getElementById("Hints_GoalButton").innerHTML;
 		
-			return createDownDlg("goalButton", content );
+			return createDownDlg("goalButton", Hints.hintSelected.content );
 		
 		},
 	condition:
@@ -457,3 +462,14 @@ Hints.Categories["SourceCode"] = {
 	condition : "true"
 };
 
+Hints.Categories["WhileDebugging"] = {
+		
+		show:
+			function (param) {
+				if (Hints.hintSelected.content == null)
+					Hints.hintSelected.content = document.getElementById("Hints_WhileDebugging").innerHTML;
+			
+				Hints.Categories["SourceCode"].show();
+			},
+		condition : "Game.runningStatus == 2"
+	};

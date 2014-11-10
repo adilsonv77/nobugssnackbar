@@ -114,20 +114,24 @@ Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, mis
 	
 	Game.loginData = {userLogged: u, missionHist: missionsHistorical, clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
-	UserControl.retrieveQuestionnaire(function(q) {
-		if (q != null) {
-			var formQuestionnaire = Questionnaire.createForm(q);
-			$("#contentQuestionnaire").html("");
-			$("#contentQuestionnaire").append(formQuestionnaire);
+	try {
+		UserControl.retrieveQuestionnaire(function(q) {
+			if (q != null) {
+				var formQuestionnaire = Questionnaire.createForm(q);
+				$("#contentQuestionnaire").html("");
+				$("#contentQuestionnaire").append(formQuestionnaire);
+				
+				MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, 
+						$("#questionnaire").get(0).firstChild.data, null, null);
+				
+			} else {
+				Game.continueLoginProcess();
+			}
 			
-			MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, 
-					$("#questionnaire").get(0).firstChild.data, null, null);
-			
-		} else {
-			Game.continueLoginProcess();
-		}
-		
-	});
+		});
+	} catch (ex) {
+		Game.init();
+	};
 };
 
 Game.finishQuestionnaire = function() {
@@ -416,7 +420,11 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.lastErrorData.count = 0;
   Game.lastErrorData.comm = 0;
   
-  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
+  try {
+	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
+  } catch (ex) {
+	  Game.init();
+  }
 
 };
 
@@ -798,7 +806,7 @@ Game.countInstructions = function(c) {
 
 Game.goalButtonClick = function() {
   
-	Hints.hideHints();
+	Hints.stopHints();
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
@@ -807,7 +815,7 @@ Game.goalButtonClick = function() {
 
 Game.logoffButtonClick = function() {
 	
-	Hints.hideHints();
+	Hints.stopHints();
 	Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
@@ -861,6 +869,8 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 
+  Hints.stopHints();
+	
   Game.resetButtons();
   Game.reset();
   
@@ -895,7 +905,9 @@ Game.firstClick = true;
  */
 Game.debugButtonClick = function() {
 	 
+	Game.disableButton('debugButton');
 	if (Game.runningStatus === 0) {
+		
 		Game.enableButton('resetButton');
 
 		if (Game.enabledVarWindow) {
@@ -906,11 +918,14 @@ Game.debugButtonClick = function() {
   	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
 		Game.firstClick = true;
+		
 	} else {
-		Game.disableButton('debugButton');
+		
+		Hints.stopHints();
 		Game.firstClick = false;
 		if (!Blockly.mainWorkspace.traceOn_) // the second complete debug didn't show the highlight on the blocks 
 			Blockly.mainWorkspace.traceOn(true);
+		
 	}
 	
 	Game.execute(2);
@@ -943,7 +958,7 @@ Game.execute = function(debug) {
   if (Game.runningStatus === 0) {
 	  
 	  Blockly.hideChaff();
-	  Hints.hideHints();
+	  Hints.stopHints();
 	  Blockly.WidgetDiv.hide();
 	  
 	  BlocklyApps.log = [];
@@ -1069,13 +1084,15 @@ Game.nextStep = function() {
 					}
 					
 					Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
+					
 					return;
 				}
 				
 			} else {
 				
 				// if there isn't more lines to evaluate
-				Game.resetButtons();
+				Game.resetButtons(1);
+				
 			    Blockly.mainWorkspace.highlightBlock(null);
 			    
 			    hero.verifyObjectives("deliver", {allCustomers:true});
@@ -1084,6 +1101,7 @@ Game.nextStep = function() {
 			    
 			    if (hero.allObjectivesAchieved) {
 			    	
+			    	Hints.stopHints();
 				    Game.stopCronometro();
 				    Game.stopSaveUserProgress();
 			    	//TODO animar o cooker no final da missao
@@ -1352,8 +1370,10 @@ Game.animate = function() {
  
   var tuple = BlocklyApps.log.shift();
   if (!tuple) {
-	if (Game.runningStatus == 2)
+	if (Game.runningStatus == 2) {
 		Game.enableButton('debugButton');
+        Hints.startHints();
+	}
     return;
   }
   var command = tuple.shift();

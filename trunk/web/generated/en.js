@@ -5,7 +5,7 @@ if (typeof hints == 'undefined') { var hints = {}; }
 
 
 hints.messages = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Hints_ChooseCategory">Choose a category 0 to see the blocks.</span><span id="Hints_RunProgram">Click in this button for track the cooker actions according your program.</span><span id="Hints_DebugProgram">Click in this button for track the next cooker action according your program.</span><span id="Hints_GoalButton">Click in this button for see which goals are you achieved.</span><span id="Hints_GoalButtonError">Click in this button for remember what you must do in this mission.</span><span id="Hints_DebugButtonError">If it\'s hard to achieve the goals, try to use this button and pay attention in the variables.</span></div>';
+  return '<div style="display: none"><span id="Hints_ChooseCategory">Choose a category 0 to see the blocks.</span><span id="Hints_RunProgram">Click in this button for track the cooker actions according your program.</span><span id="Hints_DebugProgram">Click in this button for track the next cooker action according your program.</span><span id="Hints_GoalButton">Click in this button for see which goals are you achieved.</span><span id="Hints_GoalButtonError">Click in this button for remember what you must do in this mission.</span><span id="Hints_DebugButtonError">If it\'s hard to achieve the goals, try to use this button and pay attention in the variables.</span><span id="Hints_WhileDebugging">Each time the debug button is clicked, the cooker moves according of the program command (block). The highlighted block is the next to be executed. Click again on debug button.</span></div>';
 };
 
 
