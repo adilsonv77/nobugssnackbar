@@ -28,8 +28,8 @@
 	<hints>
 		<sequence>
 			<hint category="ChooseCategory(0)"/>
-			<hint category="SelectCommand(0,0)"/>
-			<hint time="3000" category="StackTogether(0,0,move_goToBarCounter)"/>
+			<hint time="0" category="SelectCommand(0,0)"/>
+			<hint category="StackTogether(0,0,move_goToBarCounter)"/>
 			<hint category="RunProgram"/>
 		</sequence>
 		
