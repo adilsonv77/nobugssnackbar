@@ -10,14 +10,15 @@
 		<page type="statement">
 		O comportamento da tua personagem &#233; o mesmo da miss&#227;o anterior, e por isso <br/>
 		j&#225; est&#225; pronto na &#225;rea de trabalho. Agora clica no bot&#227;o com um p&#233; (tamb&#233;m <br/>
-		chamado bot&#227;o para Depurar) para veres o teu programa ser executado um comando <br/>
+		chamado <b>bot&#227;o para Depurar</b>) para veres o teu programa ser executado um comando <br/>
 		de cada vez. Faz isso at&#233; o programa encerrar.
 		</page>
 
 	</explanation>
 	<hints>
 		<sequence>
-			<hint time="5000">DebugProgram</hint>
+			<hint time="5000" category="WhileDebugging"/>
+			<hint time="5000" category="DebugProgram"/>
 		</sequence>
 	</hints>
 	
