@@ -4,6 +4,8 @@ Hints.chooseCategoryCalled = false;
 Hints.bindEvent1 = null;
 Hints.bindEvent2 = null;
 
+Hints.TIMEINTERVAL = 3000;
+
 Hints.init = function(hints) {
 	
 	Hints.hints = {sequence:[], whenError:[]};
@@ -67,9 +69,14 @@ Hints.formatCategory = function(hint) {
 Hints.traverseHints = function(hint, error) {
     
 	var ret = [];
+	var before = null;
+    var h = null;
 	while (hint) {
 
-	  var h = {};
+	  h = {};
+	  if (before != null)
+		  before.next = h;
+	  
 	  h.type = hint.tagName;
 			  
 	  h.category = hint.getAttribute("category");
@@ -82,7 +89,7 @@ Hints.traverseHints = function(hint, error) {
 	  
 	  h.time = hint.getAttribute("time");
 	  if (h.time == null )
-		  h.time = "0";
+		  h.time = Hints.TIMEINTERVAL;
 	  
 	  h.time = parseInt(h.time);
 	  
@@ -91,10 +98,11 @@ Hints.traverseHints = function(hint, error) {
 		  h.condition = Hints.Categories[h.category].condition;
 	  
 	  hint = hint.nextElementSibling;
-	  
+	  before = h;
 	  ret.push(h);
 	}
   
+    before.next = h;
 	return ret;
   
   
@@ -132,14 +140,16 @@ Hints.timeIsUp = function() {
 	if (hints.length == 0)
 		return;
 	
-	if (Blockly.Block.dragMode_ != 0) {
-		window.setTimeout( Hints.timeIsUp, 1000 );
+	if (Blockly.Block.dragMode_ > 0) {
+		window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+		return;
 	}
 	
 	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 	var countInstructions = Game.countInstructions(xml.childNodes);
 
 	Hints.hintSelected = null;
+	var nextTime = Hints.TIMEINTERVAL;
 	for (var i=0; i<hints.length; i++) {
 		var hint = hints[i];
 		
@@ -148,31 +158,34 @@ Hints.timeIsUp = function() {
 			
 			Hints.hintSelected = hint;
 			Hints.Categories[hint.category].show(hint.args);
-			Hints.associateHideEvents();
+			Hints.associateHideEvents(Hints.Categories[hint.category].bindEvent);
+			nextTime = hint.time;
 			
 			return;
 			
 		}
 	}
 	
-	window.setTimeout( Hints.timeIsUp, 1000 );
+	window.setTimeout( Hints.timeIsUp, nextTime );
 
 };
 
-Hints.associateHideEvents = function() {
+Hints.associateHideEvents = function(bindEvent) {
 	
-	function hideHint() {
-		Hints.hideHints();
-		
-		window.setTimeout( Hints.timeIsUp, (Hints.hintSelected==null?1000:Hints.hintSelected.time) );
-	};
-
-	Hints.bindEvent1 = Blockly.addChangeListener(hideHint);
-
-	Hints.bindEvent2 = Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, hideHint);
+	if (bindEvent == undefined)
+		bindEvent = Hints.hideHintWithTimer;
+    
+	Hints.bindEvent1 = Blockly.addChangeListener(bindEvent);
+	Hints.bindEvent2 = Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, bindEvent);
+	Hints.bindEvent3 = Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent);
 
 };
 
+Hints.hideHintWithTimer = function () {
+	Hints.hideHints();
+	
+	window.setTimeout( Hints.timeIsUp, (Hints.hintSelected==null||Hints.hintSelected.next==null?Hints.TIMEINTERVAL:Hints.hintSelected.next.time) );
+};
 
 Hints.hideHints = function() {
 	
@@ -187,10 +200,14 @@ Hints.hideHints = function() {
 		Blockly.unbindEvent_(Hints.bindEvent2);
 		Hints.bindEvent2 = null;
 	}
+	if (Hints.bindEvent3 != null) {
+		Blockly.unbindEvent_(Hints.bindEvent3);
+		Hints.bindEvent3 = null;
+	}
 };
 
 Hints.startHints = function() {
-	window.setTimeout( Hints.timeIsUp, 1000 );
+	window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
 };
 
 /****************************************************************************************/
@@ -244,6 +261,7 @@ function createStylePosition(menu, submenu, dialog) {
 	var e = Blockly.Toolbox.tree_.children_[menu].element_;
 	
 	e = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[submenu];
+	Hints.hintSelected.e = e;
 	
 	return [createStyle(e.getSvgRoot(), e.svg_.height, dialog), e.svg_.getRootElement()];
 
@@ -323,7 +341,14 @@ Hints.Categories["SelectCommand"] = {
 		},
 		
 	condition:
-		"countInstructions == 0 && Hints.chooseCategoryCalled == true"
+		"countInstructions == 0 && Hints.chooseCategoryCalled == true",
+		
+	bindEvent:
+		function() {
+			Hints.chooseCategoryCalled = false;
+			Hints.hideHintWithTimer();
+		}
+		
 };
 
 Hints.Categories["StackTogether"] = {
