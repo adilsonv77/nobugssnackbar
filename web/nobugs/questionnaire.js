@@ -27,6 +27,8 @@ Questionnaire.createForm = function (questionnaire) {
 		for (var i = 0; i < questionnaire[j].questions.length; i++) {
 			
 			var tr = document.createElement("tr");
+			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
+			
 			var td = document.createElement("td");
 			tr.appendChild(td);
 	
@@ -38,6 +40,8 @@ Questionnaire.createForm = function (questionnaire) {
 			// TODO provide the component according questionnaire.questions[i].type	
 			table.appendChild(tr);
 			tr = document.createElement("tr");
+			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
+			
 			td = document.createElement("td");
 			
 			switch(questionnaire[j].questions[i].type[0].toUpperCase()) {
@@ -48,6 +52,7 @@ Questionnaire.createForm = function (questionnaire) {
 					input.type = "number";
 					input.min = "0";
 					input.max = "130";
+					input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 					input.onkeypress = function(event) {
 						return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)
 					};
@@ -63,6 +68,7 @@ Questionnaire.createForm = function (questionnaire) {
 						input.type = "radio";
 						input.value = questionnaire[j].questions[i].options[x].value;
 						input.id = questionnaire[j].id + "_" + questionnaire[j].questions[i].id + "_" + x;
+						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 						
 						var label = document.createElement("label");
 						
@@ -87,6 +93,7 @@ Questionnaire.createForm = function (questionnaire) {
 						input.type = "text";
 						input.name = questionnaire[j].questions[i].id;
 						input.style["width"] = "100px";
+						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 						td.appendChild(input);
 					} else {
 						var cont = questionnaire[j].questions[i].type.substring(1, questionnaire[j].questions[i].type.length);
@@ -98,6 +105,7 @@ Questionnaire.createForm = function (questionnaire) {
 							input.type = "text";
 							input.style["width"] = "300px";
 							input.style["marginTop"] = "5px";
+							input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 							
 							var label = document.createElement("label");
 							
@@ -178,5 +186,96 @@ Questionnaire.handlingQuestionnaire = function() {
 	}
 	UserControl.saveQuestionnaire(saveAnswers);
 	// it's not necessary waiting the answer... the next parts of the games don't depends on it. 
+};
+
+Questionnaire.consistQuestionnaire = function() {
+	var any = false;
+	
+	var answers = document.getElementsByClassName("answer");
+	
+	for (var i = 0;i < answers.length;i++) {
+		var answer = answers[i];
+		var questionnaireId = answer.name.split("_")[0];
+		var questionId = answer.name.split("_")[1];
+		
+		var checked = false;
+		
+		switch(answer.type.toUpperCase()) {
+			case "RADIO": {
+				var answerOptions = document.getElementsByName(answer.name);
+				
+				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
+					
+					for (var x = 0;x < answerOptions.length;x++) {
+						if (answerOptions[x].checked) {
+							checked = true;
+						}
+						if (x != answerOptions.length-1) {
+							i++;
+						}
+					}
+				} else {
+					checked = true;
+				}
+				break;
+			}
+			case "NUMBER": {
+				if (answer.getAttribute("questionrequired").toUpperCase() == "TRUE") {
+					if (answer.value != "") {
+						checked = true;
+					}
+				} else {
+					checked = true;
+				}
+				
+				break;
+			}
+			case "TEXT": {
+				var answerOptions = document.getElementsByName(answer.name);
+				
+				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
+					for (var x = 0;x < answerOptions.length;x++) {
+						if (answerOptions[x].value == "") {
+							break;
+						}
+						
+						if (x != answerOptions.length-1) {
+							i++;
+						}
+						checked = true;
+					}
+				} else {
+					checked = true;
+				}
+				break;
+			}
+		}
+		if (!checked) {
+			any = true;
+			var redTrs = Questionnaire.getTrsByQuestionId(questionId);
+			for (var x = 0;x < redTrs.length;x++) {
+				redTrs[x].style["color"] = "red";
+			}
+		} else {
+			var blackTrs = Questionnaire.getTrsByQuestionId(questionId);
+			for (var x = 0;x < blackTrs.length;x++) {
+				blackTrs[x].style["color"] = "black";
+			}
+		}
+	}
+	
+	return !any;
+};
+
+Questionnaire.getTrsByQuestionId = function(questionId) {
+	var selectedTrs = [];
+	var allTrs = document.getElementsByTagName("tr");
+	
+	for (var i = 0;i < allTrs.length;i++) {
+		if (allTrs[i].getAttribute("questionId") == questionId) {
+			selectedTrs.push(allTrs[i]);
+		}
+	}
+	return selectedTrs;
 };
 

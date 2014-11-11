@@ -137,7 +137,9 @@ Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, mis
 Game.finishQuestionnaire = function() {
 	//TODO consistir formulario
 
-	var consistido = true;
+	var consistido = Questionnaire.consistQuestionnaire();
+	
+//	var consistido = true;
 	if (consistido) {
 		
 		Questionnaire.handlingQuestionnaire();
