@@ -49,6 +49,10 @@ Game.lastErrorData;
 Game.jsInterpreter;
 Game.variableBox = null;
 
+Game.DOWN = 1;
+Game.RIGHT = 2;
+Game.varWindow = Game.RIGHT;
+
 /**
  * Initialize Blockly and SnackBar. Called on page load.
  */
@@ -694,6 +698,9 @@ Game.resizeWindow = function(e) {
 
 
 Game.moveDownButtonClick = function() {
+	Hints.hideHintWithTimer();
+	
+	Game.varWindow = Game.DOWN;
 	document.getElementById("moveDown").style.display = 'none';
 	document.getElementById("moveRight").style.display = 'inline-block';
 	
@@ -708,6 +715,9 @@ Game.moveDownButtonClick = function() {
 };
 
 Game.moveRightButtonClick = function() {
+	  Hints.hideHintWithTimer();
+
+	  Game.varWindow = Game.RIGHT;
       document.getElementById("moveRight").style.display = 'none';
 	  document.getElementById("moveDown").style.display = 'inline-block';
 	
@@ -761,58 +771,32 @@ Game.display = function() {
 	
 };
 
-Game.countInstructions = function(c) {
+Game.countInstructions = function(c, f) {
 	
 	var conta = 0;
-	if (c.length != undefined) {
-		
-		for (var i=0; i<c.length; i++)
-			conta += Game.countInstructions(c[i]);
-		
-		return conta;
-		
-	}
-	
-	while (c != null) {
-		var a = c;
-		if (!a.attributes["disabled"])
+	for (var i = 0; i < c.length; i++) {
+		var block = c[i];
+		if (block.nextConnection != null) { // we dont count the blocks that are into other blocks, as parameter, for instance 
+			
 			conta++;
-
-		if (c.childNodes.length == 0)
-			break;
-		else
-			c = c.childNodes[c.childElementCount-1];
-		
-		if (!a.attributes["disabled"] && 
-			 ((a.childElementCount >= 2 && a.childNodes[a.childElementCount-2].nodeName === "STATEMENT") ||
-					 (a.childNodes[0].nodeName === "STATEMENT"))) {
-			var offset = 1;
-			if (c.nodeName === "NEXT")
-				offset = 2;
-			if (a.childNodes[0].nodeName === "MUTATION")
-				conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-(offset+1)].childNodes[0]);
-			conta = conta + Game.countInstructions(a.childNodes[a.childElementCount-offset].childNodes[0]);
-			
-		}
-		if (c.nodeName === "NEXT") {
-			c  = c.childNodes[0];
-			
-		} else
-			break;
+			if (f != undefined)
+				if (!f(block))
+					return conta;
+		} 	
+		conta += Game.countInstructions(block.childBlocks_, f);
 	}
 	
 	return conta;
-
 	
 };
 
 Game.goalButtonClick = function() {
-  
+	
 	Hints.stopHints();
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
-  
+	
 };
 
 Game.logoffButtonClick = function() {
@@ -1111,7 +1095,7 @@ Game.nextStep = function() {
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-			    	var count = Game.countInstructions(xml.childNodes);
+			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 
 			    	var now = new Date().getTime();
 			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
