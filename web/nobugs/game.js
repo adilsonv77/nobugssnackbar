@@ -957,6 +957,8 @@ Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
 	  
+	  Game.highlightPause = false;
+	  
 	  Blockly.hideChaff();
 	  Hints.stopHints();
 	  Blockly.WidgetDiv.hide();
