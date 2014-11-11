@@ -17,8 +17,17 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint consist="false">ChooseCategory(1)</hint>
-			<hint>SelectCommand(1,0)</hint>
+			<hint category="ChooseCategory(1)" condition="countInstructions &lt; 2"/>
+			<hint category="SelectCommand(1,0)" condition="countInstructions &lt; 2"/>
+			<hint category="LastBlockInserted" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariable() > 2">
+			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
+			</hint> 
+			<hint category="LastBlockInserted" condition="Hints.isVariable() == true">
+			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie <b>uma nova vari&#225;vel</b>.
+			</hint>
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.variableName() == 'item'">
+			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie <b>uma nova vari&#225;vel</b>.
+			</hint>
 		</sequence>
 	</hints>
 		

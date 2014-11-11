@@ -17,6 +17,12 @@
 		</page>
 
 	</explanation>
+	<hints>
+		<sequence>
+			<hint time="2000" category="VariableWindow"/>
+			<hint time="5000" category="DebugProgram"/>
+		</sequence>
+	</hints>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
