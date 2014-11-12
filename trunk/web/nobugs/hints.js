@@ -46,6 +46,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.content = document.getElementById("Hints_GoalButtonError").innerHTML;
 	hint.time = 0;
 	hint.condition = "true";
+	hint.running = false;
 	hint.category = "GoalButton";
 	
 	Hints.hints.whenError.push(hint);
@@ -55,6 +56,7 @@ Hints.addDefaultErrorHints = function() {
 	hint = hint.next;
 	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
 	hint.time = 0;
+	hint.running = false;
 	hint.category = "DebugProgram";
 	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
 	Hints.hints.whenError.unshift(hint);
@@ -64,6 +66,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "TestBlock";
 	hint.content =  document.getElementById("Hints_EmptyInputError").innerHTML;
 	hint.time = 0;
+	hint.running = false;
 	hint.condition = "Hints.hasEmptyInputs()";
 	
 	Hints.hints.testBlock.push(hint);
@@ -115,8 +118,18 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 	  if (h.condition == null)
 		  h.condition = Hints.Categories[h.category].condition;
 	  
+	  if (h.condition == undefined)
+		  h.condition = "true";
+	  
 	  if (Hints.Categories[h.category].naturalCondition != undefined)
 		  h.condition = h.condition + " && " + Hints.Categories[h.category].naturalCondition;
+	  
+	  h.running = hint.getAttribute("running");
+	  if (h.running == null)
+		  h.running = Hints.Categories[h.category].running;
+	  
+	  if (h.running == null || h.running == undefined)
+		  h.running = false;
 	  
 	  hint = hint.nextElementSibling;
 	  if (h.category === "TestBlock") {
@@ -188,10 +201,15 @@ Hints.timeIsUp = function() {
 	if (menuSelected != null)
 		menuSelected = menuSelected.element_;
 	
+	
+	var running = Game.runningStatus > 0;
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
 		var hint = hints[i];
 		Hints.hintSelected = hint;
+		
+		if (running && !hint.running)
+			continue;
 		
 		var condition = eval(hint.condition);
 		if (condition) {
@@ -206,7 +224,7 @@ Hints.timeIsUp = function() {
 		}
 	}
 	
-	if (Hints.hints.testBlock.length > 0) {
+	if (!running && Hints.hints.testBlock.length > 0) {
 		
 		for (var i=0; i<Hints.hints.testBlock.length; i++) {
 			
@@ -560,7 +578,7 @@ Hints.Categories["SelectCommand"] = {
 		"countInstructions == 0",
 		
 	naturalCondition:
-		"Hints.chooseCategoryCalled == true || (Blockly.Toolbox.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ == menuSelected)" ,
+		"(Hints.chooseCategoryCalled == true || (Blockly.Toolbox.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ == menuSelected))" ,
 			
 	bindEvent:
 		function() {
@@ -636,9 +654,9 @@ Hints.Categories["DebugProgram"] = {
 		"Game.howManyRuns == 0",
 	
 	naturalCondition:
-		"Game.enabledDebug == true && countInstructions > 0"
+		"Game.enabledDebug == true && countInstructions > 0",
 			
-
+	running: true
 	
 };
 	
@@ -677,7 +695,9 @@ Hints.Categories["WhileDebugging"] = {
 				Hints.Categories["SourceCode"].show();
 			},
 			
-		naturalCondition : "Game.runningStatus == 2"
+		naturalCondition : "Game.runningStatus == 2",
+		
+		running : true
 	};
 
 Hints.Categories["VariableWindow"] = {
@@ -698,7 +718,7 @@ Hints.Categories["VariableWindow"] = {
 			},
 			
 		naturalCondition : "Game.runningStatus == 2 && Game.enabledVarWindow == true && Hints.Categories['VariableWindow'].thereAreVariable()",
-		
+		running: true,
 		thereAreVariable:
 			function () {
 			  

@@ -15,7 +15,7 @@ Explanation.selectCommands = function(commands) {
 	return ret;
 };
 
-Explanation.showInfo = function(explanation, withHint) {
+Explanation.showInfo = function(explanation, withHint, afterclosed) {
 	
 	var statement = 0;
 	Explanation.firstStatement = -1;
@@ -42,11 +42,11 @@ Explanation.showInfo = function(explanation, withHint) {
 
 	if (withHint) {
 		Explanation.pageNumber = Explanation.firstStatement;
-		Explanation.createDialog(Explanation.firstStatement);
+		Explanation.createDialog(Explanation.firstStatement, afterclosed);
 	}
 	else {
-		Explanation.pageNumber = Explanation.lastStatement
-		Explanation.createDialog(Explanation.lastStatement);
+		Explanation.pageNumber = Explanation.lastStatement;
+		Explanation.createDialog(Explanation.lastStatement, afterclosed);
 	}
 		
 	Explanation.showHint = withHint;
@@ -91,7 +91,7 @@ Explanation.previousStatement = function() {
 
 };
 
-Explanation.createDialog = function(nrPage) {
+Explanation.createDialog = function(nrPage, afterclosed) {
     var content = document.getElementById('dialogInfo');
 	var container = document.getElementById('dialogInfoText');
 	var children = Explanation.explanation.getElementsByTagName("page");
@@ -114,7 +114,7 @@ Explanation.createDialog = function(nrPage) {
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 
 	MyBlocklyApps.showDialog(content, (nrPage==0?document.getElementById('goalButton'):null),
-							 true, true, true, Game.missionTitle, style, null);
+							 true, true, true, Game.missionTitle, style, afterclosed);
 	
 };
 
@@ -167,8 +167,10 @@ Explanation.evaluateObjectives = function(statement, container) {
 Explanation.finishStatement = function() {
 	BlocklyApps.hideDialog(false);
 
-	if (!Explanation.showHint)
+	if (!Explanation.showHint) {
+		Hints.startHints();
 		return;
+	}
 
 	
 	Hints.init(Game.mission.getElementsByTagName("hints")[0]);
