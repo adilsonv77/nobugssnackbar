@@ -6,7 +6,8 @@
 		anotar os pedidos dos dois clientes. Uma vari&#225;vel s&#243; consegue guardar uma <br/>
 		informa&#231;&#227;o de cada vez. <b>Por isso, vais precisar de criar uma segunda vari&#225;vel. </b> <br/>
 		As vari&#225;veis s&#227;o identificadas pelo nome. Ent&#227;o usa nomes distintos para vari&#225;veis <br/>
-		diferentes, caso contr&#225;rio, referencias a mesma.
+		diferentes, caso contr&#225;rio, referencias a mesma.<br/><br/>
+		<span style="color: red">Use vari&#225;veis diferentes para anotar o pedido de cada cliente.</span>
 		</page>
 
 		<page type="hint" origin="command" id="1" dir="up">
@@ -17,27 +18,37 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="ChooseCategory(1)" condition="countInstructions &lt; 2">
+			<hint category="ChooseCategory(1)" condition="Hints.countVariable() &lt; 2">
 			Precisamos criar mais uma vari&#225;vel. Selecione a categoria Vari&#225;veis.
 			</hint>
-			<hint category="SelectCommand(1,0)" condition="countInstructions &lt; 2"/>
+			<hint category="SelectCommand(1,0)" time="0"  condition="Hints.countVariable() &lt; 2"/>
 			<hint category="LastBlockInserted" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariable() > 2">
 			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
 			</hint> 
+			<hint time="5000" category="VariableWindow"/>
+			
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.hasEmptyInputs() == true &amp;&amp; Hints.countVariable() > 2">
+			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
+			</hint> 
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariable() > 2">
+			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
+			</hint> 
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.variableName() == 'item'">
-			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie <b>uma nova vari&#225;vel</b>.
+			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<!--  se deve estar em branco, eh porque deve ser um dos ultimos incluidos. a prioridade sao os blocos falhados -->
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2 &amp;&amp; Hints.hasEmptyInputs() == true">
-			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie <b>uma nova vari&#225;vel</b>.
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2">
-			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie <b>uma nova vari&#225;vel</b>.
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.hasEmptyInputs() == true">
 			Arraste um bloco [askForFood] nessa abertura em branco.
 			</hint>
 		</sequence>
+		<errors>
+		</errors>
 	</hints>
 		
 	
@@ -71,7 +82,7 @@
 			<drinks></drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7">
+	<objectives ordered="false" reward="7" >
 		<objective pos="1" place="counter" distinct="true">askForFood</objective>
 		<objective pos="4" place="counter" distinct="true">askForFood</objective>
 	</objectives>
