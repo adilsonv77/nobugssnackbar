@@ -2,7 +2,7 @@ var Hints = {};
 Hints.Categories = [];
 Hints.chooseCategoryCalled = false;
 Hints.bindEvent1 = null;
-Hints.bindEvent2 = null;
+Hints.bindEvents = [];
 
 Hints.TIMEINTERVAL = 3000;
 
@@ -17,6 +17,7 @@ Hints.init = function(hints) {
 		return;
 	
 	Hints.lastInsertedBlock = null;
+	Hints.activeBlock = null;
 	Hints.lastCountBlocks = Blockly.mainWorkspace.getTopBlocks(true).length;
 	
 	Blockly.removeChangeListener(Hints.changeListener);
@@ -49,12 +50,23 @@ Hints.addDefaultErrorHints = function() {
 	
 	Hints.hints.whenError.push(hint);
 	
-	hint = new Object();
+	hint.next = new Object();
+	
+	hint = hint.next;
 	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
 	hint.time = 0;
 	hint.category = "DebugProgram";
 	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
 	Hints.hints.whenError.unshift(hint);
+	
+	hint = new Object();
+	
+	hint.category = "TestBlock";
+	hint.content =  document.getElementById("Hints_EmptyInputError").innerHTML;
+	hint.time = 0;
+	hint.condition = "Hints.hasEmptyInputs()";
+	
+	Hints.hints.testBlock.push(hint);
 	
 };
 
@@ -196,11 +208,17 @@ Hints.timeIsUp = function() {
 	
 	if (Hints.hints.testBlock.length > 0) {
 		
-		Hints.foundTestBlock = false;
+		for (var i=0; i<Hints.hints.testBlock.length; i++) {
+			
+			Hints.foundTestBlock = false;
+			Hints.hintSelected = Hints.hints.testBlock[i];
+			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocksV2);
+			
+			if (Hints.foundTestBlock)
+				return;
+			
+		}
 		
-		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
-		if (Hints.foundTestBlock)
-			return;
 	}
 	
 	
@@ -208,9 +226,29 @@ Hints.timeIsUp = function() {
 
 };
 
+Hints.visitBlocksV2 = function(block) {
+	
+	Hints.activeBlock = block;
+	var hint = Hints.hintSelected;
+	
+	var condition = eval(hint.condition);
+	if (condition) {
+		Hints.foundTestBlock = true;
+
+		var cat = Hints.Categories[hint.category];
+		
+		cat.show(hint.args);
+		Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
+		return false;
+		
+	}
+	Hints.activeBlock = null;
+	return true;
+};
+
 Hints.visitBlocks = function(block) {
 	
-	Hints.lastInsertedBlock = block;
+	Hints.activeBlock = block;
 	for (var i=0; i<Hints.hints.testBlock.length; i++) {
 		var hint = Hints.hints.testBlock[i];
 		Hints.hintSelected = hint;
@@ -223,12 +261,12 @@ Hints.visitBlocks = function(block) {
 			
 			cat.show(hint.args);
 			Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
-
 			return false;
 			
 		}
 
 	}
+	Hints.activeBlock = null;
 	return true;
 	
 };
@@ -239,9 +277,12 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 		bindEvent = Hints.hideHintWithTimer;
 	
 	Hints.bindEvent1 = Blockly.addChangeListener(bindEvent);
-	Hints.bindEvent2 = Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, bindEvent);
-	Hints.bindEvent3 = Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent);
-	Hints.bindEvent4 = specialEvent;
+
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
+	if (specialEvent != null)
+		Hints.bindEvents.push(specialEvent);
 
 };
 
@@ -260,17 +301,9 @@ Hints.hideHints = function() {
 		Hints.bindEvent1 = null;
 	}
 	
-	if (Hints.bindEvent2 != null) {
-		Blockly.unbindEvent_(Hints.bindEvent2);
-		Hints.bindEvent2 = null;
-	}
-	if (Hints.bindEvent3 != null) {
-		Blockly.unbindEvent_(Hints.bindEvent3);
-		Hints.bindEvent3 = null;
-	}
-	if (Hints.bindEvent4 != null) {
-		Blockly.unbindEvent_(Hints.bindEvent4);
-		Hints.bindEvent4 = null;
+	while (Hints.bindEvents.length > 0) {
+		Blockly.unbindEvent_(Hints.bindEvents[0]);
+		Hints.bindEvents.shift();
 	}
 };
 
@@ -293,10 +326,10 @@ Hints.changeListener = function() {
 	if (blocks.length > Hints.lastCountBlocks) {
 		Hints.lastInsertedBlock = Blockly.selected;
 	} else 
-		if (blocks.length < Hints.lastCountBlocks || Hints.lastInsertedBlock != Blockly.selected )
+		if (blocks.length < Hints.lastCountBlocks )
 			Hints.lastInsertedBlock = null;
 	
-	
+	Hints.activeBlock = Hints.lastInsertedBlock;
 	Hints.lastCountBlocks = blocks.length;
 };
 
@@ -422,11 +455,43 @@ Hints.countVariable = function() {
 };
 
 Hints.isVariable = function() {
-	return (Hints.lastInsertedBlock != null && Hints.lastInsertedBlock.type == "variables_set") ;
+	return (Hints.activeBlock != null && Hints.activeBlock.type == "variables_set") ;
 };
 
 Hints.variableName = function() {
-	return Hints.lastInsertedBlock.getVars()[0];
+	return Hints.activeBlock.getVars()[0];
+};
+
+Hints.hasEmptyInputs  = function() {
+	
+	var input = Hints.activeBlock.inputList;
+	for (var i=0; i<input.length; i++) {
+		if (input[i].connection != null && input[i].connection.targetConnection == null)
+			return true;
+	}
+	
+	return false;
+	
+};
+
+Hints.fCountVariableName = function(block) {
+	if (block.type === "variables_set") {
+		
+		var varName = block.getVars()[0];
+		for (var i=0; i<Hints.variablesNames.length; i++) {
+			if (Hints.variablesNames[i] === varName)
+				return true;
+		}
+		Hints.variablesNames.push(varName);
+		
+	}
+	return true;
+};
+
+Hints.countVariableName  = function() {
+	Hints.variablesNames = [];
+	Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.fCountVariableName);
+	return Hints.variablesNames.length;
 };
 
 /****************************************************************************************/
@@ -668,9 +733,9 @@ Hints.Categories["TestBlock"] = {
 		show:
 			function (param) {
 			Blockly.mainWorkspace.traceOn(true);
-				Blockly.mainWorkspace.highlightBlock(Hints.lastInsertedBlock.id);
+				Blockly.mainWorkspace.highlightBlock(Hints.activeBlock.id);
 				
-				var bbBox = BlocklyApps.getBBox_(Hints.lastInsertedBlock.getSvgRoot());
+				var bbBox = BlocklyApps.getBBox_(Hints.activeBlock.getSvgRoot());
 				createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
 			},
 		

@@ -17,16 +17,25 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="ChooseCategory(1)" condition="countInstructions &lt; 2"/>
+			<hint category="ChooseCategory(1)" condition="countInstructions &lt; 2">
+			Precisamos criar mais uma vari&#225;vel. Selecione a categoria Vari&#225;veis.
+			</hint>
 			<hint category="SelectCommand(1,0)" condition="countInstructions &lt; 2"/>
 			<hint category="LastBlockInserted" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariable() > 2">
 			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
 			</hint> 
-			<hint category="LastBlockInserted" condition="Hints.isVariable() == true">
-			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie <b>uma nova vari&#225;vel</b>.
-			</hint>
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.variableName() == 'item'">
 			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie <b>uma nova vari&#225;vel</b>.
+			</hint>
+			<!--  se deve estar em branco, eh porque deve ser um dos ultimos incluidos. a prioridade sao os blocos falhados -->
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2 &amp;&amp; Hints.hasEmptyInputs() == true">
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie <b>uma nova vari&#225;vel</b>.
+			</hint>
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2">
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie <b>uma nova vari&#225;vel</b>.
+			</hint>
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.hasEmptyInputs() == true">
+			Arraste um bloco [askForFood] nessa abertura em branco.
 			</hint>
 		</sequence>
 	</hints>
