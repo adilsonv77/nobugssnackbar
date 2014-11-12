@@ -52,7 +52,14 @@
 	"SnackMan.goToCoolerTooltip" : "Move o cozinheiro at&#233; o refrigerador." ,
 	"SnackMan.askForDrinkTooltip" : "Pergunto ao cliente o que ele deseja beber.",
 	"SnackMan.catchDrinkTooltip" : "Pega a bebida do refrigerador e coloca na bandeja pronto para ser entregue ao cliente.",
-	
+	"SnackMan.askHasHungerTooltip" : "Pergunto ao cliente se deseja comer algo.",
+	"SnackMan.askHasThirstyTooltip" : "Pergunto ao cliente se deseja beber algo.",
+	"SnackMan.goToBoxOfFruitsTooltip" : "Move o cozinheiro at&#233; a caixa de frutas.",
+	"SnackMan.catchFruitsTooltip" : "Pega uma fruta da caixa necess&#225;ria para preparar o sumo.",
+	"SnackMan.goToJuiceMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de sumos.",
+	"SnackMan.prepareAndCatchJuiceTooltip" : "Usa a fruta p&#234;ga e prepara o sumo.",
+	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja.",
+	"SnackMan.constSoftDrinkTooltip" : "Refrigerante.",
 	
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
@@ -106,5 +113,7 @@
 	"Hints.GoalButtonError": "Clique nesse bot&#227;o para relembrar o que precisas fazer nessa miss&#227;o.",
 	
 	"Hints.WhileDebugging" : "Cada vez que clica no bot&#227;o Depurar, o movimento do cozinheiro &#233; executado de acordo com um comando do seu programa. Observe que o bloco real&#231;ado &#233; o pr&#243;ximo a ser executado. Clique novamente no bot&#227;o Depurar.",
-	"Hints.VariableWindow" : "Aqui est&#227;o as vari&#225;veis criadas durante a execu&#231;&#227;o. Observe que o nome da vari&#225;vel &#233; o mesmo que aquele configurado no &#250;ltimo comando executado."
+	"Hints.VariableWindow" : "Aqui est&#227;o as vari&#225;veis criadas durante a execu&#231;&#227;o. Observe que o nome da vari&#225;vel &#233; o mesmo que aquele configurado no &#250;ltimo comando executado.",
+
+	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas em vazias."
 }

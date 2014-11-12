@@ -7,6 +7,13 @@ String.prototype.format = function() {
     return formatted;
 };
 
+var window_prompt = window.prompt;
+
+window.prompt = function(one, two) {
+	Blockly.fireUiEventNow(window, 'showWindowPrompt');
+	return window_prompt(one, two);
+};
+
 
 // Based on Professional JavaScript for Web Developers (Nicholas C. Zakas)
 // Parasitic Combination Inheritance

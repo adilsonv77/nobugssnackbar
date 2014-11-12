@@ -23,6 +23,16 @@ function loadQuestionnaire() {
 	});
 }
 
+function chamou() {
+	document.getElementById("aquiVaiOForm").innerHTML = "Chamou";
+}
+
+function callEvent() {
+    var evt = document.createEvent('UIEvents');
+    evt.initEvent("showWindowPrompt", true, true);  // event type, bubbling, cancelable
+    window.dispatchEvent(evt);
+
+}
 
 </script>
 
@@ -30,8 +40,16 @@ function loadQuestionnaire() {
 
 <body >
 
+<script>
+
+
+var wrapFunc = function(e) {
+	chamou();
+};
+window.addEventListener("showWindowPrompt", wrapFunc, false);
+</script>
 	<input type="button" value="Load" onclick="loadQuestionnaire()"/>
+	<input type="button" value="Chamar evento" onclick="callEvent()"/>
 	<div id="aquiVaiOForm"></div>
-	
 </body>
 </html>
