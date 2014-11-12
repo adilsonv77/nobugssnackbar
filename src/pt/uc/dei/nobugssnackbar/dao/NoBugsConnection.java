@@ -99,14 +99,9 @@ public class NoBugsConnection {
 			u.setName(rs.getString(5));
 			u.setSex(rs.getString(6));
 			u.setLastTime(rs.getTime(7));
-
+			
 			ps.close();
 
-			ps = bdCon
-					.prepareStatement("update users set userlasttime = now() where userid = ?");
-			//ps.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
-			ps.setLong(1, u.getId());
-			ps.executeUpdate();
 		} finally {
 			if (bdCon != null)
 				try {
@@ -117,6 +112,28 @@ public class NoBugsConnection {
 		return u;
 	}
 
+	public void updateUserLastTime(User u) throws Exception {
+		
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("update users set userlasttime = now() where userid = ?");
+			
+			ps.setLong(1, u.getId());
+			ps.executeUpdate();
+			
+			ps.close();
+		} finally {
+			if (bdCon != null) {
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
+	
 	public void insertUser(String userNick, String userPassword, String userName, String sex) throws SQLException {
 		Connection bdCon = null;
 		try {

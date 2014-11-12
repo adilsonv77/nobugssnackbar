@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProperty;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
@@ -38,6 +39,7 @@ public class UserControl {
 	private long classid = 0;
 	private long levelid = 0;
 	private int missionidx;
+	private boolean registeredUserLastTime;
 	
 	@RemoteMethod
 	public Object[] verifyLogged() throws SQLException {
@@ -70,6 +72,20 @@ public class UserControl {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Object[]{"Error_login"};
+		}
+		
+	}
+	
+	@RemoteMethod
+	public void updateUserLastTime() {
+		
+		try {
+			if (!this.registeredUserLastTime) {
+				NoBugsConnection.getConnection().updateUserLastTime(this.user);
+				this.registeredUserLastTime = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}

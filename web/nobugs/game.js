@@ -143,7 +143,6 @@ Game.finishQuestionnaire = function() {
 
 	var consistido = Questionnaire.consistQuestionnaire();
 	
-//	var consistido = true;
 	if (consistido) {
 		
 		Questionnaire.handlingQuestionnaire();
@@ -181,6 +180,8 @@ Game.finishIntro = function() {
 };
 
 Game.logged = function(missionsHistorical) {
+	
+	UserControl.updateUserLastTime();
 	
 	if (Game.variableBox != null)
 		Game.variableBox.style.display = "none";
@@ -818,6 +819,7 @@ Game.logoffButtonClick = function() {
     Game.runningStatus = 0;
 	
     document.getElementById('blockly').innerHTML = ""; // clean the editor
+    //---------------------------------------------------------------
     var answer = null;
     var timeSpent = 0;
     if (Game.currTime != 0) {
@@ -999,14 +1001,16 @@ Game.execute = function(debug) {
  */
 Game.lockBlockly = function() {
 	
-	var blockly = document.getElementById('blockly');
+	var blockly = document.getElementById("blockly");
 	
-    var blocklyLock = document.createElement('div');
-    blocklyLock.id = 'blocklyLock';
+    var blocklyLock = document.createElement("div");
+    blocklyLock.id = "blocklyLock";
     blocklyLock.style.cssText = blockly.style.cssText;
-    blocklyLock.style.position = 'absolute';
-
-	var mainBody = document.getElementById('mainBody');
+    blocklyLock.style.position = "absolute";
+    blocklyLock.style.backgroundColor = "grey";
+    blocklyLock.style.opacity = "0.3";
+    
+	var mainBody = document.getElementById("mainBody");
 	mainBody.appendChild(blocklyLock);
 	
 	Game.stopSaveUserProgress();
@@ -1016,10 +1020,10 @@ Game.lockBlockly = function() {
  * Unlock block panel after run
  */
 Game.unlockBlockly = function() {
-	var blocklyLock = document.getElementById('blocklyLock');
+	var blocklyLock = document.getElementById("blocklyLock");
 	
-	if (blocklyLock !== 'undefined' && blocklyLock !== undefined) {
-		var mainBody = document.getElementById('mainBody');
+	if (blocklyLock !== "undefined" && blocklyLock !== undefined) {
+		var mainBody = document.getElementById("mainBody");
 		mainBody.removeChild(blocklyLock);
 	}
 	
