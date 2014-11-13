@@ -9,14 +9,20 @@ Hints.lastTimeSpent = 0;
 
 Hints.hndlTimer = 0;
 
-Hints.lastCountBlocks;
+Hints.lastCountBlocks = 0;
+Hints.hintBlockDeleted = null;
+
+var countInstructions, countTopInstructions, menuSelected; 
 
 Hints.init = function(hints) {
-	
+
 	Hints.hints = {sequence:[], whenError:[], testBlock:[]};
 	if (hints == null)
 		return;
 	
+	Hints.showedIddle = 0;
+
+	Hints.hintBlockDeleted = null;
 	Hints.lastInsertedBlock = null;
 	Hints.activeBlock = null;
 	Hints.lastCountBlocks = Blockly.mainWorkspace.getTopBlocks(true).length;
@@ -102,7 +108,7 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 	  h.type = hint.tagName;
 			  
 	  h.category = hint.getAttribute("category");
-	  
+
 	  Hints.formatCategory(h);
 	  
 	  h.content = hint.innerHTML || hint.textContent;
@@ -123,7 +129,7 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 		  h.condition = "true";
 	  
 	  if (Hints.Categories[h.category].naturalCondition != undefined)
-		  h.condition = h.condition + " && " + Hints.Categories[h.category].naturalCondition;
+		  h.condition = Hints.Categories[h.category].naturalCondition + " && " + h.condition;
 	  
 	  h.running = hint.getAttribute("running");
 	  if (h.running == null)
@@ -133,6 +139,12 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 		  h.running = false;
 	  
 	  hint = hint.nextElementSibling;
+
+	  if (h.category === "BlockDeleted" && Hints.hintBlockDeleted == null) {
+		  Hints.hintBlockDeleted = h;
+		  continue;
+	  }
+	  
 	  if (h.category === "TestBlock") {
 		  if (beforeTest != null)
 			  beforeTest.next = h;
@@ -197,8 +209,12 @@ Hints.timeIsUp = function() {
 		return;
 	}
 	
-	var countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
-	var menuSelected = Blockly.Toolbox.tree_.selectedItem_; 
+	var blocks = Blockly.mainWorkspace.getTopBlocks();
+	
+	 // variables used into conditions
+	countInstructions = Game.countInstructions(blocks);
+	countTopInstructions = blocks.length;
+	menuSelected = Blockly.Toolbox.tree_.selectedItem_; 
 	if (menuSelected != null)
 		menuSelected = menuSelected.element_;
 	
@@ -206,24 +222,10 @@ Hints.timeIsUp = function() {
 	var running = Game.runningStatus > 0;
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
-		var hint = hints[i];
-		Hints.hintSelected = hint; // let this line. hintSelected is used into the methods in the condition
 		
-		if (running && !hint.running)
-			continue;
-		
-		var condition = eval(hint.condition);
-		if (condition) {
-			
-			if (Hints.lastTimeSpent < hint.time) {
-				Hints.hndlTimer = window.setTimeout(Hints.showHint.bind(window, hint), hint.time-Hints.lastTimeSpent);
-				Hints.lastTimeSpent = hint.time;
-			} else {
-				Hints.showHint(hint);
-			}
+		if (Hints.runHint(hints[i]))
 			return;
-			
-		}
+		
 	}
 	
 	if (!running && Hints.hints.testBlock.length > 0) {
@@ -245,6 +247,30 @@ Hints.timeIsUp = function() {
 
 };
 
+
+Hints.runHint = function(hint) {
+	
+	Hints.hintSelected = hint; // let this line. hintSelected is used into the methods in the condition
+
+	if (Game.runningStatus > 0 && !hint.running)
+		return false;
+
+	var condition = eval(hint.condition);
+	if (condition) {
+		
+		if (Hints.lastTimeSpent < hint.time) {
+			Hints.hndlTimer = window.setTimeout(Hints.showHint.bind(window, hint), hint.time-Hints.lastTimeSpent);
+			Hints.lastTimeSpent = hint.time;
+		} else {
+			Hints.showHint(hint);
+		}
+		return true;
+		
+	}
+	
+	return false;
+
+};
 Hints.showHint = function(hint) {
 	
 	Hints.hintSelected = hint;
@@ -325,6 +351,8 @@ Hints.hideHints = function() {
 };
 
 Hints.startHints = function() {
+	Hints.showedErrorHint = false;
+
 	Hints.launchTimer(Hints.TIMEINTERVAL);
 	
 };
@@ -337,15 +365,19 @@ Hints.stopHints = function() {
 
 Hints.changeListener = function() {
 	
-	var blocks = Blockly.mainWorkspace.getTopBlocks(true);
-	if (blocks.length > Hints.lastCountBlocks) {
+	var howMany = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	if (howMany > Hints.lastCountBlocks) {
 		Hints.lastInsertedBlock = Blockly.selected;
-	} else 
-		if (blocks.length < Hints.lastCountBlocks )
+	} else {
 			Hints.lastInsertedBlock = null;
+			if (Hints.hintBlockDeleted != null) {
+				Hints.runHint(Hints.hintBlockDeleted);
+			}
+				
+		}
 	
 	Hints.activeBlock = Hints.lastInsertedBlock;
-	Hints.lastCountBlocks = blocks.length;
+	Hints.lastCountBlocks = howMany;
 };
 
 /****************************************************************************************/
@@ -481,8 +513,13 @@ Hints.hasEmptyInputs  = function() {
 	
 	var input = Hints.activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
-		if (input[i].connection != null && input[i].connection.targetConnection == null)
-			return true;
+		if (input[i].connection != null) {
+			if (input[i].connection.targetConnection == null)
+			  return true;
+			Hints.activeBlock = input[i].connection.targetConnection.sourceBlock_;
+			if (Hints.hasEmptyInputs())
+				return true;
+		} 
 	}
 	
 	return false;
@@ -749,7 +786,7 @@ Hints.Categories["TestBlock"] = {
 		
 		show:
 			function (param) {
-			Blockly.mainWorkspace.traceOn(true);
+			    Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(Hints.activeBlock.id);
 				
 				var bbBox = BlocklyApps.getBBox_(Hints.activeBlock.getSvgRoot());
@@ -758,3 +795,58 @@ Hints.Categories["TestBlock"] = {
 		
 		
 };
+Hints.showedIddle = 0;
+
+Hints.Categories["Iddle"] = {
+		
+		show:
+				function (param) {
+		    		var content = document.getElementById('dialogInfo');
+		    		var container = document.getElementById('dialogInfoText');
+		    		container.innerHTML = Hints.hintSelected.content;
+		    		
+		    		var bbBox = BlocklyApps.getBBox_(Blockly.mainWorkspace.topBlocks_[0].getSvgRoot());
+		    		
+		    		var style = {top: '120px'}; 
+		    		style[Blockly.RTL ? 'right' : 'left'] = (bbBox.x - 500) +  'px';
+		    		style.width = "440px";
+
+		    		MyBlocklyApps.showDialog(content, null, true, false, false, Game.missionTitle, style, null);
+		    		
+					Hints.showedIddle++;
+				},
+
+		naturalCondition:
+			"(Blockly.mainWorkspace.topBlocks_.length > 0)"
+			
+	};
+
+Hints.Categories["BlockDeleted"] = {
+		
+		show:
+				function (param) {
+		    		var content = document.getElementById('dialogInfo');
+		    		var container = document.getElementById('dialogInfoText');
+		    		container.innerHTML = Hints.hintSelected.content;
+		    		
+		    		var style = {top: '120px'}; 
+		    		style.width = "440px";
+
+		    		MyBlocklyApps.showDialog(content, null, true, false, true, Game.missionTitle, style, null);
+				}
+	};
+
+Hints.showedErrorHint = false;
+
+Hints.Categories["LastError"] = {
+		
+		show:
+				function (param) {
+					var bbBox = BlocklyApps.getBBox_(Game.lastErrorData.block.getSvgRoot());
+					createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
+					Hints.showedErrorHint = true;
+				},
+				
+		naturalCondition :
+			"(!Hints.showedErrorHint && Game.lastErrorData.block != null)"
+	};

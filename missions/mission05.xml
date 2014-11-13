@@ -14,6 +14,39 @@
 		sobre o que ele faz.
 		</page>
 	</explanation>
+	
+	<hints>
+		<sequence>
+			<hint category="LastBlockInserted">
+			Todos os blocos j&#225; estavam dispon&#237;veis na &#225;rea de trabalho. Logo, reveja com aten&#231;&#227;o a necessidade 
+			desse novo bloco.
+			</hint> 
+			
+			<hint category="BlockDeleted" condition="countInstructions &lt; 6">
+			N&#227;o existem blocos suficientes para resolver o problema. Tente inserir um novo bloco de acordo como aquele que voc&#234; acabou de excluir.
+			</hint>
+
+			<hint category="BlockDeleted" time="7000" condition="countInstructions &lt; 6">
+			N&#227;o existem blocos suficientes para resolver o problema. Resolva inserindo um bloco e pense no que vai resultar
+			na intera&#231;&#227;o do snack man. Execute o programa para comprovar se resultou. Quando tiver vencido esse bloco,
+			tente resolver o pr&#243;ximo. Repita esse processo com calma, at&#233; atingir todos os objetivos da miss&#227;o.
+			</hint>
+
+			<hint time="7000" category="Iddle" condition = "Hints.showedIddle &lt; 2 &amp;&amp; countTopInstructions > 3">
+			Organize os blocos disponibilizados pelo jogo. Encaixe-os na ordem para atender os objetivos da miss&#227;o. Todos os 
+			blocos necess&#225;rios est&#227;o a sua disposi&#231;&#227;o. Logo, voc&#234; n&#227;o precisa nem adicionar, e nem 
+			remover blocos.
+			</hint>
+			
+			<hint category="LastError" condition="Game.lastErrorData.block.type == 'do_deliver'">
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
+			a partir de outra vari&#225;vel. 
+			</hint>
+			
+			
+		</sequence>
+	</hints>
+	
 	<commands>
 		<category name="snackMan" show="true"/>
 		

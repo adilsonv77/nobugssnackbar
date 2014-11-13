@@ -424,8 +424,9 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.imgDoor = PreloadImgs.get("doors");
   
   Game.lastErrorData = new Object();
-  Game.lastErrorData.count = 0;
-  Game.lastErrorData.comm = 0;
+  Game.lastErrorData.iderror = 0;
+  Game.lastErrorData.message = "";
+  Game.lastErrorData.block = null;
   
   try {
 	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
@@ -1091,7 +1092,11 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
 			    
+			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
+			    	
+		    	    Game.lastErrorData.iderror = 0;
+		    	    Game.lastErrorData.message = "";
 			    	
 			    	Hints.stopHints();
 				    Game.stopCronometro();
@@ -1134,6 +1139,10 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
+		    	    Game.lastErrorData.iderror = "missionFail";
+		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
+
+			    	
 			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null,
 			    			function() {
 				    			Hints.showErrorHint();
@@ -1464,9 +1473,13 @@ Game.step = function(command, values) {
 
 Game.showError = function(iderror) {
 	
+	Game.lastErrorData.iderror = iderror;
+	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
 	container.textContent = BlocklyApps.getMsg(iderror);
+	Game.lastErrorData.block = Blockly.selected;
+	Game.lastErrorData.message = container.textContent;
 	
     var style = {top: '120px'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
