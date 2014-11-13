@@ -20,7 +20,7 @@
 	<hints>
 		<sequence>
 			<hint time="2000" category="VariableWindow"/>
-			<hint time="5000" category="DebugProgram"/>
+			<hint time="7000" category="DebugProgram"/>
 		</sequence>
 	</hints>
 	<commands>

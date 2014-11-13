@@ -18,7 +18,7 @@
 	<hints>
 		<sequence>
 			<hint time="5000" category="WhileDebugging"/>
-			<hint time="5000" category="DebugProgram"/>
+			<hint time="7000" category="DebugProgram"/>
 		</sequence>
 	</hints>
 	
