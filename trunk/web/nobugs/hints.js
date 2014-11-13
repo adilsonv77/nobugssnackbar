@@ -5,6 +5,7 @@ Hints.bindEvent1 = null;
 Hints.bindEvents = [];
 
 Hints.TIMEINTERVAL = 3000;
+Hints.lastTimeSpent = 0;
 
 Hints.hndlTimer = 0;
 
@@ -33,7 +34,7 @@ Hints.init = function(hints) {
 
     if (Hints.hints.sequence.length > 0) {
     	
-    	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, Hints.hints.sequence[0].time);
+    	Hints.launchTimer(Hints.hints.sequence[0].time);
     }
 	
     
@@ -192,7 +193,7 @@ Hints.timeIsUp = function() {
 		return;
 	
 	if (Blockly.Block.dragMode_ > 0) {
-		Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+		Hints.launchTimer(Hints.TIMEINTERVAL);
 		return;
 	}
 	
@@ -206,7 +207,7 @@ Hints.timeIsUp = function() {
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
 		var hint = hints[i];
-		Hints.hintSelected = hint;
+		Hints.hintSelected = hint; // let this line. hintSelected is used into the methods in the condition
 		
 		if (running && !hint.running)
 			continue;
@@ -214,11 +215,12 @@ Hints.timeIsUp = function() {
 		var condition = eval(hint.condition);
 		if (condition) {
 			
-			var cat = Hints.Categories[hint.category];
-			
-			cat.show(hint.args);
-			Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
-			
+			if (Hints.lastTimeSpent < hint.time) {
+				Hints.hndlTimer = window.setTimeout(Hints.showHint.bind(window, hint), hint.time-Hints.lastTimeSpent);
+				Hints.lastTimeSpent = hint.time;
+			} else {
+				Hints.showHint(hint);
+			}
 			return;
 			
 		}
@@ -230,7 +232,7 @@ Hints.timeIsUp = function() {
 			
 			Hints.foundTestBlock = false;
 			Hints.hintSelected = Hints.hints.testBlock[i];
-			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocksV2);
+			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
 			
 			if (Hints.foundTestBlock)
 				return;
@@ -238,13 +240,34 @@ Hints.timeIsUp = function() {
 		}
 		
 	}
-	
-	
-	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
+
+	Hints.launchTimer(Hints.TIMEINTERVAL);
 
 };
 
-Hints.visitBlocksV2 = function(block) {
+Hints.showHint = function(hint) {
+	
+	Hints.hintSelected = hint;
+	var cat = Hints.Categories[hint.category];
+	
+	cat.show(hint.args);
+	Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
+	
+};
+
+Hints.launchTimer = function(time) {
+	
+	if (Hints.hndlTimer == 0) {
+		
+    	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, time);
+    	Hints.lastTimeSpent = time;
+	}
+	
+};
+
+
+
+Hints.visitBlocks = function(block) {
 	
 	Hints.activeBlock = block;
 	var hint = Hints.hintSelected;
@@ -264,31 +287,6 @@ Hints.visitBlocksV2 = function(block) {
 	return true;
 };
 
-Hints.visitBlocks = function(block) {
-	
-	Hints.activeBlock = block;
-	for (var i=0; i<Hints.hints.testBlock.length; i++) {
-		var hint = Hints.hints.testBlock[i];
-		Hints.hintSelected = hint;
-		
-		var condition = eval(hint.condition);
-		if (condition) {
-			Hints.foundTestBlock = true;
-
-			var cat = Hints.Categories[hint.category];
-			
-			cat.show(hint.args);
-			Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
-			return false;
-			
-		}
-
-	}
-	Hints.activeBlock = null;
-	return true;
-	
-};
-
 Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	
 	if (bindEvent == undefined || bindEvent == null)
@@ -305,9 +303,10 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 };
 
 Hints.hideHintWithTimer = function () {
-	Hints.hideHints();
+	Hints.stopHints();
 	
-	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, (Hints.hintSelected==null||Hints.hintSelected.next==null?Hints.TIMEINTERVAL:Hints.hintSelected.next.time) );
+	Hints.launchTimer((Hints.hintSelected==null||Hints.hintSelected.next==null?Hints.TIMEINTERVAL:Hints.hintSelected.next.time));
+
 };
 
 Hints.hideHints = function() {
@@ -326,10 +325,8 @@ Hints.hideHints = function() {
 };
 
 Hints.startHints = function() {
-	if (Hints.hndlTimer != 0)
-		return;
+	Hints.launchTimer(Hints.TIMEINTERVAL);
 	
-	Hints.hndlTimer = window.setTimeout( Hints.timeIsUp, Hints.TIMEINTERVAL );
 };
 
 Hints.stopHints = function() {

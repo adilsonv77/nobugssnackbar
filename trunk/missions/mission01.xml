@@ -30,7 +30,7 @@
 			<hint category="ChooseCategory(0)"/>
 			<hint time="0" category="SelectCommand(0,0)"/>
 			<hint category="StackTogether(0,0,move_goToBarCounter)"/>
-			<hint category="RunProgram"/>
+			<hint time="7000" category="RunProgram"/>
 		</sequence>
 		
 		<errors>
