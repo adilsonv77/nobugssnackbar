@@ -58,6 +58,7 @@ public class UserControl {
 		this.levelid = 0;
 		this.missionidx = 0;
 		this.mission = 0;
+		this.registeredUserLastTime = false;
 	}
 	
 	@RemoteMethod
