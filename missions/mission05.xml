@@ -23,7 +23,8 @@
 			</hint> 
 			
 			<hint category="BlockDeleted" condition="countInstructions &lt; 6">
-			N&#227;o existem blocos suficientes para resolver o problema. Tente inserir um novo bloco de acordo como aquele que voc&#234; acabou de excluir.
+			N&#227;o existem blocos suficientes para resolver o problema. Tente inserir um novo bloco de acordo como aquele que voc&#234; 
+			acabou de excluir.
 			</hint>
 
 			<hint category="BlockDeleted" time="7000" condition="countInstructions &lt; 6">

@@ -171,8 +171,8 @@ SnackMan = function(objectives, mission) {
 		this.objective.objectives.push(p);
 	}
 	
-	this.createAditionalObjective(objectives, "varQtd");
-	this.createAditionalObjective(objectives, "commQtd");
+	this.hasVarQtd = this.createAditionalObjective(objectives, "varQtd");
+	this.hasCommQtd = this.createAditionalObjective(objectives, "commQtd");
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
@@ -190,8 +190,9 @@ SnackMan.prototype.createAditionalObjective = function(objectives, key) {
 		var o = Objective.factory(key);
 		var p = o.init(m);
 		this.objective.objectives.push(p);
-		
+		return true;
 	}
+	return false;
 };
 // extracts some important information and creates the graph
 SnackMan.prototype.createGraph = function() {
