@@ -123,18 +123,25 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 	  h.imghex = hint.getElementsByTagName("imghex"); 
 	  if ((h.imghex != null || h.imghex != undefined) && h.imghex.length > 0) {
 		  
-		  var imageKey = h.imghex[0].getAttribute("id");
-		  console.log(imageKey);
+		  var imgsHexId = [];
+		  var imgsHexH = [];
+		  for (var i=0; i<h.imghex.length; i++) {
+			  imgsHexId.push(h.imghex[i].getAttribute("id"));
+			  imgsHexH.push(h.imghex[i].textContent);
+		  }
 		  
-		  UserControl.existsImageKey(imageKey, {async:false, callback:function(b){
-			  if (!b) {
-				  var hex = h.imghex[imageKey].textContent;
-				  UserControl.convertHexToImage(imageKey, hex);
-			  }
-			  var firstPart = h.content.substring(0, h.content.indexOf("<imghex id=\"" + imageKey + "\">"));
-			  var lastPart = h.content.substring(h.content.indexOf("</imghex>") + "</imghex>".length);
+		  UserControl.existsImageKey(imgsHexId, {async:false, callback:function(b){
 			  
-			  h.content = firstPart + " <img src=\"/nobugssnackbar/hintimg?i=" + imageKey + "\"/> " + lastPart;
+			  for (var i=0; i<b.length; i++) {
+				  if (!b[i]) {
+					  
+					  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
+				  }
+				  var imgOrig = " <img src=\"/nobugssnackbar/hintimg?i=" + imgsHexId[i] + "\"/>";
+				  h.content = 
+					  h.content.replace("<imghex id=\"" + imgsHexId[i] + "\"><![CDATA["+imgsHexH[i]+"]]></imghex>", imgOrig);
+			  }
+
 		  }});
 	  }
 	  
@@ -862,6 +869,7 @@ Hints.Categories["BlockDeleted"] = {
 
 Hints.showedErrorHint = false;
 
+// the LastError category happens when an error is throwed during the program execution 
 Hints.Categories["LastError"] = {
 		
 		show:
@@ -874,3 +882,24 @@ Hints.Categories["LastError"] = {
 		naturalCondition :
 			"(!Hints.showedErrorHint && Game.lastErrorData.block != null)"
 	};
+
+Hints.showedCountInstrutionsHint = false;
+
+Hints.Categories["ShowCountInstructions"] = {
+		
+		show :
+			function (param) {
+				
+				if (Hints.hintSelected.content == null)
+					Hints.hintSelected.content = document.getElementById("Hints_ShowCountInstructions").innerHTML;
+				
+				var bbBox = BlocklyApps.getBBox_(Game.counterInstruction);
+				createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
+				Hints.showedCountInstrutionsHint = true;
+				
+			},
+		
+		naturalCondition : 
+			"(!Hints.showedCountInstrutionsHint)"
+		
+};
