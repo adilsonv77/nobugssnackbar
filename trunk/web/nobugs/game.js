@@ -53,6 +53,7 @@ Game.DOWN = 1;
 Game.RIGHT = 2;
 Game.varWindow = Game.RIGHT;
 
+Game.counterInstruction = null;
 /**
  * Initialize Blockly and SnackBar. Called on page load.
  */
@@ -514,6 +515,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
 	  Game.addCronometro(Game.bonusTime , timeSpent );
 	  
+	  Game.showCountInstructions();
+	  
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
@@ -695,6 +698,9 @@ Game.resizeWindow = function(e) {
         
     }
     Game.blockly.style.width = (w) + 'px';
+    
+    if (Game.counterInstruction != null)
+    	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 
   };
 
@@ -997,16 +1003,45 @@ Game.execute = function(debug) {
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
 };
 
+Game.showCountInstructions = function() {
+
+	if (hero.hasCommQtd) {
+
+		var ci = document.createElement("div");
+		ci.id = "countInstruction";
+		ci.style.position = "absolute";
+		ci.style.top = blockly.offsetTop + "px";
+		ci.style.backgroundColor = "rgba(153, 152, 152, 0.28)";
+		ci.style.opacity = "0.3";
+		
+		ci.innerHTML = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks()) + " blocks";
+		document.getElementById("mainBody").appendChild(ci);
+
+		ci.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - ci.clientWidth - 15) + "px";
+		
+		
+		Game.counterInstruction = ci;
+	} else
+		Game.counterInstruction = null;
+	
+};
+
+Game.updateCounterInstructions = function(howMany) {
+	if (Game.counterInstruction == null)
+		return;
+	
+	Game.counterInstruction.innerHTML = howMany + " blocks";
+	Game.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.clientWidth - 15) + "px";
+};
+
 /**
  * Lock block panel during running
  */
 Game.lockBlockly = function() {
 	
-	var blockly = document.getElementById("blockly");
-	
     var blocklyLock = document.createElement("div");
     blocklyLock.id = "blocklyLock";
-    blocklyLock.style.cssText = blockly.style.cssText;
+    blocklyLock.style.cssText = Game.blockly.style.cssText;
     blocklyLock.style.position = "absolute";
     blocklyLock.style.backgroundColor = "grey";
     blocklyLock.style.opacity = "0.3";

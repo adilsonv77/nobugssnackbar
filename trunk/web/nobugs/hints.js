@@ -17,8 +17,6 @@ var countInstructions, countTopInstructions, menuSelected;
 Hints.init = function(hints) {
 
 	Hints.hints = {sequence:[], whenError:[], testBlock:[]};
-	if (hints == null)
-		return;
 	
 	Hints.showedIddle = 0;
 
@@ -29,22 +27,28 @@ Hints.init = function(hints) {
 	
 	Blockly.removeChangeListener(Hints.changeListener);
 	Blockly.addChangeListener(Hints.changeListener);
-	
-	var hs = hints.getElementsByTagName("sequence");
-	if (hs != null && hs.length > 0)
-		Hints.hints.sequence = Hints.traverseHints(hs[0].firstElementChild, false, Hints.hints.testBlock);
-	
-	hs = hints.getElementsByTagName("errors");
-	if (hs != null && hs.length > 0)
-		Hints.hints.whenError = Hints.traverseHints(hs[0].firstElementChild, true);
+	if (hints != null) {
+		
+		var hs = hints.getElementsByTagName("sequence");
+		if (hs != null && hs.length > 0)
+			Hints.hints.sequence = Hints.traverseHints(hs[0].firstElementChild, false, Hints.hints.testBlock);
+		
+		hs = hints.getElementsByTagName("errors");
+		if (hs != null && hs.length > 0)
+			Hints.hints.whenError = Hints.traverseHints(hs[0].firstElementChild, true);
+
+	}
+
+    Hints.addDefaultErrorHints();
 
     if (Hints.hints.sequence.length > 0) {
     	
     	Hints.launchTimer(Hints.hints.sequence[0].time);
+    } else {
+    	Hints.launchTimer(Hints.hints.testBlock[0].time);
     }
 	
     
-    Hints.addDefaultErrorHints();
 };
 
 Hints.addDefaultErrorHints = function() {
@@ -366,6 +370,7 @@ Hints.stopHints = function() {
 Hints.changeListener = function() {
 	
 	var howMany = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	Game.updateCounterInstructions(howMany);
 	if (howMany > Hints.lastCountBlocks) {
 		Hints.lastInsertedBlock = Blockly.selected;
 	} else {
