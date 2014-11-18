@@ -114,6 +114,7 @@
 	
 	"Hints.WhileDebugging" : "Cada vez que clica no bot&#227;o Depurar, o movimento do cozinheiro &#233; executado de acordo com um comando do seu programa. Observe que o bloco real&#231;ado &#233; o pr&#243;ximo a ser executado. Clique novamente no bot&#227;o Depurar.",
 	"Hints.VariableWindow" : "Aqui est&#227;o as vari&#225;veis criadas durante a execu&#231;&#227;o. Observe que o nome da vari&#225;vel &#233; o mesmo que aquele configurado no &#250;ltimo comando executado.",
-
+	"Hints.ShowCountInstructions" : "Aqui est&#225; a quantidade de blocos que voc&#234; tem em seu programa.", 
+	
 	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias."
 }

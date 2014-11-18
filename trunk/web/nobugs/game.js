@@ -1031,7 +1031,7 @@ Game.updateCounterInstructions = function(howMany) {
 		return;
 	
 	Game.counterInstruction.innerHTML = howMany + " blocks";
-	Game.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.clientWidth - 15) + "px";
+	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.clientWidth - 15) + "px";
 };
 
 /**
@@ -1522,6 +1522,24 @@ Game.showError = function(iderror) {
 	
 	BlocklyApps.showDialog(content, origin, true, true, style, null);
 
+};
+
+Game.lastErrorHas = function(blockName) {
+	
+	if (Game.lastErrorData.block == null) return;
+	
+	var input = Game.lastErrorData.block.inputList;
+	
+	for (var i=0; i<input.length; i++) {
+		if (input[i].connection != null) {
+			if (input[i].connection.targetConnection != null) {
+				if (input[i].connection.targetConnection.sourceBlock_.type === blockName)
+					return true;
+			}
+		} 
+	}
+	
+	return false;
 };
 
 Game.saveMoney = function() {
