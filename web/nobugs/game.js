@@ -391,8 +391,10 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   };
   
   window.addEventListener('scroll', function() {
+	  Hints.hideHintWithTimer();
       Game.doResizeWindow();
-    });  window.addEventListener('resize',  Game.resizeWindow);
+    });  
+  window.addEventListener('resize',  Game.resizeWindow);
 
   Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
   Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
