@@ -175,11 +175,11 @@ Hints.showErrorHint = function() {
 	for (var i=0; i<hintErrors.length; i++) {
 	
 		var hint = hintErrors[i];
+		Hints.hintSelected = hint;
 		
 		var condition = eval(hint.condition);
 		if (condition) {
 			
-			Hints.hintSelected = hint;
 			var cat = Hints.Categories[hint.category];
 			
 			cat.show(hint.args);
