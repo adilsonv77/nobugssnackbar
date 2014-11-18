@@ -183,7 +183,13 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public boolean existsImageKey(String key) {
-		return HintImage.getImages().containsKey(key);
+	public boolean[] existsImageKey(String key[]) {
+		boolean b[] = new boolean[key.length];
+		
+		for (int i = 0; i < b.length;i++) {
+			b[i] = HintImage.getImages().containsKey(key[i]);
+		}
+		
+		return b;
 	}
 }
