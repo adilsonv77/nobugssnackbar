@@ -76,7 +76,7 @@ Hints.addDefaultErrorHints = function() {
 	
 	hint.category = "TestBlock";
 	hint.content =  document.getElementById("Hints_EmptyInputError").innerHTML;
-	hint.time = 0;
+	hint.time = 7000;
 	hint.running = false;
 	hint.condition = "Hints.hasEmptyInputs()";
 	
@@ -355,7 +355,12 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
 		Hints.bindEvents.push(specialEvent);
+	
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgBackground_, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgKnob_, 'mousedown', null, bindEvent));
 
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgBackground_, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgKnob_, 'mousedown', null, bindEvent));
 };
 
 Hints.hideHintWithTimer = function () {
@@ -400,12 +405,13 @@ Hints.changeListener = function() {
 	if (howMany > Hints.lastCountBlocks) {
 		Hints.lastInsertedBlock = Blockly.selected;
 	} else {
+		if (howMany < Hints.lastCountBlocks) {
 			Hints.lastInsertedBlock = null;
 			if (Hints.hintBlockDeleted != null) {
 				Hints.runHint(Hints.hintBlockDeleted);
 			}
-				
 		}
+	}
 	
 	Hints.activeBlock = Hints.lastInsertedBlock;
 	Hints.lastCountBlocks = howMany;
@@ -541,6 +547,9 @@ Hints.variableName = function() {
 };
 
 Hints.hasEmptyInputs  = function() {
+	
+	if (Hints.activeBlock == Hints.lastInsertedBlock) // dont test the block is just inserted
+		return false;
 	
 	var input = Hints.activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
