@@ -1,10 +1,9 @@
 package pt.uc.dei.nobugssnackbar.servlets;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,35 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 public class HintImage extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static Map<String, byte[]> images;
 
+	public static Map<String, byte[]> getImages() {
+		if (images == null)
+			images = new HashMap<>();
+		return images;
+	}
+	
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println(request.getPathInfo());
+		String i = request.getParameter("i");
 		
-		InputStream in = new FileInputStream("D:/doutoramento/nobugssnackbar/web/images/_unlock.png");
+		byte data[] = getImages().get(i);
 		
-		int len = 2048; 
-		byte[] dados = new byte[len];
-		for (int index = 0; index < dados.length; index++)
-        {
-			int l = in.read();
-			if (l == -1) {
-				len = index;
-				break;
-			}
-			
-            dados[index] = (byte) l; 
-        }
-		in.close();
-
-		dados = Arrays.copyOf(dados, len);
-		
-		response.setContentLength(len);
+		response.setContentLength(data.length);
 		response.setContentType("image/png");
 		OutputStream out = response.getOutputStream();
-		out.write(dados);
+		out.write(data);
 		out.close();
 	}	
 	

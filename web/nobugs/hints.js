@@ -116,8 +116,27 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 	  Hints.formatCategory(h);
 	  
 	  h.content = hint.innerHTML || hint.textContent;
+	  
 	  if (h.content.length == 0)
 		  h.content = null;
+	  
+	  h.imghex = hint.getElementsByTagName("imghex"); 
+	  if ((h.imghex != null || h.imghex != undefined) && h.imghex.length > 0) {
+		  
+		  var imageKey = h.imghex[0].getAttribute("id");
+		  console.log(imageKey);
+		  
+		  UserControl.existsImageKey(imageKey, {async:false, callback:function(b){
+			  if (!b) {
+				  var hex = h.imghex[imageKey].textContent;
+				  UserControl.convertHexToImage(imageKey, hex);
+			  }
+			  var firstPart = h.content.substring(0, h.content.indexOf("<imghex id=\"" + imageKey + "\">"));
+			  var lastPart = h.content.substring(h.content.indexOf("</imghex>") + "</imghex>".length);
+			  
+			  h.content = firstPart + " <img src=\"/nobugssnackbar/hintimg?i=" + imageKey + "\"/> " + lastPart;
+		  }});
+	  }
 	  
 	  h.time = hint.getAttribute("time");
 	  if (h.time == null )

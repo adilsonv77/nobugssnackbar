@@ -1,11 +1,17 @@
 package pt.uc.dei.nobugssnackbar.control;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
+import org.directwebremoting.ServerContext;
+import org.directwebremoting.ServerContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProperty;
 import org.directwebremoting.annotations.RemoteProxy;
@@ -15,6 +21,8 @@ import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
 import pt.uc.dei.nobugssnackbar.model.BartleType;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
+import pt.uc.dei.nobugssnackbar.servlets.HintImage;
+import pt.uc.dei.nobugssnackbar.util.Image;
 
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
@@ -167,5 +175,15 @@ public class UserControl {
 	@RemoteMethod 
 	public List<BartleType> bartleClassification(String userName) throws SQLException {
 		return BartleTest.bartleClassification(NoBugsConnection.getConnection().getUserId(userName));
+	}
+	
+	@RemoteMethod 
+	public void convertHexToImage(String key, String hex) throws NoSuchAlgorithmException, IOException {
+		HintImage.getImages().put(key, Image.toImage(hex));
+	}
+	
+	@RemoteMethod
+	public boolean existsImageKey(String key) {
+		return HintImage.getImages().containsKey(key);
 	}
 }
