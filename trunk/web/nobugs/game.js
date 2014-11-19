@@ -372,6 +372,10 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   document.getElementById("initialBackground").style.display = "none";
   
   document.getElementById("mainBody").style.display = "inline";
+  if (Game.counterInstruction != null) {
+	  mainBody.removeChild(Game.counterInstruction);
+	  Game.counterInstruction = null;
+  }
 	  			
   BlocklyApps.init();
 	
@@ -503,6 +507,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   var xml = Blockly.Xml.textToDom(answer);
   MyDomToWorkspace(Blockly.mainWorkspace, xml);
   
+  Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
       
@@ -836,8 +841,6 @@ Game.logoffButtonClick = function() {
     Game.killAll();
     Game.runningStatus = 0;
 	
-    document.getElementById('blockly').innerHTML = ""; // clean the editor
-    //---------------------------------------------------------------
     var answer = null;
     var timeSpent = 0;
     if (Game.currTime != 0) {
@@ -845,6 +848,8 @@ Game.logoffButtonClick = function() {
     	timeSpent = Math.floor((now - Game.currTime)/1000);
     	
     }
+
+    document.getElementById('blockly').innerHTML = ""; // clean the editor
 	
 	UserControl.logoff(timeSpent, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
@@ -1088,7 +1093,10 @@ Game.updateVariables = function() {
 		var data = entry.scope.properties[entry.name].data;
 		if (data != undefined) {
 			if (data.type != undefined) {
-				data = "<p class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>";
+				data = "<div>" + 
+						"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
+						"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>" +  
+						"</div>";
 			}
 				
 			rows.push({"name":entry.name, "value": data});
@@ -1130,7 +1138,7 @@ Game.nextStep = function() {
 			} else {
 				
 				// if there isn't more lines to evaluate
-				Game.resetButtons(1);
+				Game.resetButtons();
 				
 			    Blockly.mainWorkspace.highlightBlock(null);
 			    
@@ -1519,6 +1527,7 @@ Game.step = function(command, values) {
 
 Game.showError = function(iderror) {
 	
+	Hints.stopHintsEx();
 	Game.lastErrorData.iderror = iderror;
 	
 	var content = document.getElementById('dialogError');
@@ -1531,7 +1540,10 @@ Game.showError = function(iderror) {
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 	var origin = Blockly.mainWorkspace.topBlocks_[Blockly.mainWorkspace.topBlocks_.length-1].getSvgRoot();
 	
-	BlocklyApps.showDialog(content, origin, true, true, style, null);
+	BlocklyApps.showDialog(content, origin, true, true, style, 
+			function() { 
+				Hints.startHintsEx(); 
+			});
 
 };
 
