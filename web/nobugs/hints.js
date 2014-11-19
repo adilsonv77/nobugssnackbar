@@ -25,7 +25,7 @@ Hints.init = function(hints) {
 	Hints.hintBlockDeleted = null;
 	Hints.lastInsertedBlock = null;
 	Hints.activeBlock = null;
-	Hints.lastCountBlocks = Blockly.mainWorkspace.getTopBlocks(true).length;
+	Hints.lastCountBlocks = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 	
 	Blockly.removeChangeListener(Hints.changeListener);
 	Blockly.addChangeListener(Hints.changeListener);
