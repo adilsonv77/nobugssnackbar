@@ -1021,7 +1021,7 @@ Game.execute = function(debug) {
 
 Game.showCountInstructions = function() {
 
-	if (hero.hasCommQtd) {
+	if (hero.hasCommQtd || hero.objective.maxCommands > 0) {
 
 		var ci = document.createElement("div");
 		ci.id = "countInstruction";
