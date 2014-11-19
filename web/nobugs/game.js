@@ -701,6 +701,15 @@ Game.resizeWindow = function(e) {
     }
     Game.blockly.style.width = (w) + 'px';
     
+    var blocklyLock = document.getElementById("blocklyLock");
+	
+	if (blocklyLock !== null && blocklyLock !== "undefined" && blocklyLock !== undefined) {
+	    blocklyLock.style.cssText = Game.blockly.style.cssText;
+	    blocklyLock.style.position = "absolute";
+	    blocklyLock.style.backgroundColor = "grey";
+	    blocklyLock.style.opacity = "0.3";
+	}
+    
     if (Game.counterInstruction != null)
     	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 
@@ -1060,7 +1069,7 @@ Game.lockBlockly = function() {
 Game.unlockBlockly = function() {
 	var blocklyLock = document.getElementById("blocklyLock");
 	
-	if (blocklyLock !== "undefined" && blocklyLock !== undefined) {
+	if (blocklyLock !== null && blocklyLock !== "undefined" && blocklyLock !== undefined) {
 		var mainBody = document.getElementById("mainBody");
 		mainBody.removeChild(blocklyLock);
 	}
