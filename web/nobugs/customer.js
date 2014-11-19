@@ -68,9 +68,10 @@ Customer = function(options) {
 	this.fUnfulfilled = 0;
 	
 	this.currentNode = CustOpt.nodes[options.init];
-	this.dest = CustOpt.nodes[options.place];
+	this.dest = CustOpt.nodes[options.place.id];
 	
-	this.place = options.place;
+	this.place = options.place.id;
+	this.placeType = options.place.type;
 
 	// if he is in the door, then he is in state = 0 else state = 8
 	this.state = (this.currentNode.id === CustOpt.customerFinalPath[0].id?0:8);
@@ -297,7 +298,7 @@ Customer.prototype.askForDrink = function() {
 		return null;
 	
 	var d = this.drinks[this.dUnfulfilled];
-	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink"};
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink", source: this.currentNode.id, sourceType: this.placeType};
 };
 
 Customer.prototype.hasThirsty = function() {
@@ -309,7 +310,7 @@ Customer.prototype.askForFood = function() {
 		return null;
 	
 	var d = this.foods[this.fUnfulfilled];
-	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food"};
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
 };
 
 Customer.prototype.hasHunger = function() {
@@ -326,26 +327,35 @@ Customer.prototype.deliver = function(item) {
 
 	var money = 0;
 	var happy = Customer.DELIVERED_BAD;
+	var reason = null;
 	
 	if  ((item.type === "item") &&
 	    ((item.drinkOrFood === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
 			(item.drinkOrFood === "food" && (this.fUnfulfilled < this.foods.length)))) {
 		
-		var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
-		// d is the "ordered item"
-		
-		
-		if (item.descr === "$$" + d.item) {
+		if (item.source === this.currentNode.id) {
+
+			var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
+			// d is the "ordered item"
 			
-			if (item.drinkOrFood === "drink")
-				this.dUnfulfilled++;
-			else
-				this.fUnfulfilled++;
 			
-			money = d.price;
-			happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
+			if (item.descr === "$$" + d.item) {
+				
+				if (item.drinkOrFood === "drink")
+					this.dUnfulfilled++;
+				else
+					this.fUnfulfilled++;
+				
+				money = d.price;
+				happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
+			}
+			
+		} else {
+			reason = "Error_doesntMatchPosition";
 		}
 		
+	} else {
+		reason = "Error_deliveredWrongRequest";
 	}
 	
 	if (happy ===  Customer.DELIVERED_TOTAL) {
@@ -365,5 +375,5 @@ Customer.prototype.deliver = function(item) {
 			
 		} 
 	
-	return {money: money, happy: happy};
+	return {money: money, happy: happy, reason: reason};
 };

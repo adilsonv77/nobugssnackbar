@@ -357,7 +357,7 @@ SnackMan.prototype.catchDrink = function(order) {
 	
 	BlocklyApps.log.push(['IP']);
 	
-	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink"}; 
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType}; 
 	this.verifyObjectives("catchDrink", item);
 	this.catched++;
 	
@@ -460,7 +460,7 @@ SnackMan.prototype.catchFood = function(order) {
 	
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food"};
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food", source: order.data.source, sourceType: order.data.sourceType};
 	
 	this.verifyObjectives("catchFood", item);
 	this.catched++;
@@ -487,7 +487,7 @@ SnackMan.prototype.deliver = function(item) {
 	var amount = found.deliver(item.data); 
 	
 	if (amount.happy == Customer.DELIVERED_BAD) {
-		BlocklyApps.log.push(["fail", "Error_deliveredWrongRequest"]);
+		BlocklyApps.log.push(["fail", amount.reason]);
 		throw false;
 	}
 	
@@ -564,7 +564,7 @@ SnackMan.prototype.catchFruits = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = {type: "item", descr:"$$"+order.data.descr.substring(9), drinkOrFood: "drink"};
+	var item = {type: "item", descr:"$$"+order.data.descr.substring(9), drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType};
 	//this.verifyObjectives("catchFruits", item);
 	
 	return item; 
@@ -613,7 +613,7 @@ SnackMan.prototype.prepareAndCatchJuice = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	// TODO in future version, maybe the display has limited stock
-	var item = {type: "item", descr:"$$juiceof"+order.data.descr.substring(2), drinkOrFood: "drink"};
+	var item = {type: "item", descr:"$$juiceof"+order.data.descr.substring(2), drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType};
 	//this.verifyObjectives("catchFruits", item);
 	this.catched++;
 	

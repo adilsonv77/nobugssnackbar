@@ -76,7 +76,7 @@ CustomerManager.reset = function() {
 		if (dest != null) {
 			dest = dest.textContent.toString();
 			if (dest.indexOf("counter") == 0) {
-				dest = CustOpt.counter[parseInt(dest.substring(7)) - 1];
+				dest = {id : CustOpt.counter[parseInt(dest.substring(7)) - 1], type : "counter"};
 			}
 		}
 		
@@ -246,5 +246,15 @@ CustomerManager.getCustomerCounter = function(id) {
 		return customers[i];
 	
 	return null;
+};
+
+CustomerManager.getCustomerPosition = function(id) {
+	
+	for (var i=0; i<CustOpt.counter.length; i++)
+		  if (id === CustOpt.counter[i])
+			return i+1 + " ";
+	
+	// in future, test the tables
+	return "0";
 };
 

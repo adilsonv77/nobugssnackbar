@@ -12,6 +12,8 @@ Hints.hndlTimer = 0;
 Hints.lastCountBlocks = 0;
 Hints.hintBlockDeleted = null;
 
+Hints.specialControl = false;
+
 var countInstructions, countTopInstructions, menuSelected; 
 
 Hints.init = function(hints) {
@@ -386,6 +388,9 @@ Hints.hideHints = function() {
 };
 
 Hints.startHints = function() {
+	if (Hints.specialControl)
+		return;
+	
 	Hints.showedErrorHint = false;
 
 	Hints.launchTimer(Hints.TIMEINTERVAL);
@@ -396,6 +401,22 @@ Hints.stopHints = function() {
 	window.clearTimeout(Hints.hndlTimer);
 	Hints.hideHints();
 	Hints.hndlTimer = 0;
+};
+
+/**
+ * This two methods are necessary because sometimes the main flow of the game doesn't favor to stop the hints.
+ */
+Hints.startHintsEx = function() {
+	Hints.specialControl = false;
+	Hints.startHints();
+};
+
+/**
+ * Same as the previous method.
+ */
+Hints.stopHintsEx = function() {
+	Hints.stopHints();
+	Hints.specialControl = true;
 };
 
 Hints.changeListener = function() {
@@ -909,6 +930,6 @@ Hints.Categories["ShowCountInstructions"] = {
 			},
 		
 		naturalCondition : 
-			"(!Hints.showedCountInstrutionsHint)"
+			"(Game.firstTime && !Hints.showedCountInstrutionsHint)"
 		
 };
