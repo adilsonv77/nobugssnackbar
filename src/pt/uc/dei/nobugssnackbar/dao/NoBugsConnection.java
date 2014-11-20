@@ -288,7 +288,8 @@ public class NoBugsConnection {
 			psLog.setLong(3, idMission);
 			psLog.setLong(4, idClazz);
 			psLog.setLong(5, user.getId());
-			psLog.executeUpdate();
+			log.info("logging " + idMission + " " + idClazz + " " + user.getId());
+			psLog.executeUpdate(); 
 			psLog.close();
 			
 			if (localTimeSpend == -1) {
