@@ -27,7 +27,7 @@
 			acabou de excluir.
 			</hint>
 
-			<hint category="BlockDeleted" time="7000" condition="countInstructions &lt; 6">
+			<hint category="BlockDeleted" time="5000" condition="countInstructions &lt; 6">
 			N&#227;o existem blocos suficientes para resolver o problema. Resolva inserindo um bloco e pense no que vai resultar
 			na intera&#231;&#227;o do snack man. Execute o programa para comprovar se resultou. Quando tiver vencido esse bloco,
 			tente resolver o pr&#243;ximo. Repita esse processo com calma, at&#233; atingir todos os objetivos da miss&#227;o.

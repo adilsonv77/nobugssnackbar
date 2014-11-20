@@ -11,6 +11,7 @@ Hints.hndlTimer = 0;
 
 Hints.lastCountBlocks = 0;
 Hints.hintBlockDeleted = null;
+Hints.evtChangeListener = null;
 
 Hints.specialControl = false;
 
@@ -27,8 +28,9 @@ Hints.init = function(hints) {
 	Hints.activeBlock = null;
 	Hints.lastCountBlocks = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 	
-	Blockly.removeChangeListener(Hints.changeListener);
-	Blockly.addChangeListener(Hints.changeListener);
+	if (Hints.evtChangeListener == null)
+		Hints.evtChangeListener = Blockly.addChangeListener(Hints.changeListener);
+		
 	if (hints != null) {
 		
 		var hs = hints.getElementsByTagName("sequence");
@@ -543,6 +545,23 @@ function createRightDlg(x, y, text) {
 
 };
 
+
+function createInfoDlg(contentTxt, style, title) {
+	
+	var content = document.getElementById('dialogInfo');
+	var container = document.getElementById('dialogInfoText');
+	container.innerHTML = contentTxt;
+	
+	var buttons = document.getElementById('dialogInfoButton');
+	buttons.innerHTML = nobugspage.finishButton(null, null, null);
+		
+
+	MyBlocklyApps.showDialog(content, null, true, false, false, title, style, null);
+	
+
+}
+
+
 /****************************************************************************************/
 /**                  Supported functions used in conditions                             */
 /****************************************************************************************/
@@ -862,18 +881,15 @@ Hints.Categories["Iddle"] = {
 		
 		show:
 				function (param) {
-		    		var content = document.getElementById('dialogInfo');
-		    		var container = document.getElementById('dialogInfoText');
-		    		container.innerHTML = Hints.hintSelected.content;
-		    		
+			
 		    		var bbBox = BlocklyApps.getBBox_(Blockly.mainWorkspace.topBlocks_[0].getSvgRoot());
 		    		
 		    		var style = {top: '120px'}; 
 		    		style[Blockly.RTL ? 'right' : 'left'] = (bbBox.x - 500) +  'px';
 		    		style.width = "440px";
-
-		    		MyBlocklyApps.showDialog(content, null, true, false, false, Game.missionTitle, style, null);
 		    		
+					createInfoDlg(Hints.hintSelected.content, style, Game.missionTitle);
+					
 					Hints.showedIddle++;
 				},
 
@@ -886,14 +902,11 @@ Hints.Categories["BlockDeleted"] = {
 		
 		show:
 				function (param) {
-		    		var content = document.getElementById('dialogInfo');
-		    		var container = document.getElementById('dialogInfoText');
-		    		container.innerHTML = Hints.hintSelected.content;
 		    		
 		    		var style = {top: '120px'}; 
 		    		style.width = "440px";
-
-		    		MyBlocklyApps.showDialog(content, null, true, false, true, Game.missionTitle, style, null);
+		    		
+		    		createInfoDlg(Hints.hintSelected.content, style, Game.missionTitle);
 				}
 	};
 

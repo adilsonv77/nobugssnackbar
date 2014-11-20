@@ -34,14 +34,14 @@
 			J&#225; est&#227;o mais vari&#225;veis que o necess&#225;rio. Consulte o bot&#227;o [!] para rever os objetivos.
 			</hint> 
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.variableName() == 'item'">
-			Clique em [item] e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie uma <b>nova vari&#225;vel</b>.
+			Clique na caixa de op&#231;&#245;es e observe que tens op&#231;&#245;es para criar nova vari&#225;vel ou renomear. Crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<!--  se deve estar em branco, eh porque deve ser um dos ultimos incluidos. a prioridade sao os blocos falhados -->
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2 &amp;&amp; Hints.hasEmptyInputs() == true">
-			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie uma <b>nova vari&#225;vel</b>.
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique na caixa de op&#231;&#245;es e crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2">
-			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique em [item] e crie uma <b>nova vari&#225;vel</b>.
+			Apesar de haverem mais blocos de cria&#231;&#227;o de vari&#225;veis, ambas usam a mesma vari&#225;vel. Clique na caixa de op&#231;&#245;es e crie uma <b>nova vari&#225;vel</b>.
 			</hint>
 			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.hasEmptyInputs() == true">
 			Arraste um bloco [askForFood] nessa abertura em branco.
