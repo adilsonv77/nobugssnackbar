@@ -33,7 +33,7 @@
 	"NoBugs.logoffTooltip": "Sair do jogo",
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
 	
-	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. Voc&#234; recebeu {0}.",
+	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. Voc&#234; recebeu no total {0}.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.",
 	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. N&#227;o existem mais miss&#245;es para si.", 
 	"NoBugs.rewardExplanation" : "Receba {0} se cumprir todos os objetivos acima.",
@@ -94,6 +94,7 @@
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",
+	"Explane.AskForFoodDistinctVar":"Pergunta pelo que o cliente {0} deseja comer e armazena o pedido em uma nova vari&#225;vel.",
 	"Explane.CatchFood":"Pegue a comida solicitada pelo cliente {0}.",
 	"Explane.Deliver":"Entregue o pedido do cliente {0}.",
 	"Explane.AskForDrink":"Pergunta pelo que o cliente {0} deseja beber.",
@@ -118,5 +119,10 @@
 	"Hints.VariableWindow" : "Aqui est&#227;o as vari&#225;veis criadas durante a execu&#231;&#227;o. Observe que o nome da vari&#225;vel &#233; o mesmo que aquele configurado no &#250;ltimo comando executado.",
 	"Hints.ShowCountInstructions" : "Aqui est&#225; a quantidade de blocos que voc&#234; tem em seu programa.", 
 	
-	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias."
+	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias.",
+	
+	"Victory.BaseValue"     : "Valor base", 
+	"Victory.Bonus"         : "B&#244;nus", 
+	"Victory.MaxCommands"   : "M&#225;ximo de comandos"
+	 
 }

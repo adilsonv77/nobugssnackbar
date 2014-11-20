@@ -377,6 +377,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	  Game.counterInstruction = null;
   }
 	  			
+  Game.removeChangeListeners();
+
   BlocklyApps.init();
 	
   UserControl.retrieveMoney(function(ret) {
@@ -445,8 +447,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
 Game.unload = function(e) {
 
-	Game.stopSaveUserProgress();
-	
 	var answer = null;
 	if (Blockly.mainWorkspace != null) 
 		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
@@ -829,7 +829,6 @@ Game.logoffButtonClick = function() {
 	Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
-	Game.stopSaveUserProgress();
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
@@ -942,7 +941,7 @@ Game.debugButtonClick = function() {
 	Game.execute(2);
 };
 
-Game.resetButtons = function() {
+Game.resetButtons = function(hideVars) {
 	
 	Game.disableButton('resetButton');
 	
@@ -955,9 +954,10 @@ Game.resetButtons = function() {
 	
 	Game.runningStatus = 0;
 	
-	$('#vars').datagrid('loadData', {
-		"total": 0, "rows": []
-	});
+	if (hideVars == undefined || hideVars == true)
+		$('#vars').datagrid('loadData', {
+			"total": 0, "rows": []
+		});
 };
 
 
@@ -1065,7 +1065,6 @@ Game.lockBlockly = function() {
 	var mainBody = document.getElementById("mainBody");
 	mainBody.appendChild(blocklyLock);
 	
-	Game.stopSaveUserProgress();
 };
 
 /**
@@ -1078,9 +1077,6 @@ Game.unlockBlockly = function() {
 		var mainBody = document.getElementById("mainBody");
 		mainBody.removeChild(blocklyLock);
 	}
-	
-	Game.stopSaveUserProgress();
-	Game.startSaveUserProgress();
 	
 };
 
@@ -1154,7 +1150,6 @@ Game.nextStep = function() {
 			    	
 			    	Hints.stopHints();
 				    Game.stopCronometro();
-				    Game.stopSaveUserProgress();
 			    	//TODO animar o cooker no final da missao
 
 			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
@@ -1164,16 +1159,33 @@ Game.nextStep = function() {
 			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
 			    	
 			    	var reward = hero.addReward(count, Game.totalTimeSpent + timeSpent, Game.bonusTime, Game.bonusTimeReward);
-			    	Game.money = parseInt(Game.money) + reward;
+			    	Game.money = parseInt(Game.money) + reward.total;
 			    	Game.display();
 
 			        var answer = Blockly.Xml.domToText(xml);
 			    	
-			    	UserControl.saveMission(reward, timeSpent, true, answer, function(){
+			    	UserControl.saveMission(reward.total, timeSpent, true, answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-			    		var out = msg.format(reward + coin2)+ "<br/>";
+			    		var out = msg.format(reward.total + coin2)+ "<br/>";
+			    		
+			    		if (reward.base != reward.total) {
+			    			
+				    		var out2 =  BlocklyApps.getMsg("Victory_BaseValue") + " : " + reward.base + "<br/>";
+				    		if (reward.bonus.length > 0) {
+					    		out2 = out2 + "<br/>" + BlocklyApps.getMsg("Victory_Bonus") + " : " + "<br/><table>" ;
+					    		for (var i=0; i < reward.bonus.length; i++) {
+					    			var b = BlocklyApps.getMsg(reward.bonus[i].name);
+					    			s = s.format(b, reward.bonus[i].extraInfo);
+					    			out2 = out2 + "<tr><td>" + s + "</td> <td>" + reward.bonus[i].value + "</td></tr>";   
+					    		}
+					    		out2 = out2 + "</table>";
+					    		
+				    		}
+				    		out = out + out2;
+				    		
+			    		}
 			    		
 			    		var vicText = document.getElementById("victoyText");
 			    		vicText.innerHTML = out;
@@ -1238,14 +1250,18 @@ Game.startSaveUserProgress = function() {
 				return;
 			
 			var now = new Date().getTime();
-
+			var timeSpent = 0;
+			if (Game.currTime != 0)
+				timeSpent = Math.floor(((now) - Game.currTime) / 1000);
+			
+			if (timeSpent < 5) // the minimum interval to log the actions is 5 seconds
+				return; 
+			
 			var answer = "<xml></xml>";
 			if (Blockly.mainWorkspace != null) 
 				answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 			
-			var timeSpent = 0;
-			if (Game.currTime != 0)
-				timeSpent = Math.floor(((now) - Game.currTime) / 1000);
+
 			
 			UserControl.saveMission(0, timeSpent, false, answer);
 			
@@ -1253,14 +1269,22 @@ Game.startSaveUserProgress = function() {
 		});
 };
 
-Game.stopSaveUserProgress = function() {
-	if (Game.logEvent != null) {
-	
-		Blockly.removeChangeListener(Game.logEvent);
-		Game.logEvent = null;
-	}
+// because there are some events from the last mission, and the canvas instance 
+// ... changed, then we need renovate the listeners  
+Game.removeChangeListeners = function() {
+	  if (Game.logEvent != null) {
 
-}; 
+		  Blockly.removeChangeListener(Game.logEvent);
+		  Game.logEvent = null;
+	  }
+	  
+	  if (Hints.evtChangeListener != null) {
+
+		  Blockly.removeChangeListener(Hints.evtChangeListener);
+		  Hints.evtChangeListener = null;
+	  }
+	};
+
 
 /**********************************************************************
  *                          Finish block                              *
@@ -1445,7 +1469,7 @@ Game.animate = function() {
 	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
 	   // TODO ???
-	  Game.resetButtons();
+	  Game.resetButtons(false);
 	  Blockly.mainWorkspace.highlightBlock(null);
 	  
   }

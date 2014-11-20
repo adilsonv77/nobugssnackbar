@@ -189,6 +189,10 @@ Objective.AskForFood.prototype.checkObjective = function(customer, objective)  {
 };
 
 Objective.AskForFood.prototype.createExplanationItem = function(objective) {
+	if (objective.distinct) {
+		return Objective.createExplanationItemPlacePos("explanation_askForFoodDistinctVar", objective);
+	}
+	
 	return Objective.createExplanationItemPlacePos("explanation_askForFood", objective);
 };
 

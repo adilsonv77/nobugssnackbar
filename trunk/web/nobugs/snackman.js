@@ -795,28 +795,39 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 
 SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward) {
 	
+	var ret = {total: 0, base: 0, bonus : []};
 	if (this.allObjectivesAchieved) {
 		
-		var ret = this.objective.reward;
+		ret.total = this.objective.reward;
+		ret.base = ret.total;
 		if (count <= this.objective.maxCommands) {
-			ret += this.objective.maxCommandsReward;
+			ret.total += this.objective.maxCommandsReward;
+			
+			ret.bonus.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
 		} 
 		
 		if (timeSpent <= timeLimit) {
 			timeReward = timeReward.split(" ");
 			var timePart = Math.floor(timeLimit / timeReward.length);
+			var timeBonus = 0;
 			for (var i=1; i<=timeReward.length; i++) {
 				if (timeSpent <= timePart*i) {
-					ret += parseInt(timeReward[timeReward.length-i]);
+					timeBonus = parseInt(timeReward[timeReward.length-i]);
+					
 					break;
 				}
 			}
+			
+			if (timeBonus > 0) {
+				ret.bonus.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: timeSpent});
+				ret.total += timeBonus;
+			}
 		}
 		
-		return ret; 
+		
 	}
 	
-	return 0;
+	return ret;
 	
 };
 
