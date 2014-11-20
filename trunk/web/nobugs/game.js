@@ -1172,18 +1172,14 @@ Game.nextStep = function() {
 			    		
 			    		if (reward.base != reward.total) {
 			    			
-				    		var out2 =  BlocklyApps.getMsg("Victory_BaseValue") + " : " + reward.base + "<br/>";
-				    		if (reward.bonus.length > 0) {
-					    		out2 = out2 + "<br/>" + BlocklyApps.getMsg("Victory_Bonus") + " : " + "<br/><table>" ;
-					    		for (var i=0; i < reward.bonus.length; i++) {
-					    			var b = BlocklyApps.getMsg(reward.bonus[i].name);
-					    			s = s.format(b, reward.bonus[i].extraInfo);
-					    			out2 = out2 + "<tr><td>" + s + "</td> <td>" + reward.bonus[i].value + "</td></tr>";   
-					    		}
-					    		out2 = out2 + "</table>";
-					    		
+				    		var out2 =  "<table class='tableVictory' ><tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_BaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.base + "</td></tr>";
+				    		out2 = out2 + "<tr style='font-weight:bold'><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+				    		for (var i=0; i < reward.bonus.length; i++) {
+				    			var b = BlocklyApps.getMsg(reward.bonus[i].name);
+				    			var s = b.format(reward.bonus[i].extraInfo);
+				    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonus[i].value + "</td></tr>";   
 				    		}
-				    		out = out + out2;
+				    		out = out + out2 + "</table>";
 				    		
 			    		}
 			    		
@@ -1195,11 +1191,16 @@ Game.nextStep = function() {
 					    MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 				    				
-				    				window.removeEventListener('unload', Game.unload);				    				
-				    				UserControl.retrieveMissions(function(ret) {
-				    					Game.loginData.clazzId = 0;
-				    					Game.logged(ret);
-				    				});
+				    				window.removeEventListener('unload', Game.unload);	
+				    				try {
+					    				UserControl.retrieveMissions(function(ret) {
+					    					Game.loginData.clazzId = 0;
+					    					Game.logged(ret);
+					    				});
+				    					
+				    				} catch(ex) {
+				    					Game.init();
+				    				}
 				    		
 		    				});
 			    	});
@@ -1254,7 +1255,7 @@ Game.startSaveUserProgress = function() {
 			if (Game.currTime != 0)
 				timeSpent = Math.floor(((now) - Game.currTime) / 1000);
 			
-			if (timeSpent < 5) // the minimum interval to log the actions is 5 seconds
+			if (timeSpent < 10) // the minimum interval to log the actions is 10 seconds
 				return; 
 			
 			var answer = "<xml></xml>";

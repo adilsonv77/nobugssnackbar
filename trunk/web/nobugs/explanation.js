@@ -159,6 +159,14 @@ Explanation.evaluateObjectives = function(statement, container) {
 		out = out + msg.format(hero.objective.maxCommandsReward+coin2, hero.objective.maxCommands);
 		
 	}
+	
+	if (Game.bonusTime != null) {
+		
+		msg = BlocklyApps.getMsg("timeBonusExplanation");
+		var a = Game.bonusTimeReward.split(" ");
+		out = out + msg.format(a[a.length-1]+coin2, Game.bonusTime/60);
+		
+	}
 	div.innerHTML = out;
 	
 	

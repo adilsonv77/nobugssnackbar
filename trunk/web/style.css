@@ -227,11 +227,20 @@ p.item {
 	background-color: #FF6961;
 }
 
- .selectMissionPanel {
-     margin: 0 auto;
-   }
+.selectMissionPanel {
+    margin: 0 auto;
+}
 
-   .gridViewChild {
-     padding: 10px;
-     text-align: center;
-   }   
+.gridViewChild {
+  padding: 10px;
+  text-align: center;
+}   
+
+table.tableVictory  {
+ border-collapse: collapse;
+}
+
+table.tableVictory td  {
+ border: 1px solid rgb(182, 182, 182);
+ padding: 5px;	
+}

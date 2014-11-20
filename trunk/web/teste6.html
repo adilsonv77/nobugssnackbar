@@ -1,55 +1,74 @@
 <html>
 <head>
-  <script type="text/javascript" src="dwr/engine.js"></script>
-  <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="dwr/engine.js"></script>
+<script type="text/javascript" src="dwr/interface/UserControl.js"></script>
 
-	<script type="text/javascript" src="nobugs/questionnaire.js"></script>
+<script type="text/javascript" src="nobugs/questionnaire.js"></script>
 
 <script type="text/javascript">
+	var questionnaire;
 
-var questionnaire;
+	function loadQuestionnaire() {
 
-function loadQuestionnaire() {
-	
-	UserControl.login("2", "2", function() {
-		
-		UserControl.retrieveQuestionnaire(function(q) {
-			
-			var form = createForm(q);
-			document.getElementById("aquiVaiOForm").appendChild(form);
-			
+		UserControl.login("2", "2", function() {
+
+			UserControl.retrieveQuestionnaire(function(q) {
+
+				var form = createForm(q);
+				document.getElementById("aquiVaiOForm").appendChild(form);
+
+			});
+
 		});
-		
-	});
-}
+	}
 
-function chamou() {
-	document.getElementById("aquiVaiOForm").innerHTML = "Chamou";
-}
+	function chamou() {
+		document.getElementById("aquiVaiOForm").innerHTML = "Chamou";
+	}
 
-function callEvent() {
-    var evt = document.createEvent('UIEvents');
-    evt.initEvent("showWindowPrompt", true, true);  // event type, bubbling, cancelable
-    window.dispatchEvent(evt);
+	function callEvent() {
+		var evt = document.createEvent('UIEvents');
+		evt.initEvent("showWindowPrompt", true, true); // event type, bubbling, cancelable
+		window.dispatchEvent(evt);
 
-}
-
+	}
 </script>
 
 </head>
 
-<body >
+<body>
 
-<script>
-
-
-var wrapFunc = function(e) {
-	chamou();
-};
-window.addEventListener("showWindowPrompt", wrapFunc, false);
-</script>
-	<input type="button" value="Load" onclick="loadQuestionnaire()"/>
-	<input type="button" value="Chamar evento" onclick="callEvent()"/>
+	<script>
+		var wrapFunc = function(e) {
+			chamou();
+		};
+		window.addEventListener("showWindowPrompt", wrapFunc, false);
+	</script>
+	<input type="button" value="Load" onclick="loadQuestionnaire()" />
+	<input type="button" value="Chamar evento" onclick="callEvent()" />
 	<div id="aquiVaiOForm"></div>
+
+
+	<table class="tableVictory">
+		<tr style="font-weight: bold">
+			<td>Valor base</td>
+			<td align="right" style="width: 50px;">7</td>
+		</tr>
+		<tr style="font-weight: bold">
+			<td colspan="2">Bônus</td>
+		</tr>
+		<tr>
+			<td>&nbsp;Máximo de comandos</td>
+			<td align="right" style="width: 50px;">15</td>
+		</tr>
+	</table>
+	
+	<table class="tableVictory">
+		<tr>
+			<td>Teste</td>
+			<td>12</td>
+		</tr>
+	</table>
 </body>
 </html>

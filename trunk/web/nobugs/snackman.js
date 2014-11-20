@@ -812,14 +812,18 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 			var timeBonus = 0;
 			for (var i=1; i<=timeReward.length; i++) {
 				if (timeSpent <= timePart*i) {
-					timeBonus = parseInt(timeReward[timeReward.length-i]);
+					timeBonus = parseInt(timeReward[i-1]);
 					
 					break;
 				}
 			}
 			
 			if (timeBonus > 0) {
-				ret.bonus.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: timeSpent});
+				
+				var minutes = Math.trunc((timeSpent/60));
+				var seconds = timeSpent - (minutes*60);
+				
+				ret.bonus.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
 				ret.total += timeBonus;
 			}
 		}
