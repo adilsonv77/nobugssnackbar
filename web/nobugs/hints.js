@@ -548,16 +548,11 @@ function createRightDlg(x, y, text) {
 
 function createInfoDlg(contentTxt, style, title) {
 	
-	var content = document.getElementById('dialogInfo');
-	var container = document.getElementById('dialogInfoText');
+	var content = document.getElementById('dialogHint');
+	var container = document.getElementById('dialogHintText');
 	container.innerHTML = contentTxt;
-	
-	var buttons = document.getElementById('dialogInfoButton');
-	buttons.innerHTML = nobugspage.finishButton(null, null, null);
-		
 
 	MyBlocklyApps.showDialog(content, null, true, false, false, title, style, null);
-	
 
 }
 
