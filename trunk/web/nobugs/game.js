@@ -411,7 +411,9 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   window.addEventListener('unload', Game.unload);
  
-  
+  var sliderSvg = document.getElementById('slider');
+  Game.speedSlider = new Slider(10, 35, 130, sliderSvg);
+
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
   BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
