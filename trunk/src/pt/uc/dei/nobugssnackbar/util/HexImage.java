@@ -3,14 +3,10 @@ package pt.uc.dei.nobugssnackbar.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-import javax.servlet.ServletContext;
-
-public class Image {
+public class HexImage {
 	
 	public static String toHex(File file) throws FileNotFoundException, IOException {
 
@@ -22,6 +18,7 @@ public class Image {
 			result.append(String.format("%02X", value));
 		}
 
+		in.close();
 		return result.toString();
 	}
 	
@@ -35,12 +32,4 @@ public class Image {
 		return data;
 	}
 	
-//	public static void main(String...strings) throws Exception {
-//		File file = new File("C:\\tela2.png");
-//		
-//		Image image = new Image("");
-//		
-//		System.out.println(image.toHex(file));
-//		
-//	}
 }

@@ -22,7 +22,7 @@ import pt.uc.dei.nobugssnackbar.model.BartleType;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
-import pt.uc.dei.nobugssnackbar.util.Image;
+import pt.uc.dei.nobugssnackbar.util.HexImage;
 
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
@@ -179,7 +179,7 @@ public class UserControl {
 	
 	@RemoteMethod 
 	public void convertHexToImage(String key, String hex) throws NoSuchAlgorithmException, IOException {
-		HintImage.getImages().put(key, Image.toImage(hex));
+		HintImage.getImages().put(key, HexImage.toImage(hex));
 	}
 	
 	@RemoteMethod
