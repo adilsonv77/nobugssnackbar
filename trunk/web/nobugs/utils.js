@@ -11,7 +11,16 @@ var window_prompt = window.prompt;
 
 window.prompt = function(one, two) {
 	Blockly.fireUiEventNow(window, 'showWindowPrompt');
-	return window_prompt(one, two);
+	
+	var p;
+	do {
+		var p = window_prompt(one, two);
+		var valid = variableNames.validate(p);
+		if (valid == false) 
+			one = "Nome de varáivel incorreto. " + one; 
+	} while(!valid);
+	
+	return p;
 };
 
 
