@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="100000"/>
 	<explanation>
 		<page type="statement">
 		J&#225; sabes ir ao cliente e perguntar e anotar o seu pedido. Teu pr&#243;ximo objetivo &#233; <br/>

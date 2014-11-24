@@ -58,6 +58,15 @@ Hints.init = function(hints) {
 Hints.addDefaultErrorHints = function() {
 	
 	var hint = {};
+	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
+	hint.time = 0;
+	hint.running = false;
+	hint.category = "DebugProgram";
+	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
+	Hints.hints.whenError.push(hint);
+	
+	hint.next = new Object();
+	hint = hint.next;
 	hint.content = document.getElementById("Hints_GoalButtonError").innerHTML;
 	hint.time = 0;
 	hint.condition = "true";
@@ -65,16 +74,6 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "GoalButton";
 	
 	Hints.hints.whenError.push(hint);
-	
-	hint.next = new Object();
-	
-	hint = hint.next;
-	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
-	hint.time = 0;
-	hint.running = false;
-	hint.category = "DebugProgram";
-	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
-	Hints.hints.whenError.unshift(hint);
 	
 	hint = new Object();
 	
@@ -365,6 +364,7 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 
 	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgBackground_, 'mousedown', null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgKnob_, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Game.slider.svg, 'mousedown', null, bindEvent));
 };
 
 Hints.hideHintWithTimer = function () {
@@ -941,3 +941,22 @@ Hints.Categories["ShowCountInstructions"] = {
 			"(Game.firstTime && !Hints.showedCountInstrutionsHint)"
 		
 };
+
+Hints.Categories["Slider"] = {
+		
+		show:
+				function (param) {
+					Game.slider.svg.style.visibility = "visible";
+
+					if (Hints.hintSelected.content == null)
+						Hints.hintSelected.content = document.getElementById("NoBugs_slider").innerHTML;
+					
+					var bbBox = BlocklyApps.getBBox_(document.getElementById("divslider"));
+					createDownDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
+				},
+
+		naturalCondition:
+			"Game.howManyRuns >= Game.slider.timesBefore && Game.slider.svg.style.visibility == 'hidden'"
+			
+	};
+

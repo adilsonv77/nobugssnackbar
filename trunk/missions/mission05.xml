@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="100000"/>
 	<explanation>
 		<page type="statement">
 		Agora &#233; hora de atender o pedido. No card&#225;pio temos cachorro-quente. No balc&#227;o <br/>

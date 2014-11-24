@@ -207,7 +207,7 @@ public class NoBugsConnection {
 			String xml = rs.getString(2);
 			ps.close();
 			
-			ps = bdCon.prepareStatement("select timespend, answer from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+			ps = bdCon.prepareStatement("select timespend, answer, executions from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
 			
 			ps.setLong(1, missionId);
 			ps.setLong(2, clazzId);
@@ -216,21 +216,24 @@ public class NoBugsConnection {
 			rs = ps.executeQuery();
 			String answer = null;
 			String timeSpent = null;
+			String executions = "0";
 			if (rs.next()) {
 				
 				timeSpent = rs.getString(1);
 				answer = rs.getString(2);
+				executions = rs.getString(3);
 
 			}
 
 			ps.close();
 
-			ret = new String[1][5];
+			ret = new String[1][6];
 			ret[0][0] = missionId + "";
 			ret[0][1] = missionIdx + "";
 			ret[0][2] = xml;
 			ret[0][3] = answer;
 			ret[0][4] = timeSpent;
+			ret[0][5] = executions;
 
 		} finally {
 			if (bdCon != null)
@@ -295,7 +298,7 @@ public class NoBugsConnection {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, answer, missionid, classid, userid, executions) values (?, ?, ?, ?, ?, ?, ?, 1)");
+								+ "(timespend, achieved, money, answer, missionid, classid, userid, executions) values (?, ?, ?, ?, ?, ?, ?, 0)");
 			} else {
 				ps = bdCon
 						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ? "

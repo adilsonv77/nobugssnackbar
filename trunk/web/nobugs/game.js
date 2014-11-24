@@ -411,9 +411,12 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   window.addEventListener('unload', Game.unload);
  
-  var sliderSvg = document.getElementById('slider');
-  Game.speedSlider = new Slider(10, 35, 130, sliderSvg);
-  sliderSvg.style.visibility = "hidden";
+  Game.slider = {};
+  Game.slider.svg = document.getElementById('slider');
+  Game.slider.svg.style.visibility = "hidden";
+  
+  if (Game.speedSlider == undefined)
+	  Game.speedSlider = new Slider(10, 35, 130, Game.slider.svg);
 
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
@@ -465,7 +468,7 @@ Game.unload = function(e) {
 
 Game.missionLoaded = function(ret){
 	
-  Game.howManyRuns = 0;
+  Game.howManyRuns = parseInt(ret[4]);
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -474,11 +477,14 @@ Game.missionLoaded = function(ret){
 	  
   var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
   
+  Game.slider.timesBefore = 0;
+  
   var slider = mission.childNodes[0].getElementsByTagName("slider");
-  Game.slider = {};
   if (slider.length > 0) {
 	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
-	  Game.slider.explains = slider[0].getAttribute("explains") === "true";
+  }
+  if (Game.howManyRuns >= Game.slider.timesBefore) {
+	  Game.slider.svg.style.visibility = "visible";
   }
    
   
@@ -1222,14 +1228,6 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
-			    	if (Game.slider.timesBefore != undefined) {
-			    		
-			    		if (Game.howManyRuns >= Game.slider.timesBefore) {
-			    			var sliderSvg = document.getElementById('slider');
-			    			sliderSvg.style.visibility = "visible";
-			    		}
-			    	}
-			    	
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
 
