@@ -131,8 +131,8 @@ Questionnaire.createForm = function (questionnaire) {
 	return form;
 }
 
-Questionnaire.nextChar = function(char) {
-	return String.fromCharCode(char.charCodeAt(0) + 1);
+Questionnaire.nextChar = function(c) {
+	return String.fromCharCode(c.charCodeAt(0) + 1);
 };
 
 Questionnaire.handlingQuestionnaire = function() {
