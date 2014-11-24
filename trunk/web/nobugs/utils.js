@@ -14,10 +14,12 @@ window.prompt = function(one, two) {
 	
 	var p;
 	do {
-		var p = window_prompt(one, two);
-		var valid = variableNames.validate(p);
-		if (valid == false) 
-			one = "Nome de varáivel incorreto. " + one; 
+		p = window_prompt(one, two);
+		
+		var valid = p == null || VariableNames.validate(p);
+		if (valid == false) {
+			alert(BlocklyApps.getMsg("Error_variableName"));
+		}
 	} while(!valid);
 	
 	return p;
