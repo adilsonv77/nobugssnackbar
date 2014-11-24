@@ -60,6 +60,7 @@
 			<drinks></drinks>
 		</customer>
 	</customers>
+	<slider timesBefore="2" explains="true"/>
 	<objectives ordered="false" reward="7">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">catchFood</objective>
