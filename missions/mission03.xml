@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="100000"/>
 	<explanation>
 		<page type="statement">
 		Agora que j&#225; sabes ir at&#233; o balc&#227;o &#233; o momento de aprenderes a anotar o <br/>

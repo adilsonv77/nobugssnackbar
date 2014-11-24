@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="100000"/>
 	<explanation>
 		<page type="statement">
 		Ol&#225; $${userLogged.name} !!! <br/><br/>

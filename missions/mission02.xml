@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="100000"/>
 	<explanation>
 		<page type="statement">
 		Agora j&#225; sabes o essencial para executar um programa. Por&#233;m, por vezes, <br/>

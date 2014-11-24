@@ -1,19 +1,13 @@
 package pt.uc.dei.nobugssnackbar.control;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
-import org.directwebremoting.ServerContext;
-import org.directwebremoting.ServerContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProperty;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
@@ -108,7 +102,7 @@ public class UserControl {
 		this.levelid = levelId;
 		this.missionidx = missionIdx;
 
-		return  new String[]{r[0][1], r[0][2], r[0][3], r[0][4]} ;
+		return  new String[]{r[0][1], r[0][2], r[0][3], r[0][4], r[0][5]} ;
 	}
 	
 	@RemoteMethod
