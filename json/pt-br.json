@@ -84,6 +84,7 @@
 	"Error.variableHaventContentToDeliver" : "N&#227;o h&#225; nada a ser entregue.",
 	"Error.deliveredWrongRequest" : "A entrega n&#227;o corresponde ao que o cliente pediu.",
 	"Error.doesntMatchPosition" : "A entrega n&#227;o corresponde &#224; mesma posi&#231;&#227;o do cliente.",
+	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto: use somente caracteres alfab&#233;ticos e n&#250;meros.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
