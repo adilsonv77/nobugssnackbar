@@ -413,6 +413,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
  
   var sliderSvg = document.getElementById('slider');
   Game.speedSlider = new Slider(10, 35, 130, sliderSvg);
+  sliderSvg.style.visibility = "hidden";
 
   BlocklyApps.bindClick('runButton', Game.runButtonClick);
   BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
@@ -423,8 +424,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
   //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
-  BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
-  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+ // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+ // BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
   
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
@@ -472,6 +473,15 @@ Game.missionLoaded = function(ret){
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
   var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
+  
+  var slider = mission.childNodes[0].getElementsByTagName("slider");
+  Game.slider = {};
+  if (slider.length > 0) {
+	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
+	  Game.slider.explains = slider[0].getAttribute("explains") === "true";
+  }
+   
+  
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
@@ -687,7 +697,7 @@ Game.resizeWindow = function(e) {
 	Game.blockly.style.left = Game.rtl ? '10px' : '380px';
     var w = window.innerWidth;
     if (Game.variableBox.style.display === "none") {
-    	Game.blockly.style.height = "90%";
+    	//Game.blockly.style.height = "90%";
         w -= 400;
     	
     } else {
@@ -712,7 +722,8 @@ Game.resizeWindow = function(e) {
 	
 	if (blocklyLock !== null && blocklyLock !== "undefined" && blocklyLock !== undefined) {
 	    blocklyLock.style.cssText = Game.blockly.style.cssText;
-	    blocklyLock.style.position = "absolute";
+	    blocklyLock.style.height = Game.blockly.clientHeight  + "px";;
+	    blocklyLock.style.position = "fixed";
 	    blocklyLock.style.backgroundColor = "grey";
 	    blocklyLock.style.opacity = "0.3";
 	}
@@ -1058,11 +1069,14 @@ Game.updateCounterInstructions = function(howMany) {
 Game.lockBlockly = function() {
 	
     var blocklyLock = document.createElement("div");
+    
     blocklyLock.id = "blocklyLock";
     blocklyLock.style.cssText = Game.blockly.style.cssText;
-    blocklyLock.style.position = "absolute";
+    blocklyLock.style.height = Game.blockly.clientHeight + "px";
+    blocklyLock.style.position = "fixed";
     blocklyLock.style.backgroundColor = "grey";
     blocklyLock.style.opacity = "0.3";
+    
     
 	var mainBody = document.getElementById("mainBody");
 	mainBody.appendChild(blocklyLock);
@@ -1208,6 +1222,14 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
+			    	if (Game.slider.timesBefore != undefined) {
+			    		
+			    		if (Game.howManyRuns >= Game.slider.timesBefore) {
+			    			var sliderSvg = document.getElementById('slider');
+			    			sliderSvg.style.visibility = "visible";
+			    		}
+			    	}
+			    	
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
 
@@ -1469,6 +1491,8 @@ Game.animate = function() {
 
 	  // call the next animate when the animation of the last command has finished
 	  //if (Game.runningStatus === 1) 
+	  Game.stepSpeed = 1000 * Math.pow(1 - Game.speedSlider.getValue(), 3);
+
 	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
 	   // TODO ???

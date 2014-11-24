@@ -96,7 +96,7 @@ button.notEnabled {
 /* Variable box */
 #variableBox {
 	width: 200px;
-	position: absolute;
+	position: fixed;
 	display: block;
 	background-color: #FDD9DC;
 }
