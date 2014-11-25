@@ -49,11 +49,11 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void logoff(int timeSpend, String answer) throws SQLException {
+	public void logoff(int timeSpend, long execution, String answer) throws SQLException {
 		
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
-			NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, 0, timeSpend, false, answer);
+			NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, 0, timeSpend, execution, false, answer);
 		
 		this.user = null;
 		this.classid = 0;
@@ -106,7 +106,7 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void saveMission(int money, int timeSpend, boolean achieved, String answer) throws SQLException {
+	public void saveMission(int money, int timeSpend, long execution, boolean achieved, String answer) throws SQLException {
 		
 		if (this.user == null)
 			return;
@@ -115,7 +115,7 @@ public class UserControl {
 		
 		this.user.setMoney(this.user.getMoney() + money);
 		
-		NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, money, timeSpend, achieved, answer);
+		NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, money, timeSpend, execution, achieved, answer);
 
 		if (achieved) {
 			// when saveMission is called with achieved = true, this means that finished the mission
@@ -185,5 +185,19 @@ public class UserControl {
 		}
 		
 		return b;
+	}
+	
+	@RemoteMethod
+	public void missionFail(int execution, String[][] goals) throws SQLException {
+		
+		NoBugsConnection.getConnection().storeMissionFail(execution, this.user.getId(), this.mission, this.classid, goals);
+		
+	}
+	
+	@RemoteMethod
+	public void missionError(int execution, String idError, String blockId, String errorMessage) throws SQLException {
+		
+		NoBugsConnection.getConnection().storeMissionError(execution, this.user.getId(), this.mission, this.classid, idError, blockId, errorMessage);
+		
 	}
 }

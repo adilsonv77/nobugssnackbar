@@ -453,6 +453,13 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
 Game.unload = function(e) {
 
+	Game.saveMission();
+	
+    return null;
+};
+
+Game.saveMission = function() {
+	
 	var answer = null;
 	if (Blockly.mainWorkspace != null) 
 		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
@@ -460,10 +467,11 @@ Game.unload = function(e) {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, timeSpent, false, answer, 
+	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer, 
 			{callback:function() {}, async:false});
 	
-    return null;
+	Game.currTime = new Date().getTime();
+	
 };
 
 Game.missionLoaded = function(ret){
@@ -869,7 +877,7 @@ Game.logoffButtonClick = function() {
 
     document.getElementById('blockly').innerHTML = ""; // clean the editor
 	
-	UserControl.logoff(timeSpent, answer, function(){
+	UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
@@ -1008,9 +1016,9 @@ Game.execute = function(debug) {
 		  
 		var js = Blockly.JavaScript;
 		
-		UserControl.registerExecution();
-		  
 		Game.howManyRuns++;
+
+		Game.saveMission();
 		
   	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
   	    
@@ -1186,7 +1194,7 @@ Game.nextStep = function() {
 
 			        var answer = Blockly.Xml.domToText(xml);
 			    	
-			    	UserControl.saveMission(reward.total, timeSpent, true, answer, function(){
+			    	UserControl.saveMission(reward.total, timeSpent, Game.howManyRuns, true, answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
@@ -1228,6 +1236,17 @@ Game.nextStep = function() {
 			    	});
 			    	
 			    } else {
+			    	
+			    	var objs = [];
+					var os = hero.objective.objectives;
+					for (var i=0; i<os.length; i++) {
+						
+						objs[i] = [Objective.factory(os[i].objective).createExplanationItem(os[i]), os[i].achieved];
+					}
+					UserControl.missionFail(Game.howManyRuns, objs);
+
+				    
+			    	
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
 
@@ -1286,7 +1305,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, timeSpent, false, answer);
+			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer);
 			
 			Game.currTime = now;
 		});
@@ -1577,13 +1596,15 @@ Game.step = function(command, values) {
 Game.showError = function(iderror) {
 	
 	Hints.stopHintsEx();
-	Game.lastErrorData.iderror = iderror;
+	Game.lastErrorData.iderror = iderror[0];
 	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
-	container.textContent = BlocklyApps.getMsg(iderror);
+	container.textContent = BlocklyApps.getMsg(iderror[0]);
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
+	
+	UserControl.missionError(Game.howManyRuns, iderror[0], Blockly.selected.id, container.textContent);
 	
     var style = {top: '120px'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
