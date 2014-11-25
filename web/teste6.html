@@ -6,6 +6,10 @@
 
 <script type="text/javascript" src="nobugs/questionnaire.js"></script>
 
+  <script type="text/javascript" src="drop/drop.min.js"></script>
+  <link rel="stylesheet" href="drop/drop-theme-arrows-alert.css" />
+
+
 <script type="text/javascript">
 	var questionnaire;
 
@@ -33,6 +37,20 @@
 		window.dispatchEvent(evt);
 
 	}
+	
+	function showDrop() {
+		var input = document.getElementById("minhaclazz");
+		
+		var drop = new Drop({
+			target: input,
+			content: "Campo obrigatório",
+			position: "right middle",
+			classes: "drop-theme-arrows",
+			openOn: null
+		});
+		drop.open();
+
+	}
 </script>
 
 </head>
@@ -45,8 +63,9 @@
 		};
 		window.addEventListener("showWindowPrompt", wrapFunc, false);
 	</script>
-	<input type="button" value="Load" onclick="loadQuestionnaire()" />
+	<input id="minhaclazz" type="button" value="Load" onclick="loadQuestionnaire()" />
 	<input type="button" value="Chamar evento" onclick="callEvent()" />
+	<input type="button" value="Show drop" onclick="showDrop()" />
 	<div id="aquiVaiOForm"></div>
 
 

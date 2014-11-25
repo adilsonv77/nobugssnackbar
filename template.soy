@@ -136,6 +136,9 @@
   <link href="jquery.growl/jquery.growl.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.gridview/jquery.gridview.min.js"></script>
 
+  <script type="text/javascript" src="drop/drop.min.js"></script>
+  <link rel="stylesheet" href="drop/drop-theme-arrows-alert.css" />
+
   <link rel="stylesheet" href="jquery.countup/jquery.countup.css">
   <script src="jquery.countup/base.js"></script>
   <script src="jquery.countup/jquery.countup.js"></script>
@@ -400,7 +403,7 @@
   		
   	</div>
     <div id="buttonsQuestionnaire" class="farSide" style="padding: 1ex 3ex 0">
-	    <button class="secondary" onclick="Game.logoffButtonClick()">
+	    <button class="secondary" onclick="Questionnaire.closeDrop(); Game.logoffButtonClick()">
 	      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
 	    </button>
 	    <button class="secondary" onclick="Game.finishQuestionnaire()">
