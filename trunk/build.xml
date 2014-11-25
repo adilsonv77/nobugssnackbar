@@ -93,5 +93,47 @@
 		
 	</target>
 	
+	<target name="compress">
+		<description>Compress the javascript files</description>
+		
+		<property name="js.home" value="${basedir}/web/nobugs" />
+		<property name="js.host" value="${js.home}/nobugs-min.js" />
+		
+		<delete file="${js.host}" />
+		
+		<!-- http://yui.github.io/yuicompressor/ -->
+		<!-- https://github.com/yui/yuicompressor -->
+		<java jar="${basedir}/web/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
+			
+			<!-- 'line-break' delimit the max number of characters and create a line break when this number is reached -->
+			<arg line="--line-break 100" /> 
+			
+			<!-- 'o' define what the output file -->
+			<arg line="-o ${js.host}"/>
+			
+			<!-- list of files to compress -->
+			<arg line="${js.home}/blockly.js" />
+			<arg line="${js.home}/customer.js" />
+			<arg line="${js.home}/customerman.js" />
+			<arg line="${js.home}/explanation.js" />
+			<arg line="${js.home}/game.js" />
+			<arg line="${js.home}/graph.js" />
+			<arg line="${js.home}/hints.js" />
+			<arg line="${js.home}/language.js" />
+			<arg line="${js.home}/money.js" />
+			<arg line="${js.home}/nobugsblocklygeneratorjavascript.js" />
+			<arg line="${js.home}/nobugsjsinterpreter.js" />
+			<arg line="${js.home}/objectives.js" />
+			<arg line="${js.home}/preloadimgs.js" />
+			<arg line="${js.home}/questionnaire.js" />
+			<arg line="${js.home}/slider.js" />
+			<arg line="${js.home}/snackman.js" />
+			<arg line="${js.home}/sprite.js" />
+			<arg line="${js.home}/utils.js" />
+			<arg line="${js.home}/variablenamesvalidate.js" />
+			<arg line="${js.home}/xml.js" />
+			
+		</java>
+	</target>
 	
 </project>
