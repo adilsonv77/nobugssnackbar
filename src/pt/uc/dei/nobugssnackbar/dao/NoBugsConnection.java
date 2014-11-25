@@ -279,7 +279,7 @@ public class NoBugsConnection {
 	}
 
 	public void finishMission(User user, long idMission, long idClazz, int money,
-			int timeSpend, boolean achieved, String answer) throws SQLException {
+			int timeSpend, long execution, boolean achieved, String answer) throws SQLException {
 
 		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
 
@@ -289,13 +289,14 @@ public class NoBugsConnection {
 			PreparedStatement ps, psLog;
 			
 			psLog = bdCon.prepareStatement("insert into logmissions "
-							+ "(timespend, answer, missionid, classid, userid, moment) values (?, ?, ?, ?, ?, now())");
+							+ "(timespend, answer, missionid, classid, userid, execution, moment) values (?, ?, ?, ?, ?, ?, now())");
 			
 			psLog.setLong(1, timeSpend);
 			psLog.setString(2, answer);
 			psLog.setLong(3, idMission);
 			psLog.setLong(4, idClazz);
 			psLog.setLong(5, user.getId());
+			psLog.setLong(6, execution);
 			log.info("logging " + idMission + " " + idClazz + " " + user.getId());
 			psLog.executeUpdate(); 
 			psLog.close();
@@ -303,10 +304,10 @@ public class NoBugsConnection {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, answer, missionid, classid, userid, executions) values (?, ?, ?, ?, ?, ?, ?, 0)");
+								+ "(timespend, achieved, money, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
 			} else {
 				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ? "
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ?, executions = ? "
 								+ "where missionid = ? and classid = ? and  userid = ?");
 				timeSpend += localTimeSpend;
 			}
@@ -315,9 +316,10 @@ public class NoBugsConnection {
 			ps.setString(2, (achieved ? "T" : "F"));
 			ps.setInt(3, money);
 			ps.setString(4, answer);
-			ps.setLong(5, idMission);
-			ps.setLong(6, idClazz);
-			ps.setLong(7, user.getId());
+			ps.setLong(5, execution);
+			ps.setLong(6, idMission);
+			ps.setLong(7, idClazz);
+			ps.setLong(8, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
@@ -723,6 +725,73 @@ public class NoBugsConnection {
 				}
 		}
 		return ret;
+	}
+
+	public void storeMissionFail(long execution, long user, long mission, long classid,
+			String[][] goals) throws SQLException {
+
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(
+					"insert into missionsfails (missionid, userid, classid, execution, goalcount, goaldescription, goalachieved) "
+									 + "values (?, ?, ?, ?, ?, ?, ?)");
+			ps.setLong(1, mission);
+			ps.setLong(2, user);
+			ps.setLong(3, classid);
+			ps.setLong(4, execution);
+			
+			for (int i=0; i<goals.length; i++) {
+				
+				ps.setLong(5, i+1);
+				ps.setString(6, goals[i][0]);
+				ps.setString(7, goals[i][1].substring(0, 1).toUpperCase());
+				
+				ps.executeUpdate();
+			}
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+	}
+
+	public void storeMissionError(int execution, long user, long mission,
+			long classid, String idError, String blockId, String errorMessage) throws SQLException {
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(
+					"insert into missionserrors (missionid, userid, classid, execution, errorid, blockid, errormessage) "
+									 + "values (?, ?, ?, ?, ?, ?, ?)");
+			ps.setLong(1, mission);
+			ps.setLong(2, user);
+			ps.setLong(3, classid);
+			ps.setLong(4, execution);
+			
+			ps.setString(5, idError);
+			ps.setString(6, blockId);
+			ps.setString(7, errorMessage);
+
+			ps.executeUpdate();
+			
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+	
 	}
 
 }
