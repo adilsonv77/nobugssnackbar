@@ -106,7 +106,7 @@
 		<java jar="${basedir}/web/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
 			
 			<!-- 'line-break' delimit the max number of characters and create a line break when this number is reached -->
-			<arg line="--line-break 100" /> 
+			<!--<arg line="-line-break 200" />-->
 			
 			<!-- 'o' define what the output file -->
 			<arg line="-o ${js.host}"/>
