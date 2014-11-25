@@ -67,7 +67,7 @@ nobugspage.toolbox = function(opt_data, opt_ignored, opt_ijData) {
 
 
 nobugspage.nextButton = function(opt_data, opt_ignored, opt_ijData) {
-  return '<button class="secondary" onclick="Explanation.nextStatement()">Próximo</button>';
+  return '<button class="secondary" onclick="Explanation.nextStatement()">PróximoóÊ</button>';
 };
 
 
