@@ -1,52 +1,53 @@
 /**
- * 
- */	
+ *
+ */
 
 var Questionnaire = {};
 
 Questionnaire.createForm = function (questionnaire) {
-	
+
 	var form = document.createElement("form");
 	var div = document.createElement("div");
-	
+
 	div.style["width"] = "600px";
 	div.style["height"] = "480px";
 	div.style["overflow"] = "scroll";
 	div.id = "questions";
-	
+
 	var table = document.createElement("table");
-	
+
 	div.appendChild(table);
 	form.appendChild(div);
-	
+
 	var input = document.createElement("input");
-	
+
 	var questionNumber = 1;
-	
-	for (var j = 0; j < questionnaire.length; j++) 
+
+	for (var j = 0; j < questionnaire.length; j++)
 		for (var i = 0; i < questionnaire[j].questions.length; i++) {
-			
+
 			var tr = document.createElement("tr");
 			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
-			
+
 			var td = document.createElement("td");
 			tr.appendChild(td);
-	
+
 			td.innerHTML = "<b>" + (questionNumber++) + "</b> - " + questionnaire[j].questions[i].description;
-			
+
 			td = document.createElement("td");
 			tr.appendChild(td);
-			
-			// TODO provide the component according questionnaire.questions[i].type	
+
+			// TODO provide the component according questionnaire.questions[i].type
 			table.appendChild(tr);
 			tr = document.createElement("tr");
 			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
-			
+
 			td = document.createElement("td");
-			
+
 			switch(questionnaire[j].questions[i].type[0].toUpperCase()) {
 				case "N": {
 					input = document.createElement("input");
+					input.setAttribute("questionId", questionnaire[j].questions[i].id);
 					input.className = "answer";
 					input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
 					input.type = "number";
@@ -54,8 +55,9 @@ Questionnaire.createForm = function (questionnaire) {
 					input.max = "130";
 					input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 					input.onkeypress = function(event) {
-						return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)
+						return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0);
 					};
+					input.addEventListener("change", Questionnaire.closeDrop, false);
 					td.appendChild(input);
 					break;
 				}
@@ -63,26 +65,29 @@ Questionnaire.createForm = function (questionnaire) {
 					var identifier = "a";
 					for (var x = 0;x < questionnaire[j].questions[i].options.length;x++) {
 						input = document.createElement("input");
+						input.setAttribute("questionId", questionnaire[j].questions[i].id);
 						input.className = "answer";
 						input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
 						input.type = "radio";
 						input.value = questionnaire[j].questions[i].options[x].value;
 						input.id = questionnaire[j].id + "_" + questionnaire[j].questions[i].id + "_" + x;
 						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
-						
+
+						input.addEventListener("change", Questionnaire.closeDrop, false);
+
 						var label = document.createElement("label");
-						
+
 						label.innerHTML = identifier + ") ";
 						identifier = Questionnaire.nextChar(identifier);
 						td.appendChild(label);
-						
+
 						td.appendChild(input);
-						
+
 						label = document.createElement("label");
 						label.htmlFor = input.id;
 						label.innerHTML = questionnaire[j].questions[i].options[x].description;
 						td.appendChild(label);
-						
+
 						var br = document.createElement("br");
 						td.appendChild(br);
 					}
@@ -91,45 +96,59 @@ Questionnaire.createForm = function (questionnaire) {
 				case "T": {
 					if (questionnaire[j].questions[i].type.length == 1) {
 						input.type = "text";
+						input.setAttribute("questionId", questionnaire[j].questions[i].id);
 						input.name = questionnaire[j].questions[i].id;
 						input.style["width"] = "100px";
 						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
+						input.addEventListener("change", Questionnaire.closeDrop, false);
 						td.appendChild(input);
 					} else {
 						var cont = questionnaire[j].questions[i].type.substring(1, questionnaire[j].questions[i].type.length);
 						var identifier = "a";
 						for(var x = 0;x < cont;x++) {
 							input = document.createElement("input");
+							input.setAttribute("questionId", questionnaire[j].questions[i].id);
 							input.className = "answer";
 							input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
 							input.type = "text";
 							input.style["width"] = "300px";
 							input.style["marginTop"] = "5px";
 							input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
-							
+							input.addEventListener("change", Questionnaire.closeDrop, false);
+
 							var label = document.createElement("label");
-							
+
 							label.innerHTML = identifier + ") ";
 							identifier = Questionnaire.nextChar(identifier);
 							td.appendChild(label);
-							
+
 							td.appendChild(input);
-							
+
 							var br = document.createElement("br");
 							td.appendChild(br);
 						}
 					}
 					break;
 				}
-				
+
 			}
 			tr.appendChild(td);
 			table.appendChild(tr);
-			
+
 		}
-	
+
 	return form;
-}
+};
+
+Questionnaire.closeDrop = function() {
+
+	if (Questionnaire.drop != null && Questionnaire.drop != undefined) {
+		Questionnaire.drop.close();
+		Questionnaire.drop = null;
+	}
+
+
+};
 
 Questionnaire.nextChar = function(c) {
 	return String.fromCharCode(c.charCodeAt(0) + 1);
@@ -138,22 +157,22 @@ Questionnaire.nextChar = function(c) {
 Questionnaire.handlingQuestionnaire = function() {
 	var answers = document.getElementsByClassName("answer");
 	var saveAnswers = [];
-	
+
 	for (var i = 0;i < answers.length;i++) {
 		var answer = answers[i];
 		var questionnaireId = answer.name.split("_")[0];
 		var questionId = answer.name.split("_")[1];
-		
+
 		switch(answer.type.toUpperCase()) {
 			case "RADIO": {
 				var answerOptions = document.getElementsByName(answer.name);
-				
+
 				for (var x = 0;x < answerOptions.length;x++) {
 					if (answerOptions[x].checked) {
 						var questionnaireId = answer.name.split("_")[0];
 						var questionId = answer.name.split("_")[1];
 						saveAnswers.push([questionnaireId, questionId, answerOptions[x].value]);
-						
+
 					}
 					if (x != answerOptions.length-1) {
 						i++;
@@ -172,7 +191,7 @@ Questionnaire.handlingQuestionnaire = function() {
 					if (answerOptions[x].value != "") {
 						aux = aux + "<answer><![CDATA[" + answerOptions[x].value + "]]></answer>";
 					}
-					
+
 					if (x != answerOptions.length-1) {
 						i++;
 					}
@@ -185,27 +204,27 @@ Questionnaire.handlingQuestionnaire = function() {
 		}
 	}
 	UserControl.saveQuestionnaire(saveAnswers);
-	// it's not necessary waiting the answer... the next parts of the games don't depends on it. 
+	// it's not necessary waiting the answer... the next parts of the games don't depends on it.
 };
 
 Questionnaire.consistQuestionnaire = function() {
 	var any = false;
-	
+
 	var answers = document.getElementsByClassName("answer");
-	
+
 	for (var i = 0;i < answers.length;i++) {
 		var answer = answers[i];
 		var questionnaireId = answer.name.split("_")[0];
 		var questionId = answer.name.split("_")[1];
-		
+
 		var checked = false;
-		
+
 		switch(answer.type.toUpperCase()) {
 			case "RADIO": {
 				var answerOptions = document.getElementsByName(answer.name);
-				
+
 				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
-					
+
 					for (var x = 0;x < answerOptions.length;x++) {
 						if (answerOptions[x].checked) {
 							checked = true;
@@ -227,18 +246,18 @@ Questionnaire.consistQuestionnaire = function() {
 				} else {
 					checked = true;
 				}
-				
+
 				break;
 			}
 			case "TEXT": {
 				var answerOptions = document.getElementsByName(answer.name);
-				
+
 				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
 					for (var x = 0;x < answerOptions.length;x++) {
 						if (answerOptions[x].value == "") {
 							break;
 						}
-						
+
 						if (x != answerOptions.length-1) {
 							i++;
 						}
@@ -256,6 +275,22 @@ Questionnaire.consistQuestionnaire = function() {
 			for (var x = 0;x < redTrs.length;x++) {
 				redTrs[x].style["color"] = "red";
 			}
+			var input = Questionnaire.getInputByQuestionId(questionId);
+			input.focus();
+
+			if (input.type == "radio")
+				input = input.labels[0];
+
+			Questionnaire.drop = new Drop({
+				target: input,
+				content: "Campo obrigatorio",
+				position: "right middle",
+				classes: "drop-theme-arrows",
+				openOn: null
+			});
+			Questionnaire.drop.open();
+
+			return;
 		} else {
 			var blackTrs = Questionnaire.getTrsByQuestionId(questionId);
 			for (var x = 0;x < blackTrs.length;x++) {
@@ -263,19 +298,31 @@ Questionnaire.consistQuestionnaire = function() {
 			}
 		}
 	}
-	
+
 	return !any;
 };
 
 Questionnaire.getTrsByQuestionId = function(questionId) {
 	var selectedTrs = [];
 	var allTrs = document.getElementsByTagName("tr");
-	
+
 	for (var i = 0;i < allTrs.length;i++) {
 		if (allTrs[i].getAttribute("questionId") == questionId) {
 			selectedTrs.push(allTrs[i]);
 		}
 	}
 	return selectedTrs;
+};
+
+Questionnaire.getInputByQuestionId = function(questionId) {
+	var answers = document.getElementsByClassName("answer");
+	for (var i = 0;i < answers.length;i++) {
+		if (answers[i].getAttribute("questionId") == questionId) {
+
+			return answers[i];
+		}
+	}
+
+	return null;
 };
 

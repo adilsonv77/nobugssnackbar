@@ -67,6 +67,11 @@ public class NoBugsConnection {
 		dataSource.setJdbcUrl(url);
 		dataSource.setUser(username);
 		dataSource.setPassword(password);
+		
+		// this is necessary to prevent the time out of connections
+		dataSource.setIdleConnectionTestPeriod(60);
+		dataSource.setTestConnectionOnCheckin(true);
+		dataSource.setPreferredTestQuery("select last_insert_id()");
 
 	}
 	
