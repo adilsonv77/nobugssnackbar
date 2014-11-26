@@ -14,5 +14,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="lib/yuicompressor-2.4.8.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
