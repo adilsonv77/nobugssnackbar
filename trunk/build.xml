@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 <project name="Utility-Tasks" default="soy" basedir=".">
 	
+	<!-- Defines a reference to enviroments variables -->
+    <property environment="e"/>
+	
+	<!-- File name of project properties -->
+	<property name="file.properties" value="build.properties" />
+    <!-- Relating properties of web application enviroment comes from build.properties file -->
+	<property file="${file.properties}" />
+	
+	
 	<property name="blockly.dir" location="D:\\doutoramento\\blockly" />
 	<property name="dest.dir" location="web" />
 	
@@ -93,46 +102,51 @@
 		
 	</target>
 	
+	<path id="lib.base">
+		<pathelement path="${classpath}"/>
+	    <pathelement path="${build.home}"/>
+	    <fileset dir="${basedir}/lib">
+	    	<include name="**/*.jar"/>
+	    </fileset>
+	</path>
+	
 	<target name="compress">
 		<description>Compress the javascript files</description>
 		
-		<property name="js.home" value="${basedir}/web/nobugs" />
-		<property name="js.host" value="${js.home}/nobugs-min.js" />
-		
-		<delete file="${js.host}" />
+		<delete file="${js.compress.out}" />
 		
 		<!-- http://yui.github.io/yuicompressor/ -->
 		<!-- https://github.com/yui/yuicompressor -->
-		<java jar="${basedir}/web/WEB-INF/lib/yuicompressor-2.4.8.jar" fork="true">
-			
-			<!-- 'line-break' delimit the max number of characters and create a line break when this number is reached -->
-			<!--<arg line="-line-break 200" />-->
+		<java classpath="${build.home}" classname="nobugssnackbar.YUICompressor" fork="true">
 			
 			<!-- 'o' define what the output file -->
-			<arg line="-o ${js.host}"/>
+			<arg line="-o ${js.compress.out}"/>
 			
 			<!-- list of files to compress -->
+			<arg line="${js.home}/language.js" />
+			<arg line="${js.home}/slider.js" />
+			<arg line="${js.home}/utils.js" />
+			<arg line="${js.home}/preloadimgs.js" />
+			<arg line="${js.home}/game.js" />
+			<arg line="${js.home}/explanation.js" />
+			<arg line="${js.home}/hints.js" />
 			<arg line="${js.home}/blockly.js" />
+			<arg line="${js.home}/graph.js" />
+			<arg line="${js.home}/snackman.js" />
 			<arg line="${js.home}/customer.js" />
 			<arg line="${js.home}/customerman.js" />
-			<arg line="${js.home}/explanation.js" />
-			<arg line="${js.home}/game.js" />
-			<arg line="${js.home}/graph.js" />
-			<arg line="${js.home}/hints.js" />
-			<arg line="${js.home}/language.js" />
-			<arg line="${js.home}/money.js" />
-			<arg line="${js.home}/nobugsblocklygeneratorjavascript.js" />
-			<arg line="${js.home}/nobugsjsinterpreter.js" />
-			<arg line="${js.home}/objectives.js" />
-			<arg line="${js.home}/preloadimgs.js" />
-			<arg line="${js.home}/questionnaire.js" />
-			<arg line="${js.home}/slider.js" />
-			<arg line="${js.home}/snackman.js" />
 			<arg line="${js.home}/sprite.js" />
-			<arg line="${js.home}/utils.js" />
-			<arg line="${js.home}/variablenamesvalidate.js" />
+			<arg line="${js.home}/nobugsjsinterpreter.js" />
+			<arg line="${js.home}/nobugsblocklygeneratorjavascript.js" />
 			<arg line="${js.home}/xml.js" />
+			<arg line="${js.home}/objectives.js" />
+			<arg line="${js.home}/money.js" />
+			<arg line="${js.home}/questionnaire.js" />
+			<arg line="${js.home}/variablenamesvalidate.js" />
 			
+			<classpath>
+				<path refid="lib.base" />
+			</classpath>
 		</java>
 	</target>
 	
