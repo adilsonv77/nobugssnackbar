@@ -19,7 +19,7 @@ var countInstructions, countTopInstructions, menuSelected;
 
 Hints.init = function(hints) {
 
-	Hints.hints = {sequence:[], whenError:[], testBlock:[]};
+	Hints.hints = {sequence:[], whenError:[]};
 	
 	Hints.showedIddle = 0;
 
@@ -35,7 +35,7 @@ Hints.init = function(hints) {
 		
 		var hs = hints.getElementsByTagName("sequence");
 		if (hs != null && hs.length > 0)
-			Hints.hints.sequence = Hints.traverseHints(hs[0].firstElementChild, false, Hints.hints.testBlock);
+			Hints.hints.sequence = Hints.traverseHints(hs[0].firstElementChild, false);
 		
 		hs = hints.getElementsByTagName("errors");
 		if (hs != null && hs.length > 0)
@@ -45,12 +45,8 @@ Hints.init = function(hints) {
 
     Hints.addDefaultErrorHints();
 
-    if (Hints.hints.sequence.length > 0) {
-    	
+    if (Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
-    } else {
-    	Hints.launchTimer(Hints.hints.testBlock[0].time);
-    }
 	
     
 };
@@ -83,7 +79,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.running = false;
 	hint.condition = "Hints.hasEmptyInputs()";
 	
-	Hints.hints.testBlock.push(hint);
+	Hints.hints.sequence.push(hint);
 	
 };
 
@@ -102,11 +98,10 @@ Hints.formatCategory = function(hint) {
 	
 };
 
-Hints.traverseHints = function(hint, error, listTestBlock) {
+Hints.traverseHints = function(hint, error) {
     
 	var ret = [];
 	var before = null;
-	var beforeTest = null;
     var h = null;
 	while (hint) {
 
@@ -140,7 +135,7 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 					  
 					  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
 				  }
-				  var imgOrig = " <img src=\"/nobugssnackbar/hintimg?i=" + imgsHexId[i] + "\"/>";
+				  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\"/>";
 				  h.content = 
 					  h.content.replace("<imghex id=\"" + imgsHexId[i] + "\"><![CDATA["+imgsHexH[i]+"]]></imghex>", imgOrig);
 			  }
@@ -178,20 +173,11 @@ Hints.traverseHints = function(hint, error, listTestBlock) {
 		  continue;
 	  }
 	  
-	  if (h.category === "TestBlock") {
-		  if (beforeTest != null)
-			  beforeTest.next = h;
+	  if (before != null)
+		  before.next = h;
 
-		  beforeTest = h;
-		  listTestBlock.push(h);
-		  
-	  } else {
-		  if (before != null)
-			  before.next = h;
-
-		  before = h;
-		  ret.push(h);
-	  }
+	  before = h;
+	  ret.push(h);
 	}
   
 	return ret;
@@ -234,7 +220,7 @@ Hints.timeIsUp = function() {
 	Hints.hndlTimer = 0;
 	
 	var hints = Hints.hints.sequence;
-	if (hints.length == 0 && Hints.hints.testBlock.length == 0)
+	if (hints.length == 0)
 		return;
 	
 	if (Blockly.Block.dragMode_ > 0) {
@@ -261,25 +247,9 @@ Hints.timeIsUp = function() {
 		
 	}
 	
-	if (!running && Hints.hints.testBlock.length > 0) {
-		
-		for (var i=0; i<Hints.hints.testBlock.length; i++) {
-			
-			Hints.foundTestBlock = false;
-			Hints.hintSelected = Hints.hints.testBlock[i];
-			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
-			
-			if (Hints.foundTestBlock)
-				return;
-			
-		}
-		
-	}
-
 	Hints.launchTimer(Hints.TIMEINTERVAL);
 
 };
-
 
 Hints.runHint = function(hint) {
 	
@@ -288,6 +258,17 @@ Hints.runHint = function(hint) {
 	if (Game.runningStatus > 0 && !hint.running)
 		return false;
 
+	if (hint.category === "TestBlock") {
+		
+		Hints.foundTestBlock = false;
+		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
+		
+		if (Hints.foundTestBlock)
+			return true;
+		
+		return false;
+	}
+	
 	var condition = eval(hint.condition);
 	if (condition) {
 		

@@ -18,6 +18,10 @@
 	
 	<hints>
 		<sequence>
+			<hint category="TestBlock" time="0" condition="Hints.activeBlock.type == 'prepare_catchFood' &amp;&amp; countTopInstructions == 6">
+			Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando estiver em frente ao mostrador. 
+			</hint>
+		
 			<hint category="LastBlockInserted">
 			Todos os blocos j&#225; estavam dispon&#237;veis na &#225;rea de trabalho. Logo, reveja com aten&#231;&#227;o a necessidade 
 			desse novo bloco.
@@ -34,15 +38,21 @@
 			tente resolver o pr&#243;ximo. Repita esse processo com calma, at&#233; atingir todos os objetivos da miss&#227;o.
 			</hint>
 
-			<hint time="7000" category="Iddle" condition = "Hints.showedIddle &lt; 2 &amp;&amp; countTopInstructions > 3">
+			<hint time="7000" category="Iddle" condition = "Hints.showedIddle &lt; 2 &amp;&amp; countTopInstructions > 5">
 			Organize os blocos disponibilizados pelo jogo. Encaixe-os na ordem para atender os objetivos da miss&#227;o. Todos os 
 			blocos necess&#225;rios est&#227;o a sua disposi&#231;&#227;o. Logo, voc&#234; n&#227;o precisa nem adicionar, e nem 
 			remover blocos.
 			</hint>
 			
-			<hint category="LastError" condition="Game.lastErrorData.block.type == 'do_deliver'">
+			<hint category="LastError" time="0" condition="Game.lastErrorData.block.type == 'do_deliver'" >
 			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
 			a partir de outra vari&#225;vel. Verifique se os blocos [catchFood] e [askForFood] est&#227;o referenciando corretamente suas vari&#225;veis.
+			</hint>
+			
+			<hint category="LastError" time="0" condition="Game.lastErrorData.block.type == 'variables_set' &amp;&amp; Game.lastErrorHas('prepare_catchFood')">
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou o pedido em uma vari&#225;vel e est&#225; a pegar o produto com 
+			base em outra vari&#225;vel. Verifique em que vari&#225;vel o bloco [askForFood] guardou o valor e use a mesma vari&#225;vel como 
+			par&#226;metro deste [catchFood].
 			</hint>
 			
 			
