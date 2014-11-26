@@ -543,7 +543,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
       Game.mission = data;
 	  Game.reset();
 	  
-	  Game.totalTimeSpent = parseInt(timeSpent);
 	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
 	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
 	  Game.addCronometro(Game.bonusTime , timeSpent );
@@ -822,19 +821,25 @@ Game.display = function() {
 	
 };
 
+Game.exitCountInstructions;
+
 Game.countInstructions = function(c, f) {
 	
+	Game.exitCountInstructions = false;
 	var conta = 0;
 	for (var i = 0; i < c.length; i++) {
 		var block = c[i];
 		if (block.nextConnection != null) { // we dont count the blocks that are into other blocks, as parameter, for instance 
-			
 			conta++;
-			if (f != undefined)
-				if (!f(block))
-					return conta;
 		} 	
+		if (f != undefined)
+			if (!f(block)) {
+				Game.exitCountInstructions = true;
+				return conta;
+			}
 		conta += Game.countInstructions(block.childBlocks_, f);
+		if (Game.exitCountInstructions)
+			return conta;
 	}
 	
 	return conta;
@@ -1188,7 +1193,7 @@ Game.nextStep = function() {
 			    	var now = new Date().getTime();
 			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
 			    	
-			    	var reward = hero.addReward(count, Game.totalTimeSpent + timeSpent, Game.bonusTime, Game.bonusTimeReward);
+			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 			    	Game.money = parseInt(Game.money) + reward.total;
 			    	Game.display();
 
@@ -1306,7 +1311,7 @@ Game.startSaveUserProgress = function() {
 
 			
 			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer);
-			
+
 			Game.currTime = now;
 		});
 };

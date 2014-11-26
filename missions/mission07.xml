@@ -1,5 +1,6 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="2"/>
 	<explanation>
 		<page type="statement">
 		Vejo que te est&#225; saindo bem como aprendiz de atendedor. E que tal fazer o trabalho<br/>
@@ -31,6 +32,9 @@
 		</sequence>
 		<!-- <errors> only happens after running a program, and some goals aren't achieved  --> 
 		<errors>
+
+			<hint category="Slider"/>
+			
 		</errors>
 	</hints>
 	<commands>

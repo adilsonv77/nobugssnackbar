@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class HintImage extends HttpServlet {
-
+	
 	private static final long serialVersionUID = 1L;
 	private static Map<String, byte[]> images;
 
