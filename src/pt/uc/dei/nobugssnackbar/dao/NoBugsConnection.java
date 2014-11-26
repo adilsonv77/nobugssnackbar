@@ -24,8 +24,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -122,7 +124,7 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
-			
+			u.setLastTime(new Time((new Date()).getTime()));
 			PreparedStatement ps = bdCon.prepareStatement("update users set userlasttime = now() where userid = ?");
 			
 			ps.setLong(1, u.getId());

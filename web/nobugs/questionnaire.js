@@ -283,7 +283,7 @@ Questionnaire.consistQuestionnaire = function() {
 
 			Questionnaire.drop = new Drop({
 				target: input,
-				content: "Campo obrigatorio",
+				content: BlocklyApps.getMsg("NoBugs_requiredField"),
 				position: "right middle",
 				classes: "drop-theme-arrows",
 				openOn: null
