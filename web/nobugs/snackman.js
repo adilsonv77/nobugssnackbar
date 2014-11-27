@@ -806,7 +806,7 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 			ret.bonus.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
 		} 
 		
-		if (timeSpent <= timeLimit) {
+		if (timeLimit != null && timeSpent <= timeLimit) {
 			timeReward = timeReward.split(" ");
 			var timePart = Math.floor(timeLimit / timeReward.length);
 			var timeBonus = 0;
