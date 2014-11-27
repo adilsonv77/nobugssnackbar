@@ -911,7 +911,11 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 
-  Hints.stopHints();
+   Game.lastErrorData.iderror = 0;
+   Game.lastErrorData.message = "";
+   Game.lastErrorData.block = null;
+
+   Hints.stopHints();
 	
   Game.resetButtons();
   Game.reset();
