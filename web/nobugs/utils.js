@@ -14,11 +14,29 @@ window.prompt = function(one, two) {
 	
 	var p;
 	do {
-		p = window_prompt(one, two);
-		
-		var valid = p == null || VariableNames.validate(p);
-		if (valid == false) {
-			alert(BlocklyApps.getMsg("Error_variableName"));
+		try {
+			
+			p = window_prompt(one, two);
+			
+			if (p != null)
+				p = p.trim();
+			
+			var valid = p == null || VariableNames.validate(p);
+			if (valid == false) {
+				alert(BlocklyApps.getMsg("Error_variableName"));
+			}
+		} catch (ex) {
+			
+			var content = document.getElementById('dialogError');
+			var container = document.getElementById('dialogErrorText');
+			container.textContent = BlocklyApps.getMsg("Error_showPrompt");
+
+		    var style = {width: '400px'}; 
+			style[Blockly.RTL ? 'right' : 'left'] = '215px';
+
+			MyBlocklyApps.showDialog(content, null, false, true, true, "", style, null);
+			
+			return null;
 		}
 	} while(!valid);
 	

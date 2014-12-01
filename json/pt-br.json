@@ -86,6 +86,7 @@
 	"Error.deliveredWrongRequest" : "A entrega n&#227;o corresponde ao que o cliente pediu.",
 	"Error.doesntMatchPosition" : "A entrega n&#227;o corresponde &#224; mesma posi&#231;&#227;o do cliente.",
 	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto: use somente caracteres alfab&#233;ticos e n&#250;meros.",
+	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
