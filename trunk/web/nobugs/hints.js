@@ -21,6 +21,9 @@ Hints.beforeHideChaff = null;
 var countInstructions, countTopInstructions, menuSelected; 
 
 Hints.init = function(hints) {
+	
+	if (!Game.loginData.userLogged.showHint)
+		return;
 
 	Hints.hints = {sequence:[], whenError:[]};
 	

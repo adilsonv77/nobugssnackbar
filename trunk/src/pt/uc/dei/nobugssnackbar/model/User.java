@@ -21,6 +21,8 @@ public class User {
 	
 	@RemoteProperty
 	private Time lastTime;
+	
+	@RemoteProperty
 	private boolean showHint;
 
 	public long getId() {

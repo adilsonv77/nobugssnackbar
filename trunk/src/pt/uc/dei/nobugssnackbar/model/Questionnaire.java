@@ -10,12 +10,15 @@ public class Questionnaire {
 
 	@RemoteProperty
 	private long id;
-	
+
 	@RemoteProperty
 	private String description;
-	
+
 	@RemoteProperty
 	private List<Question> questions;
+
+	@RemoteProperty
+	private String showRules;
 
 	public long getId() {
 		return id;
@@ -40,7 +43,13 @@ public class Questionnaire {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-	
-	
-	
+
+	public String getShowRules() {
+		return showRules;
+	}
+
+	public void setShowRules(String showRules) {
+		this.showRules = showRules;
+	}
+
 }
