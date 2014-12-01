@@ -4,4 +4,4 @@ var regex = /^(?!(?:do|if|in|for|let|new|try|var|case|else|enum|eval|null|this|t
 
 VariableNames.validate = function(name) {
 	return regex.test(name);
-}
+};
