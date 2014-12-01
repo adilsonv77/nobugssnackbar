@@ -106,7 +106,7 @@ public class NoBugsConnection {
 			u.setName(rs.getString(5));
 			u.setSex(rs.getString(6));
 			u.setLastTime(rs.getTime(7));
-			u.setShowHint(rs.getString(8)=="T");
+			u.setShowHint(rs.getString(8).equals("T"));
 			
 			ps.close();
 
@@ -452,14 +452,15 @@ public class NoBugsConnection {
 			}
 			ps.close();
 
-			ps = bdCon.prepareStatement(
-					"select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
+			String s =	"select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
 					   +  " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					   +  " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					   +     " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)" 
 					   +     "   where ma.userid = ? and ma.achieved = 'T' group by classid, classlevelid) maz " 
 					   +     "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
-					   + " order by c.classname");
+					   + " order by c.classname, classlevelid";
+
+			ps = bdCon.prepareStatement( s );
 			
 			ps.setString(1,  classes.toString().replace("[", "").replace("]", "").replace(" ", ""));
 			ps.setLong(2, idUser);
@@ -518,7 +519,7 @@ public class NoBugsConnection {
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue from questionnaire " + 
+					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules from questionnaire " + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
@@ -578,6 +579,7 @@ public class NoBugsConnection {
 				lastQuestionnaireId = rs.getInt(1);
 				quest.setId(lastQuestionnaireId);
 				quest.setDescription(rs.getString(2));
+				quest.setShowRules(rs.getString(9));
 				quest.setQuestions(new ArrayList<Question>());
 				
 				ret.add(quest);
