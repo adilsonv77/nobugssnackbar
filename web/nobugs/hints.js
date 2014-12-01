@@ -15,6 +15,9 @@ Hints.evtChangeListener = null;
 
 Hints.specialControl = false;
 
+Hints.menuOpened = false;
+Hints.beforeHideChaff = null;
+
 var countInstructions, countTopInstructions, menuSelected; 
 
 Hints.init = function(hints) {
@@ -47,8 +50,26 @@ Hints.init = function(hints) {
 
     if (Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
-	
     
+    Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, Hints.menuEvent);
+    
+    if (Hints.beforeHideChaff == null) {
+        Hints.beforeHideChaff = Blockly.hideChaff;
+        Blockly.hideChaff = Hints.hideChaff;
+    }
+    	
+    
+};
+
+Hints.menuEvent = function() {
+	Hints.menuOpened = Blockly.Toolbox.tree_.selectedItem_ != null;
+};
+
+Hints.hideChaff = function(b) {
+	
+	Hints.beforeHideChaff(b);
+	Hints.menuOpened = false;
+	
 };
 
 Hints.addDefaultErrorHints = function() {
@@ -238,7 +259,6 @@ Hints.timeIsUp = function() {
 		menuSelected = menuSelected.element_;
 	
 	
-	var running = Game.runningStatus > 0;
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
 		
@@ -270,7 +290,9 @@ Hints.runHint = function(hint) {
 	}
 	
 	var condition = eval(hint.condition);
-	if (condition) {
+	var cat = Hints.Categories[hint.category];
+
+	if (condition && Hints.showOnMenu(cat)) {
 		
 		if (Hints.lastTimeSpent < hint.time) {
 			Hints.hndlTimer = window.setTimeout(Hints.showHint.bind(window, hint), hint.time-Hints.lastTimeSpent);
@@ -305,7 +327,17 @@ Hints.launchTimer = function(time) {
 	
 };
 
-
+Hints.showOnMenu = function(category) {
+	
+	if (!Hints.menuOpened) return true;
+	
+	var hideOnMenu = category.hideOnMenu;
+	if (hideOnMenu == undefined)
+		hideOnMenu = true;
+	
+	return !hideOnMenu;
+	
+};
 
 Hints.visitBlocks = function(block) {
 	
@@ -313,10 +345,10 @@ Hints.visitBlocks = function(block) {
 	var hint = Hints.hintSelected;
 	
 	var condition = eval(hint.condition);
-	if (condition) {
-		Hints.foundTestBlock = true;
+	var cat = Hints.Categories[hint.category];
 
-		var cat = Hints.Categories[hint.category];
+	if (condition && Hints.showOnMenu(cat)) {
+		Hints.foundTestBlock = true;
 		
 		cat.show(hint.args);
 		Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
@@ -643,8 +675,9 @@ Hints.Categories["ChooseCategory"] = {
 		
 			Hints.chooseCategoryCalled = true;
 			Hints.hideHintWithTimer();
-		}
+		},
 		
+	hideOnMenu : false
 };
 
 Hints.Categories["SelectCommand"] = {
@@ -674,7 +707,9 @@ Hints.Categories["SelectCommand"] = {
 		function() {
 			Hints.chooseCategoryCalled = false;
 			Hints.hideHintWithTimer();
-		}
+		},
+	
+	hideOnMenu : false
 		
 };
 
@@ -704,7 +739,9 @@ Hints.Categories["StackTogether"] = {
 		},
 		
 	condition:
-		"countInstructions == 1"
+		"countInstructions == 1",
+		
+	hideOnMenu : false
 	
 };
 
