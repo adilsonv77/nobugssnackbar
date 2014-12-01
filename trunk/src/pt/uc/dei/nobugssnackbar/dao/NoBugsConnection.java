@@ -89,7 +89,7 @@ public class NoBugsConnection {
 			bdCon = dataSource.getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime from users where usernick = ? and userpassw = ?");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint from users where usernick = ? and userpassw = ?");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
@@ -106,6 +106,7 @@ public class NoBugsConnection {
 			u.setName(rs.getString(5));
 			u.setSex(rs.getString(6));
 			u.setLastTime(rs.getTime(7));
+			u.setShowHint(rs.getString(8)=="T");
 			
 			ps.close();
 
@@ -147,7 +148,7 @@ public class NoBugsConnection {
 			bdCon = dataSource.getConnection();
 			
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermoney) values (?, ?, ?, ?, 0)");
+					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermoney, showhint) values (?, ?, ?, ?, 0, 'T')");
 			
 			ps.setString(1, userNick);
 			ps.setString(2, userPassword);
@@ -479,9 +480,22 @@ public class NoBugsConnection {
 		List<Questionnaire> ret = new ArrayList<>();
 		try {
 			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select classid from classesusers where userid = ?");
+			ps.setLong(1, userid);
+
+			List<Long> classes = new ArrayList<Long>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				classes.add(rs.getLong(1));
+			}
+			ps.close();
+			String clazzes = classes+"";
+			
+			
 			List<Long> qid = new ArrayList<>();
 			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery("select distinct questionnaireid from questionnaireanswer where userid = "+userid);
+			rs = st.executeQuery("select distinct questionnaireid from questionnaireanswer where userid = "+userid);
 			while (rs.next()) {
 				qid.add(rs.getLong(1));
 			}
@@ -496,14 +510,14 @@ public class NoBugsConnection {
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
-							" where %s and questionnairefinish > now()"+
+							" where %s and questionnairefinish > now() and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
 							" order by questionnaireid, questionorder, optionorder";
 			
 			;
 			lista = String.format(questionnaire," questionnaireid not in (" +
 					lista.substring(1, lista.length()-1) +
 				     ")" );
-			PreparedStatement ps = bdCon.prepareStatement(lista);
+			ps = bdCon.prepareStatement(lista);
 			rs = ps.executeQuery();
 			addQuestionnaires(ret, rs);
 			rs.close();

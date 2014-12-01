@@ -21,6 +21,7 @@ public class User {
 	
 	@RemoteProperty
 	private Time lastTime;
+	private boolean showHint;
 
 	public long getId() {
 		return id;
@@ -81,6 +82,14 @@ public class User {
 
 	public void setLastTime(Time lastTime) {
 		this.lastTime = lastTime;
+	}
+
+	public boolean isShowHint() {
+		return showHint;
+	}
+	
+	public void setShowHint(boolean showHint) {
+		this.showHint = showHint;
 	}
 	
 	
