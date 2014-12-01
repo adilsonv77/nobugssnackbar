@@ -142,7 +142,7 @@ public class NoBugsConnection {
 		}
 	}
 	
-	public void insertUser(String userNick, String userPassword, String userName, String sex) throws SQLException {
+	public void insertUser(String userNick, String userPassword, String userName, String sex, int classes[]) throws SQLException {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
@@ -157,6 +157,18 @@ public class NoBugsConnection {
 			
 			ps.executeUpdate();
 			ps.close();
+			
+			if (classes != null && classes.length > 0) {
+				for (int classId : classes) {
+					ps = bdCon.prepareStatement("insert into classesusers (classid, userid) values (?, ?)");
+				
+					ps.setLong(1, classId);
+					ps.setLong(2, getUserId(userNick));
+					
+					ps.executeUpdate();
+					ps.close();
+				}
+			}
 			
 		} finally {
 			if (bdCon != null)

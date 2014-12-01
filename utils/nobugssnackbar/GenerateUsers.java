@@ -29,7 +29,7 @@ public class GenerateUsers {
 			
 			String s1 = extractChar() + extractChar() + extractChar() + extractChar() + extractChar();
 			
-			nobugs.insertUser(s1, UserControl.encrypt(s1), s1, "M");
+			nobugs.insertUser(s1, UserControl.encrypt(s1), s1, "M", new int[]{});
 		}
 		
 		
