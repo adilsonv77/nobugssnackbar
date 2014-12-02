@@ -519,7 +519,7 @@ public class NoBugsConnection {
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules from questionnaire " + 
+					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q0.classid from questionnaire q0" + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
@@ -580,6 +580,7 @@ public class NoBugsConnection {
 				quest.setId(lastQuestionnaireId);
 				quest.setDescription(rs.getString(2));
 				quest.setShowRules(rs.getString(9));
+				quest.setClassId(rs.getLong(10));
 				quest.setQuestions(new ArrayList<Question>());
 				
 				ret.add(quest);

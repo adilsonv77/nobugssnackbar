@@ -20,6 +20,9 @@ public class Questionnaire {
 	@RemoteProperty
 	private String showRules;
 
+	@RemoteProperty
+	private long classId;
+
 	public long getId() {
 		return id;
 	}
@@ -50,6 +53,14 @@ public class Questionnaire {
 
 	public void setShowRules(String showRules) {
 		this.showRules = showRules;
+	}
+
+	public long getClassId() {
+		return classId;
+	}
+
+	public void setClassId(long classId) {
+		this.classId = classId;
 	}
 
 }

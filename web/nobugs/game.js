@@ -116,18 +116,23 @@ Game.login = function() {
 };
 
 Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
-	
+	/*
+	 * missionsHistorical [...][n], where n are 
+	 *   0 - class name
+	 *   1 - level name
+	 *   2 - how many missions
+	 *   3 - how many solved missions
+	 *   4 - class id
+	 *   5 - level id
+	 */
 	Game.loginData = {userLogged: u, missionHist: missionsHistorical, clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
 	try {
 		UserControl.retrieveQuestionnaire(function(q) {
 			if (q != null) {
-				var formQuestionnaire = Questionnaire.createForm(q);
-				$("#contentQuestionnaire").html("");
-				$("#contentQuestionnaire").append(formQuestionnaire);
 				
-				MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, 
-						$("#questionnaire").get(0).firstChild.data, null, null);
+				if (!Game.showQuestionnaire(q))
+					Game.continueLoginProcess();
 				
 			} else {
 				Game.continueLoginProcess();
@@ -137,6 +142,22 @@ Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, mis
 	} catch (ex) {
 		Game.init();
 	};
+};
+
+Game.showQuestionnaire = function(q) {
+	
+	var formQuestionnaire = Questionnaire.createForm(q);
+	if (formQuestionnaire != null) {
+		
+		$("#contentQuestionnaire").html("");
+		$("#contentQuestionnaire").append(formQuestionnaire);
+		
+		MyBlocklyApps.showDialog(document.getElementById("dialogQuestionnaire"), null, false, true, true, 
+				$("#questionnaire").get(0).firstChild.data, null, null);
+		
+	} 
+	
+	return formQuestionnaire != null;
 };
 
 Game.finishQuestionnaire = function() {
@@ -396,10 +417,12 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	varBoxH: "90%"
   };
   
-  window.addEventListener('scroll', function() {
+  Game.scrollEvent =  function() {
 	  Hints.hideHintWithTimer();
       Game.doResizeWindow();
-    });  
+    };
+    
+  window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
 
   Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
@@ -1229,8 +1252,25 @@ Game.nextStep = function() {
 
 					    MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
-				    				
+					    			Game.init();
+				    				/*
 				    				window.removeEventListener('unload', Game.unload);	
+				    				try {
+				    					UserControl.retrieveQuestionnaire(function(q) {
+				    						if (q != null) {
+				    							
+				    							if (!Game.showQuestionnaire(q))
+				    								Game.continueLoginProcess();
+				    							
+				    						} else {
+				    							Game.continueLoginProcess();
+				    						}
+				    						
+				    					});
+				    				} catch (ex) {
+				    					Game.init();
+				    				};
+/*
 				    				try {
 					    				UserControl.retrieveMissions(function(ret) {
 					    					Game.loginData.clazzId = 0;
@@ -1240,7 +1280,7 @@ Game.nextStep = function() {
 				    				} catch(ex) {
 				    					Game.init();
 				    				}
-				    		
+				    		*/
 		    				});
 			    	});
 			    	
@@ -1323,18 +1363,33 @@ Game.startSaveUserProgress = function() {
 // because there are some events from the last mission, and the canvas instance 
 // ... changed, then we need renovate the listeners  
 Game.removeChangeListeners = function() {
-	  if (Game.logEvent != null) {
-
-		  Blockly.removeChangeListener(Game.logEvent);
-		  Game.logEvent = null;
-	  }
+  if (Game.scrollEvent != undefined) {
 	  
-	  if (Hints.evtChangeListener != null) {
+	  window.removeEventListener("scroll", Game.scrollEvent);
+	  window.removeEventListener("resize", Game.resizeWindow);
+	  window.removeEventListener('unload', Game.unload);
+	  
+	  MyBlocklyApps.unbindClick('runButton', Game.runButtonClick);
+	  MyBlocklyApps.unbindClick('resetButton', Game.resetButtonClick);
+	  MyBlocklyApps.unbindClick('debugButton', Game.debugButtonClick);
 
-		  Blockly.removeChangeListener(Hints.evtChangeListener);
-		  Hints.evtChangeListener = null;
-	  }
-	};
+	  MyBlocklyApps.unbindClick('goalButton', Game.goalButtonClick);
+	  MyBlocklyApps.unbindClick('logoffButton', Game.logoffButtonClick);
+	  
+  }
+	
+  if (Game.logEvent != null) {
+
+	  Blockly.removeChangeListener(Game.logEvent);
+	  Game.logEvent = null;
+  }
+  
+  if (Hints.evtChangeListener != null) {
+
+	  Blockly.removeChangeListener(Hints.evtChangeListener);
+	  Hints.evtChangeListener = null;
+  }
+};
 
 
 /**********************************************************************
