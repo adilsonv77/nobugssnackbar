@@ -9,11 +9,15 @@ a&#231;&#245;es. Clica na estrela do bloco de comando "se" e adiciona o bloco se
 Parece mais f&#225;cil n&#227;o, &#233; ? Mas para te desafiar, atende os dois clientes com <br/>
 no m&#225;ximo 20 comandos.
 		</page>
-		<page type="hint" origin="command" id="1#1" dir="up">
-		No bloco de condicional existe uma estrela. Clica nela para adicionar a op&#231;&#227;o do sen&#227;o.
-		</page>
 
 	</explanation>
+	<hints>
+		<sequence>
+		<hint category="Iddle" condition = "Hints.showedIddle &lt; 2">
+		No bloco de condicional existe uma estrela. Clica nela para adicionar a op&#231;&#227;o do sen&#227;o.
+		</hint>
+		</sequence>
+	</hints>
 	<commands>
 		<category name="snackMan" show="true" />
 

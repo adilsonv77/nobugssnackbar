@@ -302,6 +302,8 @@ Questionnaire.handlingQuestionnaire = function() {
 };
 
 Questionnaire.consistQuestionnaire = function() {
+	Questionnaire.closeDrop();
+	
 	var any = false;
 
 	var answers = document.getElementsByClassName("answer");

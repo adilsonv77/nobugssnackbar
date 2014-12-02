@@ -1369,7 +1369,7 @@ Game.removeChangeListeners = function() {
   if (Game.scrollEvent != undefined) {
 	  
 	  window.removeEventListener("scroll", Game.scrollEvent);
-	  window.removeEventListener("resize", Game.resizeWindow);
+	  //window.removeEventListener("resize", Game.resizeWindow); // not enable this line
 	  window.removeEventListener('unload', Game.unload);
 	  
 	  MyBlocklyApps.unbindClick('runButton', Game.runButtonClick);

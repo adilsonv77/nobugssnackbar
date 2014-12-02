@@ -1,11 +1,11 @@
-// This file was automatically generated from importjs_compressed.soy.
+// This file was automatically generated from importjs_descompressed.soy.
 // Please don't edit this file by hand.
 
 if (typeof importsjs == 'undefined') { var importsjs = {}; }
 
 
 importsjs.imports = function(opt_data, opt_ignored, opt_ijData) {
-  return '<script type="text/javascript" src="nobugs/nobugs-min.js"><\/script>';
+  return '<script type="text/javascript" src="nobugs/language.js"><\/script><script type="text/javascript" src="nobugs/slider.js"><\/script><script type="text/javascript" src="nobugs/utils.js"><\/script><script type="text/javascript" src="nobugs/preloadimgs.js"><\/script><script type="text/javascript" src="nobugs/game.js"><\/script><script type="text/javascript" src="nobugs/explanation.js"><\/script><script type="text/javascript" src="nobugs/hints.js"><\/script><script type="text/javascript" src="nobugs/blockly.js"><\/script><script type="text/javascript" src="nobugs/graph.js"><\/script><script type="text/javascript" src="nobugs/snackman.js"><\/script><script type="text/javascript" src="nobugs/customer.js"><\/script><script type="text/javascript" src="nobugs/customerman.js"><\/script><script type="text/javascript" src="nobugs/sprite.js"><\/script><script type="text/javascript" src="nobugs/nobugsjsinterpreter.js"><\/script><script type="text/javascript" src="nobugs/nobugsblocklygeneratorjavascript.js"><\/script><script type="text/javascript" src="nobugs/xml.js"><\/script><script type="text/javascript" src="nobugs/objectives.js"><\/script><script type="text/javascript" src="nobugs/money.js"><\/script><script type="text/javascript" src="nobugs/questionnaire.js"><\/script><script type="text/javascript" src="nobugs/variablenamesvalidate.js"><\/script>';
 };
 
 ;
