@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Utility-Tasks" basedir=".">
+<project name="Utility-Tasks" basedir="." default="help">
 	
 	<!-- Defines a reference to enviroments variables -->
     <property environment="e"/>
@@ -123,7 +123,7 @@
 	</path>
 	
 	<target name="compress">
-		<description>Compress the javascript files</description>
+		<description>Compress the nobugs javascript files</description>
 		
 		<delete file="${js.compress.out}" />
 		
@@ -160,6 +160,13 @@
 				<path refid="lib.base" />
 			</classpath>
 		</java>
+	</target>
+	
+	<target name="help">
+		<echo message = "Use:"/>
+	    <echo message = "ant soydescompress      - Creates the pages based on a template and descompressed imports"/>
+		<echo message = "ant soycompress         - Creates the pages based on a template and compressed imports"/>
+		<echo message = "ant compress            - Compress the nobugs javascript files"/>
 	</target>
 	
 </project>
