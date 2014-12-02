@@ -624,6 +624,10 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  
 }; 
 
+/* This procedure is necessary for two reasons: 
+ *    1 - depends on the viewport when the user finished his session
+ *    2 - some times the user put blocks in crazy positions
+ */
 Game.moveBlocks = function() {
 	
 	var blocks = Blockly.mainWorkspace.getTopBlocks();
@@ -640,37 +644,10 @@ Game.moveBlocks = function() {
 	minPosX = Math.abs(minPosX); minPosY = Math.abs(minPosY);
 		
 	for (var i=0; i<blocks.length; i++){
-		//var xy = blocks[i].getRelativeToSurfaceXY();
-		blocks[i].setDragging_(true);
 		blocks[i].moveBy(minPosX, minPosY);
-		//Game.moveConnections_(blocks[i], minPosX, minPosY);
-		blocks[i].setDragging_(false);
 	}	
 	
 };
-
-Game.moveConnections_ = function(block_, dx, dy) {
-	  if (!block_.rendered) {
-	    // Rendering is required to lay out the blocks.
-	    // This is probably an invisible block attached to a collapsed block.
-	    return;
-	  }
-	  var myConnections = block_.getConnections_(false);
-	  for (var x = 0; x < myConnections.length; x++) {
-	    myConnections[x].moveBy(dx, dy);
-	  }
-	  var icons = block_.getIcons();
-	  for (var x = 0; x < icons.length; x++) {
-	    icons[x].computeIconLocation();
-	  }
-
-	  // Recurse through all blocks attached under this one.
-	  for (var x = 0; x < block_.childBlocks_.length; x++) {
-	    this.childBlocks_[x].moveConnections_(dx, dy);
-	  }
-	};
-
-
 
 Game.verifyButtons = function(objectives) {
 	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";
