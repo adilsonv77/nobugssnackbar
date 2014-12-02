@@ -2,7 +2,7 @@ var Hints = {};
 Hints.Categories = [];
 Hints.beforeHideChaff = null; // this need to keep here
 
-var countInstructions, countTopInstructions, menuSelected; 
+var countInstructions, countTopInstructions, menuSelected, showedHint; 
 
 Hints.init = function(hints) {
 	
@@ -132,6 +132,7 @@ Hints.traverseHints = function(hint, error) {
 
 	  h = {};
 	  
+	  h.showed = false;
 	  h.type = hint.tagName;
 			  
 	  h.category = hint.getAttribute("category");
@@ -221,11 +222,13 @@ Hints.showErrorHint = function() {
 		var hint = hintErrors[i];
 		Hints.hintSelected = hint;
 		
+		showedHint = hint.showed;
 		var condition = eval(hint.condition);
 		if (condition) {
 			
 			var cat = Hints.Categories[hint.category];
 			
+			hint.showed = true;
 			cat.show(hint.args);
 			
 			Hints.associateHideEvents(null, (cat.specialEvent!=undefined?cat.specialEvent():null));
@@ -293,6 +296,7 @@ Hints.runHint = function(hint) {
 		return false;
 	}
 	
+	showedHint = hint.showed;
 	var condition = eval(hint.condition);
 	var cat = Hints.Categories[hint.category];
 
@@ -316,6 +320,7 @@ Hints.showHint = function(hint) {
 	Hints.hintSelected = hint;
 	var cat = Hints.Categories[hint.category];
 	
+	hint.showed = true;
 	cat.show(hint.args);
 	Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
 	
@@ -348,12 +353,14 @@ Hints.visitBlocks = function(block) {
 	Hints.activeBlock = block;
 	var hint = Hints.hintSelected;
 	
+	showedHint = hint.showed;
 	var condition = eval(hint.condition);
 	var cat = Hints.Categories[hint.category];
 
 	if (condition && Hints.showOnMenu(cat)) {
 		Hints.foundTestBlock = true;
 		
+		hint.showed = true;
 		cat.show(hint.args);
 		Hints.associateHideEvents(cat.bindEvent, (cat.specialEvent!=undefined?cat.specialEvent():null));
 		return false;
@@ -606,11 +613,13 @@ Hints.hasEmptyInputs  = function() {
 	var input = Hints.activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
 		if (input[i].connection != null) {
-			if (input[i].connection.targetConnection == null)
+			if (input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
 			  return true;
-			Hints.activeBlock = input[i].connection.targetConnection.sourceBlock_;
-			if (Hints.hasEmptyInputs())
-				return true;
+			if (input[i].connection.targetConnection != null) {
+				Hints.activeBlock = input[i].connection.targetConnection.sourceBlock_;
+				if (Hints.hasEmptyInputs())
+					return true;
+			}
 		} 
 	}
 	
