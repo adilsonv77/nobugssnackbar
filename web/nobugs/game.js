@@ -436,6 +436,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Blockly.JavaScript.addReservedWords('Game, code');
 
   window.addEventListener('unload', Game.unload);
+  window.addEventListener('onload', Game.onload);
  
   Game.slider = {};
   Game.slider.svg = document.getElementById('slider');
@@ -483,6 +484,33 @@ Game.unload = function(e) {
 	
     return null;
 };
+
+Game.onload = function(e) {
+	console.log(navigator.appName);
+	if ((validateIE() || validateOpera()) && (!validateChrome() || !validateFirefox() || !validateSafari())) {
+		window.location.herf = "error.html";
+	}
+	
+	function validateIE() {
+		return navigator.appName == "Microsoft Internet Explorer";
+	}
+	
+	function validateChrome() {
+		return navigator.appName == "Netscape";
+	}
+	
+	function validateFirefox() {
+		return navigator.appName == "Netscape";
+	}
+	
+	function validateSafari() {
+		return navigator.appName == "Netscape";
+	}
+	
+	function validateOpera() {
+		return navigator.appName == "Opera";
+	}
+}
 
 Game.saveMission = function() {
 	
