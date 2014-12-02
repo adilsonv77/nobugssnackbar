@@ -1,22 +1,6 @@
 var Hints = {};
 Hints.Categories = [];
-Hints.chooseCategoryCalled = false;
-Hints.bindEvent1 = null;
-Hints.bindEvents = [];
-
-Hints.TIMEINTERVAL = 3000;
-Hints.lastTimeSpent = 0;
-
-Hints.hndlTimer = 0;
-
-Hints.lastCountBlocks = 0;
-Hints.hintBlockDeleted = null;
-Hints.evtChangeListener = null;
-
-Hints.specialControl = false;
-
-Hints.menuOpened = false;
-Hints.beforeHideChaff = null;
+Hints.beforeHideChaff = null; // this need to keep here
 
 var countInstructions, countTopInstructions, menuSelected; 
 
@@ -27,12 +11,29 @@ Hints.init = function(hints) {
 
 	Hints.hints = {sequence:[], whenError:[]};
 	
-	Hints.showedIddle = 0;
+	Hints.chooseCategoryCalled = false;
+	Hints.bindEvent1 = null;
+	Hints.bindEvents = [];
+
+	Hints.TIMEINTERVAL = 3000;
+	Hints.lastTimeSpent = 0;
+
+	Hints.hndlTimer = 0;
 
 	Hints.hintBlockDeleted = null;
+	Hints.evtChangeListener = null;
+
+	Hints.specialControl = false;
+
+	Hints.menuOpened = false;
+
+	Hints.showedIddle = 0;
+
 	Hints.lastInsertedBlock = null;
 	Hints.activeBlock = null;
 	Hints.lastCountBlocks = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	Hints.showedCountInstrutionsHint = false;
+
 	
 	if (Hints.evtChangeListener == null)
 		Hints.evtChangeListener = Blockly.addChangeListener(Hints.changeListener);
@@ -891,7 +892,6 @@ Hints.Categories["TestBlock"] = {
 		
 		
 };
-Hints.showedIddle = 0;
 
 Hints.Categories["Iddle"] = {
 		
@@ -941,8 +941,6 @@ Hints.Categories["LastError"] = {
 		naturalCondition :
 			"(!Hints.showedErrorHint && Game.lastErrorData.block != null)"
 	};
-
-Hints.showedCountInstrutionsHint = false;
 
 Hints.Categories["ShowCountInstructions"] = {
 		
