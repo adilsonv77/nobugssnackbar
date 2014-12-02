@@ -91,11 +91,14 @@ window.addEventListener('load', Game.init);
 
 Game.login = function() {
 	
+	document.getElementById('ButtonLogin').disabled = "disabled";
+	
 	var user = document.getElementById('loginuser').value;
 	var passw = document.getElementById('loginpassw').value;
 	
     UserControl.login(user, passw, 
 		  function(ret) {
+    		document.getElementById('ButtonLogin').disabled = "";
 			var error = document.getElementById("errorLogin");
 
 			if (ret[0] == null) {
