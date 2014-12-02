@@ -114,3 +114,10 @@ MyBlocklyApps.hideDialog = function(opt_animate) {
 	  BlocklyApps.dialogDispose_ = null;
 	};
 
+MyBlocklyApps.unbindClick = function(el, func) {
+	  if (typeof el == 'string') {
+	    el = document.getElementById(el);
+	  }
+	  el.removeEventListener('click', func);
+	  el.removeEventListener('touchend', func);
+	};

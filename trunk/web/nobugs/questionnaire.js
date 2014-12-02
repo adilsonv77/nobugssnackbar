@@ -23,7 +23,23 @@ Questionnaire.createForm = function (questionnaire) {
 
 	var questionNumber = 1;
 
-	for (var j = 0; j < questionnaire.length; j++)
+	var missions = Game.loginData.missionHist;
+	Game.finishedMissionId = 0;
+
+	for (var j = 0; j < questionnaire.length; j++) {
+		
+		if (questionnaire[j].showRules != null) {
+			
+			for (var i=missions.length-1; i>=0; i--)
+				if (questionnaire[j].classId == missions[i][4]) {
+					Game.finishedMissionId += missions[i][3];
+				}
+			
+			var condition = eval(questionnaire[j].showRules);
+			if (!condition) 
+				continue;
+		}
+		
 		for (var i = 0; i < questionnaire[j].questions.length; i++) {
 
 			var tr = document.createElement("tr");
@@ -136,8 +152,12 @@ Questionnaire.createForm = function (questionnaire) {
 			table.appendChild(tr);
 
 		}
+	}
 
-	return form;
+	if (questionNumber == 1)
+		return null;
+	else
+		return form;
 };
 
 Questionnaire.closeDrop = function() {
