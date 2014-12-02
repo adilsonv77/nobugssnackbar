@@ -9,7 +9,7 @@ Questionnaire.createForm = function (questionnaire) {
 	var form = document.createElement("form");
 	var div = document.createElement("div");
 
-	div.style["width"] = "600px";
+	div.style["width"] = "800px";
 	div.style["height"] = "480px";
 	div.style["overflow"] = "scroll";
 	div.id = "questions";
@@ -43,20 +43,26 @@ Questionnaire.createForm = function (questionnaire) {
 		for (var i = 0; i < questionnaire[j].questions.length; i++) {
 
 			var tr = document.createElement("tr");
-			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
+			if (questionnaire[j].questions[i].type[0].toUpperCase() != "L") 
+				tr.setAttribute("questionId", questionnaire[j].questions[i].id);
 
 			var td = document.createElement("td");
 			tr.appendChild(td);
 
-			td.innerHTML = "<b>" + (questionNumber++) + "</b> - " + questionnaire[j].questions[i].description;
-
+			if (questionnaire[j].questions[i].type[0].toUpperCase() != "L") {
+				td.innerHTML = "<b>" + (questionNumber++) + "</b> - " + questionnaire[j].questions[i].description;
+			} else {
+				td.innerHTML = "<b>" + (questionNumber++) + "</b> - ";
+			}
+			
 			td = document.createElement("td");
 			tr.appendChild(td);
 
 			// TODO provide the component according questionnaire.questions[i].type
 			table.appendChild(tr);
 			tr = document.createElement("tr");
-			tr.setAttribute("questionId", questionnaire[j].questions[i].id);
+			if (questionnaire[j].questions[i].type[0].toUpperCase() != "L") 
+				tr.setAttribute("questionId", questionnaire[j].questions[i].id);
 
 			td = document.createElement("td");
 
@@ -70,6 +76,7 @@ Questionnaire.createForm = function (questionnaire) {
 					input.min = "0";
 					input.max = "130";
 					input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
+					input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
 					input.onkeypress = function(event) {
 						return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0);
 					};
@@ -88,7 +95,8 @@ Questionnaire.createForm = function (questionnaire) {
 						input.value = questionnaire[j].questions[i].options[x].value;
 						input.id = questionnaire[j].id + "_" + questionnaire[j].questions[i].id + "_" + x;
 						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
-
+						input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
+						
 						input.addEventListener("change", Questionnaire.closeDrop, false);
 
 						var label = document.createElement("label");
@@ -117,6 +125,7 @@ Questionnaire.createForm = function (questionnaire) {
 						input.style["width"] = "100px";
 						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 						input.addEventListener("change", Questionnaire.closeDrop, false);
+						input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
 						td.appendChild(input);
 					} else {
 						var cont = questionnaire[j].questions[i].type.substring(1, questionnaire[j].questions[i].type.length);
@@ -130,6 +139,7 @@ Questionnaire.createForm = function (questionnaire) {
 							input.style["width"] = "300px";
 							input.style["marginTop"] = "5px";
 							input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
+							input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
 							input.addEventListener("change", Questionnaire.closeDrop, false);
 
 							var label = document.createElement("label");
@@ -146,7 +156,70 @@ Questionnaire.createForm = function (questionnaire) {
 					}
 					break;
 				}
-
+				case "L": {
+					
+					var box = document.createElement("table");
+					box.style["borderWidth"] = "1px";
+//					box.style["borderColor"] = "black";
+					box.border = "1";
+					
+					var boxHead = document.createElement("thead");
+					
+					var boxTr = document.createElement("tr");
+					var boxTd = document.createElement("td");
+					
+					boxTr.appendChild(boxTd);
+					
+					//Generate header of likert question options
+					var options = questionnaire[j].questions[i].options;
+					if (questionnaire[j].questions[i].options != null) {
+						for (var x = 0;x < questionnaire[j].questions[i].options.length;x++) {
+							boxTd = document.createElement("th");
+							boxTd.style["textAlign"] = "center";
+							boxTd.innerHTML = questionnaire[j].questions[i].options[x].description;
+							
+							boxTr.appendChild(boxTd);
+							boxHead.appendChild(boxTr);
+						}
+					}
+					
+					var boxBody = document.createElement("tbody");
+					while (i < questionnaire[j].questions.length) {
+						boxTr = document.createElement("tr");
+						boxTr.setAttribute("questionId", questionnaire[j].questions[i].id);
+						boxTd = document.createElement("td");
+						
+						boxTd.innerHTML = questionnaire[j].questions[i].description;
+						boxTr.appendChild(boxTd);
+						
+						for (var x = 0;x < options.length;x++) {
+							boxTd = document.createElement("td");
+							boxTd.style["textAlign"] = "center";
+							
+							input = document.createElement("input");
+							input.type = "radio";
+							input.setAttribute("questionId", questionnaire[j].questions[i].id);
+							input.className = "answer";
+							input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
+							input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
+							input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
+							input.addEventListener("change", Questionnaire.closeDrop, false);
+							input.id = questionnaire[j].id + "_" + questionnaire[j].questions[i].id + "_" + x;
+							input.value = options[x].value;
+							
+							boxTd.appendChild(input);
+							boxTr.appendChild(boxTd);
+							boxBody.appendChild(boxTr);
+						}
+						i++;
+					}
+					
+					box.appendChild(boxHead);
+					box.appendChild(boxBody);
+					td.appendChild(box);
+					break;
+				}
+				default :
 			}
 			tr.appendChild(td);
 			table.appendChild(tr);
@@ -183,16 +256,20 @@ Questionnaire.handlingQuestionnaire = function() {
 		var questionnaireId = answer.name.split("_")[0];
 		var questionId = answer.name.split("_")[1];
 
-		switch(answer.type.toUpperCase()) {
-			case "RADIO": {
+		switch(answer.getAttribute("qtype").toUpperCase()) {
+			case "N": {
+				saveAnswers.push([questionnaireId, questionId, answer.value]);
+				break;
+			}
+			case "L":
+			case "S": {
 				var answerOptions = document.getElementsByName(answer.name);
 
 				for (var x = 0;x < answerOptions.length;x++) {
 					if (answerOptions[x].checked) {
-						var questionnaireId = answer.name.split("_")[0];
-						var questionId = answer.name.split("_")[1];
+//						var questionnaireId = answer.name.split("_")[0];
+//						var questionId = answer.name.split("_")[1];
 						saveAnswers.push([questionnaireId, questionId, answerOptions[x].value]);
-
 					}
 					if (x != answerOptions.length-1) {
 						i++;
@@ -200,11 +277,7 @@ Questionnaire.handlingQuestionnaire = function() {
 				}
 				break;
 			}
-			case "NUMBER": {
-				saveAnswers.push([questionnaireId, questionId, answer.value]);
-				break;
-			}
-			case "TEXT": {
+			case "T": {
 				var answerOptions = document.getElementsByName(answer.name);
 				var aux = "";
 				for (var x = 0;x < answerOptions.length;x++) {
@@ -221,6 +294,7 @@ Questionnaire.handlingQuestionnaire = function() {
 				}
 				break;
 			}
+			default :
 		}
 	}
 	UserControl.saveQuestionnaire(saveAnswers);
@@ -239,8 +313,21 @@ Questionnaire.consistQuestionnaire = function() {
 
 		var checked = false;
 
-		switch(answer.type.toUpperCase()) {
-			case "RADIO": {
+		var qtype = answer.getAttribute("qtype").toUpperCase();
+		switch(qtype) {
+			case "N": {
+				if (answer.getAttribute("questionrequired").toUpperCase() == "TRUE") {
+					if (answer.value != "") {
+						checked = true;
+					}
+				} else {
+					checked = true;
+				}
+
+				break;
+			}
+			case "L":
+			case "S": {
 				var answerOptions = document.getElementsByName(answer.name);
 
 				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
@@ -258,18 +345,7 @@ Questionnaire.consistQuestionnaire = function() {
 				}
 				break;
 			}
-			case "NUMBER": {
-				if (answer.getAttribute("questionrequired").toUpperCase() == "TRUE") {
-					if (answer.value != "") {
-						checked = true;
-					}
-				} else {
-					checked = true;
-				}
-
-				break;
-			}
-			case "TEXT": {
+			case "T": {
 				var answerOptions = document.getElementsByName(answer.name);
 
 				if (answerOptions[0].getAttribute("questionrequired").toUpperCase() == "TRUE") {
@@ -299,14 +375,16 @@ Questionnaire.consistQuestionnaire = function() {
 			input.focus();
 
 			if (input.type == "radio")
-				input = input.labels[0];
-
+				if ((input.labels != undefined && input.labels.length > 0) || (input.previousElementSibling != null && input.previousElementSibling.nodeName.toUpperCase() == "LABEL"))
+					input = input.parentElement;
+				else 
+					input = Questionnaire.getTrsByQuestionId(questionId)[0].childNodes[0];
 			Questionnaire.drop = new Drop({
 				target: input,
 				content: BlocklyApps.getMsg("NoBugs_requiredField"),
-				position: "right middle",
+				position: "left middle",
 				classes: "drop-theme-arrows",
-				openOn: null
+				openOn: ""
 			});
 			Questionnaire.drop.open();
 
