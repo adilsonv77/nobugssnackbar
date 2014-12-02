@@ -160,7 +160,7 @@ Questionnaire.createForm = function (questionnaire) {
 					
 					var box = document.createElement("table");
 					box.style["borderWidth"] = "1px";
-//					box.style["borderColor"] = "black";
+					box.style["borderCollapse"] = "collapse";
 					box.border = "1";
 					
 					var boxHead = document.createElement("thead");
@@ -176,6 +176,7 @@ Questionnaire.createForm = function (questionnaire) {
 						for (var x = 0;x < questionnaire[j].questions[i].options.length;x++) {
 							boxTd = document.createElement("th");
 							boxTd.style["textAlign"] = "center";
+							boxTd.style["padding"] = "5px";
 							boxTd.innerHTML = questionnaire[j].questions[i].options[x].description;
 							
 							boxTr.appendChild(boxTd);
@@ -190,6 +191,7 @@ Questionnaire.createForm = function (questionnaire) {
 						boxTd = document.createElement("td");
 						
 						boxTd.innerHTML = questionnaire[j].questions[i].description;
+						boxTd.style["padding"] = "5px";
 						boxTr.appendChild(boxTd);
 						
 						for (var x = 0;x < options.length;x++) {
