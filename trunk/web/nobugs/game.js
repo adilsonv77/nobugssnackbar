@@ -436,7 +436,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Blockly.JavaScript.addReservedWords('Game, code');
 
   window.addEventListener('unload', Game.unload);
-  window.addEventListener('onload', Game.onload);
  
   Game.slider = {};
   Game.slider.svg = document.getElementById('slider');
@@ -510,7 +509,7 @@ Game.onload = function(e) {
 	function validateOpera() {
 		return navigator.appName == "Opera";
 	}
-}
+};
 
 Game.saveMission = function() {
 	
@@ -587,6 +586,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   var xml = Blockly.Xml.textToDom(answer);
   MyDomToWorkspace(Blockly.mainWorkspace, xml);
   
+  Game.moveBlocks();
+  
   Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
@@ -622,6 +623,54 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  
 	  
 }; 
+
+Game.moveBlocks = function() {
+	
+	var blocks = Blockly.mainWorkspace.getTopBlocks();
+	var minPosX = 0, minPosY = 0;
+	for (var i=0; i<blocks.length; i++){
+		var xy = blocks[i].getRelativeToSurfaceXY();
+		if (minPosX > xy.x)
+			minPosX = xy.x;
+		
+		if (minPosY > xy.y)
+			minPosY = xy.y;
+	}
+	
+	minPosX = Math.abs(minPosX); minPosY = Math.abs(minPosY);
+		
+	for (var i=0; i<blocks.length; i++){
+		//var xy = blocks[i].getRelativeToSurfaceXY();
+		blocks[i].setDragging_(true);
+		blocks[i].moveBy(minPosX, minPosY);
+		//Game.moveConnections_(blocks[i], minPosX, minPosY);
+		blocks[i].setDragging_(false);
+	}	
+	
+};
+
+Game.moveConnections_ = function(block_, dx, dy) {
+	  if (!block_.rendered) {
+	    // Rendering is required to lay out the blocks.
+	    // This is probably an invisible block attached to a collapsed block.
+	    return;
+	  }
+	  var myConnections = block_.getConnections_(false);
+	  for (var x = 0; x < myConnections.length; x++) {
+	    myConnections[x].moveBy(dx, dy);
+	  }
+	  var icons = block_.getIcons();
+	  for (var x = 0; x < icons.length; x++) {
+	    icons[x].computeIconLocation();
+	  }
+
+	  // Recurse through all blocks attached under this one.
+	  for (var x = 0; x < block_.childBlocks_.length; x++) {
+	    this.childBlocks_[x].moveConnections_(dx, dy);
+	  }
+	};
+
+
 
 Game.verifyButtons = function(objectives) {
 	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";

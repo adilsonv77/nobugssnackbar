@@ -9,7 +9,7 @@ import pt.uc.dei.nobugssnackbar.util.HexImage;
 public class GenerateHexFromImg {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		File file = new File("./missions/imagens/insertintoif.png");
+		File file = new File("./missions/imagens/insertintoifelse.png");
 		System.out.println(HexImage.toHex(file));
 
 	}
