@@ -2,6 +2,30 @@ var Hints = {};
 Hints.Categories = [];
 Hints.beforeHideChaff = null; // this need to keep here
 
+	Hints.chooseCategoryCalled = false;
+	Hints.bindEvent1 = null;
+	Hints.bindEvents = [];
+
+	Hints.TIMEINTERVAL = 3000;
+	Hints.lastTimeSpent = 0;
+
+	Hints.hndlTimer = 0;
+
+	Hints.hintBlockDeleted = null;
+	Hints.evtChangeListener = null;
+
+	Hints.specialControl = false;
+
+	Hints.menuOpened = false;
+
+	Hints.showedIddle = 0;
+
+	Hints.lastInsertedBlock = null;
+	Hints.activeBlock = null;
+	Hints.lastCountBlocks = 0;
+	Hints.showedCountInstrutionsHint = false;
+
+
 var countInstructions, countTopInstructions, menuSelected, showedHint; 
 
 Hints.init = function(hints) {
