@@ -24,11 +24,11 @@ Questionnaire.createForm = function (questionnaire) {
 	var questionNumber = 1;
 
 	var missions = Game.loginData.missionHist;
-	Game.finishedMissionId = 0;
 
 	for (var j = 0; j < questionnaire.length; j++) {
 		
 		if (questionnaire[j].showRules != null) {
+			Game.finishedMissionId = 0;
 			
 			for (var i=missions.length-1; i>=0; i--)
 				if (questionnaire[j].classId == missions[i][4]) {
