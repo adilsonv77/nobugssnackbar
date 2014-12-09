@@ -485,33 +485,6 @@ Game.unload = function(e) {
     return null;
 };
 
-Game.onload = function(e) {
-	console.log(navigator.appName);
-	if ((validateIE() || validateOpera()) && (!validateChrome() || !validateFirefox() || !validateSafari())) {
-		window.location.herf = "error.html";
-	}
-	
-	function validateIE() {
-		return navigator.appName == "Microsoft Internet Explorer";
-	}
-	
-	function validateChrome() {
-		return navigator.appName == "Netscape";
-	}
-	
-	function validateFirefox() {
-		return navigator.appName == "Netscape";
-	}
-	
-	function validateSafari() {
-		return navigator.appName == "Netscape";
-	}
-	
-	function validateOpera() {
-		return navigator.appName == "Opera";
-	}
-};
-
 Game.saveMission = function() {
 	
 	var answer = null;
