@@ -15,11 +15,17 @@
   <script type="text/javascript" src="commons/common.js"></script>
   <script type="text/javascript" src="nobugs.js"></script>
 </head>
-<body onload="Game.onload()">
-  <script type="text/javascript">
-    document.write(nobugspage.start({}, null,
-        {lang: BlocklyApps.LANG,
-         langSrc: BlocklyApps.languagePack()}));
-  </script>
-</body>
+	<!--[if !IE]> -->
+		<body onload="nav.onload()">
+			<script type="text/javascript">
+	    		document.write(nobugspage.start({}, null,
+	        		{lang: BlocklyApps.LANG,
+	         		langSrc: BlocklyApps.languagePack()}));
+	  		</script>
+  		</body>
+	<!--[endif]-->
+	<!--[if IE]> -->
+		<body onload="window.location.href = 'error.html'">
+		</body>
+	<!--[endif]-->
 </html>
