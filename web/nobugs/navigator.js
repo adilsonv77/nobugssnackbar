@@ -7,7 +7,7 @@ nav.onload = function(e) {
 	}
 	
 	function validateIE() {
-		return navigator.appVersion.indexOf("MSIE") > -1;
+		return navigator.appVersion.indexOf("MSIE") > -1 || navigator.userAgent.indexOf("Trident");
 	}
 	function validateChrome() {
 		return navigator.appVersion.indexOf("Chrome") > -1;
