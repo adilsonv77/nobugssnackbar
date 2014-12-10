@@ -1,8 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="utf-8">
 		<title>Error</title>
+		<script type="text/javascript" src="commons/common.js"></script>
+		<script src="nobugs.js"></script>
+  		<script src="_soy/soyutils.js"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				var main = document.getElementById("main").innerHTML;
+				document.getElementById("main").innerHTML = nobugspage.messages(
+							{}, null, {lang: BlocklyApps.LANG, langSrc: BlocklyApps.languagePack()}
+						) + main;
+				document.getElementById("msgError").appendChild(document.getElementById("Error_navigatorNotSupported"));
+			}
+		</script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="images/fav-icon.ico">
 		<style type="text/css">
 			root {
 				display: block;
@@ -39,7 +53,7 @@
 	<body>
 		<div id="main">
 		<div id="content">
-			<h2>Este jogo não é suportado por este navegador. <br >Aconselha-se que seja feito o download e a instalação de algum dos navegadores abaixo:</h2>
+			<h2 id="msgError"></h2>
 			<ul>
 				<li>
 					<a target="_blank" 
@@ -47,7 +61,7 @@
 						title="Google Chrome">
 							<img alt="Google Chrome" 
 								src="images/icon-chrome.png" />
-								Google Chrome
+								<p>Google Chrome
 					</a>
 				</li>
 				<li>
@@ -56,7 +70,7 @@
 						title="Mozilla Firefox">
 						<img alt="Mozilla Firefox" 
 							src="images/icon-ff.png" />
-							Mozilla Firefox
+							<p>Mozilla Firefox
 					</a>
 				</li>
 				<li>
@@ -65,7 +79,7 @@
 						title="Safari">
 						<img alt="Safari" 
 							src="images/icon-safari.png" />
-							Safari
+							<p>Safari
 					</a>
 				</li>
 			</ul>
