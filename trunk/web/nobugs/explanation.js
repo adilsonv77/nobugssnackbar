@@ -1,3 +1,4 @@
+'use strict';
 var Explanation = {};
 
 Explanation.selectCommands = function(commands) {

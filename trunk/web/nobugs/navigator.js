@@ -1,7 +1,7 @@
+'use strict';
 var nav = {};
 
 nav.onload = function(e) {
-	
 	if ((validateIE() || validateOpera()) && (!validateChrome() || !validateFirefox() || !validateSafari())) {
 		window.location.href = "error.html";
 	}

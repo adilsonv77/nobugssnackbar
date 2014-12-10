@@ -3,7 +3,7 @@
  * Visual Blocks Language
  *
  * Copyright 2012 Google Inc.
- * https://blockly.googlecode.com/
+ * https://developers.google.com/blockly/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ Blockly.JavaScript['controls_forEach'] = function(block) {
       variable0 + '_index', Blockly.Variables.NAME_TYPE);
   branch = Blockly.JavaScript.INDENT + variable0 + ' = ' +
       argument0 + '[' + indexVar + '];\n' + branch;
-  var code = 'for (var ' + indexVar + ' in  ' + argument0 + ') {\n' +
+  var code = 'for (var ' + indexVar + ' in ' + argument0 + ') {\n' +
       branch + '}\n';
   return code;
 };

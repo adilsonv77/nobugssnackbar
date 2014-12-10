@@ -1,3 +1,4 @@
+'use strict';
 var PreloadImgs = {};
 PreloadImgs.imgs = {};
 PreloadImgs.keys = [];

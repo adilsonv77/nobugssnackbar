@@ -91,7 +91,7 @@ window.addEventListener('load', Game.init);
 
 Game.login = function() {
 	
-	alert("teste");
+	//alert("teste");
 	document.getElementById('ButtonLogin').disabled = "disabled";
 	
 	var user = document.getElementById('loginuser').value;
@@ -731,15 +731,13 @@ Game.stopCronometro = function() {
 // This is a copy from commons.js importPrettify function. Because my prettify files are in another
 //   place, I need to overwrite this function.
 Game.importPrettify = function() {
-	  //<link rel="stylesheet" type="text/css" href="../prettify.css">
-	  //<script type="text/javascript" src="../prettify.js"></script>
+	  //<link rel="stylesheet" href="prettify.css">
+	  //<script src="prettify.js"></script>
 	  var link = document.createElement('link');
 	  link.setAttribute('rel', 'stylesheet');
-	  link.setAttribute('type', 'text/css');
 	  link.setAttribute('href', 'prettify.css');
 	  document.head.appendChild(link);
 	  var script = document.createElement('script');
-	  script.setAttribute('type', 'text/javascript');
 	  script.setAttribute('src', 'prettify.js');
 	  document.head.appendChild(script);
 };
