@@ -1,11 +1,11 @@
-// This file was automatically generated from importjs_descompressed.soy.
+// This file was automatically generated from importjs_compressed.soy.
 // Please don't edit this file by hand.
 
 if (typeof importsjs == 'undefined') { var importsjs = {}; }
 
 
 importsjs.imports = function(opt_data, opt_ignored, opt_ijData) {
-  return '<script type="text/javascript" src="nobugs/language.js"><\/script><script type="text/javascript" src="nobugs/slider.js"><\/script><script type="text/javascript" src="nobugs/utils.js"><\/script><script type="text/javascript" src="nobugs/preloadimgs.js"><\/script><script type="text/javascript" src="nobugs/game.js"><\/script><script type="text/javascript" src="nobugs/explanation.js"><\/script><script type="text/javascript" src="nobugs/hints.js"><\/script><script type="text/javascript" src="nobugs/blockly.js"><\/script><script type="text/javascript" src="nobugs/graph.js"><\/script><script type="text/javascript" src="nobugs/snackman.js"><\/script><script type="text/javascript" src="nobugs/customer.js"><\/script><script type="text/javascript" src="nobugs/customerman.js"><\/script><script type="text/javascript" src="nobugs/sprite.js"><\/script><script type="text/javascript" src="nobugs/nobugsjsinterpreter.js"><\/script><script type="text/javascript" src="nobugs/nobugsblocklygeneratorjavascript.js"><\/script><script type="text/javascript" src="nobugs/xml.js"><\/script><script type="text/javascript" src="nobugs/objectives.js"><\/script><script type="text/javascript" src="nobugs/money.js"><\/script><script type="text/javascript" src="nobugs/questionnaire.js"><\/script><script type="text/javascript" src="nobugs/variablenamesvalidate.js"><\/script><script type="text/javascript" src="nobugs/navigator.js"><\/script>';
+  return '<script type="text/javascript" src="nobugs/nobugs-min.js"><\/script>';
 };
 
 ;
@@ -21,7 +21,7 @@ hints.messages = function(opt_data, opt_ignored, opt_ijData) {
 
 
 hints.dialogs = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id="RightHint" class="dialogHiddenContent"><table><tr><td id="RightHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="LeftHint" class="dialogHiddenContent"><table><tr><td valign="top"><img src="images/help_left.png" style="padding: 10px" /></td><td id="LeftHintText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Stack a couple of this command blocks together to be more closer to reach the goal.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="DownHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td id="DownHintText"></td></tr></table></div>';
+  return '<div id="RightHint" class="dialogHiddenContent"><table><tr><td id="RightHintText"></td><td valign="top"><img src="images/help_right.png" style="padding: 10px" /></td></tr></table></div><div id="LeftHint" class="dialogHiddenContent"><table><tr><td valign="top"><img src="images/help_left.png" style="padding: 10px" /></td><td id="LeftHintText"></td></tr></table></div><div id="SelectCommand" class="dialogHiddenContent"><table><tr><td>Drag a block to the workspace.</td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="StackTogether" class="dialogHiddenContent"><table><tr><td>Stack a couple of this command blocks together to be more closer to reach the goal.<br/><img src="images/stacktogether.png"/></td><td ><img src="images/help_stack.png" style="padding: 10px" /></td></tr></table></div><div id="DownHint" class="dialogHiddenContent"><table><tr><td ><img src="images/help_down.png" style="padding: 10px" /></td><td id="DownHintText"></td></tr></table></div>';
 };
 
 ;

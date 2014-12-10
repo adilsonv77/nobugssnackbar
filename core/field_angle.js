@@ -3,7 +3,7 @@
  * Visual Blocks Editor
  *
  * Copyright 2013 Google Inc.
- * https://blockly.googlecode.com/
+ * https://developers.google.com/blockly/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
 goog.provide('Blockly.FieldAngle');
 
 goog.require('Blockly.FieldTextInput');
+goog.require('goog.math');
 
 
 /**
@@ -182,7 +183,7 @@ Blockly.FieldAngle.prototype.onMouseMove = function(e) {
     // This shouldn't happen, but let's not let this error propogate further.
     return;
   }
-  angle = angle / Math.PI * 180;
+  angle = goog.math.toDegrees(angle);
   // 0: East, 90: North, 180: West, 270: South.
   if (dx < 0) {
     angle += 180;
@@ -227,7 +228,7 @@ Blockly.FieldAngle.prototype.updateGraph_ = function() {
   if (!this.gauge_) {
     return;
   }
-  var angleRadians = Number(this.getText()) / 180 * Math.PI;
+  var angleRadians = goog.math.toRadians(Number(this.getText()));
   if (isNaN(angleRadians)) {
     this.gauge_.setAttribute('d',
         'M ' + Blockly.FieldAngle.HALF + ', ' + Blockly.FieldAngle.HALF);

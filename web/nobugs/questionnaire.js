@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *
  */
@@ -39,6 +41,14 @@ Questionnaire.createForm = function (questionnaire) {
 			if (!condition) 
 				continue;
 		}
+		
+		var trQ = document.createElement("tr");
+		var tdQ = document.createElement("td");
+		tdQ.className = "questionnaireDiv";
+		trQ.appendChild(tdQ);
+		tdQ.innerHTML = questionnaire[j].description;
+		
+		table.appendChild(trQ);
 		
 		for (var i = 0; i < questionnaire[j].questions.length; i++) {
 

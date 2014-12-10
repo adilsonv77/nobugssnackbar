@@ -1,3 +1,4 @@
+'use strict';
 var Hints = {};
 Hints.Categories = [];
 Hints.beforeHideChaff = null; // this need to keep here
@@ -79,7 +80,7 @@ Hints.init = function(hints) {
     if (Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
     
-    Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, Hints.menuEvent);
+    Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, Hints.menuEvent);
     
     if (Hints.beforeHideChaff == null) {
         Hints.beforeHideChaff = Blockly.hideChaff;
@@ -90,7 +91,7 @@ Hints.init = function(hints) {
 };
 
 Hints.menuEvent = function() {
-	Hints.menuOpened = Blockly.Toolbox.tree_.selectedItem_ != null;
+	Hints.menuOpened = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_ != null;
 };
 
 Hints.hideChaff = function(b) {
@@ -285,7 +286,7 @@ Hints.timeIsUp = function() {
 	 // variables used into conditions
 	countInstructions = Game.countInstructions(blocks);
 	countTopInstructions = blocks.length;
-	menuSelected = Blockly.Toolbox.tree_.selectedItem_; 
+	menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_; 
 	if (menuSelected != null)
 		menuSelected = menuSelected.element_;
 	
@@ -401,7 +402,7 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	
 	Hints.bindEvent1 = Blockly.addChangeListener(bindEvent);
 
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.Toolbox.HtmlDiv, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
@@ -536,9 +537,9 @@ function createStyle(e, originH, dialog) {
 
 function createStylePosition(menu, submenu, dialog) {
 	
-	var e = Blockly.Toolbox.tree_.children_[menu].element_;
+	var e = Blockly.mainWorkspace.toolbox_.tree_.children_[menu].element_;
 	
-	e = Blockly.Toolbox.flyout_.workspace_.getTopBlocks(true)[submenu];
+	e = Blockly.mainWorkspace.toolbox_.flyout_.workspace_.getTopBlocks(true)[submenu];
 	if (e == undefined)
 		return [];
 		
@@ -680,7 +681,7 @@ Hints.Categories["ChooseCategory"] = {
 	show: 	
 		function (param) {
 	
-			Hints.hintSelected.e = Blockly.Toolbox.tree_.children_[parseInt(param[0])].element_;
+			Hints.hintSelected.e = Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(param[0])].element_;
 			var menuText = Hints.hintSelected.e.firstChild.childNodes[2].textContent;
 
 			var dialogContent = null;
@@ -698,7 +699,7 @@ Hints.Categories["ChooseCategory"] = {
 		"countInstructions == 0",
 
 	naturalCondition:
-		"(Hints.chooseCategoryCalled == false) && (Blockly.Toolbox.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ != menuSelected)",
+		"(Hints.chooseCategoryCalled == false) && (Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ != menuSelected)",
 
 	specialEvent:
 		function() {
@@ -738,7 +739,7 @@ Hints.Categories["SelectCommand"] = {
 		"countInstructions == 0",
 		
 	naturalCondition:
-		"(Hints.chooseCategoryCalled == true || (Blockly.Toolbox.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ == menuSelected))" ,
+		"(Hints.chooseCategoryCalled == true || (Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ == menuSelected))" ,
 			
 	bindEvent:
 		function() {
@@ -763,7 +764,7 @@ Hints.Categories["StackTogether"] = {
 					if (blocks[i].childBlocks_.length > 1) {
 						return null;
 					} else {
-						Blockly.Toolbox.tree_.setSelectedItem(Blockly.Toolbox.tree_.children_[parseInt(param[0])]);
+						Blockly.mainWorkspace.toolbox_.tree_.setSelectedItem(Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(param[0])]);
 						
 						var r = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
 						BlocklyApps.showDialog(dialog, null, false, false, r[0], null);

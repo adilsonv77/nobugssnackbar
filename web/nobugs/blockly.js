@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Modification of some basic functions
  **/

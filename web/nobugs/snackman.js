@@ -329,6 +329,12 @@ SnackMan.prototype.catchDrink = function(order) {
 		throw false;
 	}
 
+	// does the order have food ?
+	if (order.data.drinkOrFood != "drink") {
+		BlocklyApps.log.push(["fail", "Error_doesntOrderDrink"]);
+		throw false;
+	}
+	
 	// does the order have the drink of this place ?
 	if (order.data.descr.indexOf("coke") == -1) {
 		BlocklyApps.log.push(["fail", "Error_wrongPlaceForDrink"]);
@@ -425,13 +431,13 @@ SnackMan.prototype.catchFood = function(order) {
 	}
 
 	// does the order have food ?
-	if (order.data.type != "order") {
+	if (order.data.drinkOrFood != "food") {
 		BlocklyApps.log.push(["fail", "Error_doesntOrderFood"]);
 		throw false;
 	}
 	
 	// does the order have the food of this place ?
-	if (order.data.descr.indexOf("hotdog") == 1) {
+	if (order.data.descr.indexOf("hotdog") == -1) {
 		BlocklyApps.log.push(["fail", "Error_onlyHotDog"]);
 		throw false;
 	}

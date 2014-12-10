@@ -1,3 +1,4 @@
+'use strict';
 function loadMission(fileName) {
 	
 	 var xml = new window.XMLHttpRequest();
