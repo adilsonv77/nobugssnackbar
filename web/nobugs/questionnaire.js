@@ -248,7 +248,7 @@ Questionnaire.createForm = function (questionnaire) {
 Questionnaire.closeDrop = function() {
 
 	if (Questionnaire.drop != null && Questionnaire.drop != undefined) {
-		Questionnaire.drop.close();
+		Questionnaire.drop.remove();
 		Questionnaire.drop = null;
 	}
 

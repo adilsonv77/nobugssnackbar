@@ -122,3 +122,23 @@ MyBlocklyApps.unbindClick = function(el, func) {
 	  el.removeEventListener('click', func);
 	  el.removeEventListener('touchend', func);
 	};
+
+	
+MyBlocklyApps.newShowModalDialog = function(content) {
+	
+	var dialog = $('<div />')
+			.css({width: "800px", height: "600px", zIndex: "1"})
+			.addClass("dialog");
+	
+	dialog.css("visibility", "visible");
+	dialog.html(content);
+	
+	var top_ = Math.max(0, ((window.innerHeight - dialog.height()) / 2));
+	var left_ = Math.max(0, ((window.innerWidth - dialog.width()) / 2));
+	dialog.offset({ top: top_, left: left_ });
+	
+	$( "body" ).append( dialog );
+	
+
+	
+};

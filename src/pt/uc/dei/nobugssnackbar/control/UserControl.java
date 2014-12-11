@@ -106,6 +106,14 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
+	public String loadMissionAnswer(int clazzId, int levelId, int missionIdx) throws SQLException {
+		String[][] r = NoBugsConnection.getConnection().loadMission(this.user, clazzId, levelId, missionIdx);
+		
+		return  r[0][3] ;
+	}
+	
+	
+	@RemoteMethod
 	public void saveMission(int money, int timeSpend, long execution, boolean achieved, String answer) throws SQLException {
 		
 		if (this.user == null)

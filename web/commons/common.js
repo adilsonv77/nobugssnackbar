@@ -357,7 +357,7 @@ BlocklyApps.initReadonly = function() {
   // Add the blocks.
   var xml = BlocklyApps.getStringParamFromUrl('xml', '');
   xml = Blockly.Xml.textToDom('<xml>' + xml + '</xml>');
-  MyDomToWorkspace(Blockly.mainWorkspace, xml);
+  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
 };
 
 /**
@@ -379,11 +379,11 @@ BlocklyApps.loadBlocks = function(defaultXml) {
     // Language switching stores the blocks during the reload.
     delete window.sessionStorage.loadOnceBlocks;
     var xml = Blockly.Xml.textToDom(loadOnce);
-    MyDomToWorkspace(Blockly.mainWorkspace, xml);
+    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
   } else if (defaultXml) {
     // Load the editor with default starting blocks.
     var xml = Blockly.Xml.textToDom(defaultXml);
-    MyDomToWorkspace(Blockly.mainWorkspace, xml);
+    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
   } else if ('BlocklyStorage' in window) {
     // Restore saved blocks in a separate thread so that subsequent
     // initialization is not affected from a failed load.
