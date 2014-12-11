@@ -208,6 +208,7 @@ p.item {
 
 .missionEnabled {
 	background-color: #77DD77;
+	cursor: pointer;
 }
 
 
@@ -218,6 +219,10 @@ p.item {
 
 .missionTarget:hover {
 	background-color: #BBBBEE;
+}
+
+.missionEnabled:hover {
+	background-color: #BBEEBB;
 }
 
 .missionDisabled {

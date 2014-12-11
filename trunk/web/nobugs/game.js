@@ -165,7 +165,6 @@ Game.showQuestionnaire = function(q) {
 };
 
 Game.finishQuestionnaire = function() {
-	//TODO consistir formulario
 
 	var consistido = Questionnaire.consistQuestionnaire();
 	
@@ -226,7 +225,10 @@ Game.logged = function(missionsHistorical) {
 
 		MyBlocklyApps.showDialog(content[0], null, false, true, true,
 					BlocklyApps.getMsg("_missions"), null, 
-					function() { $("#" + idRoot).remove();});
+					function() { 
+						$("#" + idRoot).remove();
+				    	 
+					});
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
@@ -376,21 +378,62 @@ Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved
 			 {level: l});
 	 
 	 // without unbind, i need this code must appear just in one loop
-	 $('.missionSquare').unbind('click').click(function (evt) {
-		 if (this.className.indexOf("missionTarget") >= 0) {
-			 var clazzId = this.getAttribute("idclazz");
-			 var missionIdx = this.getAttribute("idmission");
-	    	 var levelId = this.getAttribute("idlevel");
-	    	 BlocklyApps.hideDialog(true);
+	 $('.missionTarget').unbind('click').click(function (evt) {
+		 
+		 var clazzId = this.getAttribute("idclazz");
+		 var missionIdx = this.getAttribute("idmission");
+    	 var levelId = this.getAttribute("idlevel");
+    	 BlocklyApps.hideDialog(true);
+    	 
+		 Game.missionSelected(clazzId, levelId, missionIdx);
+		 
+	 });
+	 
+	 
+	 $('.missionEnabled').unbind('click').click(function (evt) {
+		 
+		 var fret = function(ret) {
 			 
-			 Game.missionSelected(clazzId, levelId, missionIdx);
+			 var answer = ret;
 			 
-		 }
+			 var divMissionSelected = document.createElement("div");
+			 divMissionSelected.style.width = "800px";
+			 divMissionSelected.style.height = "600px";
+			 document.getElementById("mainBody").appendChild(divMissionSelected);
+			 
+			 try {
+				 
+				 Blockly.inject(divMissionSelected, {path: ''});
+				 var xml = Blockly.Xml.textToDom(answer);
+			     Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+			    // Game.moveBlocksToZero();
+				 
+				 MyBlocklyApps.newShowModalDialog(divMissionSelected);
+			 } catch (ex) {
+				 console.log(ex);
+			 }
+		 };
+		 
+		 var clazzId = this.getAttribute("idclazz");
+		 var missionIdx = this.getAttribute("idmission");
+    	 var levelId = this.getAttribute("idlevel");
+		 UserControl.loadMissionAnswer(clazzId, levelId, missionIdx, fret);
+		 
 	 });
 
 	 return $(missionPanel).width();
 	
 };
+
+Game.moveBlocksToZero = function() {
+	
+	var blocks = Blockly.mainWorkspace.getTopBlocks();
+	for (var i=0; i<blocks.length; i++){
+		blocks[i].moveBy(0, 0);
+	}	
+	
+};
+
 
 Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	
@@ -531,7 +574,8 @@ Game.missionLoaded = function(ret){
       {path: '',
        rtl: Game.rtl,
        toolbox: toolbox,
-       trashcan: true});
+       trashcan: true,
+       comments: false});
 
 
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
@@ -558,7 +602,7 @@ Game.missionLoaded = function(ret){
 Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
-  MyDomToWorkspace(Blockly.mainWorkspace, xml);
+  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
   
   Game.moveBlocks();
   

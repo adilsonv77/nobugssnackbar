@@ -70,24 +70,3 @@ function innerXML ( node ) {
 	
 	return sinnerXML;
 }
-
- function MyDomToWorkspace(workspace, xml) {
-	  if (Blockly.RTL) {
-	    var width = workspace.getMetrics().viewWidth;
-	  }
-	  for (var x = 0; x < xml.childNodes.length; x++) {
-		var xmlChild = xml.childNodes[x];
-	  
-	    if (xmlChild.nodeName.toLowerCase() == 'block') {
-	      var block = Blockly.Xml.domToBlock(workspace, xmlChild);
-	      var blockX = parseInt(xmlChild.getAttribute('x'), 10);
-	      var blockY = parseInt(xmlChild.getAttribute('y'), 10);
-	      if (!isNaN(blockX) && !isNaN(blockY)) {
-	        block.moveBy(Blockly.RTL ? width - blockX : blockX, blockY);
-	      }
-	    }
-	  }
-	};
-
-
-
