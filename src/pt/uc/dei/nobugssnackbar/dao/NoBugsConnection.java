@@ -519,11 +519,12 @@ public class NoBugsConnection {
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q0.classid from questionnaire q0" + 
+					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q1.classid from questionnaire q0" + 
 							" join questionsquestionnaire using (questionnaireid)"+
+							" join questionnaireclasses q1 using (questionnaireid)" +
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
-							" where %s and questionnairefinish > now() and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
+							" where %s and questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
 							" order by questionnaireid, questionorder, optionorder";
 			
 			;
@@ -616,10 +617,8 @@ public class NoBugsConnection {
 		try {
 			bdCon = dataSource.getConnection();
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into questionnaire (classid, questionnairedescription) values (?, ?)");
-			ps.setLong(1, classId);
-			ps.setString(2, description);
-
+					.prepareStatement("insert into questionnaire (questionnairedescription) values (?)");
+			ps.setString(1, description);
 			ps.executeUpdate();
 			
 			Statement st = bdCon.createStatement();
@@ -627,6 +626,13 @@ public class NoBugsConnection {
 			rs.next();
 			ret = rs.getLong(1);
 			st.close();
+			ps.close();
+
+			ps = bdCon
+					.prepareStatement("insert into questionnaireclasses (questionnaireid, classid) values (?, ?)");
+			ps.setLong(1, ret);
+			ps.setLong(2, classId);
+			ps.executeUpdate();
 			ps.close();
 		} finally {
 			if (bdCon != null)
