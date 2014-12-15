@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Canvas</title>
+		<script type="text/javascript" src="../dwr/engine.js"></script>
+  		<script type="text/javascript" src="../dwr/interface/Image64.js"></script>
+		<script type="text/javascript" src="clock.js" ></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				var canvas = document.getElementById("canvas");
+				var ctx = canvas.getContext("2d");
+				var radius = canvas.height / 2;
+				ctx.translate(radius, radius);
+				radius = radius * 0.90
+				
+				Clock.setCtx(ctx);
+				Clock.setRadius(radius);
+				setInterval(Clock.drawClock, 1000);
+				
+				document.getElementById("btSave").addEventListener("click", function() {
+					var canvas = document.getElementById("canvas");
+					var data = canvas.toDataURL();
+					data = data.replace("data:image/png;base64,", "");
+					try {
+						Image64.saveImage(data);	
+					} catch (e) {
+						console.log(e);
+					}
+					
+				});
+			};
+			
+			
+		</script>
+	</head>
+	
+	<body>
+		<canvas id="canvas" width="400" height="400" style="background-color:#333">
+		</canvas>
+		
+		<input id="btSave" type="button" value="Guardar" />
+	</body>
+
+</html>
