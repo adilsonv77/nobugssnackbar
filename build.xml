@@ -9,9 +9,18 @@
     <!-- Relating properties of web application enviroment comes from build.properties file -->
 	<property file="${file.properties}" />
 	
-	
 	<property name="blockly.dir" location="D:\\doutoramento\\blockly" />
 	<property name="dest.dir" location="web" />
+	
+	<target name="help">
+		<echo message = "Use:"/>
+		<echo message = "ant soydescompress      - Creates the pages based on a template and descompressed imports"/>
+		<echo message = "ant soycompress         - Creates the pages based on a template and compressed imports"/>
+		<echo message = "ant compress            - Compress the nobugs javascript files" />
+		<echo message = "ant war                 - Generates the Web Application Archive (WAR)"/>
+		<echo message = "ant clean               - Clean build directories"/>
+		<echo message = "ant init                - Create build directories"/>
+	</target>
 	
 	<target name="copy" depends="">
 		<description>Copy files from Blockly Project to this project</description>
@@ -163,11 +172,44 @@
 		</java>
 	</target>
 	
-	<target name="help">
-		<echo message = "Use:"/>
-	    <echo message = "ant soydescompress      - Creates the pages based on a template and descompressed imports"/>
-		<echo message = "ant soycompress         - Creates the pages based on a template and compressed imports"/>
-		<echo message = "ant compress            - Compress the nobugs javascript files"/>
+	<target name="war" depends="clean, init, soycompress">
+		<war destfile="${war.home}/${app.name}.war" webxml="${web.home}/WEB-INF/web.xml">
+	    	<fileset dir="${web.home}" >
+	    		<include name="_soy/**/*.*" />
+	    		<include name="commons/**/*.*" />
+	    		<include name="drop/**/*.*" />
+	    		<include name="easyui/**/*.*" />
+	    		<include name="generated/**/*.*" />
+	    		<include name="images/**/*.*" />
+	    		<include name="jquery.*/**/*.*" />
+	    		<include name="jsinterpreter/**/*.*" />
+	    		<include name="media/**/*.*" />
+	    		<include name="META-INF/**/*.*" />
+	    		<include name="msg/**/*.*" />
+	    		<include name="nobugs/nobugs-min.js" />
+	    		<include name="WEB-INF/**/*.*" />
+	    		<include name="*.js" />
+	    		<include name="*.css" />
+	    		<include name="index.html" />
+	    		<include name="error.html" />
+	        </fileset>
+	        <classes dir="${build.home}" >
+	            <include name="**/*.class" />
+	            <include name="**/*.properties" />
+	            <include name="**/*.xml" />
+	        	<exclude name="nobugssnackbar/**/*.*"/>
+	        </classes>
+	    </war>
+	</target>
+	
+	<target name="clean" depends="init">
+		<delete includeEmptyDirs="true">
+	        <fileset dir="${war.home}"/>
+	    </delete>
+	</target>
+	
+	<target name="init">
+	    <mkdir dir="${war.home}"/>
 	</target>
 	
 </project>
