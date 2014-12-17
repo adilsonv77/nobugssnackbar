@@ -91,7 +91,6 @@ window.addEventListener('load', Game.init);
 
 Game.login = function() {
 	
-	alert("teste");
 	document.getElementById('ButtonLogin').disabled = "disabled";
 	
 	var user = document.getElementById('loginuser').value;
