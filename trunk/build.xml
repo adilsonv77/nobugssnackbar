@@ -182,10 +182,14 @@
 	    		<include name="generated/**/*.*" />
 	    		<include name="images/**/*.*" />
 	    		<include name="jquery.*/**/*.*" />
-	    		<include name="jsinterpreter/**/*.*" />
+	    		<include name="jsinterpreter/acorn_interpreter.js" />
 	    		<include name="media/**/*.*" />
 	    		<include name="META-INF/**/*.*" />
-	    		<include name="msg/**/*.*" />
+	    		<include name="msg/js/en_us.js" />
+	    		<include name="msg/js/pt-br.js" />
+	    		<include name="msg/json/en.json" />
+	    		<include name="msg/json/pt-br.json" />
+	    		<include name="msg/messages.js" />
 	    		<include name="nobugs/nobugs-min.js" />
 	    		<include name="WEB-INF/**/*.*" />
 	    		<include name="*.js" />

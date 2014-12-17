@@ -22,6 +22,9 @@ window.prompt = function(one, two) {
 			if (p != null)
 				p = p.trim();
 			
+			if (p === two) 
+				return two;
+			
 			var valid = p == null || VariableNames.validate(p);
 			if (valid == false) {
 				alert(BlocklyApps.getMsg("Error_variableName"));
