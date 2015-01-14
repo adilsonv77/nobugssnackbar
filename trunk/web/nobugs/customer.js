@@ -45,6 +45,12 @@ PreloadImgs.put('$customer04_anger', 'images/$customer04_anger.png');
 PreloadImgs.put('coin', 'images/coin.png');
 PreloadImgs.put('anger', 'images/anger.png');
 
+//Candidate Orders
+PreloadImgs.put('$coke', 'images/$$coke.png');
+PreloadImgs.put('$hotdog', 'images/$$hotdog.png');
+PreloadImgs.put('$juiceoforange', 'images/$$juiceoforange.png');
+PreloadImgs.put('$orange', 'images/$$orange.png');
+
 
 // acts as a state machine
 CustOpt.createCustomerPath = function() {
@@ -89,7 +95,7 @@ Customer = function(options) {
 		width: 96,
 		height: 32,
 		sourceY: 0,
-		img : PreloadImgs.get("$customer" +options.id)
+		img : PreloadImgs.get("$customer" +options.id),
     });
 	
 	if (this.state === 8)
@@ -280,6 +286,20 @@ Customer.prototype.draw = function(ctx) {
 			ctx.drawImage(this.imgCustAnger, this.img.x, this.img.y);
 		} else {
 			this.img.draw(ctx);
+			
+			var ordersUnfulfilled = [];
+			
+			for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
+				ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
+			}
+			
+			for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
+				ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
+			}
+			
+			if (ordersUnfulfilled.length > 0) {
+				Baloon.draw(ctx, this.img.x, this.img.y, ordersUnfulfilled, 0.7);
+			}
 		}
 	}
 		

@@ -165,6 +165,7 @@
 			<arg line="${js.home}/money.js" />
 			<arg line="${js.home}/questionnaire.js" />
 			<arg line="${js.home}/variablenamesvalidate.js" />
+			<arg line="${js.home}/baloon.js" />
 			
 			<classpath>
 				<path refid="lib.base" />
