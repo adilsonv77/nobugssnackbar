@@ -14,6 +14,7 @@
 	"Apps.dialogNext": "Pr&#243;ximo",
 	"Apps.dialogPrevious": "Anterior",
 	"Apps.dialogLogoff" : "Sair",
+	"Apps.close" : "Fechar",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
@@ -23,6 +24,7 @@
 	"NoBugs.debugTooltip" : "Executar somente um passo.",
 	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o.",
 	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, entre em contacto com ",
+	"NoBugs.buy": "Comprar",
 	
 	"NoBugs.variables" : "Vari&#225;veis",
 	"NoBugs.varname" : "Nome",
@@ -97,6 +99,8 @@
 	"Single.King" : "o Rei",
 	"Single.Queen" : "a Rainha",
 	"Single.Questionnaire" : "Question&#225;rio",
+	"Single.IceCreamMachine" : "Gelado",
+	"Single.FrenchFryer" : "Fritadeira de batatas",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",

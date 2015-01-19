@@ -73,3 +73,28 @@ function innerXML ( node ) {
 	
 	return sinnerXML;
 }
+
+function convertImgHex(imgHex, content, fConvert) {
+	
+	  var imgsHexId = [];
+	  var imgsHexH = [];
+	  for (var i=0; i<imgHex.length; i++) {
+		  imgsHexId.push(imgHex[i].getAttribute("id"));
+		  imgsHexH.push(imgHex[i].textContent);
+	  }
+	  
+	  UserControl.existsImageKey(imgsHexId, {async:false, callback:function(b){
+		  
+		  for (var i=0; i<b.length; i++) {
+			  if (!b[i]) {
+				  
+				  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
+			  }
+			  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\"/>";
+			  fConvert(content, imgsHexId[i], imgsHexH[i], imgOrig);
+		  }
+
+	  }});
+
+}
+

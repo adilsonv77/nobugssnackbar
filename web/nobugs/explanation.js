@@ -97,7 +97,14 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	var container = document.getElementById('dialogInfoText');
 	var children = Explanation.explanation.getElementsByTagName("page");
 
-	container.innerHTML = children[nrPage].innerHTML || children[nrPage].textContent;
+	var containerText = children[nrPage].innerHTML || children[nrPage].textContent;
+	
+	var imgHex = children[nrPage].getElementsByTagName("imghex");
+	convertImgHex(imgHex, container, function(container, hexId, hexHex, img) {
+		containerText = containerText.replace("<imghex id=\"" + hexId + "\"><![CDATA["+ hexHex +"]]></imghex>", img);
+	});
+	
+	container.innerHTML = containerText;
 	
 	var buttons = document.getElementById('dialogInfoButton');
 	

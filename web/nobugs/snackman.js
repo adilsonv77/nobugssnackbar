@@ -33,6 +33,9 @@ PreloadImgs.put('display', 'images/display.png');
 PreloadImgs.put('boxoffruits', 'images/boxoffruits.png');
 PreloadImgs.put('juicemachine', 'images/juicemachine.png');
 
+PreloadImgs.put('frenchfries', 'images/frenchfries.png');
+PreloadImgs.put('icecream', 'images/icecream.png');
+
 SnackMan = function(objectives, mission) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
 /*
@@ -147,6 +150,32 @@ SnackMan = function(objectives, mission) {
 		});
 	}
 	
+	this.frenchFries = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 2,
+		horzSeq: false,
+		x: 320,
+		y: 288,
+		width: 32,
+		height: 64,
+		sourceX: 0,
+		sourceY: 0,
+		img : PreloadImgs.get("frenchfries")
+	});
+	
+	this.iceCream = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 1,
+		horzSeq: false,
+		x: 192,
+		y: 224,
+		width: 32,
+		height: 64,
+		sourceX: 0,
+		sourceY: 0,
+		img : PreloadImgs.get("icecream")
+	});
+	
 	this.objective = {};
 	
 	this.objective.objectives = [];
@@ -234,6 +263,8 @@ SnackMan.prototype.draw = function(ctx) {
 	this.display.draw(ctx);
 	this.img.draw(ctx);
 	this.cooler.draw(ctx);
+//	this.frenchFries.draw(ctx);
+//	this.iceCream.draw(ctx);
 	
 };
 
