@@ -243,184 +243,52 @@ Game.missionsRetrieved = function(missions) {
 		if (idx == -1) {
 			s.push(missions[i][0]);
 			
-			rec = {clazz: missions[i][0], clazzId: missions[i][4], levels:[]};
+			rec = {group: missions[i][0], groupId: missions[i][4], levels:[]};
 			data.push(rec); 
 			
 		} else {
 			rec = data[idx];
 		}
 		
-		var l = {name: missions[i][1], id: missions[i][5], howManyMissions: missions[i][2], howManyAchieved: missions[i][3]};
+		var l = {name: missions[i][1], id: missions[i][5], howManyItems: missions[i][2], howManyItemsAchieved: missions[i][3]};
 		rec.levels.push(l);
 	}
 	
-	var useAccordion = data.length > 1;
-	if (useAccordion) {
-		if (document.getElementById("aa") != null) {
-			$( "#aa" ).remove();
-		}
-			
-		var ac = $('<div id="aa"/>').addClass("easyui-accordion").addClass("accordion").appendTo("body");
-		
-		ac.accordion({
-		    animate:false
-		});
-		
-	}
+	var f1 = function (evt) {
+		 
+		 var itemId = this.getAttribute("idgroup");
+		 var missionIdx = this.getAttribute("iditem");
+		 var levelId = this.getAttribute("idlevel");
+		 BlocklyApps.hideDialog(true);
+  	 
+		 Game.missionSelected(itemId, levelId, missionIdx);
+		 
+	};
 	
-	var wMax = 0;
-	for (var i = 0; i <data.length; i++) {
+	var f2 = function(i) {
 		
-		var lastAllAchieved = true;
-		
-		var appendTo = "body";
-		if (useAccordion) {
-			
-			$('#aa').accordion('add', {
-				title: data[i].clazz
-			} );
-			
-			appendTo = $('#aa').accordion('getPanel', i);
-		}
-		
-		var idTabs = "tt" + i;
-		var tabs = $('<div id = "'+idTabs+'"/>')
-						.addClass('easyui-tabs')
-						.addClass('tabs-container')
-						.appendTo(appendTo);
-		
-		$('#'+idTabs).tabs();
-		
-		for (var j = 0; j < data[i].levels.length; j++) {
-
-			var id = 'selectMissionPanel' + i + j;
-			var div = $('<div id = "'+id+'"/>')
-				  			.addClass('selectMissionPanel');
-			
-			var mm = parseInt(data[i].levels[j].howManyMissions);
-			var ma = parseInt((lastAllAchieved?data[i].levels[j].howManyAchieved:"-1"));
-			$('#'+idTabs).tabs('add',{
-			    title: data[i].levels[j].name,
-			    content: div,
-			    selected: (ma < mm && lastAllAchieved)
-			});
-			
-			var w = Game.createGridView("#" + id , mm, ma, data[i].clazzId, data[i].levels[j].id);
-			
-			lastAllAchieved = ma == mm;
-				
-			if (w > wMax)
-				wMax = w;
-			
-		}
-		
-	}
-
-	for (var i = 0; i <data.length; i++) {
-		$('#tt'+i).tabs({
-		    width: wMax + 50,
-			border:false
-		});
-	}
-		
-	$('#aa').accordion({
-	    animate:false,
-	    border:false,
-	    width: wMax + 50
-	});
-	
-	return (useAccordion?"aa": "tt0");
-	
-	
-};
-
-Game.createGridView = function (missionPanel, numberOfMissions, missionsAchieved, clazzId, levelId) {
-    var missionTarget = missionsAchieved + 1;
-    for (var i=1; i<=numberOfMissions; i++) {
     	var imgs = generateImages(i, 2);
-    	var div = $('<div />')
-    	    .attr("idclazz", clazzId)
-    		.attr("idmission", i)
-    	    .attr("idlevel", levelId)
-  			.addClass('gridViewChild')
-  			.addClass('missionSquare')
-  			.html($.each(imgs, function(i){
-  				   imgs[i] = "<img src='images/"+this+"'/>";
-			         }));
-			if (i < missionTarget) {
-				div.addClass('missionEnabled');
-			} else
-	    	if (i == missionTarget) {
-	    		div.addClass('missionTarget');
-	    	} else 
-	    		div.addClass('missionDisabled');
-    	
-	        $(missionPanel).append(div);
-    }
-	 var l = Math.ceil(Math.sqrt(numberOfMissions));
-	 
-	 var onPosition = function(i, zoomedChild, margin) { 
-		 return {x: (70 * (i%l)) + margin, 
-			 	 y: (70 * Math.floor(i/l)) + margin}; 
-		};
-	 
-	 $(missionPanel).gridview({
-		 						draggable: false,
-		 						scrollToZoom: false, 
-		 						animationSpeed: 0,
-								width: (l*70)+10,
-		 						height: (l*70)+10,
-		 						onPosition: onPosition
-		 					});
-	 
-	 $(missionPanel).gridview("zoom",
-			 {level: l});
-	 
-	 // without unbind, i need this code must appear just in one loop
-	 $('.missionTarget').unbind('click').click(function (evt) {
-		 
-		 var clazzId = this.getAttribute("idclazz");
-		 var missionIdx = this.getAttribute("idmission");
-    	 var levelId = this.getAttribute("idlevel");
-    	 BlocklyApps.hideDialog(true);
-    	 
-		 Game.missionSelected(clazzId, levelId, missionIdx);
-		 
-	 });
-	 
-	 
-	 $('.missionEnabled').unbind('click').click(function (evt) {
-		 
-		 var fret = function(ret) {
-			 
-			 var answer = ret;
-			 
-			 var divMissionSelected = document.createElement("div");
-			 divMissionSelected.style.width = "800px";
-			 divMissionSelected.style.height = "600px";
-			 document.getElementById("mainBody").appendChild(divMissionSelected);
-			 
-			 try {
-				 
-				 Blockly.inject(divMissionSelected, {path: ''});
-				 var xml = Blockly.Xml.textToDom(answer);
-			     Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-			    // Game.moveBlocksToZero();
-				 
-				 MyBlocklyApps.newShowModalDialog(divMissionSelected);
-			 } catch (ex) {
-				 console.log(ex);
-			 }
-		 };
-		 
-		 var clazzId = this.getAttribute("idclazz");
-		 var missionIdx = this.getAttribute("idmission");
-    	 var levelId = this.getAttribute("idlevel");
-		 UserControl.loadMissionAnswer(clazzId, levelId, missionIdx, fret);
-		 
-	 });
+		var html = $.each(imgs, function(i){
+			   imgs[i] = "<img src='images/"+this+"'/>";
+		         });
+		
+		return html;
+	};
+	
+	var f3 = function(i, j, m) {
+		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
+		var mt = ma + 1;
+		return m < mt;
+	};
+	
+	var f4 = function(i, j, m) {
+		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
+		var mt = ma + 1;
+		return m == mt;
+	};
 
-	 return $(missionPanel).width();
+	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", f1, f2, f3, f4);
+	return sel.build();
 	
 };
 
@@ -492,6 +360,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 
   //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
+  BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
   BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
   BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
   //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
@@ -552,8 +421,6 @@ Game.missionLoaded = function(ret){
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
-  var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
-  
   Game.slider.timesBefore = 0;
   
   var slider = mission.childNodes[0].getElementsByTagName("slider");
@@ -564,6 +431,7 @@ Game.missionLoaded = function(ret){
 	  Game.slider.svg.style.visibility = "visible";
   }
    
+  var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
   
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
@@ -598,6 +466,98 @@ Game.missionLoaded = function(ret){
   }
 };
   
+Game.buyButtonClick = function() {
+    var selectMachine = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0];
+    Game.selectMachine(selectMachine);
+};
+
+Game.selectMachine = function(selectMachineOpts) {
+	
+	Game.machines = [];
+	Game.loadMachines(selectMachineOpts, 0);
+};
+
+Game.continueSelectMachine = function(selectMachineOpts) {
+	var data = [];
+	var rec = {group: "", groupId: 1, levels:[]};
+	data.push(rec);
+
+	var l = {name: "Equipamentos", id: "x", howManyItems: selectMachineOpts.children.length, howManyItemsAchieved:-1};
+	rec.levels.push(l);
+	
+	var f1 = function(evt) {
+		
+		if (Game.selectedMachine != null) {
+			Game.selectedMachine.style.backgroundColor = "#7777DD";
+		}
+		Game.selectedMachine = this;
+
+		this.style.backgroundColor = "#FFB347";
+		
+		$('#BuyMachine').removeAttr("disabled");
+
+		
+		//BlocklyApps.hideDialog(false);
+		//Game.continueLoading();
+	};
+	
+	var f2 = function(i) {
+		
+		i--;
+		
+		var m = Game.machines[i].name.toLowerCase() + ".png";
+		var t = BlocklyApps.getMsg( "Text_" + Game.machines[i].name );
+		
+		return "<img src='images/"+m+"'/> <br/> " + t + "<br/>"+Game.machines[i].cust+" <img style='vertical-align:middle' src='images/coin2.png'/>";
+			
+	};
+	
+	var f3 = function(i, j, m) {
+		return false;
+	};
+	
+	var f4 = function(i, j, m) {
+		return Game.money >= Game.machines[m-1].cust;
+	};
+	
+	var sel = new Selector(data, 1, 180, null, null, f1, f2, f3, f4);
+	var selBuilt = sel.build();
+
+	var content = $("<div/>")
+			.append($("#" + selBuilt))
+			.append(nobugspage.buyButton(null, null, null));
+			
+
+	MyBlocklyApps.showDialog(content[0], null, false, true, true,
+		"Adicione um novo equipamento ao seu estabelecimento", null, 
+		function() { 
+			$("#" + selBuilt).remove();
+	    	 
+		});
+
+};
+
+Game.loadMachines = function(selectMachineOpts, idx) {
+	
+	var type = selectMachineOpts.children[idx].getAttribute("type");
+	UserControl.loadMachine(type, function(ret){
+		Game.machines.push({name: ret[0], cust: ret[1]});
+		
+		idx++;
+		if (idx < selectMachineOpts.children.length) {
+			Game.loadMachines(selectMachineOpts, idx);
+		} else {
+			Game.selectedMachine = null;
+			Game.continueSelectMachine(selectMachineOpts);
+		}
+	});
+	
+};
+
+Game.buyMachineButtonClick = function() {
+	alert("clicou");
+};
+
 Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
@@ -624,16 +584,20 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
-	  if (firstTime) {
+	  Game.continueLoading();
+	  
+  };
+  
+  Game.continueLoading = function() {
+	  if (Game.firstTime) {
 		  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
 		  
 		  Explanation.showInfo(explanation, true);
 	  } else {
-		  Hints.init(data.getElementsByTagName("hints")[0]);
+		  Hints.init(Game.mission.getElementsByTagName("hints")[0]);
 		  Game.initTime();
 	  }
-	  
-	  
+  
   };
 
   window.setTimeout(function(){loginLoaded(mission);}, 1000); 

@@ -208,4 +208,9 @@ public class UserControl {
 		NoBugsConnection.getConnection().storeMissionError(execution, this.user.getId(), this.mission, this.classid, idError, blockId, errorMessage);
 		
 	}
+	
+	@RemoteMethod
+	public String[] loadMachine(int code) throws SQLException {
+		return NoBugsConnection.getConnection().loadMachine(code);
+	}
 }

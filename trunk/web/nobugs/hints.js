@@ -171,7 +171,11 @@ Hints.traverseHints = function(hint, error) {
 	  
 	  h.imghex = hint.getElementsByTagName("imghex"); 
 	  if ((h.imghex != null || h.imghex != undefined) && h.imghex.length > 0) {
-		  
+		  convertImgHex(h.imghex, h, function(h, hexId, hexHex, img){
+			  h.content = 
+			    h.content.replace("<imghex id=\"" + hexId + "\"><![CDATA["+ hexHex +"]]></imghex>", img);
+		  });
+		  /*
 		  var imgsHexId = [];
 		  var imgsHexH = [];
 		  for (var i=0; i<h.imghex.length; i++) {
@@ -192,6 +196,7 @@ Hints.traverseHints = function(hint, error) {
 			  }
 
 		  }});
+		  */
 	  }
 	  
 	  h.time = hint.getAttribute("time");

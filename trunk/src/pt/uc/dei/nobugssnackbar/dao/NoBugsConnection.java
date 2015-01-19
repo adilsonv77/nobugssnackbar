@@ -831,4 +831,28 @@ public class NoBugsConnection {
 	
 	}
 
+	public String[] loadMachine(int code) throws SQLException {
+		Connection bdCon = null;
+		String[] ret = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select machinename, machinecost from machines where machineid = " + code);
+			rs.next();
+			ret = new String[2];
+			ret[0] = rs.getString(1);
+			ret[1] = rs.getInt(2) + "";
+			st.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
 }
