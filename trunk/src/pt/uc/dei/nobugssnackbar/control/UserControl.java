@@ -213,4 +213,34 @@ public class UserControl {
 	public String[] loadMachine(int code) throws SQLException {
 		return NoBugsConnection.getConnection().loadMachine(code);
 	}
+	
+	@RemoteMethod
+	public List<String> listMachinesFromUser() throws SQLException {
+		
+		return NoBugsConnection.getConnection().listMachines(this.user.getId());
+	}
+	
+	@RemoteMethod
+	public void buyMachine(int machineId) throws SQLException {
+		NoBugsConnection.getConnection().buyMachine(this.user.getId(), machineId);
+	}
+
+	@RemoteMethod
+	public List<String[]> loadWholeMachineData(Integer[] machineid) throws SQLException {
+		return NoBugsConnection.getConnection().loadMachineData(machineid);
+	}
+	
+	@RemoteMethod
+	public List<String[]> loadMachinesFromUser() throws SQLException {
+		
+		List<String> machines = NoBugsConnection.getConnection().listMachines(this.user.getId());
+		
+		Integer[] im = new Integer[machines.size()];
+		for (int i = 0; i < im.length; i++)
+			im[i] = Integer.parseInt( machines.get(i) );
+		
+		
+		return loadWholeMachineData(im);
+	}
+	
 }

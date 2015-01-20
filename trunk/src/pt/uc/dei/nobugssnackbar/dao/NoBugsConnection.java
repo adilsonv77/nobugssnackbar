@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -843,6 +844,78 @@ public class NoBugsConnection {
 			ret = new String[2];
 			ret[0] = rs.getString(1);
 			ret[1] = rs.getInt(2) + "";
+			st.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
+	public List<String> listMachines(long userId) throws SQLException {
+		Connection bdCon = null;
+		List<String> ret = new ArrayList<String>();
+		try {
+			bdCon = dataSource.getConnection();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select machineid from machines join usersmachines using (machineid) where userid = " + userId);
+			while (rs.next()) {
+				ret.add(rs.getString(1));
+			}
+			st.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
+	public void buyMachine(long userid, int machineid) throws SQLException {
+		Connection bdCon = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("insert into usersmachines (userid, machineid) values (?, ?)");
+			ps.setLong(1, userid);
+			ps.setInt(2, machineid);
+			ps.executeUpdate();
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+	}
+
+	public List<String[]> loadMachineData(Integer[] machineid) throws SQLException {
+		Connection bdCon = null;
+		List<String[]> ret = new ArrayList<String[]>();
+
+		try {
+			bdCon = dataSource.getConnection();
+			
+			List<Integer> list = Arrays.asList(machineid);
+			String lista = (list + "");
+			lista = lista.substring(1, lista.length()-1);
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select machineid, machinename, machinex, machiney, machinepath from machines where machineid in (" + lista + ")");
+			while (rs.next()) {
+				ret.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
+			}
 			st.close();
 			
 		} finally {

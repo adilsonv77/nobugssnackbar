@@ -449,6 +449,8 @@ Game.missionLoaded = function(ret){
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(objectives, mission);
+  Game.installMachines();
+  
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (ret[2] != null) // the user try this mission before, than load the previous code
 	  Game.nextPartOfMissionLoaded(false, ret[2], mission, ret[3]);
@@ -465,6 +467,15 @@ Game.missionLoaded = function(ret){
 	  }
   }
 };
+
+Game.installMachines = function() {
+	UserControl.loadMachinesFromUser(function(ret) {
+
+		for (var i = 0; i < ret.length; i++)
+			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4]);
+		
+	});	
+};
   
 Game.buyButtonClick = function() {
     var selectMachine = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0];
@@ -477,12 +488,12 @@ Game.selectMachine = function(selectMachineOpts) {
 	Game.loadMachines(selectMachineOpts, 0);
 };
 
-Game.continueSelectMachine = function(selectMachineOpts) {
+Game.continueSelectMachine = function() {
 	var data = [];
 	var rec = {group: "", groupId: 1, levels:[]};
 	data.push(rec);
-
-	var l = {name: "Equipamentos", id: "x", howManyItems: selectMachineOpts.children.length, howManyItemsAchieved:-1};
+	
+	var l = {name: BlocklyApps.getMsg("Text_Equipments"), id: "x", howManyItems: Game.machines.length, howManyItemsAchieved:-1};
 	rec.levels.push(l);
 	
 	var f1 = function(evt) {
@@ -495,10 +506,6 @@ Game.continueSelectMachine = function(selectMachineOpts) {
 		this.style.backgroundColor = "#FFB347";
 		
 		$('#BuyMachine').removeAttr("disabled");
-
-		
-		//BlocklyApps.hideDialog(false);
-		//Game.continueLoading();
 	};
 	
 	var f2 = function(i) {
@@ -529,7 +536,7 @@ Game.continueSelectMachine = function(selectMachineOpts) {
 			
 
 	MyBlocklyApps.showDialog(content[0], null, false, true, true,
-		"Adicione um novo equipamento ao seu estabelecimento", null, 
+		BlocklyApps.getMsg("Text_AddNewEquipment"), null, 
 		function() { 
 			$("#" + selBuilt).remove();
 	    	 
@@ -541,21 +548,39 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 	
 	var type = selectMachineOpts.children[idx].getAttribute("type");
 	UserControl.loadMachine(type, function(ret){
-		Game.machines.push({name: ret[0], cust: ret[1]});
+		Game.machines.push({id: type, name: ret[0], cust: ret[1]});
 		
 		idx++;
 		if (idx < selectMachineOpts.children.length) {
 			Game.loadMachines(selectMachineOpts, idx);
 		} else {
 			Game.selectedMachine = null;
-			Game.continueSelectMachine(selectMachineOpts);
+
+			UserControl.listMachinesFromUser(function(ret2) {
+
+				for (var i = Game.machines.length - 1; i>=0; i--) {
+					
+					if (ret2.indexOf(Game.machines[i].id) >= 0)
+						Game.machines.splice(i, 1);
+				}
+				
+				Game.continueSelectMachine();
+			});
+
 		}
 	});
 	
 };
 
 Game.buyMachineButtonClick = function() {
-	alert("clicou");
+	var idmachine = Game.selectedMachine.getAttribute("iditem");
+	UserControl.buyMachine(idmachine, function() {
+
+		UserControl.loadWholeMachineData([idmachine], function(machine) {
+				hero.installMachine(idmachine, machine[0][1], machine[0][2], machine[0][3], machine[0][4]);
+				Game.display();
+		});
+	});
 };
 
 Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
@@ -584,11 +609,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
-	  Game.continueLoading();
-	  
-  };
-  
-  Game.continueLoading = function() {
 	  if (Game.firstTime) {
 		  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
 		  
@@ -597,9 +617,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 		  Hints.init(Game.mission.getElementsByTagName("hints")[0]);
 		  Game.initTime();
 	  }
-  
   };
-
+  
   window.setTimeout(function(){loginLoaded(mission);}, 1000); 
 	  
 	  
@@ -634,12 +653,16 @@ Game.verifyButtons = function(objectives) {
 	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";
 	Game.enabledRun = objectives.getAttribute("buttonRun") !== "false";
 	Game.enabledVarWindow = objectives.getAttribute("variableWindow") !== "false";
+	Game.enabledBuy = objectives.getAttribute("buttonBuy") === "true";
 	
 	if (!Game.enabledDebug)
 		Game.disableButton('debugButton');
 	
 	if (!Game.enabledRun)
 		Game.disableButton('runButton');
+	
+	if (!Game.enabledBuy)
+		Game.disableButton('buyButton');
 
 	Game.resetButtons();
 };
@@ -956,6 +979,7 @@ Game.runButtonClick = function() {
   Game.disableButton("runButton");
   Game.enableButton("resetButton");
   Game.disableButton("debugButton");
+  Game.disableButton("buyButton");
   
   Game.doResizeWindow("none");
   
@@ -989,7 +1013,8 @@ Game.resetButtonClick = function() {
 Game.enableButton = function(buttonName) {
 
 	if ((buttonName === "debugButton" && !Game.enabledDebug) ||
-		(buttonName === "runButton" && !Game.enabledRun))
+		(buttonName === "runButton" && !Game.enabledRun) ||
+		(buttonName == "buyButton" && !Game.enabledBuy))
 		return;
 	
    var button = document.getElementById(buttonName);
@@ -1043,6 +1068,8 @@ Game.resetButtons = function(hideVars) {
 	Game.enableButton('debugButton');
 	
 	Game.enableButton('runButton');
+	
+	Game.enableButton('buyButton');
 	
 	if (Blockly.mainWorkspace != null)
 		Blockly.mainWorkspace.traceOn(false); 
