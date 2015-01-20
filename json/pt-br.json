@@ -35,6 +35,7 @@
 	"NoBugs.of": "de",
 	"NoBugs.logoffTooltip": "Sair do jogo",
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
+	"NoBugs.buyTooltip":"Comprar equipamentos.",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. Voc&#234; recebeu no total {0}.",
@@ -101,6 +102,8 @@
 	"Single.Questionnaire" : "Question&#225;rio",
 	"Single.IceCreamMachine" : "Gelado",
 	"Single.FrenchFryer" : "Fritadeira de batatas",
+	"Single.AddNewEquipment" : "Adicione um novo equipamento ao seu estabelecimento",
+	"Single.Equipments" : "Equipamentos",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",
