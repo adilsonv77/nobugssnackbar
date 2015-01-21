@@ -415,6 +415,8 @@ Game.saveMission = function() {
 Game.missionLoaded = function(ret){
 	
   Game.howManyRuns = parseInt(ret[4]);
+  Game.previousCode = ret[2];
+  Game.timeSpent = ret[3];
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -436,24 +438,21 @@ Game.missionLoaded = function(ret){
   var toolbox = nobugspage.toolbox(null, null, 
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
-  document.getElementById('blockly').innerHTML = ""; // clean the editor
-  Blockly.inject(document.getElementById('blockly'),
-      {path: '',
-       rtl: Game.rtl,
-       toolbox: toolbox,
-       trashcan: true,
-       comments: false});
-
-
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(objectives, mission);
-  Game.installMachines();
-  
+  Game.mission = mission;
+
+  Game.installMachines(toolbox);
+};
+
+Game.afterInstallMachines = function() {
+
+  var mission = Game.mission;
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
-  if (ret[2] != null) // the user try this mission before, than load the previous code
-	  Game.nextPartOfMissionLoaded(false, ret[2], mission, ret[3]);
+  if (Game.previousCode != null) // the user try this mission before, than load the previous code
+	  Game.nextPartOfMissionLoaded(false, Game.previousCode, mission, Game.timeSpent);
   else {
       var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
@@ -466,14 +465,38 @@ Game.missionLoaded = function(ret){
 		  Game.nextPartOfMissionLoaded(true, outerHTML, mission, 0);
 	  }
   }
+  
+  // release memory 
+  Game.previousCode = null;
+  Game.timeSpent = null;
 };
 
-Game.installMachines = function() {
+Game.installMachines = function(toolbox) {
 	UserControl.loadMachinesFromUser(function(ret) {
 
 		for (var i = 0; i < ret.length; i++)
-			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4]);
+			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
 		
+		var yourMachines = BlocklyApps.getMsg("Apps_catYourMachines");
+		
+		var s = '<category name="' + yourMachines + '">';
+		for (var i = 0; i < hero.extendedCommands.length; i++) {
+			s = s + '<block type="'+ hero.extendedCommands[i].name + '"/>';
+		}
+		s = s + '</category></xml>';
+		
+		toolbox = toolbox.replace('</xml>', s);
+		
+  	    document.getElementById('blockly').innerHTML = ""; // clean the editor
+	    Blockly.inject(document.getElementById('blockly'),
+		     {path: '',
+		       rtl: Game.rtl,
+		       toolbox: toolbox,
+		       trashcan: true,
+		       comments: false});
+	    
+	    Game.afterInstallMachines();
+
 	});	
 };
   
@@ -577,6 +600,7 @@ Game.buyMachineButtonClick = function() {
 	UserControl.buyMachine(idmachine, function() {
 
 		UserControl.loadWholeMachineData([idmachine], function(machine) {
+			// TODO fazer uma revisao disso pois tem mais params a serem considerados e aspectos nessa instalacao
 				hero.installMachine(idmachine, machine[0][1], machine[0][2], machine[0][3], machine[0][4]);
 				Game.display();
 		});
@@ -597,7 +621,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
       CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
       
-      Game.mission = data;
 	  Game.reset();
 	  
 	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
@@ -1594,6 +1617,17 @@ Game.initApi = function(interpreter, scope) {
 	    
     interpreter.setProperty(scope, 'deliver',
       interpreter.createNativeFunction(wrapper));
+    
+    // extended commands
+    for (var i=0; i<hero.extendedCommands.length; i++) {
+    	var ex = hero.extendedCommands[i];
+    	wrapper = function(o) {
+  	      return interpreter.createPrimitive(ex.run(o));
+  	    };
+  	    
+  	  interpreter.setProperty(scope, ex.nameLang,
+  		      interpreter.createNativeFunction(wrapper));
+    }
   
 };
 

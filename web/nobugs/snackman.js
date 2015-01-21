@@ -140,6 +140,7 @@ SnackMan = function(objectives, mission) {
 	}
 	
 	this.installedMachines = [];
+	this.extendedCommands = [];
 	/*
 	this.frenchFries = new Sprite({
 		ticksPerFrame: 0,
@@ -154,18 +155,6 @@ SnackMan = function(objectives, mission) {
 		img : PreloadImgs.get("frenchfries")
 	});
 	
-	this.iceCream = new Sprite({
-		ticksPerFrame: 0,
-		numberOfFrames: 1,
-		horzSeq: false,
-		x: 192,
-		y: 224,
-		width: 32,
-		height: 64,
-		sourceX: 0,
-		sourceY: 0,
-		img : PreloadImgs.get("icecream")
-	});
 	*/
 	this.objective = {};
 	
@@ -251,10 +240,10 @@ SnackMan.prototype.draw = function(ctx) {
 		this.juiceMachine.draw(ctx);
 	}
 		
+	this.drawInstalledMachines(ctx);
 	this.display.draw(ctx);
 	this.img.draw(ctx);
 	this.cooler.draw(ctx);
-	this.drawInstalledMachines(ctx);
 	
 };
 
@@ -496,6 +485,54 @@ SnackMan.prototype.catchFood = function(order) {
 	
 };
 
+SnackMan.prototype.genericCatch = function(order, machine) {
+
+	if (this.currentNode.id != machine.node.id) {
+		BlocklyApps.log.push(["fail", machine.errorIsntFront]);
+		throw false;
+	}
+	
+	// does he have any order ? 
+	if (order.data == null || order.data === undefined || order.data.type != "order") {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
+		throw false;
+	}
+
+	// does the order have food or drink ?
+	if (order.data.drinkOrFood != machine.drinkOrFood) {
+		BlocklyApps.log.push(["fail", "Error_doesntOrder" + machine.drinkOrFood.substring(0,1).toUpperCase() + machine.drinkOrFood.substring(1)]);
+		throw false;
+	}
+	
+	// does the order have the food/drink of this place ?
+	if (order.data.descr.indexOf(machine.typeOfDrinkFood) == -1) {
+		BlocklyApps.log.push(["fail", "Error_only"+machine.typeOfDrinkFood.substring(0,1).toUpperCase() + machine.typeOfDrinkFood.substring(1)]);
+		throw false;
+	}
+	
+	// two animations slides: open machine
+	BlocklyApps.log.push(['OD']); 
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['OD']);
+	CustomerManager.update();
+	
+	// two animations slides: close machine
+	BlocklyApps.log.push(['CD']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['CD']);
+	CustomerManager.update();
+	
+	BlocklyApps.log.push(['IP']);
+	
+	var item = {type: "item", descr:machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
+	
+	this.catched++;
+	
+	return item; 
+	
+};
 
 SnackMan.prototype.deliver = function(item) {
 	
@@ -810,21 +847,19 @@ SnackMan.prototype.drawInstalledMachines = function(ctx) {
 	}
 };
 
-SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, commands) {
+SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, 
+		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands) {
 	
 	var img = new Image();
     img.src = "images/_"+machinename.toLowerCase() + ".png";
 
 	var machine = new Sprite({
 		ticksPerFrame: 0,
-		numberOfFrames: 2,
+		numberOfFrames: 3,
 		horzSeq: false,
-		x: machinex,
-		y: machiney,
-		width: 32,
-		height: 128,
-		sourceX: 0,
-		sourceY: 0,
+		x: machinex, y: machiney,
+		width: 32, height: 192,
+		sourceX: 0, sourceY: 0,
 		img : img,
 	});
 	
@@ -837,7 +872,8 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		var myObj2 = path[key1];
 		this.path[key1] = myObj2;
 		for (var key2 in myObj2) {
-			this.path[key2][key1] = myObj2[key2]; 
+			if (this.path[key2] != undefined)
+				this.path[key2][key1] = myObj2[key2]; 
 		}
 	}
 	
@@ -845,14 +881,34 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 	for (var i = 0; i < nodes.length; i++)
 		this.nodes[nodes[i].id] = nodes[i];
 	
+	var machineCfg = {};
+	machineCfg.node = nodes[0];
+	machineCfg.errorIsntFront = machineErrorIsntFront;
+	machineCfg.drinkOrFood = machineDrinkOrFood;
+	machineCfg.typeOfDrinkFood = machineTypeOfDrinkFood;
+	machineCfg.produce = machineProduce;
+	
 	// link the commands
-	for (var com in commands) {
+	for (var i = 0; i < commands.length; i++) {
+		var com = commands[i];
 		Blockly.Blocks[com[0]] = {
-				init: new Function(com[1])
-		};
-		Blockly.JavaScript[com[0]] = {
 				init: new Function(com[2])
 		};
+		
+		Blockly.JavaScript[com[0]] = function(block){
+				return eval(com[3]);
+				
+		};
+		
+		var run = null;
+		switch (com[4]) {
+			case "M" : run = new Function("hero.animateSnackMan( this.machine.node );");
+			case "C" : run = new Function("order", "return hero.genericCatch( order, this.machine ); ");
+		
+		}
+		
+		
+		this.extendedCommands.push({name: com[0], nameLang: com[1], run: run, machine: machineCfg});
 	}
 	
 };
