@@ -887,6 +887,7 @@ public class NoBugsConnection {
 			ps.setInt(2, machineid);
 			ps.executeUpdate();
 			ps.close();
+			//TODO descontar o valor da bolsa do usuario
 			
 		} finally {
 			if (bdCon != null)
@@ -898,9 +899,9 @@ public class NoBugsConnection {
 		
 	}
 
-	public List<String[]> loadMachineData(Integer[] machineid) throws SQLException {
+	public List<Object[]> loadMachineData(Integer[] machineid) throws SQLException {
 		Connection bdCon = null;
-		List<String[]> ret = new ArrayList<String[]>();
+		List<Object[]> ret = new ArrayList<Object[]>();
 
 		try {
 			bdCon = dataSource.getConnection();
@@ -910,11 +911,28 @@ public class NoBugsConnection {
 			lista = lista.substring(1, lista.length()-1);
 			
 			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery("select machineid, machinename, machinex, machiney, machinepath from machines where machineid in (" + lista + ")");
+			ResultSet rs = st.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce from machines where machineid in (" + lista + ")");
 			while (rs.next()) {
-				ret.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
+				ret.add(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), null});
 			}
 			st.close();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select machinecommandname, machinecommandlang, machinecommandblocks, machinecommandjavascript, machinecommandtype from machinescommands where machineid = ?");
+			for (Object[] obj: ret) {
+				ps.setString(1, (String)obj[0]);
+				
+				List<String[]> lcomms = new ArrayList<String[]>();
+				obj[9] = lcomms;
+
+				rs = ps.executeQuery();
+				while (rs.next()) {
+				
+					lcomms.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5) });
+					
+				}
+				rs.close();
+			}
+			ps.close();
 			
 		} finally {
 			if (bdCon != null)

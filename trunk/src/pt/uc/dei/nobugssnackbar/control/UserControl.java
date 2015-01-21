@@ -226,12 +226,12 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public List<String[]> loadWholeMachineData(Integer[] machineid) throws SQLException {
+	public List<Object[]> loadWholeMachineData(Integer[] machineid) throws SQLException {
 		return NoBugsConnection.getConnection().loadMachineData(machineid);
 	}
 	
 	@RemoteMethod
-	public List<String[]> loadMachinesFromUser() throws SQLException {
+	public List<Object[]> loadMachinesFromUser() throws SQLException {
 		
 		List<String> machines = NoBugsConnection.getConnection().listMachines(this.user.getId());
 		

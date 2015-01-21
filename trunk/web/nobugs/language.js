@@ -145,8 +145,7 @@ Blockly.Blocks['prepare_catchFood'] = {
 		};
 
 Blockly.JavaScript['prepare_catchFood'] = function(block) {
-	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
-		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null';
 	return ['catchFood( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
