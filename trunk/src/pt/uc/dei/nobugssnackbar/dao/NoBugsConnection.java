@@ -53,9 +53,7 @@ public class NoBugsConnection {
 		if (conn == null) {
 			conn = new NoBugsConnection(url, className, username, password);
 			log.info("Connected successfull");
-
 		}
-
 	}
 
 	private static NoBugsConnection conn;
