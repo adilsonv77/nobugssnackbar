@@ -206,6 +206,7 @@
 	            <include name="**/*.xml" />
 	        	<exclude name="nobugssnackbar/**/*.*"/>
 	        </classes>
+			<lib dir="${web.home}/WEB-INF/lib" />
 	    </war>
 	</target>
 	
