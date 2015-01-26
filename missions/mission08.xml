@@ -1,20 +1,42 @@
 <?xml version='1.0'?>
 <mission>
+	<slider timesBefore="2"/>
 	<explanation>
 		<page type="statement">
-		Uau... Poderemos fazer muito dinheiro com a tua efici&#234;ncia. A partir de agora <br/>
-		receber&#225;s sempre mais dinheiro se conseguires resolver as miss&#245;es com um limite<br/>
-		de comandos de que te vou informar sempre.
-		</page>
-		<page type="statement">
-		Tenho boas not&#237;cias. Comprei um stock de refrigerantes. Agora podemos perguntar ao<br/>
-		cliente o que ele deseja comer e beber. <br/>
+		Vejo que te est&#225; saindo bem como aprendiz de atendedor. E que tal fazer o trabalho<br/>
+		com mais efic&#225;cia, pois assim no futuro pr&#243;ximo poder&#225;s atender mais clientes em <br/>
+		menos tempo ?<br/>
 		<br/>
-		Essa &#233; a tua miss&#227;o atual: pergunta ao cliente o que ele deseja comer e beber, e serve-o. <br/>
-		N&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.
+		Resolve o mesmo problema, agora usando no m&#225;ximo 11 comandos.
+		<br/><br/>
+		Dicas: 
+		<br/>1) uma vez em frente ao mostrador podes pegar comida de mais de um pedido;
+		<br/>2) n&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.  
 		</page>
 
 	</explanation>
+	<hints>
+		<sequence>
+			<hint category="ShowCountInstructions" time="0"/>
+			
+			<hint category="LastError" condition="Game.lastErrorData.block.type == 'do_deliver'">
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
+			a partir de outra vari&#225;vel. Verifique se os blocos [catchFood] e [askForFood] est&#227;o referenciando corretamente suas vari&#225;veis.
+			</hint>
+			
+			<hint category="LastError" condition="Game.lastErrorData.block.type == 'variables_set' &amp;&amp; Game.lastErrorHas('prepare_catchFood')">
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou o pedido em uma vari&#225;vel e est&#225; a pegar o produto com 
+			base em outra vari&#225;vel. Verifique em que vari&#225;vel o bloco [askForFood] guardou o valor e use a mesma vari&#225;vel como 
+			par&#226;metro deste [catchFood].
+			</hint>
+		</sequence>
+		<!-- <errors> only happens after running a program, and some goals aren't achieved  --> 
+		<errors>
+
+			<hint category="Slider"/>
+			
+		</errors>
+	</hints>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
@@ -22,11 +44,6 @@
 		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="catchFood" show="true" />
-
-		<category name="askForDrink" show="true" />
-		<category name="goToCooler" show="true" />
-		<category name="catchDrink" show="true" />
-
 		<category name="deliver" show="true" />
 		
 
@@ -37,29 +54,33 @@
 	<customers>
 		<customer>
 			<id>01</id>
-			<init>counter3</init>
-			<dest>counter3</dest>
+			<init>counter1</init>
+			<dest>counter1</dest>
 			<foods>
 				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<drinks></drinks>
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter4</init>
+			<dest>counter4</dest>
+			<foods>
+				<food qt="1" price="0">hotdog</food>
+			</foods>
+			<drinks></drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" maxCommands="10" maxCommandsReward="15" >
-		<objective pos="3" place="counter">askForFood</objective>
-		<objective pos="3" place="counter">catchFood</objective>
-		<objective pos="3" place="counter">deliver</objective>
+	<objectives ordered="false" reward="7" commQtd="11"  >
+		<objective pos="1" place="counter">askForFood</objective>
+		<objective pos="1" place="counter">catchFood</objective>
+		<objective pos="1" place="counter">deliver</objective>
 		
-		<objective pos="3" place="counter">askForDrink</objective>
-		<objective pos="3" place="counter">catchDrink</objective>
-		<objective pos="3" place="counter">deliver</objective>
+		<objective pos="4" place="counter">askForFood</objective>
+		<objective pos="4" place="counter">catchFood</objective>
+		<objective pos="4" place="counter">deliver</objective>
 	</objectives>
-	<xml>
-		<block type="ask_askForDrink" x="300" y="1"></block>
-		<block type="prepare_catchDrink" x="300" y="50"></block>
-		<block type="move_goToCooler" x="300" y="100"></block>
+	<xml preload="6">
+
 	</xml>
 </mission>
-

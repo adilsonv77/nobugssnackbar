@@ -25,13 +25,12 @@ PreloadImgs.get = function(key) {
  */
 PreloadImgs.loadImgs = function() {
 	
-	if (PreloadImgs.loaded)
-		return;
-	
 	for (var i = 0; i < PreloadImgs.keys.length; i++) {
 		var preload = PreloadImgs.imgs[PreloadImgs.keys[i]];
-		preload.img = new Image();
-	    preload.img.src = preload.src;
+		if (preload.img == null) {
+			preload.img = new Image();
+		    preload.img.src = preload.src;
+		}
 	}
 	
 	PreloadImgs.loaded = true;

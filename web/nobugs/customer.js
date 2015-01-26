@@ -290,11 +290,13 @@ Customer.prototype.draw = function(ctx) {
 			var ordersUnfulfilled = [];
 			
 			for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
-				ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
+				for (var j = 0; j < this.foods[i].qt; j++)
+					ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
 			}
 			
 			for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
-				ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
+				for (var j = 0; j < this.drinks[i].qt; j++)
+					ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
 			}
 			
 			if (ordersUnfulfilled.length > 0) {
