@@ -2,10 +2,9 @@
 <mission>
 	<explanation>
 		<page type="statement">
-Agora os nossos clientes podem ter sede E tamb&#233;m podem ter fome. E, se t&#234;m sede, podem pedir<br/>
+Agora os nossos clientes podem ter sede OU fome. E, se t&#234;m sede, podem pedir<br/>
 refrigerante ou sumo.<br/><br/>
-<b>Tens a limita&#231;&#227;o de 34 comandos</b> e a possibilidade de receber um b&#244;nus de $30 se resolver em 3 minutos.<br/><br/>
-Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.<br/>
+Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de outro.<br/>
 
 		</page>
 
@@ -40,38 +39,40 @@ Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.<br/>
 	</commands>
 	<cooker>initial</cooker>
 	<customersSN>
+		<randomization qtd="1">thirsty</randomization>
+		<randomization qtd="1" set="notTheSame">hungry</randomization>
 	</customersSN>
 	<customers>
-		<customer randomType="atLeastOne">
+		<customer>
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods randomMin="0" randomMax="1" >
+			<foods>
 				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks randomMin="0" randomMax="1">
+			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
-		<customer randomType="atLeastOne">
+		<customer>
 			<id>02</id>
 			<init>counter3</init>
 			<dest>counter3</dest>
-			<foods randomMin="0" randomMax="1">
+			<foods>
 				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks randomMin="0" randomMax="1">
+			<drinks  randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="30" commQtd="34" bonusTime="180" bonusTimeReward="45 30" >
+	<objectives ordered="false" reward="20" maxCommands="30" maxCommandsReward="20">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="15">
+	<xml preload="14">
 	</xml>
 
 </mission>

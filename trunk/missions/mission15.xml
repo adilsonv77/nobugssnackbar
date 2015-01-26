@@ -2,10 +2,25 @@
 <mission>
 	<explanation>
 		<page type="statement">
-Agora os nossos clientes podem ter sede OU fome. E, se t&#234;m sede, podem pedir<br/>
-refrigerante ou sumo.<br/><br/>
-Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de outro.<br/>
-
+Ufaaaa... Est&#225; a dar trabalho, n&#227;o ? Mas est&#225;s a ficar cada vez melhor a atender<br/>
+clientes. Tanto que sinto que tens condi&#231;&#245;es de n&#227;o s&#243; anotar e entregar, mas <br/>
+tamb&#233;m de come&#231;ar a preparar algumas coisas.<br/>
+<br/>
+Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja.<br/>
+Vou-te ensinar os truques de atender e preparar os sumos.
+		</page>
+		<page type="statement">
+O cliente ter&#225; sempre sede. Logo, nesta miss&#227;o nem precisas de perguntar. <br/>
+Come&#231;a por perguntar o que deseja beber. Em seguida, se o pedido foi um <br/>
+refrigerante (softDrink) vai at&#233; ao refrigerador e desempenha a tarefa como sempre<br/>
+fizeste. Sen&#227;o, vais &#224; caixa de laranjas, retira as laranjas, de acordo com o pedido,<br/>
+e leva-as at&#233; &#224; m&#225;quina. Prepara o sumo e tr&#225;-lo de volta ao cliente.<br/>
+<br/>
+Chegaram dois clientes. Vai l&#225; praticar esta tarefa. Resolve primeiro um cliente,<br/>
+outro simplesmente reaproveitas. Essa &#233; mais uma miss&#227;o em que ganhas b&#244;nus<br/>
+por tempo: 3 minutos para ganhar $30.<br/>
+<br/>
+Deixei parte do que te ensinei pronto na &#225;rea de trabalho. 
 		</page>
 
 	</explanation>
@@ -33,14 +48,12 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
 		<category name="const.softDrink" show="true" />
-		<category name="const.orange" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
 		<category name="logic" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
 	<customersSN>
-		<randomization qtd="1">thirsty</randomization>
-		<randomization qtd="1" set="notTheSame">hungry</randomization>
 	</customersSN>
 	<customers>
 		<customer>
@@ -48,7 +61,6 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<foods>
-				<food qt="1" price="0">hotdog</food>
 			</foods>
 			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
@@ -60,19 +72,107 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<init>counter3</init>
 			<dest>counter3</dest>
 			<foods>
-				<food qt="1" price="0">hotdog</food>
 			</foods>
-			<drinks  randomMin="1" randomMax="1">
+			<drinks randomMin="1" randomMax="1">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="20" maxCommands="30" maxCommandsReward="20">
+	<objectives ordered="false" reward="15" bonusTime="180" bonusTimeReward="45 30">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="14">
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="variables_set" id="3" inline="true" x="300" y="1">
+			<field name="VAR">pedido</field>
+			<value name="VALUE">
+				<block type="ask_askForDrink" id="4"></block>
+			</value>
+		</block>
+		<block type="variables_set" id="14" inline="true" x="300" y="50">
+			<field name="VAR">frutas</field>
+			<value name="VALUE">
+				<block type="prepare_catchFruits" id="15" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="16">
+							<field name="VAR">pedido</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="variables_set" id="18" inline="true" x="300" y="100">
+			<field name="VAR">bebida</field>
+			<value name="VALUE">
+				<block type="prepare_prepareAndCatchJuice" id="19" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="20">
+							<field name="VAR">frutas</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="variables_set" id="10" inline="true" x="300" y="150">
+			<field name="VAR">bebida</field>
+			<value name="VALUE">
+				<block type="prepare_catchDrink" id="11" inline="false">
+					<value name="VALUE">
+						<block type="variables_get" id="12">
+							<field name="VAR">pedido</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+		<block type="do_deliver" id="23" inline="false" x="300" y="200">
+			<value name="VALUE">
+				<block type="variables_get" id="24">
+					<field name="VAR">bebida</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToCooler" id="9" x="300" y="250">
+		</block>
+		<block type="move_goToBoxOfFruits" id="13" x="300" y="300">
+		</block>
+		<block type="move_goToJuiceMachine" id="17" x="300" y="350">
+		</block>
+		<block type="move_goToBarCounter" id="1" x="300" inline="false" y="400">
+			<value name="VALUE">
+				<block type="math_number" id="2">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" id="21" x="300" inline="false" y="450">
+			<value name="VALUE">
+				<block type="math_number" id="22">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="controls_if" id="5" inline="false" x="300" y="500">
+			<mutation else="1"></mutation>
+			<value name="IF0">
+				<block type="logic_compare" id="6" inline="true">
+					<field name="OP">EQ</field>
+					<value name="A">
+						<block type="variables_get" id="7">
+							<field name="VAR">pedido</field>
+						</block>
+					</value>
+					<value name="B">
+						<block type="const_softDrink" id="8"></block>
+					</value>
+				</block>
+			</value>
+			<statement name="DO0">
+			</statement>
+			<statement name="ELSE">
+			</statement>
+		</block>
 	</xml>
 
 </mission>

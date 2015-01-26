@@ -35,6 +35,7 @@ CustomerManager.init = function(customers, sn) {
 	this.optCustomers = customers;
 	
 	this.randomization = [];
+	this.patterns = [];
 
 	if (sn != undefined)
 		this.parseSN(sn);
@@ -82,14 +83,41 @@ CustomerManager.reset = function() {
 		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
-		var foods = CustomerManager.extractItems("food", customer.getElementsByTagName("foods")[0]);
-		var drinks =  CustomerManager.extractItems("drink", customer.getElementsByTagName("drinks")[0], customer.getAttribute("randomType"), foods.length);
-		
-		customers.push(new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks}));
+		var pattern = customer.getElementsByTagName("pattern")[0];
+		if (pattern == null) {
+			
+			var _foods = customer.getElementsByTagName("foods");
+			var foods = CustomerManager.extractItems("food", _foods[0]);
+			var drinks =  CustomerManager.extractItems("drink", customer.getElementsByTagName("drinks")[0], customer.getAttribute("randomType"), foods.length);
+			
+			customers.push(new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks}));
+			
+		} else {
+			
+			// this means the customers go away and will come new customers at same place
+			var orders = pattern.getElementsByTagName("order");
+			
+			var custPattern = [];
+			
+			for (var i = 0; i < orders.length; i++) {
+
+				var foods = CustomerManager.extractItems("food", orders[i].getElementsByTagName("foods")[0]);
+				var drinks =  CustomerManager.extractItems("drink", orders[i].getElementsByTagName("drinks")[0], orders[i].getAttribute("randomType"), foods.length);
+			
+				
+				if (foods.length > 0 || drinks.length > 0)
+					custPattern.push({ foods: foods, drinks: drinks});
+			}
+			
+			if (custPattern.length > 0)
+				this.patterns.push({init: init, place: dest, id: id, pattern: custPattern, idxCustPattern: 0});
+			
+		}
 		
 		customer = customer.nextElementSibling;
 	}
 	
+	this.createCustomersBasedOnPattern();
 	this.transformSN();
 };
 
@@ -128,6 +156,32 @@ CustomerManager.transformSN = function() {
 			}
 		}
 		
+	}
+	
+};
+
+CustomerManager.createCustomersBasedOnPattern = function() {
+	
+	for (var i = 0; i < this.patterns.length; i++) {
+		var place = this.patterns[i].place;
+		var found = false;
+		for (var i = 0; i < customers.length; i++)
+			if (customers[i].id === place.id && customers[i].type === place.type) {
+				found = true;
+				break;
+			}
+		
+		if (!found) {
+			var custPattern = this.patterns[i].pattern[this.patterns[i].idxCustPattern];
+			
+			this.patterns[i].idxCustPattern = (this.patterns[i].idxCustPattern + 1) %  this.patterns[i].pattern.length;
+				
+			var foods = custPattern.foods;
+			var drinks = custPattern.drinks;
+			
+			customers.push(new Customer({init: this.patterns[i].init, place: this.patterns[i].place, id: this.patterns[i].id, 
+				foods: foods, drinks: drinks}));
+		}
 	}
 	
 };
@@ -184,9 +238,13 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		var item = children[selected[j]];
 		
 		var theItem = item.childNodes[0].nodeValue;
-		var theQtd = item.getAttribute("qt");
-		var thePrice = item.getAttribute("price");
-		items.push({item: theItem, qt: theQtd, price: thePrice});
+		
+		if (hero.hasMachineFor(theItem)) {
+			var theQtd = item.getAttribute("qt");
+			var thePrice = item.getAttribute("price");
+			items.push({item: theItem, qt: theQtd, price: thePrice});
+		}
+		
 	} 
 	
 	return items;

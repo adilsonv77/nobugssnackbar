@@ -477,6 +477,8 @@ Game.installMachines = function(toolbox) {
 		for (var i = 0; i < ret.length; i++)
 			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
 		
+		PreloadImgs.loadImgs();
+		
 		var yourMachines = BlocklyApps.getMsg("Apps_catYourMachines");
 		
 		var s = '<category name="' + yourMachines + '">';
@@ -1625,8 +1627,9 @@ Game.initApi = function(interpreter, scope) {
   	      return interpreter.createPrimitive(ex.run(o));
   	    };
   	    
-  	  interpreter.setProperty(scope, ex.nameLang,
-  		      interpreter.createNativeFunction(wrapper));
+  	  var nf = interpreter.createNativeFunction(wrapper);
+  	  nf.run = ex.run;
+  	  interpreter.setProperty(scope, ex.nameLang, nf);
     }
   
 };

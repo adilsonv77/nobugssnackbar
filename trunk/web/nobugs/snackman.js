@@ -888,28 +888,55 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 	machineCfg.typeOfDrinkFood = machineTypeOfDrinkFood;
 	machineCfg.produce = machineProduce;
 	
+	PreloadImgs.put('$' + machineProduce, 'images/$$' + machineProduce + '.png');	
+	
+	machine.machineCfg = machineCfg;
+
 	// link the commands
 	for (var i = 0; i < commands.length; i++) {
 		var com = commands[i];
 		Blockly.Blocks[com[0]] = {
+				bodyFunc: com[3],
 				init: new Function(com[2])
+				
 		};
 		
 		Blockly.JavaScript[com[0]] = function(block){
-				return eval(com[3]);
+			
+			var xpt = eval(Blockly.Blocks[block.type].bodyFunc);
+			return xpt;
 				
 		};
 		
 		var run = null;
 		switch (com[4]) {
-			case "M" : run = new Function("hero.animateSnackMan( this.machine.node );");
-			case "C" : run = new Function("order", "return hero.genericCatch( order, this.machine ); ");
+			case "M" : 
+				run = new Function("hero.animateSnackMan( this.machine.node );");
+				break;
+			case "C" : 
+				run = new Function("order", "return hero.genericCatch( order, this.machine ); ");
+			    break;
 		
 		}
 		
-		
 		this.extendedCommands.push({name: com[0], nameLang: com[1], run: run, machine: machineCfg});
 	}
+	
+};
+
+SnackMan.prototype.hasMachineFor = function(product) {
+	
+	if (product === "hotdog" || product === "coke" || product === "juiceoforange")
+		return true;
+	
+	for( var i= 0; i < this.installedMachines.length; i++ ) {
+		
+		var machine = this.installedMachines[i].machineCfg;
+		if (machine.produce === product)
+			return true;
+		
+	}
+	return false;
 	
 };
 
