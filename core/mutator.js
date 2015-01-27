@@ -29,6 +29,7 @@ goog.provide('Blockly.Mutator');
 
 goog.require('Blockly.Bubble');
 goog.require('Blockly.Icon');
+goog.require('Blockly.WorkspaceSvg');
 
 
 /**
@@ -39,12 +40,7 @@ goog.require('Blockly.Icon');
  */
 Blockly.Mutator = function(quarkNames) {
   Blockly.Mutator.superClass_.constructor.call(this, null);
-  this.quarkXml_ = [];
-  // Convert the list of names into a list of XML objects for the flyout.
-  for (var x = 0; x < quarkNames.length; x++) {
-    var element = goog.dom.createDom('block', {'type': quarkNames[x]});
-    this.quarkXml_[x] = element;
-  }
+  this.quarkNames_ = quarkNames;
 };
 goog.inherits(Blockly.Mutator, Blockly.Icon);
 
@@ -64,6 +60,10 @@ Blockly.Mutator.prototype.workspaceHeight_ = 0;
  * Create the icon on the block.
  */
 Blockly.Mutator.prototype.createIcon = function() {
+  if (this.iconMark_) {
+    // Icon already exists.
+    return;
+  }
   Blockly.Icon.prototype.createIcon_.call(this);
   /* Here's the markup that will be generated:
   <rect class="blocklyIconShield" width="16" height="16" rx="4" ry="4"/>
@@ -116,7 +116,7 @@ Blockly.Mutator.prototype.createEditor_ = function() {
       {'class': 'blocklyMutatorBackground',
        'height': '100%', 'width': '100%'}, this.svgDialog_);
   var mutator = this;
-  this.workspace_ = new Blockly.Workspace(
+  this.workspace_ = new Blockly.WorkspaceSvg(
       function() {return mutator.getFlyoutMetrics_();}, null);
   this.workspace_.flyout_ = new Blockly.Flyout();
   this.workspace_.flyout_.autoClose = false;
@@ -190,11 +190,16 @@ Blockly.Mutator.prototype.setVisible = function(visible) {
   if (visible) {
     // Create the bubble.
     this.bubble_ = new Blockly.Bubble(this.block_.workspace,
-        this.createEditor_(), this.block_.svg_.svgPath_,
+        this.createEditor_(), this.block_.svgPath_,
         this.iconX_, this.iconY_, null, null);
     var thisObj = this;
     this.workspace_.flyout_.init(this.workspace_);
-    this.workspace_.flyout_.show(this.quarkXml_);
+    // Convert the list of names into a list of XML objects for the flyout.
+    var quarkXml = [];
+    for (var i = 0, quarkName; quarkName = this.quarkNames_[i]; i++) {
+      quarkXml[i] = goog.dom.createDom('block', {'type': quarkName});
+    }
+    this.workspace_.flyout_.show(quarkXml);
 
     this.rootBlock_ = this.block_.decompose(this.workspace_);
     var blocks = this.rootBlock_.getDescendants();
@@ -247,7 +252,7 @@ Blockly.Mutator.prototype.setVisible = function(visible) {
  * @private
  */
 Blockly.Mutator.prototype.workspaceChanged_ = function() {
-  if (Blockly.Block.dragMode_ == 0) {
+  if (Blockly.dragMode_ == 0) {
     var blocks = this.workspace_.getTopBlocks(false);
     var MARGIN = 20;
     for (var b = 0, block; block = blocks[b]; b++) {
@@ -269,6 +274,8 @@ Blockly.Mutator.prototype.workspaceChanged_ = function() {
     this.block_.compose(this.rootBlock_);
     // Restore rendering and show the changes.
     this.block_.rendered = savedRendered;
+    // Mutation may have added some elements that need initalizing.
+    this.block_.initSvg();
     if (this.block_.rendered) {
       this.block_.render();
     }

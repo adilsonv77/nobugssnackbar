@@ -29,10 +29,10 @@ goog.provide('Blockly.Toolbox');
 goog.require('Blockly.Flyout');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.html.SafeHtml');
+goog.require('goog.math.Rect');
 goog.require('goog.style');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('goog.ui.tree.TreeNode');
-goog.require('goog.math.Rect');
 
 
 /**
@@ -102,8 +102,10 @@ Blockly.Toolbox.prototype.CONFIG_ = {
 
 /**
  * Initializes the toolbox.
+ * @param {!Blockly.Workspace} workspace The workspace in which to create new
+ *     blocks.
  */
-Blockly.Toolbox.prototype.init = function() {
+Blockly.Toolbox.prototype.init = function(workspace) {
   this.CONFIG_['cleardotPath'] = Blockly.pathToMedia + '1x1.gif';
   this.CONFIG_['cssCollapsedFolderIcon'] =
       'blocklyTreeIconClosed' + (Blockly.RTL ? 'Rtl' : 'Ltr');
@@ -115,7 +117,7 @@ Blockly.Toolbox.prototype.init = function() {
   tree.setSelectedItem(null);
 
   this.HtmlDiv.style.display = 'block';
-  this.flyout_.init(Blockly.mainWorkspace);
+  this.flyout_.init(workspace);
   this.populate_();
   tree.render(this.HtmlDiv);
 
@@ -175,6 +177,11 @@ Blockly.Toolbox.prototype.populate_ = function() {
           syncTrees(childIn, childOut);
         }
       } else if (name == 'HR') {
+        // <hr> tag is deprecated, use <sep></sep> instead.
+        // https://github.com/google/blockly/issues/50
+        console.warn('The <hr> separator tag in the toolbox XML needs to be ' +
+                     'changed to <sep></sep> (due to a bug in IE).');
+      } else if (name == 'SEP') {
         treeOut.add(new Blockly.Toolbox.TreeSeparator());
       } else if (name == 'BLOCK') {
         treeOut.blocks.push(childIn);
@@ -259,7 +266,7 @@ Blockly.Toolbox.TreeControl.prototype.handleTouchEvent_ = function(e) {
   if (node && e.type === goog.events.EventType.TOUCHSTART) {
     // Fire asynchronously since onMouseDown takes long enough that the browser
     // would fire the default mouse event before this method returns.
-    window.setTimeout(function() {
+    setTimeout(function() {
       node.onMouseDown(e);  // Same behaviour for click and touch.
     }, 1);
   }

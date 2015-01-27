@@ -465,18 +465,21 @@ Game.installMachines = function(toolbox) {
 			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
 		
 		PreloadImgs.loadImgs();
-		
-		var yourMachines = BlocklyApps.getMsg("Apps_catYourMachines");
-		
-		var s = '<category name="' + yourMachines + '">';
-		for (var i = 0; i < hero.extendedCommands.length; i++) {
-			s = s + '<block type="'+ hero.extendedCommands[i].name + '"/>';
+		if (ret.length > 0) {
+			
+			var yourMachines = BlocklyApps.getMsg("Apps_catYourMachines");
+			
+			var s = '<category name="' + yourMachines + '">';
+			for (var i = 0; i < hero.extendedCommands.length; i++) {
+				s = s + '<block type="'+ hero.extendedCommands[i].name + '"/>';
+			}
+			s = s + '</category></xml>';
+			
+			toolbox = toolbox.replace('</xml>', s);
+			
 		}
-		s = s + '</category></xml>';
-		
-		toolbox = toolbox.replace('</xml>', s);
-		
-  	    document.getElementById('blockly').innerHTML = ""; // clean the editor
+
+		document.getElementById('blockly').innerHTML = ""; // clean the editor
 	    Blockly.inject(document.getElementById('blockly'),
 		     {path: '',
 		       rtl: Game.rtl,
@@ -631,6 +634,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	 // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
 	 // BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  
+	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
 	  
@@ -1583,34 +1587,34 @@ Game.initApi = function(interpreter, scope) {
 		  interpreter.createNativeFunction(wrapper));
 	    
     wrapper = function(o) {
-	      return interpreter.createPrimitive(hero.catchFruits(o));
+	      return interpreter.createPrimitive(hero.pickUpFruits(o));
 	    };
 
-	interpreter.setProperty(scope, 'catchFruits',
+	interpreter.setProperty(scope, 'pickUpFruits',
 		  interpreter.createNativeFunction(wrapper));
     
     wrapper = function(o) {
-	      return interpreter.createPrimitive(hero.prepareAndCatchJuice(o));
+	      return interpreter.createPrimitive(hero.prepareAndPickUpJuice(o));
 	    };
 
-	interpreter.setProperty(scope, 'prepareAndCatchJuice',
+	interpreter.setProperty(scope, 'prepareAndPickUpJuice',
 		  interpreter.createNativeFunction(wrapper));
 	
 	
 	
 	// other commands
     wrapper = function(o) {
-	      return interpreter.createPrimitive(hero.catchFood(o));
+	      return interpreter.createPrimitive(hero.pickUpHotDog(o));
 	    };
 
-	interpreter.setProperty(scope, 'catchFood',
+	interpreter.setProperty(scope, 'pickUpHotDog',
 		  interpreter.createNativeFunction(wrapper));
 	
     wrapper = function(o) {
-	      return interpreter.createPrimitive(hero.catchDrink(o));
+	      return interpreter.createPrimitive(hero.pickUpDrink(o));
 	    };
 	    
-    interpreter.setProperty(scope, 'catchDrink',
+    interpreter.setProperty(scope, 'pickUpDrink',
 	  interpreter.createNativeFunction(wrapper));
 
     wrapper = function(o) {

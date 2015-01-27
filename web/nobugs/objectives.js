@@ -94,16 +94,16 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.AskForFood();
 		break;
 
-	case "catchFood": 
-		this.factories[key] = new Objective.CatchFood();
+	case "pickUpFood": 
+		this.factories[key] = new Objective.PickUpFood();
 		break;
 
 	case "askForDrink":
 		this.factories[key] = new Objective.AskForDrink();
 		break;
 
-	case "catchDrink": 
-		this.factories[key] = new Objective.CatchDrink();
+	case "pickUpDrink": 
+		this.factories[key] = new Objective.PickUpDrink();
 		break;
 	
 	case "deliver": 
@@ -242,29 +242,29 @@ Objective.CatchSomething.prototype.askSomething = function(cust) {
 
 
 /******************************************************************************
- *                                CatchFood
+ *                                PickUpFood
  ******************************************************************************/
-Objective.CatchFood = function() {
+Objective.PickUpFood = function() {
 	Objective.CatchSomething.call(this, "explanation_catchFood");
 }; 
 
-inherits(Objective.CatchSomething, Objective.CatchFood);
+inherits(Objective.CatchSomething, Objective.PickUpFood);
 
-Objective.CatchFood.prototype.askSomething = function(cust) {
+Objective.PickUpFood.prototype.askSomething = function(cust) {
 		
 	return cust.askForFood();
 };
 
 /******************************************************************************
- *                                CatchDrink
+ *                                PickUpDrink
  ******************************************************************************/
-Objective.CatchDrink = function() {
+Objective.PickUpDrink = function() {
 	Objective.CatchSomething.call(this, "explanation_catchDrink");
 }; 
 
-inherits(Objective.CatchSomething, Objective.CatchDrink);
+inherits(Objective.CatchSomething, Objective.PickUpDrink);
 
-Objective.CatchDrink.prototype.askSomething = function(cust) {
+Objective.PickUpDrink.prototype.askSomething = function(cust) {
 		
 	return cust.askForDrink();
 };

@@ -325,7 +325,7 @@ SnackMan.prototype.askForDrink = function() {
 	return drink;
 };
 
-SnackMan.prototype.catchDrink = function(order) {
+SnackMan.prototype.pickUpDrink = function(order) {
 
 	// is he in front of the cooler ?
 	if (this.currentNode.id != this.coolerNode.id) {
@@ -374,7 +374,7 @@ SnackMan.prototype.catchDrink = function(order) {
 	BlocklyApps.log.push(['IP']);
 	
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType}; 
-	this.verifyObjectives("catchDrink", item);
+	this.verifyObjectives("pickUpDrink", item);
 	this.catched++;
 	
 	// TODO in future version, maybe the cooler has limited stock
@@ -426,7 +426,7 @@ SnackMan.prototype.hasHunger = function() {
 	
 };
 
-SnackMan.prototype.catchFood = function(order) {
+SnackMan.prototype.pickUpHotDog= function(order) {
 
 	// is he in front of the display ?
 	if (this.currentNode.id != this.displayNode.id) {
@@ -478,14 +478,14 @@ SnackMan.prototype.catchFood = function(order) {
 	// TODO in future version, maybe the display has limited stock
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food", source: order.data.source, sourceType: order.data.sourceType};
 	
-	this.verifyObjectives("catchFood", item);
+	this.verifyObjectives("pickUpFood", item);
 	this.catched++;
 	
 	return item; 
 	
 };
 
-SnackMan.prototype.genericCatch = function(order, machine) {
+SnackMan.prototype.genericPickUp = function(order, machine) {
 
 	if (this.currentNode.id != machine.node.id) {
 		BlocklyApps.log.push(["fail", machine.errorIsntFront]);
@@ -591,7 +591,7 @@ SnackMan.prototype.goToJuiceMachine = function() {
 
 };
 
-SnackMan.prototype.catchFruits = function(order) {
+SnackMan.prototype.pickUpFruits = function(order) {
 
 	// is he in front of the box of fruits ?
 	if (this.currentNode.id != this.boxOfFruitsNode.id) {
