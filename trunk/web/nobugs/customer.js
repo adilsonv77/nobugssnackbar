@@ -290,13 +290,11 @@ Customer.prototype.draw = function(ctx) {
 			var ordersUnfulfilled = [];
 			
 			for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
-				for (var j = 0; j < this.foods[i].qt; j++)
-					ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
+				ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
 			}
 			
 			for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
-				for (var j = 0; j < this.drinks[i].qt; j++)
-					ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
+				ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
 			}
 			
 			if (ordersUnfulfilled.length > 0) {
@@ -370,6 +368,8 @@ Customer.prototype.deliver = function(item) {
 				
 				money = d.price;
 				happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
+			} else {
+				reason = "Error_deliveredWrongRequest"; 	
 			}
 			
 		} else {

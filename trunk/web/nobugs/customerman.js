@@ -35,7 +35,6 @@ CustomerManager.init = function(customers, sn) {
 	this.optCustomers = customers;
 	
 	this.randomization = [];
-	this.patterns = [];
 
 	if (sn != undefined)
 		this.parseSN(sn);
@@ -59,8 +58,12 @@ CustomerManager.parseSN = function(sn) {
 
 };
 
+// TODO need to improve this function. There is not neccessary load the configuration each time this function is called
 CustomerManager.reset = function() {
+	this.patterns = [];
+	
 	customers = [];
+
 	var customer = this.optCustomers.firstElementChild;
 	while (customer != null) {
 		var init = customer.getElementsByTagName("init")[0].textContent.toString();
@@ -240,9 +243,8 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		var theItem = item.childNodes[0].nodeValue;
 		
 		if (hero.hasMachineFor(theItem)) {
-			var theQtd = item.getAttribute("qt");
 			var thePrice = item.getAttribute("price");
-			items.push({item: theItem, qt: theQtd, price: thePrice});
+			items.push({item: theItem, price: thePrice});
 		}
 		
 	} 
