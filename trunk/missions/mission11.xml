@@ -29,11 +29,11 @@
 		<category name="goToBarCounter" show="true"/>
 		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
-		<category name="catchFood" show="true" />
+		<category name="pickUpHotDog" show="true" />
 
 		<category name="askForDrink" show="true" />
 		<category name="goToCooler" show="true" />
-		<category name="catchDrink" show="true" />
+		<category name="pickUpDrink" show="true" />
 
 		<category name="deliver" show="true" />
 		

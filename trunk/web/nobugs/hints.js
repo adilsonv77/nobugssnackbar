@@ -550,7 +550,7 @@ function createStylePosition(menu, submenu, dialog) {
 		
 	Hints.hintSelected.e = e;
 	
-	return [createStyle(e.getSvgRoot(), e.svg_.height, dialog), e.svg_.getRootElement()];
+	return [createStyle(e.getSvgRoot(), e.height, dialog), e.getSvgRoot()];
 
 }
 

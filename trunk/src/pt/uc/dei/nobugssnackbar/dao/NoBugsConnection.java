@@ -903,37 +903,39 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		List<Object[]> ret = new ArrayList<Object[]>();
 
+		
 		try {
-			bdCon = dataSource.getConnection();
-			
-			List<Integer> list = Arrays.asList(machineid);
-			String lista = (list + "");
-			lista = lista.substring(1, lista.length()-1);
-			
-			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce from machines where machineid in (" + lista + ")");
-			while (rs.next()) {
-				ret.add(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), null});
-			}
-			st.close();
-			
-			PreparedStatement ps = bdCon.prepareStatement("select machinecommandname, machinecommandlang, machinecommandblocks, machinecommandjavascript, machinecommandtype from machinescommands where machineid = ?");
-			for (Object[] obj: ret) {
-				ps.setString(1, (String)obj[0]);
+			if (machineid.length > 0) {
+				bdCon = dataSource.getConnection();
 				
-				List<String[]> lcomms = new ArrayList<String[]>();
-				obj[9] = lcomms;
-
-				rs = ps.executeQuery();
+				List<Integer> list = Arrays.asList(machineid);
+				String lista = (list + "");
+				lista = lista.substring(1, lista.length()-1);
+				
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce from machines where machineid in (" + lista + ")");
 				while (rs.next()) {
-				
-					lcomms.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5) });
-					
+					ret.add(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), null});
 				}
-				rs.close();
+				st.close();
+				
+				PreparedStatement ps = bdCon.prepareStatement("select machinecommandname, machinecommandlang, machinecommandblocks, machinecommandjavascript, machinecommandtype from machinescommands where machineid = ?");
+				for (Object[] obj: ret) {
+					ps.setString(1, (String)obj[0]);
+					
+					List<String[]> lcomms = new ArrayList<String[]>();
+					obj[9] = lcomms;
+	
+					rs = ps.executeQuery();
+					while (rs.next()) {
+					
+						lcomms.add(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5) });
+						
+					}
+					rs.close();
+				}
+				ps.close();
 			}
-			ps.close();
-			
 		} finally {
 			if (bdCon != null)
 				try {

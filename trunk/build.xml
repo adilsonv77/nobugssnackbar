@@ -29,14 +29,13 @@
 		<delete dir="core"/>
 		<delete dir="generators"/>
 		
-		<delete dir="${dest.dir}/commons"/>
 		<delete dir="${dest.dir}/media"/>
 		<delete dir="${dest.dir}/msg"/>
-		<delete dir="${dest.dir}/../_soy"/>
+		<delete dir="${dest.dir}/../_soy"/> 
 		<delete dir="${dest.dir}/../i18n"/>
 
 		<copy todir="${dest.dir}/../_soy">
-			<fileset dir="${blockly.dir}/apps/_soy"/>
+			<fileset dir="${blockly.dir}/demos/plane/soy"/>
 		</copy>
 
 		<copy todir="${dest.dir}/../i18n">
@@ -46,14 +45,6 @@
 		<copy todir="blocks">
 			<fileset dir="${blockly.dir}/blocks"/>
 		</copy>
-		
-		<copy todir="${dest.dir}/commons">
-			<fileset dir="${blockly.dir}/apps">
-				<include name="**/common.*"/>
-				<exclude name="**/*.soy"/>
-			</fileset>
-		</copy>
-
 		<copy todir="core">
 			<fileset dir="${blockly.dir}/core"/>
 		</copy>
@@ -78,7 +69,7 @@
 		</copy>
 		
 		<copy todir="${dest.dir}">
-			<fileset dir="${blockly.dir}/apps" 
+			<fileset dir="${blockly.dir}/demos" 
 				includes="**/prettify.*"/>
 		</copy>
 	</target>

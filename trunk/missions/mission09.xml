@@ -21,11 +21,11 @@
 		<category name="goToBarCounter" show="true"/>
 		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
-		<category name="catchFood" show="true" />
+		<category name="pickUpHotDog" show="true" />
 
 		<category name="askForDrink" show="true" />
 		<category name="goToCooler" show="true" />
-		<category name="catchDrink" show="true" />
+		<category name="pickUpDrink" show="true" />
 
 		<category name="deliver" show="true" />
 		
@@ -49,16 +49,16 @@
 	</customers>
 	<objectives ordered="false" reward="7" maxCommands="10" maxCommandsReward="15" >
 		<objective pos="3" place="counter">askForFood</objective>
-		<objective pos="3" place="counter">catchFood</objective>
+		<objective pos="3" place="counter">pickUpFood</objective>
 		<objective pos="3" place="counter">deliver</objective>
 		
 		<objective pos="3" place="counter">askForDrink</objective>
-		<objective pos="3" place="counter">catchDrink</objective>
+		<objective pos="3" place="counter">pickUpDrink</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml>
 		<block type="ask_askForDrink" x="300" y="1"></block>
-		<block type="prepare_catchDrink" x="300" y="50"></block>
+		<block type="prepare_pickUpDrink" x="300" y="50"></block>
 		<block type="move_goToCooler" x="300" y="100"></block>
 	</xml>
 </mission>

@@ -44,9 +44,11 @@
   <script src="jquery.countup/base.js"></script>
   <script src="jquery.countup/jquery.countup.js"></script>
 
-<!--  <script type="text/javascript" src="jsinterpreter/acorn_interpreter.js"></script> -->
+  <script type="text/javascript" src="jsinterpreter/acorn_interpreter.js"></script>
+<!--
   <script type="text/javascript" src="jsinterpreter/acorn.js"></script>
   <script type="text/javascript" src="jsinterpreter/interpreter.js"></script>
+  -->
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/util.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
@@ -333,7 +335,7 @@
 	      {if $ij.enabled['askHasHunger']}<block type="ask_askHasHunger"> </block>{/if}
 	      {if $ij.enabled['askForFood']}<block type="ask_askForFood"> </block>{/if}
 	      {if $ij.enabled['goToDisplay']}<block type="move_goToDisplay"> </block>{/if}
-	      {if $ij.enabled['catchFood']}<block type="prepare_catchFood"> </block>{/if}
+	      {if $ij.enabled['pickUpHotDog']}<block type="prepare_pickUpHotDog"> </block>{/if}
 	
 	      {if $ij.enabled['askHasThirsty']}<block type="ask_askHasThirsty"> </block>{/if}
 	      {if $ij.enabled['askForDrink']}<block type="ask_askForDrink"> </block>{/if}
@@ -343,11 +345,11 @@
 	      
 	      {if $ij.enabled['goToBoxOfFruits']}<block type="move_goToBoxOfFruits"></block>{/if}
 	       
-	      {if $ij.enabled['catchFruits']}<block type="prepare_catchFruits"> </block>{/if}
+	      {if $ij.enabled['pickUpFruits']}<block type="prepare_pickUpFruits"> </block>{/if}
 	      {if $ij.enabled['goToJuiceMachine']}<block type="move_goToJuiceMachine"> </block>{/if}
-	      {if $ij.enabled['prepareAndCatchJuice']}<block type="prepare_prepareAndCatchJuice"> </block>{/if}
+	      {if $ij.enabled['prepareAndPickUpJuice']}<block type="prepare_prepareAndPickUpJuice"> </block>{/if}
 	      
-	      {if $ij.enabled['catchDrink']}<block type="prepare_catchDrink"> </block>{/if}
+	      {if $ij.enabled['pickUpDrink']}<block type="prepare_pickUpDrink"> </block>{/if}
 	      
 	      {if $ij.enabled['deliver']}<block type="do_deliver"> </block>{/if}
 	

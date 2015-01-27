@@ -80,9 +80,15 @@ Blockly.Python.ORDER_LAMBDA = 16;           // lambda
 Blockly.Python.ORDER_NONE = 99;             // (...)
 
 /**
- * Initialise the database of variable names.
+ * Empty loops or conditionals are not allowed in Python.
  */
-Blockly.Python.init = function() {
+Blockly.Python.PASS = '  pass\n';
+
+/**
+ * Initialise the database of variable names.
+ * @param {!Blockly.Workspace} workspace Workspace to generate code from.
+ */
+Blockly.Python.init = function(workspace) {
   // Create a dictionary of definitions to be printed before the code.
   Blockly.Python.definitions_ = Object.create(null);
   // Create a dictionary mapping desired function names in definitions_
@@ -97,7 +103,7 @@ Blockly.Python.init = function() {
   }
 
   var defvars = [];
-  var variables = Blockly.Variables.allVariables();
+  var variables = Blockly.Variables.allVariables(workspace);
   for (var x = 0; x < variables.length; x++) {
     defvars[x] = Blockly.Python.variableDB_.getName(variables[x],
         Blockly.Variables.NAME_TYPE) + ' = None';
