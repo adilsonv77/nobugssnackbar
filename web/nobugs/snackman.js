@@ -526,7 +526,7 @@ SnackMan.prototype.genericCatch = function(order, machine) {
 	
 	BlocklyApps.log.push(['IP']);
 	
-	var item = {type: "item", descr:machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
+	var item = {type: "item", descr:"$$"+machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
 	
 	this.catched++;
 	
@@ -911,10 +911,10 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		var run = null;
 		switch (com[4]) {
 			case "M" : 
-				run = new Function("hero.animateSnackMan( this.machine.node );");
+				run = new Function("machine", "hero.animateSnackMan( machine.node );");
 				break;
 			case "C" : 
-				run = new Function("order", "return hero.genericCatch( order, this.machine ); ");
+				run = new Function("machine", "order", "return hero.genericCatch( order, machine ); ");
 			    break;
 		
 		}

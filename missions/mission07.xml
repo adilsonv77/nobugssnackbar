@@ -69,21 +69,22 @@
 			<pattern>
 				<order>
 					<foods>
-						<food qt="2" price="0">icecream</food>
+						<food price="0">icecream</food>
+						<food price="0">icecream</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="0">coke</drink>
+						<drink price="0">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="0">hotdog</food>
+						<food price="0">hotdog</food>
 					</foods>
 					<drinks></drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="0">frenchfryes</food>
+						<food price="0">frenchfryes</food>
 					</foods>
 					<drinks></drinks>
 				</order>
@@ -96,7 +97,7 @@
 			<pattern>
 				<order>
 					<foods>
-						<food qt="1" price="0">hotdog</food>
+						<food price="0">hotdog</food>
 					</foods>
 					<drinks></drinks>
 				</order>

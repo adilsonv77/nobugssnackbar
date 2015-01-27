@@ -355,19 +355,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   if (Game.speedSlider == undefined)
 	  Game.speedSlider = new Slider(10, 35, 130, Game.slider.svg);
 
-  BlocklyApps.bindClick('runButton', Game.runButtonClick);
-  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
-  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
-
-  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
-  BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
-  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
-  BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
-  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
-
- // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
- // BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
-  
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
   
@@ -630,6 +617,19 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  Game.addCronometro(Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
+	  
+	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
+	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
+	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
+
+	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
+	  BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
+	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
+	  BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
+	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
+
+	 // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+	 // BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(Game.importPrettify, 1);
@@ -1622,14 +1622,15 @@ Game.initApi = function(interpreter, scope) {
     
     // extended commands
     for (var i=0; i<hero.extendedCommands.length; i++) {
-    	var ex = hero.extendedCommands[i];
     	wrapper = function(o) {
-  	      return interpreter.createPrimitive(ex.run(o));
+    	  var ex = interpreter.stateStack[0].func_.ex;
+    	  return interpreter.createPrimitive(ex.run(ex.machine, o));
+  	      //return interpreter.createPrimitive(ex.run(o));
   	    };
   	    
   	  var nf = interpreter.createNativeFunction(wrapper);
-  	  nf.run = ex.run;
-  	  interpreter.setProperty(scope, ex.nameLang, nf);
+  	  nf.ex = hero.extendedCommands[i];
+  	  interpreter.setProperty(scope, nf.ex.nameLang, nf);
     }
   
 };
