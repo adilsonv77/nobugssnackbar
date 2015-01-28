@@ -68,6 +68,7 @@ var Customer = {};
 
 Customer = function(options) {
 	
+	this.hasRandom = options.hasRandom;
 	this.drinks = options.drinks;
 	this.dUnfulfilled = 0;
 	
@@ -290,7 +291,9 @@ Customer.prototype.draw = function(ctx) {
 			
 			var ordersUnfulfilled = [];
 			
-			var withouDoubt = (CustomerManager.randomization.length == 0) || (Game.runningStatus !== 0);
+			var withDoubt = (CustomerManager.randomization.length > 0)|| (this.hasRandom);
+			
+			var withouDoubt = (!withDoubt) || (Game.runningStatus !== 0) || (Game.victory);
 			if (withouDoubt) {
 				for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
 					ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));

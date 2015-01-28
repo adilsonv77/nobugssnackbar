@@ -93,7 +93,9 @@ CustomerManager.reset = function() {
 			var foods = CustomerManager.extractItems("food", _foods[0]);
 			var drinks =  CustomerManager.extractItems("drink", customer.getElementsByTagName("drinks")[0], customer.getAttribute("randomType"), foods.length);
 			
-			customers.push(new Customer({init: init, place: dest, id: id, foods: foods, drinks: drinks}));
+			var hasRandom = customer.getAttribute("randomType") != null;
+			
+			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks}));
 			
 		} else {
 			
@@ -109,7 +111,7 @@ CustomerManager.reset = function() {
 			
 				
 				if (foods.length > 0 || drinks.length > 0)
-					custPattern.push({ foods: foods, drinks: drinks});
+					custPattern.push({ hasRandom: orders[i].getAttribute("randomType")!=null, foods: foods, drinks: drinks});
 			}
 			
 			if (custPattern.length > 0)
@@ -183,7 +185,7 @@ CustomerManager.createCustomersBasedOnPattern = function() {
 			var drinks = custPattern.drinks;
 			
 			customers.push(new Customer({init: this.patterns[i].init, place: this.patterns[i].place, id: this.patterns[i].id, 
-				foods: foods, drinks: drinks}));
+				hasRandom: this.patterns[i].hasRandom, foods: foods, drinks: drinks}));
 		}
 	}
 	
