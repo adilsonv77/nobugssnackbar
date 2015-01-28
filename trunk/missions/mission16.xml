@@ -72,7 +72,7 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="14">
+	<xml preload="15">
 	</xml>
 
 </mission>

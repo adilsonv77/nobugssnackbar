@@ -14,6 +14,8 @@
 	<hints>
 		<sequence>
 		
+			<hint category="Slider"/>
+		
 			<hint category="LastError" condition="Game.lastErrorData.block.type == 'do_deliver'">
 			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
 			a partir de outra vari&#225;vel. Verifique se os blocos [pickUpHotDog] e [askForFood] est&#227;o referenciando corretamente suas vari&#225;veis.
@@ -28,7 +30,6 @@
 		</sequence>
 		<errors>
 
-			<hint category="Slider"/>
 			
 		</errors>
 	</hints>

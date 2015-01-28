@@ -73,7 +73,7 @@ no m&#225;ximo 20 comandos.
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="12">
+	<xml preload="13">
 	</xml>
 </mission>
 
