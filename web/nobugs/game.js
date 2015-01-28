@@ -416,10 +416,12 @@ Game.missionLoaded = function(ret){
   if (slider.length > 0) {
 	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
   }
+  // if the slider is not loaded in the begin, then the hint show it 
   if (Game.howManyRuns >= Game.slider.timesBefore) {
 	  Game.slider.svg.style.visibility = "visible";
   }
    
+  
   var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
   
   var toolbox = nobugspage.toolbox(null, null, 

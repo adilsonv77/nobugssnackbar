@@ -94,7 +94,7 @@
 		<objective pos="3" place="counter">deliver</objective>
 		<objective pos="4" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="9">
+	<xml preload="10">
 	</xml>
 </mission>
 

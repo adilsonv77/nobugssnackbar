@@ -44,6 +44,7 @@ PreloadImgs.put('$customer04', 'images/$customer04.png');
 PreloadImgs.put('$customer04_anger', 'images/$customer04_anger.png');
 PreloadImgs.put('coin', 'images/coin.png');
 PreloadImgs.put('anger', 'images/anger.png');
+PreloadImgs.put('duvida', 'images/duvida.png');
 
 //Candidate Orders
 PreloadImgs.put('$coke', 'images/$$coke.png');
@@ -289,13 +290,18 @@ Customer.prototype.draw = function(ctx) {
 			
 			var ordersUnfulfilled = [];
 			
-			for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
-				ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
-			}
-			
-			for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
-				ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
-			}
+			var withouDoubt = (CustomerManager.randomization.length == 0) || (Game.runningStatus !== 0);
+			if (withouDoubt) {
+				for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
+					ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
+				}
+				
+				for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
+					ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
+				}
+				
+			} else
+				ordersUnfulfilled.push(PreloadImgs.get("duvida"));
 			
 			if (ordersUnfulfilled.length > 0) {
 				Baloon.draw(ctx, this.img.x, this.img.y, ordersUnfulfilled, 0.7);
