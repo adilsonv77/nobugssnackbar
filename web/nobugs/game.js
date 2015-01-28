@@ -899,7 +899,8 @@ Game.moveRightButtonClick = function() {
  * pending tasks.
  */
 Game.reset = function() {
-	
+  
+  Game.victory = false;
   Game.stopAlertGoalButton();
   hero.reset();
   CustomerManager.reset();
@@ -1300,6 +1301,8 @@ Game.nextStep = function() {
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
+			    	
+			    	Game.victory = true;
 			    	
 		    	    Game.lastErrorData.iderror = 0;
 		    	    Game.lastErrorData.message = "";
