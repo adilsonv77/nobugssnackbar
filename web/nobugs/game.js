@@ -77,12 +77,20 @@ Game.init = function() {
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
 
-	    	var lu = document.getElementById("loginuser");
-		    document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
-
+		    window.addEventListener('resize',  Game.resizeMainWindow);
+		    
+		    Game.resizeMainWindow();
 		}
 	});
 
+
+};
+
+Game.resizeMainWindow = function() {
+	
+	var lu = document.getElementById("loginuser");
+    document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
+    document.getElementById("suporte").style.left = document.getElementById("errorLogin").style.left;
 
 };
 
@@ -331,11 +339,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	varBoxH: "90%"
   };
   
-  Game.scrollEvent =  function() {
-	  Hints.hideHintWithTimer();
-      Game.doResizeWindow();
-    };
-    
+  window.removeEventListener('resize',  Game.resizeMainWindow);
+  
   window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
 
@@ -814,6 +819,11 @@ Game.doResizeWindow = function(style) {
     Blockly.fireUiEvent(window, 'resize');
 };
 
+Game.scrollEvent =  function() {
+	  Hints.hideHintWithTimer();
+    Game.doResizeWindow();
+  };
+  
 Game.resizeWindow = function(e) {
 	
 	var visualization = document.getElementById('visualization'); // the animation area
@@ -995,7 +1005,9 @@ Game.logoffButtonClick = function() {
     }
 
     document.getElementById('blockly').innerHTML = ""; // clean the editor
-	
+    window.removeEventListener('scroll', Game.scrollEvent);  
+    window.removeEventListener('resize',  Game.resizeWindow);
+    
 	UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
