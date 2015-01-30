@@ -26,6 +26,7 @@ Hints.activeBlock = null;
 Hints.lastCountBlocks = 0;
 Hints.showedCountInstrutionsHint = false;
 
+Hints.dealError = false;
 
 var countInstructions, countTopInstructions, menuSelected, showedHint; 
 
@@ -245,6 +246,7 @@ Hints.showErrorHint = function() {
 	
 	var countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 	
+	Hints.dealError = true;
 	Hints.hintSelected = null;
 	var hintErrors = Hints.hints.whenError;
 	for (var i=0; i<hintErrors.length; i++) {
@@ -252,19 +254,33 @@ Hints.showErrorHint = function() {
 		var hint = hintErrors[i];
 		Hints.hintSelected = hint;
 		
-		showedHint = hint.showed;
-		var condition = eval(hint.condition);
-		if (condition) {
+		if (hint.category === "TestBlock") {
 			
-			var cat = Hints.Categories[hint.category];
+			Hints.foundTestBlock = false;
+			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
 			
-			hint.showed = true;
-			cat.show(hint.args);
+			if (Hints.foundTestBlock)
+				return;
 			
-			Hints.associateHideEvents(null, (cat.specialEvent!=undefined?cat.specialEvent():null));
-			break;
 			
+			
+		} else {
+			
+			showedHint = hint.showed;
+			var condition = eval(hint.condition);
+			if (condition) {
+				
+				var cat = Hints.Categories[hint.category];
+				
+				hint.showed = true;
+				cat.show(hint.args);
+				
+				Hints.associateHideEvents(null, (cat.specialEvent!=undefined?cat.specialEvent():null));
+				break;
+				
+			}
 		}
+		
 		
 	}
 	
@@ -275,6 +291,7 @@ Hints.timeIsUp = function() {
 	if (Hints.hndlTimer == 0)
 		return;
 	
+	Hints.dealError = false;
 	Hints.hndlTimer = 0;
 	
 	var hints = Hints.hints.sequence;
@@ -387,7 +404,7 @@ Hints.visitBlocks = function(block) {
 	var condition = eval(hint.condition);
 	var cat = Hints.Categories[hint.category];
 
-	if (condition && Hints.showOnMenu(cat)) {
+	if (condition && (Hints.dealError || Hints.showOnMenu(cat))) {
 		Hints.foundTestBlock = true;
 		
 		hint.showed = true;
@@ -492,6 +509,18 @@ Hints.changeListener = function() {
 	
 	Hints.activeBlock = Hints.lastInsertedBlock;
 	Hints.lastCountBlocks = howMany;
+};
+
+Hints.countChildren = function(block) {
+	var blocks = [];
+	if (block.type === "controls_if") {
+		blocks.push(block.childBlocks_[1]);
+		if (block.elseCount_ == 1)
+			blocks.push(block.childBlocks_[2]);
+	} else {
+		blocks.push(block);
+	}
+	return Game.countInstructions(blocks);
 };
 
 /****************************************************************************************/

@@ -505,29 +505,38 @@ public class NoBugsConnection {
 			String clazzes = classes+"";
 			
 			
-			List<Long> qid = new ArrayList<>();
+			List<Long> qidBartle = new ArrayList<>();
 			Statement st = bdCon.createStatement();
-			rs = st.executeQuery("select distinct questionnaireid from questionnaireanswer where userid = "+userid);
+			
+			// list which are the questionnaires from bartle test type
+			rs = st.executeQuery("select distinct questionnaireclassid from bartletestquestions join questionsquestionnaire using (questionid) join questionnaireclasses using (questionnaireid)");
+			while (rs.next()) {
+				qidBartle.add(rs.getLong(1));
+			}
+			rs.close();
+			
+			List<Long> qid = new ArrayList<>();
+			rs = st.executeQuery("select distinct questionnaireclassid from questionnaireanswer where userid = "+userid);
 			while (rs.next()) {
 				qid.add(rs.getLong(1));
 			}
-			boolean needQuestBartle = !qid.remove(2L);
-			qid.add(2L);
+			boolean needQuestBartle = !qid.removeAll(qidBartle); // remove the bartle questionnaire but alert if it's necessary will answer this type of questionnaire
+			qid.addAll(qidBartle);
 			rs.close();
 			
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q1.classid from questionnaire q0" + 
+					"select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q1.classid from questionnaire q0" + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questionnaireclasses q1 using (questionnaireid)" +
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
 							" where %s and questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
-							" order by questionnaireid, questionorder, optionorder";
+							" order by questionnaireclassid, questionorder, optionorder";
 			
 			;
-			lista = String.format(questionnaire," questionnaireid not in (" +
+			lista = String.format(questionnaire," questionnaireclassid not in (" +
 					lista.substring(1, lista.length()-1) +
 				     ")" );
 			ps = bdCon.prepareStatement(lista);
@@ -541,9 +550,9 @@ public class NoBugsConnection {
 				List<Long> list = BartleTest.selectQuestions();
 				lista = (list + "");
 
-				ps = bdCon.prepareStatement(
-						String.format(questionnaire,
-						            " q.questionid in (" +lista.substring(1, lista.length()-1) + ")"));
+				lista = String.format(questionnaire,
+			            " q.questionid in (" +lista.substring(1, lista.length()-1) + ")");
+				ps = bdCon.prepareStatement(lista);
 				rs = ps.executeQuery();
 				addQuestionnaires(ret, rs);
 				rs.close();
@@ -718,7 +727,7 @@ public class NoBugsConnection {
 		try {
 			bdCon = dataSource.getConnection();
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into questionnaireanswer (questionnaireid, questionid, userid, questionanswer) values (?, ?, ?, ?)");
+					.prepareStatement("insert into questionnaireanswer (questionnaireclassid, questionid, userid, questionanswer) values (?, ?, ?, ?)");
 			
 			ps.setLong(1, questionnaireId);
 			ps.setLong(2, questionId);

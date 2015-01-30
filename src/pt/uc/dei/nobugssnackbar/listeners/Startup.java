@@ -2,7 +2,6 @@ package pt.uc.dei.nobugssnackbar.listeners;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 

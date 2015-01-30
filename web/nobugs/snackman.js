@@ -635,7 +635,7 @@ SnackMan.prototype.pickUpFruits = function(order) {
 	
 };
 
-SnackMan.prototype.prepareAndCatchJuice = function(order) {
+SnackMan.prototype.prepareAndPickUpJuice = function(order) {
 	// is he in front of the juice machine ?
 	if (this.currentNode.id != this.juiceMachineNode.id) {
 		BlocklyApps.log.push(["fail", "Error_isntFrontJuiceMachine"]);

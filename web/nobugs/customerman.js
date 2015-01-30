@@ -89,11 +89,12 @@ CustomerManager.reset = function() {
 		var pattern = customer.getElementsByTagName("pattern")[0];
 		if (pattern == null) {
 			
-			var _foods = customer.getElementsByTagName("foods");
-			var foods = CustomerManager.extractItems("food", _foods[0]);
-			var drinks =  CustomerManager.extractItems("drink", customer.getElementsByTagName("drinks")[0], customer.getAttribute("randomType"), foods.length);
+			var _foods = customer.getElementsByTagName("foods")[0];
+			var _drinks = customer.getElementsByTagName("drinks")[0];
+			var foods = CustomerManager.extractItems("food", _foods);
+			var drinks =  CustomerManager.extractItems("drink", _drinks , customer.getAttribute("randomType"), foods.length);
 			
-			var hasRandom = customer.getAttribute("randomType") != null;
+			var hasRandom = (customer.getAttribute("randomType") != null) || (_foods.getAttribute("randomMin") != null) || (_drinks.getAttribute("randomMin") != null);
 			
 			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks}));
 			
