@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -18,16 +19,11 @@ import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
 @WebListener
 public class Startup implements ServletContextListener {
 
-    /**
-     * Default constructor. 
-     */
+	private static Logger log = Logger.getGlobal();
+	
     public Startup() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-     * @see ServletContextListener#contextInitialized(ServletContextEvent)
-     */
     public void contextInitialized(ServletContextEvent contextEvent) {
     	String url = "";
     	String className = "";
@@ -35,7 +31,9 @@ public class Startup implements ServletContextListener {
     	String password = "";
     	Properties props = new Properties();
     	try {
-    		props.load(new InputStreamReader(new FileInputStream(new File(contextEvent.getServletContext().getRealPath("/") + "META-INF\\db.properties"))));
+    		String path = contextEvent.getServletContext().getRealPath("/") + "/META-INF/db.properties";
+    		log.info("db.properties : " + path);
+    		props.load(new InputStreamReader(new FileInputStream(new File(path))));
     		url = props.getProperty("url-conn");
         	className = props.getProperty("class-conn");
         	username = props.getProperty("user-conn");
@@ -48,6 +46,7 @@ public class Startup implements ServletContextListener {
     	}
     	
     	try {
+    		log.info("user : " + username);
 			NoBugsConnection.buildConnection(url, className, username, password);
 		} catch (Exception ee) {
 			ee.printStackTrace();
