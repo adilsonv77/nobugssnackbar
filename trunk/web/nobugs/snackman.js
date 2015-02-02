@@ -850,9 +850,6 @@ SnackMan.prototype.drawInstalledMachines = function(ctx) {
 SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, 
 		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands) {
 	
-	var img = new Image();
-    img.src = "images/_"+machinename.toLowerCase() + ".png";
-
 	var machine = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 3,
@@ -860,7 +857,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		x: machinex, y: machiney,
 		width: 32, height: 192,
 		sourceX: 0, sourceY: 0,
-		img : img,
+		img : PreloadImgs.get(machinename.toLowerCase()),
 	});
 	
 	this.installedMachines.push(machine);
