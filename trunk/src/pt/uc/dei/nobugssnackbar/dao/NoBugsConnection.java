@@ -265,7 +265,7 @@ public class NoBugsConnection {
 
 	}
 
-	private int loadMissionAccomplished(long idMission, long idUser)
+	private int loadMissionAccomplished(long idMission, long idUser, long idClass)
 			throws SQLException {
 
 		int timeSpend = -1;
@@ -276,8 +276,8 @@ public class NoBugsConnection {
 			Statement st = bdCon.createStatement();
 			ResultSet rs = st
 					.executeQuery("select timespend from missionsaccomplished where missionid = "
-							+ idMission + " and userid = " + idUser);
-			if (rs.next())
+							+ idMission + " and userid = " + idUser + " and classid = " + idClass);
+			if (rs.next()) 
 				timeSpend = rs.getInt(1);
 			st.close();
 		} finally {
@@ -295,7 +295,7 @@ public class NoBugsConnection {
 	public void finishMission(User user, long idMission, long idClazz, int money,
 			int timeSpend, long execution, boolean achieved, String answer) throws SQLException {
 
-		int localTimeSpend = loadMissionAccomplished(idMission, user.getId());
+		int localTimeSpend = loadMissionAccomplished(idMission, user.getId(), idClazz);
 
 		Connection bdCon = null;
 		try {
@@ -382,8 +382,7 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
-			int localTimeSpend = loadMissionAccomplished(idMission,
-					user.getId());
+			int localTimeSpend = loadMissionAccomplished(idMission,	user.getId(), idClass);
 			PreparedStatement ps;
 			if (localTimeSpend == -1) {
 				ps = bdCon
