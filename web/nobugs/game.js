@@ -470,12 +470,16 @@ Game.afterInstallMachines = function() {
 Game.installMachines = function(toolbox) {
 	UserControl.loadMachinesFromUser(function(ret) {
 
-		for (var i = 0; i < ret.length; i++)
-			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
-		
-		PreloadImgs.loadImgs();
-		if (ret.length > 0) 
+		for (var i = 0; i < ret.length; i++) {
 			
+			var m = ret[i][1].toLowerCase();
+			var m2 = 'images/_' + m + '.png';
+			PreloadImgs.put(m, m2, true);
+			
+			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
+		}
+		
+		if (ret.length > 0) 
 			toolbox = Game.loadToolBoxWithMachines(toolbox);
 
 		document.getElementById('blockly').innerHTML = ""; // clean the editor
@@ -505,8 +509,11 @@ Game.loadToolBoxWithMachines = function(toolbox) {
 };
   
 Game.buyButtonClick = function() {
+	
+	Game.saveMission();
     var selectMachine = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0];
     Game.selectMachine(selectMachine);
+    
 };
 
 Game.selectMachine = function(selectMachineOpts) {
@@ -540,12 +547,11 @@ Game.continueSelectMachine = function() {
 		i--;
 		
 		var m = Game.machines[i].name.toLowerCase();
-		var m2 = 'images/_' + m + '.png';
-		PreloadImgs.put(m, m2);
+		PreloadImgs.put(m, 'images/_' + m + '.png');
 		
 		var t = BlocklyApps.getMsg( "Text_" + Game.machines[i].name );
 		
-		return "<img src='"+m2+"'/> <br/> " + t + "<br/>"+Game.machines[i].cust+" <img style='vertical-align:middle' src='images/coin2.png'/>";
+		return "<img src='images/"+m+".png'/> <br/> " + t + "<br/>"+Game.machines[i].cust+" <img style='vertical-align:middle' src='images/coin2.png'/>";
 			
 	};
 	
@@ -613,6 +619,9 @@ Game.buyMachineButtonClick = function() {
 				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
 				PreloadImgs.loadImgs();
 				
+				var dom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+				
+				document.getElementById('blockly').innerHTML = ""; // clean the editor
 				Blockly.inject(document.getElementById('blockly'),
 					     {path: '',
 					       rtl: Game.rtl,
@@ -620,6 +629,7 @@ Game.buyMachineButtonClick = function() {
 					       trashcan: true,
 					       comments: false});
 				
+				Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
 				
 				Game.display();
 				BlocklyApps.hideDialog(false);
@@ -631,7 +641,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
   var xml = Blockly.Xml.textToDom(answer);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-  
   Game.moveBlocks();
   
   Game.firstTime = firstTime;

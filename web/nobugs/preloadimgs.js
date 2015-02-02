@@ -4,13 +4,20 @@ PreloadImgs.imgs = {};
 PreloadImgs.keys = [];
 PreloadImgs.loaded = false;
 
-PreloadImgs.put = function(key, source) {
+PreloadImgs.put = function(key, source, loadNow) {
 	
 	if (PreloadImgs.keys.indexOf(key) > -1)
 		return;
 	
 	PreloadImgs.keys.push(key);
 	PreloadImgs.imgs[key] = {src: source, img: null};
+	
+	if (loadNow != undefined && loadNow) {
+
+		PreloadImgs.imgs[key].img = new Image();
+		PreloadImgs.imgs[key].img.src = PreloadImgs.imgs[key].src;
+		
+	}
 	
 };
 
