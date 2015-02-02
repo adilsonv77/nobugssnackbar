@@ -119,7 +119,8 @@ public class UserControl {
 		if (this.user == null)
 			return;
 		
-		//log.info("saveMission " + timeSpend + " " + this.user.getId() + " " + this.mission);
+		if (achieved)
+		  log.info("saveMission " + timeSpend + " " + this.user.getId() + " " + this.mission + " " + this.classid);
 		
 		this.user.setMoney(this.user.getMoney() + money);
 		
