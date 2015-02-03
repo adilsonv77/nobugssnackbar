@@ -911,7 +911,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 				run = new Function("machine", "hero.animateSnackMan( machine.node );");
 				break;
 			case "C" : 
-				run = new Function("machine", "order", "return hero.genericCatch( order, machine ); ");
+				run = new Function("machine", "order", "return hero.genericPickUp( order, machine ); ");
 			    break;
 		
 		}

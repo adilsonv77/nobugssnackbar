@@ -137,6 +137,8 @@ Customer = function(options) {
 		img : PreloadImgs.get("anger")
 	});
 	this.showFire = false;
+	
+	this.openMission = options.openMission;
 
 };
 
@@ -163,22 +165,21 @@ Customer.prototype.update = function() {
 			break;
 			
 	// moving to some place
-	case 6: var node = this.path.shift();
-			if (node) {
-				node = CustOpt.nodes[node];
-				this.log.push(['MC', this.currentNode.x, this.currentNode.y, node.x, node.y]);
-				this.currentNode = node;
-				
+	case 6: if (this.moveToSomePlace())
 				return;
-			}
-			break;
+			else
+				break;
 			
 	// turn to front
 	case 7: this.log.push(['MC', this.currentNode.x, this.currentNode.y, this.currentNode.x, this.currentNode.y]);
 			break;
 			
 	// finish state: nothing to do on this moment
-	case 8: return;
+	case 8: 
+		   if (this.drinks.length == this.dUnfulfilled && this.foods.length == this.fUnfulfilled && this.openMission)
+			   this.state = 32;
+		   
+			return;
 	
 	case  9: ;
 	case 10: ;
@@ -215,10 +216,53 @@ Customer.prototype.update = function() {
 	case 31:
 			 this.log.push(['UF', false]); // hide the fire
 			 this.state = 8;
-			 return;			 
+			 return;	
+			 
+	// go back to the door
+	case 32:
+		this.log.push(['SD', true]);
+		this.path = CustOpt.graph.findShortestPath(this.dest.id, CustOpt.door);
+		break;
+	
+	case 33: // go back to the door
+		if (this.moveToSomePlace())
+			return;
+		else
+			break;
+		
+		// open the door 
+	case 34: ;
+	case 35: ;
+	case 36: this.log.push(['UD']);
+			 break;
+			
+	// hide the customer
+	case 37: this.log.push(['SC', false]);
+			 this.log.push(['UD']);
+			 this.log.push(['SD', false]);
+			 break;
+
+	
+	case 38: 
+		CustomerManager.removeCustomer(this);
+		return; // think about the next state
 	}
 
 	this.state++;
+};
+
+
+Customer.prototype.moveToSomePlace = function() {
+	
+	var node = this.path.shift();
+	if (node) {
+		node = CustOpt.nodes[node];
+		this.log.push(['MC', this.currentNode.x, this.currentNode.y, node.x, node.y]);
+		this.currentNode = node;
+		
+		return true;
+	}
+	return false;
 };
 
 Customer.prototype.animate = function() {
@@ -268,7 +312,7 @@ Customer.prototype.changeCustomerPosition = function(pos) {
 		if (pos[2] > pos[0])
 			this.img.sourceY = 64;
 		else if (pos[3] < pos[1])
-			    this.img.sourceY = 128;
+			    this.img.sourceY = 96;
 			 else
 				this.img.sourceY = 0;
 	
