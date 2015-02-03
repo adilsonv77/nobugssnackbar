@@ -145,6 +145,7 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
+			bdCon.setAutoCommit(false);
 			
 			PreparedStatement ps = bdCon
 					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermoney, showhint) values (?, ?, ?, ?, 0, 'T')");
@@ -169,6 +170,9 @@ public class NoBugsConnection {
 				}
 			}
 			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
+
 		} finally {
 			if (bdCon != null)
 				try {
@@ -301,6 +305,7 @@ public class NoBugsConnection {
 		try {
 			bdCon = dataSource.getConnection();
 			PreparedStatement ps, psLog;
+			bdCon.setAutoCommit(false);
 			
 			psLog = bdCon.prepareStatement("insert into logmissions "
 							+ "(timespend, answer, missionid, classid, userid, execution, moment) values (?, ?, ?, ?, ?, ?, now())");
@@ -346,6 +351,10 @@ public class NoBugsConnection {
 				ps.executeUpdate();
 				ps.close();
 			}
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
+
 		} finally {
 			if (bdCon != null)
 				try {
@@ -382,6 +391,8 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
+			bdCon.setAutoCommit(false);
+
 			int localTimeSpend = loadMissionAccomplished(idMission,	user.getId(), idClass);
 			PreparedStatement ps;
 			if (localTimeSpend == -1) {
@@ -400,6 +411,10 @@ public class NoBugsConnection {
 
 			ps.executeUpdate();
 			ps.close();
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
+
 		} finally {
 			if (bdCon != null)
 				try {
@@ -623,6 +638,8 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
+			bdCon.setAutoCommit(false);
+			
 			PreparedStatement ps = bdCon
 					.prepareStatement("insert into questionnaire (questionnairedescription) values (?)");
 			ps.setString(1, description);
@@ -641,6 +658,10 @@ public class NoBugsConnection {
 			ps.setLong(2, classId);
 			ps.executeUpdate();
 			ps.close();
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
+
 		} finally {
 			if (bdCon != null)
 				try {
@@ -658,6 +679,9 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
+			
+			bdCon.setAutoCommit(false);
+			
 			PreparedStatement ps = bdCon
 					.prepareStatement("insert into questions (questiondescription, questiontype) values (?, ?)");
 			ps.setString(1, description);
@@ -679,6 +703,9 @@ public class NoBugsConnection {
 			ps.executeUpdate();
 			
 			ps.close();
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
 		} finally {
 			if (bdCon != null)
 				try {
@@ -777,6 +804,7 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
+			bdCon.setAutoCommit(false);
 			
 			PreparedStatement ps = bdCon.prepareStatement(
 					"insert into missionsfails (missionid, userid, classid, execution, goalcount, goaldescription, goalachieved) "
@@ -794,6 +822,9 @@ public class NoBugsConnection {
 				
 				ps.executeUpdate();
 			}
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
 			
 			ps.close();
 			
@@ -890,12 +921,28 @@ public class NoBugsConnection {
 		try {
 			bdCon = dataSource.getConnection();
 			
+			bdCon.setAutoCommit(false);
+			
 			PreparedStatement ps = bdCon.prepareStatement("insert into usersmachines (userid, machineid) values (?, ?)");
 			ps.setLong(1, userid);
 			ps.setInt(2, machineid);
 			ps.executeUpdate();
 			ps.close();
-			//TODO descontar o valor da bolsa do usuario
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select machinecost from machines where machineid = " + machineid);
+			rs.next();
+			int cost = rs.getInt(1);
+			st.close();
+			
+			ps = bdCon.prepareStatement("update users set usermoney = usermoney - ? where userid = ?");
+			ps.setInt(1, cost);
+			ps.setLong(2, userid);
+			ps.executeUpdate();
+			ps.close();
+			
+			bdCon.commit();
+			bdCon.setAutoCommit(true);
 			
 		} finally {
 			if (bdCon != null)
