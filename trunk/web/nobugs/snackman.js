@@ -885,7 +885,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 	machineCfg.typeOfDrinkFood = machineTypeOfDrinkFood;
 	machineCfg.produce = machineProduce;
 	
-	PreloadImgs.put('$' + machineProduce, 'images/$$' + machineProduce + '.png');	
+	PreloadImgs.put('$' + machineProduce, 'images/$$' + machineProduce + '.png', true);	
 	
 	machine.machineCfg = machineCfg;
 
