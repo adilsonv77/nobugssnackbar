@@ -415,6 +415,7 @@ Game.missionLoaded = function(ret){
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
+  Game.openMission = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
   Game.slider.timesBefore = 0;
   
   var slider = mission.childNodes[0].getElementsByTagName("slider");
@@ -647,7 +648,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   
   var loginLoaded = function(data) {
       
-      CustomerManager.init(data.childNodes[0].getElementsByTagName("customers")[0],
+      CustomerManager.init(Game.openMission,
+    		  			   data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
       
 	  Game.reset();

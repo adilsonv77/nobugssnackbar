@@ -28,10 +28,11 @@ var customers = [];
 
 PreloadImgs.put('banco', 'images/banco.png');
 
-CustomerManager.init = function(customers, sn) {
+CustomerManager.init = function(openMission, customers, sn) {
 	
     this.banco = PreloadImgs.get("banco");
 
+    this.openMission = openMission;
 	this.optCustomers = customers;
 	
 	this.randomization = [];
@@ -96,7 +97,7 @@ CustomerManager.reset = function() {
 			
 			var hasRandom = (customer.getAttribute("randomType") != null) || (_foods.getAttribute("randomMin") != null) || (_drinks.getAttribute("randomMin") != null);
 			
-			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks}));
+			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks, openMission: this.openMission}));
 			
 		} else {
 			
@@ -186,7 +187,7 @@ CustomerManager.createCustomersBasedOnPattern = function() {
 			var drinks = custPattern.drinks;
 			
 			customers.push(new Customer({init: this.patterns[i].init, place: this.patterns[i].place, id: this.patterns[i].id, 
-				hasRandom: this.patterns[i].hasRandom, foods: foods, drinks: drinks}));
+				hasRandom: this.patterns[i].hasRandom, foods: foods, drinks: drinks, openMission: this.openMission}));
 		}
 	}
 	
@@ -254,6 +255,11 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 	
 	return items;
 	
+};
+
+CustomerManager.removeCustomer = function(customer) {
+	var start = customers.indexOf(customer);
+	customers.splice(start, 1);
 };
 
 CustomerManager.update = function() {

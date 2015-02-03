@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission>
+<mission open="true">
 	<explanation>
 		<page type="statement">
 		Chegamos a um tipo diferente de miss&#227;o. Neste tipo de miss&#227;o voc&#234; pode rejogar v&#225;rias <br/>
@@ -71,9 +71,9 @@
 					<foods>
 						<food price="0">icecream</food>
 						<food price="0">icecream</food>
+						<food price="0">hotdog</food>
 					</foods>
 					<drinks>
-						<drink price="0">coke</drink>
 					</drinks>
 				</order>
 				<order>
