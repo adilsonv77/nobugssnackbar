@@ -30,7 +30,7 @@
 		<delete dir="generators"/>
 		
 		<delete dir="${dest.dir}/media"/>
-		<delete dir="${dest.dir}/msg"/>
+		<delete dir="${dest.dir}/js/msg"/>
 		<delete dir="${dest.dir}/../_soy"/> 
 		<delete dir="${dest.dir}/../i18n"/>
 
@@ -59,11 +59,11 @@
 			<fileset dir="${blockly.dir}/media"/>
 		</copy>
 		
-		<copy todir="${dest.dir}/msg">
+		<copy todir="${dest.dir}/js/msg">
 			<fileset dir="${blockly.dir}/msg"/>
 		</copy>
 		
-		<copy todir="${dest.dir}">
+		<copy todir="${dest.dir}/js">
 			<fileset dir="${blockly.dir}" 
 				includes="blockly_compressed.js blocks_compressed.js javascript_compressed.js python_compressed.js"/>
 		</copy>
@@ -96,7 +96,7 @@
 			<exec executable="python">
 				<arg value="i18n\json_to_js.py"/>
 				<arg value="--path_to_jar=.\_soy"/>
-				<arg value="--output_dir=web\generated"/>
+				<arg value="--output_dir=web\js\generated"/>
 				<arg value="--template"/>
 				<arg value="@{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
 				<arg value="json\*.json"/>
@@ -159,6 +159,7 @@
 			<arg line="${js.home}/variablenamesvalidate.js" />
 			<arg line="${js.home}/selector.js" />
 			<arg line="${js.home}/baloon.js" />
+			<arg line="${js.home}/progressmoney.js" />
 			
 			<classpath>
 				<path refid="lib.base" />
@@ -169,22 +170,25 @@
 	<target name="war" depends="clean, init, soycompress">
 		<war destfile="${war.home}/${app.name}.war" webxml="${web.home}/WEB-INF/web.xml">
 	    	<fileset dir="${web.home}" >
+
+	    		<include name="js/**/**/*.*" />
+	    		<!-- TODO: adicionar um excluir daqui 
+		    		<include name="jsinterpreter/acorn_interpreter.js" />
+				-->
+	    		<include name="css/**/**/*.*" />
+	    		
 	    		<include name="_soy/**/*.*" />
 	    		<include name="commons/**/*.*" />
-	    		<include name="drop/**/*.*" />
-	    		<include name="easyui/**/*.*" />
 	    		<include name="generated/**/*.*" />
 	    		<include name="images/**/*.*" />
-	    		<include name="jquery.*/**/*.*" />
-	    		<include name="jsinterpreter/acorn_interpreter.js" />
 	    		<include name="media/**/*.*" />
 	    		<include name="META-INF/**/*.*" />
-	    		<include name="msg/js/en_us.js" />
-	    		<include name="msg/js/pt-br.js" />
-	    		<include name="msg/json/en.json" />
-	    		<include name="msg/json/pt-br.json" />
-	    		<include name="msg/messages.js" />
-	    		<include name="nobugs/nobugs-min.js" />
+	    		<include name="js/msg/js/en_us.js" />
+	    		<include name="js/msg/js/pt-br.js" />
+	    		<include name="js/msg/json/en.json" />
+	    		<include name="js/msg/json/pt-br.json" />
+	    		<include name="js/msg/messages.js" />
+	    		<include name="js/nobugs/nobugs-min.js" />
 	    		<include name="WEB-INF/**/*.*" />
 	    		<include name="*.js" />
 	    		<include name="*.css" />
