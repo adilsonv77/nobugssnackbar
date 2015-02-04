@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>progressbar demo</title>
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/easyui/jquery.min.js"></script>
+  <script src="js/easyui/jquery-ui.min.js"></script>
+  <script>
+  
+  var v = 0;
+  function add() {
+	  v += 5;
+	  $( "#progressbar" ).progressbar("value" , v);
+  }
+  
+  </script>
+</head>
+<body>
+ 
+<div id="progressbar"></div>
+ 
+<script>
+$( "#progressbar" ).progressbar({
+  value: 0
+});
+</script>
+ 
+ <button onclick="add()">Add</button>
+</body>
+</html>

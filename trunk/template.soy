@@ -22,33 +22,36 @@
  * Web page structure.
  */
 {template .start}
+  <link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
+  <link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery.growl/jquery.growl.css" />
+  <link rel="stylesheet" type="text/css" href="css/drop/drop-theme-arrows-alert.css" />
 
-  <script type="text/javascript" src="blockly_compressed.js"></script>
-  
-  <script type="text/javascript" src="blocks_compressed.js"></script>
-  <script type="text/javascript" src="javascript_compressed.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/jquery.countup/jquery.countup.css">
+
+  <script type="text/javascript" src="js/blockly_compressed.js"></script>
+  <script type="text/javascript" src="js/blocks_compressed.js"></script>
+  <script type="text/javascript" src="js/javascript_compressed.js"></script>
   <script type="text/javascript" src="{$ij.langSrc}"></script>
 
-  <link rel="stylesheet" type="text/css" href="easyui/easyui.css">
-  <link rel="stylesheet" type="text/css" href="easyui/icon.css">
-  <script type="text/javascript" src="easyui/jquery.min.js"></script>
-  <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-  <script src="jquery.growl/jquery.growl.js" type="text/javascript"></script>
-  <link href="jquery.growl/jquery.growl.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="jquery.gridview/jquery.gridview.min.js"></script>
+  <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+  <script type="text/javascript" src="js/easyui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="js/jquery.growl/jquery.growl.js" ></script>
+  <script type="text/javascript" src="js/jquery.gridview/jquery.gridview.min.js"></script>
 
-  <script type="text/javascript" src="drop/drop.min.js"></script>
-  <link rel="stylesheet" href="drop/drop-theme-arrows-alert.css" />
+  <script type="text/javascript" src="js/drop/drop.min.js"></script>
 
-  <link rel="stylesheet" href="jquery.countup/jquery.countup.css">
-  <script src="jquery.countup/base.js"></script>
-  <script src="jquery.countup/jquery.countup.js"></script>
+  <script type="text/javascript" src="js/jquery.countup/base.js"></script>
+  <script type="text/javascript" src="js/jquery.countup/jquery.countup.js"></script>
 
-  <script type="text/javascript" src="jsinterpreter/acorn_interpreter.js"></script>
+  <script type="text/javascript" src="js/jsinterpreter/acorn_interpreter.js"></script>
 <!--
-  <script type="text/javascript" src="jsinterpreter/acorn.js"></script>
-  <script type="text/javascript" src="jsinterpreter/interpreter.js"></script>
+  <script type="text/javascript" src="js/jsinterpreter/acorn.js"></script>
+  <script type="text/javascript" src="js/jsinterpreter/interpreter.js"></script>
   -->
+  
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/util.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js"></script>
@@ -119,6 +122,7 @@
   
 	  <div id="visualization">
 	  	<canvas id="display" width="352" height="448"></canvas>
+	  	<div id="progressMoney" style="display:none; position: absolute; left:20px; top: 10px"></div>
 	  </div>
 	  <table style="padding-top: 1em;" class="buttons">
 	    <tr>
