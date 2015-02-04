@@ -422,7 +422,6 @@ Customer.prototype.deliver = function(item) {
 				else
 					this.fUnfulfilled++;
 				
-				money = d.price;
 				happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
 			} else {
 				reason = "Error_deliveredWrongRequest"; 	
@@ -437,6 +436,15 @@ Customer.prototype.deliver = function(item) {
 	}
 	
 	if (happy ===  Customer.DELIVERED_TOTAL) {
+		
+		var fConta = function(entry) {
+			
+			money += entry.price;
+
+		};
+		
+		this.foods.forEach(fConta);
+		this.drinks.forEach(fConta);
 		
 		this.showCoin = true;
 		this.coin.x = this.img.x+5;

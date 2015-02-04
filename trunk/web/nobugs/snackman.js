@@ -571,7 +571,7 @@ SnackMan.prototype.deliver = function(item) {
 			CustomerManager.update();
 		}
 		
-		BlocklyApps.log.push(['IO', amount, this.catched - this.delivered]);
+		BlocklyApps.log.push(['IO', amount.money, this.catched - this.delivered]);
 		CustomerManager.update();
 	}
 	

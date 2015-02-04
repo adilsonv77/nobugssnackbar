@@ -262,7 +262,7 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		var theItem = item.childNodes[0].nodeValue;
 		
 		if (hero.hasMachineFor(theItem)) {
-			var thePrice = item.getAttribute("price");
+			var thePrice = parseInt(item.getAttribute("price"));
 			items.push({item: theItem, price: thePrice});
 		}
 		
