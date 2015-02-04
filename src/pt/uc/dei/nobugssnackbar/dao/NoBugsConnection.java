@@ -159,15 +159,21 @@ public class NoBugsConnection {
 			ps.close();
 			
 			if (classes != null && classes.length > 0) {
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery("select last_insert_id()");
+				rs.next();
+				long userid = rs.getLong(1);
+				st.close();
+
+				ps = bdCon.prepareStatement("insert into classesusers (classid, userid) values (?, ?)");
 				for (int classId : classes) {
-					ps = bdCon.prepareStatement("insert into classesusers (classid, userid) values (?, ?)");
 				
 					ps.setLong(1, classId);
-					ps.setLong(2, getUserId(userNick));
+					ps.setLong(2, userid);
 					
 					ps.executeUpdate();
-					ps.close();
 				}
+				ps.close();
 			}
 			
 			bdCon.commit();
