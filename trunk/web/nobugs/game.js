@@ -640,6 +640,8 @@ Game.buyMachineButtonClick = function() {
 
 Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
+  Game.speedSlider.setValue(0.5); 
+		
   var xml = Blockly.Xml.textToDom(answer);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
   Game.moveBlocks();
@@ -647,7 +649,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
-      
       CustomerManager.init(Game.openMission,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
