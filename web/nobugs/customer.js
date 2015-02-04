@@ -139,6 +139,7 @@ Customer = function(options) {
 	this.showFire = false;
 	
 	this.openMission = options.openMission;
+	this.idxPattern = options.idxPattern;
 
 };
 
@@ -245,6 +246,8 @@ Customer.prototype.update = function() {
 	
 	case 38: 
 		CustomerManager.removeCustomer(this);
+		if (this.openMission)
+			CustomerManager.createCustomerByPattern(this.idxPattern, CustOpt.door);
 		return; // think about the next state
 	}
 

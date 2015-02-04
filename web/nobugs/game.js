@@ -1191,7 +1191,11 @@ Game.execute = function(debug) {
 
 		Game.saveMission();
 		
-  	    var code = "var NoBugsJavaScript = {};\n" + js.workspaceToCode();
+  	    var code = "var NoBugsJavaScript = {};\n";
+  	    if (Game.openMission) {
+  	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + js.workspaceToCode() + "\n } ";
+  	    } else 
+  	    	code += js.workspaceToCode();
   	    
       //  alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
