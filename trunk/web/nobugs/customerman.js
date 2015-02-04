@@ -125,7 +125,7 @@ CustomerManager.reset = function() {
 	}
 	
 	this.createCustomersBasedOnPattern();
-	this.transformSN();
+	this.transformSN(); // this doesnt work with pattern options
 };
 
 CustomerManager.transformSN = function() {
@@ -179,17 +179,32 @@ CustomerManager.createCustomersBasedOnPattern = function() {
 			}
 		
 		if (!found) {
-			var custPattern = this.patterns[i].pattern[this.patterns[i].idxCustPattern];
 			
-			this.patterns[i].idxCustPattern = (this.patterns[i].idxCustPattern + 1) %  this.patterns[i].pattern.length;
-				
-			var foods = custPattern.foods;
-			var drinks = custPattern.drinks;
-			
-			customers.push(new Customer({init: this.patterns[i].init, place: this.patterns[i].place, id: this.patterns[i].id, 
-				hasRandom: this.patterns[i].hasRandom, foods: foods, drinks: drinks, openMission: this.openMission}));
+			CustomerManager.createCustomerByPattern(i, this.patterns[i].init);
 		}
 	}
+	
+};
+
+CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
+	
+	var i = idxPattern;
+	var custPattern = this.patterns[i].pattern[this.patterns[i].idxCustPattern];
+	
+	this.patterns[i].idxCustPattern = (this.patterns[i].idxCustPattern + 1) %  this.patterns[i].pattern.length;
+		
+	var foods = custPattern.foods;
+	var drinks = custPattern.drinks;
+	
+	customers.push(new Customer({
+							init: initPlace, 
+							place: this.patterns[i].place, 
+							id: this.patterns[i].id, 
+							hasRandom: this.patterns[i].hasRandom, 
+							foods: foods, drinks: drinks,
+							openMission: this.openMission, idxPattern: i}));
+	
+	// TODO thinking this method using the transformSN method
 	
 };
 
