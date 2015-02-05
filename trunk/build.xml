@@ -154,7 +154,6 @@
 			<arg line="${js.home}/nobugsblocklygeneratorjavascript.js" />
 			<arg line="${js.home}/xml.js" />
 			<arg line="${js.home}/objectives.js" />
-			<arg line="${js.home}/money.js" />
 			<arg line="${js.home}/questionnaire.js" />
 			<arg line="${js.home}/variablenamesvalidate.js" />
 			<arg line="${js.home}/selector.js" />

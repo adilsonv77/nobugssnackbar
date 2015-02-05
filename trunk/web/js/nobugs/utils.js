@@ -98,3 +98,19 @@ function convertImgHex(imgHex, content, fConvert) {
 
 }
 
+
+function generateImages(number, digits) {
+	
+	
+	number = number + "";
+	while (number.length < digits) {
+		number = "0" + number;
+	}
+	
+	var imgs = new Array(digits);
+	$.each(imgs, function(i){
+		imgs[i] = number[i]+ ".png";
+	});
+	
+	return imgs;
+}

@@ -26,23 +26,34 @@
 
 var ProgressMoney = {};
 
-ProgressMoney.init = function(openMission) {
-	this.openMission = openMission;
+PreloadImgs.put("mission_points", "images/mission_points.png");
+PreloadImgs.put("numbers", "images/numbers.png");
+
+
+ProgressMoney = function(openMission, x, y) {
+	this.x = x;
+	this.y = y;
 	
-	if (openMission) {
-		this.value = 0;
-		
-		$( "#progressMoney" ).progressbar({ value: 0, max: 100 });
-
-		
-		$('#progressMoney').show();
-	}
-
+	this.openMission = openMission;
+	this.amount = 0;
+	
+	this.digitsImage = PreloadImgs.get("numbers");
 };
 
-ProgressMoney.draw = function(ctx) {
-   if (!this.openMission) return;
+ProgressMoney.prototype.draw = function(ctx) {
 	
-   this.value += 1;
-   $( "#progressMoney" ).progressbar("value" , this.value);
+	if (this.openMission) {
+		ctx.drawImage(PreloadImgs.get("mission_points"), this.x-35, 0);
+	}
+	
+	var smoney = this.amount + ""; // convert to string
+	while (smoney.length < 3) {
+		smoney = "0" + smoney;
+	}
+	
+	for (var i=0; i<3; i++) {
+		var x = parseInt( smoney[i] ) * 16;
+		ctx.drawImage(this.digitsImage, x, 0, 16, 16, this.x+(i*13), this.y, 16, 16);
+	}
+	
 };
