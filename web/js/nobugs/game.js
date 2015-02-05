@@ -42,8 +42,8 @@ Game.mission = null;
 Game.pidList = [];
 
 
-Game.money = 0;
-Game.currentlyMoney = Game.money;
+Game.globalMoney = {};
+Game.missionMoney = {};
 
 Game.lastErrorData;
 Game.jsInterpreter;
@@ -324,10 +324,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   BlocklyApps.init();
 	
-  UserControl.retrieveMoney(function(ret) {
-	  Game.money = ret;
-  });
-
   NoBugsJavaScript.redefine();
   
   Game.rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
@@ -416,8 +412,13 @@ Game.missionLoaded = function(ret){
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	  
   Game.openMission = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
-  ProgressMoney.init(Game.openMission);
+  Game.globalMoney = new ProgressMoney(false, 298, 8);
+  Game.missionMoney = new ProgressMoney(Game.openMission, 200, 8);
   
+  UserControl.retrieveMoney(function(ret) {
+	  Game.globalMoney.amount = parseInt(ret);
+  });
+
   Game.slider.timesBefore = 0;
   
   var slider = mission.childNodes[0].getElementsByTagName("slider");
@@ -563,7 +564,7 @@ Game.continueSelectMachine = function() {
 	};
 	
 	var f4 = function(i, j, m) {
-		return Game.money >= Game.machines[m-1].cust;
+		return Game.globalMoney.amount >= Game.machines[m-1].cust;
 	};
 	
 	var sel = new Selector(data, 1, 180, null, null, f1, f2, f3, f4);
@@ -974,11 +975,12 @@ Game.display = function() {
 	CustomerManager.animation();
 
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
-	ProgressMoney.draw(Game.ctxDisplay);
+
+	Game.missionMoney.draw(Game.ctxDisplay);
+	Game.globalMoney.draw(Game.ctxDisplay);
 	
 	hero.draw(Game.ctxDisplay);
 	CustomerManager.draw(Game.ctxDisplay);
-	showMoney(Game.money, Game.ctxDisplay);
 	
 };
 
@@ -1064,8 +1066,6 @@ Game.runButtonClick = function() {
   
   Game.doResizeWindow("none");
   
-  Game.saveMoney();
-  
   Blockly.mainWorkspace.traceOn(true);
   Game.execute(1);
 };
@@ -1126,7 +1126,6 @@ Game.debugButtonClick = function() {
 			$('#vars').datagrid('resize');
 		}
 		
-  	    Game.saveMoney();
 		Blockly.mainWorkspace.traceOn(true);
 		Game.firstClick = true;
 		
@@ -1371,7 +1370,7 @@ Game.nextStep = function() {
 			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
 			    	
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
-			    	Game.money = parseInt(Game.money) + reward.total;
+			    	Game.globalMoney.amount = parseInt(Game.globalMoney.amount) + reward.total;
 			    	Game.display();
 
 			        var answer = Blockly.Xml.domToText(xml);
@@ -1790,7 +1789,8 @@ Game.step = function(command, values) {
   	case 'IO' :
   		var value = values.shift();
   		if (value != null)
-  			Game.money += value;
+  			Game.missionMoney.amount += value;
+  		
   		value = values.shift();
   		if (value == 0)
   			hero.changeImageOriginal();
@@ -1860,10 +1860,6 @@ Game.lastErrorHas = function(blockName) {
 	}
 	
 	return false;
-};
-
-Game.saveMoney = function() {
-	this.currentlyMoney = this.money;
 };
 
 Game.alertColor = ["#DD4B39", "#E07c70", "#edcdc9", "#E07c70"];
