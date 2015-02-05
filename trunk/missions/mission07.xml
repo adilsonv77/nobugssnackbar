@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission open="true">
+<mission open="true" timeLimit="10">
 	<explanation>
 		<page type="statement">
 		Chegamos a um tipo diferente de miss&#227;o. Neste tipo de miss&#227;o voc&#234; pode rejogar v&#225;rias <br/>
@@ -106,8 +106,7 @@
 			</pattern>
 		</customer>
 	</customers>
-	<objectives buttonBuy="true" timeLimit="6000"> 
-	</objectives>
+	<objectives buttonBuy="true"/> 
 	<xml alwaysNew = "true">
 
 	</xml>

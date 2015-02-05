@@ -18,7 +18,7 @@
  */
 
 /**
- * @fileoverview Progress bar of money in open missions.
+ * @fileoverview Visible representation of money.
  * @author adilsonv77@gmail.com (Adilson Vahldick)
  */
 

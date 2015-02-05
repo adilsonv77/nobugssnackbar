@@ -719,13 +719,26 @@ BlocklyApps.getMsgOrNull = function(key) {
   if (element) {
     var text = element.textContent;
     // Convert newline sequences.
-    text = text.replace(/\\n/g, '\n');
+    text = text.replace(/\\n/g, '<br/>');
     return text;
   } else {
     return null;
   }
 };
 
+BlocklyApps.getHtmlMsg = function(key) {
+	  var msg = BlocklyApps.getHtmlMsgOrNull(key);
+	  return msg === null ? '[Unknown message: ' + key + ']' : msg;
+	};
+
+BlocklyApps.getHtmlMsgOrNull = function(key) {
+	  var element = document.getElementById(key);
+	  if (element) {
+	    return element.innerHTML;
+	  } else {
+	    return null;
+	  }
+	};
 /**
  * Bind a function to a button's click event.
  * On touch enabled browsers, ontouchend is treated as equivalent to onclick.
@@ -749,10 +762,10 @@ BlocklyApps.importPrettify = function() {
   var link = document.createElement('link');
   link.setAttribute('rel', 'stylesheet');
   link.setAttribute('type', 'text/css');
-  link.setAttribute('href', '../prettify.css');
+  link.setAttribute('href', 'css/prettify.css');
   document.head.appendChild(link);
   var script = document.createElement('script');
   script.setAttribute('type', 'text/javascript');
-  script.setAttribute('src', '../prettify.js');
+  script.setAttribute('src', 'js/prettify.js');
   document.head.appendChild(script);
 };
