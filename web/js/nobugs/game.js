@@ -404,16 +404,24 @@ Game.missionLoaded = function(ret){
 	
   Game.howManyRuns = parseInt(ret[4]);
   Game.previousCode = ret[2];
-  Game.timeSpent = ret[3];
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
-	  
-  Game.openMission = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
+	
+  Game.openMission = {};
+  Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
+  Game.openMission.time = mission.childNodes[0].getAttribute("timeLimit");
+  
   Game.globalMoney = new ProgressMoney(false, 298, 8);
-  Game.missionMoney = new ProgressMoney(Game.openMission, 200, 8);
+  Game.missionMoney = new ProgressMoney(Game.openMission.open, 200, 8);
+
+  if (Game.openMission.open)
+	  Game.timeSpent = 0;
+  else
+	  Game.timeSpent = ret[3];
+
   
   UserControl.retrieveMoney(function(ret) {
 	  Game.globalMoney.amount = parseInt(ret);
@@ -652,14 +660,25 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
-      CustomerManager.init(Game.openMission,
+      CustomerManager.init(Game.openMission.open,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
       
 	  Game.reset();
 	  
-	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
-	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
+	  if (Game.openMission.open) {
+	  
+		  Game.bonusTime = Game.openMission.time;
+		  Game.bonusTimeReward = "0";
+			  
+	  } else {
+		  
+		  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
+		  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
+		  
+	  }
+	  
+	  
 	  Game.addCronometro(Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
@@ -679,7 +698,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
-	  window.setTimeout(Game.importPrettify, 1);
+	  window.setTimeout(BlocklyApps.importPrettify, 1);
 	  
 	  if (Game.firstTime) {
 		  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
@@ -741,11 +760,16 @@ Game.verifyButtons = function(objectives) {
 
 Game.timesUp = function (m, s) {
 	if (((m*60 + s)+30) == Game.bonusTime) {
+		
 		Game.changeCSSAlertCronometro();
+		
 	} else {
 		if (((m*60 + s)) == Game.bonusTime) {
+			
 			Game.changeCSSOverCronometro();
-		}
+			Game.finishOpenMission();
+			
+		} 
 	}
 };
 
@@ -772,6 +796,28 @@ Game.changeCSSOverCronometro = function() {
 	
 	Game.cronometro.options.cssDigit = 'over';
 	Game.cronometro.options.callback =  function(){}; // it's not still necessary call this method
+	
+};
+
+Game.finishOpenMission = function() {
+	
+	if (!Game.openMission.open) return;
+	
+	Game.stopCronometro();
+	
+	Game.runningStatus = 0;
+	
+	var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
+	var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+	var out = msg.format(Game.missionMoney.amount + "&nbsp;" + coin2)+ "<br/>";
+	
+	var vicText = document.getElementById("victoyText");
+	vicText.innerHTML = out;
+	
+	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+			function(){
+    			Game.init();
+		});
 	
 };
 
@@ -827,21 +873,6 @@ Game.stopCronometro = function() {
 	if (Game.cronometro != null) {
 		Game.cronometro.stop();
 	}
-};
-
-// I dont know what this feature do in the game. 
-// This is a copy from commons.js importPrettify function. Because my prettify files are in another
-//   place, I need to overwrite this function.
-Game.importPrettify = function() {
-	  //<link rel="stylesheet" href="prettify.css">
-	  //<script src="prettify.js"></script>
-	  var link = document.createElement('link');
-	  link.setAttribute('rel', 'stylesheet');
-	  link.setAttribute('href', 'css/prettify.css');
-	  document.head.appendChild(link);
-	  var script = document.createElement('script');
-	  script.setAttribute('src', 'js/prettify.js');
-	  document.head.appendChild(script);
 };
 
 Game.doResizeWindow = function(style) {
@@ -950,6 +981,7 @@ Game.reset = function() {
   Game.stopAlertGoalButton();
   hero.reset();
   CustomerManager.reset();
+  Game.missionMoney.amount = 0;
 
   Game.display();
 
@@ -1196,7 +1228,7 @@ Game.execute = function(debug) {
 		Game.saveMission();
 		
   	    var code = "var NoBugsJavaScript = {};\n";
-  	    if (Game.openMission) {
+  	    if (Game.openMission.open) {
   	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + js.workspaceToCode() + "\n } ";
   	    } else 
   	    	code += js.workspaceToCode();
@@ -1402,34 +1434,6 @@ Game.nextStep = function() {
 					    MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
 				    			function(){
 					    			Game.init();
-				    				/*
-				    				window.removeEventListener('unload', Game.unload);	
-				    				try {
-				    					UserControl.retrieveQuestionnaire(function(q) {
-				    						if (q != null) {
-				    							
-				    							if (!Game.showQuestionnaire(q))
-				    								Game.continueLoginProcess();
-				    							
-				    						} else {
-				    							Game.continueLoginProcess();
-				    						}
-				    						
-				    					});
-				    				} catch (ex) {
-				    					Game.init();
-				    				};
-/*
-				    				try {
-					    				UserControl.retrieveMissions(function(ret) {
-					    					Game.loginData.clazzId = 0;
-					    					Game.logged(ret);
-					    				});
-				    					
-				    				} catch(ex) {
-				    					Game.init();
-				    				}
-				    		*/
 		    				});
 			    	});
 			    	

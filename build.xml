@@ -171,9 +171,8 @@
 	    	<fileset dir="${web.home}" >
 
 	    		<include name="js/**/**/*.*" />
-	    		<!-- TODO: adicionar um excluir daqui 
-		    		<include name="jsinterpreter/acorn_interpreter.js" />
-				-->
+	    		<exclude name="js/jsinterpreter/acorn_interpreter.js"/>
+
 	    		<include name="css/**/**/*.*" />
 	    		
 	    		<include name="_soy/**/*.*" />

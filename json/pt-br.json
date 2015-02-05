@@ -46,6 +46,8 @@
 	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de {0} se cumprir a miss&#227;o com {1} comandos ou menos.",
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de {0} (ou mais) se cumprir a miss&#227;o em {1} minutos ou menos.",
 	
+	"NoBugs.finishOpenMission" : "O tempo da miss&#227;o acabou. &#60;br/&#62;&#60;br/&#62; Voc&#234; recebeu no total &#60;b&#62;{0}&#60;/b&#62; pelas entregas dos pedidos.",
+	
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
 	"NoBugs.password" : "Senha",
