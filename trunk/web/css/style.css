@@ -211,6 +211,12 @@ p.item {
 	background-position: bottom; 
 }
 
+.rerunBack {
+	background-image: url('../images/rerun.png');
+	background-repeat: no-repeat;
+	background-position: bottom; 
+}
+
 .missionEnabled {
 	background-color: #77DD77;
 	cursor: default;

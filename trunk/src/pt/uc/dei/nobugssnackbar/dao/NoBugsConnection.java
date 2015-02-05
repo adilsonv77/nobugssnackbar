@@ -474,7 +474,7 @@ public class NoBugsConnection {
 			String s =	"select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join (" 
 					   +  " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					   +  " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
-					   +     " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)" 
+					   +     " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)"
 					   +     "   where ma.userid = ? and ma.achieved = 'T' group by classid, classlevelid) maz " 
 					   +     "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
 					   + " order by c.classname, classlevelid";
@@ -484,11 +484,37 @@ public class NoBugsConnection {
 			ps.setString(1,  classes.toString().replace("[", "").replace("]", "").replace(" ", ""));
 			ps.setLong(2, idUser);
 			
+			List<Integer> classesId = new ArrayList<>();
+			List<Integer> classesLevelId = new ArrayList<>();
+			
 			List<Object[]> l = new ArrayList<>(); 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6)};
+				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), new ArrayList<Integer>()};
+
+				classesId.add(rs.getInt(5));
+				classesLevelId.add(rs.getInt(6));
+				
 				l.add(li);
+			}
+			ps.close();
+			
+			ps = bdCon.prepareStatement( "select missionorder from classesmissions join missions using (missionid) where classid = ? and classlevelid = ? and missionrepeatable = 'Y'" ); 
+			
+			for (int i = 0; i < classesId.size(); i++) {
+				
+				ps.setInt(1, classesId.get(i));
+				ps.setInt(2, classesLevelId.get(i));
+				
+				@SuppressWarnings("unchecked")
+				List<Integer> missions = (List<Integer>) l.get(i)[6];
+				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					missions.add(rs.getInt(1));
+				}
+				
+				
 			}
 			ps.close();
 			

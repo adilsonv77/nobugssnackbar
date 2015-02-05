@@ -140,6 +140,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, mis
 	 *   3 - how many solved missions
 	 *   4 - class id
 	 *   5 - level id
+	 *   6 - missions that can be replayed []
 	 */
 	Game.loginData = {userLogged: u, missionHist: missionsHistorical, clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
@@ -264,7 +265,10 @@ Game.missionsRetrieved = function(missions) {
 			rec = data[idx];
 		}
 		
-		var l = {name: missions[i][1], id: missions[i][5], howManyItems: missions[i][2], howManyItemsAchieved: missions[i][3]};
+		var l = {name: missions[i][1], id: missions[i][5], 
+							 howManyItems: missions[i][2], 
+					 howManyItemsAchieved: missions[i][3], 
+					          repeateable: missions[i][6]};
 		rec.levels.push(l);
 	}
 	
@@ -290,18 +294,23 @@ Game.missionsRetrieved = function(missions) {
 	};
 	
 	var f3 = function(i, j, m) {
+		if (data[i].levels[j].repeateable.indexOf(m) > -1) // repeateable missions never are enabled
+			return false;
+		
 		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
 		var mt = ma + 1;
+		
 		return m < mt;
 	};
 	
 	var f4 = function(i, j, m) {
+		var idx = data[i].levels[j].repeateable.indexOf(m);
 		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
 		var mt = ma + 1;
-		return m == mt;
+		return (idx == -1 && m == mt) || (idx > -1 && m < mt);
 	};
 
-	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", f1, f2, f3, f4);
+	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", "rerunBack", f1, f2, f3, f4);
 	return sel.build();
 	
 };
@@ -581,7 +590,7 @@ Game.continueSelectMachine = function() {
 		return Game.globalMoney.amount >= Game.machines[m-1].cust;
 	};
 	
-	var sel = new Selector(data, 1, 180, null, null, f1, f2, f3, f4);
+	var sel = new Selector(data, 1, 180, null, null, null, f1, f2, f3, f4);
 	var selBuilt = sel.build();
 
 	var content = $("<div/>")

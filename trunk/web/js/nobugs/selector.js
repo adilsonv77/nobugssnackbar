@@ -25,7 +25,7 @@
 'use strict';
 
 var Selector = {};
-Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass, clickTarget, genContent, 
+Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass, rerunCssClass, clickTarget, genContent, 
 					fMissionEnabled, fMissionTarget) {
 	this.data = data;
 	this.clickTarget = clickTarget;
@@ -33,6 +33,7 @@ Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass,
 	
 	this.enabledCssClass = enabledCssClass;
 	this.disabledCssClass = disabledCssClass;
+	this.rerunCssClass = rerunCssClass;
 	
 	this.fMissionEnabled  = fMissionEnabled;
 	this.fMissionTarget   = fMissionTarget;
