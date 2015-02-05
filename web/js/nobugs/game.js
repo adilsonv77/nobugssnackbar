@@ -65,21 +65,26 @@ Game.init = function() {
 	PreloadImgs.put('doors', 'images/doors.png');
 	
     PreloadImgs.loadImgs();
+
+    // if there is some event added in before execution, than remove it
+    window.removeEventListener('resize',  Game.resizeMainWindow);
+    
+    window.addEventListener('resize',  Game.resizeMainWindow);
     
     // if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
 		
-		if (ret[0]) 
+		if (ret[0]) {
+			
 			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5]);
-		else {
+			
+		} else {
 			window.removeEventListener('unload', Game.unload);
 
   		    document.getElementById("mainBody").style.display = "none";
 		    document.getElementById("initialBackground").style.display = "inline";
-
-		    window.addEventListener('resize',  Game.resizeMainWindow);
-		    
 		    Game.resizeMainWindow();
+		    
 		}
 	});
 
@@ -224,6 +229,7 @@ Game.logged = function(missionsHistorical) {
 		// this is necessary when unloads
 	    document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "inline";
+	    Game.resizeMainWindow();
 		 
 		var idRoot = Game.missionsRetrieved(missionsHistorical);
 		var content = $("<div/>")
@@ -335,7 +341,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	varBoxH: "90%"
   };
   
-  window.removeEventListener('resize',  Game.resizeMainWindow);
+  // window.removeEventListener('resize',  Game.resizeMainWindow); //
   
   window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
@@ -799,25 +805,56 @@ Game.changeCSSOverCronometro = function() {
 	
 };
 
+Game.beforeFinishMission = function() {
+	Game.victory = true;
+	
+    Game.lastErrorData.iderror = 0;
+    Game.lastErrorData.message = "";
+	
+	Hints.stopHints();
+    Game.stopCronometro();
+    Game.stopAlertGoalButton();
+    
+	//TODO animar o cooker no final da missao
+
+	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    var answer = Blockly.Xml.domToText(xml);
+
+	var now = new Date().getTime();
+	var timeSpent = Math.floor((now - Game.currTime)/1000);
+	
+	return {timeSpent: timeSpent, answer: answer};
+	
+};
+
+Game.showDialogVictory = function(out) {
+	
+	var vicText = document.getElementById("victoyText");
+	vicText.innerHTML = out;
+
+	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+			function(){
+				Game.init();
+		});
+
+};
+
 Game.finishOpenMission = function() {
 	
 	if (!Game.openMission.open) return;
 	
-	Game.stopCronometro();
-	
+	var r = Game.beforeFinishMission();
 	Game.runningStatus = 0;
 	
-	var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
-	var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-	var out = msg.format(Game.missionMoney.amount + "&nbsp;" + coin2)+ "<br/>";
+	UserControl.saveMission(Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, r.answer, function(){
 	
-	var vicText = document.getElementById("victoyText");
-	vicText.innerHTML = out;
-	
-	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
-			function(){
-    			Game.init();
-		});
+		var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
+		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+		var out = msg.format(Game.missionMoney.amount + "&nbsp;" + coin2)+ "<br/>";
+		
+		Game.showDialogVictory(out);
+		
+	});
 	
 };
 
@@ -1386,28 +1423,14 @@ Game.nextStep = function() {
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
 			    	
-			    	Game.victory = true;
+			    	var r = Game.beforeFinishMission();
 			    	
-		    	    Game.lastErrorData.iderror = 0;
-		    	    Game.lastErrorData.message = "";
-			    	
-			    	Hints.stopHints();
-				    Game.stopCronometro();
-			    	//TODO animar o cooker no final da missao
-
-			    	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
-
-			    	var now = new Date().getTime();
-			    	var timeSpent = Math.floor((now - Game.currTime)/1000);
-			    	
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 			    	Game.globalMoney.amount = parseInt(Game.globalMoney.amount) + reward.total;
 			    	Game.display();
 
-			        var answer = Blockly.Xml.domToText(xml);
-			    	
-			    	UserControl.saveMission(reward.total, timeSpent, Game.howManyRuns, true, answer, function(){
+			    	UserControl.saveMission(reward.total, r.timeSpent, Game.howManyRuns, true, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
@@ -1426,15 +1449,7 @@ Game.nextStep = function() {
 				    		
 			    		}
 			    		
-			    		var vicText = document.getElementById("victoyText");
-			    		vicText.innerHTML = out;
-			    		
-					    Game.stopAlertGoalButton();
-
-					    MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
-				    			function(){
-					    			Game.init();
-		    				});
+			    		Game.showDialogVictory(out);
 			    	});
 			    	
 			    } else {
