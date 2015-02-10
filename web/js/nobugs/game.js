@@ -430,7 +430,7 @@ Game.missionLoaded = function(ret){
   Game.openMission.time = mission.childNodes[0].getAttribute("timeLimit");
   
   Game.globalMoney = new ProgressMoney(false, 298, 8);
-  Game.missionMoney = new ProgressMoney(Game.openMission.open, 200, 8);
+  Game.missionMoney = new ProgressMoney(true, 200, 8);
 
   if (Game.openMission.open)
 	  Game.timeSpent = 0;
@@ -1054,7 +1054,9 @@ Game.display = function() {
 
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
 
-	Game.missionMoney.draw(Game.ctxDisplay);
+	if (Game.openMission.open)
+		Game.missionMoney.draw(Game.ctxDisplay);
+	
 	Game.globalMoney.draw(Game.ctxDisplay);
 	
 	hero.draw(Game.ctxDisplay);
