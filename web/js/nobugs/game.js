@@ -233,9 +233,17 @@ Game.logged = function(missionsHistorical) {
 	    Game.resizeMainWindow();
 		 
 		var idRoot = Game.missionsRetrieved(missionsHistorical);
+		var idLeaderBoard = Game.createsLeaderBoard("#"+idRoot);
+
+		var tdMissions = $("<td>").append($("#" + idRoot));
+		var tdLeaderBoard = $("<td>").append($("#" + idLeaderBoard));
+		
+		var trMission = $("<tr>").append(tdMissions).append(tdLeaderBoard);
+		
+		var tableMission = $("<table>").append(trMission);
 		var content = $("<div/>")
-				.append($("#" + idRoot))
-				.append(nobugspage.logoffDlgButton(null, null, null));
+						.append(tableMission)
+						.append(nobugspage.logoffDlgButton(null, null, null));
 
 		MyBlocklyApps.showDialog(content[0], null, false, true, true,
 					BlocklyApps.getMsg("_missions"), null, 
@@ -246,6 +254,42 @@ Game.logged = function(missionsHistorical) {
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
+};
+
+Game.createsLeaderBoard = function(idRoot) {
+	
+	var lb = $('<div id="leaderBoard"/>').addClass("easyui-tabs").addClass("tabs-container").appendTo("body");
+	
+	lb.tabs();
+	
+	// Money
+	lb.tabs('add',{
+	    content: "Teste",
+	    iconCls: "leaderMoney",
+	    width: 100
+	    
+	});
+	
+	// Level - Time
+	lb.tabs('add',{
+	    content: "Teste",
+	    iconCls: "leaderTime",
+		width: 100
+	    
+	});
+	
+	// Level - Runnings
+	lb.tabs('add',{
+	    content: "Teste",
+	    iconCls: "leaderRun",
+		width: 100
+
+	});
+	
+	lb.tabs({selected: 0, width: 200, height: $(idRoot).css("height")});
+	
+	return "leaderBoard";
+	
 };
 
 Game.missionsRetrieved = function(missions) {
