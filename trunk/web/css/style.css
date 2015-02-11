@@ -265,3 +265,13 @@ table.tableVictory td  {
 	padding: 5px; 
 	background-color: rgb(250, 250, 125);
 }
+
+.leaderMoney{
+	background:url('../images/iconmoney.png') no-repeat center center;
+}
+.leaderTime{
+	background:url('../images/icontime.png') no-repeat center center;
+}
+.leaderRun{
+	background:url('../images/iconrun.png') no-repeat center center;
+}

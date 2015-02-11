@@ -26,7 +26,7 @@
 
 var Selector = {};
 Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass, rerunCssClass, clickTarget, genContent, 
-					fMissionEnabled, fMissionTarget) {
+					fMissionEnabled, fMissionTarget, additionalComponent) {
 	this.data = data;
 	this.clickTarget = clickTarget;
 	this.genContent = genContent;
@@ -111,16 +111,16 @@ Selector.prototype.build = function() {
 
 	for (var i = 0; i <data.length; i++) {
 		$('#tt'+i).tabs({
-		    width: wMax + 50,
-			border:false
+		    width: wMax + 50
 		});
 	}
 		
-	$('#aa').accordion({
-	    animate:false,
-	    border:false,
-	    width: wMax + 50
-	});
+	if (useAccordion)
+		$('#aa').accordion({
+		    animate:false,
+		    border:false,
+		    width: wMax + 50
+		});
 	
 	return (useAccordion?"aa": "tt0");
 	
