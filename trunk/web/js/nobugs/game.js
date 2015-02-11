@@ -307,7 +307,7 @@ Game.missionsRetrieved = function(missions) {
 		var idx = data[i].levels[j].repeateable.indexOf(m);
 		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
 		var mt = ma + 1;
-		return (idx == -1 && m == mt) || (idx > -1 && m < mt);
+		return (idx == -1 && m == mt) || (idx > -1 && m <= mt);
 	};
 
 	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", "rerunBack", f1, f2, f3, f4);
