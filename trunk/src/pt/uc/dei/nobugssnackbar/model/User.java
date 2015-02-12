@@ -1,6 +1,8 @@
 package pt.uc.dei.nobugssnackbar.model;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
@@ -12,16 +14,18 @@ public class User {
 	private String nick;
 	private String passw;
 	private long money;
-	
+
+	private List<Long> classesId = new ArrayList<>();
+
 	@RemoteProperty
 	private String sex;
-	
+
 	@RemoteProperty
 	private String name;
-	
+
 	@RemoteProperty
 	private Time lastTime;
-	
+
 	@RemoteProperty
 	private boolean showHint;
 
@@ -89,11 +93,13 @@ public class User {
 	public boolean isShowHint() {
 		return showHint;
 	}
-	
+
 	public void setShowHint(boolean showHint) {
 		this.showHint = showHint;
 	}
-	
-	
+
+	public List<Long> getClassesId() {
+		return classesId;
+	}
 
 }

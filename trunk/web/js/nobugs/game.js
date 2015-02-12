@@ -76,7 +76,7 @@ Game.init = function() {
 		
 		if (ret[0]) {
 			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]);
 			
 		} else {
 			window.removeEventListener('unload', Game.unload);
@@ -121,7 +121,7 @@ Game.login = function() {
 	  			
 	  			error.innerHTML = "";
 	  			
-  				Game.renderQuestionnaire(ret[1], ret[2]);
+  				Game.renderQuestionnaire(ret[1], ret[2], ret[3]);
 	  			
 	  				  			
 	  		} else {
@@ -131,7 +131,7 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, missionIdx) {
+Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, clazzId, levelId, missionIdx) {
 	/*
 	 * missionsHistorical [...][n], where n are 
 	 *   0 - class name
@@ -142,7 +142,17 @@ Game.renderQuestionnaire = function(u, missionsHistorical, clazzId, levelId, mis
 	 *   5 - level id
 	 *   6 - missions that can be replayed []
 	 */
-	Game.loginData = {userLogged: u, missionHist: missionsHistorical, clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
+	/*
+	 * leaderBoard [...][n], where n are
+	 *   0 - userid
+	 *   1 - username
+	 *   2 - money
+	 *   3 - time spent
+	 *   4 - executions
+	 *   5 - max mission accomplished 
+	 */
+	Game.loginData = {userLogged: u, missionHist: missionsHistorical, leaderBoard: leaderBoard, 
+					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
 	try {
 		UserControl.retrieveQuestionnaire(function(q) {
@@ -231,22 +241,16 @@ Game.logged = function(missionsHistorical) {
 	    document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "inline";
 	    Game.resizeMainWindow();
-		 
+	    
 		var idRoot = Game.missionsRetrieved(missionsHistorical);
-		var idLeaderBoard = Game.createsLeaderBoard("#"+idRoot);
-
-		var tdMissions = $("<td>").append($("#" + idRoot));
-		var tdLeaderBoard = $("<td>").append($("#" + idLeaderBoard));
 		
-		var trMission = $("<tr>").append(tdMissions).append(tdLeaderBoard);
-		
-		var tableMission = $("<table>").append(trMission);
-		var content = $("<div/>")
-						.append(tableMission)
-						.append(nobugspage.logoffDlgButton(null, null, null));
-
-		MyBlocklyApps.showDialog(content[0], null, false, true, true,
-					BlocklyApps.getMsg("_missions"), null, 
+		$("#" + idRoot).css("height", "342px");
+	    $("#tdSelectMission").append($("#" + idRoot));
+	    Game.createsLeaderBoard("#"+idRoot);
+	    
+		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
+					null, false, true, true,
+					BlocklyApps.getMsg("Text_YourProgress"), null, //  
 					function() { 
 						$("#" + idRoot).remove();
 				    	 
@@ -258,37 +262,40 @@ Game.logged = function(missionsHistorical) {
 
 Game.createsLeaderBoard = function(idRoot) {
 	
-	var lb = $('<div id="leaderBoard"/>').addClass("easyui-tabs").addClass("tabs-container").appendTo("body");
+	//$("#leaderBoard").tabs({width: 200, height: $(idRoot).css("height")});
 	
-	lb.tabs();
-	
-	// Money
-	lb.tabs('add',{
-	    content: "Teste",
-	    iconCls: "leaderMoney",
-	    width: 100
-	    
-	});
-	
-	// Level - Time
-	lb.tabs('add',{
-	    content: "Teste",
-	    iconCls: "leaderTime",
-		width: 100
-	    
-	});
-	
-	// Level - Runnings
-	lb.tabs('add',{
-	    content: "Teste",
-	    iconCls: "leaderRun",
-		width: 100
+	$('#leaderBoard .datagrid-header-inner').hide();
+	$('#leaderBoard .panel-body, #leaderBoard .datagrid-header').css("border-style", "none");
 
+	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
+	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
+	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
+	
+	var lbData = Game.loginData.leaderBoard;
+	var lbMoneyData = [], lbTimeData = [], lbRunData = [];
+	
+	lbData.forEach(function(entry) {
+		lbMoneyData.push({"name": entry[1], "money": entry[2] });
+		
+		var s = entry[3];
+		var m = Math.floor(s / 60);
+		var h;
+		if (m > 60) {
+			h = Math.floor(m / 60);
+			m = m - (h * 60);
+		} else {
+			h = "";
+		}
+			
+		s = s - (m * 60);
+		
+		lbTimeData.push({"name": entry[1], "time": h + m + " min " + s + " s" });
+		lbRunData.push({"name": entry[1], "runs": entry[4] });
 	});
 	
-	lb.tabs({selected: 0, width: 200, height: $(idRoot).css("height")});
-	
-	return "leaderBoard";
+	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
+	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
+	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
 	
 };
 

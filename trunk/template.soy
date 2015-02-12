@@ -314,6 +314,54 @@
   <div id="dialogHint" class="dialogHiddenContent">
     <div id="dialogHintText"></div>
   </div>
+
+  <div id = "dialogSelectMission" class="dialogHiddenContent">
+  	<table>
+  		<tr>
+  			<td id="tdSelectMission" style="height: 342px">
+  				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.SelectMission" desc="--"}Select a Mission{/msg}</span>
+  			</td>
+  			
+  			<td style="height: 342px">
+  				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.LeaderBoard" desc="--"}Leader Board{/msg}</span>
+  				<div id="leaderBoard" class="easyui-tabs" style="height: 342px; width: 200px">
+  					<div data-options="iconCls: 'leaderMoney'">
+	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="singleSelect:true">
+						    <thead>
+						        <tr>
+						            <th data-options="field:'name', width: 150"></th>
+						            <th data-options="field:'money', width: 40, align: 'right'"></th>
+						        </tr>
+						    </thead>
+						</table>
+  					</div>
+  					<div data-options="iconCls: 'leaderTime'">
+	  					<table id="dgLeaderTime" class="easyui-datagrid">
+						    <thead>
+						        <tr>
+						            <th data-options="field:'name', width: 110"></th>
+						            <th data-options="field:'time', width: 80"></th>
+						        </tr>
+						    </thead>
+						</table>
+  					</div>
+  					<div data-options="iconCls: 'leaderRun'">
+	  					<table id="dgLeaderRun" class="easyui-datagrid">
+						    <thead>
+						        <tr>
+						            <th data-options="field:'name', width: 150"></th>
+						            <th data-options="field:'runs', width: 40, align: 'right'"></th>
+						        </tr>
+						    </thead>
+						</table>
+  					</div>
+  				
+  				</div>
+  			</td>
+  		</tr>
+  	</table>
+    {call .logoffDlgButton /}
+  </div>
   
 {/template}
 

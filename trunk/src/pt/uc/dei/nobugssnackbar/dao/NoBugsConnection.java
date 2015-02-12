@@ -108,6 +108,16 @@ public class NoBugsConnection {
 			u.setShowHint(rs.getString(8).equals("T"));
 			
 			ps.close();
+			
+			ps = bdCon.prepareStatement("select classid from classesusers where userid = ?");
+			ps.setLong(1, u.getId());
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				u.getClassesId().add(rs.getLong(1));
+			}
+			
+			ps.close();
 
 		} finally {
 			if (bdCon != null)
@@ -518,7 +528,7 @@ public class NoBugsConnection {
 			}
 			ps.close();
 			
-			ret = new Object[l.size()][4];
+			ret = new Object[l.size()][];
 			for (int i=0; i<l.size(); i++)
 				ret[i] = l.get(i);
 			
@@ -1023,6 +1033,38 @@ public class NoBugsConnection {
 				}
 				ps.close();
 			}
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
+	public List<Object[]> retrieveLeaderBoard(List<Long> classesId) throws SQLException {
+		Connection bdCon = null;
+		List<Object[]> ret = new ArrayList<Object[]>();
+
+		
+		try {
+			bdCon = dataSource.getConnection();
+			
+			String clazzes = classesId + "";
+			
+			String query = "select userid, username, sum(money), sum(timespend), sum(executions), max(missionorder) from missionsaccomplished "+ 
+											   "join classesmissions using (missionid, classid) "+
+											   "join users using (userid) " +
+											   "where classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") group by userid";
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next()) {
+				ret.add(new Object[]{rs.getLong(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5), rs.getLong(6)});
+			}
+			st.close();
+			
 		} finally {
 			if (bdCon != null)
 				try {
