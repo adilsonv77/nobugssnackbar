@@ -275,3 +275,11 @@ table.tableVictory td  {
 .leaderRun{
 	background:url('../images/iconrun.png') no-repeat center center;
 }
+
+.lines-no .datagrid-body td{
+	border-right:1px dotted transparent;
+    border-bottom:1px dotted transparent;
+}
+#leaderBoard .datagrid-row-over, #leaderBoard .datagrid-row-selected {
+	background-color: transparent
+}

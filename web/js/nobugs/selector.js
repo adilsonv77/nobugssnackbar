@@ -77,10 +77,10 @@ Selector.prototype.build = function() {
 		var idTabs = "tt" + i;
 		var tabs = $('<div id = "'+idTabs+'"/>')
 						.addClass('easyui-tabs')
-						.addClass('tabs-container')
 						.appendTo(appendTo);
 		
-		$('#'+idTabs).tabs();
+		// TODO: if it is necessary the accordion, because the player belongs more than one class, then we have some problems in height
+		$('#'+idTabs).tabs({height: 342});
 		
 		for (var j = 0; j < data[i].levels.length; j++) {
 
