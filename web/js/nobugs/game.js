@@ -246,7 +246,8 @@ Game.logged = function(missionsHistorical) {
 		
 		$("#" + idRoot).css("height", "342px");
 	    $("#tdSelectMission").append($("#" + idRoot));
-	    Game.createsLeaderBoard("#"+idRoot);
+	    
+	    createsLeaderBoard("#"+idRoot);
 	    
 		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
 					null, false, true, true,
@@ -260,65 +261,6 @@ Game.logged = function(missionsHistorical) {
 	}
 };
 
-Game.createsLeaderBoard = function(idRoot) {
-	
-	// Adjusting the styles
-	$('#leaderBoard .datagrid-header-inner').hide();
-	$('#leaderBoard .panel-body, #leaderBoard .datagrid-header').css("border-style", "none");
-
-	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
-	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
-	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
-
-	// adding the tooltip
-	$('.leaderMoney').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabMoney")+ '</span>')
-	});
-	
-	$('.leaderTime').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabTime")+ '</span>')
-	});
-	
-	$('.leaderRun').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabRun")+ '</span>')
-	});
-	
-	var lbData = Game.loginData.leaderBoard;
-	var lbMoneyData = [], lbTimeData = [], lbRunData = [];
-	
-	lbData.forEach(function(entry) {
-		lbMoneyData.push({"name": entry[1], "money": entry[2] });
-		
-		var s = entry[3];
-		var m = Math.floor(s / 60);
-		var h;
-		if (m > 60) {
-			h = Math.floor(m / 60);
-			m = m - (h * 60);
-		} else {
-			h = "";
-		}
-			
-		s = s - (m * 60);
-		
-		lbTimeData.push({"name": entry[1], "time": h + m + " min " + s + " s", "missionDone": entry[5], "timeSeconds" : entry[3] });
-		lbRunData.push({"name": entry[1], "runs": entry[4], "missionDone": entry[5] });
-	});
-	
-	lbMoneyData.sort(function(a,b) {return b.money - a.money;});
-	
-	lbTimeData.sort(function(a,b) { return b.missionDone - a.missionDone;});
-	
-	lbRunData.sort(function(a,b) { return b.missionDone - a.missionDone;});
-	
-	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
-	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
-	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
-	
-};
 
 Game.missionsRetrieved = function(missions) {
 	var s = [];

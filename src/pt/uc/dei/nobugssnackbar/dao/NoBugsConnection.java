@@ -1056,7 +1056,7 @@ public class NoBugsConnection {
 			String query = "select userid, username, sum(money), sum(timespend), sum(executions), max(missionorder) from missionsaccomplished "+ 
 											   "join classesmissions using (missionid, classid) "+
 											   "join users using (userid) " +
-											   "where classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") group by userid";
+											   "where achieved = 'T' and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") group by userid";
 			
 			Statement st = bdCon.createStatement();
 			ResultSet rs = st.executeQuery(query);
