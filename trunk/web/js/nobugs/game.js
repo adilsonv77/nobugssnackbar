@@ -304,9 +304,15 @@ Game.createsLeaderBoard = function(idRoot) {
 			
 		s = s - (m * 60);
 		
-		lbTimeData.push({"name": entry[1], "time": h + m + " min " + s + " s" });
-		lbRunData.push({"name": entry[1], "runs": entry[4] });
+		lbTimeData.push({"name": entry[1], "time": h + m + " min " + s + " s", "missionDone": entry[5], "timeSeconds" : entry[3] });
+		lbRunData.push({"name": entry[1], "runs": entry[4], "missionDone": entry[5] });
 	});
+	
+	lbMoneyData.sort(function(a,b) {return b.money - a.money;});
+	
+	lbTimeData.sort(function(a,b) { return b.missionDone - a.missionDone;});
+	
+	lbRunData.sort(function(a,b) { return b.missionDone - a.missionDone;});
 	
 	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
 	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
@@ -782,9 +788,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  window.setTimeout(BlocklyApps.importPrettify, 1);
 	  
 	  if (Game.firstTime) {
-		  var explanation = Explanation.parseUserLogged(mission.childNodes[0].getElementsByTagName("explanation")[0]);
-		  
-		  Explanation.showInfo(explanation, true);
+		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
 	  } else {
 		  Hints.init(Game.mission.getElementsByTagName("hints")[0]);
 		  Game.initTime();
@@ -1160,6 +1164,7 @@ Game.goalButtonClick = function() {
 	Hints.stopHints();
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
+	
 	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
 	
 };

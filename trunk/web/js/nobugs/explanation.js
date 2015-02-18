@@ -18,6 +18,8 @@ Explanation.selectCommands = function(commands) {
 
 Explanation.showInfo = function(explanation, withHint, afterclosed) {
 	
+	explanation = Explanation.parseUserLogged(explanation);
+	
 	var statement = 0;
 	Explanation.firstStatement = -1;
 	
@@ -121,8 +123,8 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	var style = {top: '120px'}; 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 
-	MyBlocklyApps.showDialog(content, (nrPage==0?document.getElementById('goalButton'):null),
-							 true, true, true, Game.missionTitle, style, afterclosed);
+	MyBlocklyApps.showDialog(content, null,
+							 false, true, true, Game.missionTitle, style, afterclosed);
 	
 };
 
