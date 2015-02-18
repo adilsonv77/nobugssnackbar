@@ -141,6 +141,11 @@
 	
 	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias.",
 	
+	"Tooltip.TabMoney"      : "Jogadores ordenados pelo dinheiro ganho.",
+	"Tooltip.TabTime"       : "Jogadores ordenados pelo seu n&#237;vel e tempo gasto.",
+	"Tooltip.TabRun"        : "Jogadores ordenados pelo seu n&#237;vel e quantidade de execu&#231;&#245;es.",
+	
+	
 	"Victory.BaseValue"     : "Valor base", 
 	"Victory.Bonus"         : "B&#244;nus", 
 	"Victory.MaxCommands"   : "Para o m&#225;ximo de comandos",
