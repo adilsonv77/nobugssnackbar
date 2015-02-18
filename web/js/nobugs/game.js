@@ -262,14 +262,29 @@ Game.logged = function(missionsHistorical) {
 
 Game.createsLeaderBoard = function(idRoot) {
 	
-	//$("#leaderBoard").tabs({width: 200, height: $(idRoot).css("height")});
-	
+	// Adjusting the styles
 	$('#leaderBoard .datagrid-header-inner').hide();
 	$('#leaderBoard .panel-body, #leaderBoard .datagrid-header').css("border-style", "none");
 
 	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
 	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
 	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
+
+	// adding the tooltip
+	$('.leaderMoney').parent().tooltip({
+		position: 'top',
+		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabMoney")+ '</span>')
+	});
+	
+	$('.leaderTime').parent().tooltip({
+		position: 'top',
+		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabTime")+ '</span>')
+	});
+	
+	$('.leaderRun').parent().tooltip({
+		position: 'top',
+		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabRun")+ '</span>')
+	});
 	
 	var lbData = Game.loginData.leaderBoard;
 	var lbMoneyData = [], lbTimeData = [], lbRunData = [];
