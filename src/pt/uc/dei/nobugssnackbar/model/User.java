@@ -10,7 +10,9 @@ import org.directwebremoting.annotations.RemoteProperty;
 @DataTransferObject()
 public class User {
 
+	@RemoteProperty
 	private long id;
+	
 	private String nick;
 	private String passw;
 	private long money;

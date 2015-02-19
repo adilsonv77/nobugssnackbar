@@ -150,6 +150,8 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, clazzId,
 	 *   3 - time spent
 	 *   4 - executions
 	 *   5 - max mission accomplished 
+	 *   ----
+	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
 	Game.loginData = {userLogged: u, missionHist: missionsHistorical, leaderBoard: leaderBoard, 
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
@@ -247,7 +249,12 @@ Game.logged = function(missionsHistorical) {
 		$("#" + idRoot).css("height", "342px");
 	    $("#tdSelectMission").append($("#" + idRoot));
 	    
-	    createsLeaderBoard("#"+idRoot);
+	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) {
+	    	createNoLeaderBoardInfo();
+	    } else {
+		    createsLeaderBoard("#"+idRoot);
+	    }
+	    
 	    
 		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
 					null, false, true, true,

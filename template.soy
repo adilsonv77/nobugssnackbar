@@ -329,37 +329,52 @@
 	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="singleSelect:true">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 150"></th>
-						            <th data-options="field:'money', width: 40, align: 'right'"></th>
+						            <th data-options="field:'name', width: 150, styler: leaderStyler"></th>
+						            <th data-options="field:'money', width: 40, styler: leaderStyler, align: 'right'"></th>
 						        </tr>
 						    </thead>
 						</table>
+						<div id="notEnabledLeaderMoney" style="display: none; height: 100%">
+							<span style="position: relative; top: 40%;">
+							</span>
+						</div>
   					</div>
   					<div id="tdLeaderTime" data-options="iconCls: 'leaderTime'">
 	  					<table id="dgLeaderTime" class="easyui-datagrid">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 110"></th>
-						            <th data-options="field:'time', width: 80"></th>
+						            <th data-options="field:'name', width: 110, styler: leaderStyler"></th>
+						            <th data-options="field:'time', width: 80, styler: leaderStyler"></th>
 						        </tr>
 						    </thead>
 						</table>
+						<div id="notEnabledLeaderTime" style="display: none; height: 100%">
+							<span style="position: relative; top: 40%;">
+							</span>
+						</div>
+						
   					</div>
   					<div id="tdLeaderRun" data-options="iconCls: 'leaderRun'">
 	  					<table id="dgLeaderRun" class="easyui-datagrid">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 150"></th>
-						            <th data-options="field:'runs', width: 40, align: 'right'"></th>
+						            <th data-options="field:'name', width: 150, styler: leaderStyler"></th>
+						            <th data-options="field:'runs', width: 40, styler: leaderStyler, align: 'right'"></th>
 						        </tr>
 						    </thead>
 						</table>
+						<div id="notEnabledLeaderRun" style="display: none; height: 100%">
+							<span style="position: relative; top: 40%;">
+							</span>
+						</div>
+						
   					</div>
   				
   				</div>
   			</td>
   		</tr>
   	</table>
+  	
     {call .logoffDlgButton /}
   </div>
   

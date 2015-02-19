@@ -245,7 +245,7 @@ public class UserControl {
 	}
 
 	private List<Object[]> retrieveLeaderBoard() throws SQLException {
-		return NoBugsConnection.getConnection().retrieveLeaderBoard(this.user.getClassesId());
+		return NoBugsConnection.getConnection().retrieveLeaderBoard(this.user.getId(), this.user.getClassesId());
 	}
 
 	
