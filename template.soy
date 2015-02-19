@@ -324,13 +324,13 @@
   			
   			<td style="height: 342px">
   				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.LeaderBoard" desc="--"}Leader Board{/msg}</span>
-  				<div id="leaderBoard" class="easyui-tabs" style="height: 342px; width: 200px">
+  				<div id="leaderBoard" class="easyui-tabs" style="height: 342px; width: 250px">
   					<div id="tdLeaderMoney" data-options="iconCls: 'leaderMoney'">
-	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="singleSelect:true">
+	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true">
 						    <thead>
 						        <tr>
 						            <th data-options="field:'name', width: 150, styler: leaderStyler"></th>
-						            <th data-options="field:'money', width: 40, styler: leaderStyler, align: 'right'"></th>
+						            <th data-options="field:'money', width: 70, styler: leaderStyler, align: 'right'"></th>
 						        </tr>
 						    </thead>
 						</table>
@@ -340,11 +340,11 @@
 						</div>
   					</div>
   					<div id="tdLeaderTime" data-options="iconCls: 'leaderTime'">
-	  					<table id="dgLeaderTime" class="easyui-datagrid">
+	  					<table id="dgLeaderTime" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 110, styler: leaderStyler"></th>
-						            <th data-options="field:'time', width: 80, styler: leaderStyler"></th>
+						            <th data-options="field:'name', width: 120, styler: leaderStyler"></th>
+						            <th data-options="field:'time', width: 100, styler: leaderStyler"></th>
 						        </tr>
 						    </thead>
 						</table>
@@ -355,11 +355,11 @@
 						
   					</div>
   					<div id="tdLeaderRun" data-options="iconCls: 'leaderRun'">
-	  					<table id="dgLeaderRun" class="easyui-datagrid">
+	  					<table id="dgLeaderRun" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 150, styler: leaderStyler"></th>
-						            <th data-options="field:'runs', width: 40, styler: leaderStyler, align: 'right'"></th>
+						            <th data-options="field:'name', width: 160, styler: leaderStyler"></th>
+						            <th data-options="field:'runs', width: 60, styler: leaderStyler, align: 'right'"></th>
 						        </tr>
 						    </thead>
 						</table>

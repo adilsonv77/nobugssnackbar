@@ -50,9 +50,9 @@ function addTooltip() {
 function createsLeaderBoard(idRoot) {
 
 	// Only to display or hide elements
-	createTabLeaderBoardInfo("#notEnabledLeaderMoney", "#dgLeaderMoney", "", "none", "inline");
-	createTabLeaderBoardInfo("#notEnabledLeaderTime", "#dgLeaderTime", "", "none", "inline");
-	createTabLeaderBoardInfo("#notEnabledLeaderRun", "#dgLeaderRun", "", "none", "inline");
+	createTabLeaderBoardInfo("#notEnabledLeaderMoney", "#dgLeaderMoney", "", "none", "");
+	createTabLeaderBoardInfo("#notEnabledLeaderTime", "#dgLeaderTime", "", "none", "");
+	createTabLeaderBoardInfo("#notEnabledLeaderRun", "#dgLeaderRun", "", "none", "");
 
 	// Adjusting the styles
 	$('#leaderBoard .datagrid-header-inner').hide();
