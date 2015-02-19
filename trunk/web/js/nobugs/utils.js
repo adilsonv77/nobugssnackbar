@@ -98,14 +98,18 @@ function convertImgHex(imgHex, content, fConvert) {
 
 }
 
-
-function generateImages(number, digits) {
-	
+function addZeros(number, digits) {
 	
 	number = number + "";
 	while (number.length < digits) {
 		number = "0" + number;
 	}
+	return number;
+}
+
+function generateImages(number, digits) {
+	
+	number = addZeros(number, digits);
 	
 	var imgs = new Array(digits);
 	$.each(imgs, function(i){
@@ -114,3 +118,4 @@ function generateImages(number, digits) {
 	
 	return imgs;
 }
+

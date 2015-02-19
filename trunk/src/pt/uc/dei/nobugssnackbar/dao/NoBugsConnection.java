@@ -1043,27 +1043,48 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public List<Object[]> retrieveLeaderBoard(List<Long> classesId) throws SQLException {
+	public List<Object[]> retrieveLeaderBoard(long userid, List<Long> classesId) throws SQLException {
 		Connection bdCon = null;
 		List<Object[]> ret = new ArrayList<Object[]>();
 
-		
 		try {
 			bdCon = dataSource.getConnection();
-			
-			String clazzes = classesId + "";
-			
-			String query = "select userid, username, sum(money), sum(timespend), sum(executions), max(missionorder) from missionsaccomplished "+ 
-											   "join classesmissions using (missionid, classid) "+
-											   "join users using (userid) " +
-											   "where achieved = 'T' and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") group by userid";
-			
-			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery(query);
-			while (rs.next()) {
-				ret.add(new Object[]{rs.getLong(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5), rs.getLong(6)});
+
+			boolean showLB = true;
+			int showAfterMission = 0;
+			// TODO: think how we can do the same idea when the user belongs more than one class
+			if (classesId.size() == 1) {
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery(
+						" select classid, showleaderboardafter, maxmission from "+
+						    " (select max(missionorder) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where userid = " + userid + " group by userid, classid) mu " + 
+							" left outer join classes using (classid)");
+				rs.next();
+				showLB = rs.getInt(2) <= rs.getInt(3);
+				showAfterMission = rs.getInt(2);
+				st.close();
 			}
-			st.close();
+			
+			if (showLB) {
+
+				String clazzes = classesId + "";
+				
+				String query = "select userid, username, sum(money), sum(timespend), sum(executions), max(missionorder), showleaderboardafter from missionsaccomplished "+ 
+												   "join classesmissions using (missionid, classid) "+
+												   "join classes using (classid) " +
+												   "join users using (userid) " +
+												   "where achieved = 'T' and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") group by userid";
+				
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					ret.add(new Object[]{rs.getLong(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5), rs.getLong(6)});
+				}
+				st.close();
+				
+			} else {
+				ret.add(new Object[]{ null, showAfterMission });
+			}
 			
 		} finally {
 			if (bdCon != null)

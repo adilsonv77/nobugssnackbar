@@ -109,6 +109,7 @@
 	"Single.FrenchFryer" : "Fritadeira de batatas",
 	"Single.AddNewEquipment" : "Adicione um novo equipamento ao seu estabelecimento",
 	"Single.Equipments" : "Equipamentos",
+	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o {0}.",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",
