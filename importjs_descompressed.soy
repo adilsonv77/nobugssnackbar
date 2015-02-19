@@ -4,34 +4,37 @@
  * List of import js files.
  */
 {template .imports}
-  
-  <script type="text/javascript" src="js/nobugs/language.js"></script>
-  <script type="text/javascript" src="js/nobugs/slider.js"></script>
-  <script type="text/javascript" src="js/nobugs/utils.js"></script>
 
-  <script type="text/javascript" src="js/nobugs/preloadimgs.js"></script>
-  <script type="text/javascript" src="js/nobugs/game.js"></script>
+	// this is a strategy to force the browsers reload the script
+   {let $v: randomInt(999999)/}
   
-  <script type="text/javascript" src="js/nobugs/explanation.js"></script>
-  <script type="text/javascript" src="js/nobugs/hints.js"></script>
+  <script type="text/javascript" src="js/nobugs/language.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/slider.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/utils.js?v={$v}"></script>
 
-  <script type="text/javascript" src="js/nobugs/blockly.js"></script>
-  <script type="text/javascript" src="js/nobugs/graph.js"></script>
-  <script type="text/javascript" src="js/nobugs/snackman.js"></script>
-  <script type="text/javascript" src="js/nobugs/customer.js"></script>
-  <script type="text/javascript" src="js/nobugs/customerman.js"></script>
-  <script type="text/javascript" src="js/nobugs/sprite.js"></script>
-  <script type="text/javascript" src="js/nobugs/nobugsjsinterpreter.js"></script>
-  <script type="text/javascript" src="js/nobugs/nobugsblocklygeneratorjavascript.js"></script>
-  <script type="text/javascript" src="js/nobugs/xml.js"></script>
-  <script type="text/javascript" src="js/nobugs/objectives.js"></script>
-  <script type="text/javascript" src="js/nobugs/questionnaire.js"></script>
-  <script type="text/javascript" src="js/nobugs/variablenamesvalidate.js"></script>
-  <script type="text/javascript" src="js/nobugs/navigator.js"></script>
-  <script type="text/javascript" src="js/nobugs/selector.js"></script>
-  <script type="text/javascript" src="js/nobugs/baloon.js"></script>
-  <script type="text/javascript" src="js/nobugs/progressmoney.js"></script>
-  <script type="text/javascript" src="js/nobugs/leaderboard.js"></script>
+  <script type="text/javascript" src="js/nobugs/preloadimgs.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/game.js?v={$v}"></script>
+  
+  <script type="text/javascript" src="js/nobugs/explanation.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/hints.js?v={$v}"></script>
+
+  <script type="text/javascript" src="js/nobugs/blockly.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/graph.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/snackman.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/customer.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/customerman.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/sprite.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/nobugsjsinterpreter.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/nobugsblocklygeneratorjavascript.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/xml.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/objectives.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/questionnaire.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/variablenamesvalidate.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/navigator.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/selector.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/baloon.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/progressmoney.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/leaderboard.js?v={$v}"></script>
 
   
 {/template}

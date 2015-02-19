@@ -5,6 +5,9 @@
  */
 {template .imports}
 
-	<script type="text/javascript" src="nobugs/nobugs-min.js"></script>
+	// this is a strategy to force the browsers reload the script
+	{let $v: randomInt(999999)/}
+
+	<script type="text/javascript" src="nobugs/nobugs-min.js?v={$v}"></script>
 
 {/template}
