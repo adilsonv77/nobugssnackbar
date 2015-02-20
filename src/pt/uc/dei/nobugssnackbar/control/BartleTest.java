@@ -160,7 +160,7 @@ public class BartleTest {
 			PreparedStatement ps = bdCon.prepareStatement(
 					"select count(*) from questionnaireanswer join questionsquestionnaire using (questionid) "
 							+ "  join questionnaireclasses using (questionnaireid)"
-							+ " where classid = ? and userid = ?");
+							+ " where questionnaireid = 2 and classid = ? and userid = ?");
 			long classGoal = 0;
 		
 			ps.setLong(2, userid);
