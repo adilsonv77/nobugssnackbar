@@ -1057,11 +1057,16 @@ public class NoBugsConnection {
 				Statement st = bdCon.createStatement();
 				ResultSet rs = st.executeQuery(
 						" select classid, showleaderboardafter, maxmission from "+
+							" classes left outer join " +
 						    " (select max(missionorder) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where userid = " + userid + " group by userid, classid) mu " + 
-							" left outer join classes using (classid)");
+							"  using (classid) where classid = " + classesId.get(0));
 				rs.next();
-				showLB = rs.getInt(2) <= rs.getInt(3);
+				int maxmission = 0;
+				if (rs.getString(3) != null)
+					maxmission = rs.getInt(3);
+				showLB = rs.getInt(2) <= maxmission;
 				showAfterMission = rs.getInt(2);
+					
 				st.close();
 			}
 			
