@@ -42,10 +42,12 @@ public class UserControl {
 	private long levelid = 0;
 	private int missionidx;
 	private boolean registeredUserLastTime;
+	private Object[][] missions;
 	
 	@RemoteMethod
 	public Object[] verifyLogged() throws SQLException {
-		return new Object[]{user != null, this.user, (user == null?null:retrieveMissions()), (user == null?null:retrieveLeaderBoard()), this.classid, this.levelid , this.missionidx};
+		this.missions = (user == null?null:retrieveMissions());
+		return new Object[]{user != null, this.user, this.missions, (user == null?null:retrieveLeaderBoard()), this.classid, this.levelid , this.missionidx};
 	}
 	
 	@RemoteMethod
@@ -70,7 +72,9 @@ public class UserControl {
 			
 			this.user = NoBugsConnection.getConnection().login(nick, encrypt(passw));
 			
-			return new Object[]{null, this.user, retrieveMissions(), retrieveLeaderBoard()}; // no errors
+			this.missions = retrieveMissions();
+			
+			return new Object[]{null, this.user, this.missions, retrieveLeaderBoard()}; // no errors
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,7 +176,7 @@ public class UserControl {
 	
 	@RemoteMethod
 	public List<Questionnaire> retrieveQuestionnaire() throws SQLException {
-		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId());
+		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user.getId(), this.missions);
 	}
 	
 	@RemoteMethod 
