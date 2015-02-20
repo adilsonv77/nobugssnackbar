@@ -603,7 +603,7 @@ public class NoBugsConnection {
 			
 			if (needQuestBartle) {
 				
-				List<Long> list = BartleTest.selectQuestions();
+				List<Long> list = BartleTest.selectQuestionsOfClass(userid, classes);
 				lista = (list + "");
 
 				lista = String.format(questionnaire,

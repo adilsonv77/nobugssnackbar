@@ -80,6 +80,34 @@ public class BartleTest {
 		return l;
 	}
 
+	public static void saveBartleQuestionsOfClass(long classId) throws SQLException {
+		
+		List<Long> l = selectQuestions();
+		
+		Connection bdCon = null;
+		try {
+			bdCon = NoBugsConnection.getConnection().getDataSource().getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into bartletestclassquestions (questionid, classid) values (?, ?)");
+			
+			ps.setLong(2, classId);
+			for (Long ll:l) {
+				ps.setLong(1, ll);
+				ps.executeUpdate();
+			}
+			
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
+		
+	}
+	
 	public static List<BartleType> bartleClassification(Long userId) throws SQLException {
 		List<BartleType> l = new ArrayList<>();
 		Connection bdCon = null;
@@ -119,6 +147,57 @@ public class BartleTest {
 				}
 		}
 			
+		return l;
+	}
+
+	public static List<Long> selectQuestionsOfClass(long userid, List<Long> classes) throws SQLException {
+		List<Long> l = new ArrayList<>();
+
+		Connection bdCon = null;
+		try {
+			bdCon = NoBugsConnection.getConnection().getDataSource().getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(
+					"select count(*) from questionnaireanswer join questionsquestionnaire using (questionid) "
+							+ "  join questionnaireclasses using (questionnaireid)"
+							+ " where classid = ? and userid = ?");
+			long classGoal = 0;
+		
+			ps.setLong(2, userid);
+			for (Long c:classes) {
+				ps.setLong(1, c);
+				ResultSet rs = ps.executeQuery();
+				rs.next();
+				long q = rs.getLong(1);
+				rs.close();
+				
+				if (q == 0) {
+					classGoal = c;
+					break;
+				}
+					
+			}
+			ps.close();
+			
+			if (classGoal > 0) {
+				ps = bdCon.prepareStatement("select questionid from bartletestclassquestions where classid = ?");
+				ps.setLong(1, classGoal);
+				
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					l.add(rs.getLong(1));
+				}
+				ps.close();
+			}
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
 		return l;
 	}
 	
