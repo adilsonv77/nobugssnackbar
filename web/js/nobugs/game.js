@@ -54,15 +54,17 @@ Game.RIGHT = 2;
 Game.varWindow = Game.RIGHT;
 
 Game.counterInstruction = null;
+
+PreloadImgs.put('fundo', 'images/fundo.png');
+PreloadImgs.put('doors', 'images/doors.png');
+
+
 /**
  * Initialize Blockly and SnackBar. Called on page load.
  */
 Game.init = function() {
 	
 	Game.currTime = 0;
-	
-	PreloadImgs.put('fundo', 'images/fundo.png');
-	PreloadImgs.put('doors', 'images/doors.png');
 	
     PreloadImgs.loadImgs();
 

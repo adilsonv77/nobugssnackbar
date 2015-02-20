@@ -500,7 +500,7 @@ public class NoBugsConnection {
 			List<Object[]> l = new ArrayList<>(); 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), new ArrayList<Integer>()};
+				Object[] li = new Object[] {rs.getString(1), rs.getString(2), rs.getLong(3), rs.getLong(4), rs.getLong(5), rs.getLong(6), new ArrayList<Integer>()};
 
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));
@@ -542,7 +542,8 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public List<Questionnaire> retrieveQuestionnaire(long userid) throws SQLException {
+	public List<Questionnaire> retrieveQuestionnaire(long userid, Object[][] missions) throws SQLException {
+		// TODO improve this method to get fast, because after each mission this method is called
 		
 		Connection bdCon = null;
 		List<Questionnaire> ret = new ArrayList<>();
@@ -583,7 +584,8 @@ public class NoBugsConnection {
 			String lista = (qid + "");
 			
 			String questionnaire = 
-					"select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, optiondescription, optionvalue, questionnaireshowrules, q1.classid from questionnaire q0" + 
+					"select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, " +
+					        " optiondescription, optionvalue, questionnaireshowrules, q1.classid, questionnairefrommission from questionnaire q0" + 
 							" join questionsquestionnaire using (questionnaireid)"+
 							" join questionnaireclasses q1 using (questionnaireid)" +
 							" join questions q using (questionid)"+
@@ -597,7 +599,7 @@ public class NoBugsConnection {
 				     ")" );
 			ps = bdCon.prepareStatement(lista);
 			rs = ps.executeQuery();
-			addQuestionnaires(ret, rs);
+			addQuestionnaires(ret, rs, missions);
 			rs.close();
 			ps.close();
 			
@@ -610,7 +612,7 @@ public class NoBugsConnection {
 			            " q.questionid in (" +lista.substring(1, lista.length()-1) + ")");
 				ps = bdCon.prepareStatement(lista);
 				rs = ps.executeQuery();
-				addQuestionnaires(ret, rs);
+				addQuestionnaires(ret, rs, missions);
 				rs.close();
 				ps.close();
 				
@@ -632,44 +634,63 @@ public class NoBugsConnection {
 		return (ret.size() == 0? null: ret);
 	}
 
-	private void addQuestionnaires(List<Questionnaire> ret, ResultSet rs) throws SQLException {
+	private void addQuestionnaires(List<Questionnaire> ret, ResultSet rs, Object[][] missions) throws SQLException {
 
 		long lastQuestionId = 0;
 		long lastQuestionnaireId = 0;
 		Question q = null;
 		Questionnaire quest = null;
+		boolean addThisQuest = true;
 		while (rs.next()) {
-			if (quest == null || lastQuestionnaireId !=  rs.getInt(1)) {
-				quest = new Questionnaire();
+			if (lastQuestionnaireId !=  rs.getInt(1)) {
 				lastQuestionnaireId = rs.getInt(1);
-				quest.setId(lastQuestionnaireId);
-				quest.setDescription(rs.getString(2));
-				quest.setShowRules(rs.getString(9));
-				quest.setClassId(rs.getLong(10));
-				quest.setQuestions(new ArrayList<Question>());
-				
-				ret.add(quest);
-			}
-			
-			if (lastQuestionId != rs.getInt(3)) {
-				
-				q = new Question();
-				q.setId(rs.getInt(3));
-				lastQuestionId = q.getId();
-				
-				
-				quest.getQuestions().add(q);
-				q.setDescription(rs.getString(4));
-				q.setType(rs.getString(5));
-				q.setRequired(rs.getString(6).equals("T"));
-				
-				if (rs.getString(7) != null) {
-					q.setOptions(new ArrayList<QuestionOption>());
-					q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
+
+				Long classId = rs.getLong(10);
+				long finishedMission = 0;
+				for (int i=missions.length-1; i>=0; i--) {
+					Long mi = (Long) missions[i][4];
+					if (classId.equals(mi)) {
+						finishedMission += Long.parseLong(missions[i][3].toString());
+					}
 				}
 				
-			} else
-				q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
+				if (rs.getLong(11) == finishedMission) {
+				
+					quest = new Questionnaire();
+					quest.setId(lastQuestionnaireId);
+					quest.setDescription(rs.getString(2));
+					quest.setShowRules(rs.getString(9));
+					quest.setClassId(classId);
+					quest.setQuestions(new ArrayList<Question>());
+					
+					ret.add(quest);
+					
+					addThisQuest = true;
+				} else
+					addThisQuest = false;
+			}
+			
+			if (addThisQuest)
+			
+				if (lastQuestionId != rs.getInt(3)) {
+					
+					q = new Question();
+					q.setId(rs.getInt(3));
+					lastQuestionId = q.getId();
+					
+					
+					quest.getQuestions().add(q);
+					q.setDescription(rs.getString(4));
+					q.setType(rs.getString(5));
+					q.setRequired(rs.getString(6).equals("T"));
+					
+					if (rs.getString(7) != null) {
+						q.setOptions(new ArrayList<QuestionOption>());
+						q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
+					}
+					
+				} else
+					q.getOptions().add(new QuestionOption(rs.getString(7), rs.getString(8)));
 
 		}
 		
