@@ -27,12 +27,10 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import pt.uc.dei.nobugssnackbar.control.BartleTest;
 import pt.uc.dei.nobugssnackbar.model.Question;
 import pt.uc.dei.nobugssnackbar.model.QuestionOption;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
@@ -542,46 +540,14 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public List<Questionnaire> retrieveQuestionnaire(long userid, Object[][] missions) throws SQLException {
-		// TODO improve this method to get fast, because after each mission this method is called
+	public List<Questionnaire> retrieveQuestionnaire(User user, Object[][] missions) throws SQLException {
 		
 		Connection bdCon = null;
 		List<Questionnaire> ret = new ArrayList<>();
 		try {
 			bdCon = dataSource.getConnection();
 			
-			PreparedStatement ps = bdCon.prepareStatement("select classid from classesusers where userid = ?");
-			ps.setLong(1, userid);
-
-			List<Long> classes = new ArrayList<Long>();
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				classes.add(rs.getLong(1));
-			}
-			ps.close();
-			String clazzes = classes+"";
-			
-			
-			List<Long> qidBartle = new ArrayList<>();
-			Statement st = bdCon.createStatement();
-			
-			// list which are the questionnaires from bartle test type
-			rs = st.executeQuery("select distinct questionnaireclassid from bartletestquestions join questionsquestionnaire using (questionid) join questionnaireclasses using (questionnaireid)");
-			while (rs.next()) {
-				qidBartle.add(rs.getLong(1));
-			}
-			rs.close();
-			
-			List<Long> qid = new ArrayList<>();
-			rs = st.executeQuery("select distinct questionnaireclassid from questionnaireanswer where userid = "+userid);
-			while (rs.next()) {
-				qid.add(rs.getLong(1));
-			}
-			boolean needQuestBartle = !qid.removeAll(qidBartle); // remove the bartle questionnaire but alert if it's necessary will answer this type of questionnaire
-			qid.addAll(qidBartle);
-			rs.close();
-			
-			String lista = (qid + "");
+			String clazzes = user.getClassesId() + "";
 			
 			String questionnaire = 
 					"select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, " +
@@ -590,38 +556,15 @@ public class NoBugsConnection {
 							" join questionnaireclasses q1 using (questionnaireid)" +
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
-							" where %s and questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
+							" where questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
 							" order by questionnaireclassid, questionorder, optionorder";
 			
 			;
-			lista = String.format(questionnaire," questionnaireclassid not in (" +
-					lista.substring(1, lista.length()-1) +
-				     ")" );
-			ps = bdCon.prepareStatement(lista);
-			rs = ps.executeQuery();
+			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
+			ResultSet rs = ps.executeQuery();
 			addQuestionnaires(ret, rs, missions);
 			rs.close();
 			ps.close();
-			
-			if (needQuestBartle) {
-				
-				List<Long> list = BartleTest.selectQuestionsOfClass(userid, classes);
-				lista = (list + "");
-
-				lista = String.format(questionnaire,
-			            " q.questionid in (" +lista.substring(1, lista.length()-1) + ")");
-				ps = bdCon.prepareStatement(lista);
-				rs = ps.executeQuery();
-				addQuestionnaires(ret, rs, missions);
-				rs.close();
-				ps.close();
-				
-				if (ret.size() > 1)
-					Collections.shuffle(ret.get(ret.size()-1).getQuestions());
-
-			}
-			
-				
 			
 		} finally {
 			if (bdCon != null)
@@ -677,7 +620,6 @@ public class NoBugsConnection {
 					q = new Question();
 					q.setId(rs.getInt(3));
 					lastQuestionId = q.getId();
-					
 					
 					quest.getQuestions().add(q);
 					q.setDescription(rs.getString(4));

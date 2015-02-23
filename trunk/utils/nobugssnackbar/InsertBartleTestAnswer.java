@@ -15,6 +15,7 @@ public class InsertBartleTestAnswer {
 
 	
 	public static void main(String[] args) throws Exception {
+		/*
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		

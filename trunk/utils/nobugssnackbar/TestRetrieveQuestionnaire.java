@@ -14,10 +14,12 @@ public class TestRetrieveQuestionnaire {
 
 		
 		UserControl uc = new UserControl();
-		uc.login("1", "1");
+		uc.login("bruce", "bruce");
 		
 		List<Questionnaire> lq = uc.retrieveQuestionnaire();
 		System.out.println((lq==null?"No questions":lq.size()));
+		
+		System.out.println( "->" + lq.get(1).getQuestions().get(0).getDescription() );
 	}
 
 }
