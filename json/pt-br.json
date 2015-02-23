@@ -39,14 +39,14 @@
 	"NoBugs.buyTooltip":"Comprar equipamentos.",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	
-	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. Voc&#234; recebeu no total {0}.",
+	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.",
 	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. N&#227;o existem mais miss&#245;es para si.", 
-	"NoBugs.rewardExplanation" : "Receba {0} se cumprir todos os objetivos acima.",
-	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de {0} se cumprir a miss&#227;o com {1} comandos ou menos.",
-	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de {0} (ou mais) se cumprir a miss&#227;o em {1} minutos ou menos.",
+	"NoBugs.rewardExplanation" : "Receba %0 se cumprir todos os objetivos acima.",
+	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de %0 se cumprir a miss&#227;o com %1 comandos ou menos.",
+	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
 	
-	"NoBugs.finishOpenMission" : "O tempo da miss&#227;o acabou. &#60;br/&#62;&#60;br/&#62; Voc&#234; recebeu no total &#60;b&#62;{0}&#60;/b&#62; pelas entregas dos pedidos.",
+	"NoBugs.finishOpenMission" : "O tempo da miss&#227;o acabou. &#60;br/&#62;&#60;br/&#62; Voc&#234; recebeu no total &#60;b&#62;%0&#60;/b&#62; pelas entregas dos pedidos.",
 	
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
@@ -109,24 +109,24 @@
 	"Single.FrenchFryer" : "Fritadeira de batatas",
 	"Single.AddNewEquipment" : "Adicione um novo equipamento ao seu estabelecimento",
 	"Single.Equipments" : "Equipamentos",
-	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o {0}.",
+	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o %0.",
 	
-	"Explane.Counter":"V&#225; para o balc&#227;o {0}.",
-	"Explane.AskForFood":"Pergunta pelo que o cliente {0} deseja comer.",
-	"Explane.AskForFoodDistinctVar":"Pergunta pelo que o cliente {0} deseja comer e armazena o pedido em uma nova vari&#225;vel.",
-	"Explane.CatchFood":"Pegue a comida solicitada pelo cliente {0}.",
-	"Explane.Deliver":"Entregue o pedido do cliente {0}.",
-	"Explane.AskForDrink":"Pergunta pelo que o cliente {0} deseja beber.",
-	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente {0}.",
-	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) {0}.",
-	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o {0}.",
+	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
+	"Explane.AskForFood":"Pergunta pelo que o cliente %0 deseja comer.",
+	"Explane.AskForFoodDistinctVar":"Pergunta pelo que o cliente %0 deseja comer e armazena o pedido em uma nova vari&#225;vel.",
+	"Explane.CatchFood":"Pegue a comida solicitada pelo cliente %0.",
+	"Explane.Deliver":"Entregue o pedido do cliente %0.",
+	"Explane.AskForDrink":"Pergunta pelo que o cliente %0 deseja beber.",
+	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente %0.",
+	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) %0.",
+	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o %0.",
 	
 	
 	"NoBugs.intro1": "O ramo das esplanadas &#233; muito competitivo: como os lanches s&#227;o id&#234;nticos em todos os estabelecimentos os melhores s&#227;o aqueles em que o cliente &#233; melhor atendido e que possuem um clima agrad&#225;vel para se estar algumas horas. Por&#233;m, podes ter um ingrediente secreto nos lanches servidos e a tua esplanada se tornar aquela a que toda gente gostaria de ir pelo menos uma vez por semana. Come&#231;a como aprendiz na esplanada e evolui at&#233; teres condi&#231;&#245;es de adquirir o teu estabelecimento. Vou estar a acompanhar-te ao longo de v&#225;rias miss&#245;es at&#233; te tornares auto-suficiente.",
-	"NoBugs.intro2": "Desenvolve o teu ingrediente secreto e s&#234; a esplanada que atende mais r&#225;pido, atrai mais clientes e gera mais dinheiro. Torna-te {0} das Esplanadas.",
+	"NoBugs.intro2": "Desenvolve o teu ingrediente secreto e s&#234; a esplanada que atende mais r&#225;pido, atrai mais clientes e gera mais dinheiro. Torna-te %0 das Esplanadas.",
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	
-	"Hints.ChooseCategory" : "Selecione a categoria {0} para ver os blocos.",
+	"Hints.ChooseCategory" : "Selecione a categoria %0 para ver os blocos.",
 	"Hints.SelectCommand"  : "Arraste um bloco para a &#225;rea de trabalho.",
 	"Hints.StackTogether"  : "Empilhe um par desse bloco para ficar mais perto do objetivo.",
 	"Hints.RunProgram"     : "Clique nesse bot&#227;o para acompanhar o cozinheiro movimentar-se de acordo com seu programa.",
@@ -150,6 +150,6 @@
 	"Victory.BaseValue"     : "Valor base", 
 	"Victory.Bonus"         : "B&#244;nus", 
 	"Victory.MaxCommands"   : "Para o m&#225;ximo de comandos",
-	"Victory.TimeBonus"     : "Para o seu tempo de {0}"
+	"Victory.TimeBonus"     : "Para o seu tempo de %0"
 	 
 }
