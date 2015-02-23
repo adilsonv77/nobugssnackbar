@@ -142,3 +142,154 @@ MyBlocklyApps.newShowModalDialog = function(content) {
 
 	
 };
+
+/**
+ * Multiple blocks selection then CTRL+C and CTRL+V.
+ * I modified some methods.
+ */ 
+
+var afterMyMouseDown = Blockly.onMouseDown_;
+var afterMyPaste = Blockly.WorkspaceSvg.prototype.paste;
+var beforeMyKeyDown = Blockly.onKeyDown_;
+var afterMyMouseMove = Blockly.onMouseMove_;
+
+var myIsTargetSvg = false;
+
+Blockly.onMouseDown_ = function(e) {
+	myIsTargetSvg = e.target && e.target.nodeName &&
+    					e.target.nodeName.toLowerCase() == 'svg';
+	afterMyMouseDown(e);
+};
+
+Blockly.isRightButton = function(e) {
+	  
+   return e.button == 2;// || e.ctrlKey; // Control-clicking in WebKit on Mac OS X fails to change button to 2.
+};
+
+Blockly.BlockSvg.prototype.select = function() {
+	myIsTargetSvg = false;
+    // Unselect any previously selected block.
+	if (!Game.CTRLPRESSED) {
+		Game.blocksSelected.forEach(function(block) { block.unselect(); });
+		Game.blocksSelected = [];
+		if (Blockly.selected)
+			Blockly.selected.unselect();
+	} else {
+		if (Blockly.selected && Blockly.selected != this && Game.blocksSelected.length == 0)
+			Game.blocksSelected.push(Blockly.selected);
+		else {
+			var idx = Game.blocksSelected.indexOf(this);
+			if (idx != -1) {
+				Game.blocksSelected.splice(idx, 1);
+				this.unselect();
+				return;
+			}
+		}
+	}
+	
+    Blockly.selected = this;
+    this.addSelect();
+    if (Game.CTRLPRESSED) {
+    	Game.blocksSelected.push(this);
+    }
+    Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
+};
+
+Blockly.BlockSvg.prototype.unselect = function() {
+	if (Game.blocksSelected.length > 0 && myIsTargetSvg) {
+		Game.blocksSelected.forEach(function(block) { block.removeSelect(); });
+		Game.blocksSelected = [];
+	} else {
+		this.removeSelect();
+	}
+	  
+	
+	if (Game.blocksSelected.length > 0) {
+		Blockly.selected = Game.blocksSelected[Game.blocksSelected.length-1];
+	} else
+		Blockly.selected = null;
+	
+	Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
+};
+
+Blockly.copy_ = function(block) {
+	if (Game.blocksSelected.length > 0) {
+
+		Blockly.clipboard_ = [];
+		Game.blocksSelected.forEach(function(_block){Blockly.clipboard_.push(Blockly.littleCopy_(_block));});
+		
+	} else 
+		
+		Blockly.clipboard_ = [Blockly.littleCopy_(block)];
+
+};
+
+Blockly.littleCopy_ = function(block) {
+	var xmlBlock = Blockly.Xml.blockToDom_(block);
+	Blockly.Xml.deleteNext(xmlBlock);
+	// Encode start position in XML.
+	var xy = block.getRelativeToSurfaceXY();
+	xmlBlock.setAttribute('x', Blockly.RTL ? -xy.x : xy.x);
+	xmlBlock.setAttribute('y', xy.y);
+	return xmlBlock;
+};
+
+Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
+	var workspaceSvg = this;
+	var pastedBlocks = [];
+	
+	Blockly.clipboard_.forEach(function(_xmlBlock) { 
+		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock);
+		m();
+		pastedBlocks.push(Blockly.selected);
+	});
+	
+	Game.blocksSelected = pastedBlocks;
+	Game.blocksSelected.forEach( function(block) { block.addSelect(); } );
+};
+
+Blockly.onKeyDown_ = function (e) {
+	
+	beforeMyKeyDown(e);
+	
+	if (e.ctrlKey && e.keyCode == 88) {
+		
+		Game.blocksSelected.forEach(function(block) { 
+			if (block.isDeletable() && block.isMovable())
+				block.dispose(true, true);
+		});
+		
+	} else {
+		if (e.keyCode == 8 || e.keyCode == 46) {
+			
+			 try {
+				Game.blocksSelected.forEach(function(block) { 
+					
+					if (block.isDeletable()) {
+					
+						block.dispose(true, true);
+					}
+				});
+
+				Game.blocksSelected = [];
+			 } finally {
+			      // Stop the browser from going back to the previous page.
+			      // Use a finally so that any error in delete code above doesn't disappear
+			      // from the console when the page rolls back.
+			      e.preventDefault();
+			 }
+		}
+	}
+};
+
+Blockly.onMouseMove_ = function(e) {
+	
+	Game.blocksSelected.forEach(function(block) { 
+		if (block != Blockly.selected)
+			block.removeSelect(); 
+	});
+	Game.blocksSelected = [];
+	
+	afterMyMouseMove(e);
+	
+};
