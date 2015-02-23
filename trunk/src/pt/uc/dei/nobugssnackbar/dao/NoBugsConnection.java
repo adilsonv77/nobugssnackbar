@@ -556,11 +556,13 @@ public class NoBugsConnection {
 							" join questionnaireclasses q1 using (questionnaireid)" +
 							" join questions q using (questionid)"+
 							" left outer join questionoptions qo on (q.questionid = qo.questionid) "+
-							" where questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
+							" where questionnaireclassid not in (select distinct questionnaireclassid from questionnaireanswer where userid = ?) and" + 
+							      " questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ")" + 
 							" order by questionnaireclassid, questionorder, optionorder";
 			
 			;
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
+			ps.setLong(1, user.getId());
 			ResultSet rs = ps.executeQuery();
 			addQuestionnaires(ret, rs, missions);
 			rs.close();
