@@ -19,14 +19,14 @@
 
 /**
  * This code is based on Mazed application
- * 
+ *
  * @fileoverview Initialization for NoBugs Snack Bar application.
  * @author adilsonv77@gmail.com (Adilson Vahldick)
  */
 'use strict';
 
 // Supported languages.
-BlocklyApps.LANGUAGES =  [  'pt-br' ];
+BlocklyApps.LANGUAGES =  [  'en' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 
 var v = Math.floor(Math.random() * 999999);
