@@ -70,10 +70,17 @@ Game.init = function() {
 
     // if there is some event added in before execution, than remove it
     window.removeEventListener('resize',  Game.resizeMainWindow);
+    window.removeEventListener('keydown',  Game.keyDown);
+    window.removeEventListener('keyup',  Game.keyUp);
     
     window.addEventListener('resize',  Game.resizeMainWindow);
+    window.addEventListener('keydown',  Game.keyDown);
+    window.addEventListener('keyup',  Game.keyUp);
     
-    // if the user's key is stored in cookies, then the system will not show the login dialog
+	Game.CTRLPRESSED = false;
+	Game.blocksSelected = [];
+
+	// if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
 		
 		if (ret[0]) {
@@ -103,6 +110,13 @@ Game.resizeMainWindow = function() {
 
 window.addEventListener('load', Game.init);
 
+Game.keyDown = function(evt) {
+	Game.CTRLPRESSED = true;
+};
+
+Game.keyUp = function(evt) {
+	Game.CTRLPRESSED = false;
+};
 
 Game.login = function() {
 	

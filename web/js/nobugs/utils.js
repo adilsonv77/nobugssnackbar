@@ -121,3 +121,4 @@ function generateImages(number, digits) {
 	return imgs;
 }
 
+
