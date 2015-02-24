@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="mission" type="missionType"/>
+  
+  <xs:complexType name="sliderType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:int" name="timesBefore"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="pageType" mixed="true">
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element type="xs:string" name="br" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element type="xs:string" name="b" maxOccurs="unbounded" minOccurs="0"/>
+		    <xs:element type="spanType" name="span" maxOccurs="unbounded" minOccurs="0" />
+		    <xs:element type="imghexType" name="imghex" maxOccurs="unbounded" minOccurs="0" />      
+      </xs:choice>
+    <xs:attribute type="xs:string" name="type"/>
+	  <xs:attribute type="xs:string" name="origin"/>
+	  <xs:attribute type="xs:integer" name="id"/>
+	  <xs:attribute type="xs:string" name="dir"/>  
+  </xs:complexType>
+  
+	<xs:complexType name="spanType">
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+		<xs:attribute type="xs:string" name="style"/>
+		</xs:extension>
+	</xs:simpleContent>
+	</xs:complexType>  
+  
+  <xs:complexType name="explanationType">
+    <xs:sequence>
+      <xs:element type="pageType" name="page" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hintType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="b" maxOccurs="unbounded" minOccurs="0" />    
+      <xs:element type="xs:string" name="br" maxOccurs="unbounded" minOccurs="0" />  
+      <xs:element type="imghexType" name="imghex" maxOccurs="unbounded" minOccurs="0" />    
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="category" use="optional"/>
+    <xs:attribute type="xs:short" name="time" use="optional"/>
+    <xs:attribute type="xs:string" name="condition" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="sequenceType">
+    <xs:sequence>
+      <xs:element type="hintType" name="hint" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="imghexType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="errorsType">
+    <xs:sequence>
+      <xs:element type="hintType" name="hint" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hintsType">
+    <xs:sequence>
+      <xs:element type="sequenceType" name="sequence" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="errorsType" name="errors" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="categoryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="show" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="commandsType">
+    <xs:sequence>
+      <xs:element type="categoryType" name="category" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="customerType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="id"/>
+      <xs:element type="xs:string" name="init"/>
+      <xs:element type="xs:string" name="dest"/>
+      <xs:element type="patternType" name="pattern"  maxOccurs="unbounded" minOccurs="0"/>      
+      <xs:element type="foodsType" name="foods"  maxOccurs="unbounded" minOccurs="0"/>     
+      <xs:element type="drinksType" name="drinks"  maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="randomType" use="optional"/>
+    <xs:attribute type="xs:integer" name="randomMin" use="optional"/>     
+  </xs:complexType>
+
+	<xs:complexType name="drinkType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:byte" name="qt"/>
+				<xs:attribute type="xs:byte" name="price"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+  
+	<xs:complexType name="drinksType">
+		<xs:sequence>
+			<xs:element type="drinkType" name="drink"  maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute type="xs:integer" name="randomMin" use="optional"/> 
+		<xs:attribute type="xs:integer" name="randomMax" use="optional"/>   
+	</xs:complexType>
+    
+  <xs:complexType name="customersType">
+    <xs:sequence>
+      <xs:element type="customerType" name="customer" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="objectiveType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+      <xs:attribute type="xs:integer" name="pos" use="optional"/>
+		  <xs:attribute type="xs:string" name="place" use="optional"/>
+		  <xs:attribute type="xs:boolean" name="distinct" use="optional"/>         
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="objectivesType">
+    <xs:sequence>
+      <xs:element type="objectiveType" name="objective" maxOccurs="unbounded" minOccurs="0"/>
+  </xs:sequence>
+  <xs:attribute type="xs:boolean" name="ordered"/>
+  <xs:attribute type="xs:integer" name="reward"/>
+  <xs:attribute type="xs:boolean" name="buttonDebug"/>
+	<xs:attribute type="xs:boolean" name="buttonRun"/>
+	<xs:attribute type="xs:boolean" name="variableWindow"/>
+	<xs:attribute type="xs:boolean" name="buttonBuy"/>  
+	<xs:attribute type="xs:integer" name="commQtd"/>    
+	<xs:attribute type="xs:integer" name="maxCommands"/> 
+	<xs:attribute type="xs:integer" name="maxCommandsReward"/>   
+	<xs:attribute type="xs:integer" name="bonusTime"/>  
+	<xs:attribute type="xs:string" name="bonusTimeReward"/>    
+	<xs:attribute type="xs:integer" name="varQtd"/>   
+  </xs:complexType>
+  
+	<xs:complexType name="xmlType">
+		<xs:sequence>
+			<xs:element type="blockType" name="block"  maxOccurs="unbounded" minOccurs="0"/>   
+		</xs:sequence>
+		<xs:attribute type="xs:boolean" name="alwaysNew"/>  
+		<xs:attribute type="xs:integer" name="preload"/>   
+		<xs:attribute type="xs:integer" name="id"/>   	
+	</xs:complexType>
+
+	<xs:complexType name="valueType">
+		<xs:sequence>
+			<xs:element type="blockType" name="block"/>
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="name" use="optional"/>
+	</xs:complexType>
+	
+	<xs:complexType name="nextType">
+		<xs:sequence>
+			<xs:element type="blockType" name="block"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="fieldType">
+		<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute type="xs:string" name="name" use="optional"/>
+		</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="blockType">
+		<xs:sequence>
+			<xs:element type="fieldType" name="field" minOccurs="0"/>
+			<xs:element type="valueType" name="value" minOccurs="0"/>
+			<xs:element type="nextType" name="next" minOccurs="0"/>
+			<xs:element type="statementType" name="statement" minOccurs="0"/>    
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="type" use="optional"/>
+		<xs:attribute type="xs:integer" name="x" use="optional"/>
+		<xs:attribute type="xs:integer" name="y" use="optional"/>
+		<xs:attribute type="xs:boolean" name="inline" use="optional"/>
+		<xs:attribute type="xs:integer" name="id"/>   
+	</xs:complexType>
+  
+	<xs:complexType name="foodType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:integer" name="qt"/>
+				<xs:attribute type="xs:integer" name="price"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+  
+	<xs:complexType name="foodsType">
+		<xs:sequence>
+			<xs:element type="foodType" name="food" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute type="xs:integer" name="randomMin" use="optional"/>
+		<xs:attribute type="xs:integer" name="randomMax" use="optional"/>  
+	</xs:complexType>
+    
+	<xs:complexType name="machineType">
+		<xs:simpleContent>
+		<xs:extension base="xs:string">
+		<xs:attribute type="xs:integer" name="type" use="optional"/>
+		</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+  
+	<xs:complexType name="selectMachineType">
+		<xs:sequence>
+			<xs:element type="machineType" name="machine" maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+    
+	<xs:complexType name="orderType">
+		<xs:sequence>
+			<xs:element type="foodsType" name="foods"/>
+			<xs:element type="xs:string" name="drinks"/>
+		</xs:sequence>
+	</xs:complexType>
+  
+	<xs:complexType name="patternType">
+		<xs:sequence>
+			<xs:element type="orderType" name="order" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>  
+    
+	<xs:complexType name="randomizationType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:byte" name="qtd" use="optional"/>
+				<xs:attribute type="xs:string" name="set" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+  
+	<xs:complexType name="customersSNType">
+		<xs:sequence>
+			<xs:element type="randomizationType" name="randomization" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+    
+	<xs:complexType name="statementType">
+	<xs:sequence>
+		<xs:element type="blockType" name="block"/>
+	</xs:sequence>
+	<xs:attribute type="xs:string" name="name"/>
+	</xs:complexType>
+    
+  <xs:complexType name="missionType">
+    <xs:sequence>      
+      <xs:element type="sliderType" name="slider" maxOccurs="unbounded" minOccurs="0" />      
+      <xs:element type="explanationType" name="explanation" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="hintsType" name="hints" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="selectMachineType" name="selectMachine" maxOccurs="unbounded" minOccurs="0"/>       
+      <xs:element type="commandsType" name="commands" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:string" name="cooker" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="customersSNType" name="customersSN" maxOccurs="unbounded" minOccurs="0"/>      
+      <xs:element type="customersType" name="customers" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="objectivesType" name="objectives" maxOccurs="unbounded" minOccurs="0"/>     
+      <xs:element type="xmlType" name="xml" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+		<xs:attribute type="xs:boolean" name="open" use="optional"/>  
+		<xs:attribute type="xs:integer" name="timeLimit" use="optional"/>   
+  </xs:complexType>
+</xs:schema>
