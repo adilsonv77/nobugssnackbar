@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:head>
+		<style>
+			.ui-panelgrid td, .ui-panelgrid tr {
+				border: none !important;
+			}
+		</style>
+	</h:head>
+	<h:body>
+		<p:panel style="width: 980px; margin: 0 auto;">
+			<h:form id="oneForm">		                  
+			    <p:tabView id="tbView" dynamic="true" cache="true">
+			        <p:tab id="mission" title="Mission">
+			        	<p:panelGrid columns="2">
+		        			<h:outputText value="Open: " />
+	       					<p:inputSwitch />
+	       					<h:outputText value="Time limit: "/>
+	       					<p:inputText />	
+       					</p:panelGrid>       				
+			        </p:tab>
+			 
+			        <p:tab id="slider" title="Slider">
+			        	<p:panelGrid columns="2">
+	       					<h:outputText value="Times before: "/>
+	       					<p:inputText />	
+       					</p:panelGrid>
+			        </p:tab>
+			        
+			        <p:tab id="explanation" title="Explanation">
+			        	<p:panel header="Explanation: create new pages">
+				        	<p:dataTable id="tblPages" var="page" value="#{mm.pageExplList}" emptyMessage="No pages!">
+							    <p:column headerText="Id">
+							        <h:outputText value="#{page.id}" />
+							    </p:column>
+							 
+							    <p:column headerText="Type">
+							        <h:outputText value="#{page.type}" />
+							    </p:column>
+							 
+							    <p:column headerText="Origin">
+							        <h:outputText value="#{page.origin}" />
+							    </p:column>
+							 
+							    <p:column headerText="Direction">
+							        <h:outputText value="#{page.dir}" />
+							    </p:column>
+							    <p:column headerText="Message">
+							        <h:outputText value="#{page.msg}" escape="false"/>
+							    </p:column>
+							    <p:column>
+							    	<p:commandButton image="ui-icon ui-icon-pencil" update=":oneForm:tbView:dlgExplain" onclick="PF('addPageDlg').show()">
+							    		<f:setPropertyActionListener value="#{page}" target="#{mm.page}"/>
+							    	</p:commandButton>
+							    </p:column>
+							</p:dataTable>	    
+				        	<p:commandButton value="Add" action="#{mm.newPage}" onclick="PF('addPageDlg').show()" />
+				        	   	
+						</p:panel>			
+						<p:dialog id="dlgExplain" header="Create new page" widgetVar="addPageDlg" modal="true" closeOnEscape="true">
+							<p:panel>
+							
+								<p:panelGrid columns="2">
+									<h:outputText value="Type: "/>
+									<p:inputText value="#{mm.page.type}"/>
+									<h:outputText value="Origin: "/>
+									<p:inputText value="#{mm.page.origin}"/>
+									<h:outputText value="Direction: "/>
+									<p:inputText value="#{mm.page.dir}"/>
+								</p:panelGrid>
+								<p:editor id="editor" widgetVar="editorWidget" value="#{mm.page.msg}" width="600" />
+							</p:panel>
+							
+							<p:commandButton value="Save" update="tblPages" actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()" icon="ui-icon-disk" />
+							<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();" icon="ui-icon-close" />
+						</p:dialog>
+			        </p:tab>
+			 
+			        <p:tab id="hints" title="Hints">
+
+			        </p:tab>
+			        
+			     	<p:tab id="machines" title="Machines">
+			        </p:tab>
+			 
+			        <p:tab id="commands" title="Commands">
+			        </p:tab>
+			        
+			         <p:tab id="cooker" title="Cooker">
+			        </p:tab>
+			 
+			        <p:tab id="customerSN" title="Customer SN">
+			        </p:tab>
+			        
+			        <p:tab id="customers" title="Customers">
+			        </p:tab>
+			        
+			         <p:tab id="objectives" title="Objectives">
+			        </p:tab>
+			 
+			        <p:tab id="xml" title="XML">
+			        </p:tab>		        
+			    </p:tabView>
+			   
+			</h:form>
+		</p:panel>
+	</h:body>
+</html>
