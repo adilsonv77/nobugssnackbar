@@ -73,7 +73,7 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho.
 			<dest>counter3</dest>
 			<foods>
 			</foods>
-			<drinks randomMin="1" randomMax="1">
+			<drinks randomMin="1" randomMax="1" differentFromPrevious="true">
 				<drink qt="1" price="0">coke</drink>
 				<drink qt="1" price="0">juiceoforange</drink>
 			</drinks>

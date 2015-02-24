@@ -128,6 +128,9 @@ CustomerManager.reset = function() {
 	this.transformSN(); // this doesnt work with pattern options
 };
 
+/**
+ * This method deletes some customer wishes.
+ */
 CustomerManager.transformSN = function() {
 	
 	if (this.randomization.length > 0) {
@@ -155,7 +158,7 @@ CustomerManager.transformSN = function() {
 					break;
 				case "hungry":
 					
-					// how many will not have thirsty
+					// how many will not have hungry
 					for (var i=0; i < custSelected.length; i++) {
 						customers[custSelected[i]].foods = [];
 					}
@@ -232,6 +235,9 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 	
 	var randomMin = list.getAttribute("randomMin");
+	var differentFromPrevious = list.getAttribute("differentFromPrevious") === "true";
+	
+	var isDrinkList = foodsLen != undefined;
 	var children = list.getElementsByTagName(key);
 	
 	var selected = [];
@@ -247,6 +253,26 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		
 		if (foodsLen == 0 && howMany == 0 && randomType === "atLeastOne")
 			howMany = 1;
+		
+		if (differentFromPrevious) {
+			for (var i = 0; i < customers.length; i++) {
+
+				var destList;
+				if (isDrinkList)
+					destList = customers[i].drinks;
+				else 
+					destList = customers[i].foods;
+				
+				destList.forEach(function(item) {
+					
+					for (var j = children.length-1; j >= 0; j--)
+						if (children[j].childNodes[0].nodeValue === item.item) {
+							selected.splice(j, 1);
+							break;
+						}
+				});
+			}
+		}
 		
 		while (selected.length > howMany) {
 			var s = Math.floor((Math.random() * (selected.length)));
