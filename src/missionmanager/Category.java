@@ -1,0 +1,22 @@
+package missionmanager;
+
+public class Category {
+	private String name;
+	private boolean show;
+	
+	public String getName() {
+		return name;
+	}
+	
+	public boolean isShow() {
+		return show;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setShow(boolean show) {
+		this.show = show;
+	}
+}
