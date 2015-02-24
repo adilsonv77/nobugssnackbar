@@ -81,7 +81,8 @@ Hints.init = function(hints) {
     if (Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
     
-    Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, Hints.menuEvent);
+    if (Blockly.mainWorkspace.toolbox_ != undefined)
+    	Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, Hints.menuEvent);
     
     if (Hints.beforeHideChaff == null) {
         Hints.beforeHideChaff = Blockly.hideChaff;
@@ -308,7 +309,11 @@ Hints.timeIsUp = function() {
 	 // variables used into conditions
 	countInstructions = Game.countInstructions(blocks);
 	countTopInstructions = blocks.length;
-	menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_; 
+	if (Blockly.mainWorkspace.toolbox_ != undefined)
+		menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_;
+	else
+		menuSelected = null;
+	
 	if (menuSelected != null)
 		menuSelected = menuSelected.element_;
 	
@@ -423,8 +428,10 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 		bindEvent = Hints.hideHintWithTimer;
 	
 	Hints.bindEvent1 = Blockly.addChangeListener(bindEvent);
-
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
+	
+	if (Blockly.mainWorkspace.toolbox_ != undefined)
+		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
+	
 	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
