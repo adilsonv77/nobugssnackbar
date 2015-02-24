@@ -190,7 +190,31 @@ Blockly.BlockSvg.prototype.select = function() {
     Blockly.selected = this;
     this.addSelect();
     if (Game.CTRLPRESSED) {
-    	Game.blocksSelected.push(this);
+
+    	// put together the blocks that are connected... Afterwards, when they are pasting, the elements get together too
+    	var found = false;
+    	for (var i = 0; i < Game.blocksSelected.length; i++) {
+    		var block = Game.blocksSelected[i];
+    		if (block.nextConnection != null) {
+        		var targetBlock = block.nextConnection.targetConnection;
+        		if (targetBlock != null && targetBlock.sourceBlock_.id === Blockly.selected.id) {
+        			Game.blocksSelected.splice(i+1, 0, this);
+        			found = true;
+        			break;
+        		} else {
+        			targetBlock = Blockly.selected.nextConnection.targetConnection;
+        			if (targetBlock != null && targetBlock.sourceBlock_.id === block.id) {
+            			Game.blocksSelected.splice(i, 0, this);
+            			found = true;
+            			break;
+       				
+        			}
+        		}
+    		}
+    	}
+    	
+    	if (!found)
+    		Game.blocksSelected.push(this);
     }
     Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
 };
@@ -237,11 +261,22 @@ Blockly.littleCopy_ = function(block) {
 Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	var workspaceSvg = this;
 	var pastedBlocks = [];
+	var lastBlock = null;
+	
+	if (Blockly.selected != null)
+		Blockly.selected.unselect();
 	
 	Blockly.clipboard_.forEach(function(_xmlBlock) { 
 		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock);
 		m();
+		var newBlock = Blockly.mainWorkspace.getBlockById( _xmlBlock.id );
+		if (lastBlock != null && lastBlock.nextConnection != null) {
+			if (lastBlock.nextConnection.targetConnection != null && lastBlock.nextConnection.targetConnection.sourceBlock_.id === newBlock.id) {
+				pastedBlocks[pastedBlocks.length-1].nextConnection.connect(Blockly.selected.previousConnection);
+			}
+		}
 		pastedBlocks.push(Blockly.selected);
+		lastBlock = newBlock;
 	});
 	
 	Game.blocksSelected = pastedBlocks;
