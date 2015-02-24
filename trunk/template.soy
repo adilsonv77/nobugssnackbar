@@ -327,8 +327,9 @@
 	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true">
 						    <thead>
 						        <tr>
-						            <th data-options="field:'name', width: 150, styler: leaderStyler"></th>
-						            <th data-options="field:'money', width: 70, styler: leaderStyler, align: 'right'"></th>
+						        <!-- the widths are slighty lower than the total width because the game showed a horizontal bar -->
+						            <th data-options="field:'name', width: 148, styler: leaderStyler"></th>
+						            <th data-options="field:'money', width: 68, styler: leaderStyler, align: 'right'"></th>
 						        </tr>
 						    </thead>
 						</table>
@@ -419,13 +420,10 @@
 	
 	    </category>
     {/if}
-    {if $ij.enabled['const']}
-    	<category name="{msg meaning="SnackMan.constSnackMan" desc="--"}Constants{/msg}">
-    	 {if $ij.enabled['const.juiceOfOrange']}<block type="const_juiceOfOrange"> </block>{/if}
-    	 {if $ij.enabled['const.softDrink']}<block type="const_softDrink"> </block>{/if}
-        </category>
+    {if $ij.enabled['vars']}
+    <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
     {/if}
-    	
+
     {if $ij.enabled['logic']}
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
@@ -435,6 +433,14 @@
       <block type="logic_boolean"></block>
     </category>
     {/if}
+
+    {if $ij.enabled['const']}
+    	<category name="{msg meaning="SnackMan.constSnackMan" desc="--"}Constants{/msg}">
+    	 {if $ij.enabled['const.juiceOfOrange']}<block type="const_juiceOfOrange"> </block>{/if}
+    	 {if $ij.enabled['const.softDrink']}<block type="const_softDrink"> </block>{/if}
+        </category>
+    {/if}
+    	
     {if $ij.enabled['loop']}
     <category name="{msg meaning="Apps.catLoops" desc="--"}Loops{/msg}">
       {if $ij.enabled['whileUntil']}<block type="controls_whileUntil"></block>{/if}
@@ -465,9 +471,6 @@
           <block type="math_number"></block>
           <block type="math_arithmetic"></block>
     </category>
-    {/if}
-    {if $ij.enabled['vars']}
-    <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
     {/if}
     {if $ij.enabled['function']}
     <category name="{msg meaning="Apps.catProcedures" desc="IBID"}Functions{/msg}" custom="PROCEDURE"></category>
