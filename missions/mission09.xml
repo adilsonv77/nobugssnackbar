@@ -15,6 +15,21 @@
 		</page>
 
 	</explanation>
+	
+	<hints>
+		<sequence>
+			<hint category="TestBlock" time="0" condition="Hints.activeBlock.type == 'ask_askForDrink' &amp;&amp; countInstructions == 1">
+			Temos aqui tr&#234;s novos comandos: [askForDrink] para perguntar ao cliente o que ele deseja beber, [pickUpDrink] para retirar um produto 
+			quando estiver em frente ao refrigerador e [goToCooler] para instruir o cozinheiro andar at&#233; o refrigerador. 
+			</hint>
+		
+		</sequence>
+		<!-- <errors> only happens after running a program, and some goals aren't achieved  --> 
+		<errors>
+		</errors>
+	</hints>
+	
+	
 	<commands>
 		<category name="snackMan" show="true"/>
 		
