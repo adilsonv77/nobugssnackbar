@@ -26,6 +26,8 @@
 	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o.",
 	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, entre em contacto com ",
 	"NoBugs.buy": "Comprar",
+	"NoBugs.sponsoredBy": "Patrocinado por",
+	"NoBugs.developedBy": "Desenvolvido por",
 	
 	"NoBugs.variables" : "Vari&#225;veis",
 	"NoBugs.varname" : "Nome",
@@ -47,6 +49,8 @@
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
 	
 	"NoBugs.finishOpenMission" : "O tempo da miss&#227;o acabou. &#60;br/&#62;&#60;br/&#62; Voc&#234; recebeu no total &#60;b&#62;%0&#60;/b&#62; pelas entregas dos pedidos.",
+	
+	"NoBugs.order" : "pedido",
 	
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
