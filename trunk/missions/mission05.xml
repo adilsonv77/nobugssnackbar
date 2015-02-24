@@ -63,6 +63,7 @@
 	</hints>
 	
 	<commands>
+ <!--
 		<category name="snackMan" show="true"/>
 		
 		<category name="goToBarCounter" show="true"/>
@@ -73,7 +74,7 @@
 		
 
 		<category name="vars" show="true" />
-
+ -->
 	</commands>
 	<cooker>initial</cooker>
 	<customers>
@@ -94,44 +95,44 @@
 		
 	</objectives>
 	<xml>
-		<block type="variables_set" inline="true" x = "300" y = "1">
+		<block type="variables_set" inline="true" x = "300" y = "1" deletable = "false" >
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
-				<block type="ask_askForFood">
+				<block type="ask_askForFood" deletable = "false"  >
 				</block>
 			</value>
 		</block>
-		<block type="variables_set" inline="true" x = "300" y = "50">
+		<block type="variables_set" inline="true" x = "300" y = "50" deletable = "false" >
 			<field name="VAR">comida</field>
 			<value name="VALUE">
-				<block type="prepare_pickUpHotDog">
+				<block type="prepare_pickUpHotDog" deletable = "false"  >
 					<value name="VALUE">
-						<block type="variables_get">
+						<block type="variables_get" deletable = "false  ">
 						   <field name="VAR">pedido</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToBarCounter" x = "300" y = "100">
+		<block type="move_goToBarCounter" x = "300" y = "100" deletable = "false" >
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable = "false"  >
 					<field name="NUM">3</field>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToBarCounter" x = "300" y = "150">
+		<block type="move_goToBarCounter" x = "300" y = "150" deletable = "false" >
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable = "false"  >
 					<field name="NUM">3</field>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToDisplay" x = "300" y = "200">
+		<block type="move_goToDisplay" x = "300" y = "200" deletable = "false"  >
 		</block>
-		<block type="do_deliver" x = "300" y = "250">
+		<block type="do_deliver" x = "300" y = "250" deletable = "false" >
 			<value name="VALUE">
-				<block type="variables_get">
+				<block type="variables_get" deletable = "false"  >
 					<field name="VAR">comida</field>
 				</block>
 			</value>

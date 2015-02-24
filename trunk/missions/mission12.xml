@@ -38,12 +38,6 @@
 				dentro dele. Resolve primeiro para um cliente e depois utiliza esse recurso para reaproveitar o
 				c&#243;digo para outro cliente.
 			</hint>
-			<hint category="Iddle" condition = "Hints.showedIddle &gt;= 1 &amp;&amp; Hints.showedIddle &lt; 2">
-				Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para
-				duplicar um bloco. Selecionando o bloco condicional, vais copiar esse bloco e todos os outros blocos
-				dentro dele. Resolve primeiro para um cliente e depois utiliza esse recurso para reaproveitar o
-				c&#243;digo para outro cliente.
-			</hint>
 			<hint category="Iddle" condition = "Hints.showedIddle &gt;= 2 &amp;&amp; Hints.showedIddle &lt; 3 &amp;&amp; countInstructions > 14">
 			Se est&#225; complicado de organizar os blocos, tens mais uma alternativa: usar os recursos de zoom do navegador. Use a combina&#231;&#227;o
 			de teclas [Ctrl +] e [Ctrl -] para gerir o zoom do navegador.

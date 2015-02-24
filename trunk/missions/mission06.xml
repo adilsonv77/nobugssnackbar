@@ -27,6 +27,12 @@
 			par&#226;metro deste [pickUpHotDog].
 			</hint>
 			
+			<hint category="Iddle" condition = "Hints.showedIddle &lt; 2 &amp;&amp; countInstructions > 5">
+			Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para duplicar o bloco. 
+			Se manter a tecla [Ctrl] pressionada, pode selecionar v&#225;rios blocos. 
+			Resolve primeiro para um cliente e depois utiliza esse recurso para reaproveitar o c&#243;digo para outro cliente.
+			</hint>
+			
 		</sequence>
 		<errors>
 

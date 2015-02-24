@@ -249,6 +249,10 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 };
 
 Blockly.onKeyDown_ = function (e) {
+   if (Blockly.isTargetInput_(e)) {
+	    // When focused on an HTML text input widget, don't trap any keys.
+	    return;
+    }
 	
 	beforeMyKeyDown(e);
 	

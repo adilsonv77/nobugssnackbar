@@ -23,7 +23,7 @@
 			<hint category="TestBlock" time="0" condition="countTopInstructions == 3">
 			Arraste e organize a sequ&#234;ncia desses blocos.
 			</hint>
-			<hint time="2000" category="VariableWindow"/>
+			<hint time="1000" category="VariableWindow"/>
 			<hint time="3000" category="DebugProgram"/>
 		</sequence>
 	</hints>
