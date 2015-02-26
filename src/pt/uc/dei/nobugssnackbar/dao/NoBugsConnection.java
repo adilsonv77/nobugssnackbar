@@ -540,6 +540,51 @@ public class NoBugsConnection {
 		return ret;
 	}
 
+	public Questionnaire retrieveParticularQuestionnaire(User user, long questId) throws SQLException {
+		Connection bdCon = null;
+		Questionnaire ret = null;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			bdCon.prepareStatement("select * from questionnaire");
+			String clazzes = user.getClassesId() + "";
+			
+			String questionnaire = 
+					"select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, " +
+								" optiondescription, optionvalue, questionnaireshowrules, q1.classid, 0 " + 
+							" from questionnaireclasses q1 "+
+								" join questionnaire using (questionnaireid) "+
+								" join questionsquestionnaire using (questionnaireid) "+
+								" join questions q using (questionid) "+
+							    " left outer join questionoptions qo on (q.questionid = qo.questionid) "+
+							" where questionnaireid = ? and classid in ("+ clazzes.substring(1, clazzes.length()-1) + ") and (questionnairedinit is null or questionnairedinit <= now()) and questionnairedfinish > now() "+ 
+								" and questionnaireclassid not in (select distinct questionnaireclassid from questionnaireanswer where userid = ?) "+
+							" order by questionorder, optionorder";
+			
+			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
+			ps.setLong(1, questId);
+			ps.setLong(2, user.getId());
+			ResultSet rs = ps.executeQuery();
+			
+			List<Questionnaire> retL = new ArrayList<>();
+			addQuestionnaires(retL, rs, null);
+			if (retL.size() == 1)
+				ret = retL.get(0);
+			
+			rs.close();
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
+	}
+	
 	public List<Questionnaire> retrieveQuestionnaire(User user, Object[][] missions) throws SQLException {
 		
 		Connection bdCon = null;
@@ -592,12 +637,14 @@ public class NoBugsConnection {
 
 				Long classId = rs.getLong(10);
 				long finishedMission = 0;
-				for (int i=missions.length-1; i>=0; i--) {
-					Long mi = (Long) missions[i][4];
-					if (classId.equals(mi)) {
-						finishedMission += Long.parseLong(missions[i][3].toString());
+
+				if (missions != null)
+					for (int i=missions.length-1; i>=0; i--) {
+						Long mi = (Long) missions[i][4];
+						if (classId.equals(mi)) {
+							finishedMission += Long.parseLong(missions[i][3].toString());
+						}
 					}
-				}
 				
 				if (rs.getLong(11) == finishedMission) {
 				
@@ -1065,5 +1112,6 @@ public class NoBugsConnection {
 		}
 		return ret;
 	}
+
 
 }

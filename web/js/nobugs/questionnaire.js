@@ -29,9 +29,9 @@ Questionnaire.createForm = function (questionnaire) {
 
 	for (var j = 0; j < questionnaire.length; j++) {
 		
-		if (questionnaire[j].showRules != null) {
-			Game.finishedMissionId = 0;
+		if (missions!=null && questionnaire[j].showRules != null) {
 			
+			Game.finishedMissionId = 0;
 			for (var i=missions.length-1; i>=0; i--)
 				if (questionnaire[j].classId == missions[i][4]) {
 					Game.finishedMissionId += missions[i][3];
@@ -259,7 +259,7 @@ Questionnaire.nextChar = function(c) {
 	return String.fromCharCode(c.charCodeAt(0) + 1);
 };
 
-Questionnaire.handlingQuestionnaire = function() {
+Questionnaire.handlingQuestionnaire = function(saveMethod) {
 	var answers = document.getElementsByClassName("answer");
 	var saveAnswers = [];
 
@@ -309,7 +309,8 @@ Questionnaire.handlingQuestionnaire = function() {
 			default :
 		}
 	}
-	UserControl.saveQuestionnaire(saveAnswers);
+
+	saveMethod(saveAnswers);
 	// it's not necessary waiting the answer... the next parts of the games don't depends on it.
 };
 

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
+  <link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
+  <link rel="stylesheet" type="text/css" href="css/drop/drop-theme-arrows-alert.css" />
+  
+  <script type="text/javascript" src="js/blockly_compressed.js"></script>
+  <script type="text/javascript" src="js/commons/common.js"></script>
+  <script type="text/javascript" src="js/nobugs/quest.js"></script>
+  <script type="text/javascript" src="js/nobugs/questionnaire.js"></script>
+  <script type="text/javascript" src="js/nobugs/blockly.js"></script>
+
+  <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+  <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="js/drop/drop.min.js"></script>
+
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/util.js"></script>
+  <script type="text/javascript" src="dwr/interface/QuestControl.js"></script>
+
+  <script>
+  dwr.util.useLoadingMessage();
+  </script>
+
+</head>
+<body>
+	<div id="initialBackground">
+	  	<form onsubmit="return false">
+			<h1 style="font:bolder;">Questionário Final de Avaliação</h1>
+	  		<fieldset style="border: 0px none">
+	  			<label class="user">
+	  				<input type="text" id="loginuser" placeHolder="Usuário"/>
+	  			</label>
+	  			<label class="password">
+	  			    <input type="password" id="loginpassw" placeHolder="Senha"/>
+	  			</label>
+	  			<button id="ButtonLogin" class="secondary" onclick="Quest.login()">
+	  			Login
+	    		</button>
+	  		</fieldset>
+  		</form>
+  		<div>
+  			<div id="errorLogin" style="color: red; position: relative"></div>
+  		</div>
+	</div>
+	
+  <div id="dialogShadow" class="dialogAnimate"></div>
+  <div id="dialogBorder"></div>
+  <div id="dialog"></div>
+  
+  <div id="dialogQuestionnaire" class="dialogHiddenContent">
+  	<div id="contentQuestionnaire">
+  		
+  	</div>
+    <div id="buttonsQuestionnaire" class="farSide" style="padding: 1ex 3ex 0">
+	    <button class="secondary" onclick="Quest.finishQuestionnaire()">
+	      Salvar
+	    </button>
+	</div>
+  </div> 
+	
+  <span  style="display: none" id="NoBugs_requiredField">Campo obrigatorio</span>
+</body>
