@@ -17,19 +17,21 @@ public class GenerateUsers {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		
+	/*	
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
-		
+		*/
 		r = new Random();
 		s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		NoBugsConnection nobugs = NoBugsConnection.getConnection();
-		for (int i = 1; i <= 15; i++) {
+	//	NoBugsConnection nobugs = NoBugsConnection.getConnection();
+		for (int i = 1; i <= 30; i++) {
 			
 			
-			String s1 = extractChar() + extractChar() + extractChar() + extractChar() + extractChar();
-			
+			String s1 = "TP" + extractChar() + extractChar() + extractChar() + extractChar();
+			System.out.println("{\""+s1+"\", \"Student "+i+"\", \"M\"},");
+			/*
 			nobugs.insertUser(s1, UserControl.encrypt(s1), s1, "M", new int[]{});
+			*/
 		}
 		
 		

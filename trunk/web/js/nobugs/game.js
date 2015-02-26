@@ -100,6 +100,8 @@ Game.init = function() {
 
 };
 
+window.addEventListener('load', Game.init);
+
 Game.resizeMainWindow = function() {
 	
 	var lu = document.getElementById("loginuser");
@@ -107,8 +109,6 @@ Game.resizeMainWindow = function() {
     document.getElementById("suporte").style.left = document.getElementById("errorLogin").style.left;
 
 };
-
-window.addEventListener('load', Game.init);
 
 Game.keyDown = function(evt) {
 	Game.CTRLPRESSED = true;
@@ -211,7 +211,9 @@ Game.finishQuestionnaire = function() {
 	
 	if (consistido) {
 		
-		Questionnaire.handlingQuestionnaire();
+		Questionnaire.handlingQuestionnaire(function(saveAnswers) {
+			UserControl.saveQuestionnaire(saveAnswers);
+		});
 		
 		BlocklyApps.hideDialog(false);
 
