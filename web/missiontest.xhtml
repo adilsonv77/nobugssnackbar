@@ -11,6 +11,7 @@
 		</style>
 	</h:head>
 	<h:body>
+		<p:growl id="growlMsgs" showDetail="true"/>
 		<p:panel style="width: 980px; margin: 0 auto;">
 			<h:form id="oneForm">		                  
 			    <p:tabView id="tbView" dynamic="true" cache="true">
@@ -31,38 +32,51 @@
 			        </p:tab>
 			        
 			        <p:tab id="explanation" title="Explanation">
-			        	<p:panel header="Explanation: create new pages">
-				        	<p:dataTable id="tblPages" var="page" value="#{mm.pageExplList}" emptyMessage="No pages!">
-							    <p:column headerText="Id">
-							        <h:outputText value="#{page.id}" />
-							    </p:column>
-							 
+			        	<p:panel>
+				        	<p:dataTable editable="true" editMode="row" id="tblPages" var="page" value="#{mm.pageExplList}" emptyMessage="No pages!">
+							   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+		        			   	<f:facet name="header">  
+						            Pages 
+						        </f:facet> 
 							    <p:column headerText="Type">
-							        <h:outputText value="#{page.type}" />
-							    </p:column>
-							 
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{page.type}"/></f:facet>
+							        	<f:facet name="input"><p:inputText id="typeInput" value="#{page.type}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>							         
 							    <p:column headerText="Origin">
-							        <h:outputText value="#{page.origin}" />
-							    </p:column>
-							 
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{page.origin}"/></f:facet>
+							        	<f:facet name="input"><p:inputText id="originInput" value="#{page.origin}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>						        
 							    <p:column headerText="Direction">
-							        <h:outputText value="#{page.dir}" />
-							    </p:column>
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{page.dir}"/></f:facet>
+							        	<f:facet name="input"><p:inputText id="dirInput" value="#{page.dir}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>						        
 							    <p:column headerText="Message">
-							        <h:outputText value="#{page.msg}" escape="false"/>
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{page.msg}" escape="false"/></f:facet>
+							        	<f:facet name="input"><p:inputTextarea value="#{page.msg}"/></f:facet>
+							        </p:cellEditor>					        
 							    </p:column>
-							    <p:column>
-							    	<p:commandButton image="ui-icon ui-icon-pencil" onclick="PF('addPageDlg').show()">
-							    		<f:setPropertyActionListener value="#{page}" target="#{mm.page}"/>
-							    	</p:commandButton>
-							    </p:column>
+							   	<p:column style="width:32px">
+						           <p:rowEditor/>						           
+						       	</p:column >						       		
+						       	<p:column style="width:32px">
+						       		<p:commandButton type="button" icon="ui-icon ui-icon-close" title="Icon Only" actionListener="#{mm.deletePage}">
+						       			<f:setPropertyActionListener value="#{page}" target="#{mm.page}" />
+						       		</p:commandButton>
+						       	</p:column>				       	
 							</p:dataTable>	    
-				        	<p:commandButton value="Add" action="#{mm.newPage}" onclick="PF('addPageDlg').show()" />
-				        	   	
-						</p:panel>			
-						<p:dialog id="dlgExplain" header="Create new page" widgetVar="addPageDlg" modal="true" closeOnEscape="true">
-							<p:panel>
+				        	<p:commandButton value="Add" action="#{mm.newPage}" onclick="PF('addPageDlg').show()" />				        	 
+						</p:panel>		
 							
+						<p:dialog id="dlgExplain" header="Create new page" widgetVar="addPageDlg" modal="true" closeOnEscape="true">
+							<p:panel>							
 								<p:panelGrid columns="2">
 									<h:outputText value="Type: "/>
 									<p:inputText value="#{mm.page.type}"/>
@@ -71,9 +85,8 @@
 									<h:outputText value="Direction: "/>
 									<p:inputText value="#{mm.page.dir}"/>
 								</p:panelGrid>
-								<p:editor value="#{mm.page.msg}" width="600" />
-							</p:panel>
-							
+								<p:editor value="#{mm.page.msg}" controls="bold" width="600" />
+							</p:panel>							
 							<p:commandButton value="Save" update="@form" actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()" icon="ui-icon-disk" />
 							<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();" icon="ui-icon-close" />
 						</p:dialog>
@@ -81,47 +94,73 @@
 			 
 			        <p:tab id="hints" title="Hints">
 			        	<p:panel header="Hints: sequence">
-				        	<p:dataTable id="tblSequence" var="hint" value="#{mm.hintSeqList}" emptyMessage="No hints!">
+				        	<p:dataTable  editable="true" editMode="row" id="tblSequence" var="hint" value="#{mm.hintSeqList}" emptyMessage="No hints!">		        			
+			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
+								
 								<p:column headerText="Category">
-									<h:outputText value="#{hint.category}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
+									</p:cellEditor>										
 								</p:column>
 								<p:column headerText="Condition">
-									<h:outputText value="#{hint.condition}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
+									</p:cellEditor>
 								</p:column>
 								<p:column headerText="Time">
-									<h:outputText value="#{hint.time}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
+									</p:cellEditor>									
 								</p:column>
 								<p:column headerText="Message">
-									<h:outputText value="#{hint.msg}" escape="false"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
+									</p:cellEditor>										
 								</p:column>
-							    <p:column>
-							    	<p:commandButton image="ui-icon ui-icon-pencil" onclick="PF('addHintDlg').show()">
-							    		<f:setPropertyActionListener value="#{hint}" target="#{mm.hint}"/>
-							    	</p:commandButton>
-							    </p:column>
+								<p:column style="width:32px">
+						           <p:rowEditor />
+						       	</p:column>								
 							</p:dataTable>	    
 				        	<p:commandButton value="Add" action="#{mm.addInSeqListFunc}" onclick="PF('addHintDlg').show()" />	        	   	
 						</p:panel>
 						
 						<p:panel header="Hints: Error">
-				        	<p:dataTable id="tblError" var="hint" value="#{mm.hintErrorList}" emptyMessage="No hints!">
+				        	<p:dataTable editable="true" editMode="row" id="tblError" var="hint" value="#{mm.hintErrorList}" emptyMessage="No hints!">
+			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
+								
 								<p:column headerText="Category">
-									<h:outputText value="#{hint.category}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
+									</p:cellEditor>										
 								</p:column>
 								<p:column headerText="Condition">
-									<h:outputText value="#{hint.condition}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
+									</p:cellEditor>
 								</p:column>
 								<p:column headerText="Time">
-									<h:outputText value="#{hint.time}"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
+									</p:cellEditor>									
 								</p:column>
 								<p:column headerText="Message">
-									<h:outputText value="#{hint.msg}" escape="false"/>
+									<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
+										<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
+									</p:cellEditor>										
 								</p:column>
-							    <p:column>
-							    	<p:commandButton image="ui-icon ui-icon-pencil" onclick="PF('addHintDlg').show()">
-							    		<f:setPropertyActionListener value="#{hint}" target="#{mm.hint}"/>
-							    	</p:commandButton>
-							    </p:column>
+								<p:column style="width:32px">
+						           <p:rowEditor />
+						       	</p:column>										
 							</p:dataTable>	    
 				        	<p:commandButton value="Add" action="#{mm.addInErrorListFunc}" onclick="PF('addHintDlg').show()" />	        	   	
 						</p:panel>
@@ -148,27 +187,126 @@
 			     		<p:panel>
 			     			<p:panelGrid columns="2">
 				     			<h:outputText value="Machine type: "/>
-				     			<p:inputText value="#{mm.machineType}"/>
+				     			<p:inputText value="#{mm.machineType.type}"/>
 				     			<p:commandButton value="Add" update="@form" actionListener="#{mm.addMachine}"/>
 			     			</p:panelGrid>
 			     		</p:panel>
-			     		<p:dataGrid var="machine" value="#{mm.machineTypeList}">
+			     		<p:dataTable editable="true" editMode="row" var="machine" value="#{mm.machineTypeList}" style="width:300px; margin:0 auto;">
+	        				<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+     						<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>						        
+					        
 					        <p:column headerText="Type">
-					        	<h:outputText value="#{machine}"/>
+		        				<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{machine.type}" /></f:facet>
+                  					<f:facet name="input"><p:inputText value="#{machine.type}" /></f:facet>
+                 				</p:cellEditor>					        	
 					        </p:column>
-   						 </p:dataGrid>
+							<p:column style="width:32px">
+					           <p:rowEditor />
+					       	</p:column>					        
+   						 </p:dataTable>
 			        </p:tab>
 			 
 			        <p:tab id="commands" title="Commands">
 			        	<p:panel>
-			        		<p:dataGrid></p:dataGrid>
+			        		<p:dataTable editable="true" editMode="row" id="tblCommands" var="category" value="#{mm.commandList}" emptyMessage="Please add commands!">
+			        			   <f:facet name="header">  
+							            Commands 
+							        </f:facet>  		        			
+			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>	
+			        			<p:column headerText="Name">
+			        				<p:cellEditor>
+										<f:facet name="output"><h:outputText value="#{category.name}" /></f:facet>
+	                  					<f:facet name="input"><p:inputText id="nameInput" value="#{category.name}" style="width:96%" /></f:facet>
+                  					</p:cellEditor>
+								</p:column>
+								<p:column headerText="Show">
+									<p:cellEditor>
+										<f:facet name="output"><p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true"  value="#{category.show}"/></f:facet>
+										<f:facet name="input"><p:selectBooleanButton onLabel="Yes" offLabel="No"   value="#{category.show}" style="width:96%"/></f:facet>																			
+									</p:cellEditor>
+								</p:column>
+								<p:column style="width:32px">
+						           <p:rowEditor />
+						       	</p:column>
+			        		</p:dataTable>
+			        					        		
+			        		<p:commandButton value="Add" action="#{mm.newCategory}" onclick="PF('addCategoryDlg').show()" />				        		
 			        	</p:panel>
+			        	
+			        	<p:dialog id="dlgCategory" header="Create new Category" widgetVar="addCategoryDlg" modal="true" closeOnEscape="true">
+							<p:panel>
+								<p:panelGrid columns="2">
+									<h:outputText value="Name "/>
+									<p:inputText value="#{mm.category.name}"/>
+									<h:outputText value="Show "/>
+									<p:inputSwitch value="#{mm.category.show}" />								
+								</p:panelGrid>
+							</p:panel>
+							
+							<p:commandButton value="Save" update="@form" actionListener="#{mm.addCategory}" onclick="PF('addCategoryDlg').hide()" icon="ui-icon-disk" />
+							<p:commandButton value="Cancel" onclick="PF('addCategoryDlg').hide();" icon="ui-icon-close" />
+						</p:dialog>
 			        </p:tab>
 			        
-			         <p:tab id="cooker" title="Cooker">
+			        <p:tab id="cooker" title="Cooker">
+				       <h:outputLabel for="ipCooker" value="Cooker: " />
+				       <p:inplace id="ipCooker" editor="true">
+				           <p:inputText value="#{mm.cooker}"  label="text" />
+				       </p:inplace>			        	
 			        </p:tab>
 			 
 			        <p:tab id="customerSN" title="Customer SN">
+						<p:panel>
+				        	<p:dataTable editable="true" editMode="row" id="tblRandomizations" var="randomization" value="#{mm.randList}" emptyMessage="No randomizations!">
+							   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+       							
+							    <p:column headerText="Qtd">
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{randomization.qtd}"/></f:facet>
+							        	<f:facet name="input"><p:inputText id="typeInput" value="#{randomization.qtd}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>							         
+							    <p:column headerText="Set">
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{randomization.set}"/></f:facet>
+							        	<f:facet name="input"><p:inputText id="originInput" value="#{randomization.set}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>	
+							    <p:column headerText="Text">
+							    	<p:cellEditor>
+							        	<f:facet name="output"><h:outputText value="#{randomization.msg}"/></f:facet>
+							        	<f:facet name="input"><p:inputText value="#{randomization.msg}"/></f:facet>
+							        </p:cellEditor>
+							    </p:column>								    					        
+							   	<p:column style="width:32px">
+						           <p:rowEditor/>						           
+						       	</p:column >						       		
+						       	<p:column style="width:32px">
+						       		<p:commandButton type="button" icon="ui-icon ui-icon-close" title="Icon Only" actionListener="#{mm.deletePage}">
+						       			<f:setPropertyActionListener value="#{randomization}" target="#{mm.randomization}" />
+						       		</p:commandButton>
+						       	</p:column>				       	
+							</p:dataTable>	    
+				        	<p:commandButton value="Add" action="#{mm.newRandomization}" onclick="PF('addRandomizationDlg').show()" />				        	 
+						</p:panel>		
+							
+						<p:dialog id="dlgRandomization" header="Create new page" widgetVar="addRandomizationDlg" modal="true" closeOnEscape="true">
+							<p:panel>							
+								<p:panelGrid columns="2">
+									<h:outputText value="Qtd: "/>
+									<p:inputText value="#{mm.randomization.qtd}"/>
+									<h:outputText value="Set: "/>
+									<p:inputText value="#{mm.randomization.set}"/>
+									<h:outputText value="Text: "/>
+									<p:inputText value="#{mm.randomization.msg}"/>
+								</p:panelGrid>
+							</p:panel>							
+							<p:commandButton value="Save" update="@form" actionListener="#{mm.addRandomization}" onclick="PF('addRandomizationDlg').hide()" icon="ui-icon-disk" />
+							<p:commandButton value="Cancel" onclick="PF('addRandomizationDlg').hide();" icon="ui-icon-close" />
+						</p:dialog>			        
 			        </p:tab>
 			        
 			        <p:tab id="customers" title="Customers">
@@ -180,7 +318,6 @@
 			        <p:tab id="xml" title="XML">
 			        </p:tab>		        
 			    </p:tabView>
-			   
 			</h:form>
 		</p:panel>
 	</h:body>
