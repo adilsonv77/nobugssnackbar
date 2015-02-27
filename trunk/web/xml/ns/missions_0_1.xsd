@@ -92,30 +92,12 @@
       <xs:element type="xs:string" name="init"/>
       <xs:element type="xs:string" name="dest"/>
       <xs:element type="patternType" name="pattern"  maxOccurs="unbounded" minOccurs="0"/>      
-      <xs:element type="foodsType" name="foods"  maxOccurs="unbounded" minOccurs="0"/>     
-      <xs:element type="drinksType" name="drinks"  maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="wishesType" name="foods"  maxOccurs="unbounded" minOccurs="0"/>     
+      <xs:element type="wishesType" name="drinks"  maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute type="xs:string" name="randomType" use="optional"/>
-    <xs:attribute type="xs:integer" name="randomMin" use="optional"/>     
-  </xs:complexType>
-
-	<xs:complexType name="drinkType">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute type="xs:byte" name="qt"/>
-				<xs:attribute type="xs:byte" name="price"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-  
-	<xs:complexType name="drinksType">
-		<xs:sequence>
-			<xs:element type="drinkType" name="drink"  maxOccurs="unbounded" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute type="xs:integer" name="randomMin" use="optional"/> 
-		<xs:attribute type="xs:integer" name="randomMax" use="optional"/>   
-	</xs:complexType>
-    
+    <xs:attribute type="xs:string" name="randomType" use="optional"/>     
+        <xs:attribute type="xs:integer" name="randomMin" use="optional" />
+    </xs:complexType>    
   <xs:complexType name="customersType">
     <xs:sequence>
       <xs:element type="customerType" name="customer" maxOccurs="unbounded" minOccurs="0"/>
@@ -194,7 +176,7 @@
 		<xs:attribute type="xs:integer" name="id"/>   
 	</xs:complexType>
   
-	<xs:complexType name="foodType">
+	<xs:complexType name="wishType">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
 				<xs:attribute type="xs:integer" name="qt"/>
@@ -203,9 +185,9 @@
 		</xs:simpleContent>
 	</xs:complexType>
   
-	<xs:complexType name="foodsType">
+	<xs:complexType name="wishesType">
 		<xs:sequence>
-			<xs:element type="foodType" name="food" maxOccurs="unbounded" minOccurs="0"/>
+			<xs:element type="wishType" name="food" maxOccurs="unbounded" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute type="xs:integer" name="randomMin" use="optional"/>
 		<xs:attribute type="xs:integer" name="randomMax" use="optional"/>  
@@ -228,8 +210,8 @@
     
 	<xs:complexType name="orderType">
 		<xs:sequence>
-			<xs:element type="foodsType" name="foods"/>
-			<xs:element type="xs:string" name="drinks"/>
+			<xs:element type="wishesType" name="foods"/>
+			<xs:element type="wishesType" name="drinks"/>
 		</xs:sequence>
 	</xs:complexType>
   
