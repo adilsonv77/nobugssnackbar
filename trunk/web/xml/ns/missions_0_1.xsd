@@ -95,7 +95,7 @@
       <xs:element type="wishesType" name="foods"  maxOccurs="unbounded" minOccurs="0"/>     
       <xs:element type="wishesType" name="drinks"  maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute type="xs:string" name="randomType" use="optional"/>     
+    	<xs:attribute type="xs:string" name="randomType" use="optional"/>
         <xs:attribute type="xs:integer" name="randomMin" use="optional" />
     </xs:complexType>    
   <xs:complexType name="customersType">
@@ -180,7 +180,7 @@
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
 				<xs:attribute type="xs:integer" name="qt"/>
-				<xs:attribute type="xs:integer" name="price"/>
+				<xs:attribute type="xs:decimal" name="price"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

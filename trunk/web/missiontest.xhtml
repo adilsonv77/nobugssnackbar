@@ -186,9 +186,8 @@
 			     	<p:tab id="machines" title="Machines">
 			     		<p:panel>
 			     			<p:panelGrid columns="2">
-				     			<h:outputText value="Machine type: "/>
-				     			<p:inputText value="#{mm.machineType.type}"/>
-				     			<p:commandButton value="Add" update="@form" actionListener="#{mm.addMachine}"/>
+				     			<h:outputText value="New Machine: "/>
+				     			<p:commandButton value="Add" action="#{mm.newMachine}" onclick="PF('addMachineDlg').show()"/>
 			     			</p:panelGrid>
 			     		</p:panel>
 			     		<p:dataTable editable="true" editMode="row" var="machine" value="#{mm.machineTypeList}" style="width:300px; margin:0 auto;">
@@ -205,6 +204,17 @@
 					           <p:rowEditor />
 					       	</p:column>					        
    						 </p:dataTable>
+   						 
+   						 <p:dialog id="dlgMachine" header="Create new machine" widgetVar="addMachineDlg" modal="true" closeOnEscape="true">
+							<p:panel>							
+								<p:panelGrid columns="2">
+									<h:outputText value="Type: "/>
+									<p:inputText value="#{mm.machineType.type}"/>
+								</p:panelGrid>
+							</p:panel>							
+							<p:commandButton value="Save" update="@form" actionListener="#{mm.addMachine}" onclick="PF('addMachineDlg').hide()" icon="ui-icon-disk" />
+							<p:commandButton value="Cancel" onclick="PF('addMachineDlg').hide();" icon="ui-icon-close" />
+						</p:dialog>
 			        </p:tab>
 			 
 			        <p:tab id="commands" title="Commands">
