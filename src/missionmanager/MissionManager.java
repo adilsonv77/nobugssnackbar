@@ -10,9 +10,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-
-
-
 @ManagedBean(name="mm")
 @SessionScoped
 public class MissionManager{
@@ -21,6 +18,8 @@ public class MissionManager{
 	private MachineType machineType = new MachineType(); 
 	private Page page = new Page();
 	private Hint hint = new Hint();
+	/* maybe you need "newCustomer" method!!! */
+	private Customer customer = new Customer();
 	private Randomization randomization = new Randomization();
 	private Category category = new Category();
 	private ArrayList<Page> pageExplList = new ArrayList<Page>();
@@ -29,13 +28,19 @@ public class MissionManager{
 	private ArrayList<MachineType> machineTypeList = new ArrayList<MachineType>();
 	private ArrayList<Category> commandList = new ArrayList<Category>();
 	private ArrayList<Randomization> randList = new ArrayList<Randomization>();
+	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	
 	private static int counterPageId = 1;
+	private static int counterCustomerId = 1;
 	
 	public Page getPage() {
 		return page;
 	}
-		
+	
+	public ArrayList<Customer> getCustomers() {
+		return customers;
+	}
+	
 	public Randomization getRandomization() {
 		return randomization;
 	}
@@ -58,7 +63,12 @@ public class MissionManager{
 	public String getCooker() {
 		return cooker;
 	}
-	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	public Hint getHint() {
 		return hint;
 	}	
@@ -107,6 +117,14 @@ public class MissionManager{
 		this.machineType = machineType;
 	}
 	
+	public void addCustomer() {
+		if (this.customer.getId() == 0) {
+			this.customer.setId(counterCustomerId);
+			counterCustomerId++;
+			customers.add(customer);
+		}
+	}
+	
 	public void addPageExpl() {
 		if (this.page.getId() == 0) {
 			this.page.setId(counterPageId);
@@ -131,7 +149,9 @@ public class MissionManager{
 	public void addMachine() {
 		this.machineTypeList.add(machineType);
 	}
-	
+	public void newMachine() {
+		this.machineType = new MachineType();
+	}
 	public void newPage() {
 		this.page = new Page();
 	}
@@ -167,9 +187,6 @@ public class MissionManager{
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Row Edited","" );
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        for(int i=0;i<machineTypeList.size();i++){
-        	System.out.println(machineTypeList.get(i));
-        }
     }
      
     public void onRowCancel(RowEditEvent event) {
