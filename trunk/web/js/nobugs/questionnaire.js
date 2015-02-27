@@ -129,17 +129,23 @@ Questionnaire.createForm = function (questionnaire) {
 				}
 				case "T": {
 					if (questionnaire[j].questions[i].type.length == 1) {
-						input.type = "text";
+						
+						input = document.createElement("input");
 						input.setAttribute("questionId", questionnaire[j].questions[i].id);
-						input.name = questionnaire[j].questions[i].id;
-						input.style["width"] = "100px";
+						input.className = "answer";
+						input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
+						input.type = "text";
+						input.style["width"] = "100%";
+						input.maxLength = "150";
 						input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
 						input.addEventListener("change", Questionnaire.closeDrop, false);
-						input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
+						input.setAttribute("qtype", "T");
 						td.appendChild(input);
+						
 					} else {
 						var cont = questionnaire[j].questions[i].type.substring(1, questionnaire[j].questions[i].type.length);
 						var identifier = "a";
+						var maxLen = Math.floor( 150 / cont );
 						for(var x = 0;x < cont;x++) {
 							input = document.createElement("input");
 							input.setAttribute("questionId", questionnaire[j].questions[i].id);
@@ -147,9 +153,10 @@ Questionnaire.createForm = function (questionnaire) {
 							input.name = questionnaire[j].id + "_" + questionnaire[j].questions[i].id;
 							input.type = "text";
 							input.style["width"] = "300px";
+							input.maxLength = maxLen;
 							input.style["marginTop"] = "5px";
 							input.setAttribute("questionrequired", new String(questionnaire[j].questions[i].required).toUpperCase());
-							input.setAttribute("qtype", questionnaire[j].questions[i].type[0].toUpperCase());
+							input.setAttribute("qtype", "T");
 							input.addEventListener("change", Questionnaire.closeDrop, false);
 
 							var label = document.createElement("label");
@@ -195,7 +202,7 @@ Questionnaire.createForm = function (questionnaire) {
 					}
 					
 					var boxBody = document.createElement("tbody");
-					while (i < questionnaire[j].questions.length) {
+					while (i < questionnaire[j].questions.length && questionnaire[j].questions[i].type[0].toUpperCase() === "L") {
 						boxTr = document.createElement("tr");
 						boxTr.setAttribute("questionId", questionnaire[j].questions[i].id);
 						boxTd = document.createElement("td");
@@ -225,7 +232,7 @@ Questionnaire.createForm = function (questionnaire) {
 						}
 						i++;
 					}
-					
+					i--;
 					box.appendChild(boxHead);
 					box.appendChild(boxBody);
 					td.appendChild(box);
