@@ -1,14 +1,14 @@
 package missionmanager;
 
-public class Category {
+	public class Category {
 	private String name;
 	private boolean show;
 	
 	public String getName() {
 		return name;
 	}
-	
-	public boolean isShow() {
+
+	public boolean getShow() {
 		return show;
 	}
 	
