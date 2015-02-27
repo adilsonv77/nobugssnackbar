@@ -42,12 +42,13 @@ Quest.finishQuestionnaire = function() {
 	if (consistido) {
 		
 		Questionnaire.handlingQuestionnaire(function(saveAnswers) {
-			QuestControl.saveQuestionnaire(saveAnswers);
+			QuestControl.saveQuestionnaire(saveAnswers, function() {
+				QuestControl.logoff();
+			});
 		});
 		
 		BlocklyApps.hideDialog(false);
 
-		Quest.logoff();
 	}
 	
 };
