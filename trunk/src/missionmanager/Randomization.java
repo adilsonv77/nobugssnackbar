@@ -28,6 +28,4 @@ public class Randomization {
 	public String getMsg() {
 		return msg;
 	}
-	
-	
 }

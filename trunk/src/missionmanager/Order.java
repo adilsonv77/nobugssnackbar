@@ -3,22 +3,22 @@ package missionmanager;
 import java.util.ArrayList;
 
 public class Order {
-	private FoodStuff foodstuff = new FoodStuff();
 	private ArrayList<Food> foods = new ArrayList<Food>();
 	private ArrayList<Drink> drinks = new ArrayList<Drink>();
-	private FoodStuffEnum foodStuffType;
+	private Food food = new Food();
+	private Drink drink = new Drink();
 	
-	public FoodStuff getFoodstuff() {
-		return foodstuff;
+	public Food getFood() {
+		return food;
 	}
-	public void setFoodstuff(FoodStuff foodstuff) {
-		this.foodstuff = foodstuff;
+	public void setFood(Food food) {
+		this.food = food;
 	}
-	public FoodStuffEnum getFoodStuffType() {
-		return foodStuffType;
+	public Drink getDrink() {
+		return drink;
 	}
-	public void setFoodStuffType(FoodStuffEnum foodStuffType) {
-		this.foodStuffType = foodStuffType;
+	public void setDrink(Drink drink) {
+		this.drink = drink;
 	}
 	
 	public ArrayList<Food> getFoods() {
@@ -28,12 +28,16 @@ public class Order {
 		return drinks;
 	}
 	
-	public void addFoodstuff() {
-		if (foodStuffType == FoodStuffEnum.FOOD) {
-			foods.add((Food) foodstuff);
+	public void addFood() {
+		if (food != null) {
+			foods.add(food);
 		}
-		else if (foodStuffType == FoodStuffEnum.DRINK) {
-			drinks.add((Drink) foodstuff);
+		food = new Food();
+	}
+	public void addDrink() {
+		if (drink != null) {
+			drinks.add(drink);
 		}
+		drink = new Drink();
 	}
 }

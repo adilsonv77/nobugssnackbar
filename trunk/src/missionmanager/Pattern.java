@@ -18,6 +18,9 @@ public class Pattern {
 	}
 	
 	public void addOrder() {
-		orders.add(order);
+		if (order != null) {
+			orders.add(order);
+		}
+		order = new Order();
 	}
 }
