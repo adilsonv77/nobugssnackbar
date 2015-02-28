@@ -18,7 +18,6 @@ public class MissionManager{
 	private MachineType machineType = new MachineType(); 
 	private Page page = new Page();
 	private Hint hint = new Hint();
-	/* maybe you need "newCustomer" method!!! */
 	private Customer customer = new Customer();
 	private Randomization randomization = new Randomization();
 	private Category category = new Category();
@@ -123,6 +122,7 @@ public class MissionManager{
 			counterCustomerId++;
 			customers.add(customer);
 		}
+		this.customer = new Customer();
 	}
 	
 	public void addPageExpl() {
@@ -131,6 +131,7 @@ public class MissionManager{
 			counterPageId++;
 			pageExplList.add(this.page);
 		}
+		this.page = new Page();
 	}
 	
 	public void deletePage(){
@@ -147,13 +148,10 @@ public class MissionManager{
 	}
 	
 	public void addMachine() {
-		this.machineTypeList.add(machineType);
-	}
-	public void newMachine() {
+		if (machineType != null) {
+			this.machineTypeList.add(machineType);
+		}
 		this.machineType = new MachineType();
-	}
-	public void newPage() {
-		this.page = new Page();
 	}
 	
 	public void addInErrorListFunc() {
@@ -167,11 +165,9 @@ public class MissionManager{
 	}
 	
 	public void addCategory(){
-		if(category!= null){
+		if(category != null){
 			this.commandList.add(category);
 		}
-	}
-	public void newCategory(){
 		this.category = new Category();
 	}
 	
@@ -179,8 +175,6 @@ public class MissionManager{
 		if(randomization!= null){
 			this.randList.add(randomization);
 		}
-	}
-	public void newRandomization(){
 		this.randomization = new Randomization();
 	}
 	

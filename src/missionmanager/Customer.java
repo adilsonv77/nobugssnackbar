@@ -5,24 +5,24 @@ import java.util.ArrayList;
 public class Customer {
 	private int id;
 	private String init;
+	private String dest;
 	private ArrayList<Food> foods = new ArrayList<Food>();
 	private ArrayList<Drink> drinks = new ArrayList<Drink>();
-	private ArrayList<Pattern> patterns = new ArrayList<Pattern>();
-	private FoodStuff foodstuff = new FoodStuff();
+	private Food food = new Food();
+	private Drink drink = new Drink();
 	private Pattern pattern = new Pattern();
-	private FoodStuffEnum foodStuffType;
 	
-	public FoodStuffEnum getFoodStuffType() {
-		return foodStuffType;
+	public Food getFood() {
+		return food;
 	}
-	public void setFoodStuffType(FoodStuffEnum foodStuffType) {
-		this.foodStuffType = foodStuffType;
+	public void setFood(Food food) {
+		this.food = food;
 	}
-	public FoodStuff getFoodstuff() {
-		return foodstuff;
+	public Drink getDrink() {
+		return drink;
 	}
-	public void setFoodstuff(FoodStuff foodstuff) {
-		this.foodstuff = foodstuff;
+	public void setDrink(Drink drink) {
+		this.drink = drink;
 	}
 	public Pattern getPattern() {
 		return pattern;
@@ -33,6 +33,9 @@ public class Customer {
 	public int getId() {
 		return id;
 	}
+	public String getDest() {
+		return dest;
+	}
 	public String getInit() {
 		return init;
 	}
@@ -42,27 +45,27 @@ public class Customer {
 	public ArrayList<Drink> getDrinks() {
 		return drinks;
 	}
-	public ArrayList<Pattern> getPatterns() {
-		return patterns;
-	}
-	
+
 	public void setId(int id) {
 		this.id = id;
+	}
+	public void setDest(String dest) {
+		this.dest = dest;
 	}
 	public void setInit(String init) {
 		this.init = init;
 	}
 	
-	public void addFoodstuff() {
-		if (foodStuffType == FoodStuffEnum.FOOD) {
-			foods.add((Food) foodstuff);
+	public void addFood() {
+		if (food != null) {
+			foods.add(food);
 		}
-		else if (foodStuffType == FoodStuffEnum.DRINK) {
-			drinks.add((Drink) foodstuff);
-		}
+		food = new Food();
 	}
-	
-	public void addPattern() {
-		patterns.add(pattern);
+	public void addDrink() {
+		if (drink != null) {
+			drinks.add(drink);
+		}
+		drink = new Drink();
 	}
 }
