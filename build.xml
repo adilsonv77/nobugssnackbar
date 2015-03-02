@@ -185,8 +185,10 @@
 	    		<include name="META-INF/**/*.*" />
 	    		<include name="js/msg/js/en_us.js" />
 	    		<include name="js/msg/js/pt-br.js" />
+	    		<include name="js/msg/js/pt-pt.js" />
 	    		<include name="js/msg/json/en.json" />
 	    		<include name="js/msg/json/pt-br.json" />
+	    		<include name="js/msg/json/pt-pt.json" />
 	    		<include name="js/msg/messages.js" />
 	    		<include name="js/nobugs/nobugs-min.js" />
 	    		

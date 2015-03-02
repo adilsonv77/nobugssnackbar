@@ -31,7 +31,7 @@ var BlocklyApps = {};
 BlocklyApps.LANGUAGE_NAME = {
   'en': 'English',
   'es': 'Espanhol',
-  'pt': 'Portugues',
+  'pt-PT': 'Portugues Portugal',
   'pt-br': 'Portugues Brasileiro',
 };
 
@@ -47,7 +47,8 @@ BlocklyApps.LANGUAGE_PACK = {
   'en': 'js/msg/js/en.js',
   'en_us': 'js/msg/js/en_us.js',
   'es': 'js/msg/js/es.js',
-  'pt': 'js/msg/js/pt.js',
+  'pt-PT': 'js/msg/js/pt.js',
+  'pt_PT': 'js/msg/js/pt.js',
   'pt-br': 'js/msg/js/pt-br.js',
   'pt_br': 'js/msg/js/pt-br.js',
   'default': 'js/msg/js/en.js'
