@@ -1,4 +1,4 @@
-package missionmanager;
+package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 public class Hint {
 	private String category;
