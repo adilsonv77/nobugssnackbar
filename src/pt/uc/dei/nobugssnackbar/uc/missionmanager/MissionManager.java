@@ -13,6 +13,12 @@ import org.primefaces.event.RowEditEvent;
 @ManagedBean(name="mm")
 @SessionScoped
 public class MissionManager{
+	private boolean open;
+	private int timeLimit;
+	
+	private int timesBefore;	
+/*************************************************************************/
+	
 	private boolean addInErrorList;
 	private String cooker = "initial";
 	private MachineType machineType = new MachineType(); 
@@ -28,12 +34,41 @@ public class MissionManager{
 	private ArrayList<Category> commandList = new ArrayList<Category>();
 	private ArrayList<Randomization> randList = new ArrayList<Randomization>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
+	private Objectives objectives = new Objectives();
+	private XmlTag xmltag = new XmlTag();
 	
 	private static int counterPageId = 1;
 	private static int counterCustomerId = 1;
 	
+	public Objectives getObjectives() {
+		return objectives;
+	}
 	public Page getPage() {
 		return page;
+	}
+	public XmlTag getXmltag() {
+		return xmltag;
+	}
+	public void setXmltag(XmlTag xmltag) {
+		this.xmltag = xmltag;
+	}
+	public int getTimesBefore() {
+		return timesBefore;
+	}
+	public void setTimesBefore(int timesBefore) {
+		this.timesBefore = timesBefore;
+	}
+	public boolean isOpen() {
+		return open;
+	}
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+	public int getTimeLimit() {
+		return timeLimit;
+	}
+	public void setTimeLimit(int timeLimit) {
+		this.timeLimit = timeLimit;
 	}
 	
 	public ArrayList<Customer> getCustomers() {
@@ -99,7 +134,9 @@ public class MissionManager{
 	public ArrayList<Hint> getHintErrorList() {
 		return hintErrorList;
 	}
-	
+	public void setObjectives(Objectives objectives) {
+		this.objectives = objectives;
+	}
 	public void setCategory(Category category) {
 		this.category = category;
 	}
