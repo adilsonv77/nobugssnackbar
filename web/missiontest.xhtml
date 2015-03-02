@@ -953,11 +953,14 @@
 		 
 		        <p:tab id="xml" title="XML">
 		        	<p:panelGrid columns="2">
-		        		<h:inputText value="Preload: "/>
+		        		<h:outputText value="Preload: "/>
 		        		<p:spinner value="#{mm.xmltag.preload}" min="0"/>
 		        		
-		        		<h:inputText value="Always new: "/>
-		        		<p:selectBooleanButton value="#{mm.xmltag.alwaysNew}" onLabel="Yes" offLabel="No"/>		        		
+		        		<h:outputText value="Always new: "/>
+		        		<p:selectBooleanButton value="#{mm.xmltag.alwaysNew}" onLabel="Yes" offLabel="No"/>
+		        		
+		        		<h:outputText value="xmlns: "/>
+		        		<p:inputText value="#{mm.xmltag.xmlns}"/>	        		
 		        	</p:panelGrid>
 		        </p:tab>		        
 		    </p:tabView>
