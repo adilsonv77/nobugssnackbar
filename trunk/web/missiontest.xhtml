@@ -12,614 +12,391 @@
 	</h:head>
 	<h:body>
 		<p:growl id="growlMsgs" showDetail="true"/>
-		<p:panel style="width: 980px; margin: 0 auto;">
-			<h:form id="oneForm">		                  
-			    <p:tabView id="tbView" dynamic="true" cache="true">
-			        <p:tab id="mission" title="Mission">
-			        	<p:panelGrid columns="2">
-		        			<h:outputText value="Open: " />
-	       					<p:inputSwitch />
-	       					<h:outputText value="Time limit: "/>
-	       					<p:inputText />	
-       					</p:panelGrid>       				
-			        </p:tab>
-			 
-			        <p:tab id="slider" title="Slider">
-			        	<p:panelGrid columns="2">
-	       					<h:outputText value="Times before: "/>
-	       					<p:inputText />	
-       					</p:panelGrid>
-			        </p:tab>
-			        
-			        <p:tab id="explanation" title="Explanation">
-			        	<p:panel>
-				        	<p:dataTable editable="true" editMode="row" id="tblPages" var="page" value="#{mm.pageExplList}" emptyMessage="No pages!">
-							   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-		        			   	<f:facet name="header">  
-						            Pages 
-						        </f:facet> 
-							    <p:column headerText="Type">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{page.type}"/></f:facet>
-							        	<f:facet name="input"><p:inputText id="typeInput" value="#{page.type}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>							         
-							    <p:column headerText="Origin">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{page.origin}"/></f:facet>
-							        	<f:facet name="input"><p:inputText id="originInput" value="#{page.origin}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>						        
-							    <p:column headerText="Direction">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{page.dir}"/></f:facet>
-							        	<f:facet name="input"><p:inputText id="dirInput" value="#{page.dir}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>						        
-							    <p:column headerText="Message">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{page.msg}" escape="false"/></f:facet>
-							        	<f:facet name="input"><p:inputTextarea value="#{page.msg}"/></f:facet>
-							        </p:cellEditor>					        
-							    </p:column>
-							   	<p:column style="width:32px">
-						           <p:rowEditor/>						           
-						       	</p:column>						       						       	
-							</p:dataTable>	    
-				        	<p:commandButton value="Add" onclick="PF('addPageDlg').show()" />				        	 
-						</p:panel>		
-							
-						<p:dialog id="dlgExplain" header="Create new page" widgetVar="addPageDlg" modal="true" closeOnEscape="true">
-							<p:panel>							
-								<p:panelGrid columns="2">
-									<h:outputText value="Type: "/>
-									<p:inputText value="#{mm.page.type}"/>
-									<h:outputText value="Origin: "/>
-									<p:inputText value="#{mm.page.origin}"/>
-									<h:outputText value="Direction: "/>
-									<p:inputText value="#{mm.page.dir}"/>
-								</p:panelGrid>
-								<p:editor value="#{mm.page.msg}" controls="bold" width="600" />
-							</p:panel>							
-							<p:commandButton value="Save" update="@form" actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();" icon="ui-icon-close" />
-						</p:dialog>
-			        </p:tab>
-			 
-			        <p:tab id="hints" title="Hints">
-			        	<p:panel header="Hints: sequence">
-				        	<p:dataTable  editable="true" editMode="row" id="tblSequence" var="hint" value="#{mm.hintSeqList}" emptyMessage="No hints!">		        			
-			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
-								
-								<p:column headerText="Category">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
-									</p:cellEditor>										
-								</p:column>
-								<p:column headerText="Condition">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
-									</p:cellEditor>
-								</p:column>
-								<p:column headerText="Time">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
-									</p:cellEditor>									
-								</p:column>
-								<p:column headerText="Message">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
-									</p:cellEditor>										
-								</p:column>
-								<p:column style="width:32px">
-						           <p:rowEditor />
-						       	</p:column>								
-							</p:dataTable>	    
-				        	<p:commandButton value="Add" action="#{mm.addInSeqListFunc}" onclick="PF('addHintDlg').show()" />	        	   	
-						</p:panel>
+		<h:form id="oneForm" style="width: 980px; margin: 0 auto;">		                  
+		    <p:tabView id="tbView" dynamic="true" cache="true">
+		        <p:tab id="mission" title="Mission">
+		        	<p:panelGrid columns="2">
+	        			<h:outputText value="Open: "/>
+       					<p:selectBooleanButton value="#{mm.open}" onLabel="Yes" offLabel="No"/>
+       					<h:outputText value="Time limit: "/>
+       					<p:spinner value="#{mm.timeLimit}" min="0"/>	
+      				</p:panelGrid>       				
+		        </p:tab>
+		 
+		        <p:tab id="slider" title="Slider">
+		        	<p:panelGrid columns="2">
+       					<h:outputText value="Times before: "/>
+       					<p:spinner value="#{mm.timesBefore}" min="0"/>	
+      				</p:panelGrid>
+		        </p:tab>
+		        
+		        <p:tab id="explanation" title="Explanation">
+		        	<p:dataTable editable="true" editMode="row" id="tblPages" var="page" value="#{mm.pageExplList}" emptyMessage="No pages!">
+					   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+     							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+        			   	<f:facet name="header">Pages</f:facet> 
+        			   	
+					    <p:column headerText="Type">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{page.type}"/></f:facet>
+					        	<f:facet name="input"><p:inputText id="typeInput" value="#{page.type}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>							         
+					    <p:column headerText="Origin">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{page.origin}"/></f:facet>
+					        	<f:facet name="input"><p:inputText id="originInput" value="#{page.origin}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>						        
+					    <p:column headerText="Direction">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{page.dir}"/></f:facet>
+					        	<f:facet name="input"><p:inputText id="dirInput" value="#{page.dir}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>						        
+					    <p:column headerText="Message">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{page.msg}" escape="false"/></f:facet>
+					        	<f:facet name="input"><p:inputTextarea value="#{page.msg}"/></f:facet>
+					        </p:cellEditor>					        
+					    </p:column>
+					   	<p:column style="width:32px">
+				           <p:rowEditor/>						           
+				       	</p:column>						       						       	
+					</p:dataTable>	    
+		        	<p:commandButton value="Add" onclick="PF('addPageDlg').show()"/>				        	 	
 						
-						<p:panel header="Hints: Error">
-				        	<p:dataTable editable="true" editMode="row" id="tblError" var="hint" value="#{mm.hintErrorList}" emptyMessage="No hints!">
-			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
-								
-								<p:column headerText="Category">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
-									</p:cellEditor>										
-								</p:column>
-								<p:column headerText="Condition">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
-									</p:cellEditor>
-								</p:column>
-								<p:column headerText="Time">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
-									</p:cellEditor>									
-								</p:column>
-								<p:column headerText="Message">
-									<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
-										<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
-									</p:cellEditor>										
-								</p:column>
-								<p:column style="width:32px">
-						           <p:rowEditor />
-						       	</p:column>										
-							</p:dataTable>	    
-				        	<p:commandButton value="Add" action="#{mm.addInErrorListFunc}" onclick="PF('addHintDlg').show()" />	        	   	
-						</p:panel>
-						
-						<p:dialog id="dlgHint" header="Create new hint" widgetVar="addHintDlg" modal="true" closeOnEscape="true">
-							<p:panel>
-								<p:panelGrid columns="2">
-									<h:outputText value="Category: "/>
-									<p:inputText value="#{mm.hint.category}"/>
-									<h:outputText value="Condition: "/>
-									<p:inputText value="#{mm.hint.condition}"/>
-									<h:outputText value="Time: "/>
-									<p:inputText value="#{mm.hint.time}"/>
-								</p:panelGrid>
-								<p:editor value="#{mm.hint.msg}" width="600" />
-							</p:panel>
+					<p:dialog id="dlgExplain" header="Create new page" widgetVar="addPageDlg" modal="true" closeOnEscape="true">						
+						<p:panelGrid columns="2">
+							<h:outputText value="Type: "/>
+							<p:inputText value="#{mm.page.type}"/>
+							<h:outputText value="Origin: "/>
+							<p:inputText value="#{mm.page.origin}"/>
+							<h:outputText value="Direction: "/>
+							<p:inputText value="#{mm.page.dir}"/>
+						</p:panelGrid>
+						<p:editor value="#{mm.page.msg}" controls="bold" width="600"/>
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();" icon="ui-icon-close" />
+					</p:dialog>
+		        </p:tab>
+		 
+		        <p:tab id="hints" title="Hints">
+		        	<p:panel header="Hints: sequence">
+			        	<p:dataTable editable="true" editMode="row" id="tblSequence" var="hint" value="#{mm.hintSeqList}" emptyMessage="No hints!">		        			
+		        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+      						<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
 							
-							<p:commandButton value="Save" update="@form" actionListener="#{mm.addHint}" onclick="PF('addHintDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addHintDlg').hide();" icon="ui-icon-close" />
-						</p:dialog>
-			        </p:tab>
-			        
-			     	<p:tab id="machines" title="Machines">
-			     		<p:panel>
-			     			<p:panelGrid columns="2">
-				     			<h:outputText value="New Machine: "/>
-				     			<p:commandButton value="Add" onclick="PF('addMachineDlg').show()"/>
-			     			</p:panelGrid>
-			     		</p:panel>
-			     		<p:dataTable editable="true" editMode="row" var="machine" value="#{mm.machineTypeList}" style="width:300px; margin:0 auto;">
-	        				<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-     						<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>						        
-					        
-					        <p:column headerText="Type">
-		        				<p:cellEditor>
-									<f:facet name="output"><h:outputText value="#{machine.type}" /></f:facet>
-                  					<f:facet name="input"><p:inputText value="#{machine.type}" /></f:facet>
-                 				</p:cellEditor>					        	
-					        </p:column>
+							<p:column headerText="Category">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
+								</p:cellEditor>										
+							</p:column>
+							<p:column headerText="Condition">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column headerText="Time">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
+								</p:cellEditor>									
+							</p:column>
+							<p:column headerText="Message">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
+								</p:cellEditor>										
+							</p:column>
 							<p:column style="width:32px">
 					           <p:rowEditor />
-					       	</p:column>					        
-   						 </p:dataTable>
-   						 
-   						 <p:dialog id="dlgMachine" header="Create new machine" widgetVar="addMachineDlg" modal="true" closeOnEscape="true">
-							<p:panel>							
-								<p:panelGrid columns="2">
-									<h:outputText value="Type: "/>
-									<p:inputText value="#{mm.machineType.type}"/>
-								</p:panelGrid>
-							</p:panel>							
-							<p:commandButton value="Save" update="@form" actionListener="#{mm.addMachine}" onclick="PF('addMachineDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addMachineDlg').hide();" icon="ui-icon-close" />
-						</p:dialog>
-			        </p:tab>
-			 
-			        <p:tab id="commands" title="Commands">
-			        	<p:panel>
-			        		<p:dataTable editable="true" editMode="row" id="tblCommands" var="category" value="#{mm.commandList}" emptyMessage="Please add commands!">
-			        			<f:facet name="header">Commands</f:facet>	        			
-			        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>	
-			        			<p:column headerText="Name">
-			        				<p:cellEditor>
-										<f:facet name="output"><h:outputText value="#{category.name}" /></f:facet>
-	                  					<f:facet name="input"><p:inputText id="nameInput" value="#{category.name}" style="width:96%" /></f:facet>
-                  					</p:cellEditor>
-								</p:column>
-								<p:column headerText="Show">
-									<p:cellEditor>
-										<f:facet name="output"><p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true"  value="#{category.show}"/></f:facet>
-										<f:facet name="input"><p:selectBooleanButton onLabel="Yes" offLabel="No"   value="#{category.show}" style="width:96%"/></f:facet>																			
-									</p:cellEditor>
-								</p:column>
-								<p:column style="width:32px">
-						           <p:rowEditor />
-						       	</p:column>
-			        		</p:dataTable>
-			        					        		
-			        		<p:commandButton value="Add" onclick="PF('addCategoryDlg').show()" />				        		
-			        	</p:panel>
-			        	
-			        	<p:dialog id="dlgCategory" header="Create new Category" widgetVar="addCategoryDlg" modal="true" closeOnEscape="true">
-							<p:panel>
-								<p:panelGrid columns="2">
-									<h:outputText value="Name "/>
-									<p:inputText value="#{mm.category.name}"/>
-									<h:outputText value="Show "/>
-									<p:inputSwitch value="#{mm.category.show}" />								
-								</p:panelGrid>
-							</p:panel>
+					       	</p:column>								
+						</p:dataTable>	    
+			        	<p:commandButton value="Add" action="#{mm.addInSeqListFunc}" onclick="PF('addHintDlg').show()"/>	        	   	
+					</p:panel>
+					
+					<p:panel header="Hints: Error">
+			        	<p:dataTable editable="true" editMode="row" id="tblError" var="hint" value="#{mm.hintErrorList}" emptyMessage="No hints!">
+		        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+      							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>								
 							
-							<p:commandButton value="Save" update="@form" actionListener="#{mm.addCategory}" onclick="PF('addCategoryDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addCategoryDlg').hide();" icon="ui-icon-close" />
-						</p:dialog>
-			        </p:tab>
-			        
-			        <p:tab id="cooker" title="Cooker">
-				       <h:outputLabel for="ipCooker" value="Cooker: " />
-				       <p:inplace id="ipCooker" editor="true">
-				           <p:inputText value="#{mm.cooker}"  label="text" />
-				       </p:inplace>			        	
-			        </p:tab>
-			 
-			        <p:tab id="customerSN" title="Customer SN">
-						<p:panel>
-				        	<p:dataTable editable="true" editMode="row" id="tblRandomizations" var="randomization" value="#{mm.randList}" emptyMessage="No randomizations!">
-							   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-       							
-							    <p:column headerText="Qtd">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{randomization.qtd}"/></f:facet>
-							        	<f:facet name="input"><p:inputText id="typeInput" value="#{randomization.qtd}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>							         
-							    <p:column headerText="Set">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{randomization.set}"/></f:facet>
-							        	<f:facet name="input"><p:inputText id="originInput" value="#{randomization.set}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>	
-							    <p:column headerText="Text">
-							    	<p:cellEditor>
-							        	<f:facet name="output"><h:outputText value="#{randomization.msg}"/></f:facet>
-							        	<f:facet name="input"><p:inputText value="#{randomization.msg}"/></f:facet>
-							        </p:cellEditor>
-							    </p:column>								    					        
-							   	<p:column style="width:32px">
-						           <p:rowEditor/>						           
-						       	</p:column >						       					       	
-							</p:dataTable>	    
-				        	<p:commandButton value="Add" onclick="PF('addRandomizationDlg').show()" />				        	 
-						</p:panel>		
-							
-						<p:dialog id="dlgRandomization" header="Create new page" widgetVar="addRandomizationDlg" modal="true" closeOnEscape="true">
-							<p:panel>							
-								<p:panelGrid columns="2">
-									<h:outputText value="Qtd: "/>
-									<p:inputText value="#{mm.randomization.qtd}"/>
-									<h:outputText value="Set: "/>
-									<p:inputText value="#{mm.randomization.set}"/>
-									<h:outputText value="Text: "/>
-									<p:inputText value="#{mm.randomization.msg}"/>
-								</p:panelGrid>
-							</p:panel>							
-							<p:commandButton value="Save" update="@form" actionListener="#{mm.addRandomization}" onclick="PF('addRandomizationDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addRandomizationDlg').hide();" icon="ui-icon-close" />
-						</p:dialog>			        
-			        </p:tab>
-			        
-			        <p:tab id="customers" title="Customers">
-			        	<p:commandButton value="Add new customer" onclick="PF('addCustomerDlg').show()" />
-			        	
-			        	<p:dialog id="dlgCustomer" header="Create new customer" widgetVar="addCustomerDlg" closable="false" modal="true" maximizable="true">
-			        	 	<p:panel>
-			        			<p:panelGrid columns="2">
-			        				<h:outputText value="Init: "/>
-			        				<p:inputText value="#{mm.customer.init}"/>
-			        				<h:outputText value="Destination: "/>
-			        				<p:inputText value="#{mm.customer.dest}"/>
-			        			</p:panelGrid>
-			        			<p:accordionPanel id="accPnl">
-							        <p:tab title="Foods">
-							            <p:panelGrid columns="2" cellpadding="10">
-							            	<h:outputText value="Name: "/>
-							                <p:inputText value="#{mm.customer.food.name}"/>
-							                <h:outputText value="Qt: "/>
-							                <p:spinner value="#{mm.customer.food.qt}" min="0" />
-							                <h:outputText value="Price: "/>
-							                <p:spinner value="#{mm.customer.food.price}" min="0" stepFactor="0.25" />
-							            </p:panelGrid>
-							            <p:commandButton value="Add" action="#{mm.customer.addFood}" update=":oneForm:tbView:accPnl:tblCustFoods"/>
-							            
-							            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-								        	<p:dataTable id="tblCustFoods" editable="true" editMode="row" var="food" value="#{mm.customer.foods}" emptyMessage="Empty!">
-											   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-				       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-				       							
-											    <p:column headerText="Name">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
-											        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
-											        </p:cellEditor>
-											    </p:column>							         
-											    <p:column headerText="Qt">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
-											        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
-											        </p:cellEditor>
-											    </p:column>	
-											    <p:column headerText="Price">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
-											        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
-											        </p:cellEditor>
-											    </p:column>								    					        
-											   	<p:column style="width:32px">
-										           <p:rowEditor/>						           
-										       	</p:column>			       	
-											</p:dataTable>
-								    	</p:fieldset>
-							        </p:tab>
-							        
-							        <p:tab title="Drinks">
-							            <p:panelGrid columns="2" cellpadding="10">
-							            	<h:outputText value="Name: "/>
-							                <p:inputText value="#{mm.customer.drink.name}"/>
-							                <h:outputText value="Qt: "/>
-							                <p:spinner value="#{mm.customer.drink.qt}" min="0" />
-							                <h:outputText value="Price: "/>
-							                <p:spinner value="#{mm.customer.drink.price}" min="0" stepFactor="0.25" />
-							            </p:panelGrid>
-							            <p:commandButton value="Add" action="#{mm.customer.addDrink}" update=":oneForm:tbView:accPnl:tblCustDrinks"/>
-							            
-							            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-								        	<p:dataTable id="tblCustDrinks" editable="true" editMode="row" var="drink" value="#{mm.customer.drinks}" emptyMessage="Empty!">
-											   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-				       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-				       							
-											    <p:column headerText="Name">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
-											        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
-											        </p:cellEditor>
-											    </p:column>							         
-											    <p:column headerText="Qt">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
-											        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
-											        </p:cellEditor>
-											    </p:column>	
-											    <p:column headerText="Price">
-											    	<p:cellEditor>
-											        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
-											        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
-											        </p:cellEditor>
-											    </p:column>								    					        
-											   	<p:column style="width:32px">
-										           <p:rowEditor/>						           
-										       	</p:column>			       	
-											</p:dataTable>								        		
-								    	</p:fieldset>
-							        </p:tab>
-							        
-							        <p:tab title="Pattern">
-				        				<p:accordionPanel id="accPatternPnl">
-									        <p:tab title="Foods">
-									            <p:panelGrid columns="2" cellpadding="10">
-									            	<h:outputText value="Name: "/>
-									                <p:inputText value="#{mm.customer.pattern.order.food.name}"/>
-									                <h:outputText value="Qt: "/>
-									                <p:spinner value="#{mm.customer.pattern.order.food.qt}" min="0" />
-									                <h:outputText value="Price: "/>
-									                <p:spinner value="#{mm.customer.pattern.order.food.price}" min="0" stepFactor="0.25" />
-									            </p:panelGrid>
-									            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addFood}" update=":oneForm:tbView:accPnl:accPatternPnl:tblPCustFoods"/>
-									            
-									            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-										        	<p:dataTable id="tblPCustFoods" editable="true" editMode="row" var="food" value="#{mm.customer.pattern.order.foods}" emptyMessage="Empty!">
-													   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-						       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-						       							
-													    <p:column headerText="Name">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
-													        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
-													        </p:cellEditor>
-													    </p:column>							         
-													    <p:column headerText="Qt">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
-													        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
-													        </p:cellEditor>
-													    </p:column>	
-													    <p:column headerText="Price">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
-													        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
-													        </p:cellEditor>
-													    </p:column>								    					        
-													   	<p:column style="width:32px">
-												           <p:rowEditor/>						           
-												       	</p:column>			       	
-													</p:dataTable>								        		
-										    	</p:fieldset>
-									        </p:tab>
-									        
-									        <p:tab title="Drinks">
-									            <p:panelGrid columns="2" cellpadding="10">
-									            	<h:outputText value="Name: "/>
-									                <p:inputText value="#{mm.customer.pattern.order.drink.name}"/>
-									                <h:outputText value="Qt: "/>
-									                <p:spinner value="#{mm.customer.pattern.order.drink.qt}" min="0" />
-									                <h:outputText value="Price: "/>
-									                <p:spinner value="#{mm.customer.pattern.order.drink.price}" min="0" stepFactor="0.25" />
-									            </p:panelGrid>
-									            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addDrink}" update=":oneForm:tbView:accPnl:accPatternPnl:tblPCustDrinks"/>
-									            
-									            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-										        	<p:dataTable id="tblPCustDrinks" editable="true" editMode="row" var="drink" value="#{mm.customer.pattern.order.drinks}" emptyMessage="Empty!">
-													   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-						       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-						       							
-													    <p:column headerText="Name">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
-													        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
-													        </p:cellEditor>
-													    </p:column>							         
-													    <p:column headerText="Qt">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
-													        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
-													        </p:cellEditor>
-													    </p:column>	
-													    <p:column headerText="Price">
-													    	<p:cellEditor>
-													        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
-													        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
-													        </p:cellEditor>
-													    </p:column>								    					        
-													   	<p:column style="width:32px">
-												           <p:rowEditor/>						           
-												       	</p:column>			       	
-													</p:dataTable>								        		
-										    	</p:fieldset>
-									        </p:tab>
-							        	</p:accordionPanel>
-							        	<p:commandButton value="Add order" action="#{mm.customer.pattern.addOrder}" update=":oneForm:tbView:accPnl:tblOOrders"/>
-							        	<p:fieldset legend="Added orders" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-							        		<p:dataTable id="tblOOrders" var="order" value="#{mm.customer.pattern.orders}" rowIndexVar="rowIndex">
-							        			<f:facet name="header">Edit orders</f:facet>
-							        			<p:column style="width:16px;">
-							        				<h:outputText value="#{rowIndex + 1}"/>
-							        			</p:column>
-							        			<p:column headerText="Foods">
-									        		<p:fieldset legend="Foods #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-											            <p:panelGrid columns="2" cellpadding="10">
-											            	<h:outputText value="Name: "/>
-											                <p:inputText value="#{order.food.name}"/>
-											                <h:outputText value="Qt: "/>
-											                <p:spinner value="#{order.food.qt}" min="0" />
-											                <h:outputText value="Price: "/>
-											                <p:spinner value="#{order.food.price}" min="0" stepFactor="0.25" />
-											            </p:panelGrid>
-											            <p:commandButton value="Add" action="#{order.addFood}" update=":oneForm:tbView:accPnl:tblOOrders:tblCPPCustFoods"/>
-											            
-											            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-												        	<p:dataTable id="tblCPPCustFoods" editable="true" editMode="row" var="food" value="#{order.foods}" emptyMessage="Empty!">
-															   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-								       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-								       							
-															    <p:column headerText="Name">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
-															        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>							         
-															    <p:column headerText="Qt">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
-															        </p:cellEditor>
-															    </p:column>	
-															    <p:column headerText="Price">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>								    					        
-															   	<p:column style="width:32px">
-														           <p:rowEditor/>						           
-														       	</p:column>			       	
-															</p:dataTable>								        		
-												    	</p:fieldset>
-											        </p:fieldset>
-							        			</p:column>
-							        			<p:column headerText="Drinks">
-									        		<p:fieldset legend="Drinks #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-											            <p:panelGrid columns="2" cellpadding="10">
-											            	<h:outputText value="Name: "/>
-											                <p:inputText value="#{order.drink.name}"/>
-											                <h:outputText value="Qt: "/>
-											                <p:spinner value="#{order.drink.qt}" min="0" />
-											                <h:outputText value="Price: "/>
-											                <p:spinner value="#{order.drink.price}" min="0" stepFactor="0.25" />
-											            </p:panelGrid>
-											            <p:commandButton value="Add" action="#{order.addDrink}" update=":oneForm:tbView:accPnl:tblOOrders:tblOCPCustDrinks"/>
-											            
-											            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-												        	<p:dataTable id="tblOCPCustDrinks" editable="true" editMode="row" var="drink" value="#{order.drinks}" emptyMessage="Empty!">
-															   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-								       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-								       							
-															    <p:column headerText="Name">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
-															        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>							         
-															    <p:column headerText="Qt">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
-															        </p:cellEditor>
-															    </p:column>	
-															    <p:column headerText="Price">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>								    					        
-															   	<p:column style="width:32px">
-														           <p:rowEditor/>						           
-														       	</p:column>			       	
-															</p:dataTable>								        		
-												    	</p:fieldset>
-											        </p:fieldset>
-							        			</p:column>
-							        		</p:dataTable>
-							        	</p:fieldset>
-							        </p:tab>
-			        			</p:accordionPanel>
-			        		</p:panel>
-			        		<p:commandButton value="Save" update="@form" actionListener="#{mm.addCustomer}" onclick="PF('addCustomerDlg').hide()" icon="ui-icon-disk" />
-							<p:commandButton value="Cancel" onclick="PF('addCustomerDlg').hide();" icon="ui-icon-close" />
-			        	</p:dialog>
-	        			<p:dataTable id="tblCustomers" editable="true" editMode="row" var="customer" value="#{mm.customers}" style="margin-top:20px;">
-							<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-				       		<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />>
-					        <f:facet name="header">Added customers</f:facet>
+							<p:column headerText="Category">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.category}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.category}"/></f:facet>
+								</p:cellEditor>										
+							</p:column>
+							<p:column headerText="Condition">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.condition}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.condition}"/></f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column headerText="Time">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.time}"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.time}"/></f:facet>
+								</p:cellEditor>									
+							</p:column>
+							<p:column headerText="Message">
+								<p:cellEditor>
+									<f:facet name="output"><h:outputText value="#{hint.msg}" escape="false"/></f:facet>
+									<f:facet name="input"><p:inputText value="#{hint.msg}"/></f:facet>
+								</p:cellEditor>										
+							</p:column>
+							<p:column style="width:32px">
+					           <p:rowEditor />
+					       	</p:column>										
+						</p:dataTable>	    
+			        	<p:commandButton value="Add" action="#{mm.addInErrorListFunc}" onclick="PF('addHintDlg').show()" />	        	   	
+					</p:panel>
+					
+					<p:dialog id="dlgHint" header="Create new hint" widgetVar="addHintDlg" modal="true" closeOnEscape="true">
+						<p:panelGrid columns="2">
+							<h:outputText value="Category: "/>
+							<p:inputText value="#{mm.hint.category}"/>
+							<h:outputText value="Condition: "/>
+							<p:inputText value="#{mm.hint.condition}"/>
+							<h:outputText value="Time: "/>
+							<p:inputText value="#{mm.hint.time}"/>
+						</p:panelGrid>
+						<p:editor value="#{mm.hint.msg}" width="600"/>
+						
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.addHint}" onclick="PF('addHintDlg').hide()" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" onclick="PF('addHintDlg').hide();" icon="ui-icon-close" />
+					</p:dialog>
+		        </p:tab>
+		        
+		     	<p:tab id="machines" title="Machines">
+	     			<p:panelGrid columns="2">
+		     			<h:outputText value="New Machine: "/>
+		     			<p:commandButton value="Add" onclick="PF('addMachineDlg').show()"/>
+	     			</p:panelGrid>
+		     		<p:dataTable editable="true" editMode="row" var="machine" value="#{mm.machineTypeList}" style="width:300px; margin:0 auto;">
+        				<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+    					<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>						        
+				        
+				        <p:column headerText="Type">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{machine.type}"/></f:facet>
+                 				<f:facet name="input"><p:inputText value="#{machine.type}"/></f:facet>
+                			</p:cellEditor>					        	
+				        </p:column>
+						<p:column style="width:32px">
+				           <p:rowEditor/>
+				       	</p:column>					        
+  					</p:dataTable>
+  						 
+  					<p:dialog id="dlgMachine" header="Create new machine" widgetVar="addMachineDlg" modal="true" closeOnEscape="true">							
+						<p:panelGrid columns="2">
+							<h:outputText value="Type: "/>
+							<p:inputText value="#{mm.machineType.type}"/>
+						</p:panelGrid>
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.addMachine}" onclick="PF('addMachineDlg').hide()" icon="ui-icon-disk"/>
+						<p:commandButton value="Cancel" onclick="PF('addMachineDlg').hide();" icon="ui-icon-close"/>
+					</p:dialog>
+		        </p:tab>
+		 
+		        <p:tab id="commands" title="Commands">
+	        		<p:dataTable editable="true" editMode="row" id="tblCommands" var="category" value="#{mm.commandList}" emptyMessage="Please add commands!">
+	        			<f:facet name="header">Commands</f:facet>	        			
+	        			<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+     					<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>	
+	        			
+	        			<p:column headerText="Name">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{category.name}"/></f:facet>
+                 				<f:facet name="input"><p:inputText id="nameInput" value="#{category.name}" style="width:96%"/></f:facet>
+                			</p:cellEditor>
+						</p:column>
+						<p:column headerText="Show">
+							<p:cellEditor>
+								<f:facet name="output"><p:selectBooleanButton onLabel="Yes" offLabel="No" disabled="true"  value="#{category.show}"/></f:facet>
+								<f:facet name="input"><p:selectBooleanButton onLabel="Yes" offLabel="No"   value="#{category.show}" style="width:96%"/></f:facet>																			
+							</p:cellEditor>
+						</p:column>
+						<p:column style="width:32px">
+				           <p:rowEditor />
+				       	</p:column>
+	        		</p:dataTable>
+		        					        		
+		        	<p:commandButton value="Add" onclick="PF('addCategoryDlg').show()"/>
+		        	
+		        	<p:dialog id="dlgCategory" header="Create new Category" widgetVar="addCategoryDlg" modal="true" closeOnEscape="true">
+						<p:panelGrid columns="2">
+							<h:outputText value="Name "/>
+							<p:inputText value="#{mm.category.name}"/>
+							<h:outputText value="Show "/>
+							<p:inputSwitch value="#{mm.category.show}"/>								
+						</p:panelGrid>
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.addCategory}" onclick="PF('addCategoryDlg').hide()" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" onclick="PF('addCategoryDlg').hide();" icon="ui-icon-close" />
+					</p:dialog>
+		        </p:tab>
+		        
+		        <p:tab id="cooker" title="Cooker">
+		        	<p:panelGrid columns="2">
+				    	<h:outputLabel for="ipCooker" value="Cooker: "/>
+				    	<p:inplace id="ipCooker" editor="true">
+				    		<p:inputText value="#{mm.cooker}" label="text"/>
+				    	</p:inplace>
+			    	</p:panelGrid>		        	
+		        </p:tab>
+		 
+		        <p:tab id="customerSN" title="Customer SN">
+		        	<p:dataTable editable="true" editMode="row" id="tblRandomizations" var="randomization" value="#{mm.randList}" emptyMessage="No randomizations!">
+					   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+     					<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs"/>							    
+     							
+					    <p:column headerText="Qtd">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{randomization.qtd}"/></f:facet>
+					        	<f:facet name="input"><p:inputText id="typeInput" value="#{randomization.qtd}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>							         
+					    <p:column headerText="Set">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{randomization.set}"/></f:facet>
+					        	<f:facet name="input"><p:inputText id="originInput" value="#{randomization.set}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>	
+					    <p:column headerText="Text">
+					    	<p:cellEditor>
+					        	<f:facet name="output"><h:outputText value="#{randomization.msg}"/></f:facet>
+					        	<f:facet name="input"><p:inputText value="#{randomization.msg}"/></f:facet>
+					        </p:cellEditor>
+					    </p:column>								    					        
+					   	<p:column style="width:32px">
+				           <p:rowEditor/>						           
+				       	</p:column >						       					       	
+					</p:dataTable>	    
+		        	<p:commandButton value="Add" onclick="PF('addRandomizationDlg').show()"/>		
+						
+					<p:dialog id="dlgRandomization" header="Create new page" widgetVar="addRandomizationDlg" modal="true" closeOnEscape="true">							
+						<p:panelGrid columns="2">
+							<h:outputText value="Qtd: "/>
+							<p:inputText value="#{mm.randomization.qtd}"/>
+							<h:outputText value="Set: "/>
+							<p:inputText value="#{mm.randomization.set}"/>
+							<h:outputText value="Text: "/>
+							<p:inputText value="#{mm.randomization.msg}"/>
+						</p:panelGrid>
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.addRandomization}" onclick="PF('addRandomizationDlg').hide()" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" onclick="PF('addRandomizationDlg').hide();" icon="ui-icon-close" />
+					</p:dialog>			        
+		        </p:tab>
+		        
+		        <p:tab id="customers" title="Customers">
+		        	<p:commandButton value="Add new customer" onclick="PF('addCustomerDlg').show()" />
+		        	
+		        	<p:dialog id="dlgCustomer" header="Create new customer" widgetVar="addCustomerDlg" closable="false" modal="true" maximizable="true">
+	        			<p:panelGrid columns="2">
+	        				<h:outputText value="Init: "/>
+	        				<p:inputText value="#{mm.customer.init}"/>
+	        				<h:outputText value="Destination: "/>
+	        				<p:inputText value="#{mm.customer.dest}"/>
+	        			</p:panelGrid>
+	        			<p:accordionPanel id="accPnl">
+					        <p:tab title="Foods">
+					            <p:panelGrid columns="2" cellpadding="10">
+					            	<h:outputText value="Name: "/>
+					                <p:inputText value="#{mm.customer.food.name}"/>
+					                <h:outputText value="Qt: "/>
+					                <p:spinner value="#{mm.customer.food.qt}" min="0" />
+					                <h:outputText value="Price: "/>
+					                <p:spinner value="#{mm.customer.food.price}" min="0" stepFactor="0.25" />
+					            </p:panelGrid>
+					            <p:commandButton value="Add" action="#{mm.customer.addFood}" update=":oneForm:tbView:accPnl:tblCustFoods"/>
+					            
+					            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+						        	<p:dataTable id="tblCustFoods" editable="true" editMode="row" var="food" value="#{mm.customer.foods}" emptyMessage="Empty!">
+									   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+		       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+		       							
+									    <p:column headerText="Name">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
+									        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
+									        </p:cellEditor>
+									    </p:column>							         
+									    <p:column headerText="Qt">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
+									        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
+									        </p:cellEditor>
+									    </p:column>	
+									    <p:column headerText="Price">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
+									        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
+									        </p:cellEditor>
+									    </p:column>								    					        
+									   	<p:column style="width:32px">
+								           <p:rowEditor/>						           
+								       	</p:column>			       	
+									</p:dataTable>
+						    	</p:fieldset>
+					        </p:tab>
 					        
-					        <p:column style="width:16px">
-					            <p:rowToggler />
-					        </p:column>
-					        <p:column headerText="Id">
-					            <h:outputText value="#{customer.id}"/>
-					        </p:column>
-					        <p:column headerText="Init">
-					            <p:cellEditor>
-					        		<f:facet name="output"><h:outputText value="#{customer.init}"/></f:facet>
-					        		<f:facet name="input"><p:inputText value="#{customer.init}"/></f:facet>
-					        	</p:cellEditor>
-					        </p:column>
-					 		<p:column style="width:32px">
-				           		<p:rowEditor/>						           
-				       		</p:column>
-				       		
-					        <p:rowExpansion>
-			        			<p:accordionPanel id="accCPnl">
+					        <p:tab title="Drinks">
+					            <p:panelGrid columns="2" cellpadding="10">
+					            	<h:outputText value="Name: "/>
+					                <p:inputText value="#{mm.customer.drink.name}"/>
+					                <h:outputText value="Qt: "/>
+					                <p:spinner value="#{mm.customer.drink.qt}" min="0" />
+					                <h:outputText value="Price: "/>
+					                <p:spinner value="#{mm.customer.drink.price}" min="0" stepFactor="0.25" />
+					            </p:panelGrid>
+					            <p:commandButton value="Add" action="#{mm.customer.addDrink}" update=":oneForm:tbView:accPnl:tblCustDrinks"/>
+					            
+					            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+						        	<p:dataTable id="tblCustDrinks" editable="true" editMode="row" var="drink" value="#{mm.customer.drinks}" emptyMessage="Empty!">
+									   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+		       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+		       							
+									    <p:column headerText="Name">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
+									        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
+									        </p:cellEditor>
+									    </p:column>							         
+									    <p:column headerText="Qt">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
+									        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
+									        </p:cellEditor>
+									    </p:column>	
+									    <p:column headerText="Price">
+									    	<p:cellEditor>
+									        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
+									        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
+									        </p:cellEditor>
+									    </p:column>								    					        
+									   	<p:column style="width:32px">
+								           <p:rowEditor/>						           
+								       	</p:column>			       	
+									</p:dataTable>								        		
+						    	</p:fieldset>
+					        </p:tab>
+					        
+					        <p:tab title="Pattern">
+		        				<p:accordionPanel id="accPatternPnl">
 							        <p:tab title="Foods">
 							            <p:panelGrid columns="2" cellpadding="10">
 							            	<h:outputText value="Name: "/>
-							                <p:inputText value="#{customer.food.name}"/>
+							                <p:inputText value="#{mm.customer.pattern.order.food.name}"/>
 							                <h:outputText value="Qt: "/>
-							                <p:spinner value="#{customer.food.qt}" min="0" />
+							                <p:spinner value="#{mm.customer.pattern.order.food.qt}" min="0" />
 							                <h:outputText value="Price: "/>
-							                <p:spinner value="#{customer.food.price}" min="0" stepFactor="0.25" />
+							                <p:spinner value="#{mm.customer.pattern.order.food.price}" min="0" stepFactor="0.25" />
 							            </p:panelGrid>
-							            <p:commandButton value="Add" action="#{customer.addFood}" update="@form"/>
+							            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addFood}" update=":oneForm:tbView:accPnl:accPatternPnl:tblPCustFoods"/>
 							            
 							            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-								        	<p:dataTable id="tblCCustFoods" editable="true" editMode="row" var="food" value="#{customer.foods}" emptyMessage="Empty!">
+								        	<p:dataTable id="tblPCustFoods" editable="true" editMode="row" var="food" value="#{mm.customer.pattern.order.foods}" emptyMessage="Empty!">
 											   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
 				       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
 				       							
@@ -651,16 +428,16 @@
 							        <p:tab title="Drinks">
 							            <p:panelGrid columns="2" cellpadding="10">
 							            	<h:outputText value="Name: "/>
-							                <p:inputText value="#{customer.drink.name}"/>
+							                <p:inputText value="#{mm.customer.pattern.order.drink.name}"/>
 							                <h:outputText value="Qt: "/>
-							                <p:spinner value="#{customer.drink.qt}" min="0" />
+							                <p:spinner value="#{mm.customer.pattern.order.drink.qt}" min="0" />
 							                <h:outputText value="Price: "/>
-							                <p:spinner value="#{customer.drink.price}" min="0" stepFactor="0.25" />
+							                <p:spinner value="#{mm.customer.pattern.order.drink.price}" min="0" stepFactor="0.25" />
 							            </p:panelGrid>
-							            <p:commandButton value="Add" action="#{customer.addDrink}" update="@form"/>
+							            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addDrink}" update=":oneForm:tbView:accPnl:accPatternPnl:tblPCustDrinks"/>
 							            
 							            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-								        	<p:dataTable id="tblCCustDrinks" editable="true" editMode="row" var="drink" value="#{customer.drinks}" emptyMessage="Empty!">
+								        	<p:dataTable id="tblPCustDrinks" editable="true" editMode="row" var="drink" value="#{mm.customer.pattern.order.drinks}" emptyMessage="Empty!">
 											   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
 				       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
 				       							
@@ -688,22 +465,28 @@
 											</p:dataTable>								        		
 								    	</p:fieldset>
 							        </p:tab>
-							        
-							        <p:tab title="Pattern">
-						        		<p:accordionPanel id="accPatternPnlE">
-									        <p:tab title="Foods">
+					        	</p:accordionPanel>
+					        	<p:commandButton value="Add order" action="#{mm.customer.pattern.addOrder}" update=":oneForm:tbView:accPnl:tblOOrders"/>
+					        	<p:fieldset legend="Added orders" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+					        		<p:dataTable id="tblOOrders" var="order" value="#{mm.customer.pattern.orders}" rowIndexVar="rowIndex">
+					        			<f:facet name="header">Edit orders</f:facet>
+					        			<p:column style="width:16px;">
+					        				<h:outputText value="#{rowIndex + 1}"/>
+					        			</p:column>
+					        			<p:column headerText="Foods">
+							        		<p:fieldset legend="Foods #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
 									            <p:panelGrid columns="2" cellpadding="10">
 									            	<h:outputText value="Name: "/>
-									                <p:inputText value="#{customer.food.name}"/>
+									                <p:inputText value="#{order.food.name}"/>
 									                <h:outputText value="Qt: "/>
-									                <p:spinner value="#{customer.pattern.order.food.qt}" min="0" />
+									                <p:spinner value="#{order.food.qt}" min="0" />
 									                <h:outputText value="Price: "/>
-									                <p:spinner value="#{customer.pattern.order.food.price}" min="0" stepFactor="0.25" />
+									                <p:spinner value="#{order.food.price}" min="0" stepFactor="0.25" />
 									            </p:panelGrid>
-									            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addFood}" update="@form"/>
+									            <p:commandButton value="Add" action="#{order.addFood}" update=":oneForm:tbView:accPnl:tblOOrders:tblCPPCustFoods"/>
 									            
 									            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-										        	<p:dataTable id="tblPCustFoodsE" editable="true" editMode="row" var="food" value="#{customer.pattern.order.foods}" emptyMessage="Empty!">
+										        	<p:dataTable id="tblCPPCustFoods" editable="true" editMode="row" var="food" value="#{order.foods}" emptyMessage="Empty!">
 													   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
 						       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
 						       							
@@ -730,21 +513,22 @@
 												       	</p:column>			       	
 													</p:dataTable>								        		
 										    	</p:fieldset>
-									        </p:tab>
-									        
-									        <p:tab title="Drinks">
+									        </p:fieldset>
+					        			</p:column>
+					        			<p:column headerText="Drinks">
+							        		<p:fieldset legend="Drinks #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
 									            <p:panelGrid columns="2" cellpadding="10">
 									            	<h:outputText value="Name: "/>
-									                <p:inputText value="#{customer.pattern.order.drink.name}"/>
+									                <p:inputText value="#{order.drink.name}"/>
 									                <h:outputText value="Qt: "/>
-									                <p:spinner value="#{customer.pattern.order.drink.qt}" min="0" />
+									                <p:spinner value="#{order.drink.qt}" min="0" />
 									                <h:outputText value="Price: "/>
-									                <p:spinner value="#{customer.pattern.order.drink.price}" min="0" stepFactor="0.25" />
+									                <p:spinner value="#{order.drink.price}" min="0" stepFactor="0.25" />
 									            </p:panelGrid>
-									            <p:commandButton value="Add" action="#{customer.pattern.order.addDrink}" update="@form"/>
+									            <p:commandButton value="Add" action="#{order.addDrink}" update=":oneForm:tbView:accPnl:tblOOrders:tblOCPCustDrinks"/>
 									            
 									            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-										        	<p:dataTable id="tblPCustDrinksE" editable="true" editMode="row" var="drink" value="#{customer.pattern.order.drinks}" emptyMessage="Empty!">
+										        	<p:dataTable id="tblOCPCustDrinks" editable="true" editMode="row" var="drink" value="#{order.drinks}" emptyMessage="Empty!">
 													   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
 						       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
 						       							
@@ -771,114 +555,412 @@
 												       	</p:column>			       	
 													</p:dataTable>								        		
 										    	</p:fieldset>
-									        </p:tab>
-							        	</p:accordionPanel>
-							        	<p:commandButton value="Add order" action="#{customer.pattern.addOrder}" update="@form"/>
-							        	<p:fieldset legend="Added orders" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-							        		<p:dataTable id="tblOOrders" var="order" value="#{customer.pattern.orders}" rowIndexVar="rowIndex">
-							        			<f:facet name="header">Edit orders</f:facet>
-							        			<p:column style="width:16px;">
-							        				<h:outputText value="#{rowIndex + 1}"/>
-							        			</p:column>
-							        			<p:column headerText="Foods">
-									        		<p:fieldset legend="Foods #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-											            <p:panelGrid columns="2" cellpadding="10">
-											            	<h:outputText value="Name: "/>
-											                <p:inputText value="#{order.food.name}"/>
-											                <h:outputText value="Qt: "/>
-											                <p:spinner value="#{order.food.qt}" min="0" />
-											                <h:outputText value="Price: "/>
-											                <p:spinner value="#{order.food.price}" min="0" stepFactor="0.25" />
-											            </p:panelGrid>
-											            <p:commandButton value="Add" action="#{order.addFood}" update="@form"/>
-											            
-											            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-												        	<p:dataTable id="tblCPPCustFoods" editable="true" editMode="row" var="food" value="#{order.foods}" emptyMessage="Empty!">
-															   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-								       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-								       							
-															    <p:column headerText="Name">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
-															        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>							         
-															    <p:column headerText="Qt">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
-															        </p:cellEditor>
-															    </p:column>	
-															    <p:column headerText="Price">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>								    					        
-															   	<p:column style="width:32px">
-														           <p:rowEditor/>						           
-														       	</p:column>			       	
-															</p:dataTable>								        		
-												    	</p:fieldset>
-											        </p:fieldset>
-							        			</p:column>
-							        			<p:column headerText="Drinks">
-									        		<p:fieldset legend="Drinks #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-											            <p:panelGrid columns="2" cellpadding="10">
-											            	<h:outputText value="Name: "/>
-											                <p:inputText value="#{order.drink.name}"/>
-											                <h:outputText value="Qt: "/>
-											                <p:spinner value="#{order.drink.qt}" min="0" />
-											                <h:outputText value="Price: "/>
-											                <p:spinner value="#{order.drink.price}" min="0" stepFactor="0.25" />
-											            </p:panelGrid>
-											            <p:commandButton value="Add" action="#{order.addDrink}" update="@form"/>
-											            
-											            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
-												        	<p:dataTable id="tblOCPCustDrinks" editable="true" editMode="row" var="drink" value="#{order.drinks}" emptyMessage="Empty!">
-															   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
-								       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
-								       							
-															    <p:column headerText="Name">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
-															        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>							         
-															    <p:column headerText="Qt">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
-															        </p:cellEditor>
-															    </p:column>	
-															    <p:column headerText="Price">
-															    	<p:cellEditor>
-															        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
-															        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
-															        </p:cellEditor>
-															    </p:column>								    					        
-															   	<p:column style="width:32px">
-														           <p:rowEditor/>						           
-														       	</p:column>			       	
-															</p:dataTable>								        		
-												    	</p:fieldset>
-											        </p:fieldset>
-							        			</p:column>
-							        		</p:dataTable>
-							        	</p:fieldset>
-							        </p:tab>
-			        			</p:accordionPanel>
-					        </p:rowExpansion>
-					    </p:dataTable>
-			        </p:tab>
-			        
-			         <p:tab id="objectives" title="Objectives">
-			        </p:tab>
-			 
-			        <p:tab id="xml" title="XML">
-			        </p:tab>		        
-			    </p:tabView>
-			</h:form>
-		</p:panel>
+									        </p:fieldset>
+					        			</p:column>
+					        		</p:dataTable>
+					        	</p:fieldset>
+					        </p:tab>
+	        			</p:accordionPanel>
+		        		<p:commandButton value="Save" update="@form" actionListener="#{mm.addCustomer}" onclick="PF('addCustomerDlg').hide()" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" onclick="PF('addCustomerDlg').hide();" icon="ui-icon-close" />
+		        	</p:dialog>
+		        	
+        			<p:dataTable id="tblCustomers" editable="true" editMode="row" var="customer" value="#{mm.customers}" style="margin-top:20px;">
+						<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+			       		<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />>
+				        <f:facet name="header">Added customers</f:facet>
+				        
+				        <p:column style="width:16px">
+				            <p:rowToggler />
+				        </p:column>
+				        <p:column headerText="Id">
+				            <h:outputText value="#{customer.id}"/>
+				        </p:column>
+				        <p:column headerText="Init">
+				            <p:cellEditor>
+				        		<f:facet name="output"><h:outputText value="#{customer.init}"/></f:facet>
+				        		<f:facet name="input"><p:inputText value="#{customer.init}"/></f:facet>
+				        	</p:cellEditor>
+				        </p:column>
+				 		<p:column style="width:32px">
+			           		<p:rowEditor/>						           
+			       		</p:column>
+			       		
+				        <p:rowExpansion>
+		        			<p:accordionPanel id="accCPnl">
+						        <p:tab title="Foods">
+						            <p:panelGrid columns="2" cellpadding="10">
+						            	<h:outputText value="Name: "/>
+						                <p:inputText value="#{customer.food.name}"/>
+						                <h:outputText value="Qt: "/>
+						                <p:spinner value="#{customer.food.qt}" min="0" />
+						                <h:outputText value="Price: "/>
+						                <p:spinner value="#{customer.food.price}" min="0" stepFactor="0.25" />
+						            </p:panelGrid>
+						            <p:commandButton value="Add" action="#{customer.addFood}" update="@form"/>
+						            
+						            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+							        	<p:dataTable id="tblCCustFoods" editable="true" editMode="row" var="food" value="#{customer.foods}" emptyMessage="Empty!">
+										   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+			       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+			       							
+										    <p:column headerText="Name">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
+										        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
+										        </p:cellEditor>
+										    </p:column>							         
+										    <p:column headerText="Qt">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
+										        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
+										        </p:cellEditor>
+										    </p:column>	
+										    <p:column headerText="Price">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
+										        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
+										        </p:cellEditor>
+										    </p:column>								    					        
+										   	<p:column style="width:32px">
+									           <p:rowEditor/>						           
+									       	</p:column>			       	
+										</p:dataTable>								        		
+							    	</p:fieldset>
+						        </p:tab>
+						        
+						        <p:tab title="Drinks">
+						            <p:panelGrid columns="2" cellpadding="10">
+						            	<h:outputText value="Name: "/>
+						                <p:inputText value="#{customer.drink.name}"/>
+						                <h:outputText value="Qt: "/>
+						                <p:spinner value="#{customer.drink.qt}" min="0" />
+						                <h:outputText value="Price: "/>
+						                <p:spinner value="#{customer.drink.price}" min="0" stepFactor="0.25" />
+						            </p:panelGrid>
+						            <p:commandButton value="Add" action="#{customer.addDrink}" update="@form"/>
+						            
+						            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+							        	<p:dataTable id="tblCCustDrinks" editable="true" editMode="row" var="drink" value="#{customer.drinks}" emptyMessage="Empty!">
+										   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+			       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+			       							
+										    <p:column headerText="Name">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
+										        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
+										        </p:cellEditor>
+										    </p:column>							         
+										    <p:column headerText="Qt">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
+										        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
+										        </p:cellEditor>
+										    </p:column>	
+										    <p:column headerText="Price">
+										    	<p:cellEditor>
+										        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
+										        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
+										        </p:cellEditor>
+										    </p:column>								    					        
+										   	<p:column style="width:32px">
+									           <p:rowEditor/>						           
+									       	</p:column>			       	
+										</p:dataTable>								        		
+							    	</p:fieldset>
+						        </p:tab>
+						        
+						        <p:tab title="Pattern">
+					        		<p:accordionPanel id="accPatternPnlE">
+								        <p:tab title="Foods">
+								            <p:panelGrid columns="2" cellpadding="10">
+								            	<h:outputText value="Name: "/>
+								                <p:inputText value="#{customer.food.name}"/>
+								                <h:outputText value="Qt: "/>
+								                <p:spinner value="#{customer.pattern.order.food.qt}" min="0" />
+								                <h:outputText value="Price: "/>
+								                <p:spinner value="#{customer.pattern.order.food.price}" min="0" stepFactor="0.25" />
+								            </p:panelGrid>
+								            <p:commandButton value="Add" action="#{mm.customer.pattern.order.addFood}" update="@form"/>
+								            
+								            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+									        	<p:dataTable id="tblPCustFoodsE" editable="true" editMode="row" var="food" value="#{customer.pattern.order.foods}" emptyMessage="Empty!">
+												   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+					       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+					       							
+												    <p:column headerText="Name">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
+												        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
+												        </p:cellEditor>
+												    </p:column>							         
+												    <p:column headerText="Qt">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
+												        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
+												        </p:cellEditor>
+												    </p:column>	
+												    <p:column headerText="Price">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
+												        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
+												        </p:cellEditor>
+												    </p:column>								    					        
+												   	<p:column style="width:32px">
+											           <p:rowEditor/>						           
+											       	</p:column>			       	
+												</p:dataTable>								        		
+									    	</p:fieldset>
+								        </p:tab>
+								        
+								        <p:tab title="Drinks">
+								            <p:panelGrid columns="2" cellpadding="10">
+								            	<h:outputText value="Name: "/>
+								                <p:inputText value="#{customer.pattern.order.drink.name}"/>
+								                <h:outputText value="Qt: "/>
+								                <p:spinner value="#{customer.pattern.order.drink.qt}" min="0" />
+								                <h:outputText value="Price: "/>
+								                <p:spinner value="#{customer.pattern.order.drink.price}" min="0" stepFactor="0.25" />
+								            </p:panelGrid>
+								            <p:commandButton value="Add" action="#{customer.pattern.order.addDrink}" update="@form"/>
+								            
+								            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+									        	<p:dataTable id="tblPCustDrinksE" editable="true" editMode="row" var="drink" value="#{customer.pattern.order.drinks}" emptyMessage="Empty!">
+												   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+					       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+					       							
+												    <p:column headerText="Name">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
+												        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
+												        </p:cellEditor>
+												    </p:column>							         
+												    <p:column headerText="Qt">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
+												        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
+												        </p:cellEditor>
+												    </p:column>	
+												    <p:column headerText="Price">
+												    	<p:cellEditor>
+												        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
+												        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
+												        </p:cellEditor>
+												    </p:column>								    					        
+												   	<p:column style="width:32px">
+											           <p:rowEditor/>						           
+											       	</p:column>			       	
+												</p:dataTable>								        		
+									    	</p:fieldset>
+								        </p:tab>
+						        	</p:accordionPanel>
+						        	<p:commandButton value="Add order" action="#{customer.pattern.addOrder}" update="@form"/>
+						        	<p:fieldset legend="Added orders" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+						        		<p:dataTable id="tblOOrders" var="order" value="#{customer.pattern.orders}" rowIndexVar="rowIndex">
+						        			<f:facet name="header">Edit orders</f:facet>
+						        			<p:column style="width:16px;">
+						        				<h:outputText value="#{rowIndex + 1}"/>
+						        			</p:column>
+						        			<p:column headerText="Foods">
+								        		<p:fieldset legend="Foods #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+										            <p:panelGrid columns="2" cellpadding="10">
+										            	<h:outputText value="Name: "/>
+										                <p:inputText value="#{order.food.name}"/>
+										                <h:outputText value="Qt: "/>
+										                <p:spinner value="#{order.food.qt}" min="0" />
+										                <h:outputText value="Price: "/>
+										                <p:spinner value="#{order.food.price}" min="0" stepFactor="0.25" />
+										            </p:panelGrid>
+										            <p:commandButton value="Add" action="#{order.addFood}" update="@form"/>
+										            
+										            <p:fieldset legend="Added foods" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+											        	<p:dataTable id="tblCPPCustFoods" editable="true" editMode="row" var="food" value="#{order.foods}" emptyMessage="Empty!">
+														   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+							       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+							       							
+														    <p:column headerText="Name">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{food.name}"/></f:facet>
+														        	<f:facet name="input"><p:inputText value="#{food.name}"/></f:facet>
+														        </p:cellEditor>
+														    </p:column>							         
+														    <p:column headerText="Qt">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{food.qt}"/></f:facet>
+														        	<f:facet name="input"><p:spinner value="#{food.qt}" min="0" /></f:facet>
+														        </p:cellEditor>
+														    </p:column>	
+														    <p:column headerText="Price">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{food.price}"/></f:facet>
+														        	<f:facet name="input"><p:spinner value="#{food.price}" min="0" stepFactor="0.25"/></f:facet>
+														        </p:cellEditor>
+														    </p:column>								    					        
+														   	<p:column style="width:32px">
+													           <p:rowEditor/>						           
+													       	</p:column>			       	
+														</p:dataTable>								        		
+											    	</p:fieldset>
+										        </p:fieldset>
+						        			</p:column>
+						        			<p:column headerText="Drinks">
+								        		<p:fieldset legend="Drinks #{rowIndex + 1}" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+										            <p:panelGrid columns="2" cellpadding="10">
+										            	<h:outputText value="Name: "/>
+										                <p:inputText value="#{order.drink.name}"/>
+										                <h:outputText value="Qt: "/>
+										                <p:spinner value="#{order.drink.qt}" min="0" />
+										                <h:outputText value="Price: "/>
+										                <p:spinner value="#{order.drink.price}" min="0" stepFactor="0.25" />
+										            </p:panelGrid>
+										            <p:commandButton value="Add" action="#{order.addDrink}" update="@form"/>
+										            
+										            <p:fieldset legend="Added drinks" toggleable="true" toggleSpeed="500" style="margin-top:10px;">
+											        	<p:dataTable id="tblOCPCustDrinks" editable="true" editMode="row" var="drink" value="#{order.drinks}" emptyMessage="Empty!">
+														   	<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+							       							<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}" update=":growlMsgs" />							    
+							       							
+														    <p:column headerText="Name">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{drink.name}"/></f:facet>
+														        	<f:facet name="input"><p:inputText value="#{drink.name}"/></f:facet>
+														        </p:cellEditor>
+														    </p:column>							         
+														    <p:column headerText="Qt">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{drink.qt}"/></f:facet>
+														        	<f:facet name="input"><p:spinner value="#{drink.qt}" min="0" /></f:facet>
+														        </p:cellEditor>
+														    </p:column>	
+														    <p:column headerText="Price">
+														    	<p:cellEditor>
+														        	<f:facet name="output"><h:outputText value="#{drink.price}"/></f:facet>
+														        	<f:facet name="input"><p:spinner value="#{drink.price}" min="0" stepFactor="0.25"/></f:facet>
+														        </p:cellEditor>
+														    </p:column>								    					        
+														   	<p:column style="width:32px">
+													           <p:rowEditor/>						           
+													       	</p:column>			       	
+														</p:dataTable>								        		
+											    	</p:fieldset>
+										        </p:fieldset>
+						        			</p:column>
+						        		</p:dataTable>
+						        	</p:fieldset>
+						        </p:tab>
+		        			</p:accordionPanel>
+				        </p:rowExpansion>
+				    </p:dataTable>
+		        </p:tab>
+		        
+		        <p:tab id="objectives" title="Objectives">
+		        	<p:fieldset legend="Attributes" toggleable="true" toggleSpeed="500">
+		        		<p:panelGrid columns="2">
+		        			<h:outputText value="Ordered: "/>
+		        			<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.ordered}"/>
+		        			
+		        			<h:outputText value="Button Debug: "/>
+		        			<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.buttonDebug}"/>
+		        			
+		        			<h:outputText value="Button Run: "/>
+		        			<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.buttonRun}"/>
+		        			
+		        			<h:outputText value="Button Buy: "/>
+		        			<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.buttonBuy}"/>
+		        			
+		        			<h:outputText value="Variable window: "/>
+		        			<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.variableWindow}"/>
+		        			
+		        			<h:outputText value="Reward: "/>
+		        			<p:spinner value="#{mm.objectives.reward}" min="0"/>
+		        			
+		        			<h:outputText value="Command Qtd: "/>
+		        			<p:spinner value="#{mm.objectives.commQtd}" min="0"/>
+		        			
+		        			<h:outputText value="Max Commands: "/>
+		        			<p:spinner value="#{mm.objectives.maxCommands}" min="0"/>
+		        			
+		        			<h:outputText value="Max Commands Reward: "/>
+		        			<p:spinner value="#{mm.objectives.maxCommandsReward}" min="0"/>
+		        			
+		        			<h:outputText value="Var Qtd: "/>
+		        			<p:spinner value="#{mm.objectives.varQtd}" min="0"/>
+		        			
+		        			<h:outputText value="Bonus Time: "/>
+		        			<p:inputText value="#{mm.objectives.bonusTime}"/>
+		        			
+		        			<h:outputText value="Bonus Time Reward: "/>
+		        			<p:inputText value="#{mm.objectives.bonusTimeReward}"/>		        					        					        					        				        					        					        					        			
+		        		</p:panelGrid>
+		        	</p:fieldset>
+		        	
+	     			<p:panelGrid columns="2">
+		     			<h:outputText value="New objective: "/>
+		     			<p:commandButton value="Add" onclick="PF('addObjectiveDlg').show()"/>
+	     			</p:panelGrid>
+	     			
+  					<p:dialog id="dlgObjective" header="Create new objective" widgetVar="addObjectiveDlg" modal="true" closeOnEscape="true">							
+						<p:panelGrid columns="2">
+							<h:outputText value="Value: "/>
+							<p:inputText value="#{mm.objectives.objectiveItem.value}"/>
+							
+							<h:outputText value="Place: "/>
+							<p:inputText value="#{mm.objectives.objectiveItem.place}"/>
+							
+							<h:outputText value="Pos: "/>
+							<p:spinner value="#{mm.objectives.objectiveItem.pos}" min="0"/>
+							
+							<h:outputText value="Distinct: "/>
+							<p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{mm.objectives.objectiveItem.distinct}"/>
+						</p:panelGrid>
+						<p:commandButton value="Save" update="@form" actionListener="#{mm.objectives.addObjective}" onclick="PF('addObjectiveDlg').hide()" icon="ui-icon-disk"/>
+						<p:commandButton value="Cancel" onclick="PF('addObjectiveDlg').hide();" icon="ui-icon-close"/>
+					</p:dialog>
+
+		     		<p:dataTable editable="true" editMode="row" var="objective" value="#{mm.objectives.objectiveList}">
+        				<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs"/>
+    					<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"  update=":growlMsgs"/>						        
+				        
+				        <p:column headerText="Value">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{objective.value}"/></f:facet>
+                 				<f:facet name="input"><p:inputText value="#{objective.value}"/></f:facet>
+                			</p:cellEditor>
+                		</p:column>
+                		<p:column headerText="Place">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{objective.place}"/></f:facet>
+                 				<f:facet name="input"><p:inputText value="#{objective.place}"/></f:facet>
+                			</p:cellEditor>
+                		</p:column>
+                		<p:column headerText="Pos">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{objective.pos}"/></f:facet>
+                 				<f:facet name="input"><p:spinner value="#{objective.pos}" min="0"/></f:facet>
+                			</p:cellEditor>
+                		</p:column>
+                		<p:column headerText="Distinct">
+	        				<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{objective.distinct}"/></f:facet>
+                 				<f:facet name="input"><p:selectBooleanButton onLabel="Yes" offLabel="No" value="#{objective.distinct}"/></f:facet>
+                			</p:cellEditor>
+                		</p:column>                			                			                							        	
+						<p:column style="width:32px">
+				           <p:rowEditor/>
+				       	</p:column>					        
+  					</p:dataTable>
+		        </p:tab>
+		 
+		        <p:tab id="xml" title="XML">
+		        	<p:panelGrid columns="2">
+		        		<h:inputText value="Preload: "/>
+		        		<p:spinner value="#{mm.xmltag.preload}" min="0"/>
+		        		
+		        		<h:inputText value="Always new: "/>
+		        		<p:selectBooleanButton value="#{mm.xmltag.alwaysNew}" onLabel="Yes" offLabel="No"/>		        		
+		        	</p:panelGrid>
+		        </p:tab>		        
+		    </p:tabView>
+		</h:form>
 	</h:body>
 </html>
