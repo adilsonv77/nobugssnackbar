@@ -197,6 +197,13 @@ Explanation.finishStatement = function() {
 };
 
 Explanation.parseUserLogged = function(explanations) {
+	// because a strange behaviour on safari, if process this method twice or more, the second time 
+	//    it transforms the signal tags (<>) into UTF-8.
+	// It was a "good" fault, because now I improve the speed of this proccess 
+	if (explanations.getAttribute("done")) {
+		return explanations;
+	}
+	
 	var children = explanations.getElementsByTagName("page");
 
 	var userLogged = Game.loginData.userLogged; // dont delete this line because is used in eval(e2) line
@@ -223,6 +230,8 @@ Explanation.parseUserLogged = function(explanations) {
 		else
 			children[j].textContent = e;
 	}
+	
+	explanations.setAttribute("done" , "true");
 	return explanations;
 };
 

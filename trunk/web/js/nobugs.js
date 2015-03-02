@@ -26,9 +26,9 @@
 'use strict';
 
 // Supported languages.
-BlocklyApps.LANGUAGES =  [  'en', 'pt-br' ];
+BlocklyApps.LANGUAGES =  [  'en', 'pt-br', 'pt-PT' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 
 var v = Math.floor(Math.random() * 999999);
 document.write('<script type="text/javascript" src="js/generated/' +
-               BlocklyApps.LANG + '.js?v='+v+'"></script>\n');
+               BlocklyApps.LANG.toLowerCase() + '.js?v='+v+'"></script>\n');
