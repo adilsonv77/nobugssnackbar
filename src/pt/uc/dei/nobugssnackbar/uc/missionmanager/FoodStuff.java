@@ -1,4 +1,4 @@
-package missionmanager;
+package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.math.BigDecimal;
 
