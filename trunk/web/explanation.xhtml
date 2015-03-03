@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<p:dataTable editable="true" editMode="row" id="tblPages" var="page"
+		value="#{mm.pageExplList}" emptyMessage="No pages!">
+		<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs" />
+		<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"
+			update=":growlMsgs" />
+		<f:facet name="header">Pages</f:facet>
+
+		<p:column headerText="Type">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{page.type}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText id="typeInput" value="#{page.type}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column headerText="Origin">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{page.origin}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText id="originInput" value="#{page.origin}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column headerText="Direction">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{page.dir}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText id="dirInput" value="#{page.dir}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column headerText="Message">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{page.msg}" escape="false" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputTextarea value="#{page.msg}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column style="width:32px">
+			<p:rowEditor />
+		</p:column>
+	</p:dataTable>
+	<p:commandButton value="Add" onclick="PF('addPageDlg').show()" />
+
+	<p:dialog id="dlgExplain" header="Create new page"
+		widgetVar="addPageDlg" modal="true" closeOnEscape="true">
+		<p:panelGrid columns="2">
+			<h:outputText value="Type: " />
+			<p:inputText value="#{mm.page.type}" />
+			<h:outputText value="Origin: " />
+			<p:inputText value="#{mm.page.origin}" />
+			<h:outputText value="Direction: " />
+			<p:inputText value="#{mm.page.dir}" />
+		</p:panelGrid>
+		<p:editor value="#{mm.page.msg}" controls="bold" width="600" />
+		<p:commandButton value="Save" update="@form"
+			actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()"
+			icon="ui-icon-disk" />
+		<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();"
+			icon="ui-icon-close" />
+	</p:dialog>
+</ui:composition>
