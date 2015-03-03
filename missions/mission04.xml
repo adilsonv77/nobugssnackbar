@@ -11,11 +11,6 @@
 		<span style="color: red">Use vari&#225;veis diferentes para anotar o pedido de cada cliente.</span>
 		</page>
 
-		<page type="hint" origin="command" id="1" dir="up">
-		Nesse menu consegues gerir (criar, eliminar e renomear) vari&#225;veis. Arrasta o primeiro comando <br/>
-		dessa lista at&#233; &#224; &#225;rea de trabalho e clica na seta ao lado da palavra item: aparece um novo<br/>
-		menu com a op&#231;&#227;o [Nova vari&#225;vel].
-		</page>
 	</explanation>
 	<hints>
 		<sequence>
