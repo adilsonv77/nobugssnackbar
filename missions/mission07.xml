@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission open="true" timeLimit="10">
 	<explanation>
-		<page type="statement">
+		<page>
 		Chegamos a um tipo diferente de miss&#227;o. Neste tipo de miss&#227;o voc&#234; pode rejogar v&#225;rias <br/>
 		vezes, atrav&#233;s de um custo de moedas. <br/>
 		<br/>
@@ -13,7 +13,7 @@
 		equipamento. Esses comandos estar&#227;o acess&#237;veis a partir do menu [Seus equipamentos]. 
 		</page>
 
-		<page type="statement">
+		<page>
 		Voc&#234; tem um tempo limite para fazer dinheiro. Os clientes v&#227;o entrar e sair do seu estabelecimento. <br/>
 		Tome cuidado para respeitar o tempo de entrada e sa&#237;da dos clientes. Lembre-se: se perguntar a um espa&#231;o <br/>
 		vazio o que ele deseja comer, o programa p&#225;ra a execu&#231;&#227;o devido a um erro. <br/><br/>
@@ -22,7 +22,7 @@
 		mudarem, seguem um padr&#227;o.<br/><br/>
 		A execu&#231;&#227;o do seu programa se repetir&#225; automaticamente at&#233; encerrar o tempo.
 		</page>
-		<page type="statement"> 
+		<page> 
 		Essas miss&#245;es poder&#227;o lhe dar b&#244;nus quanto <b>menos vezes</b> voc&#234; clicar em executar ou menos  <br/>
 		c&#243;digo tiver para atender os pedidos. <br/><br/>
 		Mas aten&#231;&#227;o: sempre que a execu&#231;&#227;o parar por causa de um erro, voc&#234; deixa de ganhar todas<br/>

@@ -16,15 +16,16 @@
   
   <xs:complexType name="pageType" mixed="true">
       <xs:choice maxOccurs="unbounded" minOccurs="0">
-        <xs:element type="xs:string" name="br" maxOccurs="unbounded" minOccurs="0"/>
-        <xs:element type="xs:string" name="b" maxOccurs="unbounded" minOccurs="0"/>
-		    <xs:element type="spanType" name="span" maxOccurs="unbounded" minOccurs="0" />
-		    <xs:element type="imghexType" name="imghex" maxOccurs="unbounded" minOccurs="0" />      
+      	<xs:element type="xs:string" name="br" maxOccurs="unbounded"
+      		minOccurs="0" />
+      	<xs:element type="xs:string" name="b" maxOccurs="unbounded"
+      		minOccurs="0" />
+      	<xs:element type="spanType" name="span" maxOccurs="unbounded"
+      		minOccurs="0" />
+      	<xs:element type="imghexType" name="imghex"
+      		maxOccurs="unbounded" minOccurs="0" />
       </xs:choice>
-    <xs:attribute type="xs:string" name="type"/>
-	  <xs:attribute type="xs:string" name="origin"/>
-	  <xs:attribute type="xs:integer" name="id"/>
-	  <xs:attribute type="xs:string" name="dir"/>  
+      <xs:attribute type="xs:string" name="type"/>  
   </xs:complexType>
   
 	<xs:complexType name="spanType">

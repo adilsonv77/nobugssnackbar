@@ -1,4 +1,4 @@
-package pt.uc.dei.nobugssnackbar.uc.missionmanager;
+package pt.uc.dei.nobugssnackbar.model;
 
 public class Page {
 	private int id;
@@ -6,14 +6,6 @@ public class Page {
 	private String origin;
 	private String type;
 	private String msg;
-	
-	Page() {
-		id = 0;
-		dir = "";
-		origin = "";
-		type = "";
-		msg = "";
-	}
 	
 	public int getId() {
 		return id;

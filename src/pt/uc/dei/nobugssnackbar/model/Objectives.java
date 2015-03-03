@@ -1,4 +1,4 @@
-package pt.uc.dei.nobugssnackbar.uc.missionmanager;
+package pt.uc.dei.nobugssnackbar.model;
 
 import java.util.ArrayList;
 
