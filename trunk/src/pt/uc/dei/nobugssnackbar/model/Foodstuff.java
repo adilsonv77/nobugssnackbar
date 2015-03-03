@@ -1,8 +1,8 @@
-package pt.uc.dei.nobugssnackbar.uc.missionmanager;
+package pt.uc.dei.nobugssnackbar.model;
 
 import java.math.BigDecimal;
 
-public class FoodStuff {
+public class Foodstuff {
 	private int qt;
 	private BigDecimal price;
 	private String name;

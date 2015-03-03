@@ -916,7 +916,10 @@
 		        		<h:outputText value="xmlns: "/>
 		        		<p:inputText value="#{mm.xmltag.xmlns}"/>	        		
 		        	</p:panelGrid>
-		        </p:tab>		        
+		        </p:tab>	
+		        <p:tab id="generate" title="Generate">
+		        	<p:commandButton value="Generate" action="#{xmlGen.Generate()}"/>
+		        </p:tab>	        
 		    </p:tabView>
 		</h:form>
 	</h:body>

@@ -10,15 +10,26 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
+import pt.uc.dei.nobugssnackbar.model.Category;
+import pt.uc.dei.nobugssnackbar.model.Customer;
+import pt.uc.dei.nobugssnackbar.model.Hint;
+import pt.uc.dei.nobugssnackbar.model.MachineType;
+import pt.uc.dei.nobugssnackbar.model.Objectives;
+import pt.uc.dei.nobugssnackbar.model.Page;
+import pt.uc.dei.nobugssnackbar.model.Randomization;
+import pt.uc.dei.nobugssnackbar.model.XmlTag;
+
 @ManagedBean(name="mm")
 @SessionScoped
 public class MissionManager{
+	
+	// #region Class private variables
 	private boolean open;
 	private int timeLimit;
 	
 	private int timesBefore;	
 /*************************************************************************/
-	
+
 	private boolean addInErrorList;
 	private String cooker = "initial";
 	private MachineType machineType = new MachineType(); 
@@ -39,7 +50,9 @@ public class MissionManager{
 	
 	private static int counterPageId = 1;
 	private static int counterCustomerId = 1;
+	// #end
 	
+	// #region Class public getters and setters
 	public Objectives getObjectives() {
 		return objectives;
 	}
@@ -152,7 +165,9 @@ public class MissionManager{
 	public void setMachineType(MachineType machineType) {
 		this.machineType = machineType;
 	}
+	// #end
 	
+	// #region Class user defined methods
 	public void addCustomer() {
 		if (this.customer.getId() == 0) {
 			this.customer.setId(counterCustomerId);
@@ -233,4 +248,5 @@ public class MissionManager{
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
+    // #end
 }

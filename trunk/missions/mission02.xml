@@ -2,7 +2,7 @@
 <mission>
 	<slider timesBefore="100000"/>
 	<explanation>
-		<page type="statement">
+		<page>
 		Agora j&#225; sabes o essencial para executar um programa. Por&#233;m, por vezes, <br/>
 		&#233; preciso que se execute um programa um comando de cada vez, pois podes <br/>
 		cometer algum erro com a tua personagem e &#233; mais f&#225;cil descobrir esse <br/>
