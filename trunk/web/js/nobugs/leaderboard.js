@@ -47,6 +47,12 @@ function addTooltip() {
 	
 };
 
+function getRow(data) {
+	for (var i = 0; i < data.length; i++)
+		if (data[i].id == Game.loginData.userLogged.id)
+			return i;
+}
+
 function createsLeaderBoard(idRoot) {
 
 	// Only to display or hide elements
@@ -72,6 +78,9 @@ function createsLeaderBoard(idRoot) {
 		
 		var s = entry[3];
 		var m = Math.floor(s / 60);
+
+		s = s - (m * 60);
+		
 		var h;
 		if (m > 60) {
 			h = Math.floor(m / 60);
@@ -80,8 +89,6 @@ function createsLeaderBoard(idRoot) {
 		} else {
 			h = "";
 		}
-		
-		s = s - (m * 60);
 		
 		lbTimeData.push({"id": entry[0], "name": entry[1], "time": h + addZeros(m, 2) + "min " + addZeros(s, 2) + "s", "missionDone": entry[5], "timeSeconds" : entry[3] });
 		lbRunData.push({"id": entry[0], "name": entry[1], "runs": entry[4], "missionDone": entry[5] });
@@ -108,9 +115,27 @@ function createsLeaderBoard(idRoot) {
 	// the styler is defined in template.soy
 	
 	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
+	
+	
 	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
+
 	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
 	
+	/* This stuff doesnt work :(
+	$('#leaderBoard').tabs({
+		  onSelect: function(title,index){
+			  switch (index) {
+			  case 0 : $("#dgLeaderMoney").datagrid("scrollTo", "16"); //getRow(lbMoneyData));
+			  		   break;
+			  		   
+			  case 1:  $("#dgLeaderTime").datagrid("highlightRow", getRow(lbTimeData));
+	  		   		   break;
+	  		   
+			  case 2: $("#dgLeaderRun").datagrid("highlightRow", getRow(lbRunData));
+			  	      break;
+			  }
+		  	}});
+	*/
 	$('#leaderBoard').tabs('select', 0);
 };
 
@@ -135,5 +160,5 @@ function createTabLeaderBoardInfo(idDiv, idGrid, msg, idDivDisplay, idGridDispla
 	
 function leaderStyler(value, rowData, index) {
 	if (rowData.id == Game.loginData.userLogged.id) 
-		return "font-weight: bold";
+		return "font-weight: bold; color: red";
 }
