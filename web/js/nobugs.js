@@ -19,7 +19,7 @@
 
 /**
  * This code is based on Mazed application
- *
+ *.
  * @fileoverview Initialization for NoBugs Snack Bar application.
  * @author adilsonv77@gmail.com (Adilson Vahldick)
  */

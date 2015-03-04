@@ -252,5 +252,18 @@ public class UserControl {
 		return NoBugsConnection.getConnection().retrieveLeaderBoard(this.user.getId(), this.user.getClassesId());
 	}
 
+	@RemoteMethod
+	public boolean isUserAllowed(String usernick) throws SQLException{
+		return NoBugsConnection.getConnection().isUserAllowed(usernick);
+	}
 	
+	@RemoteMethod
+	public void registerUser(String lang) {
+		// according the language
+		long clazz = NoBugsConnection.getConnection().getDefaultClass(lang);
+		
+	//	NoBugsConnection.getConnection().insertUser(userNick, userPassword, userName, sex, new long[]{clazz});
+		
+		// send a welcome email
+	}
 }
