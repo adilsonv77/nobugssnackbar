@@ -63,6 +63,11 @@ function nobugsComparison(arg0, arg1, operator) {
 	arg1 = arg1.data;
 	operator = NoBugsJavaScript.OPERATORS[operator.data];
 	
+	if (arg0 == undefined || arg1 == undefined) {
+		BlocklyApps.log.push(["fail", "Error_variableDoesntInitialized"]);
+		throw false;
+	}
+	
 	if (arg0.type != undefined) {
 		arg0 = '\"' + arg0.descr + '\"';
 	} else if (arg1.type != undefined) {

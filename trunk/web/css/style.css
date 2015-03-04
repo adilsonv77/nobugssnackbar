@@ -281,5 +281,5 @@ table.tableVictory td  {
     border-bottom:1px dotted transparent;
 }
 #leaderBoard .datagrid-row-over, #leaderBoard .datagrid-row-selected {
-	
+	background-color: transparent;
 }

@@ -720,7 +720,7 @@ BlocklyApps.getMsgOrNull = function(key) {
   if (element) {
     var text = element.textContent;
     // Convert newline sequences.
-    text = text.replace(/\\n/g, '<br/>');
+    text = text.replace(/\nn/g, '<br/>');
     return text;
   } else {
     return null;
