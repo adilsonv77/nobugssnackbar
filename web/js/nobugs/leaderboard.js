@@ -111,7 +111,7 @@ function createsLeaderBoard(idRoot) {
 	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
 	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
 	
-	$('#leaderBoard').tabs('select', 0);
+	$('#leaderBoard').tabs('select', 0); // just for teste
 };
 
 function createNoLeaderBoardInfo() {
