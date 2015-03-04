@@ -1940,7 +1940,7 @@ Game.showError = function(iderror) {
 	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
-	container.textContent = BlocklyApps.getMsg(iderror[0]);
+	container.innerHTML = BlocklyApps.getMsg(iderror[0]);
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	
