@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dialog Box fot Sign Up</title>
+<link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
+<link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
+<script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+	<form id="dialog" method="post">
+		<div align="center" style="padding: 15px 5px 5px 5px; margin: 1px">
+			<input class="easyui-validatebox textbox" type="text" maxlength="30"
+				size="10"
+				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				placeholder="Nickname" name="nickname"  data-options="required:true,validType:'userAllowed'"></input>
+		</div>
+		<div align="center" style="padding: 5px; margin: 1px">
+			<input class="easyui-validatebox" type="password"
+				maxlength="30" size="10"
+				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				placeholder="Password" name="password" id="password" required></input>
+		</div>
+		<div align="center" style="padding: 5px; margin: 1px">
+			<input class="easyui-validatebox" type="password"
+				maxlength="30" size="10"
+				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				placeholder="Confirm Password" name="confirmpassword"
+				id="confirmpassword" required="required" validType="equals['#password']"></input>
+		</div>
+		<div align="center" style="padding: 5px; margin: 1px">
+			<input class="easyui-validatebox" type="text" maxlength="30"
+				size="10"
+				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				placeholder="Email" name="email"
+				data-options="required:true,validType:'email'"></input>
+		</div>
+		<div align="center" style="padding: 5px; margin: 1px">
+			<input class="easyui-validatebox textbox" type="text" maxlength="30"
+				size="10"
+				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				placeholder="Complete Name" name="completename" required></input>
+		</div>
+		<div align="center" style="padding: 5px; margin: 1px">
+			<select name="gender"><option value="male">Male</option>
+				<option value="female">Female</option></select>
+		</div>
+
+	</form>
+	<div align="center" style="text-align: center; margin: 10px">
+		<b><a href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="submitForm()"><font size="3">Sign Up</font></a></b> <b><a
+			href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="clearForm()"><font size="3">Cancel</font></a></b>
+	</div>
+	<script>
+		$.extend($.fn.validatebox.defaults.rules, {
+			equals : {
+				validator : function(value, param) {
+					return value == $(param[0]).val();
+				},
+				message : 'Field do not match.'
+			}
+		});
+		$.extend($.fn.validatebox.defaults.rules, {
+			userAllowed : {
+				validator : function(value) {
+					var ok = false;
+					UserControl.isUserAllowed(value, 
+							{callback:function(ret) {ok = ret;}, async:false}
+							);
+					return ok;
+				},
+				message : "User doesn't allowed."
+			}
+		});
+		
+		$('#dialog').form(
+				{
+					onSubmit : function() {
+						return $(this).form('validate');
+					},
+					success : function() {
+						$.messager.alert('Info',
+								'Your registration was successful!', 'info');
+						$('#dialog').form('clear');
+						$('#sign').tooltip('hide');
+					}
+				});
+		function submitForm() {
+			$('#dialog').form('submit');
+		}
+		function clearForm() {
+			$('#dialog').form('clear');
+		}
+	</script>
+</body>
+</html>

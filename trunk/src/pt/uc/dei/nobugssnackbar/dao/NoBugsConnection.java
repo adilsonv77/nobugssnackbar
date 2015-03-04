@@ -1113,5 +1113,34 @@ public class NoBugsConnection {
 		return ret;
 	}
 
+	public boolean isUserAllowed(String usernick) throws SQLException {
+		Connection bdCon = null;
+		boolean ret = false;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select * from users where usernick = ?");
+			ps.setString(1, usernick);
+			
+			ResultSet rs = ps.executeQuery();
+			if (!rs.next())
+				ret = true;
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
+	public long getDefaultClass(String lang) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
