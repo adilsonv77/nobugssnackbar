@@ -182,6 +182,7 @@
 	    		<include name="generated/**/*.*" />
 	    		<include name="images/**/*.*" />
 	    		<include name="media/**/*.*" />
+	    		<include name="xml/ns/**/*.*" />
 	    		<include name="META-INF/**/*.*" />
 	    		<include name="js/msg/js/en_us.js" />
 	    		<include name="js/msg/js/pt-br.js" />
@@ -193,9 +194,12 @@
 	    		<include name="js/nobugs/nobugs-min.js" />
 	    		
 	    		<!-- temporariamente por causa do questionario que pode ser aplicado em outro momento -->
+	    		<!--
 	    		<include name="js/nobugs/quest.js" />
 	    		<include name="js/nobugs/questionnaire.js" />
 		    	<include name="js/nobugs/blockly.js" />
+		    	-->
+	    		<!-- -->
 	    		
 	    		<include name="WEB-INF/**/*.*" />
 	    		<include name="*.js" />
@@ -203,7 +207,6 @@
 	    		<include name="index.html" />
 	    		<include name="error.html" />
 	    		<include name="quest.html" />
-	    		<include name="createUsers.jsp" />
 	        </fileset>
 	        <classes dir="${build.home}" >
 	            <include name="**/*.class" />

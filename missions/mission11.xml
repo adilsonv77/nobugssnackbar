@@ -2,16 +2,20 @@
 <mission>
 	<explanation>
 		<page>
+		<![CDATA[
 		Est&#225;s prestes a vencer o primeiro n&#237;vel. Mais esta miss&#227;o e j&#225; te posso chamar Atendedor Aprendido ;) <br/>
         <br/>
         As vari&#225;veis n&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido <br/> 
         podes depois colocar o produto que retirastes do mostrador ou do refrigerador. Essas vari&#225;veis podem ser <br/>
         reaproveitadas. Mas lembra-te: quando se coloca um novo valor numa vari&#225;vel, perde-se o anterior. <br/>
+		]]>
 		</page>
 		
 		<page>
+		<![CDATA[
 		O &#250;ltimo desafio antes de se completar o n&#237;vel Aprendiz de Atendedor: os quatro clientes t&#234;m fome e sede. <br/>
 		Atende todos os clientes com apenas duas vari&#225;veis. Ganhas $30 extra se resolves o problema em cinco minutos.
+		]]>
 		</page>
 
 	</explanation>

@@ -3,16 +3,20 @@
 	<slider timesBefore="100000"/>
 	<explanation>
 		<page>
+		<![CDATA[
 		Agora &#233; hora de atender o pedido. No card&#225;pio temos cachorro-quente. No balc&#227;o <br/>
 		superior encontra-se um mostrador aquecido (display) onde podes ir buscar os <br/>
 		cachorros-quentes para servir.
+		]]>
 		</page>
 		<page>
+		<![CDATA[
 		Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas lig&#225;-los <br/>
 		logicamente para cumprir essa miss&#227;o.  <br/>
 		<br/>
 		Dica: clica no comando e deixa o rato parado sobre o bloco, que aparece uma explica&#231;&#227;o <br/>
 		sobre o que ele faz.
+		]]>
 		</page>
 	</explanation>
 	

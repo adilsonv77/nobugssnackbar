@@ -2,6 +2,7 @@
 <mission>
 	<explanation>
 		<page>
+		<![CDATA[
 		Estamos a come&#231;ar a fazer nome na pra&#231;a: clientes satisfeitos trazem mais clientes. <br/>
 		Observa que estamos com o balc&#227;o cheio. Alguns t&#234;m fome e outros sede. Os clientes <br/>
 		sentados no banco 1 e 2 t&#234;m fome e os outros dois t&#234;m sede.<br/>
@@ -9,6 +10,7 @@
         Mas agora para tornar mais interessante a miss&#227;o, vou-te limitar o tempo que tens para<br/>
         resolver o problema. Quanto menos tempo gastares, maior ser&#225; a tua bonifica&#231;&#227;o. Se <br/>
         conseguires resolv&#234;-la at&#233; 8 minutos receber&#225;s mais $60.
+		]]>
 		</page>
 
 	</explanation>
