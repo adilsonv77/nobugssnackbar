@@ -1313,6 +1313,16 @@ Game.execute = function(debug) {
 
 		Game.saveMission();
 		
+		if (Blockly.selected != null) {
+			
+			myIsTargetSvg = true; // defined in blockly.js 
+			Blockly.selected.unselect();
+			myIsTargetSvg = true;
+			
+		}
+		
+		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Game.semanticAnalysis);
+		
   	    var code = "var NoBugsJavaScript = {};\n";
   	    if (Game.openMission.open) {
   	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + js.workspaceToCode() + "\n } ";
@@ -1326,13 +1336,20 @@ Game.execute = function(debug) {
         Game.stepSpeed = 1000 * Math.pow(0.5, 3);
 	    
         Game.lockBlockly();
+        
 	  } catch (e) {
 		  
 		  if (e == Infinity) { 
-			  Game.showError("Error_infinityLoopDetected");
+			  Game.showError(["Error_infinityLoopDetected"]);
 		      Game.resetButtons();
 		      return;
-		  }
+		  } else
+			  if (e.isNoBugs) {
+				  Blockly.mainWorkspace.highlightBlock(Blockly.selected.id);
+				  Game.showError([e.msg]);
+			      Game.resetButtons();
+			      return;
+			  }
 		  
 		  console.log(e);
 		  
@@ -1341,6 +1358,34 @@ Game.execute = function(debug) {
 
   Game.runningStatus = debug;
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
+};
+
+Game.semanticAnalysis  = function(block) {
+	
+	if (Game.hasEmptyInputs(block)) {
+		
+		Blockly.selected = block;
+		throw {isNoBugs: true, msg : "Hints_EmptyInputError"};
+		
+	}
+	return true;
+};
+
+Game.hasEmptyInputs = function (activeBlock) {
+	var input = activeBlock.inputList;
+	for (var i=0; i<input.length; i++) {
+		if (input[i].connection != null) {
+			if (input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
+			  return true;
+			if (input[i].connection.targetConnection != null) {
+				if (Game.hasEmptyInputs(input[i].connection.targetConnection.sourceBlock_))
+					return true;
+			}
+		} 
+	}
+	
+	return false;
+
 };
 
 Game.showCountInstructions = function() {
