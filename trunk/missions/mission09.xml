@@ -2,16 +2,21 @@
 <mission>
 	<explanation>
 		<page>
+		<![CDATA[
 		Uau... Poderemos fazer muito dinheiro com a tua efici&#234;ncia. A partir de agora <br/>
 		receber&#225;s sempre mais dinheiro se conseguires resolver as miss&#245;es com um limite<br/>
 		de comandos de que te vou informar sempre.
+		]]>
 		</page>
+		
 		<page>
+		<![CDATA[
 		Tenho boas not&#237;cias. Comprei um stock de refrigerantes. Agora podemos perguntar ao<br/>
 		cliente o que ele deseja comer e beber. <br/>
 		<br/>
 		Essa &#233; a tua miss&#227;o atual: pergunta ao cliente o que ele deseja comer e beber, e serve-o. <br/>
 		N&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.
+		]]>
 		</page>
 
 	</explanation>

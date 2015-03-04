@@ -3,16 +3,20 @@
 	<slider timesBefore="100000"/>
 	<explanation>
 		<page>
+		<![CDATA[
 		Agora j&#225; sabes o essencial para executar um programa. Por&#233;m, por vezes, <br/>
 		&#233; preciso que se execute um programa um comando de cada vez, pois podes <br/>
 		cometer algum erro com a tua personagem e &#233; mais f&#225;cil descobrir esse <br/>
 		erro se executares um de cada vez.
+		]]>
 		</page>
 		<page type="statement">
+		<![CDATA[
 		O comportamento da tua personagem &#233; o mesmo da miss&#227;o anterior, e por isso <br/>
 		j&#225; est&#225; pronto na &#225;rea de trabalho. Agora clica no bot&#227;o com um p&#233; (tamb&#233;m <br/>
 		chamado <b>bot&#227;o para Depurar</b>) para veres o teu programa ser executado um comando <br/>
 		de cada vez. Faz isso at&#233; o programa encerrar.
+		]]>
 		</page>
 
 	</explanation>

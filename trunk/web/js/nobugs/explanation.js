@@ -27,14 +27,11 @@ Explanation.showInfo = function(explanation, withHint, afterclosed) {
 	var i = 0;
 	while (expla != null) {
 		
-		var type = expla.getAttribute("type");
-		if (type === "statement") {
-			if (statement == 0)
-				Explanation.firstStatement = i;
-			statement++;
-			
-			Explanation.lastStatement = i;
-		}
+		if (statement == 0)
+			Explanation.firstStatement = i;
+		statement++;
+		
+		Explanation.lastStatement = i;
 		expla = expla.nextElementSibling; i++;
 	}
 	
@@ -60,17 +57,8 @@ Explanation.nextStatement = function() {
 	
 	BlocklyApps.hideDialog(false);
 	
-	var explanation = Explanation.explanation;
-	var children = explanation.getElementsByTagName("page");
+	Explanation.pageNumber = Explanation.pageNumber + 1; 
 	
-	var i = Explanation.pageNumber + 1; Explanation.pageNumber = -1;
-	for (; i <= Explanation.lastStatement; i++) {
-		var type = children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Explanation.pageNumber == -1)
-				Explanation.pageNumber = i;
-		}
-	}
 	Explanation.createDialog(Explanation.pageNumber);
 	
 };
@@ -79,17 +67,8 @@ Explanation.previousStatement = function() {
 	
 	BlocklyApps.hideDialog(false);
 	
-	var explanation = Explanation.explanation;
-	var children = explanation.getElementsByTagName("page");
+	Explanation.pageNumber = Explanation.pageNumber - 1;
 	
-	var i = Explanation.pageNumber - 1; Explanation.pageNumber = -1;
-	for (; i >= 0; i--) {
-		var type = children[i].getAttribute("type");
-		if (type === "statement") {
-			if (Explanation.pageNumber == -1)
-				Explanation.pageNumber = i;
-		}
-	}
 	Explanation.createDialog(Explanation.pageNumber);
 
 };
@@ -103,7 +82,7 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	
 	var imgHex = children[nrPage].getElementsByTagName("imghex");
 	convertImgHex(imgHex, container, function(container, hexId, hexHex, img) {
-		containerText = containerText.replace("<imghex id=\"" + hexId + "\"><![CDATA["+ hexHex +"]]></imghex>", img);
+		containerText = containerText.replace("<imghex id=\"" + hexId + "\">"+ hexHex +"</imghex>", img);
 	});
 	
 	container.innerHTML = containerText;
@@ -210,7 +189,7 @@ Explanation.parseUserLogged = function(explanations) {
 	
 	for (var j=0; j< children.length; j++) {
 		
-		var e = innerXML ( children[j] ); 
+		var e = children[j].textContent; 
 		
 		do {
 			var i = e.indexOf("$${") ;

@@ -2,14 +2,18 @@
 <mission>
 	<explanation>
 		<page>
+		<![CDATA[
 Ufaaaa... Est&#225; a dar trabalho, n&#227;o ? Mas est&#225;s a ficar cada vez melhor a atender<br/>
 clientes. Tanto que sinto que tens condi&#231;&#245;es de n&#227;o s&#243; anotar e entregar, mas <br/>
 tamb&#233;m de come&#231;ar a preparar algumas coisas.<br/>
 <br/>
 Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja.<br/>
 Vou-te ensinar os truques de atender e preparar os sumos.
+]]>
 		</page>
+		
 		<page>
+		<![CDATA[
 O cliente ter&#225; sempre sede. Logo, nesta miss&#227;o nem precisas de perguntar. <br/>
 Come&#231;a por perguntar o que deseja beber. Em seguida, se o pedido foi um <br/>
 refrigerante (softDrink) vai at&#233; ao refrigerador e desempenha a tarefa como sempre<br/>
@@ -21,6 +25,7 @@ outro simplesmente reaproveitas. Essa &#233; mais uma miss&#227;o em que ganhas 
 por tempo: 3 minutos para ganhar $30.<br/>
 <br/>
 Deixei parte do que te ensinei pronto na &#225;rea de trabalho. 
+]]>
 		</page>
 
 	</explanation>
