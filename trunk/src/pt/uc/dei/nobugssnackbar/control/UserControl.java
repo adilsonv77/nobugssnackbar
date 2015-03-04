@@ -258,7 +258,7 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void registerUser(String lang) {
+	public void registerUser(String lang) throws SQLException {
 		// according the language
 		long clazz = NoBugsConnection.getConnection().getDefaultClass(lang);
 		

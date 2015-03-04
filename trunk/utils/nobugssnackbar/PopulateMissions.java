@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
 
 public class PopulateMissions {
@@ -30,7 +31,7 @@ public class PopulateMissions {
 			} while (true);
 			arq.close();
 			
-			NoBugsConnection.getConnection().insertMission("Mission default", xml.toString());
+			(new MissionDao()).insertMission("Mission default", xml.toString());
 			
 		}
 		
