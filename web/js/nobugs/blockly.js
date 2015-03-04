@@ -159,6 +159,7 @@ Blockly.onMouseDown_ = function(e) {
 	myIsTargetSvg = e.target && e.target.nodeName &&
     					e.target.nodeName.toLowerCase() == 'svg';
 	afterMyMouseDown(e);
+	myIsTargetSvg = false;
 };
 
 Blockly.isRightButton = function(e) {

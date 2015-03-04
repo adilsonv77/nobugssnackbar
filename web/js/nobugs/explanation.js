@@ -20,24 +20,9 @@ Explanation.showInfo = function(explanation, withHint, afterclosed) {
 	
 	explanation = Explanation.parseUserLogged(explanation);
 	
-	var statement = 0;
-	Explanation.firstStatement = -1;
-	
-	var expla = explanation.firstElementChild;
-	var i = 0;
-	while (expla != null) {
-		
-		if (statement == 0)
-			Explanation.firstStatement = i;
-		statement++;
-		
-		Explanation.lastStatement = i;
-		expla = expla.nextElementSibling; i++;
-	}
-	
-	if (Explanation.firstStatement == -1) // this will happen if is something wrong in the mission's statement
-		return;
-	
+	Explanation.firstStatement = 0;
+	Explanation.lastStatement = explanation.childElementCount - 1;
+
 	Explanation.explanation = explanation;
 
 	if (withHint) {

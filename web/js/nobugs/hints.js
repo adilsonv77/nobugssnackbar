@@ -676,21 +676,7 @@ Hints.hasEmptyInputs  = function() {
 	if (Hints.activeBlock == Hints.lastInsertedBlock) // dont test the block is just inserted
 		return false;
 	
-	var input = Hints.activeBlock.inputList;
-	for (var i=0; i<input.length; i++) {
-		if (input[i].connection != null) {
-			if (input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
-			  return true;
-			if (input[i].connection.targetConnection != null) {
-				Hints.activeBlock = input[i].connection.targetConnection.sourceBlock_;
-				if (Hints.hasEmptyInputs())
-					return true;
-			}
-		} 
-	}
-	
-	return false;
-	
+	return Game.hasEmptyInputs(Hints.activeBlock);
 };
 
 Hints.fCountVariableName = function(block) {
