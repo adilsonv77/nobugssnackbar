@@ -149,19 +149,20 @@ public class NoBugsConnection {
 		}
 	}
 	
-	public void insertUser(String userNick, String userPassword, String userName, String sex, int classes[]) throws SQLException {
+	public void insertUser(String userNick, String userPassword, String userName, String sex, String userMail, int classes[]) throws SQLException {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
 			bdCon.setAutoCommit(false);
 			
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermoney, showhint) values (?, ?, ?, ?, 0, 'T')");
+					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermail, usermoney, showhint) values (?, ?, ?, ?, ?, 0, 'T')");
 			
 			ps.setString(1, userNick);
 			ps.setString(2, userPassword);
 			ps.setString(3, sex);
 			ps.setString(4, userName);
+			ps.setString(5, userMail);
 			
 			ps.executeUpdate();
 			ps.close();
@@ -196,27 +197,6 @@ public class NoBugsConnection {
 		}
 
 		
-	}
-
-	public void insertMission(String name, String xml) throws SQLException {
-
-		Connection bdCon = null;
-		try {
-			bdCon = dataSource.getConnection();
-			PreparedStatement ps = bdCon
-					.prepareStatement("insert into missions (missionname, missioncontent) values (?, ?)");
-			ps.setString(1, name);
-			ps.setString(2, xml);
-
-			ps.executeUpdate();
-			ps.close();
-		} finally {
-			if (bdCon != null)
-				try {
-					bdCon.close();
-				} catch (SQLException ignore) {
-				}
-		}
 	}
 
 	public String[][] loadMission(User user, int clazzId, int levelId, int missionIdx) throws SQLException {
@@ -1137,9 +1117,28 @@ public class NoBugsConnection {
 		return ret;
 	}
 
-	public long getDefaultClass(String lang) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getDefaultClass(String lang) throws SQLException {
+		Connection bdCon = null;
+		long ret = 0;
+		try {
+			bdCon = dataSource.getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select classid from classes where classname like 'Default%' and classlang like ?");
+			ps.setString(1, "%" + lang + "%");
+			
+			ResultSet rs = ps.executeQuery();
+			if (!rs.next())
+				ret = rs.getLong(1);
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
 	}
 
 
