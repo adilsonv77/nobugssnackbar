@@ -554,7 +554,8 @@ Game.installMachines = function(toolbox) {
 		       rtl: Game.rtl,
 		       toolbox: toolbox,
 		       trashcan: true,
-		       comments: false});
+		       comments: false,
+		       scrollbars: true});
 	    
 	    Game.afterInstallMachines();
 
@@ -693,7 +694,8 @@ Game.buyMachineButtonClick = function() {
 					       rtl: Game.rtl,
 					       toolbox: tb,
 					       trashcan: true,
-					       comments: false});
+					       comments: false,
+					       scrollbars: true});
 				
 				Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
 				

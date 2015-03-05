@@ -26,7 +26,7 @@
 'use strict';
 
 // Supported languages.
-BlocklyApps.LANGUAGES =  [  'en', 'pt-br', 'pt-PT' ];
+BlocklyApps.LANGUAGES =  [  'en', 'pt-br', 'pt-pt' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
 
 var v = Math.floor(Math.random() * 999999);
