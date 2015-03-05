@@ -1319,7 +1319,7 @@ Game.execute = function(debug) {
 			
 			myIsTargetSvg = true; // defined in blockly.js 
 			Blockly.selected.unselect();
-			myIsTargetSvg = true;
+			myIsTargetSvg = false;
 			
 		}
 		
@@ -1814,6 +1814,9 @@ Game.initApi = function(interpreter, scope) {
 Game.highlightPause = false;
 
 Game.highlightBlock = function(id) {
+	
+	if (!Blockly.mainWorkspace.traceOn_) // this happens when there was a previous block selected
+		Blockly.mainWorkspace.traceOn(true);
 	
 	BlocklyApps.log.push(['IM', 0]);
 	CustomerManager.update();

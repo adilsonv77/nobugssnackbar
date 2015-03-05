@@ -167,6 +167,42 @@ Blockly.isRightButton = function(e) {
    return e.button == 2;// || e.ctrlKey; // Control-clicking in WebKit on Mac OS X fails to change button to 2.
 };
 
+Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
+	var notNull = base.nextConnection.targetConnection != null;
+	for (var i = 0; i < base.childBlocks_.length; i++) {
+		var testBlock = base.childBlocks_[i];
+		if ((notNull && testBlock != base.nextConnection.targetConnection.sourceBlock_) || !notNull)
+			while (testBlock != null) {
+				
+				if (typeAction == 1) {
+	
+					var idx = Game.blocksSelected.indexOf(testBlock);
+					if (idx != -1) {
+						Game.blocksSelected[idx].unselect();
+						Game.blocksSelected.splice(idx, 1);
+					} else 
+						if (testBlock.type === "controls_if") {
+							this.checkBlocks(testBlock, 1);
+						}
+					
+					
+				} else {
+					
+					if (testBlock == compare)
+						return false;
+				}
+				
+				if (testBlock.nextConnection != null && testBlock.nextConnection.targetConnection != null)
+					testBlock = testBlock.nextConnection.targetConnection.sourceBlock_;
+				else
+					testBlock = null;
+			}
+	}
+	
+	return true;
+
+};
+
 Blockly.BlockSvg.prototype.select = function() {
 	myIsTargetSvg = false;
     // Unselect any previously selected block.
@@ -189,37 +225,65 @@ Blockly.BlockSvg.prototype.select = function() {
 			}
 			
 		}
+	    if (Game.blocksSelected.length > 0) {
+	  		// if there are blocks that have this block as child, then doesnt add the current block
+	  		var testBlock = this.parentBlock_;
+	  		var compare = this;
+	  		
+	  		while (testBlock != null) {
+	  			
+	  			if (testBlock.type === "controls_if") {
+	  				if (Game.blocksSelected.indexOf(testBlock) == -1)
+	  					compare = testBlock;
+	  				else 
+	      				if (!this.checkBlocks(testBlock, 2, compare)) {
+	      					return;
+	      				}
+	  			}
+	  			
+	  			testBlock = testBlock.parentBlock_;
+	  		}
+
+	  		if (this.type === "controls_if") {
+	    		
+	    		// if there are blocks selected which belongs to the current block, then unselects them 
+	    		
+	    		this.checkBlocks(this, 1);
+	    		
+	      	}
+	    	
+	    	// put together the blocks that are connected... Afterwards, when they are copying, the elements get together too
+	    	var found = false;
+	    	for (var i = 0; i < Game.blocksSelected.length; i++) {
+	    		var block = Game.blocksSelected[i];
+	    		if (block.nextConnection != null) {
+	        		var targetBlock = block.nextConnection.targetConnection;
+	        		if (targetBlock != null && targetBlock.sourceBlock_.id === this.id) {
+	        			Game.blocksSelected.splice(i+1, 0, this);
+	        			found = true;
+	        			break;
+	        		} else {
+	        			targetBlock = this.nextConnection.targetConnection;
+	        			if (targetBlock != null && targetBlock.sourceBlock_.id === block.id) {
+	            			Game.blocksSelected.splice(i, 0, this);
+	            			found = true;
+	            			break;
+	       				
+	        			}
+	        		}
+	    		}
+	    	}
+	    	
+	    	if (!found)
+	    		Game.blocksSelected.push(this);
+	    }
+	    
 	}
 	
+    	
     Blockly.selected = this;
     this.addSelect();
-    if (Game.CTRLPRESSED) {
 
-    	// put together the blocks that are connected... Afterwards, when they are copying, the elements get together too
-    	var found = false;
-    	for (var i = 0; i < Game.blocksSelected.length; i++) {
-    		var block = Game.blocksSelected[i];
-    		if (block.nextConnection != null) {
-        		var targetBlock = block.nextConnection.targetConnection;
-        		if (targetBlock != null && targetBlock.sourceBlock_.id === Blockly.selected.id) {
-        			Game.blocksSelected.splice(i+1, 0, this);
-        			found = true;
-        			break;
-        		} else {
-        			targetBlock = Blockly.selected.nextConnection.targetConnection;
-        			if (targetBlock != null && targetBlock.sourceBlock_.id === block.id) {
-            			Game.blocksSelected.splice(i, 0, this);
-            			found = true;
-            			break;
-       				
-        			}
-        		}
-    		}
-    	}
-    	
-    	if (!found)
-    		Game.blocksSelected.push(this);
-    }
     Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
 };
 
