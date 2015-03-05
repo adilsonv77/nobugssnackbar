@@ -3,11 +3,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
 	<p:dataTable editable="true" editMode="row" id="tblPages" var="page"
-		value="#{mm.pageExplList}" emptyMessage="No pages!">
-		<p:ajax event="rowEdit" listener="#{mm.onRowEdit}" update=":growlMsgs" />
-		<p:ajax event="rowEditCancel" listener="#{mm.onRowCancel}"
-			update=":growlMsgs" />
+value="#{mm.mission.pageExplList}" emptyMessage="No pages!">
+		<p:ajax event="rowEdit" listener="#{mm.mission.onRowEdit}"  />
+		<p:ajax event="rowEditCancel" listener="#{mm.mission.onRowCancel}"/>
 		<f:facet name="header">Pages</f:facet>
 
 		<p:column headerText="Type">
@@ -57,18 +57,18 @@
 	<p:commandButton value="Add" onclick="PF('addPageDlg').show()" />
 
 	<p:dialog id="dlgExplain" header="Create new page"
-		widgetVar="addPageDlg" modal="true" closeOnEscape="true">
+		widgetVar="addPageDlg" closeOnEscape="true">
 		<p:panelGrid columns="2">
 			<h:outputText value="Type: " />
-			<p:inputText value="#{mm.page.type}" />
+			<p:inputText value="#{mm.mission.page.type}" />
 			<h:outputText value="Origin: " />
-			<p:inputText value="#{mm.page.origin}" />
+			<p:inputText value="#{mm.mission.page.origin}" />
 			<h:outputText value="Direction: " />
-			<p:inputText value="#{mm.page.dir}" />
+			<p:inputText value="#{mm.mission.page.dir}" />
 		</p:panelGrid>
-		<p:editor value="#{mm.page.msg}" controls="bold" width="600" />
+		<p:editor value="#{mm.mission.page.msg}" controls="bold" width="600" />
 		<p:commandButton value="Save" update="@form"
-			actionListener="#{mm.addPageExpl}" onclick="PF('addPageDlg').hide()"
+			actionListener="#{mm.mission.addPageExpl}" onclick="PF('addPageDlg').hide()"
 			icon="ui-icon-disk" />
 		<p:commandButton value="Cancel" onclick="PF('addPageDlg').hide();"
 			icon="ui-icon-close" />
