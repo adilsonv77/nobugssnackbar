@@ -31,7 +31,7 @@ var BlocklyApps = {};
 BlocklyApps.LANGUAGE_NAME = {
   'en': 'English',
   'es': 'Espanhol',
-  'pt-PT': 'Portugues Portugal',
+  'pt-pt': 'Portugues Portugal',
   'pt-br': 'Portugues Brasileiro',
 };
 
@@ -47,10 +47,8 @@ BlocklyApps.LANGUAGE_PACK = {
   'en': 'js/msg/js/en.js',
   'en_us': 'js/msg/js/en_us.js',
   'es': 'js/msg/js/es.js',
-  'pt-PT': 'js/msg/js/pt.js',
-  'pt_PT': 'js/msg/js/pt.js',
+  'pt-pt': 'js/msg/js/pt.js',
   'pt-br': 'js/msg/js/pt-br.js',
-  'pt_br': 'js/msg/js/pt-br.js',
   'default': 'js/msg/js/en.js'
 };
 
@@ -107,7 +105,7 @@ BlocklyApps.getNumberParamFromUrl = function(name, minValue, maxValue) {
  */
 BlocklyApps.getLang = function() {
   // First choice: The URL specified language.
-  var lang = BlocklyApps.getStringParamFromUrl('lang', '');
+  var lang = BlocklyApps.getStringParamFromUrl('lang', '').toLowerCase();
   if (BlocklyApps.LANGUAGES.indexOf(lang) != -1) {
     // Save this explicit choice as cookie.
     // Use of a session cookie for saving language is explicitly permitted
@@ -120,13 +118,13 @@ BlocklyApps.getLang = function() {
   // Second choice: Language cookie.
   var cookie = document.cookie.match(/(^|;)\s*lang=(\w+)/);
   if (cookie) {
-    lang = unescape(cookie[2]);
+    lang = unescape(cookie[2]).toLowerCase();
     if (BlocklyApps.LANGUAGES.indexOf(lang) != -1) {
       return lang;
     }
   }
   // Third choice: The browser's language.
-  lang = navigator.language;
+  lang = navigator.language.toLowerCase();
   if (BlocklyApps.LANGUAGES.indexOf(lang) != -1) {
     return lang;
   }

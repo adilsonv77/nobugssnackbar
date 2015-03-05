@@ -171,7 +171,7 @@ Blockly.BlockSvg.prototype.select = function() {
 	myIsTargetSvg = false;
     // Unselect any previously selected block.
 	if (!Game.CTRLPRESSED) {
-		Game.blocksSelected.forEach(function(block) { block.unselect(); });
+		Game.blocksSelected.forEach(function(block) {block.unselect(); });
 		Game.blocksSelected = [];
 		if (Blockly.selected)
 			Blockly.selected.unselect();
@@ -181,10 +181,13 @@ Blockly.BlockSvg.prototype.select = function() {
 		else {
 			var idx = Game.blocksSelected.indexOf(this);
 			if (idx != -1) {
+				
 				Game.blocksSelected.splice(idx, 1);
 				this.unselect();
+				
 				return;
 			}
+			
 		}
 	}
 	
@@ -192,7 +195,7 @@ Blockly.BlockSvg.prototype.select = function() {
     this.addSelect();
     if (Game.CTRLPRESSED) {
 
-    	// put together the blocks that are connected... Afterwards, when they are pasting, the elements get together too
+    	// put together the blocks that are connected... Afterwards, when they are copying, the elements get together too
     	var found = false;
     	for (var i = 0; i < Game.blocksSelected.length; i++) {
     		var block = Game.blocksSelected[i];
@@ -241,15 +244,32 @@ Blockly.copy_ = function(block) {
 	if (Game.blocksSelected.length > 0) {
 
 		Blockly.clipboard_ = [];
-		Game.blocksSelected.forEach(function(_block){Blockly.clipboard_.push(Blockly.littleCopy_(_block));});
+		var beforeBlock = null;
+		var beforeCopyBlock = null;
+		Game.blocksSelected.forEach(function(_block){
+			
+			var xmlCopy = Blockly.littleCopy_(_block);
+			var previousBlock = null;
+			if (beforeBlock != null) {
+				if (beforeBlock.nextConnection.targetConnection != null && 
+						beforeBlock.nextConnection.targetConnection.sourceBlock_.id === _block.id) {
+					previousBlock = beforeCopyBlock;
+				}
+			}
+			
+			Blockly.clipboard_.push({xml: xmlCopy, previous: previousBlock});
+			beforeCopyBlock = xmlCopy;
+			beforeBlock = _block;
+		});
 		
 	} else 
 		
-		Blockly.clipboard_ = [Blockly.littleCopy_(block)];
+		Blockly.clipboard_ = [{xml: Blockly.littleCopy_(block), previous: null}];
 
 };
 
 Blockly.littleCopy_ = function(block) {
+	
 	var xmlBlock = Blockly.Xml.blockToDom_(block);
 	Blockly.Xml.deleteNext(xmlBlock);
 	// Encode start position in XML.
@@ -268,13 +288,11 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 		Blockly.selected.unselect();
 	
 	Blockly.clipboard_.forEach(function(_xmlBlock) { 
-		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock);
+		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock.xml);
 		m();
-		var newBlock = Blockly.mainWorkspace.getBlockById( _xmlBlock.id );
-		if (lastBlock != null && lastBlock.nextConnection != null) {
-			if (lastBlock.nextConnection.targetConnection != null && lastBlock.nextConnection.targetConnection.sourceBlock_.id === newBlock.id) {
-				pastedBlocks[pastedBlocks.length-1].nextConnection.connect(Blockly.selected.previousConnection);
-			}
+		var newBlock = Blockly.mainWorkspace.getBlockById( _xmlBlock.xml.id );
+		if (_xmlBlock.previous != null) {
+			pastedBlocks[pastedBlocks.length-1].nextConnection.connect(Blockly.selected.previousConnection);
 		}
 		pastedBlocks.push(Blockly.selected);
 		lastBlock = newBlock;
@@ -294,7 +312,7 @@ Blockly.onKeyDown_ = function (e) {
 	
 	if (e.ctrlKey && e.keyCode == 88) {
 		
-		Game.blocksSelected.forEach(function(block) { 
+		Game.blocksSelected.forEach(function(block) {
 			if (block.isDeletable() && block.isMovable())
 				block.dispose(true, true);
 		});
@@ -324,7 +342,8 @@ Blockly.onKeyDown_ = function (e) {
 
 Blockly.onMouseMove_ = function(e) {
 	
-	Game.blocksSelected.forEach(function(block) { 
+	Game.blocksSelected.forEach(function(block) {
+
 		if (block != Blockly.selected)
 			block.removeSelect(); 
 	});
