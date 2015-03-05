@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<link rel="stylesheet" href="../css/admin/style.css"/>
+</h:head>
+<h:body>
+	<p:growl id="growlMsgs" showDetail="true"/>
+	<h:form id="Form">
+		<p:layout id="layoutLeft" style="min-width:400px;min-height:200px;">
+		    <p:layoutUnit position="west" resizable="true" size="250" minSize="100" maxSize="300">
+		       <div id="addMission">
+			       <h3>Missions</h3>		       
+			       	<p:commandButton  action="#{mm.addMission()}" icon="ui-icon-circle-plus"/>		       
+		       </div>
+		       <p:orderList id="missionList" value="#{mm.missionList}" var="mis"  controlsLocation="none">			
+					<p:column>
+						<p:outputLabel value="#{mis.name}"/>
+					</p:column>	      
+		       </p:orderList>
+		    </p:layoutUnit>
+		 
+		    <p:layoutUnit position="center">	    			    
+		    		<p:outputLabel value="Name:" for="missionName"/>
+		    		<p:inputText id="missionName" readonly="true" />
+			       
+			        <p:outputLabel for="selectLanguage" value="Language:" />
+			        <p:selectOneMenu id="selectLanguage">
+			            <f:selectItem itemLabel="Select One" itemValue="" />
+			            <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+			            <f:selectItem itemLabel="PS4" itemValue="PS4" />
+			            <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+			        </p:selectOneMenu>   
+			         		
+			    	<p:tabView id="tbView" dynamic="true" cache="true">
+				        
+				        <p:tab title="Explanation">
+				        	<ui:include src="modules/explanation.xhtml"/>
+				        </p:tab>
+				        
+				        <p:tab title="Commands">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Customers">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Objectives">
+		
+				        </p:tab>	
+				        
+				        <p:tab title="Hints">
+		
+				        </p:tab>	
+				        
+				        <p:tab title="Machines">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Settings">
+		
+				        </p:tab>			        			        			        	        		        		        
+			    	</p:tabView>
+			    	<footer>
+			    		<div id="footerButtons">
+			    			<p:commandButton id="btnTest" value="Test" icon="ui-icon-play"/>
+			    			<p:commandButton id="btnSave" value="Save" icon="ui-icon-circle-arrow-s"/>
+			    		</div>
+			    	</footer>
+		    </p:layoutUnit>
+		</p:layout>	
+	</h:form>
+</h:body>
+</html>

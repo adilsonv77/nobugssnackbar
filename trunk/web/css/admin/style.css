@@ -1,0 +1,37 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+h3{
+	display:inline-block;
+	color: red;
+}
+
+#missionList{
+	margin: 0;
+	padding:0;
+	width: 100%;
+}
+
+#layoutLeft{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+footer{
+	position:absolute;
+	bottom:0;
+	float: left;
+	border: 1px solid;
+	display: block;
+	width: 99%;  	
+}
+#footerButtons{
+	border: 1px solid;
+	float: right;
+	
+}
+#footerButtons :FIRST-CHILD {
+	margin-right: 15px;
+}
