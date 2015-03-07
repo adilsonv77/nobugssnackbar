@@ -29,7 +29,47 @@
 		}
 		.hide-column-names table thead tr {
     		display: none;
-		}
+    	}
+    	.ui-dashboard-column {
+    		width: 180px;
+    		word-wrap: break-word;
+    	}
+    	.ui-dashboard-column .ui-panel {
+    		height: 200px;
+    		padding: 0px;
+    		margin: 5px;
+    		margin-top: 0;
+    	}
+    	.ui-dashboard-column .ui-panel a {
+    		text-decoration: none;
+    	}
+    	.ui-dashboard-column .ui-panel-titlebar {
+    		background: none;
+    		font-weight: normal;
+    		height: 181px;
+    		border: none;
+    		overflow: hidden;
+    	}
+     	.ui-dashboard-column .ui-panel-content {
+    		width: 0;
+    		padding: 0;
+    		margin: 0;
+    	}
+    	.ui-dashboard-column .ui-widget-content {
+    		background-color: transparent;
+    	}
+    	.ui-dashboard-column .ui-panel-content .ui-panelgrid-cell {
+    		padding: 0 5px 0 0;
+    	}
+    	.ui-dashboard-column .ui-panel-content .ui-panelgrid-cell .ui-button {
+    		margin-top: 9px;
+    	}
+    	.ui-panel-content table.ui-panelgrid {
+    		display: none;
+    	}
+    	.ui-dashboard-column .ui-panel:hover .ui-panel-content table.ui-panelgrid {
+    		display: block;
+    	}
 	</style>	
 </h:head>
 <h:body>
@@ -71,38 +111,36 @@
         		</p:layoutUnit>
         		
         		<p:layoutUnit position="center">
-        			<h:form id="contentForm">
-						<p:tabView id="tbView" dynamic="true" cache="true">
-					        
-					        <p:tab title="Explanation">
-					        	<ui:include src="modules/explanation.xhtml"/>
-					        </p:tab>
-					        
-					        <p:tab title="Commands">
-			
-					        </p:tab>
-					        
-					        <p:tab title="Customers">
-			
-					        </p:tab>
-					        
-					        <p:tab title="Objectives">
-			
-					        </p:tab>	
-					        
-					        <p:tab title="Hints">
-			
-					        </p:tab>	
-					        
-					        <p:tab title="Machines">
-			
-					        </p:tab>
-					        
-					        <p:tab title="Settings">
-			
-					        </p:tab>			        			        			        	        		        		        
-				    	</p:tabView>
-			    	</h:form>
+					<p:tabView id="tbView" dynamic="true" cache="true">
+				        
+				        <p:tab id="explTab" title="Explanation">
+				        	<ui:include src="modules/explanation.xhtml"/>
+				        </p:tab>
+				        
+				        <p:tab title="Commands">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Customers">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Objectives">
+		
+				        </p:tab>	
+				        
+				        <p:tab title="Hints">
+		
+				        </p:tab>	
+				        
+				        <p:tab title="Machines">
+		
+				        </p:tab>
+				        
+				        <p:tab title="Settings">
+		
+				        </p:tab>			        			        			        	        		        		        
+			    	</p:tabView>
         		</p:layoutUnit>
         		
         		<p:layoutUnit position="south">
