@@ -5,74 +5,117 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<link rel="stylesheet" href="../css/admin/style.css"/>
+	<style type="text/css">
+		body {
+			background-color: #f5f5f5;
+		}
+		#missionPnl {
+			border: none; 
+			border-right: 1px solid #ddd
+		}
+		#addMissionBtn {
+			float: right;
+		}
+		#footerBtnPnl {
+			float: right;
+		}
+		.ui-panelgrid .ui-widget-content, .ui-panelgrid .ui-panelgrid-cell {
+			border: none !important;
+		}
+		.clear:after {
+			content: '';
+    		display: block;
+    		clear: both;
+		}
+		.hide-column-names table thead tr {
+    		display: none;
+		}
+	</style>	
 </h:head>
 <h:body>
 	<p:growl id="growlMsgs" showDetail="true"/>
-	<h:form id="Form">
-		<p:layout id="layoutLeft" style="min-width:400px;min-height:200px;">
-		    <p:layoutUnit position="west" resizable="true" size="250" minSize="100" maxSize="300">
-		       <div id="addMission">
-			       <h3>Missions</h3>		       
-			       	<p:commandButton  action="#{mm.addMission()}" icon="ui-icon-circle-plus"/>		       
-		       </div>
-		       <p:orderList id="missionList" value="#{mm.missionList}" var="mis"  controlsLocation="none">			
-					<p:column>
-						<p:outputLabel value="#{mis.name}"/>
-					</p:column>	      
-		       </p:orderList>
-		    </p:layoutUnit>
+	<p:layout fullPage="true">
 		 
-		    <p:layoutUnit position="center">	    			    
-		    		<p:outputLabel value="Name:" for="missionName"/>
-		    		<p:inputText id="missionName" readonly="true" />
-			       
-			        <p:outputLabel for="selectLanguage" value="Language:" />
-			        <p:selectOneMenu id="selectLanguage">
-			            <f:selectItem itemLabel="Select One" itemValue="" />
-			            <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-			            <f:selectItem itemLabel="PS4" itemValue="PS4" />
-			            <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
-			        </p:selectOneMenu>   
-			         		
-			    	<p:tabView id="tbView" dynamic="true" cache="true">
-				        
-				        <p:tab title="Explanation">
-				        	<ui:include src="modules/explanation.xhtml"/>
-				        </p:tab>
-				        
-				        <p:tab title="Commands">
-		
-				        </p:tab>
-				        
-				        <p:tab title="Customers">
-		
-				        </p:tab>
-				        
-				        <p:tab title="Objectives">
-		
-				        </p:tab>	
-				        
-				        <p:tab title="Hints">
-		
-				        </p:tab>	
-				        
-				        <p:tab title="Machines">
-		
-				        </p:tab>
-				        
-				        <p:tab title="Settings">
-		
-				        </p:tab>			        			        			        	        		        		        
-			    	</p:tabView>
-			    	<footer>
-			    		<div id="footerButtons">
-			    			<p:commandButton id="btnTest" value="Test" icon="ui-icon-play"/>
-			    			<p:commandButton id="btnSave" value="Save" icon="ui-icon-circle-arrow-s"/>
-			    		</div>
-			    	</footer>
-		    </p:layoutUnit>
-		</p:layout>	
-	</h:form>
+		<p:layoutUnit id="missionPnl" position="west" size="350" minSize="200" maxSize="400" resizable="true">
+	        <f:facet name="header">
+	        	<div class="clear">
+        			<h:outputText value="Missions" />
+        			<p:commandButton id="addMissionBtn" icon="ui-icon-circle-plus" />
+        		</div>
+    		</f:facet>
+    			
+    		<p:dataTable id="missionDT" value="#{mm.missionList}" var="mission" styleClass="hide-column-names" selectionMode="single">
+    			<p:column>
+    				<h:outputText value="#{mission.name}" />
+    			</p:column>
+    		</p:dataTable>
+	    </p:layoutUnit>
+ 
+    	<p:layoutUnit position="center">
+    	
+        	<p:layout>
+        		<p:layoutUnit position="north">
+        			<p:panelGrid columns="4">
+        			
+        				<h:outputLabel value="Name :" for="missionNameCont" />
+        				<p:inputText id="missionNameCont" value="Some value" disabled="true" />
+        				
+        				<h:outputLabel value="Language :" for="langMenu" />
+        				<p:selectOneMenu id="langMenu" style="width: 100px;">
+            				<f:selectItem itemLabel="en" itemValue="" />
+            				<f:selectItem itemLabel="pt" itemValue="" />
+            				<f:selectItem itemLabel="bg" itemValue="" />
+        				</p:selectOneMenu>
+        				
+        			</p:panelGrid>
+        		</p:layoutUnit>
+        		
+        		<p:layoutUnit position="center">
+        			<h:form id="contentForm">
+						<p:tabView id="tbView" dynamic="true" cache="true">
+					        
+					        <p:tab title="Explanation">
+					        	<ui:include src="modules/explanation.xhtml"/>
+					        </p:tab>
+					        
+					        <p:tab title="Commands">
+			
+					        </p:tab>
+					        
+					        <p:tab title="Customers">
+			
+					        </p:tab>
+					        
+					        <p:tab title="Objectives">
+			
+					        </p:tab>	
+					        
+					        <p:tab title="Hints">
+			
+					        </p:tab>	
+					        
+					        <p:tab title="Machines">
+			
+					        </p:tab>
+					        
+					        <p:tab title="Settings">
+			
+					        </p:tab>			        			        			        	        		        		        
+				    	</p:tabView>
+			    	</h:form>
+        		</p:layoutUnit>
+        		
+        		<p:layoutUnit position="south">
+        			<p:panelGrid id="footerBtnPnl" columns="2">
+        				<p:commandButton value="Test" icon="ui-icon-play"/>
+        				<p:commandButton value="Save" icon="ui-icon-circle-arrow-s"/>
+        			</p:panelGrid>
+       			</p:layoutUnit>
+       			
+        	</p:layout>
+        	
+    	</p:layoutUnit>
+ 
+	</p:layout>
 </h:body>
 </html>

@@ -28,7 +28,13 @@ public class Mission{
 	private int timeLimit;
 	private String name;
 	private int missionCounter = 0;
-	
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	private int timesBefore;	
 /*************************************************************************/
 
@@ -170,7 +176,6 @@ public class Mission{
 	
 	public String getName() {
 		name = name + missionCounter++;
-		System.out.println(name);
 		return name;
 
 	}
@@ -262,4 +267,5 @@ public class Mission{
         }
     }
     // #end
+
 }
