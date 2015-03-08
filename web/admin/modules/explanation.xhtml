@@ -1,30 +1,76 @@
-<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<style type="text/css">
+		.my-lightbulb {
+			display: inline-block;
+			width: 36px;
+			height: 36px;
+			background: transparent url('../images/light-bulb-icon.png') no-repeat local center;
+			background-size: 36px 36px;
+		}
+		.ui-orderlist-list {
+			width: 515px !important;
+			height: 216px !important;
+		}
+		.ui-orderlist-list li.ui-orderlist-item {
+			display: inline-block;
+			border: 1px solid lightgray;
+			width: 150px;
+			height: 200px;
+			margin: 5px;
+		}
+		.ui-orderlist-controls .ui-orderlist-button-move-up > span {
+			background-position: -96px -48px !important;
+		}
+		.ui-orderlist-controls .ui-orderlist-button-move-top > span {
+			background-position: -240px -48px !important;
+		}
+		.ui-orderlist-controls .ui-orderlist-button-move-down > span {
+			background-position: -32px -48px !important;
+		}
+		.ui-orderlist-controls .ui-orderlist-button-move-bottom > span {
+			background-position: -208px -48px !important;
+		}
+	</style>	
+</h:head>
+<h:body>
+	<p:panelGrid columns="2" style="margin-bottom: 50px;">
+		<span class="my-lightbulb"></span>
+		<h:outputText>
+			<f:attribute name="value" value="Here are the explanation pages that are presented as the goal explanation of the mission."/>
+		</h:outputText>
+	</p:panelGrid>
 	
-	<div style="height:700px">
-		<h:form id="explanationForm">
-			<p:growl id="msgs" showDetail="true" />
-			
-			<p:dialog header="Explanation page" widgetVar="dlgExplanation" minHeight="40">
-    			<p:editor value="#{explanationView.page.msg}" />
-    			<p:panelGrid columns="2" style="float: right;">
-       				<p:commandButton value="OK" icon="ui-icon-check" update="@form" actionListener="#{explanationView.addPage}" onclick="PF('addHintDlg').hide()"/>
-       				<p:commandButton value="Cancel" icon="ui-icon-close" onclick="PF('dlgExplanation').hide()" />
-        		</p:panelGrid>
-			</p:dialog>
-			
-			<div style="float: left;">
-				<p:commandButton value="Click to add a new page" onclick="PF('dlgExplanation').show()" style="width: 170px; height: 202px;"/>
-			</div>
-			
-			<p:dashboard id="board" binding="#{explanationView.dashboard}">
-				<p:ajax event="reorder" listener="#{explanationView.handleReorder}" update="msgs" />
-			</p:dashboard>            
-	        <div style="clear: both" />
+	<h:form>
 	
-        </h:form>
-	</div>
-</ui:composition>
+		<div>
+			<p:commandButton id="addPageBtn">
+				<f:attribute name="value" value="Click to add a new page" />
+				<f:attribute name="style" value="width: 156px; height: 217px; float: left; margin: 3px 2px 2px 8px" />
+				<f:attribute name="oncomplete" value="PF('pageDialog').show()" />
+			</p:commandButton>
+		
+			<p:orderList id="animation" value="#{explView.pagesMsg}" var="p" itemLabel="#{p}" itemValue="#{p}" controlsLocation="right">      		
+				<p:column>
+					<h:outputText value="#{p}" escape="false" />
+				</p:column>
+			</p:orderList>
+		</div>
+		
+	    <p:dialog showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40">
+	    	
+	    	<p:editor value="#{explView.page.msg}" />
+   			<p:panelGrid columns="2" style="float: right;">
+    			<p:commandButton value="OK" icon="ui-icon-check" update="@form" actionListener="#{explView.addPage}" oncomplete="PF('pageDialog').hide()"/>
+      			<p:commandButton value="Cancel" icon="ui-icon-close" oncomplete="PF('pageDialog').hide()" />
+       		</p:panelGrid>
+       		
+    	</p:dialog>
+	</h:form>
+</h:body>
+</html>
