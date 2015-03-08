@@ -195,14 +195,14 @@ public class Mission{
 		this.customer = new Customer();
 	}
 	
-	public void addPageExpl() {
+	/*public void addPageExpl() {
 		if (this.page.getId() == 0) {
 			this.page.setId(counterPageId);
 			counterPageId++;
 			pageExplList.add(this.page);
 		}
 		this.page = new Page();
-	}
+	}*/
 	
 	public void deletePage(){
 		pageExplList.remove(page);
