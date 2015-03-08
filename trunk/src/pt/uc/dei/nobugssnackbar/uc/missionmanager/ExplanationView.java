@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.dashboard.Dashboard;
+import org.primefaces.component.panel.Panel;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CloseEvent;
 import org.primefaces.event.DashboardReorderEvent;
-import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
@@ -24,9 +25,10 @@ import pt.uc.dei.nobugssnackbar.model.Page;
 @ViewScoped
 public class ExplanationView implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7318954023298641865L;
 	private Page page = new Page();
 	private ArrayList<Page> pageList = new ArrayList<Page>();
+	private Dashboard dashboard;
 	private DashboardModel model;
 	private int pageIdCount = 1;
 	
@@ -43,67 +45,94 @@ public class ExplanationView implements Serializable {
 		return pageList;
 	}
 	
-    public DashboardModel getModel() {
-        return model;
-    }
+	public Dashboard getDashboard() {
+		return dashboard;
+	}
+	public void setDashboard(Dashboard d) {
+		dashboard = d;
+	}
 	// #end
     
+
 	@PostConstruct
 	public void init() {
+		createDashboard();
+	}
+	
+	public void addPanel() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Application app = fc.getApplication();
+		
+		dashboard.getChildren().clear();
+		model.getColumns().clear();
+		
+		for (int i = 0; i < pageList.size(); i++) {
+			Panel panel = (Panel) app.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+			panel.setId("id" + pageList.get(i).getId());
+
+			panel.setHeader(pageList.get(i).getMsg());
+			
+			dashboard.getChildren().add(panel);
+			DashboardColumn column1 = new DefaultDashboardColumn();
+			column1.addWidget(panel.getId());
+			model.addColumn(column1);
+		}
+	}
+	
+	public void createDashboard() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Application app = fc.getApplication();
+		
+		dashboard = (Dashboard) app.createComponent(fc, "org.primefaces.component.Dashboard", "org.primefaces.component.DashboardRenderer");
 		model = new DefaultDashboardModel();
-        
-		DashboardColumn column2 = new DefaultDashboardColumn();
-        column2.addWidget("test"); 
-        model.addColumn(column2);
+		dashboard.setId("dashboard");
+		dashboard.setModel(model);
+
+    /*<p:ajax event="reorder" listener="#{explanationView.handleReorder}" update="msgs" />
+      <p:panel id="test">
+    	<f:facet name="header">
+    		<h:outputText value="test" />
+    	</f:facet>
+    	<p:panelGrid columns="2">
+        	<p:commandButton icon="ui-icon-pencil" />
+        	<p:commandButton icon="ui-icon-trash" />
+    	</p:panelGrid>
+    </p:panel>*/
 	}
 	
 	public void handleReorder(DashboardReorderEvent event) {
         FacesMessage message = new FacesMessage();
         message.setSeverity(FacesMessage.SEVERITY_INFO);
-        message.setSummary("Reordered: " + event.getWidgetId());
-        message.setDetail("Item index: " + event.getItemIndex() + 
-        		", Column index: " + event.getColumnIndex() + 
+        message.setSummary("Reordered");
+        message.setDetail("Column index: " + event.getColumnIndex() + 
         		", Sender index: " + event.getSenderColumnIndex());
         
-        if (model.getColumn(event.getColumnIndex()).getWidgetCount() > 0) {
-        	model.getColumn(event.getSenderColumnIndex()).addWidget(event.getWidgetId());
-        	model.getColumn(event.getColumnIndex()).removeWidget(event.getWidgetId());
+        if (model.getColumn(event.getColumnIndex()).getWidgetCount() > 1) {
+        	String s = event.getWidgetId();
+        	model.getColumn(event.getColumnIndex()).removeWidget(s);
+        	model.getColumn(event.getSenderColumnIndex()).addWidget(s);
         	
-            RequestContext.getCurrentInstance().update("explanationForm");
+        	s = model.getColumn(event.getColumnIndex()).getWidget(0);
+        	model.getColumn(event.getColumnIndex()).removeWidget(s);
+        	model.getColumn(event.getColumnIndex()).addWidget(model.getColumn(event.getSenderColumnIndex()).getWidget(0));
+        	model.getColumn(event.getSenderColumnIndex()).removeWidget(model.getColumn(event.getColumnIndex()).getWidget(0));
+        	model.getColumn(event.getSenderColumnIndex()).addWidget(s);
+        	        	
+        	RequestContext.getCurrentInstance().update("tbView:explanationForm:board");
         }
-        else {
-            addMessage(message);
-        }
-    }
-     
-    public void handleClose(CloseEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Panel Closed", "Closed panel id:'" + event.getComponent().getId() + "'");
-         
+        
         addMessage(message);
     }
-     
-    public void handleToggle(ToggleEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, event.getComponent().getId() + " toggled", "Status:" + event.getVisibility().name());
-         
-        addMessage(message);
-    }
-     
+ 
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
-	private void addDashboard(Page page) {
-		DashboardColumn column = new DefaultDashboardColumn();
-		column.addWidget(Integer.toString(page.getId()));
-		model.addColumn(column);
-	}
-	
+ 
 	public void addPage() {
 		this.page.setId(pageIdCount++);
 		this.pageList.add(this.page);
-		addDashboard(this.page);
 		this.page = new Page();
 		
-		RequestContext.getCurrentInstance().update("explanationForm");
+		addPanel();
 	}
 }
