@@ -5,7 +5,5 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.model.Page;
 
 public interface PagesProvider {
-
 	List<Page> getPages();
-	
 }

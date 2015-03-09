@@ -6,30 +6,31 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import pt.uc.dei.nobugssnackbar.model.Page;
-import pt.uc.dei.nobugssnackbar.uc.missionmanager.ExplanationView;
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.PagesProvider;
 
-@FacesConverter(forClass=Page.class, value="pageExpla")
+@FacesConverter(forClass=Page.class)
 public class ExplanationPageConverter implements Converter {
 
-	public static ExplanationView ev;
+	private PagesProvider pp;
 	
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String msg) {
-		/*
 		long id = Long.parseLong(msg);
 		
-		for (Page pg:ev.getPages())
+		for (Page pg : pp.getPages())
 			if (pg.getId() == id)
 				return pg;
-		*/
-		return new Page(msg);
+		return null;
 	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object object) {
 		Page pg = (Page) object;
 		
-		return pg.getMsg(); // getId() + "";
+		return pg.getId() + "";
 	}
 
+	public void setProvider(PagesProvider provider) {
+		this.pp = provider;
+	}
 }
