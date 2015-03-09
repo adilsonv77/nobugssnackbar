@@ -55,9 +55,9 @@
 				<f:attribute name="oncomplete" value="PF('pageDialog').show()" />
 			</p:commandButton>
 		
-			<p:orderList id="animation" value="#{explView.pagesMsg}" var="p" itemLabel="#{p}" itemValue="#{p}" controlsLocation="right">      		
+			<p:orderList id="animation" value="#{explView.pages}" var="p" itemValue="#{p}" converter="pageExpla" controlsLocation="right">      		
 				<p:column>
-					<h:outputText value="#{p}" escape="false" />
+					<h:outputText value="#{p.msg}" escape="false" />
 				</p:column>
 			</p:orderList>
 		</div>

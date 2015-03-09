@@ -32,7 +32,7 @@ goog.require('Blockly.ScrollbarPair');
 goog.require('Blockly.Trashcan');
 goog.require('Blockly.Workspace');
 goog.require('Blockly.Xml');
-goog.require('goog.math');
+goog.require('goog.dom');
 goog.require('goog.math.Coordinate');
 
 
@@ -90,14 +90,6 @@ Blockly.WorkspaceSvg.prototype.scrollY = 0;
 Blockly.WorkspaceSvg.prototype.trashcan = null;
 
 /**
- * PID of upcoming firing of a change event.  Used to fire only one event
- * after multiple changes.
- * @type {?number}
- * @private
- */
-Blockly.WorkspaceSvg.prototype.fireChangeEventPid_ = null;
-
-/**
  * This workspace's scrollbars, if they exist.
  * @type {Blockly.ScrollbarPair}
  */
@@ -105,18 +97,26 @@ Blockly.WorkspaceSvg.prototype.scrollbar = null;
 
 /**
  * Create the trash can elements.
+ * @param {?string} backgroundClass Either 'blocklyMainBackground' or
+ *     'blocklyMutatorBackground'.
  * @return {!Element} The workspace's SVG group.
  */
-Blockly.WorkspaceSvg.prototype.createDom = function() {
+Blockly.WorkspaceSvg.prototype.createDom = function(opt_backgroundClass) {
   /*
   <g>
-    [Trashcan may go here]
+    <rect class="blocklyMainBackground" height="100%" width="100%"></rect>
+    [Trashcan and/or flyout may go here]
     <g></g>  // Block canvas
     <g></g>  // Bubble canvas
     [Scrollbars may go here]
   </g>
   */
   this.svgGroup_ = Blockly.createSvgElement('g', {}, null);
+  if (opt_backgroundClass) {
+    this.svgBackground_ = Blockly.createSvgElement('rect',
+        {'height': '100%', 'width': '100%',
+         'class': opt_backgroundClass}, this.svgGroup_);
+  }
   this.svgBlockCanvas_ = Blockly.createSvgElement('g', {}, this.svgGroup_);
   this.svgBubbleCanvas_ = Blockly.createSvgElement('g', {}, this.svgGroup_);
   this.fireChangeEvent();
@@ -160,6 +160,16 @@ Blockly.WorkspaceSvg.prototype.addTrashcan = function() {
 };
 
 /**
+ * Add a flyout.
+ */
+Blockly.WorkspaceSvg.prototype.addFlyout = function() {
+  this.flyout_ = new Blockly.Flyout();
+  this.flyout_.autoClose = false;
+  var svgFlyout = this.flyout_.createDom();
+  this.svgGroup_.insertBefore(svgFlyout, this.svgBlockCanvas_);
+};
+
+/**
  * Get the SVG element that forms the drawing surface.
  * @return {!Element} SVG element.
  */
@@ -173,6 +183,17 @@ Blockly.WorkspaceSvg.prototype.getCanvas = function() {
  */
 Blockly.WorkspaceSvg.prototype.getBubbleCanvas = function() {
   return this.svgBubbleCanvas_;
+};
+
+/**
+ * Translate this workspace to new coordinates.
+ * @param {number} x Horizontal translation.
+ * @param {number} y Vertical translation.
+ */
+Blockly.WorkspaceSvg.prototype.translate = function(x, y) {
+  var translation = 'translate(' + x + ',' + y + ')';
+  this.svgBlockCanvas_.setAttribute('transform', translation);
+  this.svgBubbleCanvas_.setAttribute('transform', translation);
 };
 
 /**
@@ -284,17 +305,8 @@ Blockly.WorkspaceSvg.prototype.highlightBlock = function(id) {
  * 'blocklyWorkspaceChange' on Blockly.mainWorkspace.getCanvas().
  */
 Blockly.WorkspaceSvg.prototype.fireChangeEvent = function() {
-  if (!this.rendered) {
-    return;
-  }
-  if (this.fireChangeEventPid_) {
-    clearTimeout(this.fireChangeEventPid_);
-  }
-  var canvas = this.svgBlockCanvas_;
-  if (canvas) {
-    this.fireChangeEventPid_ = setTimeout(function() {
-        Blockly.fireUiEvent(canvas, 'blocklyWorkspaceChange');
-      }, 0);
+  if (this.rendered && this.svgBlockCanvas_) {
+    Blockly.fireUiEvent(this.svgBlockCanvas_, 'blocklyWorkspaceChange');
   }
 };
 

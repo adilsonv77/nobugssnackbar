@@ -7,6 +7,14 @@ public class Page {
 	private String type;
 	private String msg;
 	
+	public Page() {
+		
+	}
+	
+	public Page(String msg) {
+		this.msg = msg;
+	}
+
 	public int getId() {
 		return id;
 	}

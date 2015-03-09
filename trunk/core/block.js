@@ -34,7 +34,6 @@ goog.require('Blockly.Mutator');
 goog.require('Blockly.Warning');
 goog.require('Blockly.Workspace');
 goog.require('Blockly.Xml');
-goog.require('goog.Timer');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.math.Coordinate');
@@ -273,11 +272,11 @@ Blockly.Block.prototype.getConnections_ = function(all) {
     if (this.outputConnection) {
       myConnections.push(this.outputConnection);
     }
-    if (this.nextConnection) {
-      myConnections.push(this.nextConnection);
-    }
     if (this.previousConnection) {
       myConnections.push(this.previousConnection);
+    }
+    if (this.nextConnection) {
+      myConnections.push(this.nextConnection);
     }
     if (all || !this.collapsed_) {
       for (var i = 0, input; input = this.inputList[i]; i++) {
@@ -296,14 +295,15 @@ Blockly.Block.prototype.getConnections_ = function(all) {
  * @private
  */
 Blockly.Block.prototype.bumpNeighbours_ = function() {
+  if (!this.workspace) {
+    return;  // Deleted block.
+  }
   if (Blockly.dragMode_ != 0) {
-    // Don't bump blocks during a drag.
-    return;
+    return;  // Don't bump blocks during a drag.
   }
   var rootBlock = this.getRootBlock();
   if (rootBlock.isInFlyout) {
-    // Don't move blocks around in a flyout.
-    return;
+    return;  // Don't move blocks around in a flyout.
   }
   // Loop though every connection on this block.
   var myConnections = this.getConnections_(false);
@@ -514,12 +514,35 @@ Blockly.Block.prototype.setEditable = function(editable) {
 
 /**
  * Set whether the connections are hidden (not tracked in a database) or not.
+ * Recursively walk down all child blocks (except collapsed blocks).
  * @param {boolean} hidden True if connections are hidden.
  */
 Blockly.Block.prototype.setConnectionsHidden = function(hidden) {
-  var myConnections = this.getConnections_(true);
-  for (var i = 0, connection; connection = myConnections[i]; i++) {
-    connection.setHidden(hidden);
+  if (!hidden && this.isCollapsed()) {
+    if (this.outputConnection) {
+      this.outputConnection.setHidden(hidden);
+    }
+    if (this.previousConnection) {
+      this.previousConnection.setHidden(hidden);
+    }
+    if (this.nextConnection) {
+      this.nextConnection.setHidden(hidden);
+      var child = this.nextConnection.targetBlock();
+      if (child) {
+        child.setConnectionsHidden(hidden);
+      }
+    }
+  } else {
+    var myConnections = this.getConnections_(true);
+    for (var i = 0, connection; connection = myConnections[i]; i++) {
+      connection.setHidden(hidden);
+      if (connection.isSuperior()) {
+        var child = connection.targetBlock();
+        if (child) {
+          child.setConnectionsHidden(hidden);
+        }
+      }
+    }
   }
 };
 
@@ -785,16 +808,20 @@ Blockly.Block.prototype.setCollapsed = function(collapsed) {
  */
 Blockly.Block.prototype.toString = function(opt_maxLength) {
   var text = [];
-  for (var i = 0, input; input = this.inputList[i]; i++) {
-    for (var j = 0, field; field = input.fieldRow[j]; j++) {
-      text.push(field.getText());
-    }
-    if (input.connection) {
-      var child = input.connection.targetBlock();
-      if (child) {
-        text.push(child.toString());
-      } else {
-        text.push('?');
+  if (this.collapsed_) {
+    text.push(this.getInput('_TEMP_COLLAPSED_INPUT').fieldRow[0].text_);
+  } else {
+    for (var i = 0, input; input = this.inputList[i]; i++) {
+      for (var j = 0, field; field = input.fieldRow[j]; j++) {
+        text.push(field.getText());
+      }
+      if (input.connection) {
+        var child = input.connection.targetBlock();
+        if (child) {
+          text.push(child.toString());
+        } else {
+          text.push('?');
+        }
       }
     }
   }

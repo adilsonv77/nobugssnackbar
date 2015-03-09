@@ -162,11 +162,6 @@ Blockly.onMouseDown_ = function(e) {
 	myIsTargetSvg = false;
 };
 
-Blockly.isRightButton = function(e) {
-	  
-   return e.button == 2;// || e.ctrlKey; // Control-clicking in WebKit on Mac OS X fails to change button to 2.
-};
-
 Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 	var notNull = base.nextConnection.targetConnection != null;
 	for (var i = 0; i < base.childBlocks_.length; i++) {

@@ -298,9 +298,34 @@ public class NoBugsConnection {
 		Connection bdCon = null;
 		try {
 			bdCon = dataSource.getConnection();
-			PreparedStatement ps, psLog;
 			bdCon.setAutoCommit(false);
 			
+			PreparedStatement ps, psLog;
+
+			if (localTimeSpend == -1) {
+				ps = bdCon
+						.prepareStatement("insert into missionsaccomplished "
+								+ "(timespend, achieved, money, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
+				localTimeSpend = timeSpend;
+			} else {
+				ps = bdCon
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ?, executions = ? "
+								+ "where missionid = ? and classid = ? and  userid = ?");
+				localTimeSpend += timeSpend;
+			}
+
+			ps.setLong(1, localTimeSpend);
+			ps.setString(2, (achieved ? "T" : "F"));
+			ps.setInt(3, money);
+			ps.setString(4, answer);
+			ps.setLong(5, execution);
+			ps.setLong(6, idMission);
+			ps.setLong(7, idClazz);
+			ps.setLong(8, user.getId());
+
+			ps.executeUpdate();
+			ps.close();
+
 			psLog = bdCon.prepareStatement("insert into logmissions "
 							+ "(timespend, answer, missionid, classid, userid, execution, moment) values (?, ?, ?, ?, ?, ?, now())");
 			
@@ -314,28 +339,6 @@ public class NoBugsConnection {
 			psLog.executeUpdate(); 
 			psLog.close();
 			
-			if (localTimeSpend == -1) {
-				ps = bdCon
-						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
-			} else {
-				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ?, executions = ? "
-								+ "where missionid = ? and classid = ? and  userid = ?");
-				timeSpend += localTimeSpend;
-			}
-
-			ps.setLong(1, timeSpend);
-			ps.setString(2, (achieved ? "T" : "F"));
-			ps.setInt(3, money);
-			ps.setString(4, answer);
-			ps.setLong(5, execution);
-			ps.setLong(6, idMission);
-			ps.setLong(7, idClazz);
-			ps.setLong(8, user.getId());
-
-			ps.executeUpdate();
-			ps.close();
 			
 			if (achieved) {
 				ps = bdCon
