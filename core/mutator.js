@@ -30,6 +30,8 @@ goog.provide('Blockly.Mutator');
 goog.require('Blockly.Bubble');
 goog.require('Blockly.Icon');
 goog.require('Blockly.WorkspaceSvg');
+goog.require('goog.dom');
+goog.require('goog.Timer');
 
 
 /**
@@ -105,7 +107,6 @@ Blockly.Mutator.prototype.createEditor_ = function() {
   /* Create the editor.  Here's the markup that will be generated:
   <svg>
     <rect class="blocklyMutatorBackground" />
-    [Flyout]
     [Workspace]
   </svg>
   */
@@ -118,10 +119,9 @@ Blockly.Mutator.prototype.createEditor_ = function() {
   var mutator = this;
   this.workspace_ = new Blockly.WorkspaceSvg(
       function() {return mutator.getFlyoutMetrics_();}, null);
-  this.workspace_.flyout_ = new Blockly.Flyout();
-  this.workspace_.flyout_.autoClose = false;
-  this.svgDialog_.appendChild(this.workspace_.flyout_.createDom());
-  this.svgDialog_.appendChild(this.workspace_.createDom());
+  this.svgDialog_.appendChild(
+      this.workspace_.createDom('blocklyMutatorBackground'));
+  this.workspace_.addFlyout();
   return this.svgDialog_;
 };
 
@@ -135,8 +135,10 @@ Blockly.Mutator.prototype.updateEditable = function() {
   } else {
     // Close any mutator bubble.  Icon is not clickable.
     this.setVisible(false);
-    Blockly.removeClass_(/** @type {!Element} */ (this.iconGroup_),
-                         'blocklyIconGroup');
+    if (this.iconGroup_) {
+      Blockly.removeClass_(/** @type {!Element} */ (this.iconGroup_),
+                           'blocklyIconGroup');
+    }
   }
 };
 
@@ -282,6 +284,8 @@ Blockly.Mutator.prototype.workspaceChanged_ = function() {
     this.resizeBubble_();
     // The source block may have changed, notify its workspace.
     this.block_.workspace.fireChangeEvent();
+    goog.Timer.callOnce(
+        this.block_.bumpNeighbours_, Blockly.BUMP_DELAY, this.block_);
   }
 };
 

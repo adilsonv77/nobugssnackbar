@@ -106,12 +106,13 @@ Game.resizeMainWindow = function() {
 	
 	var lu = document.getElementById("loginuser");
     document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
-    document.getElementById("suporte").style.left = document.getElementById("errorLogin").style.left;
+    document.getElementById("suporte").style.left = (document.getElementById("suporte").clientWidth -
+    														document.getElementById("suportespan").offsetWidth - 10) + "px";
 
 };
 
 Game.keyDown = function(evt) {
-	Game.CTRLPRESSED = true;
+	Game.CTRLPRESSED = evt.ctrKey;
 };
 
 Game.keyUp = function(evt) {

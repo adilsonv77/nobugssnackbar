@@ -27,6 +27,8 @@
 goog.provide('Blockly.Toolbox');
 
 goog.require('Blockly.Flyout');
+goog.require('goog.dom');
+goog.require('goog.events');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.html.SafeHtml');
 goog.require('goog.math.Rect');
@@ -80,6 +82,13 @@ Blockly.Toolbox.prototype.width = 0;
  * @private
  */
 Blockly.Toolbox.prototype.selectedOption_ = null;
+
+/**
+ * The SVG group currently selected.
+ * @type {*}
+ * @private
+ */
+Blockly.Toolbox.prototype.lastCategory_ = null;
 
 /**
  * Configuration constants for Closure's tree UI.
@@ -294,11 +303,17 @@ Blockly.Toolbox.TreeControl.prototype.setSelectedItem = function(node) {
     return;
   }
   goog.ui.tree.TreeControl.prototype.setSelectedItem.call(this, node);
+  var toolbox = this.toolbox_;
   if (node && node.blocks && node.blocks.length) {
-    this.toolbox_.flyout_.show(node.blocks);
+    toolbox.flyout_.show(node.blocks);
+    // Scroll the flyout to the top if the category has changed.
+    if (toolbox.lastCategory_ != node.blocks) {
+      toolbox.flyout_.scrollToTop();
+      toolbox.lastCategory_ = node.blocks;
+    }
   } else {
     // Hide the flyout.
-    this.toolbox_.flyout_.hide();
+    toolbox.flyout_.hide();
   }
 };
 

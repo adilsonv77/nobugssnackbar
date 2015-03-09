@@ -29,6 +29,7 @@
 goog.provide('Blockly.Field');
 
 goog.require('goog.asserts');
+goog.require('goog.dom');
 goog.require('goog.math.Size');
 goog.require('goog.userAgent');
 
@@ -127,7 +128,7 @@ Blockly.Field.prototype.dispose = function() {
  * Add or remove the UI indicating if this field is editable or not.
  */
 Blockly.Field.prototype.updateEditable = function() {
-  if (!this.EDITABLE) {
+  if (!this.EDITABLE || !this.sourceBlock_) {
     return;
   }
   if (this.sourceBlock_.isEditable()) {

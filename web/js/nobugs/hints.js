@@ -679,6 +679,11 @@ Hints.hasEmptyInputs  = function() {
 	return Game.hasEmptyInputs(Hints.activeBlock);
 };
 
+Hints.hasEmptyInputsEx = function() {
+	
+	return Game.hasEmptyInputs(Hints.activeBlock);
+};
+
 Hints.fCountVariableName = function(block) {
 	if (block.type === "variables_set") {
 		
