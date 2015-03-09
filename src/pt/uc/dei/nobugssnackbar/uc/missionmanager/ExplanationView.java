@@ -43,10 +43,6 @@ public class ExplanationView {
         pages = new ArrayList<>();
     }
 	
-	public void testMethod(Page p) {
-		System.out.println(p.getMsg());
-	}
-	
 	public void addPage() {
 		page.setId(pageIdCount++);
 		pages.add(page);
