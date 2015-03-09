@@ -166,41 +166,22 @@ Hints.traverseHints = function(hint, error) {
 
 	  Hints.formatCategory(h);
 	  
-	  h.content = hint.innerHTML || hint.textContent;
+	  //h.content = hint.innerHTML || hint.textContent;
+	  h.content = hint.textContent;
 	  
 	  if (h.content.length == 0)
 		  h.content = null;
 	  
+	  h.content = changeImgHex(h.content); // utils
+	  /*
 	  h.imghex = hint.getElementsByTagName("imghex"); 
 	  if ((h.imghex != null || h.imghex != undefined) && h.imghex.length > 0) {
 		  convertImgHex(h.imghex, h, function(h, hexId, hexHex, img){
 			  h.content = 
 			    h.content.replace("<imghex id=\"" + hexId + "\"><![CDATA["+ hexHex +"]]></imghex>", img);
 		  });
-		  /*
-		  var imgsHexId = [];
-		  var imgsHexH = [];
-		  for (var i=0; i<h.imghex.length; i++) {
-			  imgsHexId.push(h.imghex[i].getAttribute("id"));
-			  imgsHexH.push(h.imghex[i].textContent);
-		  }
-		  
-		  UserControl.existsImageKey(imgsHexId, {async:false, callback:function(b){
-			  
-			  for (var i=0; i<b.length; i++) {
-				  if (!b[i]) {
-					  
-					  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
-				  }
-				  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\"/>";
-				  h.content = 
-					  h.content.replace("<imghex id=\"" + imgsHexId[i] + "\"><![CDATA["+imgsHexH[i]+"]]></imghex>", imgOrig);
-			  }
-
-		  }});
-		  */
 	  }
-	  
+	  */
 	  h.time = hint.getAttribute("time");
 	  if (h.time == null )
 		  h.time = Hints.TIMEINTERVAL;

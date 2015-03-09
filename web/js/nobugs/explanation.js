@@ -65,13 +65,8 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 
 	var containerText = children[nrPage].innerHTML || children[nrPage].textContent;
 	
-	var imgHex = children[nrPage].getElementsByTagName("imghex");
-	convertImgHex(imgHex, container, function(container, hexId, hexHex, img) {
-		containerText = containerText.replace("<imghex id=\"" + hexId + "\">"+ hexHex +"</imghex>", img);
-	});
-	
-	container.innerHTML = containerText;
-	
+	container.innerHTML = changeImgHex(containerText); // utils
+
 	var buttons = document.getElementById('dialogInfoButton');
 	
 	var justOnePage = Explanation.firstStatement == Explanation.lastStatement;
