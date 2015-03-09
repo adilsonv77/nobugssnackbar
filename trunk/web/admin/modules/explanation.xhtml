@@ -24,6 +24,13 @@
 			height: 200px;
 			margin: 5px;
 		}
+		.ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
+			display: block;
+			width: 148px;
+			height: 198px;
+			word-break: break-all;
+			text-decoration: none;
+		}
 		.ui-orderlist-controls .ui-orderlist-button-move-up > span {
 			background-position: -96px -48px !important;
 		}
@@ -47,7 +54,8 @@
 	</p:panelGrid>
 	
 	<h:form>
-	
+		<p:growl id="msgs" showDetail="true" />
+		
 		<div>
 			<p:commandButton id="addPageBtn">
 				<f:attribute name="value" value="Click to add a new page" />
@@ -57,7 +65,10 @@
 		
 			<p:orderList id="animation" value="#{explView.pages}" var="p" itemValue="#{p}" converter="pageExpla" controlsLocation="right">      		
 				<p:column>
-					<h:outputText value="#{p.msg}" escape="false" />
+					<p:commandLink oncomplete="PF('pageDialog').show()" action="#{explView.testMethod}">
+						<f:param name="action" value="#{p}" />
+						<h:outputText id="s12" value="#{p.msg}" escape="false"/>
+					</p:commandLink>
 				</p:column>
 			</p:orderList>
 		</div>

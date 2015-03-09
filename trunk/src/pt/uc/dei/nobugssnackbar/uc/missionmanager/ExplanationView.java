@@ -15,16 +15,7 @@ public class ExplanationView {
 	private int pageIdCount;
     private Page page;
     private ArrayList<Page> pages;
-    //private ArrayList<String> pagesMsg;
-    /*
-	public ArrayList<String> getPagesMsg() {
-		return pagesMsg;
-	}
-
-	public void setPagesMsg(ArrayList<String> pagesMsg) {
-		this.pagesMsg = pagesMsg;
-	}
-    */
+    
     public ExplanationView() {
 		ExplanationPageConverter.ev = this;
 	}
@@ -50,12 +41,14 @@ public class ExplanationView {
 		pageIdCount = 1;
     	page = new Page();
         pages = new ArrayList<>();
-        //pagesMsg = new ArrayList<String>();
     }
+	
+	public void testMethod(Page p) {
+		System.out.println(p.getMsg());
+	}
 	
 	public void addPage() {
 		page.setId(pageIdCount++);
-		//pagesMsg.add(page.getMsg());
 		pages.add(page);
 		page = new Page();
 	}
