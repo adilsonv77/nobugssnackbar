@@ -161,9 +161,7 @@ Explanation.finishStatement = function() {
 };
 
 Explanation.parseUserLogged = function(explanations) {
-	// because a strange behaviour on safari, if process this method twice or more, the second time 
-	//    it transforms the signal tags (<>) into UTF-8.
-	// It was a "good" fault, because now I improve the speed of this proccess 
+	// if it was transformed before, dont need transform again
 	if (explanations.getAttribute("done")) {
 		return explanations;
 	}
