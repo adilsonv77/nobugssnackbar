@@ -253,7 +253,33 @@ Blockly.BlockSvg.prototype.select = function() {
 	      	}
 	    	
 	    	// put together the blocks that are connected... Afterwards, when they are copying, the elements get together too
-	    	var found = false;
+	  		var found = false;
+	    	for (var i = 0; i < Game.blocksSelected.length; i++) {
+	    		
+	    		var block = Game.blocksSelected[i];
+	    		var tb = null;
+	    		if (i < Game.blocksSelected.length - 1)
+	    			tb = Game.blocksSelected[i+1];
+	    		
+	    		while (block != null && block.nextConnection != null && block != tb) {
+	    			var targetBlock = block.nextConnection.targetConnection;
+	        		if (targetBlock != null && targetBlock.sourceBlock_.id === this.id) {
+	        			Game.blocksSelected.splice(i+1, 0, this);
+	        			found = true;
+	        			break;
+	        		}
+	        		if (targetBlock == null)
+	        			block = null;
+	        		else
+	        			block = targetBlock.sourceBlock_;
+	    		}
+	    		if (found)
+	    			break;
+	    		
+	    	}
+
+	  		/*
+	  		var found = false;
 	    	for (var i = 0; i < Game.blocksSelected.length; i++) {
 	    		var block = Game.blocksSelected[i];
 	    		if (block.nextConnection != null) {
@@ -273,9 +299,9 @@ Blockly.BlockSvg.prototype.select = function() {
 	        		}
 	    		}
 	    	}
-	    	
+	    	*/
 	    	if (!found)
-	    		Game.blocksSelected.push(this);
+	    		Game.blocksSelected.splice(0,0,this);
 	    }
 	    
 	}
