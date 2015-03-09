@@ -66,7 +66,7 @@
 			<p:orderList id="animation" value="#{explView.pages}" var="p" itemValue="#{p}" converter="pageExpla" controlsLocation="right">      		
 				<p:column>
 					<p:commandLink oncomplete="PF('pageDialog').show()" action="#{explView.testMethod}">
-						<f:param name="action" value="#{p}" />
+						<f:setPropertyActionListener value="#{p}" target = "#{explView.page}" />
 						<h:outputText id="s12" value="#{p.msg}" escape="false"/>
 					</p:commandLink>
 				</p:column>

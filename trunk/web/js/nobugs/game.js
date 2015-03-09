@@ -112,7 +112,7 @@ Game.resizeMainWindow = function() {
 };
 
 Game.keyDown = function(evt) {
-	Game.CTRLPRESSED = evt.ctrKey;
+	Game.CTRLPRESSED = evt.ctrlKey;
 };
 
 Game.keyUp = function(evt) {
