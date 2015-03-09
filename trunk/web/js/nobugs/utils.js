@@ -76,7 +76,7 @@ function innerXML ( node ) {
 	return sinnerXML;
 }
 
-function convertImgHex(imgHex, content, fConvert) {
+function convertImgHex(imgHex, fConvert) {
 
 	  var imgsHexId = [];
 	  var imgsHexH = [];
@@ -93,13 +93,38 @@ function convertImgHex(imgHex, content, fConvert) {
 				  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
 			  }
 			  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\"/>";
-			  fConvert(content, imgsHexId[i], imgsHexH[i], imgOrig);
+			  fConvert(imgsHexId[i], imgsHexH[i], imgOrig);
 		  }
 
 	  }});
 
 }
 
+function changeImgHex(containerText) {
+	if (containerText == null)
+		return containerText;
+	
+	// this is because in Safari containerText is only a String ;(
+	var init = containerText.indexOf("<imghex id=");
+	if (init != -1) {
+
+		var finish = containerText.indexOf("</imghex>")+9;
+		
+		var imgHex = containerText.substring(init, finish);
+		
+		var oParser = new DOMParser();
+		var dom = oParser.parseFromString(imgHex, 'text/xml');
+		
+		imgHex = [dom.firstChild];
+		
+		convertImgHex(imgHex, function(hexId, hexHex, img) {
+			containerText = containerText.replace("<imghex id=\"" + hexId + "\">"+ hexHex +"</imghex>", img);
+		});
+		
+	}
+	
+	return containerText;
+}
 function addZeros(number, digits) {
 
 	number = number + "";
@@ -122,3 +147,4 @@ function generateImages(number, digits) {
 }
 
 
+	
