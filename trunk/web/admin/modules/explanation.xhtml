@@ -53,7 +53,7 @@
 		</h:outputText>
 	</p:panelGrid>
 	
-	<h:form>
+	<h:form id="explForm">
 		<p:growl id="msgs" showDetail="true" />
 		
 		<div>
@@ -65,15 +65,15 @@
 		
 			<p:orderList id="animation" value="#{explView.pages}" var="p" itemValue="#{p}" converter="pageExpla" controlsLocation="right">      		
 				<p:column>
-					<p:commandLink oncomplete="PF('pageDialog').show()" action="#{explView.testMethod}">
-						<f:setPropertyActionListener value="#{p}" target = "#{explView.page}" />
-						<h:outputText id="s12" value="#{p.msg}" escape="false"/>
+					<p:commandLink update=":tbView:explForm:explPageDlg" oncomplete="PF('pageDialog').show()">
+						<f:setPropertyActionListener value="#{p}" target="#{explView.page}" />
+						<h:outputText value="#{p.msg}" escape="false" />
 					</p:commandLink>
 				</p:column>
 			</p:orderList>
 		</div>
 		
-	    <p:dialog showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40">
+	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40">
 	    	
 	    	<p:editor value="#{explView.page.msg}" />
    			<p:panelGrid columns="2" style="float: right;">
