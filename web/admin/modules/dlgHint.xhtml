@@ -30,9 +30,10 @@
 	    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
 	        
 		<p:commandButton value="OK" id="btnAddEditHint" actionListener="#{hintView.addEditHint}" 
-		oncomplete="PF('hintDialog').hide()" update="@form"/>  
+		oncomplete="PF('hintDialog').hide()" update=":tbView:formDTT,:tbView:formDTE"/>  
 		
 		<p:commandButton value="Cancel" id="btnCancelHint" actionListener="#{hintView.newHint}" 
-		oncomplete="PF('hintDialog').hide()" update="@form"/> 
-	</p:dialog>
+		oncomplete="PF('hintDialog').hide()"/> 
+	</p:dialog>	
+	
 </ui:composition>

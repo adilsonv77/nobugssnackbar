@@ -6,16 +6,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 <h:body>
-	<h:form>
-		<p:panelGrid columns="2" style="margin-bottom: 50px;">
-			<span class="my-lightbulb"></span>
-			<h:outputText value="Here are the explanation pages that are presented as the goal explanation of the mission."/>
 	
-			<p:commandButton value="Add from database" id="btnAddFromDB"/>
-			<p:commandButton value="Add blank" id="btnAddBlank"  oncomplete="PF('hintDialog').show()" 
-				actionListener="#{hintView.setAdd(true)}" update="@form"/>
-		</p:panelGrid>
+	<p:panelGrid columns="2" style="margin-bottom: 50px;">
+		<span class="my-lightbulb"></span>
+		<h:outputText value="Here are the explanation pages that are presented as the goal explanation of the mission."/>
+
+		<p:commandButton value="Add from database" id="btnAddFromDB"/>
+		<p:commandButton value="Add blank" id="btnAddBlank"  oncomplete="PF('hintDialog').show()" 
+			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints"
+		/>
+	</p:panelGrid>
 		
+	<h:form id="formDTT">
 		<p:outputLabel for="dtTips" value="Tips:"/>
 		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}">
 		    <p:column headerText="Category">
@@ -34,19 +36,21 @@
 		        <h:outputText value="#{hint.condition}" />
 		    </p:column>
 		    <p:column headerText="Edit">
+		    
 		        <p:commandButton value="Edit" id="btnTipsHint"  oncomplete="PF('hintDialog').show()" 
-		        actionListener="#{hintView.setAdd(false)}" update="@form" >
+		        actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="Delete" update="@form" actionListener="#{hintView.deleteHint}" >
-		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
-		        </p:commandButton>		        
+		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(hint)}" update=":tbView:formDTT"/>
+		        	        
 		    </p:column>		    
 		</p:dataTable>	
-		
+	</h:form>
+	
+	<h:form id="formDTE">
 		<p:outputLabel for="dtErorrs" value="Errors:"/>
-		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableColumns="true" draggableRows="true">
+		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}">
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
 		    <p:column headerText="Category">
 		        <h:outputText value="#{error.category}" />
@@ -65,49 +69,24 @@
 		    </p:column>
 		    <p:column headerText="Edit">
 		        <p:commandButton value="Edit" oncomplete="PF('hintDialog').show()" 
-		        	action="#{hintView.editAdd(false)}" update="@form" >
+		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="Delete" update="@form" action="#{hintView.deleteHint}">
-		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
-		        </p:commandButton>		        
+		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>		        
 		    </p:column>		    
 		</p:dataTable>		
-	    
-		<p:dialog showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
-			<p:panelGrid columns="2">
-					
-			    <p:outputLabel for="hintType" value="Hint type:"/>
-				<p:selectOneRadio id="hintType" value="#{hintView.hint.type}">
-				    <f:selectItem itemLabel="Tip" itemValue="false"/>
-				    <f:selectItem itemLabel="Error" itemValue="true" />
-				</p:selectOneRadio>
-			        
-			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
-			    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()"/>
-			    
-			    <p:outputLabel for="hintTime" value="Time"/>
-			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
-			    
-			    <p:outputLabel for="hintCondition" value="Condition:"/>
-			    <p:inputText id="hintCondition" value="#{hintView.hint.condition}"/>		        
-		   
-			</p:panelGrid>
-		        
-		    <p:outputLabel for="hintText" value="Text explanation:"/>
-		    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
-		        
-			<p:commandButton value="OK" id="btnAddEditHint" actionListener="#{hintView.addEditHint}" 
-			oncomplete="PF('hintDialog').hide()" update="@form"/>  
-			
-			<p:commandButton value="Cancel" id="btnCancelHint" actionListener="#{hintView.newHint}" 
-			oncomplete="PF('hintDialog').hide()" update="@form"/> 
-		</p:dialog>			
-    	
+	</h:form>
+	
+	<h:form id="formDlgHints">
+		<ui:include src="dlgHint.xhtml"/>		
+    </h:form>	
+    
+    <h:form id="formDlgCHCD">
 	    <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
 	 	header="Choose Hint Category" minHeight="40">	    	
-			<p:commandButton value="Choose category" style="width:100px; height:125px; display: inline" oncomplete="PF('chooseCategoryDialog').show()"/>
+			<p:comman
+			dButton value="Choose category" style="width:100px; height:125px; display: inline" oncomplete="PF('chooseCategoryDialog').show()"/>
 		   		
 		   	<p:dataGrid var="car" value="#{hintView.tipsHints}" columns="5" layout="grid" rows="1"  id="cars">
 				<p:panel header="AAA" style="text-align:center;" >
@@ -119,18 +98,7 @@
 			
 			<p:commandButton value="Cancel" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>
 		</p:dialog>  			
-
-		<p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseCategoryDialog" closable="false"
-	    	header="Choose Category" minHeight="40">
-		    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-		        <p:outputLabel for="city" value="City:" />
-		        <p:selectOneRadio id="city" value="#{hintView.hint}"  layout="grid" columns="3">
-		            <f:selectItems value="#{hintView.tipsHints}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
-		        </p:selectOneRadio>
-		    </h:panelGrid>	
-			<p:commandButton value="Cancel" id="btnCancelChooseCat" oncomplete="PF('chooseCategoryDialog').hide()"/> 
-		</p:dialog>    			    			
-   	
 	</h:form>
+	
 </h:body>
 </html>

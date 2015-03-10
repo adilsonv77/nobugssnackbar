@@ -74,7 +74,7 @@ public class HintView {
 		hint = new Hint();
 	}
 	
-	public void deleteHint(){
+	public void deleteHint(Hint hint){
 		if(hint.getType()){
 			errorsHints.remove(hint);
 		}
