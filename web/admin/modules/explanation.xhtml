@@ -4,15 +4,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<!-- You have to remove <h:head> if this page (tab) is
+	 not at the first position in tabView in index.xhtml
+-->
+
 <h:head>
 	<style type="text/css">
-		.my-lightbulb {
-			display: inline-block;
-			width: 36px;
-			height: 36px;
-			background: transparent url('../images/light-bulb-icon.png') no-repeat local center;
-			background-size: 36px 36px;
-		}
 		.ui-orderlist-list {
 			width: 515px !important;
 			height: 216px !important;
@@ -114,5 +112,5 @@
  			</p:panelGrid>
  		</p:dialog>
 	</h:form>
-</h:body>
+ </h:body>
 </html>

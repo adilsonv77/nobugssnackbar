@@ -9,6 +9,13 @@
 		body {
 			background-color: #f5f5f5;
 		}
+		.my-lightbulb {
+			display: inline-block;
+			width: 36px;
+			height: 36px;
+			background: transparent url('../images/light-bulb-icon.png') no-repeat local center;
+			background-size: 36px 36px;
+		}
 		#tbView {
 			border-bottom: 0 !important;
 		}
@@ -65,23 +72,23 @@
         				
         				<h:outputLabel value="Language :" for="langMenu" />
         				<p:selectOneMenu id="langMenu" style="width: 100px;">
-            				<f:selectItem itemLabel="en" itemValue="" />
-            				<f:selectItem itemLabel="pt" itemValue="" />
-            				<f:selectItem itemLabel="bg" itemValue="" />
+            				<f:selectItem itemLabel="en" itemValue="en" />
+            				<f:selectItem itemLabel="pt" itemValue="pt" />
+            				<f:selectItem itemLabel="bg" itemValue="bg" />
         				</p:selectOneMenu>
         				
         			</p:panelGrid>
         		</p:layoutUnit>
         		
         		<p:layoutUnit position="center">
-					<p:tabView id="tbView" dynamic="true" cache="true">
+					<p:tabView id="tbView" dynamic="true" effect="fade" effectDuration="fast">
 				        
 				        <p:tab id="explTab" title="Explanation">
 				        	<ui:include src="modules/explanation.xhtml"/>
 				        </p:tab>
 				        
 				        <p:tab title="Commands">
-		
+							 <ui:include src="modules/commands.xhtml"/>
 				        </p:tab>
 				        
 				        <p:tab title="Customers">
