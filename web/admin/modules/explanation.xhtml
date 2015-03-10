@@ -93,10 +93,8 @@
 			</p:orderList>
 		</div>
 			
-	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40" closable="false">
-	    	<p:watermark for="editorPage" value="Type something..." />
-	    	
-	    	<p:editor id="editorPage" value="#{explView.page.msg}">
+	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40" closable="false">	    	
+	    	<p:editor value="#{explView.page.msg}">
 	    		<f:attribute name="controls" value="#{explView.editorControls}" />
 	    	</p:editor>
 
