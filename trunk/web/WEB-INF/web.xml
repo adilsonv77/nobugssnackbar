@@ -68,25 +68,43 @@
 			pt.uc.dei.nobugssnackbar.control.Image64,
 			pt.uc.dei.nobugssnackbar.control.QuestionnaireControl
 			</param-value>
-		</init-param>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>hintImage</servlet-name>
-		<servlet-class>pt.uc.dei.nobugssnackbar.servlets.HintImage</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>hintImage</servlet-name>
-		<url-pattern>/hintimg/*</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>dwr-invoker</servlet-name>
-		<url-pattern>/dwr/*</url-pattern>
-	</servlet-mapping>
+    </init-param>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <servlet-name>hintImage</servlet-name>
+    <servlet-class>pt.uc.dei.nobugssnackbar.servlets.HintImage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hintImage</servlet-name>
+    <url-pattern>/hintimg/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>dwr-invoker</servlet-name>
+    <url-pattern>/dwr/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+    <param-value>resources.application</param-value>
+  </context-param>
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
 </web-app>
