@@ -43,7 +43,9 @@
 		<!-- <errors> only happens after running a program, and some goals aren't achieved  --> 
 		<errors>
 			<hint category="LastError" condition="Game.lastErrorData.iderror == 'Error.thereIsntCustomer'">
+			<![CDATA[
 			Observe que o seu cozinheiro chegou antes do cliente. Que tal fazer o seu cozinheiro gastar algum tempo antes de alcan&#231;ar esse s&#237;tio ?
+			]]>
 			</hint>
 			
 		</errors>

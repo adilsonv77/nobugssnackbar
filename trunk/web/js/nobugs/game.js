@@ -409,7 +409,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.slider.svg.style.visibility = "hidden";
   
   if (Game.speedSlider == undefined)
-	  Game.speedSlider = new Slider(10, 35, 130, Game.slider.svg);
+	  Game.speedSlider = new Slider(10, 20, 130, Game.slider.svg);
 
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
@@ -1578,6 +1578,7 @@ Game.nextStep = function() {
 				
 			}
 		} catch (ex) {
+			  console.log(ex);
 			// when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
 			  Game.animate();
 			  

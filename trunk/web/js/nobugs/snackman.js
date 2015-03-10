@@ -984,7 +984,7 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 			
 			if (timeBonus > 0) {
 				
-				var minutes = Math.trunc((timeSpent/60));
+				var minutes = Math.floor((timeSpent/60));
 				var seconds = timeSpent - (minutes*60);
 				
 				ret.bonus.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
