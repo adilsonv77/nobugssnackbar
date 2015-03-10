@@ -1,0 +1,38 @@
+
+<ui:composition  xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
+		<p:panelGrid columns="2">
+				
+		    <p:outputLabel for="hintType" value="Hint type:"/>
+			<p:selectOneRadio id="hintType" value="#{hintView.hint.type}">
+			    <f:selectItem itemLabel="Tip" itemValue="false"/>
+			    <f:selectItem itemLabel="Error" itemValue="true" />
+			</p:selectOneRadio>
+		        
+		    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
+		    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()"/>
+		    
+		    <p:outputLabel for="hintTime" value="Time"/>
+		    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
+		    
+		    <p:outputLabel for="hintCondition" value="Condition:"/>
+		    <p:inputText id="hintCondition" value="#{hintView.hint.condition}"/>		        
+	   
+		</p:panelGrid>
+	        
+	    <p:outputLabel for="hintText" value="Text explanation:"/>
+	    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
+	        
+		<p:commandButton value="OK" id="btnAddEditHint" actionListener="#{hintView.addEditHint}" 
+		oncomplete="PF('hintDialog').hide()" update="@form"/>  
+		
+		<p:commandButton value="Cancel" id="btnCancelHint" actionListener="#{hintView.newHint}" 
+		oncomplete="PF('hintDialog').hide()" update="@form"/> 
+	</p:dialog>
+</ui:composition>

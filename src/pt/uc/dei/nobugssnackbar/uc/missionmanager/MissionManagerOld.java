@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -15,16 +14,16 @@ import pt.uc.dei.nobugssnackbar.model.Mission;
 
 
 
-@ManagedBean(name="mm")
+@ManagedBean(name="mmOld")
 @SessionScoped
-public class MissionManager{
+public class MissionManagerOld{
 
-	// #region private variables
+	// #region Class private variables
 	private Mission mission = new Mission();
 	private ArrayList<Mission> missionList = new ArrayList<Mission>();
 	// #end
 	
-	// #region getters and setters
+	// #region Class getters and setters
 	public Mission getMission() {
 		return mission;
 	}
@@ -40,8 +39,6 @@ public class MissionManager{
 	// #end
 	
 	// #region user defined methods
-	
-	
     public void onSelect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
