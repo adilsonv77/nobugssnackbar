@@ -26,7 +26,7 @@ public class MissionDao {
 			Statement stm = bdCon.createStatement();
 			ResultSet rs = stm.executeQuery("select missionname from missions");
 			while (rs.next()) {
-				l.add(new Mission(rs.getString("missionname")));
+				//l.add(new Mission(rs.getString("missionname")));
 			}
 			stm.close();
 
