@@ -94,10 +94,12 @@
 		</div>
 			
 	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40" closable="false">
+	    	<p:watermark for="editorPage" value="Type something..." />
 	    	
-	    	<p:editor value="#{explView.page.msg}">
+	    	<p:editor id="editorPage" value="#{explView.page.msg}">
 	    		<f:attribute name="controls" value="#{explView.editorControls}" />
 	    	</p:editor>
+
    			<p:panelGrid columns="2" style="float: right;">
     			<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:explForm:opList, :tbView:explForm:explPageDlg" actionListener="#{explView.addPage}"/>
       			<p:commandButton value="Cancel" icon="ui-icon-close" update=":tbView:explForm:explPageDlg" actionListener="#{explView.resetPage}" />
