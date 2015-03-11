@@ -5,7 +5,7 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
-public class HintCategoryJdbcDao implements HintCategoryDao {
+public class HintCategoryJdbcDao extends JdbcDao implements HintCategoryDao {
 
 	@Override
 	public HintCategory read(long key) throws Exception {

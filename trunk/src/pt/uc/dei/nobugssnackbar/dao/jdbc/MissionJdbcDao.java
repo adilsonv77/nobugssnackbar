@@ -2,43 +2,17 @@ package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.model.Mission;
 
-public class MissionJdbcDao implements MissionDao {
+public class MissionJdbcDao extends JdbcDao implements MissionDao {
 
-	private Connection getConnection() throws SQLException {
-		return NoBugsConnection.getConnection().getDataSource().getConnection();
-	}
-
-	public List<Mission> list() throws SQLException {
-
-		List<Mission> l = new ArrayList<>();
-		Connection bdCon = null;
-		try {
-			bdCon = getConnection();
-
-			Statement stm = bdCon.createStatement();
-			ResultSet rs = stm.executeQuery("select missionname from missions");
-			while (rs.next()) {
-				//l.add(new Mission(rs.getString("missionname")));
-			}
-			stm.close();
-
-		} finally {
-			if (bdCon != null)
-				try {
-					bdCon.close();
-				} catch (SQLException ignore) {
-				}
-		}
-		return l;
+	public List<Mission> list() throws Exception {
+		
+		return listObjects("select missionname from missions", Mission.class);
 
 	}
 	

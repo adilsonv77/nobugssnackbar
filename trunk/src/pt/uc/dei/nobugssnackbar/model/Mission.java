@@ -18,6 +18,12 @@ import pt.uc.dei.nobugssnackbar.model.mission.XmlTag;
 
 public class Mission{
 	
+	public Mission() { }
+	
+	public Mission(String name) {
+		this.name = name;
+	}
+	
 	// #region Class private variables
 	private boolean open;
 	private int timeLimit;
