@@ -207,6 +207,8 @@
 	    		<include name="index.html" />
 	    		<include name="error.html" />
 	    		<include name="quest.html" />
+
+	    		<include name="jsp/**/*.*" />
 	        </fileset>
 	        <classes dir="${build.home}" >
 	            <include name="**/*.class" />
