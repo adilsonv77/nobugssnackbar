@@ -3,7 +3,7 @@ package nobugssnackbar;
 import java.util.Random;
 
 import pt.uc.dei.nobugssnackbar.control.UserControl;
-import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class GenerateUsers {
 

@@ -1,5 +1,7 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -12,7 +14,9 @@ import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
 @ManagedBean(name="hcHelper")
 @ViewScoped
-public class HintCategoryHelperView {
+public class HintCategoryHelperView implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{hintView}")
 	private HintView hintView;

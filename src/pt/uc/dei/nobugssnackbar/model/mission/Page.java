@@ -1,6 +1,7 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
-public class Page {
+public class Page implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String dir;
 	private String origin;

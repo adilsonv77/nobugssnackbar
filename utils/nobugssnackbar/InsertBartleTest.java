@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 
 import pt.uc.dei.nobugssnackbar.control.BartleTest;
-import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class InsertBartleTest {
 

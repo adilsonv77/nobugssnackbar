@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.control.BartleTest;
-import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class TestBartle {
 

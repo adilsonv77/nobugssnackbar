@@ -1,15 +1,19 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager.converter;
 
+import java.io.Serializable;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import pt.uc.dei.nobugssnackbar.model.Page;
+import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.PagesProvider;
 
 @FacesConverter(forClass=Page.class)
-public class ExplanationPageConverter implements Converter {
+public class ExplanationPageConverter implements Converter, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private PagesProvider pp;
 	

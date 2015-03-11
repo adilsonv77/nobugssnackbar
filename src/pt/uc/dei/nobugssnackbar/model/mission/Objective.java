@@ -1,6 +1,7 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
-public class Objective {
+public class Objective implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private int pos;
 	private String place;
 	private boolean distinct;

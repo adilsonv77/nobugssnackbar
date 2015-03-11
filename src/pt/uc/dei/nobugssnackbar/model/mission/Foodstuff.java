@@ -1,8 +1,9 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.math.BigDecimal;
 
-public class Foodstuff {
+public class Foodstuff implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private int qt;
 	private BigDecimal price;
 	private String name;

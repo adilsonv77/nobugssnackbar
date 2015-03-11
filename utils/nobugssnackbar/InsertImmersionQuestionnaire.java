@@ -2,7 +2,7 @@ package nobugssnackbar;
 
 import java.sql.SQLException;
 
-import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class InsertImmersionQuestionnaire {
 

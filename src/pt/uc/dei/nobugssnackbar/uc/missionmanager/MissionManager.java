@@ -4,21 +4,31 @@ import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.model.Mission;
-
-
 
 @ManagedBean(name="mm")
 @SessionScoped
 public class MissionManager{
 
+	@ManagedProperty(value="#{factoryDao.missionDao}")
+	private MissionDao missionDao;
+	
+	public MissionDao getMissionDao() {
+		return missionDao;
+	}
+	
+	public void setMissionDao(MissionDao missionDao) {
+		this.missionDao = missionDao;
+	}
+	
 	// #region private variables
 	private Mission mission = new Mission();
 	private ArrayList<Mission> missionList = new ArrayList<Mission>();

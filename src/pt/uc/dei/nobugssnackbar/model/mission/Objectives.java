@@ -1,8 +1,9 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.util.ArrayList;
 
-public class Objectives {
+public class Objectives  implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private Objective objectiveItem = new Objective();
 	private ArrayList<Objective> objectiveList = new ArrayList<Objective>();
 	private boolean ordered;

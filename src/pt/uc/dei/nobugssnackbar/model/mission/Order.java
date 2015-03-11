@@ -1,8 +1,9 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.util.ArrayList;
 
-public class Order {
+public class Order implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Food> foods = new ArrayList<Food>();
 	private ArrayList<Drink> drinks = new ArrayList<Drink>();
 	private Food food = new Food();
