@@ -6,9 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 
 import org.primefaces.event.ReorderEvent;
 
@@ -18,7 +16,7 @@ import pt.uc.dei.nobugssnackbar.model.Hint;
 
 @ManagedBean(name="hintView")
 @SessionScoped
-@ViewScoped
+// only one scope !!! @ViewScoped
 public class HintView {
 
 	private boolean add = false;
@@ -92,5 +90,8 @@ public class HintView {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+	public String getSomeText() {
+		return "Teste";
+	}
 	
 }

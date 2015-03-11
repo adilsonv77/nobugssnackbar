@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog widgetVar="hintCategoryDialog">
+		<pe:dynaForm id="dynaForm" value="#{hcHelper.model}" var="data">
+			<pe:dynaFormControl type="input" for="txt">
+				<p:inputText id="txt" value="#{data.value}" required="#{data.required}" />
+			</pe:dynaFormControl>
+		</pe:dynaForm>
+	</p:dialog>
+
+</ui:composition>

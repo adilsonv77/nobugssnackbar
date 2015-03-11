@@ -24,8 +24,17 @@
 	-->
 	
 	<context-param>
-	 <param-name>primefaces.THEME</param-name>
- 	 <param-value>bootstrap</param-value>
+	 	<param-name>primefaces.THEME</param-name>
+ 	 	<param-value>bootstrap</param-value>
+	</context-param>
+    <context-param>
+    	<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    	<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    	<param-value>client</param-value>
+  	</context-param>
+	<context-param>
+	    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+	    <param-value>resources.application</param-value>
 	</context-param>
 
  	<servlet>
@@ -53,6 +62,11 @@
 	<listener>
 		<listener-class>org.directwebremoting.servlet.DwrListener</listener-class>
 	</listener>
+	<!-- 
+	<listener>
+    	<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+     -->
 	<servlet>
 		<servlet-name>dwr-invoker</servlet-name>
 		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
@@ -86,25 +100,4 @@
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>/faces/*</url-pattern>
-  </servlet-mapping>
-  <context-param>
-    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-  </context-param>
-  <context-param>
-    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-    <param-value>resources.application</param-value>
-  </context-param>
-  <listener>
-    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-  </listener>
 </web-app>
