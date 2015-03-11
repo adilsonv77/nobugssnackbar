@@ -10,18 +10,18 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-import pt.uc.dei.nobugssnackbar.model.Category;
 import pt.uc.dei.nobugssnackbar.model.Customer;
-import pt.uc.dei.nobugssnackbar.model.Hint;
-import pt.uc.dei.nobugssnackbar.model.MachineType;
-import pt.uc.dei.nobugssnackbar.model.Objectives;
-import pt.uc.dei.nobugssnackbar.model.Page;
-import pt.uc.dei.nobugssnackbar.model.Randomization;
-import pt.uc.dei.nobugssnackbar.model.XmlTag;
+import pt.uc.dei.nobugssnackbar.model.mission.Category;
+import pt.uc.dei.nobugssnackbar.model.mission.Hint;
+import pt.uc.dei.nobugssnackbar.model.mission.MachineType;
+import pt.uc.dei.nobugssnackbar.model.mission.Objectives;
+import pt.uc.dei.nobugssnackbar.model.mission.Page;
+import pt.uc.dei.nobugssnackbar.model.mission.Randomization;
+import pt.uc.dei.nobugssnackbar.model.mission.XmlTag;
 
 @ManagedBean(name="mission")
 @SessionScoped
-public class Mission{
+public class MissionOld{
 	
 	// #region Class private variables
 	private boolean open;

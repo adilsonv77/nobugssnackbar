@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +11,15 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ReorderEvent;
 
-import pt.uc.dei.nobugssnackbar.model.Hint;
-
-
+import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
 @SessionScoped
 // only one scope !!! @ViewScoped
-public class HintView {
+public class HintView implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private boolean add = false;
 	private Hint hint = new Hint();
 	private List<Hint> tipsHints = new ArrayList<>();

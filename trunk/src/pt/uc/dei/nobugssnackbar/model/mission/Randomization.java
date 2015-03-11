@@ -1,6 +1,7 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
-public class Randomization {
+public class Randomization implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private byte qtd;
 	private String set;
 	private String msg;

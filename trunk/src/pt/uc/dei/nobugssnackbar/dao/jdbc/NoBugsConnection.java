@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package pt.uc.dei.nobugssnackbar.dao;
+package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

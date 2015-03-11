@@ -10,7 +10,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import pt.uc.dei.nobugssnackbar.dao.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.FactoryJdbcDao;
 
 /**
  * Application Lifecycle Listener implementation class Startup
@@ -47,7 +48,12 @@ public class Startup implements ServletContextListener {
     	
     	try {
     		log.info("user : " + username);
-			NoBugsConnection.buildConnection(url, className, username, password);
+    		
+    		AbstractFactoryDao factDao = new FactoryJdbcDao(url, className, username, password);
+
+    		contextEvent.getServletContext().setAttribute("factoryDao", factDao);
+    		
+    		
 		} catch (Exception ee) {
 			ee.printStackTrace();
 		}

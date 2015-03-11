@@ -2,6 +2,10 @@ package pt.uc.dei.nobugssnackbar.model;
 
 import java.util.ArrayList;
 
+import pt.uc.dei.nobugssnackbar.model.mission.Drink;
+import pt.uc.dei.nobugssnackbar.model.mission.Food;
+import pt.uc.dei.nobugssnackbar.model.mission.Pattern;
+
 public class Customer {
 	private int id;
 	private String init;

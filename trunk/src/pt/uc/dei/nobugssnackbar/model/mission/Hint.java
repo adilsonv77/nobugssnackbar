@@ -1,6 +1,7 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
-public class Hint {
+public class Hint implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	// #region private variables
 	private String category;

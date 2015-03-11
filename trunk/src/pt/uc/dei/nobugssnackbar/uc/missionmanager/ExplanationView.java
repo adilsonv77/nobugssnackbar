@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +9,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import pt.uc.dei.nobugssnackbar.model.Page;
+import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
- 
  
 @ManagedBean(name="explView")
 @SessionScoped
-public class ExplanationView implements PagesProvider {
+public class ExplanationView implements PagesProvider, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int pageIdCount;
     private Page page;
     private List<Page> pages;

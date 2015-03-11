@@ -1,6 +1,7 @@
-package pt.uc.dei.nobugssnackbar.model;
+package pt.uc.dei.nobugssnackbar.model.mission;
 
-public class XmlTag {
+public class XmlTag implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private int preload;
 	private boolean alwaysNew;
 	private String xmlns;
