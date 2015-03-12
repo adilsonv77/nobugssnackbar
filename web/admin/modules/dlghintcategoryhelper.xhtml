@@ -5,11 +5,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog">
-	
-		<p:panel rendered="#{hintView.showDlgExt}">
-	
-			<pe:dynaForm id="dynaForm" value="#{hcHelper.model}" var="data">
+	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog" closable="false">
+		<h:form>
+			<pe:dynaForm id="dynaForm" value="#{hcHelper.model}" var="data" rendered="#{hintView.showDlgExt}">
 			
 				<pe:dynaFormControl styleClass="pe-dynaform-label">  
 	            	<h:outputText value="#{data}"/> 
@@ -31,16 +29,12 @@
 ~
 		        <f:facet name="buttonBar">
 		            <p:commandButton value="Ok" action="#{hcHelper.submitForm}"
-		                             process="dynaForm"
+		                             
 		                             oncomplete="PF('hintCategoryDialog').hide()"/>
 		        </f:facet>
         				
 			</pe:dynaForm>
-		</p:panel>
-				<p:commandButton id="testeId" value="#{hintView.showDlgExt}"/>
-			
-		
-		 <p:commandButton value="Doido" />
+		</h:form>
 	</p:dialog>
-
+	
 </ui:composition>

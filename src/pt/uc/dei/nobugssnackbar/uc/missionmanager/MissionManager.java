@@ -49,7 +49,7 @@ public class MissionManager{
 		this.missionList = missionList;
 	}
 	
-	private MissionContent missionContent;
+	private MissionContent missionContent = new MissionContent();
 	
 	public MissionContent getMissionContent() {
 		return missionContent;
