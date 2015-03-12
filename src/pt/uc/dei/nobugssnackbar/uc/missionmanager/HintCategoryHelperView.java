@@ -91,6 +91,9 @@ public class HintCategoryHelperView implements Serializable {
 		return model;
 	}
 	
+	public void submitForm() {
+		
+	}
 	
 
 }

@@ -1,14 +1,33 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
+
+@JdbcTable(name="hintcategories")
 public class HintCategory {
 
-	private int id;
+	@JdbcField(name="hintcategoryid")
+	@JdbcPk
+	private Integer id;
+	@JdbcField(name="hintcategorytitle")
 	private String title;
+	@JdbcField(name="hintcategorydescription")
 	private String description;
+	@JdbcField(name="hintcategorybody")
 	private String body;
+	
+	public HintCategory() {
+	}
 
-	public HintCategory(int id, String title, String description, String body) {
+	public HintCategory(Integer id, String title, String description, String body) {
 		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.body = body;
+	}
+
+	public HintCategory(String title, String description, String body) {
 		this.title = title;
 		this.description = description;
 		this.body = body;

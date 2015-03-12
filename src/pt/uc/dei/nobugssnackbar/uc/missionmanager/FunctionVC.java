@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import pt.uc.dei.nobugssnackbar.dao.jdbc.FunctionProviderJdbcDao;
+import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderConverter;
 
@@ -18,21 +19,33 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	
 	private Function func;
 	private List<Function> funcList;
-	private FunctionProviderJdbcDao functionProviderJdbcDao;
+	
+	@ManagedProperty(value="#{factoryDao.functionProviderDao}")
+	private FunctionProviderDao functionProviderDao;
+	
+	public FunctionProviderDao getFunctionProviderDao() {
+		return functionProviderDao;
+	}
+	
+	public void setFunctionProviderDao(FunctionProviderDao functionProviderDao) {
+		this.functionProviderDao = functionProviderDao;
+	}
+	
 	private FunctionProviderConverter fpc;
 	
 	public FunctionVC() throws Exception {
 		
 		func = new Function();
-		functionProviderJdbcDao = new FunctionProviderJdbcDao();
-		funcList = functionProviderJdbcDao.list();
+		
 		
 		this.fpc = new FunctionProviderConverter();
 		this.fpc.setProvider(this);
 	}
 
 	@Override
-	public List<Function> getFunctions() {
+	public List<Function> getFunctions() throws Exception {
+		if (funcList == null)
+			funcList = functionProviderDao.list();
 		return funcList;
 	}
 	
