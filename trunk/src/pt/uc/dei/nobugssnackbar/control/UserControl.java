@@ -3,15 +3,17 @@ package pt.uc.dei.nobugssnackbar.control;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
-import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
@@ -20,6 +22,14 @@ import pt.uc.dei.nobugssnackbar.util.HexImage;
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
 
+	private GameDao gameDao;
+
+	public UserControl() {
+		WebContext ctx = WebContextFactory.get();
+		AbstractFactoryDao factoryDao = (AbstractFactoryDao) ctx.getServletContext().getAttribute("factoryDao");
+		this.gameDao = factoryDao.getGameDao();
+	}
+	
 	public static String encrypt(String passw) throws NoSuchAlgorithmException {
 		
 		MessageDigest md;
@@ -44,17 +54,17 @@ public class UserControl {
 	private Object[][] missions;
 	
 	@RemoteMethod
-	public Object[] verifyLogged() throws SQLException {
+	public Object[] verifyLogged() throws Exception {
 		this.missions = (user == null?null:retrieveMissions());
 		return new Object[]{user != null, this.user, this.missions, (user == null?null:retrieveLeaderBoard()), this.classid, this.levelid , this.missionidx};
 	}
 	
 	@RemoteMethod
-	public void logoff(int timeSpend, long execution, String answer) throws SQLException {
+	public void logoff(int timeSpend, long execution, String answer) throws Exception {
 		
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
-			NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, 0, timeSpend, execution, false, answer);
+			gameDao.finishMission(this.user, this.mission, this.classid, 0, timeSpend, execution, false, answer);
 		
 		this.user = null;
 		this.classid = 0;
@@ -69,7 +79,7 @@ public class UserControl {
 		
 		try {
 			
-			this.user = NoBugsConnection.getConnection().login(nick, encrypt(passw));
+			this.user = gameDao.login(nick, encrypt(passw));
 			
 			this.missions = retrieveMissions();
 			
@@ -87,7 +97,7 @@ public class UserControl {
 		
 		try {
 			if (!this.registeredUserLastTime) {
-				NoBugsConnection.getConnection().updateUserLastTime(this.user);
+				gameDao.updateUserLastTime(this.user);
 				this.registeredUserLastTime = true;
 			}
 		} catch (Exception e) {
@@ -97,8 +107,8 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public String[] loadMission(int clazzId, int levelId, int missionIdx) throws SQLException {
-		String[][] r = NoBugsConnection.getConnection().loadMission(this.user, clazzId, levelId, missionIdx);
+	public String[] loadMission(int clazzId, int levelId, int missionIdx) throws Exception {
+		String[][] r = gameDao.loadMission(this.user, clazzId, levelId, missionIdx);
 		
 		this.mission = Integer.parseInt(r[0][0]);
 		this.classid = clazzId;
@@ -109,15 +119,15 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public String loadMissionAnswer(int clazzId, int levelId, int missionIdx) throws SQLException {
-		String[][] r = NoBugsConnection.getConnection().loadMission(this.user, clazzId, levelId, missionIdx);
+	public String loadMissionAnswer(int clazzId, int levelId, int missionIdx) throws Exception {
+		String[][] r = gameDao.loadMission(this.user, clazzId, levelId, missionIdx);
 		
 		return  r[0][3] ;
 	}
 	
 	
 	@RemoteMethod
-	public void saveMission(int money, int timeSpend, long execution, boolean achieved, String answer) throws SQLException {
+	public void saveMission(int money, int timeSpend, long execution, boolean achieved, String answer) throws Exception {
 		
 		if (this.user == null)
 			return;
@@ -127,7 +137,7 @@ public class UserControl {
 		
 		this.user.setMoney(this.user.getMoney() + money);
 		
-		NoBugsConnection.getConnection().finishMission(this.user, this.mission, this.classid, money, timeSpend, execution, achieved, answer);
+		gameDao.finishMission(this.user, this.mission, this.classid, money, timeSpend, execution, achieved, answer);
 
 		if (achieved) {
 			// when saveMission is called with achieved = true, this means that finished the mission
@@ -140,11 +150,10 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void saveQuestionnaire(String[][] answers) throws NumberFormatException, SQLException {
-		NoBugsConnection nobugs = NoBugsConnection.getConnection();
+	public void saveQuestionnaire(String[][] answers) throws NumberFormatException, Exception {
 		for(int i = 0;i< answers.length;i++) {
 			
-			nobugs.insertAnswer(Long.parseLong(answers[i][0]), Long.parseLong(answers[i][1]), this.user.getId(), answers[i][2]);
+			gameDao.insertAnswer(Long.parseLong(answers[i][0]), Long.parseLong(answers[i][1]), this.user.getId(), answers[i][2]);
 			
 		}
 	}
@@ -159,28 +168,28 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void registerExecution() throws SQLException {
-		NoBugsConnection.getConnection().addExecutionInMission(this.user, this.mission, this.classid);
+	public void registerExecution() throws Exception {
+		gameDao.addExecutionInMission(this.user, this.mission, this.classid);
 	}
 	
 	@RemoteMethod
-	public String loadAnswer(int idMission) throws SQLException {
-		return NoBugsConnection.getConnection().loadAnswer(idMission, this.user.getId());
+	public String loadAnswer(int idMission) throws Exception {
+		return gameDao.loadAnswer(idMission, this.user.getId());
 	}
 	
 	@RemoteMethod
-	public Object[][] retrieveMissions() throws SQLException {
-		return NoBugsConnection.getConnection().retrieveMissions(this.user.getId());
+	public Object[][] retrieveMissions() throws Exception {
+		return gameDao.retrieveMissions(this.user.getId());
 	}
 	
 	@RemoteMethod
-	public List<Questionnaire> retrieveQuestionnaire() throws SQLException {
-		return NoBugsConnection.getConnection().retrieveQuestionnaire(this.user, this.missions);
+	public List<Questionnaire> retrieveQuestionnaire() throws Exception {
+		return gameDao.retrieveQuestionnaire(this.user, this.missions);
 	}
 	
 	@RemoteMethod 
-	public List<BartleType> bartleClassification(String userName) throws SQLException {
-		return BartleTest.bartleClassification(NoBugsConnection.getConnection().getUserId(userName));
+	public List<BartleType> bartleClassification(String userName) throws Exception {
+		return BartleTest.bartleClassification(gameDao.getUserId(userName));
 	}
 	
 	@RemoteMethod 
@@ -200,44 +209,44 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void missionFail(int execution, String[][] goals) throws SQLException {
+	public void missionFail(int execution, String[][] goals) throws Exception {
 		
-		NoBugsConnection.getConnection().storeMissionFail(execution, this.user.getId(), this.mission, this.classid, goals);
-		
-	}
-	
-	@RemoteMethod
-	public void missionError(int execution, String idError, String blockId, String errorMessage) throws SQLException {
-		
-		NoBugsConnection.getConnection().storeMissionError(execution, this.user.getId(), this.mission, this.classid, idError, blockId, errorMessage);
+		gameDao.storeMissionFail(execution, this.user.getId(), this.mission, this.classid, goals);
 		
 	}
 	
 	@RemoteMethod
-	public String[] loadMachine(int code) throws SQLException {
-		return NoBugsConnection.getConnection().loadMachine(code);
-	}
-	
-	@RemoteMethod
-	public List<String> listMachinesFromUser() throws SQLException {
+	public void missionError(int execution, String idError, String blockId, String errorMessage) throws Exception {
 		
-		return NoBugsConnection.getConnection().listMachines(this.user.getId());
+		gameDao.storeMissionError(execution, this.user.getId(), this.mission, this.classid, idError, blockId, errorMessage);
+		
 	}
 	
 	@RemoteMethod
-	public void buyMachine(int machineId) throws SQLException {
-		NoBugsConnection.getConnection().buyMachine(this.user.getId(), machineId);
+	public String[] loadMachine(int code) throws Exception {
+		return gameDao.loadMachine(code);
+	}
+	
+	@RemoteMethod
+	public List<String> listMachinesFromUser() throws Exception {
+		
+		return gameDao.listMachines(this.user.getId());
+	}
+	
+	@RemoteMethod
+	public void buyMachine(int machineId) throws Exception {
+		gameDao.buyMachine(this.user.getId(), machineId);
 	}
 
 	@RemoteMethod
-	public List<Object[]> loadWholeMachineData(Integer[] machineid) throws SQLException {
-		return NoBugsConnection.getConnection().loadMachineData(machineid);
+	public List<Object[]> loadWholeMachineData(Integer[] machineid) throws Exception {
+		return gameDao.loadMachineData(machineid);
 	}
 	
 	@RemoteMethod
-	public List<Object[]> loadMachinesFromUser() throws SQLException {
+	public List<Object[]> loadMachinesFromUser() throws Exception {
 		
-		List<String> machines = NoBugsConnection.getConnection().listMachines(this.user.getId());
+		List<String> machines = gameDao.listMachines(this.user.getId());
 		
 		Integer[] im = new Integer[machines.size()];
 		for (int i = 0; i < im.length; i++)
@@ -247,21 +256,21 @@ public class UserControl {
 		return loadWholeMachineData(im);
 	}
 
-	private List<Object[]> retrieveLeaderBoard() throws SQLException {
-		return NoBugsConnection.getConnection().retrieveLeaderBoard(this.user.getId(), this.user.getClassesId());
+	private List<Object[]> retrieveLeaderBoard() throws Exception {
+		return gameDao.retrieveLeaderBoard(this.user.getId(), this.user.getClassesId());
 	}
 
 	@RemoteMethod
-	public boolean isUserAllowed(String usernick) throws SQLException{
-		return NoBugsConnection.getConnection().isUserAllowed(usernick);
+	public boolean isUserAllowed(String usernick) throws Exception{
+		return gameDao.isUserAllowed(usernick);
 	}
 	
 	@RemoteMethod
-	public void registerUser(String lang) throws SQLException {
+	public void registerUser(String lang) throws Exception {
 		// according the language
-		long clazz = NoBugsConnection.getConnection().getDefaultClass(lang);
+		long clazz = gameDao.getDefaultClass(lang);
 		
-	//	NoBugsConnection.getConnection().insertUser(userNick, userPassword, userName, sex, new long[]{clazz});
+	//	gameDao.insertUser(userNick, userPassword, userName, sex, new long[]{clazz});
 		
 		// send a welcome email
 	}
