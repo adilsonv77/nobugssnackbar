@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
-import pt.uc.dei.nobugssnackbar.model.Mission;
+import pt.uc.dei.nobugssnackbar.model.mission.Mission;
 
 public class MissionJdbcDao extends JdbcDao implements MissionDao {
 

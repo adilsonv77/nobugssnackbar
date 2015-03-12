@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 
@@ -22,12 +23,21 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 	private HintCategoryDao hintCategoryDao;
 	
 	@Override
-	public HintCategoryDao getHintCategoryDao() {
-		
+	public HintCategoryDao getHintCategoryDao() {		
 		if (hintCategoryDao == null)
 			hintCategoryDao = new HintCategoryJdbcDao();
 		
 		return hintCategoryDao;
 	}
+	
+	private FunctionProviderDao functionProviderDao;
 
+	@Override
+	public FunctionProviderDao getFunctionProviderDao() {
+		if (functionProviderDao == null)
+			functionProviderDao = new FunctionProviderJdbcDao();
+		
+		return functionProviderDao;	
+	}
+	
 }

@@ -4,6 +4,6 @@ import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 
-public interface PagesProvider {
+public interface IPagesProvider {
 	List<Page> getPages();
 }

@@ -12,7 +12,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
-import pt.uc.dei.nobugssnackbar.model.Mission;
+import pt.uc.dei.nobugssnackbar.model.mission.Mission;
 
 @ManagedBean(name="mm")
 @SessionScoped
