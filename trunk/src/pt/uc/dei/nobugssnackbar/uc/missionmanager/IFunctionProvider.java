@@ -5,5 +5,5 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.model.Function;
 
 public interface IFunctionProvider {
-	List<Function> getFunctions();
+	List<Function> getFunctions() throws Exception;
 }

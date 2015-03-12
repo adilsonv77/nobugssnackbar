@@ -98,7 +98,7 @@ public class HintView implements Serializable {
 		return showDlgExt;
 	}
 
-    public void showDlgExt() throws Exception {
+    public void enableDialog() throws Exception {
     	this.showDlgExt = true;
     	
     	FacesContext context = FacesContext.getCurrentInstance();
@@ -106,7 +106,7 @@ public class HintView implements Serializable {
     	hcHelper.render();
     }
     
-    public void hideDlgExt() {
+    public void disableDialog() {
     	this.showDlgExt = false;
     }
     

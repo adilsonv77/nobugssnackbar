@@ -2,6 +2,7 @@ package nobugssnackbar;
 
 import java.util.List;
 
+import pt.uc.dei.nobugssnackbar.dao.jdbc.FunctionProviderJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -12,6 +13,7 @@ public class TestJdbcDao {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
+		FunctionProviderJdbcDao fpDao = new FunctionProviderJdbcDao();
 		MissionJdbcDao mDao = new MissionJdbcDao();
 		
 		List<Mission> l = mDao.list();
@@ -19,8 +21,6 @@ public class TestJdbcDao {
 			System.out.println(m.getName() + " " + m.getContent() + " " + m.isRepeatable());
 		System.out.println(l.size());
 		
-		
-		mDao.save(new Mission("Teste", "Content", true));
 		
 		/*
 		mDao.save(new Mission("TesteX", "Content", false));
@@ -38,9 +38,9 @@ public class TestJdbcDao {
 		m = mDao.read(20);
 		m.setName("M20");
 		mDao.save(m);
-		*/
 		
 		mDao.delete(20);
 		mDao.delete(21);
+		*/
 	}
 }
