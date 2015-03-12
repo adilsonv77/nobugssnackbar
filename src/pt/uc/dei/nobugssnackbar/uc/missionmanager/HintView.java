@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ReorderEvent;
 
+import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
@@ -24,7 +25,6 @@ public class HintView implements Serializable {
 	private Hint hint = new Hint();
 	private List<Hint> tipsHints = new ArrayList<>();
 	private List<Hint> errorsHints = new ArrayList<>();
-
 
 	public void setAdd(boolean add) {
 		this.add = add;
@@ -91,8 +91,33 @@ public class HintView implements Serializable {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-	public String getSomeText() {
-		return "Teste";
+    
+	private boolean showDlgExt;
+
+	public boolean isShowDlgExt() {
+		return showDlgExt;
 	}
-	
+
+    public void showDlgExt() throws Exception {
+    	this.showDlgExt = true;
+    	
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
+    	hcHelper.render();
+    }
+    
+    public void hideDlgExt() {
+    	this.showDlgExt = false;
+    }
+    
+    private HintCategory selectedCategory;
+    
+    public HintCategory getSelectedCategory() {
+    	
+		return new HintCategory(1, "Choose Category", "blabla", "<xml  return='ChooseCategory(#{command})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">mm.mission.commands</item></row></xml>");
+	}
+
+    public void setSelectedCategory(HintCategory selectedCategory) {
+		this.selectedCategory = selectedCategory;
+	}
 }

@@ -1,16 +1,22 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.primefaces.extensions.model.dynaform.DynaFormControl;
-import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
 @ManagedBean(name="hcHelper")
 @ViewScoped
@@ -31,19 +37,53 @@ public class HintCategoryHelperView implements Serializable {
 	
 	private DynaFormModel model;
 	
-	@PostConstruct
-	protected void initialize() {
+	public void render() throws Exception {
 		model = new DynaFormModel();
 		
-		DynaFormRow row = model.createRegularRow();
-		DynaFormLabel label11 = row.addLabel(hintView.getSomeText());
-		DynaFormControl control12 = row.addControl(new HintCategoryProperty("Author", true), "input");
-		label11.setForControl(control12);
+		HintCategory hintCategory = hintView.getSelectedCategory();
+		
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+		Document doc = dBuilder.parse(new InputSource(new ByteArrayInputStream(hintCategory.getBody().getBytes("utf-8"))));
+		doc.getDocumentElement().normalize();
+		
+		NodeList nodes = doc.getElementsByTagName("xml");
+		for (int i = 0; i < nodes.getLength(); i++) {
+
+			Node row = nodes.item(i);
+			DynaFormRow formRow = model.createRegularRow();
+			
+			NodeList rowNodes = row.getChildNodes();
+			for (int j = 0; j < rowNodes.getLength(); j++) {
+				
+				Node item = rowNodes.item(j).getFirstChild();
+				String type = item.getAttributes().getNamedItem("type").getNodeValue();
+				
+				Node value = item.getFirstChild();
+				
+				if (type.equals("text")) {
+					
+					formRow.addControl(new HintCategoryProperty("", value.getNodeValue()), "text");
+					
+				} else 
+					if (type.equals("list")) {
+						
+						formRow.addControl(new HintCategoryProperty("", value.getNodeValue()), "text");
+						
+					}
+			}
+			
+		}
+		
+		
 	}
 	
 	public DynaFormModel getModel() {
 		return model;
 	}
+	
+	
 
 }
 

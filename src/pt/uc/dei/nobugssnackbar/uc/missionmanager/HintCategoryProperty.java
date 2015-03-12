@@ -26,6 +26,10 @@ public class HintCategoryProperty implements Serializable {
 		this.required = required;
 	}
 	
+	public HintCategoryProperty() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}
