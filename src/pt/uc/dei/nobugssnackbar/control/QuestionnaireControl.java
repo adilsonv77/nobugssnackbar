@@ -4,10 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
+import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
@@ -16,13 +20,20 @@ import pt.uc.dei.nobugssnackbar.model.User;
 public class QuestionnaireControl {
 
 	private User user;
+	private GameDao gameDao;
+	
+	public QuestionnaireControl() {
+		WebContext ctx = WebContextFactory.get();
+		AbstractFactoryDao factoryDao = (AbstractFactoryDao) ctx.getServletContext().getAttribute("factoryDao");
+		this.gameDao = factoryDao.getGameDao();
+	}
 
 	@RemoteMethod
 	public List<Questionnaire> login(String nick, String passw) throws Exception {
 			
-		this.user = NoBugsConnection.getConnection().login(nick, UserControl.encrypt(passw));
+		this.user = gameDao.login(nick, UserControl.encrypt(passw));
 		
-		Questionnaire questionnaire = NoBugsConnection.getConnection().retrieveParticularQuestionnaire(this.user, 5L);
+		Questionnaire questionnaire = gameDao.retrieveParticularQuestionnaire(this.user, 5L);
 		
 		List<Questionnaire> l = new ArrayList<>();
 		if (questionnaire != null)
@@ -38,11 +49,10 @@ public class QuestionnaireControl {
 	}
 	
 	@RemoteMethod
-	public void saveQuestionnaire(String[][] answers) throws NumberFormatException, SQLException {
-		NoBugsConnection nobugs = NoBugsConnection.getConnection();
+	public void saveQuestionnaire(String[][] answers) throws Exception {
 		for(int i = 0;i< answers.length;i++) {
 			
-			nobugs.insertAnswer(Long.parseLong(answers[i][0]), Long.parseLong(answers[i][1]), this.user.getId(), answers[i][2]);
+			gameDao.insertAnswer(Long.parseLong(answers[i][0]), Long.parseLong(answers[i][1]), this.user.getId(), answers[i][2]);
 			
 		}
 	}

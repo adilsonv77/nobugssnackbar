@@ -4,13 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.Mission;
 
 public class UpdateMission {
 
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
+		
+		MissionJdbcDao mDao = new MissionJdbcDao();
 
 		int j = 0;
 		for (int i = 1; i <= 17; i++) {
@@ -25,6 +29,7 @@ public class UpdateMission {
 			}
 			if (arq != null) {
 
+				Mission m = mDao.read(j);
 				do {
 					
 					String line = arq.readLine();
@@ -36,7 +41,8 @@ public class UpdateMission {
 				} while (true);
 				arq.close();
 				
-				NoBugsConnection.getConnection().updateMission(j, xml.toString());
+				m.setContent(xml.toString());
+				mDao.save(m);
 				
 			}
 		}

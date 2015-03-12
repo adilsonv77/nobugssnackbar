@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
+import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 
@@ -38,6 +39,15 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 			functionProviderDao = new FunctionProviderJdbcDao();
 		
 		return functionProviderDao;	
+	}
+
+	private GameDao gameDao;
+
+	@Override
+	public GameDao getGameDao() {
+		if (gameDao == null)
+			gameDao = new GameJdbcDao();
+		return gameDao;
 	}
 	
 }

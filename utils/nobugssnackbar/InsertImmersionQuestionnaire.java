@@ -12,7 +12,7 @@ public class InsertImmersionQuestionnaire {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
-		idQuest = NoBugsConnection.getConnection().createQuestionnaire(1, "O propósito do presente questionário é avaliar o engajamento sentido pelo jogador.");
+		//idQuest = NoBugsConnection.getConnection().createQuestionnaire(1, "O propósito do presente questionário é avaliar o engajamento sentido pelo jogador.");
 		
 		insertQuestion(1, "Enquanto eu jogava perdi a noção do tempo.");
 		insertQuestion(2, "Enquanto eu jogava o jogo fluiu automaticamente.");
@@ -37,6 +37,7 @@ public class InsertImmersionQuestionnaire {
 	}
 
 	private static void insertQuestion(int i, String description) throws SQLException {
+		/*
 		long idQuestion = NoBugsConnection.getConnection().insertQuestion(idQuest, i, description, "L", true);
 		if (i == 1) {
 			NoBugsConnection.getConnection().insertOption(idQuestion, "Concordo plenamente", 1, "1");
@@ -45,7 +46,7 @@ public class InsertImmersionQuestionnaire {
 			NoBugsConnection.getConnection().insertOption(idQuestion, "Discordo", 4, "4");
 			NoBugsConnection.getConnection().insertOption(idQuestion, "Discordo plenamente", 5, "5");
 		}
-		
+		*/
 	}
 
 }
