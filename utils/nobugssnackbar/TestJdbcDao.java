@@ -22,8 +22,25 @@ public class TestJdbcDao {
 		
 		mDao.save(new Mission("Teste", "Content", true));
 		*/
+		/*
+		mDao.save(new Mission("TesteX", "Content", false));
+		mDao.save(new Mission("TesteY", "ContentZ", true));
 		
-		Mission m = mDao.read(1);
+		Mission m = mDao.read(21);
 		System.out.println(m.getName() + " " + m.getContent() + " " + m.isRepeatable());
+		
+		m.setName("ZZZ");
+		m.setContent("YYY");
+		m.setRepeatable(false);
+		
+		mDao.save(m);
+
+		m = mDao.read(20);
+		m.setName("M20");
+		mDao.save(m);
+		*/
+		
+		mDao.delete(20);
+		mDao.delete(21);
 	}
 }
