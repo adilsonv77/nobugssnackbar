@@ -10,8 +10,8 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-import pt.uc.dei.nobugssnackbar.model.Customer;
 import pt.uc.dei.nobugssnackbar.model.mission.Category;
+import pt.uc.dei.nobugssnackbar.model.mission.Customer;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.MachineType;
 import pt.uc.dei.nobugssnackbar.model.mission.Objectives;

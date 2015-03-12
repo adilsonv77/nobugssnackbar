@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -12,9 +11,9 @@ import javax.faces.context.FacesContext;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
  
-@ManagedBean(name="explView")
+@ManagedBean(name="explVC")
 @SessionScoped
-public class ExplanationView implements PagesProvider, Serializable {
+public class ExplanationVC implements IPagesProvider, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +32,21 @@ public class ExplanationView implements PagesProvider, Serializable {
     		"rule image | " + 
     		"cut copy paste pastetext";
     
-  			 
+ 
+	public ExplanationVC() {
+		pageIdCount = 0;
+    	page = new Page();
+        pages = new ArrayList<>();
+        
+		this.epc = new ExplanationPageConverter();
+		this.epc.setProvider(this);
+	}
+	
+	@Override
+	public List<Page> getPages() {
+		return pages;
+	}
+	
 	public String getEditorControls() {
 		return editorControls;
 	}
@@ -41,34 +54,17 @@ public class ExplanationView implements PagesProvider, Serializable {
 	public ExplanationPageConverter getConverter() {
 		return epc;
 	}
-
-	public ExplanationView() {
-		this.epc = new ExplanationPageConverter();
-		this.epc.setProvider(this);
-	}
-    
-    public List<Page> getPages() {
-        return pages;
-    }  
-    
+     
     public void setPages(List<Page> pages) {
 		this.pages = pages;
-	}
-    
+	}    
     public Page getPage() {
 		return page;
 	}
-
 	public void setPage(Page page) {
 		this.page = page;
 	}
 	
-	@PostConstruct
-    public void init() {
-		pageIdCount = 0;
-    	page = new Page();
-        pages = new ArrayList<>();
-    }
 	
 	public void addPage() {
 		if (page.getId() < 0) {

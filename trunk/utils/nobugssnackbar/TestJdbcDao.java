@@ -4,7 +4,7 @@ import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
-import pt.uc.dei.nobugssnackbar.model.Mission;
+import pt.uc.dei.nobugssnackbar.model.mission.Mission;
 
 public class TestJdbcDao {
 

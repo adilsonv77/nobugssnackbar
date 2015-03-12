@@ -66,22 +66,22 @@
 		<p:growl id="msgs" showDetail="true" />
 		
 		<div>
-			<p:commandButton id="addPageBtn" update=":tbView:explForm" actionListener="#{explView.resetPage}">
+			<p:commandButton id="addPageBtn" update=":tbView:explForm" actionListener="#{explVC.resetPage}">
 				<f:attribute name="value" value="Click to add a new page" />
 				<f:attribute name="style" value="width: 156px; height: 217px; float: left; margin: 3px 2px 2px 8px" />
 				<f:attribute name="oncomplete" value="PF('pageDialog').show()" />
 			</p:commandButton>
 		
-			<p:orderList id="opList" value="#{explView.pages}" var="p" itemValue="#{p}" converter="#{explView.converter}" controlsLocation="right">      		
+			<p:orderList id="opList" value="#{explVC.pages}" var="p" itemValue="#{p}" converter="#{explVC.converter}" controlsLocation="right">      		
 				<p:column>
-					<p:commandLink title="Delete" update=":tbView:explForm" actionListener="#{explView.getPageById}" oncomplete="PF('confDeleteDlg').show()">
+					<p:commandLink title="Delete" update=":tbView:explForm" actionListener="#{explVC.getPageById}" oncomplete="PF('confDeleteDlg').show()">
 						<f:param name="editPageID" value="#{p.id}" />
 						
 						<span class="ui-icon ui-icon-closethick" />
 						  				
 					</p:commandLink>
 					
-					<p:commandLink title="Edit" update=":tbView:explForm:explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explView.getPageById}">
+					<p:commandLink title="Edit" update=":tbView:explForm:explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explVC.getPageById}">
 						<f:param name="editPageID" value="#{p.id}" />
 						<span class="ui-icon ui-icon-pencil" />
 					</p:commandLink>
@@ -92,13 +92,13 @@
 		</div>
 			
 	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="Pages" minHeight="40" closable="false">	    	
-	    	<p:editor value="#{explView.page.msg}">
-	    		<f:attribute name="controls" value="#{explView.editorControls}" />
+	    	<p:editor value="#{explVC.page.msg}">
+	    		<f:attribute name="controls" value="#{explVC.editorControls}" />
 	    	</p:editor>
 
    			<p:panelGrid columns="2" style="float: right;">
-    			<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:explForm:opList, :tbView:explForm:explPageDlg" actionListener="#{explView.addPage}"/>
-      			<p:commandButton value="Cancel" icon="ui-icon-close" update=":tbView:explForm:explPageDlg" actionListener="#{explView.resetPage}" />
+    			<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:explForm:opList, :tbView:explForm:explPageDlg" actionListener="#{explVC.addPage}"/>
+      			<p:commandButton value="Cancel" icon="ui-icon-close" update=":tbView:explForm:explPageDlg" actionListener="#{explVC.resetPage}" />
        		</p:panelGrid>
        		
     	</p:dialog>
@@ -107,8 +107,8 @@
      		
      		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
      			<h:outputText value="Are you sure want to delete this page?" />
-     			<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":tbView:explForm" actionListener="#{explView.deleteExplPage}" oncomplete="PF('confDeleteDlg').hide()" />
-    			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" actionListener="#{explView.resetPage}" oncomplete="PF('confDeleteDlg').hide()" />
+     			<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}" oncomplete="PF('confDeleteDlg').hide()" />
+    			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" actionListener="#{explVC.resetPage}" oncomplete="PF('confDeleteDlg').hide()" />
  			</p:panelGrid>
  		</p:dialog>
 	</h:form>

@@ -7,37 +7,37 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import pt.uc.dei.nobugssnackbar.model.mission.Page;
-import pt.uc.dei.nobugssnackbar.uc.missionmanager.IPagesProvider;
+import pt.uc.dei.nobugssnackbar.model.mission.Function;
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.IFunctionProvider;
 
-@FacesConverter(forClass=Page.class)
-public class ExplanationPageConverter implements Converter, Serializable {
-
+@FacesConverter(forClass=Function.class)
+public class FunctionProviderConverter implements Converter, Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
-	private IPagesProvider pp;
+	private IFunctionProvider fp;
 	
 	@Override
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 		long id = Long.parseLong(value);
 		
-		for (Page pg : pp.getPages())
-			if (pg.getId() == id)
-				return pg;
+		for (Function f : fp.getFunctions())
+			if (f.getId() == id)
+				return f;
 		return null;
 	}
 
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
         if(object != null) {
-            return String.valueOf(((Page) object).getId());
+            return String.valueOf(((Function) object).getId());
         }
         else {
             return null;
         }
 	}
 
-	public void setProvider(IPagesProvider provider) {
-		this.pp = provider;
+	public void setProvider(IFunctionProvider provider) {
+		this.fp = provider;
 	}
 }

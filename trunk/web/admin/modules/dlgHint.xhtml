@@ -19,6 +19,9 @@
 			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
 			    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()"/>
 			    
+			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
+			    <p:commandButton id="btnBuildCondition" value="Build" oncomplete="PF('condBuilderDlg').show()"/>
+			    
 			    <p:outputLabel for="hintTime" value="Time"/>
 			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
 			    
@@ -40,6 +43,8 @@
 		</p:dialog>	
 		
 		<ui:include src="dlghintcategoryhelper.xhtml"/>
+		
+		<ui:include src="dlgconditionbuilder.xhtml"/>
 		
     </h:form>	
 	

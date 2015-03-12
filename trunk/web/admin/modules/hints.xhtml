@@ -7,14 +7,17 @@
 	
 <h:body>
 	
-	<p:panelGrid columns="2" style="margin-bottom: 50px;">
+	<p:panelGrid columns="2" style="margin-bottom: 20px;">
 		<span class="my-lightbulb"></span>
-		<h:outputText value="Here are the explanation pages that are presented as the goal explanation of the mission."/>
-
-		<p:commandButton value="Add from database" id="btnAddFromDB"/>
+		<h:outputText>
+			<f:attribute name="value" value="Here are the tips, shortcuts and helps that appears during the game play."/>
+		</h:outputText>
+	</p:panelGrid>
+	
+	<p:panelGrid columns="2" style="margin: 0 auto 30px auto;">
+		<p:commandButton value="Add from database" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
 		<p:commandButton value="Add blank" id="btnAddBlank"  oncomplete="PF('hintDialog').show()" 
-			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints"
-		/>
+			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints" icon="ui-icon-circle-plus" />
 	</p:panelGrid>
 		
 	<h:form id="formDTT">
@@ -78,7 +81,7 @@
 		</p:dataTable>		
 	</h:form>
 	
-	<ui:include src="dlghint.xhtml"/>		
+	<ui:include src="dlghint.xhtml"/>
     
     <h:form id="formDlgCHCD">
 	    <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
