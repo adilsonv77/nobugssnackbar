@@ -3,7 +3,6 @@ package pt.uc.dei.nobugssnackbar.dao.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.model.Function;
@@ -32,15 +31,4 @@ public class FunctionProviderJdbcDao extends JdbcDao<Function> implements Functi
 		}
 	}
 	
-	@Override
-	public Function read(long key) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void save(Function obj) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 }

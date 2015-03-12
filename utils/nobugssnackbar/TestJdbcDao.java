@@ -13,13 +13,17 @@ public class TestJdbcDao {
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		MissionJdbcDao mDao = new MissionJdbcDao();
-		
+		/*
 		List<Mission> l = mDao.list();
 		for (Mission m: l)
-			System.out.println(m.getName() + " " + m.isRepeatable());
+			System.out.println(m.getName() + " " + m.getContent() + " " + m.isRepeatable());
 		System.out.println(l.size());
 		
 		
 		mDao.save(new Mission("Teste", "Content", true));
+		*/
+		
+		Mission m = mDao.read(1);
+		System.out.println(m.getName() + " " + m.getContent() + " " + m.isRepeatable());
 	}
 }
