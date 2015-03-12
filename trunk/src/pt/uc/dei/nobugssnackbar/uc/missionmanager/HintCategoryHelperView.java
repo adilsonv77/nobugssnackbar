@@ -2,10 +2,12 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -60,18 +62,24 @@ public class HintCategoryHelperView implements Serializable {
 				Node item = rowNodes.item(j).getFirstChild();
 				String type = item.getAttributes().getNamedItem("type").getNodeValue();
 				
+				
 				Node value = item.getFirstChild();
 				
 				if (type.equals("text")) {
 					
 					formRow.addControl(new HintCategoryProperty("", value.getNodeValue()), "text");
 					
-				} else 
+				} else {
+					String name = item.getAttributes().getNamedItem("name").getNodeValue();
 					if (type.equals("list")) {
 						
-						formRow.addControl(new HintCategoryProperty("", value.getNodeValue()), "text");
+						FacesContext context = FacesContext.getCurrentInstance();
+				    	List<?> list = context.getApplication().evaluateExpressionGet(context, value.getNodeValue(), List.class);
+						
+						formRow.addControl(new HintCategoryProperty(name, list), "list");
 						
 					}
+				}
 			}
 			
 		}

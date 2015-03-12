@@ -4,17 +4,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.Mission;
 
 public class PopulateMissions {
 
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
-		String titles[] = {"Teste"}; //{"Movimentar cozinheiro", "Perguntar ao cliente e criar variáveis"};
+	//	String titles[] = {"Teste"}; //{"Movimentar cozinheiro", "Perguntar ao cliente e criar variáveis"};
 		StringBuffer xml; 
 		BufferedReader arq; 
+		
+		MissionDao mDao = new MissionJdbcDao();
 		
 		for (int i = 17; i <= 17; i++) {
 			
@@ -31,7 +35,7 @@ public class PopulateMissions {
 			} while (true);
 			arq.close();
 			
-			(new MissionJdbcDao()).insertMission("Mission default", xml.toString());
+			mDao.save(new Mission(0, "Mission default", xml.toString(), false ));
 			
 		}
 		

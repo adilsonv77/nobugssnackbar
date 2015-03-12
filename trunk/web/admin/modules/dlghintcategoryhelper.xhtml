@@ -12,17 +12,29 @@
 			<pe:dynaForm id="dynaForm" value="#{hcHelper.model}" var="data">
 			
 				<pe:dynaFormControl styleClass="pe-dynaform-label">  
-	            	<h:outputText value="#{data}"/><br/>  
+	            	<h:outputText value="#{data}"/> 
 	        	</pe:dynaFormControl> 
 	        
 				<pe:dynaFormControl type="text">
-		            <h:outputText value="#{data.value}"/><br/>  
+		            <h:outputText value="#{data.value}"/>
 				</pe:dynaFormControl>
 				
 				<pe:dynaFormControl type="input" for="txt">
 					<p:inputText id="txt" value="#{data.value}" required="#{data.required}" />
 				</pe:dynaFormControl>
 				
+				<pe:dynaFormControl type="list" for="list">
+					<p:selectOneListbox id="list" value="#{data.value}" required="#{data.required}">
+						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+					</p:selectOneListbox>
+				</pe:dynaFormControl>
+~
+		        <f:facet name="buttonBar">
+		            <p:commandButton value="Ok" action="#{hcHelper.submitForm}"
+		                             process="dynaForm"
+		                             oncomplete="PF('hintCategoryDialog').hide()"/>
+		        </f:facet>
+        				
 			</pe:dynaForm>
 		</p:panel>
 		 

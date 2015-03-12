@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import pt.uc.dei.nobugssnackbar.model.mission.Function;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.IFunctionProvider;
 
 @FacesConverter(forClass=Function.class)

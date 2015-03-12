@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import pt.uc.dei.nobugssnackbar.dao.jdbc.FunctionProviderJdbcDao;
-import pt.uc.dei.nobugssnackbar.model.mission.Function;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderConverter;
 
 @ManagedBean(name="funcVC")
