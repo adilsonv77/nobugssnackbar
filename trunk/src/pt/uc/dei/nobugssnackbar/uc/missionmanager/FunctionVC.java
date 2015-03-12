@@ -21,7 +21,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	private List<Function> funcList;
 	
 	@ManagedProperty(value="#{factoryDao.functionProviderDao}")
-	private FunctionProviderDao functionProviderDao;
+	private transient FunctionProviderDao functionProviderDao;
 	
 	public FunctionProviderDao getFunctionProviderDao() {
 		return functionProviderDao;

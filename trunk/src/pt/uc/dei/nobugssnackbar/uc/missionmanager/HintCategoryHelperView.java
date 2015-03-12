@@ -3,7 +3,12 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -11,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.w3c.dom.Document;
@@ -37,11 +43,13 @@ public class HintCategoryHelperView implements Serializable {
 		this.hintView = hintView;
 	}
 	
-	private DynaFormModel model;
+	private DynaFormModel model = new DynaFormModel();
+
+	private String returnCategory;
 	
 	public void render() throws Exception {
 		model = new DynaFormModel();
-		
+
 		HintCategory hintCategory = hintView.getSelectedCategory();
 		
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -50,7 +58,9 @@ public class HintCategoryHelperView implements Serializable {
 		Document doc = dBuilder.parse(new InputSource(new ByteArrayInputStream(hintCategory.getBody().getBytes("utf-8"))));
 		doc.getDocumentElement().normalize();
 		
-		NodeList nodes = doc.getElementsByTagName("xml");
+		this.returnCategory = doc.getDocumentElement().getAttributes().getNamedItem("return").getNodeValue();
+		
+		NodeList nodes = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 
 			Node row = nodes.item(i);
@@ -59,11 +69,11 @@ public class HintCategoryHelperView implements Serializable {
 			NodeList rowNodes = row.getChildNodes();
 			for (int j = 0; j < rowNodes.getLength(); j++) {
 				
-				Node item = rowNodes.item(j).getFirstChild();
+				Node item = rowNodes.item(j);
 				String type = item.getAttributes().getNamedItem("type").getNodeValue();
 				
 				
-				Node value = item.getFirstChild();
+				Node value = item.getLastChild();
 				
 				if (type.equals("text")) {
 					
@@ -71,19 +81,26 @@ public class HintCategoryHelperView implements Serializable {
 					
 				} else {
 					String name = item.getAttributes().getNamedItem("name").getNodeValue();
-					if (type.equals("list")) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+				    ELContext elContext = context.getELContext();
+
+				    if (type.equals("list")) {
 						
-						FacesContext context = FacesContext.getCurrentInstance();
-				    	List<?> list = context.getApplication().evaluateExpressionGet(context, value.getNodeValue(), List.class);
+					    ValueExpression vex = expressionFactory.createValueExpression(elContext, 
+					    												value.getNodeValue(), List.class);
+				    	List<?> list = (List<?>) vex.getValue(elContext);
 						
-						formRow.addControl(new HintCategoryProperty(name, list), "list");
+				    	HintCategoryProperty hcp = new HintCategoryProperty(name, true);
+				    	hcp.setItems(list);
+				    	
+						formRow.addControl(hcp, "list");
 						
 					}
 				}
 			}
 			
 		}
-		
 		
 	}
 	
@@ -93,113 +110,37 @@ public class HintCategoryHelperView implements Serializable {
 	
 	public void submitForm() {
 		
+		Pattern pattern = Pattern.compile("[?][{]([a-z])\\w+}");
+		Matcher matcher = pattern.matcher(this.returnCategory);
+		
+		String returnForm = "";
+		
+		while (matcher.find()) {
+			String name = matcher.group();
+			name = name.substring(2, name.length()-1);
+			for (DynaFormControl dynaFormControl : model.getControls()) {
+				HintCategoryProperty hcp = (HintCategoryProperty) dynaFormControl.getData();
+				if (name.equals(hcp.getName())) {
+					returnForm = matcher.replaceFirst(hcp.getValue().toString());
+					break;
+				}
+			}
+			matcher = pattern.matcher(returnForm);
+		}
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+	    ELContext elContext = context.getELContext();
+	    ValueExpression vex = expressionFactory.createValueExpression(elContext, 
+				returnForm, String.class);
+
+	    returnForm = (String) vex.getValue(elContext);
+	    
+		hintView.setHintCategory(returnForm);
+		hintView.disableDialog();
+		
 	}
 	
 
 }
 
-/**
-@ManagedBean
-@ViewScoped
-public class DynaFormController implements Serializable {
-
-	private static final long serialVersionUID = 20120423L;
-
-	private DynaFormModel model;
-
-	private static List<SelectItem> LANGUAGES = new ArrayList<SelectItem>();
-
-	@PostConstruct
-	protected void initialize() {
-		model = new DynaFormModel();
-
-		// add rows, labels and editable controls
-		// set relationship between label and editable controls to support outputLabel with "for" attribute
-
-		// 1. row
-		DynaFormRow row = model.createRegularRow();
-
-		DynaFormLabel label11 = row.addLabel("Author");
-		DynaFormControl control12 = row.addControl(new BookProperty("Author", true), "input");
-		label11.setForControl(control12);
-
-		DynaFormLabel label13 = row.addLabel("ISBN");
-		DynaFormControl control14 = row.addControl(new BookProperty("ISBN", true), "input");
-		label13.setForControl(control14);
-
-		// 2. row
-		row = model.createRegularRow();
-
-		DynaFormLabel label21 = row.addLabel("Title");
-		DynaFormControl control22 = row.addControl(new BookProperty("Title", false), "input", 3, 1);
-		label21.setForControl(control22);
-
-		// 3. row
-		row = model.createRegularRow();
-
-		DynaFormLabel label31 = row.addLabel("Publisher");
-		DynaFormControl control32 = row.addControl(new BookProperty("Publisher", false), "input");
-		label31.setForControl(control32);
-
-		DynaFormLabel label33 = row.addLabel("Published on");
-		DynaFormControl control34 = row.addControl(new BookProperty("Published on", false), "calendar");
-		label33.setForControl(control34);
-
-		// 4. row
-		row = model.createRegularRow();
-
-		DynaFormLabel label41 = row.addLabel("Language");
-		DynaFormControl control42 = row.addControl(new BookProperty("Language", false), "select");
-		label41.setForControl(control42);
-
-		DynaFormLabel label43 = row.addLabel("Description", 1, 2);
-		DynaFormControl control44 = row.addControl(new BookProperty("Description", false), "textarea", 1, 2);
-		label43.setForControl(control44);
-
-		// 5. row
-		row = model.createRegularRow();
-
-		DynaFormLabel label51 = row.addLabel("Rating");
-		DynaFormControl control52 = row.addControl(new BookProperty("Rating", 3, true), "rating");
-		label51.setForControl(control52);
-	}
-
-	public DynaFormModel getModel() {
-		return model;
-	}
-
-	public List<BookProperty> getBookProperties() {
-		if (model == null) {
-			return null;
-		}
-
-		List<BookProperty> bookProperties = new ArrayList<BookProperty>();
-		for (DynaFormControl dynaFormControl : model.getControls()) {
-			bookProperties.add((BookProperty) dynaFormControl.getData());
-		}
-
-		return bookProperties;
-	}
-
-	public String submitForm() {
-		FacesMessage.Severity sev = FacesContext.getCurrentInstance().getMaximumSeverity();
-		boolean hasErrors = (sev != null && (FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0));
-
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		requestContext.addCallbackParam("isValid", !hasErrors);
-
-		return null;
-	}
-
-	public List<SelectItem> getLanguages() {
-		if (LANGUAGES.isEmpty()) {
-			LANGUAGES.add(new SelectItem("en", "English"));
-			LANGUAGES.add(new SelectItem("de", "German"));
-			LANGUAGES.add(new SelectItem("ru", "Russian"));
-			LANGUAGES.add(new SelectItem("tr", "Turkish"));
-		}
-
-		return LANGUAGES;
-	}
-}
-            */

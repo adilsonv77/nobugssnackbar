@@ -5,9 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<h:form id="formDlgHints">
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
+		<!-- each dialog must have its own form -->
+		<h:form id="formDlgHints">
 	
-		<p:dialog showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
 			<p:panelGrid columns="2">
 					
 			    <p:outputLabel for="hintType" value="Hint type:"/>
@@ -39,13 +40,13 @@
 			<p:commandButton value="Cancel" id="btnCancelHint" actionListener="#{hintView.newHint}" 
 			oncomplete="PF('hintDialog').hide()"/> 
 			
-			<p:commandButton value="Test" actionListener="#{hintView.enableDialog()}" update=":tbView:formDlgHints:dlgHintCategoryExtended" oncomplete="PF('hintCategoryDialog').show()"/>
-		</p:dialog>	
+			<p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" oncomplete="PF('hintCategoryDialog').show()"/>
+	    </h:form>	
+	</p:dialog>	
 
-		<ui:include src="dlghintcategoryhelper.xhtml"/>
+	<ui:include src="dlghintcategoryhelper.xhtml"/>
 		
-		<ui:include src="dlgconditionbuilder.xhtml"/>
+	<ui:include src="dlgconditionbuilder.xhtml"/>
 		
-    </h:form>	
 	
 </ui:composition>

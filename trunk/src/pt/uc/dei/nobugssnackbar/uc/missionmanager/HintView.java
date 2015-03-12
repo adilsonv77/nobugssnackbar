@@ -94,12 +94,19 @@ public class HintView implements Serializable {
     
 	private boolean showDlgExt;
 
+	private int contador;
+
+	public int getContador() {
+		return contador;
+	}
+	
 	public boolean isShowDlgExt() {
 		return showDlgExt;
 	}
 
     public void enableDialog() throws Exception {
-    	this.showDlgExt = true;
+		this.showDlgExt = true;
+		this.contador++;
     	
     	FacesContext context = FacesContext.getCurrentInstance();
     	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
@@ -111,13 +118,21 @@ public class HintView implements Serializable {
     }
     
     private HintCategory selectedCategory;
+
+	private String hintCategory;
     
     public HintCategory getSelectedCategory() {
     	
-		return new HintCategory(1, "Choose Category", "blabla", "<xml  return='ChooseCategory(#{command})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">mm.missionContent.commands</item></row></xml>");
+		return new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
 	}
 
     public void setSelectedCategory(HintCategory selectedCategory) {
 		this.selectedCategory = selectedCategory;
+	}
+    
+	public void setHintCategory(String hintCategory) {
+		this.hintCategory = hintCategory;
+		System.out.println(hintCategory);
+		
 	}
 }
