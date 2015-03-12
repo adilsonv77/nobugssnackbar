@@ -1,11 +1,9 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
-import java.util.List;
-
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
-public class HintCategoryJdbcDao extends JdbcDao implements HintCategoryDao {
+public class HintCategoryJdbcDao extends JdbcDao<HintCategory> implements HintCategoryDao {
 
 	@Override
 	public HintCategory read(long key) throws Exception {
@@ -17,12 +15,6 @@ public class HintCategoryJdbcDao extends JdbcDao implements HintCategoryDao {
 	public void save(HintCategory obj) throws Exception {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<HintCategory> list() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

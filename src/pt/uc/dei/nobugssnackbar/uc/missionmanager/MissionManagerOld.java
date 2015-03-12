@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
-import pt.uc.dei.nobugssnackbar.model.mission.Mission;
+import pt.uc.dei.nobugssnackbar.model.Mission;
 
 
 

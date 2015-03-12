@@ -114,7 +114,7 @@ public class HintView implements Serializable {
     
     public HintCategory getSelectedCategory() {
     	
-		return new HintCategory(1, "Choose Category", "blabla", "<xml  return='ChooseCategory(#{command})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">mm.mission.commands</item></row></xml>");
+		return new HintCategory(1, "Choose Category", "blabla", "<xml  return='ChooseCategory(#{command})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">mm.missionContent.commands</item></row></xml>");
 	}
 
     public void setSelectedCategory(HintCategory selectedCategory) {

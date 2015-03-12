@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class HintCategoryProperty implements Serializable {
 
@@ -9,6 +10,7 @@ public class HintCategoryProperty implements Serializable {
 	private String name;
 	private Object value;
 	private boolean required;
+	private List<?> items;
 	
 	public HintCategoryProperty(String name, Object value) {
 		this.name = name;
@@ -26,8 +28,14 @@ public class HintCategoryProperty implements Serializable {
 		this.required = required;
 	}
 	
+	public HintCategoryProperty(String name, List<?> items, boolean required) {
+		this.name = name;
+		this.required = required;
+		this.items = items;
+	}
+	
+	
 	public HintCategoryProperty() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getName() {
@@ -44,6 +52,10 @@ public class HintCategoryProperty implements Serializable {
 	
 	public void setValue(Object value) {
 		this.value = value;
+	}
+	
+	public List<?> getItems() {
+		return items;
 	}
 
 }

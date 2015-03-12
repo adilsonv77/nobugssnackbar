@@ -12,7 +12,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
-import pt.uc.dei.nobugssnackbar.model.mission.Mission;
+import pt.uc.dei.nobugssnackbar.model.Mission;
+import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 
 @ManagedBean(name="mm")
 @SessionScoped
@@ -46,6 +47,16 @@ public class MissionManager{
 	}
 	public void setMissionList(ArrayList<Mission> missionList) {
 		this.missionList = missionList;
+	}
+	
+	private MissionContent missionContent;
+	
+	public MissionContent getMissionContent() {
+		return missionContent;
+	}
+	
+	public void setMissionContent(MissionContent missionContent) {
+		this.missionContent = missionContent;
 	}
 	// #end
 	

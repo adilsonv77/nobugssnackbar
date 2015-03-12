@@ -1,6 +1,12 @@
-package pt.uc.dei.nobugssnackbar.model.mission;
+package pt.uc.dei.nobugssnackbar.model;
 
-public class Function {
+import java.io.Serializable;
+
+/* It must be here because it is  stored in database */
+
+public class Function implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private int id;
 	private String name;
 	private String returnType;

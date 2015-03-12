@@ -4,7 +4,7 @@ import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
-import pt.uc.dei.nobugssnackbar.model.mission.Mission;
+import pt.uc.dei.nobugssnackbar.model.Mission;
 
 public class TestJdbcDao {
 
@@ -13,9 +13,13 @@ public class TestJdbcDao {
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		MissionJdbcDao mDao = new MissionJdbcDao();
+		
 		List<Mission> l = mDao.list();
 		for (Mission m: l)
-			System.out.println(m.getName());
+			System.out.println(m.getName() + " " + m.isRepeatable());
 		System.out.println(l.size());
+		
+		
+		mDao.save(new Mission("Teste", "Content", true));
 	}
 }

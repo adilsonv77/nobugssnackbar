@@ -6,16 +6,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
-import pt.uc.dei.nobugssnackbar.model.mission.Function;
+import pt.uc.dei.nobugssnackbar.model.Function;
 
-public class FunctionProviderJdbcDao extends JdbcDao implements FunctionProviderDao {
+public class FunctionProviderJdbcDao extends JdbcDao<Function> implements FunctionProviderDao {
 
-	@Override
-	public List<Function> list() throws Exception {
-		
-		return listObjects("select * from functionsprovider", Function.class);
-	}
-	
 	public void insertFunction(String name, String returnType, String description) throws SQLException {
 
 		Connection bdCon = null;
