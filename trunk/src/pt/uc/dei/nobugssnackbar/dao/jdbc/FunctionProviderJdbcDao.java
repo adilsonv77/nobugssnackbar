@@ -30,5 +30,4 @@ public class FunctionProviderJdbcDao extends JdbcDao<Function> implements Functi
 				}
 		}
 	}
-	
 }

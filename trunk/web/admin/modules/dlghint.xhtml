@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
+	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
 		<!-- each dialog must have its own form -->
 		<h:form id="formDlgHints">
 	
@@ -18,10 +18,11 @@
 				</p:selectOneRadio>
 			        
 			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
-			    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()"/>
+			    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search
+ "/>
 			    
 			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
-			    <p:commandButton id="btnBuildCondition" value="Build" oncomplete="PF('condBuilderDlg').show()"/>
+			    <p:commandButton id="btnBuildCondition" value="Build" oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
 			    
 			    <p:outputLabel for="hintTime" value="Time"/>
 			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        

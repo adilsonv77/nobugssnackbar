@@ -36,8 +36,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	public FunctionVC() throws Exception {
 		
 		func = new Function();
-		
-		
+			
 		this.fpc = new FunctionProviderConverter();
 		this.fpc.setProvider(this);
 	}
@@ -50,15 +49,15 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	}
 	
 	public FunctionProviderConverter getConverter() {
-		return fpc;
+		return this.fpc;
 	}
 	
 	public Function getFunc() {
-		return func;
+		return this.func;
 	}
 
 	public void setFunc(Function func) {
 		this.func = func;
 	}
-
+	
 }
