@@ -116,7 +116,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		if (page.getId() > -1) {
 			int index = indexOfPageById(page.getId(), pages);
 			if (index > -1) {
-				pages.remove(index).getMsg();
+				pages.remove(index);
 			}
 		}
 		resetPage();

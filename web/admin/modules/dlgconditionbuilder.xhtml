@@ -28,24 +28,46 @@
 	<p:dialog id="condBuilderDialog" showEffect="fade" hideEffect="fade" widgetVar="condBuilderDlg" header="Condition" minHeight="40" closable="false">
 		<p:fieldset legend="Condition" toggleable="true" toggleSpeed="500">
 			<p:panelGrid columns="2">
-				<h:outputText value="Function Provider: " />
-				<p:selectOneMenu value="#{funcVC.func}" converter="#{funcVC.converter}" panelStyle="width: 180px" effect="fade" var="f">
-			        <f:selectItems value="#{funcFC.functions}" var="function" itemLabel="#{function.name}" itemValue="#{function}" />
-			        <p:ajax event="change" update="@this" />		
-			        <p:column style="width: 100%">
-			            <h:outputText value="#{f.name}" />
-			        </p:column>
+				<p:outputLabel for="chooseFPBtn" value="Function Provider: " />
+				<p:commandButton id="chooseFPBtn" value="Choose" icon="ui-icon-search" onclick="PF('funcProvDlg').show()" />
+				
+				<p:outputLabel for="comparatorMenu" value="Comparator: " />
+				<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}" style="width: 50px;">
+					<f:selectItem itemLabel="&#62;" itemValue="&#62;" /> 			<!-- > -->
+					<f:selectItem itemLabel="&#60;" itemValue="&#60;" />			<!-- < -->
+					<f:selectItem itemLabel="&#61;&#61;" itemValue="&#61;&#61;" />	<!-- == -->
+					<f:selectItem itemLabel="&#33;&#61;" itemValue="&#33;&#61;" />	<!-- != -->
+					<f:selectItem itemLabel="&#62;&#61;" itemValue="&#62;&#61;" />	<!-- >= -->
+					<f:selectItem itemLabel="&#60;&#61;" itemValue="&#60;&#61;" />	<!-- <= -->
 				</p:selectOneMenu>
 				
-				<h:outputText value="Comparator: " />
-				<h:outputText>do it selectonemenu
-				</h:outputText>
-				
-				<h:outputText value="Value: " />
-				<p:inputText id="condValue" required="true" />
-				<p:watermark for="condValue" value="Type some value..." />
+				<p:outputLabel for="condValue" value="Value: " />
+				<p:inputText id="condValue" value="#{condVC.condition.value}" />				
 			</p:panelGrid>
+			
+			<p:watermark for="condValue" value="Enter some value..." />
+			<p:commandButton id="saveCondBtn" value="Save" icon="ui-icon-circle-arrow-s" update=":tbView:coList" actionListener="#{condVC.addCondition}" style="maring-top: 10px; float: right;" />
 		</p:fieldset>
+		
+		<p:panelGrid columns="4">
+			<p:commandButton value="Add" icon="ui-icon-circle-plus" />
+			<p:commandButton value="Delete" icon="ui-icon-trash" />
+			<p:commandButton value="Add [and]" update=":tbView:coList" actionListener="#{condVC.addCondition(true)}" />
+			<p:commandButton value="Add [or]" update=":tbView:coList" actionListener="#{condVC.addCondition(false)}" />
+		</p:panelGrid>
+		
+		<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
+			<p:column>			
+				<h:outputText value="#{c.comparator}" />
+			</p:column>
+		</p:orderList>
+		
+		<p:panelGrid columns="2" style="float: right;">
+    		<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:formDlgHints" onclick="PF('condBuilderDlg').hide()" />
+      		<p:commandButton value="Cancel" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
+       	</p:panelGrid>
 	</p:dialog>
+	
+	<ui:include src="dlgfuncprov.xhtml" />
 	
 </ui:composition>

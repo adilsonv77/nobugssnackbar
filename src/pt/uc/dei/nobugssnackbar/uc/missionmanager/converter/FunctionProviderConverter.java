@@ -19,14 +19,14 @@ public class FunctionProviderConverter implements Converter, Serializable {
 	
 	@Override
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
+		long id = Long.parseLong(value);
+	
 		try {
-   		   long id = Long.parseLong(value);
-		
 			for (Function f : fp.getFunctions())
 				if (f.getId() == id)
 					return f;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Function Provider Converter - Fault!");
 		}
 		return null;
 	}
