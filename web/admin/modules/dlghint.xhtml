@@ -18,11 +18,12 @@
 				</p:selectOneRadio>
 			        
 			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
-			    <p:commandButton id="btnChooseCategory" value="Choose" oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search
- "/>
+			    <p:commandButton id="btnChooseCategory" value="Choose" 
+			    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
 			    
 			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
-			    <p:commandButton id="btnBuildCondition" value="Build" oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
+			    <p:commandButton id="btnBuildCondition" value="Build" 
+			    	oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
 			    
 			    <p:outputLabel for="hintTime" value="Time"/>
 			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
@@ -31,23 +32,28 @@
 			    <p:inputText id="hintCondition" value="#{hintView.hint.condition}"/>		        
 		   
 			</p:panelGrid>
-		        
-		    <p:outputLabel for="hintText" value="Text explanation:"/>
-		    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
-		        
-			<p:commandButton value="OK" id="btnAddEditHint" actionListener="#{hintView.addEditHint}" 
-			oncomplete="PF('hintDialog').hide()" update=":tbView:formDTT,:tbView:formDTE"/>  
 			
-			<p:commandButton value="Cancel" id="btnCancelHint" actionListener="#{hintView.newHint}" 
-			oncomplete="PF('hintDialog').hide()"/> 
+		    <p:panelGrid columns="1">
+			    <p:outputLabel for="hintText" value="Text explanation:"/>
+			    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
+		    </p:panelGrid>
+		    		    
+		    <p:panelGrid columns="3" style="float: right;">    
+				<p:commandButton value="OK" id="btnAddEditHint" icon="ui-icon-check" actionListener="#{hintView.addEditHint}" 
+					oncomplete="PF('hintDialog').hide()" update=":tbView:formDTT,:tbView:formDTE"/>  
 			
-			<p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" oncomplete="PF('hintCategoryDialog').show()"/>
+				<p:commandButton value="Cancel" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
+					oncomplete="PF('hintDialog').hide()"/> 
+			
+				<!-- <p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" 
+					oncomplete="PF('hintCategoryDialog').show()"/> -->
+			</p:panelGrid>
 	    </h:form>	
 	</p:dialog>	
 
-	<ui:include src="dlghintcategoryhelper.xhtml"/>
-		
 	<ui:include src="dlgconditionbuilder.xhtml"/>
+	
+	<ui:include src="dlghintcategoryhelper.xhtml"/>		
 		
 	
 </ui:composition>

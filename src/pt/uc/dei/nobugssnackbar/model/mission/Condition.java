@@ -8,26 +8,10 @@ public class Condition implements java.io.Serializable {
 	private long id;
 	private String comparator;
 	private String logicalOperator;
-	private String functionName; // maybe it should be Function
+	private String functionName = ""; // maybe it should be Function
 	private String value;
+	private String conditionString;
 	
-	@Override
-	public String toString() {
-		
-		if (!logicalOperator.isEmpty()) {
-			return logicalOperator;
-		}
-
-		StringBuilder result = new StringBuilder();
-		result.append(functionName);
-		result.append("()");
-		result.append(" ");
-		result.append(comparator);
-		result.append(" ");
-		result.append(value);
-		
-		return result.toString();
-	}
 	
 	public String getFunction() {
 		return functionName;
@@ -60,4 +44,18 @@ public class Condition implements java.io.Serializable {
 		this.logicalOperator = logicalOperator;
 	}
 	
+	public String getConditionString() {
+	
+		if (logicalOperator != null && !logicalOperator.isEmpty()) {
+			conditionString = logicalOperator;
+		}
+		else {
+			conditionString = functionName + "() " + comparator + " " + value;
+		}
+		
+		return conditionString;
+	}
+	public void setConditionString(String conditionString) {
+		this.conditionString = conditionString;
+	}
 }

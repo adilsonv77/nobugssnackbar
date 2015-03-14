@@ -4,56 +4,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-<!-- You have to remove <h:head> if this page (tab) is
-	 not at the first position in tabView in index.xhtml
--->
-
-<h:head>
-	<style type="text/css">
-		.ui-orderlist-list {
-			width: 515px !important;
-			height: 216px !important;
-		}
-		.ui-orderlist-list li.ui-orderlist-item {
-			display: inline-block;
-			border: 1px solid lightgray;
-			width: 150px;
-			height: 200px;
-			margin: 5px;
-			word-break: break-all;
-			overflow-y: hidden;
-		}
-		.ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
-			display: block;
-			width: 148px;
-			height: 198px;
-			text-decoration: none;
-		}
-		.ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
-			display: inline;
-			visibility: hidden;
-		}
-		.ui-orderlist-list li.ui-orderlist-item:hover .ui-commandlink {
-			visibility: visible;
-		}
-		.ui-orderlist-list li.ui-orderlist-item .ui-commandlink span {
-			float: right;
-		}
-		.ui-orderlist-controls .ui-orderlist-button-move-up > span {
-			background-position: -96px -48px !important;
-		}
-		.ui-orderlist-controls .ui-orderlist-button-move-top > span {
-			background-position: -240px -48px !important;
-		}
-		.ui-orderlist-controls .ui-orderlist-button-move-down > span {
-			background-position: -32px -48px !important;
-		}
-		.ui-orderlist-controls .ui-orderlist-button-move-bottom > span {
-			background-position: -208px -48px !important;
-		}
-	</style>	
-</h:head>
 <h:body>
 	<p:panelGrid columns="2" style="margin-bottom: 50px;">
 		<span class="my-lightbulb"></span>
@@ -65,7 +15,7 @@
 	<h:form id="explForm">
 		<p:growl id="msgs" showDetail="true" />
 		
-		<div>
+		<div class="orderListDiv">
 			<p:commandButton id="addPageBtn" update=":tbView:explForm" actionListener="#{explVC.resetPage}">
 				<f:attribute name="value" value="Click to add a new page" />
 				<f:attribute name="style" value="width: 156px; height: 217px; float: left; margin: 3px 2px 2px 8px" />

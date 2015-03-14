@@ -33,12 +33,10 @@ public class FunctionProviderConverter implements Converter, Serializable {
 
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null) {
+        if (object != null) {
             return String.valueOf(((Function) object).getId());
         }
-        else {
-            return null;
-        }
+        return null;
 	}
 
 	public void setProvider(IFunctionProvider provider) {

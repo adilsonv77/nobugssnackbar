@@ -1,37 +1,79 @@
-*{
-	margin: 0;
-	padding: 0;
+body {
+	background-color: #f5f5f5;
 }
-h3{
-	display:inline-block;
-	color: red;
+.my-lightbulb {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background: transparent url('../../images/light-bulb-icon.png') no-repeat local center;
+	background-size: 36px 36px;
 }
-
-#missionList{
-	margin: 0;
-	padding:0;
-	width: 100%;
+#tbView {
+	border-bottom: 0 !important;
 }
-
-#layoutLeft{
-	margin: 0;
-	padding: 0;
-	width: 100%;
+#missionPnl {
+	border: none; 
+	border-right: 1px solid #ddd;
 }
-
-footer{
-	position:absolute;
-	bottom:0;
-	float: left;
-	border: 1px solid;
-	display: block;
-	width: 99%;  	
-}
-#footerButtons{
-	border: 1px solid;
+#addMissionBtn, #footerBtnPnl {
 	float: right;
-	
 }
-#footerButtons :FIRST-CHILD {
-	margin-right: 15px;
+.ui-panelgrid .ui-widget-content, .ui-panelgrid .ui-panelgrid-cell {
+	border: none !important;
 }
+.clear:after {
+	content: '';
+ 	display: block;
+ 	clear: both;
+}
+.hide-column-names table thead tr {
+	display: none;
+}
+.ui-tabs-nav {
+	border-width: 0 !important;
+}
+  	
+/*******************Start Explanation page css******************/
+
+.orderListDiv .ui-orderlist-list {
+	width: 515px !important;
+	height: 216px !important;
+}
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item {
+	display: inline-block;
+	border: 1px solid lightgray;
+	width: 150px;
+	height: 200px;
+	margin: 5px;
+	word-break: break-all;
+	overflow-y: hidden;
+}
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
+	display: block;
+	width: 148px;
+	height: 198px;
+	text-decoration: none;
+}
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
+	display: inline;
+	visibility: hidden;
+}
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item:hover .ui-commandlink {
+	visibility: visible;
+}
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink span {
+	float: right;
+}
+.orderListDiv .ui-orderlist-controls .ui-orderlist-button-move-up > span {
+	background-position: -96px -48px !important;
+}
+.orderListDiv .ui-orderlist-controls .ui-orderlist-button-move-top > span {
+	background-position: -240px -48px !important;
+}
+.orderListDiv .ui-orderlist-controls .ui-orderlist-button-move-down > span {
+	background-position: -32px -48px !important;
+}
+.orderListDiv .ui-orderlist-controls .ui-orderlist-button-move-bottom > span {
+	background-position: -208px -48px !important;
+}
+/*******************End Explanation page css******************/

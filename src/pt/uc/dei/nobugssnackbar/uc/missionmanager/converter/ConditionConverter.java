@@ -29,12 +29,10 @@ public class ConditionConverter implements Converter, Serializable  {
 
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null) {
+        if (object != null) {
             return String.valueOf(((Condition) object).getId());
         }
-        else {
-            return null;
-        }
+        return null;
 	}
 
 	public void setProvider(IConditionProvider provider) {
