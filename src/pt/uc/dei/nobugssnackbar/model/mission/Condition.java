@@ -1,5 +1,7 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import pt.uc.dei.nobugssnackbar.model.Function;
+
 
 public class Condition implements java.io.Serializable {
 
@@ -8,16 +10,16 @@ public class Condition implements java.io.Serializable {
 	private long id;
 	private String comparator;
 	private String logicalOperator;
-	private String functionName = ""; // maybe it should be Function
+	private Function function;
 	private String value;
 	private String conditionString;
 	
 	
-	public String getFunction() {
-		return functionName;
+	public Function getFunction() {
+		return function;
 	}
-	public void setFunction(String functionName) {
-		this.functionName = functionName;
+	public void setFunction(Function function) {
+		this.function = function;
 	}
 	public String getValue() {
 		return value;
@@ -46,16 +48,15 @@ public class Condition implements java.io.Serializable {
 	
 	public String getConditionString() {
 	
-		if (logicalOperator != null && !logicalOperator.isEmpty()) {
+		if (logicalOperator != null && 
+			!logicalOperator.isEmpty()) {
+			
 			conditionString = logicalOperator;
 		}
 		else {
-			conditionString = functionName + "() " + comparator + " " + value;
+			conditionString = function.getName() + "() " + comparator + " " + value;
 		}
 		
 		return conditionString;
-	}
-	public void setConditionString(String conditionString) {
-		this.conditionString = conditionString;
 	}
 }

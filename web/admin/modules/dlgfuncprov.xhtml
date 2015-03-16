@@ -5,8 +5,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" showEffect="fade" hideEffect="fade" header="Choose Function Provider" minHeight="40">
-		<h:form>
-		
+		<h:form id="formFuncProv">
+			<div class="orderListDiv">
+				<p:orderList id="fpList" value="#{funcVC.functions}" var="f" itemValue="#{f}" converter="#{funcVC.converter}" controlsLocation="none">      		
+					<p:column>
+						<p:commandLink title="Select"
+							actionListener="#{condVC.getSelectedFunction}"
+							update=":tbView:formCondBuilder" 
+							ondblclick="PF('funcProvDlg').hide()">
+							<f:param name="funcId" value="#{f.id}" />
+							<f:param name="funcName" value="#{f.name}"/>
+							<f:param name="funcReturnType" value="#{f.returnType}"/>
+							<f:param name="funcDescription" value="#{f.description}"/>
+
+							<b><h:outputText value="#{f.name}:#{f.returnType}" /></b>
+							<br/>
+							<h:outputText value="#{f.description}"/>
+						</p:commandLink>
+					</p:column>
+				</p:orderList>
+			</div>
 		</h:form>
 	</p:dialog>
 	

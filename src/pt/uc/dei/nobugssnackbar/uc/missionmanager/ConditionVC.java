@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
 
@@ -21,10 +22,6 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	private long idCounter;
 	private Condition condition;
 	private List<Condition> conditionList;
-	public void setConditionList(List<Condition> conditionList) {
-		this.conditionList = conditionList;
-	}
-
 	private ConditionConverter converter;
 	
 	public ConditionVC() {
@@ -47,6 +44,37 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 		}
 		
 		return result;
+	}
+	
+	public void getSelectedFunction() {
+		Function function = new Function();
+		
+		function.setId(Integer.parseInt(
+				FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("funcId")));
+		
+		function.setName(FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("funcName"));
+		
+		function.setReturnType(FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("funcReturnType"));
+		
+		function.setDescription(FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("funcDescription"));
+		
+		condition.setFunction(function);
 	}
 	
 	public void getConditionById() {
@@ -72,23 +100,98 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	}
 	
 	public void addCondition() {
-		// check fields
-		if (//condition.getFunction() != null && 
-			//!condition.getFunction().isEmpty() &&
+		if (checkFields()) {
+			
+			condition.setId(idCounter++);
+			condition.setLogicalOperator(null); // maybe this is not necessary
+			conditionList.add(condition);
+			
+			condition = new Condition();
+		}
+	}
+	
+	public boolean checkCondition() {
+		boolean result = false;
+		for (Condition c : conditionList) {
+			if (c.getLogicalOperator() == null) {
+				result = !result;
+			}
+		}
+		
+		String text = "";
+		if (!result) {
+			text = (conditionList.size() > 0) ? "Wrong condition!" : "Empty condition list!";
+		}
+		
+		FacesMessage msg = new FacesMessage("", text);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+		return result;
+	}
+	
+	public boolean checkFields() {
+		String text = "";
+		
+		if (condition.getFunction() != null && 
 			condition.getComparator() != null && 
 			!condition.getComparator().isEmpty() &&
 			condition.getValue() != null && 
 			!condition.getValue().isEmpty()) {
 			
-			condition.setId(idCounter++);
-			conditionList.add(condition);
-			
-			condition = new Condition();
+			switch (condition.getFunction().getReturnType()) {
+			case "int":
+				try {
+					Integer.parseInt(condition.getValue());
+					return true;
+				} catch (Exception e) {
+					text = "\"" + condition.getValue() + "\" is not integer!";
+					break;
+				}
+			case "float":
+				try {
+					Float.parseFloat(condition.getValue());
+					return true;
+				} catch (Exception e) {
+					text = "\"" + condition.getValue() + "\" is not float!";
+					break;
+				}
+			case "double":
+				try {
+					Double.parseDouble(condition.getValue());
+					return true;
+				} catch (Exception e) {
+					text = "\"" + condition.getValue() + "\" is not double!";
+					break;
+				}
+			case "boolean":
+					boolean r = condition.getValue().equals("true") || condition.getValue().equals("false");
+					
+					if (r == true) {
+						if (!condition.getComparator().equals("==") && 
+							!condition.getComparator().equals("!=")) {
+							text = "\"" + condition.getComparator() + "\" cannot be used with boolean!";
+						}							
+						else {
+							return true;	
+						}
+							
+					}
+					else {
+						text = "\"" + condition.getValue() + "\" is not boolean!";
+					}
+					break;
+			case "String":
+					return true;
+			}
 		}
 		else {
-			FacesMessage msg = new FacesMessage("", "Please fill out all required fields!");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+			text = "Please fill out all required fields!";
 		}
+		
+		FacesMessage msg = new FacesMessage("", text);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+		return false;
 	}
 	
 	public void addCondition(boolean logicalOperator) {
@@ -122,6 +225,10 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	@Override
 	public List<Condition> getConditions() {
 		return conditionList;
+	}
+	
+	public void setConditionList(List<Condition> conditionList) {
+		this.conditionList = conditionList;
 	}
 	
 	public void setConditions(List<Condition> conditions) {

@@ -6,7 +6,6 @@ import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
 
-/* It must be here because it is  stored in database */
 
 @JdbcTable(name="functionsprovider")
 public class Function implements Serializable {

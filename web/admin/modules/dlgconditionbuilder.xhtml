@@ -3,28 +3,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-		
-<!--
-////////// TODO //////////
-
-	0) Load the functions from DB
-	1) Function Provider class: name, return type, description;
-	2) inputText - validate inner text with 
-	   the return type of chosen function;
-	3) Validate the condition in the list 
-	   when the button OK is clicked;
- 	3.1) if it is valid then return the list as string
- 	3.2) else show message about the problem (dialog)
- 	
-//////////////////////////
-	Which UI element I can use
-	
-		* fieldset
-		* orderList
-		* selectOneMenu
-		* inputText, watermark
-		* commandButton
--->
 	
 	<p:dialog id="condBuilderDialog" showEffect="fade" hideEffect="fade" widgetVar="condBuilderDlg" 
 		header="Condition" minHeight="40" closable="false">
@@ -34,7 +12,11 @@
 			<p:fieldset legend="Condition" toggleable="true" toggleSpeed="500">
 				<p:panelGrid columns="2">
 					<p:outputLabel for="chooseFPBtn" value="Function Provider: " />
-					<p:commandButton id="chooseFPBtn" value="Choose" icon="ui-icon-search" onclick="PF('funcProvDlg').show()" />
+					<p:panelGrid columns="2">
+						<p:commandButton id="chooseFPBtn" value="Choose" 
+							icon="ui-icon-search" onclick="PF('funcProvDlg').show()"/>
+						<h:outputText rendered="#{condVC.condition.function != null}" value="#{condVC.condition.function.name}()"/>
+					</p:panelGrid>
 					
 					<p:outputLabel for="comparatorMenu" value="Comparator: " />
 					<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}" style="width: 50px;">
@@ -52,7 +34,7 @@
 
 				<p:watermark for="condValue" value="Enter some value..." />
 				<p:commandButton id="saveCondBtn" value="Save" icon="ui-icon-circle-arrow-s" 
-					update=":tbView:formCondBuilder, :tbView:formCondBuilder:growlCB" 
+					update=":tbView:formCondBuilder" 
 					actionListener="#{condVC.addCondition}" style="maring-top: 10px; float: right;" />
 			</p:fieldset>
 				
@@ -73,7 +55,9 @@
 			</p:orderList>
 			
 			<p:panelGrid columns="2" style="float: right;">
-	    		<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:formDlgHints" onclick="PF('condBuilderDlg').hide()" />
+	    		<p:commandButton value="OK" icon="ui-icon-check" 
+	    			update=":tbView:formDlgHints, :tbView:formCondBuilder" 
+	    			onclick="PF('condBuilderDlg').hide()"/>
 	      		<p:commandButton value="Cancel" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
 	       	</p:panelGrid>
     	</h:form>
