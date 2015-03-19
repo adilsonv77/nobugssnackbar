@@ -14,6 +14,8 @@ public interface GameDao {
 
 	void updateUserLastTime(User user) throws Exception ;
 
+	void insertUser(String userNick, String userPassword, String userName, String sex, String userMail, long classes[]) throws Exception;
+
 	String[][] loadMission(User user, int clazzId, int levelId, int missionIdx) throws Exception ;
 
 	void insertAnswer(long questionnaireId, long questionId, long userId, String answer) throws Exception ;

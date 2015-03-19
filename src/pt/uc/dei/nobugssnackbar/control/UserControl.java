@@ -18,6 +18,7 @@ import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
 import pt.uc.dei.nobugssnackbar.util.HexImage;
+import pt.uc.dei.nobugssnackbar.util.SendMail;
 
 @RemoteProxy(scope=ScriptScope.SESSION)
 public class UserControl {
@@ -266,12 +267,14 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void registerUser(String lang) throws Exception {
+	public void registerUser(String userNick, String userPassword, String userName, String sex, String lang, String userMail) throws Exception {
 		// according the language
 		long clazz = gameDao.getDefaultClass(lang);
 		
-	//	gameDao.insertUser(userNick, userPassword, userName, sex, new long[]{clazz});
+		gameDao.insertUser(userNick, userPassword, userName, sex, userMail, new long[]{clazz});
 		
 		// send a welcome email
+		SendMail mail = new SendMail();
+		mail.send(userMail);
 	}
 }

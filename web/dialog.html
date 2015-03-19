@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dialog Box fot Sign Up</title>
+<title>Dialog Box for Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
 <link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
 <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
@@ -11,50 +11,73 @@
 <body>
 	<form id="dialog" method="post">
 		<div align="center" style="padding: 15px 5px 5px 5px; margin: 1px">
-			<input class="easyui-validatebox textbox" type="text" maxlength="30"
-				size="10"
+			<input class="easyui-validatebox textbox" type="text" id="nickname"
+				maxlength="30" size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Nickname" name="nickname"  data-options="required:true,validType:'userAllowed'"></input>
+				placeholder="Nickname" name="nickname"
+				data-options="required:true,validType:'userAllowed'" autofocus></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
-			<input class="easyui-validatebox" type="password"
-				maxlength="30" size="10"
+			<input class="easyui-validatebox" type="password" maxlength="30"
+				data-options="required:true,validType:'passwStrength'" size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				placeholder="Password" name="password" id="password" required></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
-			<input class="easyui-validatebox" type="password"
-				maxlength="30" size="10"
+			<input class="easyui-validatebox" type="password" maxlength="30"
+				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				placeholder="Confirm Password" name="confirmpassword"
-				id="confirmpassword" required="required" validType="equals['#password']"></input>
+				id="confirmpassword" required="required"
+				validType="equals['#password']"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
 			<input class="easyui-validatebox" type="text" maxlength="30"
 				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Email" name="email"
+				placeholder="Email" name="email" id="email"
 				data-options="required:true,validType:'email'"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
 			<input class="easyui-validatebox textbox" type="text" maxlength="30"
 				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Complete Name" name="completename" required></input>
+				placeholder="Complete Name" name="completename" id="completename"
+				required></input>
 		</div>
-		<div align="center" style="padding: 5px; margin: 1px">
-			<select name="gender"><option value="male">Male</option>
-				<option value="female">Female</option></select>
+		<div align="center"
+			style="text-align: center; padding: 5px; margin: 5px 5px 5px 33px; width: 300px; height: 25px; border: 1px groove #2E9AFE">
+			<span class="panel-body panel-body-noheader panel-body-noborder"
+				style="font-size: 20px">Select your gender: </span> <input
+				class="easyui-validatebox" type="radio" name="gender" value="male"
+				id="gender" style="font-size: 15px"
+				data-options="validType:'requireRadio[\'input[name=gender]\', \'gender\']'"><span
+				style="font-size: 15px"><b>Male</b></span> <input
+				class="easyui-validatebox" type="radio" name="gender" value="female"
+				id="gender"><span style="font-size: 15px"><b>Female</b></span>
 		</div>
-
+		<div align="center" style="text-align: center">
+			<b><a href="javascript:void(0)" class="easyui-linkbutton"
+				style="margin: 10px" onclick="submitForm()"><font
+					size="3" id="signup">Sign Up</font></a></b> <b><a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				style="margin: 10px" onclick="clearForm()"><font size="3">Clear</font></a></b>
+		</div>
 	</form>
-	<div align="center" style="text-align: center; margin: 10px">
-		<b><a href="javascript:void(0)" class="easyui-linkbutton"
-			onclick="submitForm()"><font size="3">Sign Up</font></a></b> <b><a
-			href="javascript:void(0)" class="easyui-linkbutton"
-			onclick="clearForm()"><font size="3">Cancel</font></a></b>
-	</div>
 	<script>
+		$.extend($.fn.validatebox.defaults.rules, {
+			requireRadio : {
+				validator : function(value, param) {
+					var input = $(param[0]);
+					input.off('.requireRadio').on('click.requireRadio',
+							function() {
+								$(this).focus();
+							});
+					return $(param[0] + ':checked').val() != undefined;
+				},
+				message : 'Please choose option for your {1}.'
+			}
+		});
 		$.extend($.fn.validatebox.defaults.rules, {
 			equals : {
 				validator : function(value, param) {
@@ -67,15 +90,82 @@
 			userAllowed : {
 				validator : function(value) {
 					var ok = false;
-					UserControl.isUserAllowed(value, 
-							{callback:function(ret) {ok = ret;}, async:false}
-							);
+					UserControl.isUserAllowed(value, {
+						callback : function(ret) {
+							ok = ret;
+						},
+						async : false
+					});
 					return ok;
 				},
 				message : "User doesn't allowed."
 			}
 		});
-		
+
+		$.extend($.fn.validatebox.defaults.rules, {
+			passwStrength : {
+				validator : function(value) {
+
+					var password = value;
+
+					// Calculate strength
+					var strength = 0;
+
+					var points = 20; // points per test
+
+					var pattern1 = /[A-Z]/g; // Contains uppercase letters
+					var pattern2 = /[a-z]/g; // Contains lowercase letters
+					var pattern3 = /[0-9]/g; // Contains digits
+					var pattern4 = /[~`!@#$%^&*_+-]/g; // Contains a special character
+
+					if (password.length >= 7) {
+						strength += points;
+					}
+					if (password.match(pattern1) != null) {
+						strength += points;
+					}
+					if (password.match(pattern2) != null) {
+						strength += points;
+					}
+					if (password.match(pattern3) != null) {
+						strength += points;
+					}
+					if (password.match(pattern4) != null) {
+						strength += points;
+					}
+					if ((password.length >= 7)
+							&& (password.match(pattern1) != null)
+							&& (password.match(pattern2) != null)
+							&& (password.match(pattern3) != null)
+							&& (password.match(pattern4) != null)) {
+						return true;
+					}
+
+					var msgs = [ "Your password is empty.", "Easy to guess",
+							"Weak", "Average", "Strong", "Very strong" ];
+
+					if (password == "") {
+						this.myMsg = msgs[0];
+					} else {
+						var index = (strength - 20) / 20;
+						if (index == -1)
+							this.myMsg = msgs[1];
+						else {
+							this.myMsg = msgs[index + 1];
+
+						}
+					}
+
+					return false;
+				},
+				myMsg : "",
+
+				message : function() {
+					return this.myMsg;
+				}
+			}
+		});
+
 		$('#dialog').form(
 				{
 					onSubmit : function() {
@@ -83,17 +173,44 @@
 					},
 					success : function() {
 						$.messager.alert('Info',
-								'Your registration was successful!', 'info');
+								'Your registration was successful! Please, check your email!', 'info');
+						
+						var nickName = document.getElementById('nickname').value;
+						var userPassword = document.getElementById('password').value;
+						var userName = document.getElementById('completename').value;
+						var userMail = document.getElementById('email').value;
+						var sex = document.getElementById('gender').value;
+						
+						$.messager.alert(nickName.value);
+						
+						UserControl.registerUser(nickName, userPassword, userName, sex,
+								lang, userMail);
+
+						
 						$('#dialog').form('clear');
 						$('#sign').tooltip('hide');
 					}
 				});
+
 		function submitForm() {
 			$('#dialog').form('submit');
-		}
+		};
+
 		function clearForm() {
 			$('#dialog').form('clear');
-		}
+		};
+		/*function registerUser() {
+			var nickName = document.getElementById("nickname").value;
+			var userPassword = document.getElementById("password").value;
+			var userName = document.getElementById("completename").value;
+			var userMail = document.getElementById("email").value;
+			var sex = document.getElementById("gender").value;
+
+			UserControl.registerUser(nickName, userPassword, userName, sex,
+					lang, userMail);
+			$.messager.alert('Info',
+					'User is registered. Please, check your email!', 'info');
+		};*/
 	</script>
 </body>
 </html>

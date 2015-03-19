@@ -97,7 +97,7 @@ public class GameJdbcDao implements GameDao {
 		}
 	}
 	
-	public void insertUser(String userNick, String userPassword, String userName, String sex, String userMail, int classes[]) throws SQLException {
+	public void insertUser(String userNick, String userPassword, String userName, String sex, String userMail, long classes[]) throws SQLException {
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
@@ -123,7 +123,7 @@ public class GameJdbcDao implements GameDao {
 				st.close();
 
 				ps = bdCon.prepareStatement("insert into classesusers (classid, userid) values (?, ?)");
-				for (int classId : classes) {
+				for (long classId : classes) {
 				
 					ps.setLong(1, classId);
 					ps.setLong(2, userid);
@@ -1078,7 +1078,7 @@ public class GameJdbcDao implements GameDao {
 			ps.setString(1, "%" + lang + "%");
 			
 			ResultSet rs = ps.executeQuery();
-			if (!rs.next())
+			if (rs.next())
 				ret = rs.getLong(1);
 			ps.close();
 			
