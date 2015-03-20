@@ -1,19 +1,23 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hint implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// #region private variables
 	private String category;
 	private int time;
-	private String condition;
 	private String text;
 	private boolean type;
+	private List<Condition> conditions;
+	private String conditionsAsString;
 	// #end
 	public Hint(){
 		category = "";
 		time = 0;
-		condition = "";
+		conditions = new ArrayList<>();
 		text = "";
 		type = false;
 	}
@@ -22,8 +26,8 @@ public class Hint implements java.io.Serializable {
 	public String getCategory() {
 		return category;
 	}
-	public String getCondition() {
-		return condition;
+	public List<Condition> getConditions() {
+		return conditions;
 	}
 	public String getText() {
 		return text;
@@ -34,8 +38,8 @@ public class Hint implements java.io.Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setConditions(List<Condition> conditions) {
+		this.conditions = conditions;
 	}
 	public void setText(String text) {
 		this.text = text;
@@ -44,12 +48,27 @@ public class Hint implements java.io.Serializable {
 		this.time = time;
 	}	
 
-	
 	public void setType(boolean type){
 		this.type = type;
 	}
 	public boolean getType(){
 		return type;
+	}
+
+	public String getConditionsAsString() {
+		StringBuilder result = new StringBuilder();
+		
+		for (Condition c : conditions) {
+			result.append(c.getConditionString());
+			result.append(" ");
+		}
+		conditionsAsString = result.toString().trim();
+		
+		return conditionsAsString;
+	}
+
+	public void setConditionsAsString(String conditionsAsString) {
+		this.conditionsAsString = conditionsAsString;
 	}
 	// #end
 }

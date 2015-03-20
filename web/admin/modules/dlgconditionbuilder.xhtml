@@ -56,8 +56,8 @@
 			
 			<p:panelGrid columns="2" style="float: right;">
 	    		<p:commandButton value="OK" icon="ui-icon-check" 
-	    			update=":tbView:formDlgHints, :tbView:formCondBuilder" 
-	    			onclick="PF('condBuilderDlg').hide()"/>
+	    			actionListener="#{condVC.checkCondition}"
+	    			update=":tbView:formDlgHints, :tbView:formCondBuilder"/>
 	      		<p:commandButton value="Cancel" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
 	       	</p:panelGrid>
     	</h:form>

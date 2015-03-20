@@ -22,15 +22,15 @@
 			    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
 			    
 			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
-			    <p:commandButton id="btnBuildCondition" value="Build" 
-			    	oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
+			    <p:panelGrid columns="2">
+			    	<p:commandButton id="btnBuildCondition" value="Build" 
+			    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
+			    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
+			    </p:panelGrid>
 			    
 			    <p:outputLabel for="hintTime" value="Time"/>
-			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
-			    
-			    <p:outputLabel for="hintCondition" value="Condition:"/>
-			    <p:inputText id="hintCondition" value="#{hintView.hint.condition}"/>		        
-		   
+			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>
+			    		        
 			</p:panelGrid>
 			
 		    <p:panelGrid columns="1">
@@ -45,8 +45,8 @@
 				<p:commandButton value="Cancel" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 					oncomplete="PF('hintDialog').hide()"/> 
 			
-				<!-- <p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" 
-					oncomplete="PF('hintCategoryDialog').show()"/> -->
+				<p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" 
+					oncomplete="PF('hintCategoryDialog').show()"/>
 			</p:panelGrid>
 	    </h:form>	
 	</p:dialog>	

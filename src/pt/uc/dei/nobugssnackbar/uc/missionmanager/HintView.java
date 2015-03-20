@@ -16,7 +16,6 @@ import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
 @SessionScoped
-// only one scope !!! @ViewScoped
 public class HintView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +33,7 @@ public class HintView implements Serializable {
 	}
 	
 	public void setHint(Hint hint) {
-		if(null != hint){
+		if (null != hint){
 			this.hint = hint;
 		}
 	}

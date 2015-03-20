@@ -1,12 +1,15 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.model.Function;
@@ -20,21 +23,45 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	
 	private Function func;
 	private List<Function> functions;
+	private List<Function> functionsList; // constant
+	
+	@ManagedProperty(value="#{condVC}")
+	private ConditionVC cvc;
 	
 	@ManagedProperty(value="#{factoryDao.functionProviderDao}")
 	private transient FunctionProviderDao functionProviderDao;
 	private FunctionProviderConverter fpc;
 	
+	private String filterNameStr;
 	
 	public FunctionVC() throws Exception {
 		
 		func = new Function();
 		this.fpc = new FunctionProviderConverter();
 		this.fpc.setProvider(this);
+		cvc = new ConditionVC();
+	}
+	
+	public void handleKeyUpEvent() throws Exception {		
+		if (filterNameStr != null && !filterNameStr.isEmpty()) {
+
+			List<Function> l = new ArrayList<>();
+			
+			for (Function f : functionsList) {
+				boolean result = f.getName().toLowerCase().contains(filterNameStr.toLowerCase());
+				if (result) {
+					l.add(f);
+				}
+			}
+			functions = l;
+		}
+		else {
+			functions = functionsList;
+		}
 	}
 	
 	public void getFunctionById(){
-		int selectedConditionID = Integer.parseInt(
+		int selectedFunctionID = Integer.parseInt(
 				FacesContext.
 				getCurrentInstance().
 				getExternalContext().
@@ -45,7 +72,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 		func = new Function();
 		
 		for (int i = 0; i < functions.size(); i++) {
-			if (functions.get(i).getId() == selectedConditionID) {
+			if (functions.get(i).getId() == selectedFunctionID) {
 				func.setId(functions.get(i).getId());
 				func.setName(functions.get(i).getName());
 				func.setReturnType(functions.get(i).getReturnType());
@@ -53,17 +80,23 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 				break;
 			}
 		}
+		
+		cvc.getCondition().setFunction(func);
+		RequestContext.getCurrentInstance().execute("PF('funcProvDlg').hide()");
+		
+		filterNameStr = "";
 	}
 	
 	@Override
 	public List<Function> getFunctions() throws Exception {
-		if (functions == null)
-			functions = functionProviderDao.list();
+		if (functions == null) {
+			functionsList = functionProviderDao.list();
+			functions = functionsList;
+		}
 
 		return functions;
 	}
 	
-	/* It is necessary for reordering of the list using orderList */
 	public void setFunctions(List<Function> functions) {
 		this.functions = functions;
 	}
@@ -87,5 +120,19 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	public void setFunc(Function func) {
 		this.func = func;
 	}
-	
+	public ConditionVC getCvc() {
+		return cvc;
+	}
+
+	public void setCvc(ConditionVC cvc) {
+		this.cvc = cvc;
+	}
+
+	public String getFilterNameStr() {
+		return filterNameStr;
+	}
+
+	public void setFilterNameStr(String filterNameStr) {
+		this.filterNameStr = filterNameStr;
+	}
 }

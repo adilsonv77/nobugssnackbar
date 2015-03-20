@@ -36,7 +36,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="Action">
-		        <h:outputText value="#{hint.condition}" />
+		        <h:outputText value="#{hint.conditionsAsString}" />
 		    </p:column>
 		    <p:column headerText="Edit">
 		    
@@ -68,7 +68,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="Action">
-		        <h:outputText value="#{error.condition}" />
+		        <h:outputText value="#{error.conditionsAsString}" />
 		    </p:column>
 		    <p:column headerText="Edit">
 		        <p:commandButton value="Edit" oncomplete="PF('hintDialog').show()" 

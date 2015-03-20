@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import pt.uc.dei.nobugssnackbar.model.Function;
+import org.primefaces.context.RequestContext;
+
 import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
 
@@ -19,6 +21,9 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 
 	private static final long serialVersionUID = 1L;
 
+	@ManagedProperty(value="#{hintView}")
+	private HintView hv;
+	
 	private long idCounter;
 	private Condition condition;
 	private List<Condition> conditionList;
@@ -31,6 +36,8 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 		
 		converter = new ConditionConverter();
 		converter.setProvider(this);
+		
+		hv = new HintView();
 	}
 	
 	private int indexOfConditionById(long id, List<Condition> list) {
@@ -45,38 +52,7 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 		
 		return result;
 	}
-	
-	public void getSelectedFunction() {
-		Function function = new Function();
 		
-		function.setId(Integer.parseInt(
-				FacesContext.
-				getCurrentInstance().
-				getExternalContext().
-				getRequestParameterMap().
-				get("funcId")));
-		
-		function.setName(FacesContext.
-				getCurrentInstance().
-				getExternalContext().
-				getRequestParameterMap().
-				get("funcName"));
-		
-		function.setReturnType(FacesContext.
-				getCurrentInstance().
-				getExternalContext().
-				getRequestParameterMap().
-				get("funcReturnType"));
-		
-		function.setDescription(FacesContext.
-				getCurrentInstance().
-				getExternalContext().
-				getRequestParameterMap().
-				get("funcDescription"));
-		
-		condition.setFunction(function);
-	}
-	
 	public void getConditionById() {
 		int editConditionID = Integer.parseInt(
 				FacesContext.
@@ -112,20 +88,43 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	
 	public boolean checkCondition() {
 		boolean result = false;
-		for (Condition c : conditionList) {
-			if (c.getLogicalOperator() == null) {
-				result = !result;
+		
+		if (conditionList.size() % 2 != 0) {
+			for (int i = 0; i < conditionList.size(); i++) {
+				if (i % 2 == 0) {
+					if (conditionList.get(i).getLogicalOperator() == null) {
+						result = true;
+					}
+					else {
+						result = false;
+						break;
+					}
+				}
+				else {
+					if (conditionList.get(i).getLogicalOperator() != null) {
+						result = true;
+					}
+					else {
+						result = false;
+						break;
+					}				
+				}
 			}
 		}
 		
-		String text = "";
+
 		if (!result) {
-			text = (conditionList.size() > 0) ? "Wrong condition!" : "Empty condition list!";
+			String text = (conditionList.size() > 0) ? "Wrong condition!" : "Empty condition list!";
+			
+			FacesMessage msg = new FacesMessage("", text);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		
-		FacesMessage msg = new FacesMessage("", text);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        
+		else {
+			hv.getHint().setConditions(conditionList);
+			RequestContext.getCurrentInstance().execute("PF('condBuilderDlg').hide()");
+			condition = new Condition();
+		}
+
 		return result;
 	}
 	
@@ -242,5 +241,11 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	public Condition getCondition() {
 		return condition;
 	}
+	public HintView getHv() {
+		return hv;
+	}
 
+	public void setHv(HintView hv) {
+		this.hv = hv;
+	}
 }
