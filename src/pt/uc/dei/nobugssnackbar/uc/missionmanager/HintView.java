@@ -61,15 +61,16 @@ public class HintView implements Serializable {
     }
     
 	public void addEditHint() {
-		if(this.add){/*prevent from adding element when editing*/
-			if(hint.getType()){/*check type if it is error or hint*/
+		if (this.add) {/*prevent from adding element when editing*/
+			if (hint.getType()) {/*check type if it is error or hint*/
 				errorsHints.add(hint);				
 			}
-			else{
+			else {
 				tipsHints.add(hint);
 			}
 		}
-		hint = new Hint();
+		
+		this.hint = new Hint();
 	}
 	
 	public void deleteHint(Hint hint){

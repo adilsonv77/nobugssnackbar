@@ -9,7 +9,7 @@
 		
 		<h:form id="formCondBuilder">
 			<p:growl id="growlCB" showDetail="true" />
-			<p:fieldset legend="Condition" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="Condition" rendered="#{condVC.expandedFieldset == true}">
 				<p:panelGrid columns="2">
 					<p:outputLabel for="chooseFPBtn" value="Function Provider: " />
 					<p:panelGrid columns="2">
@@ -35,11 +35,12 @@
 				<p:watermark for="condValue" value="Enter some value..." />
 				<p:commandButton id="saveCondBtn" value="Save" icon="ui-icon-circle-arrow-s" 
 					update=":tbView:formCondBuilder" 
-					actionListener="#{condVC.addCondition}" style="maring-top: 10px; float: right;" />
-			</p:fieldset>
+					actionListener="#{condVC.addCondition}"
+					style="maring-top: 10px; float: right;" />
+			</p:fieldset>	
 				
 			<p:panelGrid columns="4">
-				<p:commandButton value="Add" icon="ui-icon-circle-plus" />
+				<p:commandButton value="Add" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":tbView:formCondBuilder" />
 				<p:commandButton value="Delete" icon="ui-icon-trash" update=":tbView:formCondBuilder" actionListener="#{condVC.deleteCondition}" />
 				<p:commandButton value="Add [and]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
 				<p:commandButton value="Add [or]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(false)}" />

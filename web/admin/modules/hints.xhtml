@@ -16,13 +16,13 @@
 	
 	<p:panelGrid columns="2" style="margin: 0 auto 30px auto;">
 		<p:commandButton value="Add from database" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
-		<p:commandButton value="Add blank" id="btnAddBlank"  oncomplete="PF('hintDialog').show()" 
+		<p:commandButton value="Add blank" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
 			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints" icon="ui-icon-circle-plus" />
 	</p:panelGrid>
 		
-	<h:form id="formDTT">
+	<h:form id="formDTT" style="margin-bottom: 35px;">
 		<p:outputLabel for="dtTips" value="Tips:"/>
-		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}">
+		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}" draggableRows="true">
 		    <p:column headerText="Category">
 		        <h:outputText value="#{hint.category}" />
 		    </p:column>
@@ -40,8 +40,8 @@
 		    </p:column>
 		    <p:column headerText="Edit">
 		    
-		        <p:commandButton value="Edit" id="btnTipsHint"  oncomplete="PF('hintDialog').show()" 
-		        actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
+		        <p:commandButton value="Edit" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
+		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -53,7 +53,7 @@
 	
 	<h:form id="formDTE">
 		<p:outputLabel for="dtErorrs" value="Errors:"/>
-		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}">
+		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableRows="true">
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
 		    <p:column headerText="Category">
 		        <h:outputText value="#{error.category}" />

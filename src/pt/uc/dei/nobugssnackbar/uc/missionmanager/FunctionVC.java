@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
-
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderConverter;
@@ -81,9 +79,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 			}
 		}
 		
-		cvc.getCondition().setFunction(func);
-		RequestContext.getCurrentInstance().execute("PF('funcProvDlg').hide()");
-		
+		cvc.getCondition().setFunction(func);	
 		filterNameStr = "";
 	}
 	

@@ -29,6 +29,8 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 	private List<Condition> conditionList;
 	private ConditionConverter converter;
 	
+	private boolean expandedFieldset;
+	
 	public ConditionVC() {
 		idCounter = 0;
 		condition = new Condition();
@@ -38,6 +40,15 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 		converter.setProvider(this);
 		
 		hv = new HintView();
+	}
+	
+	public void newOrEditCondList() {
+		if (hv.getAdd() == false) {
+			conditionList = hv.getHint().getConditions();
+		}
+		else {
+			conditionList = new ArrayList<>();
+		}
 	}
 	
 	private int indexOfConditionById(long id, List<Condition> list) {
@@ -75,14 +86,29 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 		}
 	}
 	
+	public void addCondition(boolean logicalOperator) {
+		Condition c = new Condition();
+		
+		if (logicalOperator) { 						// add 'AND'
+			c.setLogicalOperator("and");
+		}
+		else { 										// add 'OR'
+			c.setLogicalOperator("or");
+		}
+		
+		c.setId(idCounter++);
+		conditionList.add(c);
+	}
+	
 	public void addCondition() {
 		if (checkFields()) {
 			
 			condition.setId(idCounter++);
-			condition.setLogicalOperator(null); // maybe this is not necessary
+			condition.setLogicalOperator(null);
 			conditionList.add(condition);
 			
 			condition = new Condition();
+			expandedFieldset = false;
 		}
 	}
 	
@@ -163,7 +189,11 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 					break;
 				}
 			case "boolean":
-					boolean r = condition.getValue().equals("true") || condition.getValue().equals("false");
+				
+					condition.setValue(condition.getValue().toLowerCase());
+					
+					boolean r = condition.getValue().equals("true") || 
+								condition.getValue().equals("false");
 					
 					if (r == true) {
 						if (!condition.getComparator().equals("==") && 
@@ -192,22 +222,7 @@ public class ConditionVC implements IConditionProvider, Serializable  {
         
 		return false;
 	}
-	
-	public void addCondition(boolean logicalOperator) {
 		
-		if (logicalOperator) { 						// add 'AND'
-			condition.setLogicalOperator("and");
-		}
-		else { 										// add 'OR'
-			condition.setLogicalOperator("or");
-		}
-		
-		condition.setId(idCounter++);
-		conditionList.add(condition);
-		
-		condition = new Condition();
-	}
-	
 	public void deleteCondition() {
 		int index = indexOfConditionById(condition.getId(), conditionList);
 		if (index > -1) {
@@ -247,5 +262,13 @@ public class ConditionVC implements IConditionProvider, Serializable  {
 
 	public void setHv(HintView hv) {
 		this.hv = hv;
+	}
+
+	public boolean isExpandedFieldset() {
+		return expandedFieldset;
+	}
+
+	public void setExpandedFieldset(boolean expandedFieldset) {
+		this.expandedFieldset = expandedFieldset;
 	}
 }

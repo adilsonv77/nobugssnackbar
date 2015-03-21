@@ -23,8 +23,10 @@
 			    
 			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
 			    <p:panelGrid columns="2">
-			    	<p:commandButton id="btnBuildCondition" value="Build" 
-			    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"/>
+			    	<p:commandButton id="btnBuildCondition" value="Build"
+			    		actionListener="#{condVC.newOrEditCondList}"
+			    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
+			    		update=":tbView:formCondBuilder"/>
 			    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
 			    </p:panelGrid>
 			    
@@ -39,8 +41,10 @@
 		    </p:panelGrid>
 		    		    
 		    <p:panelGrid columns="3" style="float: right;">    
-				<p:commandButton value="OK" id="btnAddEditHint" icon="ui-icon-check" actionListener="#{hintView.addEditHint}" 
-					oncomplete="PF('hintDialog').hide()" update=":tbView:formDTT,:tbView:formDTE"/>  
+				<p:commandButton value="OK" id="btnAddEditHint" icon="ui-icon-check" 
+					actionListener="#{hintView.addEditHint}" 
+					oncomplete="PF('hintDialog').hide()" 
+					update=":tbView:formDTT, :tbView:formDTE, :tbView:formDlgHints, :tbView:formCondBuilder"/>  
 			
 				<p:commandButton value="Cancel" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 					oncomplete="PF('hintDialog').hide()"/> 
