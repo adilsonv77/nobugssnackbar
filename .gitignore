@@ -31,3 +31,8 @@ db.properties
 .buildpath
 
 
+web/admin/index.xhtml
+web/admin/modules/dlgconditionbuilder.xhtml
+web/admin/modules/dlgconditionbuilder.xhtml
+web/admin/modules/dlgconditionbuilder.xhtml
+web/admin/modules/dlghintcategoryhelper.xhtml

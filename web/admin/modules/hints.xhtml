@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-<h:body>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">  
 	
 	<p:panelGrid columns="2" style="margin-bottom: 20px;">
 		<span class="my-lightbulb"></span>
@@ -71,6 +69,7 @@
 		        <h:outputText value="#{error.conditionsAsString}" />
 		    </p:column>
 		    <p:column headerText="Edit">
+		       
 		        <p:commandButton value="Edit" oncomplete="PF('hintDialog').show()" 
 		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
@@ -80,25 +79,7 @@
 		    </p:column>		    
 		</p:dataTable>		
 	</h:form>
+
+	<ui:include src="dlghint.xhtml"/>  
 	
-	<ui:include src="dlghint.xhtml"/>
-    
-    <h:form id="formDlgCHCD">
-	    <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
-	 	header="Choose Hint Category" minHeight="40">	    	
-			<p:commandButton value="Choose category" style="width:100px; height:125px; display: inline" oncomplete="PF('chooseCategoryDialog').show()"/>
-		   		
-		   	<p:dataGrid var="car" value="#{hintView.tipsHints}" columns="5" layout="grid" rows="1"  id="cars">
-				<p:panel header="AAA" style="text-align:center;" >
-			        <h:panelGrid columns="1" style="width:100%">
-			            <h:outputText value="#{car.text}"/>		 
-			        </h:panelGrid>
-			    </p:panel>		 
-			</p:dataGrid>
-			
-			<p:commandButton value="Cancel" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>
-		</p:dialog>  			
-	</h:form>
-	
-</h:body>
-</html>
+</ui:composition>
