@@ -5,6 +5,7 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.FunctionProviderJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.Mission;
 
 public class TestJdbcDao {
@@ -14,6 +15,7 @@ public class TestJdbcDao {
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		FunctionProviderJdbcDao fpDao = new FunctionProviderJdbcDao();
+
 		MissionJdbcDao mDao = new MissionJdbcDao();
 		
 		List<Mission> l = mDao.list();
