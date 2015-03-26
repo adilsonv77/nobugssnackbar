@@ -18,7 +18,7 @@ public class FunctionProviderJdbcDao extends JdbcDao<Function> implements Functi
 					.prepareStatement("insert into functionsprovider (functionsprovidername, functionsproviderreturn, functionsproviderdescription) values (?, ?, ?)");
 			ps.setString(1, name);
 			ps.setString(2, returnType);
-			ps.setString(2, description);
+			ps.setString(3, description);
 
 			ps.executeUpdate();
 			ps.close();

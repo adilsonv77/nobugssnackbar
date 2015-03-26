@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
@@ -41,6 +42,16 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		return functionProviderDao;	
 	}
 
+	private CommandDao commandDao;
+
+	@Override
+	public CommandDao getCommandDao() {
+		if (commandDao == null)
+			commandDao = new CommandJdbcDao();
+		
+		return commandDao;	
+	}
+	
 	private GameDao gameDao;
 
 	@Override
