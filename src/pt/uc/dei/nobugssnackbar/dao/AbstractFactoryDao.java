@@ -7,4 +7,5 @@ public interface AbstractFactoryDao {
 	MissionDao getMissionDao();
 	HintCategoryDao getHintCategoryDao();
 	FunctionProviderDao getFunctionProviderDao();
+	CommandDao getCommandDao();
 }
