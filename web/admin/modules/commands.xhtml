@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
+<ui:composition  xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:body>
+	
 	<p:panelGrid columns="2" style="margin-bottom: 50px;">
 		<span class="my-lightbulb"></span>
 		<h:outputText>
@@ -13,8 +12,28 @@
 	</p:panelGrid>
 	
 	<h:form id="commandsForm">
+		<p:growl id="msgs" showDetail="true" />
 	
+	    <p:dataTable id="commandsDT" var="command" value="#{commandsVC.commands}" 
+	    	selection="#{commandsVC.selectedCommands}" rowKey="#{command.id}">
+	    	
+	        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        
+	        <p:column>
+	            <h:outputText value="#{command.name}" />
+	        </p:column>
+
+	    </p:dataTable>
+	    
+	    <p:dialog header="Selected Commands" widgetVar="multiCommandDialog"
+	    	 modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+	        <p:outputPanel id="multiCommandDetail" style="text-align:center;">
+	            <ui:repeat value="#{commandsVC.selectedCommands}" var="command">
+	                <h:outputText value="#{command.id} - #{command.name}" style="display:block"/>
+	            </ui:repeat>
+	        </p:outputPanel>
+    	</p:dialog>
+    
 	</h:form>
 	
-</h:body>
-</html>
+</ui:composition>

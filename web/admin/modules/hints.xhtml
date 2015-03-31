@@ -75,11 +75,12 @@
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>		        
+		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>
+		        		        
 		    </p:column>		    
 		</p:dataTable>		
 	</h:form>
 
 	<ui:include src="dlghint.xhtml"/>  
-	
+
 </ui:composition>
