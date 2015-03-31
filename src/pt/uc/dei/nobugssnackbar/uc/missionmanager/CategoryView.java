@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import org.primefaces.event.SelectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
@@ -33,7 +32,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	private List<HintCategory> hCategories;
 	private CategoryProviderConverter cpc;
 	// #end
-
+ 
 	public CategoryView(){
 		System.out.println(" CategoryView created...");
 		cpc = new CategoryProviderConverter();

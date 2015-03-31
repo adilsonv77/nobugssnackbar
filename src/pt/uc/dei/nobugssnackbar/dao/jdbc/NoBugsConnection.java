@@ -52,11 +52,14 @@ public class NoBugsConnection {
 		dataSource.setUser(username);
 		dataSource.setPassword(password);
 		
+		// statement pooling: even after closing the connection, the plans are reused in the same queries  
+		dataSource.setMaxStatementsPerConnection(9*20); // 8 (5 prepared + 4 extras) statements * 20 classes
+		dataSource.setStatementCacheNumDeferredCloseThreads(1); 
+		
 		// this is necessary to prevent the time out of connections
 		dataSource.setIdleConnectionTestPeriod(60);
 		dataSource.setTestConnectionOnCheckin(true);
 		dataSource.setPreferredTestQuery("select last_insert_id()");
-
 	}
 	
 	public ComboPooledDataSource getDataSource() {
