@@ -16,11 +16,12 @@ public class JdbcDao<T> {
 	private Class<T> persistentClass;
 	private List<Field> pks;
 	private List<Field> fields;
-	private PreparedStatement querySelect;
-	private PreparedStatement readSelect;
-	private PreparedStatement queryInsert;
-	private PreparedStatement queryUpdate;
-	private PreparedStatement queryDelete;
+	private JdbcTable jdbcTable;
+	private String columns;
+	private String insertColumns;
+	private String insertParams;
+	private String updateColumns;
+	private String pkColumns;
 
 	@SuppressWarnings("unchecked")
 	public JdbcDao() {
@@ -65,36 +66,43 @@ public class JdbcDao<T> {
 			}
 		}
 
-		columns = columns.substring(0, columns.length() - 1);
-		insertColumns = insertColumns.substring(0, insertColumns.length() - 1);
-		updateColumns = updateColumns.substring(0, updateColumns.length() - 1);
-		pkColumns = pkColumns.substring(0, pkColumns.length() - 4);
+		this.columns = columns.substring(0, columns.length() - 1);
+		this.insertColumns = insertColumns.substring(0, insertColumns.length() - 1);
+		this.updateColumns = updateColumns.substring(0, updateColumns.length() - 1);
+		this.pkColumns = pkColumns.substring(0, pkColumns.length() - 4);
+		this.insertParams = StringUtils.repeat("?,", qtdInsert - 1) + "?";
 
-		JdbcTable jdbcTable = persistentClass.getAnnotation(JdbcTable.class);
-		try {
-			String query = "select " + columns + " from " + jdbcTable.name();
-			this.querySelect = getConnection().prepareStatement(query);
+		this.jdbcTable = persistentClass.getAnnotation(JdbcTable.class);
+	}
+	
+	private PreparedStatement getQuerySelect(Connection con) throws SQLException {
+		String query = "select " + columns + " from " + jdbcTable.name();
+		return con.prepareStatement(query);
+	}
 
-			query = query + " where " + pkColumns;
-			this.readSelect = getConnection().prepareStatement(query);
+	private PreparedStatement getQueryInsert(Connection con) throws SQLException {
 
-			String params = StringUtils.repeat("?,", qtdInsert - 1) + "?";
+		return con.prepareStatement(
+				"insert into " + jdbcTable.name() + " ( " + insertColumns
+				+ " ) values (" + insertParams + ")");
 
-			this.queryInsert = getConnection().prepareStatement(
-					"insert into " + jdbcTable.name() + " ( " + insertColumns
-							+ " ) values (" + params + ")");
-			
-			
-			this.queryUpdate = getConnection().prepareStatement(
-					"update " + jdbcTable.name() + " set " + updateColumns + " where " + pkColumns );
-			
-			this.queryDelete = getConnection().prepareStatement(
-					"delete from "  + jdbcTable.name() + " where " + pkColumns );
+	}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private PreparedStatement getQueryUpdate(Connection con) throws SQLException {
+		return con.prepareStatement(
+				"update " + jdbcTable.name() + " set " + updateColumns + " where " + pkColumns );
+	}
 
+
+	private PreparedStatement getQueryReadSelect(Connection con) throws SQLException {
+		String query = "select " + columns + " from " + jdbcTable.name() +
+							" where " + pkColumns;
+		return con.prepareStatement(query);
+	}
+
+	private PreparedStatement getQueryDelete(Connection con) throws SQLException {
+		return con.prepareStatement(
+				"delete from "  + jdbcTable.name() + " where " + pkColumns );
 	}
 
 	protected Connection getConnection() throws SQLException {
@@ -108,7 +116,8 @@ public class JdbcDao<T> {
 		try {
 			bdCon = getConnection();
 
-			ResultSet rs = querySelect.executeQuery();
+			PreparedStatement q = getQuerySelect(bdCon);
+			ResultSet rs = q.executeQuery();
 
 			while (rs.next()) {
 
@@ -116,6 +125,7 @@ public class JdbcDao<T> {
 			}
 
 			rs.close();
+			q.close();
 
 		} finally {
 			if (bdCon != null)
@@ -152,19 +162,23 @@ public class JdbcDao<T> {
 
 			if (insert) {
 
-				addFieldsQuery(queryInsert, obj);
+				PreparedStatement q = getQueryInsert(bdCon);
 				
-				queryInsert.executeUpdate();
+				addFieldsQuery(q, obj);
+				
+				q.executeUpdate();
+				q.close();
 
 			} else {
-				
-				int qtos = addFieldsQuery(queryUpdate, obj);
+				PreparedStatement q = getQueryUpdate(bdCon);
+				int qtos = addFieldsQuery(q, obj);
 				for (Field f : pks) {
-					queryUpdate.setObject(qtos, f.get(obj));
+					q.setObject(qtos, f.get(obj));
 					qtos++;
 				}
 
-				queryUpdate.executeUpdate();
+				q.executeUpdate();
+				q.close();
 
 			}
 
@@ -197,6 +211,7 @@ public class JdbcDao<T> {
 		try {
 			
 			bdCon = getConnection();
+			PreparedStatement readSelect = getQueryReadSelect(bdCon);
 			for (int i = 0; i < pks.size(); i++) {
 				readSelect.setObject(i+1, key[i]);
 			}
@@ -206,6 +221,7 @@ public class JdbcDao<T> {
 				obj = transformResultSetToObject(rs);
 			}
 			rs.close();
+			readSelect.close();
 
 		} finally {
 			if (bdCon != null)
@@ -242,11 +258,13 @@ public class JdbcDao<T> {
 		try {
 			
 			bdCon = getConnection();
+			PreparedStatement queryDelete = getQueryDelete(bdCon);
 			for (int i = 0; i < pks.size(); i++) {
 				queryDelete.setObject(i+1, key[i]);
 			}
 			
 			queryDelete.executeUpdate();
+			queryDelete.close();
 
 		} finally {
 			if (bdCon != null)
@@ -257,5 +275,6 @@ public class JdbcDao<T> {
 		}
 	
 	}
+
 
 }
