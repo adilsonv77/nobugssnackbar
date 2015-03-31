@@ -14,7 +14,7 @@ public class TestJdbcDao {
 
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
-				"com.mysql.jdbc.Driver", "nobugs", "n0bug5v1d4l0k4");
+				"com.mysql.jdbc.Driver", "root", "root");
 		
 		
 		CommandJdbcDao cDao = new CommandJdbcDao();
@@ -23,19 +23,7 @@ public class TestJdbcDao {
 		for (Command m: c)
 			System.out.println(m.getName() + " " + m.getParentId());
 		System.out.println(c.size());
-
-		/*System.in.read();
 		
-		FunctionProviderJdbcDao fpDao = new FunctionProviderJdbcDao();
-
-		List<Function> f = fpDao.list();
-		for (Function m: f)
-			System.out.println(m.getName() + " " + m.getDescription() + " " + m.getReturnType());
-		System.out.println(f.size());
-		
-		System.in.read(); // just to pause*/
-		
-
 		MissionJdbcDao mDao = new MissionJdbcDao();
 		
 		List<Mission> l = mDao.list();

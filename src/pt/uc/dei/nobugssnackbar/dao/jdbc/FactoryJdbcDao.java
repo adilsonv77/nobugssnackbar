@@ -32,7 +32,6 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		return hintCategoryDao;
 	}
 	
-	
 	private FunctionProviderDao functionProviderDao;
 
 	@Override

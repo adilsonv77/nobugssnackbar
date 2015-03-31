@@ -4,56 +4,29 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">   
-    
-    <style>
-    .ui-orderlist-list {
-    	width: 450px !important;
-    	margin: 0;
-		padding: 0;
-    }
-	.ui-orderlist-list li {
-		display: inline-block;
-		margin: 0;
-		padding: 0;
-	}
-	.ui-orderlist table {
-		width: 120px;
-		height: 200px !important;
-		margin: 0;
-		padding: 0;
-		text-align: center;
-	}
-	.ui-orderlist table td {
-		display: block;
-		
-	}
-	.olElementHeader {
-		font-size:120%;
-		color: red;
-	}
-	</style>
 	
     <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
- 	header="Choose Hint Category" minHeight="40">	    
+ 	header="Choose Hint Category" minHeight="40">
+ 			    
     	<h:form id="formDlgCHC">
     	
 			<p:commandButton value="Choose category" oncomplete="PF('chooseCategoryDialog').show()"/>
-		   	
-		   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none">		   			   	
-		   	
-				<p:column>
-					<h:outputText class="olElementHeader" value="#{hCategory.title}"/>
-				</p:column>
-				
-				<p:column >
-					<h:outputText value="#{hCategory.description}"/>
-				</p:column>				
-							   	
-		   	</p:orderList>	
+			
+		   	<div class="orderListDiv">
+			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none">		   			   	
+			   	
+					<p:column>
+						<h:outputText class="olElementHeader" value="#{hCategory.title}" style="text-align:center;font-size:120%;color:red;"/>
+						<h:outputText value="#{hCategory.description}"/>
+					</p:column>			
+								   	
+			   	</p:orderList>	
+			</div>
 			
 			<p:commandButton value="Cancel" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>		
 		
-		</h:form> 	
+		</h:form>
+		
 	</p:dialog>  				
 
 </ui:composition>

@@ -7,6 +7,7 @@
 	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
 		<!-- each dialog must have its own form -->
 		<h:form id="formDlgHints">
+	
 			<p:panelGrid columns="2">
 					
 			    <p:outputLabel for="hintType" value="Hint type:"/>
@@ -15,7 +16,7 @@
 				    <f:selectItem itemLabel="Error" itemValue="true" />
 				</p:selectOneRadio>
 			        
-			    <p:outputLabel for="btnChooseCategory" value="Category:"/>
+			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
 			    <p:commandButton id="btnChooseCategory" value="Choose" 
 			    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
 			    
@@ -29,9 +30,8 @@
 			    </p:panelGrid>
 			    
 			    <p:outputLabel for="hintTime" value="Time"/>
-			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>		        
+			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>
 			    		        
-		   
 			</p:panelGrid>
 			
 		    <p:panelGrid columns="1">
@@ -43,15 +43,14 @@
 				<p:commandButton value="OK" id="btnAddEditHint" icon="ui-icon-check" 
 					actionListener="#{hintView.addEditHint}" 
 					oncomplete="PF('hintDialog').hide()" 
-					update=":tbView:formDTT, :tbView:formDTE, :tbView:formDlgHints, :tbView:formCondBuilder"/>   
+					update=":tbView:formDTT, :tbView:formDTE, :tbView:formDlgHints, :tbView:formCondBuilder"/>  
 			
 				<p:commandButton value="Cancel" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 					oncomplete="PF('hintDialog').hide()"/> 
 			
 				<p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" 
 					oncomplete="PF('hintCategoryDialog').show()"/>
-			</p:panelGrid>		
-		
+			</p:panelGrid>
 	    </h:form>	
 	</p:dialog>	
 
