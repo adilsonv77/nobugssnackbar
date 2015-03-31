@@ -122,8 +122,7 @@ public class HintView implements Serializable {
 	private String hintCategory;
     
     public HintCategory getSelectedCategory() {
-    	
-		return new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
+    	return new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
 	}
 
     public void setSelectedCategory(HintCategory selectedCategory) {
@@ -132,7 +131,8 @@ public class HintView implements Serializable {
     
 	public void setHintCategory(String hintCategory) {
 		this.hintCategory = hintCategory;
-		System.out.println(hintCategory);
-		
+	}
+	public String getHintCategory() {
+		return hintCategory;
 	}
 }

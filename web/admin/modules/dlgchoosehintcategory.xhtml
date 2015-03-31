@@ -13,16 +13,24 @@
 			<p:commandButton value="Choose category" oncomplete="PF('chooseCategoryDialog').show()"/>
 			
 		   	<div class="orderListDiv">
-			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none">		   			   	
-			   	
+			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemLabel="#{hCategory.title}" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none" >		   			   	
+					
 					<p:column>
-						<h:outputText class="olElementHeader" value="#{hCategory.title}" style="text-align:center;font-size:120%;color:red;"/>
+						<h:outputText class="olElementHeader" value="#{hCategory.title}" style="text-align:center;font-size:120%;color:red;display:block"/>
 						<h:outputText value="#{hCategory.description}"/>
 					</p:column>			
-								   	
+					<p:column>
+						<p:commandLink id="btnOKHintCatChoose"  update=":tbView:formDlgHints"
+							actionListener="#{categoryView.setElementByID}">
+							<f:param name="hCategoryID" value="#{hCategory.id}" />
+							<f:setPropertyActionListener value="#{categoryView.HCategory}" target="#{hintView.hint.hintCategory}"
+							oncomplete="PF('chooseHintCategoryDialog').hide()"/>
+						</p:commandLink>						
+					</p:column>
+					
 			   	</p:orderList>	
 			</div>
-			
+				
 			<p:commandButton value="Cancel" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>		
 		
 		</h:form>

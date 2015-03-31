@@ -3,14 +3,15 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.List;
 
-
-
-
-
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SelectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
@@ -22,13 +23,13 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{factoryDao.hintCategoryDao}")
+	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
 	private transient HintCategoryDao hintCategoryDao;
 
 
 
 	// #region private variables
-	private HintCategory hCategory = null;
+	private HintCategory hCategory;
 	private List<HintCategory> hCategories;
 	private CategoryProviderConverter cpc;
 	// #end
@@ -39,14 +40,14 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 		cpc.setProvider(this);
 	}
 	// #region getters and setters
-	public HintCategory getCategory() {
+	public HintCategory getHCategory() {
 		if (hCategory == null) {
 			hCategory = new HintCategory();
 		}
 		return hCategory;
 	}
 
-	public void setCategory(HintCategory category) {
+	public void setHCategory(HintCategory category) {
 		this.hCategory = category;
 	}
 	
@@ -81,5 +82,35 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	
 
 	// #region user defined methods
+	public void setElementByID(){
+		int selectedHCategoryID = Integer.parseInt(
+				FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("hCategoryID")
+		);
+
+		hCategory = new HintCategory();
+		
+		for (int i = 0; i < hCategories.size(); i++) {
+			if (hCategories.get(i).getId() == selectedHCategoryID) {
+				hCategory.setId(hCategories.get(i).getId());
+				hCategory.setTitle(hCategories.get(i).getTitle());
+				hCategory.setDescription(hCategories.get(i).getDescription());
+				hCategory.setBody(hCategories.get(i).getBody());
+				break;
+			}
+		}
+		
+		addMessage("Welcome to Primefaces!!");
+	}
+	public void onSelect(SelectEvent event) {        
+        addMessage("Welcome to Primefaces!!");
+    }
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 	// #end
 }

@@ -1,12 +1,17 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.io.Serializable;
+
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
 
 @JdbcTable(name="hintcategories")
-public class HintCategory {
+public class HintCategory implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
+	
 	@JdbcField(name="hintcategoryid")
 	@JdbcPk
 	private Integer id;

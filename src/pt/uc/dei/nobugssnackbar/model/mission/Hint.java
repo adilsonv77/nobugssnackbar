@@ -3,11 +3,15 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import pt.uc.dei.nobugssnackbar.model.HintCategory;
+
 public class Hint implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// #region private variables
 	private String category;
+	private HintCategory hintCategory;
 	private int time;
 	private String text;
 	private boolean type;
@@ -23,8 +27,17 @@ public class Hint implements java.io.Serializable {
 	}
 	
 	// #region public getters and setters
-	public String getCategory() {
+	public String getCategory() {		
+		if(hintCategory != null){
+			category = hintCategory.getTitle();
+		}
 		return category;
+	}
+	public HintCategory getHintCategory() {
+		return hintCategory;
+	}
+	public void setHintCategory(HintCategory hintCategory) {
+		this.hintCategory = hintCategory;
 	}
 	public List<Condition> getConditions() {
 		return conditions;
