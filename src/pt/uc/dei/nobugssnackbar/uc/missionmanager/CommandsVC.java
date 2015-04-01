@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,8 +17,14 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Command command;
-	private List<Command> selectedCommands;
 	private List<Command> commands;
+	
+	private List<Command> rootCommands;
+	private List<Command> selectedCommands;
+	
+	private List<Command> leafCommands;
+	private List<Command> availableLeafCommands;
+	private List<Command> selectedLeafCommands;
 
 	@ManagedProperty(value="#{factoryDao.commandDao}")
 	private transient CommandDao commandDao;
@@ -27,6 +34,29 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		this.command = new Command();
 	}
 	
+	public void onRowSelectCheckbox() {
+		loadLeafCommandsForShowing();
+	}
+	
+	public void onRowUnselectCheckbox() {
+		loadLeafCommandsForShowing();
+	}
+	
+	public void onToggleSelect() {
+		loadLeafCommandsForShowing();
+	}
+	
+	private void loadLeafCommandsForShowing() {
+		availableLeafCommands = new ArrayList<>();
+		
+		for (Command c1 : selectedCommands) {
+			for (Command c2 : leafCommands) {
+				if (c1.getId() == c2.getParentId()) {
+					availableLeafCommands.add(c2);
+				}
+			}
+		}
+	}
 	
 	public Command getCommand() {
 		return command;
@@ -45,11 +75,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	}
 
 	@Override
-	public List<Command> getCommands() throws Exception {
-		if (commands == null) {
-			commands = commandDao.list();
-		}
-		
+	public List<Command> getCommands() {		
 		return commands;
 	}
 	
@@ -63,5 +89,60 @@ public class CommandsVC implements ICommandProvider, Serializable {
 
 	public void setCommandDao(CommandDao commandDao) {
 		this.commandDao = commandDao;
+	}
+
+
+	public List<Command> getLeafCommands() {
+		return leafCommands;
+	}
+
+
+	public void setLeafCommands(List<Command> leadCommands) {
+		this.leafCommands = leadCommands;
+	}
+
+
+	public List<Command> getRootCommands() throws Exception {
+		if (rootCommands == null) {
+			commands = commandDao.list();
+			rootCommands = new ArrayList<>();
+			leafCommands = new ArrayList<>();
+			
+			for (Command c : commands) {
+				if (c.getParentId() == null) {
+					rootCommands.add(c);
+				}
+				else {
+					leafCommands.add(c);
+				}
+			}
+		}
+		
+		return rootCommands;
+	}
+
+
+	public void setRootCommands(List<Command> rootCommands) {
+		this.rootCommands = rootCommands;
+	}
+
+
+	public List<Command> getSelectedLeafCommands() {
+		return selectedLeafCommands;
+	}
+
+
+	public void setSelectedLeafCommands(List<Command> selectedLeafCommands) {
+		this.selectedLeafCommands = selectedLeafCommands;
+	}
+
+
+	public List<Command> getAvailableLeafCommands() {
+		return availableLeafCommands;
+	}
+
+
+	public void setAvailableLeafCommands(List<Command> availableLeafCommands) {
+		this.availableLeafCommands = availableLeafCommands;
 	}
 }

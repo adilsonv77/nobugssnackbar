@@ -14,8 +14,25 @@
 	<h:form id="commandsForm">
 		<p:growl id="msgs" showDetail="true" />
 	
-	    <p:dataTable id="commandsDT" var="command" value="#{commandsVC.commands}" 
-	    	selection="#{commandsVC.selectedCommands}" rowKey="#{command.id}">
+	    <p:dataTable id="commandsDT" var="command" value="#{commandsVC.rootCommands}" 
+	    	selection="#{commandsVC.selectedCommands}" rowKey="#{command.id}" rowSelectMode="checkbox"
+	    	style="margin-right:50px;min-width:200px;max-width:40%;float:left;">
+
+	    	<p:ajax event="rowSelectCheckbox" update=":tbView:commandsForm:commandsLeafDT" listener="#{commandsVC.onRowSelectCheckbox}"/>
+			<p:ajax event="rowUnselectCheckbox" update=":tbView:commandsForm:commandsLeafDT" listener="#{commandsVC.onRowUnselectCheckbox}"/>
+        	<p:ajax event="toggleSelect" update=":tbView:commandsForm:commandsLeafDT" listener="#{commandsVC.onToggleSelect}"/>
+                
+	        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	        
+	        <p:column>
+	            <h:outputText value="#{command.name}" />
+	        </p:column>
+
+	    </p:dataTable>
+	    
+	    <p:dataTable id="commandsLeafDT" var="command" value="#{commandsVC.availableLeafCommands}" 
+	    	selection="#{commandsVC.selectedLeafCommands}" rowKey="#{command.id}"
+	    	style="min-width:200px;max-width:40%;float:left;">
 	    	
 	        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 	        
@@ -25,15 +42,6 @@
 
 	    </p:dataTable>
 	    
-	    <p:dialog header="Selected Commands" widgetVar="multiCommandDialog"
-	    	 modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-	        <p:outputPanel id="multiCommandDetail" style="text-align:center;">
-	            <ui:repeat value="#{commandsVC.selectedCommands}" var="command">
-	                <h:outputText value="#{command.id} - #{command.name}" style="display:block"/>
-	            </ui:repeat>
-	        </p:outputPanel>
-    	</p:dialog>
-    
 	</h:form>
 	
 </ui:composition>
