@@ -17,6 +17,7 @@ local.properties
 .settings/
 .loadpath
 db.properties
+web/js/generated/
 
 # External tool builders
 .externalToolBuilders/

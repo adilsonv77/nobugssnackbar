@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ReorderEvent;
 
-import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
@@ -20,7 +19,7 @@ public class HintView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private boolean add = false;
+	private boolean add = false;//false = editing hint(NOT adding new hint)
 	private Hint hint = new Hint();
 	private List<Hint> tipsHints = new ArrayList<>();
 	private List<Hint> errorsHints = new ArrayList<>();
@@ -117,22 +116,26 @@ public class HintView implements Serializable {
     	this.showDlgExt = false;
     }
     
-    private HintCategory selectedCategory;
+   /* private HintCategory objHCategory;
 
-	private String hintCategory;
+	private String strHCategory;
     
-    public HintCategory getSelectedCategory() {
+    public HintCategory getObjHCategory() {
     	return new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
 	}
 
-    public void setSelectedCategory(HintCategory selectedCategory) {
-		this.selectedCategory = selectedCategory;
+	public void setObjHCategory(HintCategory objHCategory) {
+		this.objHCategory = objHCategory;
+		this.hint.setHintCategory(objHCategory);
 	}
     
-	public void setHintCategory(String hintCategory) {
-		this.hintCategory = hintCategory;
+	public void setStrHCategory(String hintCategory) {
+		this.strHCategory = hintCategory;
 	}
-	public String getHintCategory() {
-		return hintCategory;
-	}
+	public String getStrHCategory() {
+		if(objHCategory != null){
+			strHCategory = objHCategory.getTitle();
+		}
+		return strHCategory;
+	}*/
 }
