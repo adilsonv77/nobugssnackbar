@@ -9,23 +9,28 @@
  	header="Choose Hint Category" minHeight="40">
  			    
     	<h:form id="formDlgCHC">
-    		<p:growl id="msgs" showDetail="true" />
+    	
 			<p:commandButton value="Choose category" oncomplete="PF('chooseCategoryDialog').show()"/>
 			
-		   	<div  class="orderListCHC">
-			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemLabel="#{hCategory.title}" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none" >		   			   				
-		
+		   	<div class="orderListDiv">
+			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" itemLabel="#{hCategory.title}" itemValue="#{hCategory}" converter="#{categoryView.cpc}" controlsLocation="none" >		   			   	
+					
+					<p:column>
+						<h:outputText class="olElementHeader" value="#{hCategory.title}" style="text-align:center;font-size:120%;color:red;display:block"/>
+						<h:outputText value="#{hCategory.description}"/>
+					</p:column>			
 					<p:column>
 						<p:commandLink id="btnOKHintCatChoose"  update=":tbView:formDlgHints"
-							actionListener="#{categoryView.setElementByID}" oncomplete="PF('chooseHintCategoryDialog').hide()">
+							actionListener="#{categoryView.setElementByID}">
 							<f:param name="hCategoryID" value="#{hCategory.id}" />
-							<h:outputText class="olElementHeader" value="#{hCategory.title}"/>
-							<h:outputText value="#{hCategory.description}"/>
+							<f:setPropertyActionListener value="#{categoryView.HCategory}" target="#{hintView.hint.hintCategory}"
+							oncomplete="PF('chooseHintCategoryDialog').hide()"/>
 						</p:commandLink>						
 					</p:column>
 					
-			   	</p:orderList>		
-			</div>	
+			   	</p:orderList>	
+			</div>
+				
 			<p:commandButton value="Cancel" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>		
 		
 		</h:form>

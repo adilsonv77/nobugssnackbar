@@ -12,11 +12,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
-import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.CategoryProviderConverter;
 
 @ManagedBean(name = "categoryView")
@@ -27,9 +25,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 
 	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
 	private transient HintCategoryDao hintCategoryDao;
-	
-	@ManagedProperty(value="#{hintView}")
-	private HintView hw;
+
 
 
 	// #region private variables
@@ -44,12 +40,6 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 		cpc.setProvider(this);
 	}
 	// #region getters and setters
-	public HintView getHw() {
-		return hw;
-	}
-	public void setHw(HintView hw) {
-		this.hw = hw;
-	}
 	public HintCategory getHCategory() {
 		if (hCategory == null) {
 			hCategory = new HintCategory();
@@ -86,7 +76,6 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 		if (hCategories == null) {
 			hCategories = hintCategoryDao.list();
 		}
-		System.out.println(hCategories);
 		return hCategories;
 	}
 	// #end
@@ -113,10 +102,15 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 				break;
 			}
 		}
-
-		hw.getHint().setObjHintCategory(hCategory);
-
-		System.out.println("hintView " + hw.toString());
+		
+		addMessage("Welcome to Primefaces!!");
 	}
+	public void onSelect(SelectEvent event) {        
+        addMessage("Welcome to Primefaces!!");
+    }
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 	// #end
 }

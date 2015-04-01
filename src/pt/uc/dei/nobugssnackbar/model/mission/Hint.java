@@ -29,19 +29,14 @@ public class Hint implements java.io.Serializable {
 	// #region public getters and setters
 	public String getCategory() {		
 		if(hintCategory != null){
-			if(hintCategory.getId() != 1){
 			category = hintCategory.getTitle();
-			}
-			else{
-				hintCategory = null;
-			}
 		}
 		return category;
 	}
-	public HintCategory getObjHintCategory() {
+	public HintCategory getHintCategory() {
 		return hintCategory;
 	}
-	public void setObjHintCategory(HintCategory hintCategory) {
+	public void setHintCategory(HintCategory hintCategory) {
 		this.hintCategory = hintCategory;
 	}
 	public List<Condition> getConditions() {

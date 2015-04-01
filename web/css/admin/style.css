@@ -78,36 +78,6 @@ body {
 }
 /*******************End Explanation page css******************/
 
-
-/*******************Start ChooseHintCategory page css******************/
-
-.orderListCHC .ui-orderlist-list {
-	width: 515px !important;
-	height: 216px !important;
-}
-.orderListCHC .ui-orderlist-list li.ui-orderlist-item {
-	display: inline-block;
-	border: 1px solid lightgray;
-	width: 150px;
-	height: 200px;
-	margin: 5px;
-	word-break: break-all;
-	overflow-y: hidden;
-}
-.orderListCHC .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
-	display: block;
-	width: 148px;
-	height: 198px;
-	text-decoration: none;
-}
-.orderListCHC .ui-orderlist-list li.ui-orderlist-item .ui-commandlink .olElementHeader{
-	display: block;
-	text-align: center;
-	color: #000040;
-}
-
-/*******************End Explanation page css******************/
-
 #funcProvDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
 	display: inline-block !important;
 	visibility: visible !important;
