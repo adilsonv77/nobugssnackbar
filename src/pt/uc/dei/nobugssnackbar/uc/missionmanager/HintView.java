@@ -19,11 +19,16 @@ public class HintView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	public HintView() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	private boolean add = false;//false = editing hint(NOT adding new hint)
 	private Hint hint = new Hint();
 	private List<Hint> tipsHints = new ArrayList<>();
 	private List<Hint> errorsHints = new ArrayList<>();
 
+	
 	public void setAdd(boolean add) {
 		this.add = add;
 	}

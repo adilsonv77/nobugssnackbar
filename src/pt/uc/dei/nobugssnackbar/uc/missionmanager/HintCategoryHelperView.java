@@ -50,8 +50,8 @@ public class HintCategoryHelperView implements Serializable {
 	public void render() throws Exception {
 		model = new DynaFormModel();
 
-		HintCategory hintCategory = hintView.getSelectedCategory();
-		
+		HintCategory hintCategory = hintView.getHint().getObjHintCategory();
+
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
@@ -136,7 +136,7 @@ public class HintCategoryHelperView implements Serializable {
 
 	    returnForm = (String) vex.getValue(elContext);
 	    
-		hintView.setHintCategory(returnForm);
+		hintView.getHint().setCategory(returnForm);
 		hintView.disableDialog();
 		
 	}

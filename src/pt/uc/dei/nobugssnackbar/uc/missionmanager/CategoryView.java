@@ -3,7 +3,6 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -11,12 +10,8 @@ import javax.faces.bean.SessionScoped;
 
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
-
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
-import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.CategoryProviderConverter;
 
 @ManagedBean(name = "categoryView")
@@ -85,8 +80,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	public List<HintCategory> getHintCategories() throws Exception {
 		if (hCategories == null) {
 			hCategories = hintCategoryDao.list();
-		}
-		System.out.println(hCategories);
+		};
 		return hCategories;
 	}
 	// #end
@@ -115,8 +109,6 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 		}
 
 		hw.getHint().setObjHintCategory(hCategory);
-
-		System.out.println("hintView " + hw.toString());
 	}
 	// #end
 }
