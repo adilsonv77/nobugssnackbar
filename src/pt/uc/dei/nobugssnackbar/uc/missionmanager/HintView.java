@@ -73,8 +73,26 @@ public class HintView implements Serializable {
 				tipsHints.add(hint);
 			}
 		}
-		
+		checkLists();
 		this.hint = new Hint();
+	}
+	
+	public void checkLists(){
+		for (Hint hint : errorsHints) {
+			if(hint.getType() == false/*tip*/){
+				tipsHints.add(hint);
+				errorsHints.remove(hint);
+				
+			}
+		}
+		for (Hint hint : tipsHints) {
+			if(hint.getType() == true/*error*/){
+				errorsHints.add(hint);
+				tipsHints.remove(hint);
+				break;
+			}
+		}
+		
 	}
 	
 	public void deleteHint(Hint hint){

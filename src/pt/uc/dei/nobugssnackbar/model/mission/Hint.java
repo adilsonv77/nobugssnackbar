@@ -23,7 +23,7 @@ public class Hint implements java.io.Serializable {
 		time = 0;
 		conditions = new ArrayList<>();
 		text = "";
-		type = false;
+		type = false;//false == tip
 	}
 	
 	// #region public getters and setters
