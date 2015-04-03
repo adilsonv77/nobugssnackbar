@@ -46,8 +46,11 @@
 	    	</p:editor>
 
    			<p:panelGrid columns="2" style="float: right;">
-    			<p:commandButton value="OK" icon="ui-icon-check" update=":tbView:explForm:opList, :tbView:explForm:explPageDlg" actionListener="#{explVC.addPage}"/>
-      			<p:commandButton value="Cancel" icon="ui-icon-close" update=":tbView:explForm:explPageDlg" actionListener="#{explVC.resetPage}" />
+    			<p:commandButton value="OK" icon="ui-icon-check" 
+    				update=":tbView:explForm:opList, :tbView:explForm:explPageDlg, :tbView:explForm:msgs" 
+    				actionListener="#{explVC.addPage}"/>
+      			<p:commandButton value="Cancel" icon="ui-icon-close" 
+      				update=":tbView:explForm:explPageDlg" actionListener="#{explVC.resetPage}" />
        		</p:panelGrid>
        		
     	</p:dialog>
@@ -56,8 +59,11 @@
      		
      		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
      			<h:outputText value="Are you sure want to delete this page?" />
-     			<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}" oncomplete="PF('confDeleteDlg').hide()" />
-    			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" actionListener="#{explVC.resetPage}" oncomplete="PF('confDeleteDlg').hide()" />
+     			<p:commandButton value="Yes" styleClass="ui-confirmdialog-yes" 
+     				icon="ui-icon-check" update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}" 
+     				oncomplete="PF('confDeleteDlg').hide()" />
+    			<p:commandButton value="No" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+    				actionListener="#{explVC.resetPage}" oncomplete="PF('confDeleteDlg').hide()" />
  			</p:panelGrid>
  		</p:dialog>
 	</h:form>
