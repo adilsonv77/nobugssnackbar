@@ -78,13 +78,15 @@
 		<attribute name="fileimport"/>
 		<sequential>
 			<java jar="_soy/SoyMsgExtractor.jar" fork="true">
-				<arg line="--outputFile extracted_msgs.xlf --srcs @{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
+				<arg line="--outputFile src/pt/uc/dei/nobugssnackbar/i18n/extracted_msgs.xlf --srcs @{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
 			</java>
 		
 			<exec executable="python">
 				<arg value="i18n\xliff_to_json.py"/>
+				<arg value="--output_dir"/>
+				<arg value="src/pt/uc/dei/nobugssnackbar/i18n"/>
 				<arg value="--xlf"/>
-				<arg value="extracted_msgs.xlf"/>
+				<arg value="src/pt/uc/dei/nobugssnackbar/i18n/extracted_msgs.xlf"/>
 				<arg value="--templates"/>
 				<arg value="@{fileimport}"/>
 				<arg value="hints.soy"/>
@@ -95,12 +97,16 @@
 			
 			<exec executable="python">
 				<arg value="i18n\json_to_js.py"/>
+				<arg value="--key_file=src/pt/uc/dei/nobugssnackbar/i18n/keys.json"/>
 				<arg value="--path_to_jar=.\_soy"/>
-				<arg value="--output_dir=web\js\generated"/>
+				<arg value="--output_dir=web/js/generated"/>
 				<arg value="--template"/>
 				<arg value="@{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
-				<arg value="json\*.json"/>
+				<arg value="src/pt/uc/dei/nobugssnackbar/i18n/*.json"/>
 			</exec>
+			
+			<delete file="src/pt/uc/dei/nobugssnackbar/i18n/qqq.json" />
+			<delete file="src/pt/uc/dei/nobugssnackbar/i18n/keys.json" />
 			
 		</sequential>
 	</macrodef>

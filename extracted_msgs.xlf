@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en">
+    <body>
+      <trans-unit id="60092859899192993" datatype="html">
+        <source>You'll receive a bonus of %0 (or more) if accomplish this mission in %1 minutes or less.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.timeBonusExplanation</note>
+      </trans-unit>
+      <trans-unit id="152772769415535211" datatype="html">
+        <source>The customer doesn't have thirsty.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntThirsty</note>
+      </trans-unit>
+      <trans-unit id="322002523664684182" datatype="html">
+        <source>Your progress</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.YourProgress</note>
+      </trans-unit>
+      <trans-unit id="466656955922842447" datatype="html">
+        <source>Logoff the game.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.logoffTooltip</note>
+      </trans-unit>
+      <trans-unit id="486831451466151841" datatype="html">
+        <source>Required field.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.requiredField</note>
+      </trans-unit>
+      <trans-unit id="489055489882549571" datatype="html">
+        <source>The max quantity of commands used is %0.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.CommsQtd</note>
+      </trans-unit>
+      <trans-unit id="491580452690035979" datatype="html">
+        <source>There is at least one variable that didn't receive a value before.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.variableDoesntInitialized</note>
+      </trans-unit>
+      <trans-unit id="768570576516576913" datatype="html">
+        <source>text</source>
+        <note priority="1" from="description">variable name - Default [https://code.google.com/p/blockly/wiki/Variables variable] representing a [https://code.google.com/p/blockly/wiki/Text piece of text].  This should be a single word, preferably short.\n{lb}{lb}Identical|Text{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.textVariable</note>
+      </trans-unit>
+      <trans-unit id="884476449558954550" datatype="html">
+        <source>There isn't any customer in this position of the counter.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.thereIsntCustomer</note>
+      </trans-unit>
+      <trans-unit id="919714298449103401" datatype="html">
+        <source>Password</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.password</note>
+      </trans-unit>
+      <trans-unit id="945512987522205749" datatype="html">
+        <source>Select a Mission</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.SelectMission</note>
+      </trans-unit>
+      <trans-unit id="975659900482714497" datatype="html">
+        <source>Login</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">Apps.dialogLogin</note>
+      </trans-unit>
+      <trans-unit id="976278757916109841" datatype="html">
+        <source>Makes the snack man do what the next block say.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.debugTooltip</note>
+      </trans-unit>
+      <trans-unit id="980487932688199453" datatype="html">
+        <source>Your machines</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Apps.catYourMachines</note>
+      </trans-unit>
+      <trans-unit id="1111809928425879990" datatype="html">
+        <source>Add new equipments in your snackbar.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.AddNewEquipment</note>
+      </trans-unit>
+      <trans-unit id="1274375705158281519" datatype="html">
+        <source>Functions</source>
+        <note priority="1" from="description">category - Blocks related to [https://en.wikipedia.org/wiki/Subroutine defining or using procedures/functions].</note>
+        <note priority="1" from="meaning">Apps.catProcedures</note>
+      </trans-unit>
+      <trans-unit id="1339640965990621535" datatype="html">
+        <source>The max quantity of variables used is %0.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.VarQtd</note>
+      </trans-unit>
+      <trans-unit id="1362146355301996406" datatype="html">
+        <source>There is nothing to delivery.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.variableHaventContentToDeliver</note>
+      </trans-unit>
+      <trans-unit id="1407530497417852932" datatype="html">
+        <source>The deliver doesn't match the position of the customer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntMatchPosition</note>
+      </trans-unit>
+      <trans-unit id="1529895070811083124" datatype="html">
+        <source>Ask the customer %0 what he wants to drink.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.AskForDrink</note>
+      </trans-unit>
+      <trans-unit id="1632516136513115795" datatype="html">
+        <source>Here is showed the quantity of blocks you are using in your program.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.ShowCountInstructions</note>
+      </trans-unit>
+      <trans-unit id="1633378549532010097" datatype="html">
+        <source>Base value</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Victory.BaseValue</note>
+      </trans-unit>
+      <trans-unit id="1658873612540489496" datatype="html">
+        <source>%1 and store in %2</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Blockly.variableSet</note>
+      </trans-unit>
+      <trans-unit id="1686883036031489642" datatype="html">
+        <source>Logic</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Logic logic].</note>
+        <note priority="1" from="meaning">Apps.catLogic</note>
+      </trans-unit>
+      <trans-unit id="1770053335679663298" datatype="html">
+        <source>You don't achieved this mission. You need to try again.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.goalAchievedFail</note>
+      </trans-unit>
+      <trans-unit id="1845957973676262575" datatype="html">
+        <source>Ice Cream</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.IceCreamMachine</note>
+      </trans-unit>
+      <trans-unit id="1988130417110560906" datatype="html">
+        <source>Queen</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.Queen</note>
+      </trans-unit>
+      <trans-unit id="2007113832643044790" datatype="html">
+        <source>Go to counter %0.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.Counter</note>
+      </trans-unit>
+      <trans-unit id="2091854889781236532" datatype="html">
+        <source>Here the cooker can only catch fruits.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.onlyFruits</note>
+      </trans-unit>
+      <trans-unit id="2101140765251913176" datatype="html">
+        <source>Mission</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.Mission</note>
+      </trans-unit>
+      <trans-unit id="2197777220744274641" datatype="html">
+        <source>The customer doesn't have hunger.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntHunger</note>
+      </trans-unit>
+      <trans-unit id="2290486827272303337" datatype="html">
+        <source>Catch the food that the customer %0 ordered.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.CatchFood</note>
+      </trans-unit>
+      <trans-unit id="2313494021993857486" datatype="html">
+        <source>Asks the customer if he wants to eat something.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.askHasHungerTooltip</note>
+      </trans-unit>
+      <trans-unit id="2331236753804897666" datatype="html">
+        <source>Moves the snack man to the cooler.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.goToCoolerTooltip</note>
+      </trans-unit>
+      <trans-unit id="2458686278508831462" datatype="html">
+        <source>Buy some machines.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.buyTooltip</note>
+      </trans-unit>
+      <trans-unit id="2477030469514829278" datatype="html">
+        <source>Click in this button for track the cooker actions according your program.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.RunProgram</note>
+      </trans-unit>
+      <trans-unit id="2524452968407712235" datatype="html">
+        <source>Infinity loop detected by system.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.infinityLoopDetected</note>
+      </trans-unit>
+      <trans-unit id="2533409901547786170" datatype="html">
+        <source>Moves the snack man to the box of fruits.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.goToBoxOfFruitsTooltip</note>
+      </trans-unit>
+      <trans-unit id="2561306449483326985" datatype="html">
+        <source>Text</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Text text processing].\n{lb}{lb}Identical|Text{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.catText</note>
+      </trans-unit>
+      <trans-unit id="2570539532822249158" datatype="html">
+        <source>Sorry, '%1' doesn't correspond with any saved program.</source>
+        <note priority="1" from="description">alert - A request to retrieve a stored program does not have a valid URL. %1 is the invalid portion of the URL.</note>
+        <note priority="1" from="meaning">Apps.hashError</note>
+      </trans-unit>
+      <trans-unit id="2675009044475126123" datatype="html">
+        <source>Achieved</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.achieved</note>
+      </trans-unit>
+      <trans-unit id="2759884907854143483" datatype="html">
+        <source>This position is invalid.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntExistCounter</note>
+      </trans-unit>
+      <trans-unit id="2769905461583168973" datatype="html">
+        <source>There are one or more empty inputs in this block. You need insert blocks in these empty slots.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.EmptyInputError</note>
+      </trans-unit>
+      <trans-unit id="2798967537242169778" datatype="html">
+        <source>The cooker is not in front of the display.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntFrontDisplay</note>
+      </trans-unit>
+      <trans-unit id="2845004989226818210" datatype="html">
+        <source>Asks the customer if he wants to drink something.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.askHasThirstyTooltip</note>
+      </trans-unit>
+      <trans-unit id="2854352906500137882" datatype="html">
+        <source>Asks the customer about what he wants to eat.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.askForFoodTooltip</note>
+      </trans-unit>
+      <trans-unit id="3056823096817498525" datatype="html">
+        <source>The deliver doesn't match the order.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.deliveredWrongRequest</note>
+      </trans-unit>
+      <trans-unit id="3070380580405905776" datatype="html">
+        <source>Ask the customer %0 what he wants to eat.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.AskForFood</note>
+      </trans-unit>
+      <trans-unit id="3143663818296845650" datatype="html">
+        <source>Makes the snack man do what the blocks say.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.runTooltip</note>
+      </trans-unit>
+      <trans-unit id="3182570400621754269" datatype="html">
+        <source>TODO %0</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.intro2</note>
+      </trans-unit>
+      <trans-unit id="3191990787825756380" datatype="html">
+        <source>Juice of orange.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.constjuiceOfOrangeTooltip</note>
+      </trans-unit>
+      <trans-unit id="3231159937989095591" datatype="html">
+        <source>You'll receive a bonus of %0 if accomplish this mission in %1 commands or less.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.commandBonusExplanation</note>
+      </trans-unit>
+      <trans-unit id="3279501947911403228" datatype="html">
+        <source>Variables</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Variables variables].</note>
+        <note priority="1" from="meaning">Apps.catVariables</note>
+      </trans-unit>
+      <trans-unit id="3312519842352477082" datatype="html">
+        <source>Questionnaire</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.Questionnaire</note>
+      </trans-unit>
+      <trans-unit id="3544103615801735240" datatype="html">
+        <source>Here are the variables created during the game. Please note the variable name is the same as configured in the last command performed.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.VariableWindow</note>
+      </trans-unit>
+      <trans-unit id="3567591985080898295" datatype="html">
+        <source>Ask the customer %0 what he wants to eat and store in a new variable.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.AskForFoodDistinctVar</note>
+      </trans-unit>
+      <trans-unit id="3569342064531262776" datatype="html">
+        <source>The cooker is not in front of the cooler.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntFrontCooler</note>
+      </trans-unit>
+      <trans-unit id="3626599991564912495" datatype="html">
+        <source>You achieved this mission. \n You won a total of %0.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.goalAchievedVictory</note>
+      </trans-unit>
+      <trans-unit id="3717383171899667191" datatype="html">
+        <source>Close</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">Apps.close</note>
+      </trans-unit>
+      <trans-unit id="3867705753863197355" datatype="html">
+        <source>Here you configure the cooker velocity.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.slider</note>
+      </trans-unit>
+      <trans-unit id="3928178634761957620" datatype="html">
+        <source>Catches the drink from the cooler and put it on a platter ready will deliver to the customer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.catchDrinkTooltip</note>
+      </trans-unit>
+      <trans-unit id="3950150970844199876" datatype="html">
+        <source>Leaving this page will result in the loss of your work.</source>
+        <note priority="1" from="description">alert - This is shown if the user attempts to close the browser tab containing the page or navigate to a different page to prevent them from accidentally losing their program in progress.</note>
+        <note priority="1" from="meaning">NoBugs.unloadWarning</note>
+      </trans-unit>
+      <trans-unit id="3964361619617826429" datatype="html">
+        <source>OK</source>
+        <note priority="1" from="description">Label on button for user to press when done reading help information.\n{lb}{lb}Identical|OK{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.dialogOk</note>
+      </trans-unit>
+      <trans-unit id="4165864781517626428" datatype="html">
+        <source>You're an expert !!! There aren't more missions for you.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.noMoreMissions</note>
+      </trans-unit>
+      <trans-unit id="4211443408644387161" datatype="html">
+        <source>Buy</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">NoBugs.buy</note>
+      </trans-unit>
+      <trans-unit id="4394184467090347432" datatype="html">
+        <source>Drag a block to the workspace.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.SelectCommand</note>
+      </trans-unit>
+      <trans-unit id="4514880183706500807" datatype="html">
+        <source>Deliver what the customer %0 ordered.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.Deliver</note>
+      </trans-unit>
+      <trans-unit id="4815558195246015853" datatype="html">
+        <source>King</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.King</note>
+      </trans-unit>
+      <trans-unit id="4863640775114039209" datatype="html">
+        <source>This game is not supported by this browser. <x id="BREAK"/>It is recommended to be downloaded and the installation of any of the browsers below:</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.navigatorNotSupported</note>
+      </trans-unit>
+      <trans-unit id="5005146110268543835" datatype="html">
+        <source>Choose a category <x id="XXX"/> to see the blocks.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.ChooseCategory</note>
+      </trans-unit>
+      <trans-unit id="5022181585084069312" datatype="html">
+        <source>For the maximum quantity of commands</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Victory.MaxCommands</note>
+      </trans-unit>
+      <trans-unit id="5042924586049623656" datatype="html">
+        <source>Players ordered by their level and amount of runs.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Tooltip.TabRun</note>
+      </trans-unit>
+      <trans-unit id="5044822929732369334" datatype="html">
+        <source>Equipments</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.Equipments</note>
+      </trans-unit>
+      <trans-unit id="5127018186755369127" datatype="html">
+        <source>Verify if there is a customer in the currently position.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.isThereACustomerTooltip</note>
+      </trans-unit>
+      <trans-unit id="5181326060155157641" datatype="html">
+        <source>Click in this button for track the next cooker action according your program.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.DebugProgram</note>
+      </trans-unit>
+      <trans-unit id="5214619669456087883" datatype="html">
+        <source>The juicer only accepts fruits.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.onlyPutFruits</note>
+      </trans-unit>
+      <trans-unit id="5265927508026026816" datatype="html">
+        <source>French Fryer</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.FrenchFryer</note>
+      </trans-unit>
+      <trans-unit id="5391382062551588177" datatype="html">
+        <source>Save and link to blocks.</source>
+        <note priority="1" from="description">tooltip - Clicking on this button will cause the current program to be saved and for a URL to be shown to later retrieve it.</note>
+        <note priority="1" from="meaning">Apps.linkTooltip</note>
+      </trans-unit>
+      <trans-unit id="5425456465987903579" datatype="html">
+        <source>Logoff</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">Apps.dialogLogoff</note>
+      </trans-unit>
+      <trans-unit id="5532942470899034153" datatype="html">
+        <source>Colour</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Colour colour].</note>
+        <note priority="1" from="meaning">Apps.catColour</note>
+      </trans-unit>
+      <trans-unit id="5615165614489445658" datatype="html">
+        <source>Delivers the food or drink to the customer near the cooker.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.deliverTooltip</note>
+      </trans-unit>
+      <trans-unit id="5621230970080814248" datatype="html">
+        <source>Moves the snack man to the customer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.goToBarCounterTooltip</note>
+      </trans-unit>
+      <trans-unit id="5758425077401246127" datatype="html">
+        <source>Could not load your saved file.  Perhaps it was created with a different version of Blockly?</source>
+        <note priority="1" from="description">alert - There was a problem loading a file previously saved by the user.  The most likely reason for the problem is that it was created with an earlier, incompatible version of Blockly.  This message will be followed by technical information useful to engineers trying to understand the problem.</note>
+        <note priority="1" from="meaning">Apps.xmlError</note>
+      </trans-unit>
+      <trans-unit id="5802595646844192720" datatype="html">
+        <source>Restarts the execution.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.resetTooltip</note>
+      </trans-unit>
+      <trans-unit id="5838195295317713027" datatype="html">
+        <source>See generated JavaScript code.</source>
+        <note priority="1" from="description">tooltip - Pressing the button causes a program in the JavaScript computer language to be displayed, based on the program created by the user.</note>
+        <note priority="1" from="meaning">Apps.codeTooltip</note>
+      </trans-unit>
+      <trans-unit id="5840792943435673482" datatype="html">
+        <source>Catch the drink that the customer %0 ordered.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Explane.CatchDrink</note>
+      </trans-unit>
+      <trans-unit id="5890629922878157275" datatype="html">
+        <source>If it's hard to achieve the goals, try to use this button and pay attention in the window of variables.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.DebugButtonError</note>
+      </trans-unit>
+      <trans-unit id="5920842310851090823" datatype="html">
+        <source>The cooker is not close to any customer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntCloseToCustomer</note>
+      </trans-unit>
+      <trans-unit id="5969399095943850205" datatype="html">
+        <source>Catches a fruit necessary to prepare juice.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.catchFruitsTooltip</note>
+      </trans-unit>
+      <trans-unit id="5991135380423725006" datatype="html">
+        <source>Leader Board</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.LeaderBoard</note>
+      </trans-unit>
+      <trans-unit id="6104898162223181129" datatype="html">
+        <source>then</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Blockly.ifThen</note>
+      </trans-unit>
+      <trans-unit id="6119793388939505467" datatype="html">
+        <source>Here only has hotdog. The customer didn't order hotdog.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.onlyHotDog</note>
+      </trans-unit>
+      <trans-unit id="6145856927803479454" datatype="html">
+        <source>of</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.of</note>
+      </trans-unit>
+      <trans-unit id="6147622285969159562" datatype="html">
+        <source>There isn't any drink in the order.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntOrderDrink</note>
+      </trans-unit>
+      <trans-unit id="6189808175540281396" datatype="html">
+        <source>Run Program</source>
+        <note priority="1" from="description">button label - Pressing the button runs the computer program the user has written.</note>
+        <note priority="1" from="meaning">Apps.runProgram</note>
+      </trans-unit>
+      <trans-unit id="6192625840582724866" datatype="html">
+        <source>Share your blocks with this link:\n\n%1</source>
+        <note priority="1" from="description">alert - After the user has pressed a button to save his/her program, this provides the URL (%1) to retrieve the program.  The characters '\n\n' indicate that a blank line will be displayed before the URL (in English).  Leave those in unless you move %1 to the beginning or middle of the text, in which case you should use your judgment about where blank lines would be most useful.\n\nParameters:\n* %1 - URL of saved program.</note>
+        <note priority="1" from="meaning">Apps.linkAlert</note>
+      </trans-unit>
+      <trans-unit id="6249974034126889050" datatype="html">
+        <source>Variables</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.variables</note>
+      </trans-unit>
+      <trans-unit id="6316320629891574281" datatype="html">
+        <source>Run the program defined by the blocks in the workspace.</source>
+        <note priority="1" from="description">tooltip - Pressing this button runs the computer program the user has written.</note>
+        <note priority="1" from="meaning">Apps.runTooltip</note>
+      </trans-unit>
+      <trans-unit id="6357322761662784984" datatype="html">
+        <source>Players ordered by their money earned.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Tooltip.TabMoney</note>
+      </trans-unit>
+      <trans-unit id="6447851616798415862" datatype="html">
+        <source>There isn't here the drink that customer orders.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.wrongPlaceForDrink</note>
+      </trans-unit>
+      <trans-unit id="6491926390857975299" datatype="html">
+        <source>There was a problem with the request.</source>
+        <note priority="1" from="description">alert - The URL is invalid or a server error occurred.  This message will be followed by technical information useful to engineers trying to understand the problem.</note>
+        <note priority="1" from="meaning">Apps.httpRequestError</note>
+      </trans-unit>
+      <trans-unit id="6518447422827323226" datatype="html">
+        <source>The cooker is not in front of the box of fruits.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntFrontBoxOfFruits</note>
+      </trans-unit>
+      <trans-unit id="6533409555866489852" datatype="html">
+        <source>Reset</source>
+        <note priority="1" from="description">button label - Pressing the button causes the output of the program to be erased but does not delete the user's program).</note>
+        <note priority="1" from="meaning">Apps.resetProgram</note>
+      </trans-unit>
+      <trans-unit id="6535871732202319308" datatype="html">
+        <source>User</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.user</note>
+      </trans-unit>
+      <trans-unit id="6626324191294845517" datatype="html">
+        <source>Next</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">Apps.dialogNext</note>
+      </trans-unit>
+      <trans-unit id="6650354588969822092" datatype="html">
+        <source>Blockly</source>
+        <note priority="1" from="description">The project name.  If readers of your language would know approximately how to pronounce 'Blockly', leave unchanged.  Otherwise, include a transliteration in parentheses, such as the Russian: 'Blockly (Блoкли)'.</note>
+        <note priority="1" from="meaning">Apps.blocklyMessage</note>
+      </trans-unit>
+      <trans-unit id="6702258197719799711" datatype="html">
+        <source>Catches the food from the display and put it on a platter ready will deliver to the customer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.catchFoodTooltip</note>
+      </trans-unit>
+      <trans-unit id="6728544127333480386" datatype="html">
+        <source>You checked before the box "Prevent this page from creating additional dialogs". So you disabled new windows to ask you information. Press [F5] and try again to give a new variable name.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.showPrompt</note>
+      </trans-unit>
+      <trans-unit id="6804162570155223884" datatype="html">
+        <source>See the objectives of this mission.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.goalsTooltip</note>
+      </trans-unit>
+      <trans-unit id="6811995539329236788" datatype="html">
+        <source>Variable name is wrong:\n\n- Don't use repeated variable names.\n- Use only alphabetic characters and numbers.\n\n</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.variableName</note>
+      </trans-unit>
+      <trans-unit id="6881754834238674261" datatype="html">
+        <source>New Goal Achieved</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.goalAchieved</note>
+      </trans-unit>
+      <trans-unit id="6929233740582324700" datatype="html">
+        <source>Developed by</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">NoBugs.developedBy</note>
+      </trans-unit>
+      <trans-unit id="6961875918078772797" datatype="html">
+        <source>User not found.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.login</note>
+      </trans-unit>
+      <trans-unit id="6979015308440947289" datatype="html">
+        <source>Sponsored by</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">NoBugs.sponsoredBy</note>
+      </trans-unit>
+      <trans-unit id="7066012264751803101" datatype="html">
+        <source>Previous</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">Apps.dialogPrevious</note>
+      </trans-unit>
+      <trans-unit id="7097846925432631961" datatype="html">
+        <source>Moves the snack man to the juice machine.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.goToJuiceMachineTooltip</note>
+      </trans-unit>
+      <trans-unit id="7225309945091685386" datatype="html">
+        <source>order</source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">NoBugs.order</note>
+      </trans-unit>
+      <trans-unit id="7314181232693154293" datatype="html">
+        <source>list</source>
+        <note priority="1" from="description">variable name - Default [https://code.google.com/p/blockly/wiki/Variables variable] representing a [https://code.google.com/p/blockly/wiki/Lists list].  This should be a single word, preferably short.</note>
+        <note priority="1" from="meaning">Apps.listVariable</note>
+      </trans-unit>
+      <trans-unit id="7345584318848621332" datatype="html">
+        <source>In case of technical problems, please contact </source>
+        <note priority="1" from="description">---</note>
+        <note priority="1" from="meaning">NoBugs.support</note>
+      </trans-unit>
+      <trans-unit id="7377651323551775681" datatype="html">
+        <source>TODO</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.intro1</note>
+      </trans-unit>
+      <trans-unit id="7476980401736701393" datatype="html">
+        <source>Value</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.varvalue</note>
+      </trans-unit>
+      <trans-unit id="7545443551589272176" datatype="html">
+        <source>in the counter</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.Counter</note>
+      </trans-unit>
+      <trans-unit id="7594127818956644057" datatype="html">
+        <source>The cooker is not in front of the juice machine.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.isntFrontJuiceMachine</note>
+      </trans-unit>
+      <trans-unit id="7611760036928962596" datatype="html">
+        <source>Constants</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.constSnackMan</note>
+      </trans-unit>
+      <trans-unit id="7622749176766248147" datatype="html">
+        <source>We only can see these values after accomplish mission %0.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.NotEnabledToSeeLeaderBoard</note>
+      </trans-unit>
+      <trans-unit id="7686189872606576431" datatype="html">
+        <source>The cooker forget to request the order.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntHaveOrder</note>
+      </trans-unit>
+      <trans-unit id="7721934482592892506" datatype="html">
+        <source>Click in this button for see which goals are you achieved.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.GoalButton</note>
+      </trans-unit>
+      <trans-unit id="7747105119942348103" datatype="html">
+        <source>The cooker bring anything to put into the juicer.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntHaveItem</note>
+      </trans-unit>
+      <trans-unit id="7880221162350996120" datatype="html">
+        <source>Lists</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Lists lists].</note>
+        <note priority="1" from="meaning">Apps.catLists</note>
+      </trans-unit>
+      <trans-unit id="7949081907528106972" datatype="html">
+        <source>Bonus</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Victory.Bonus</note>
+      </trans-unit>
+      <trans-unit id="8056101974899346682" datatype="html">
+        <source>The mission's time is over. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You earned &amp;#60;b&amp;#62;%0&amp;#60;/b&amp;#62; delivering the requests.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.finishOpenMission</note>
+      </trans-unit>
+      <trans-unit id="8060538053130588320" datatype="html">
+        <source>Name</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.varname</note>
+      </trans-unit>
+      <trans-unit id="8137445348060483729" datatype="html">
+        <source>For your time of %0</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Victory.TimeBonus</note>
+      </trans-unit>
+      <trans-unit id="8178161970710856865" datatype="html">
+        <source>There isn't any food in the order.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Error.doesntOrderFood</note>
+      </trans-unit>
+      <trans-unit id="8276360284634811428" datatype="html">
+        <source>Stack a couple of this command blocks together to be more closer to reach the goal.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.StackTogether</note>
+      </trans-unit>
+      <trans-unit id="8279139512609314100" datatype="html">
+        <source>Moves the snack man to the display.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.goToDisplayTooltip</note>
+      </trans-unit>
+      <trans-unit id="8319563457979833885" datatype="html">
+        <source>Counter</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Single.counter</note>
+      </trans-unit>
+      <trans-unit id="8504064665960111059" datatype="html">
+        <source>Math</source>
+        <note priority="1" from="description">category - Blocks related to mathematics.</note>
+        <note priority="1" from="meaning">Apps.catMath</note>
+      </trans-unit>
+      <trans-unit id="8514812131842527965" datatype="html">
+        <source>Loops</source>
+        <note priority="1" from="description">category - Blocks related to [https://en.wikipedia.org/wiki/Control_flow#Loops loops].</note>
+        <note priority="1" from="meaning">Apps.catLoops</note>
+      </trans-unit>
+      <trans-unit id="8531227695372998290" datatype="html">
+        <source>Players ordered by their level and time spent.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Tooltip.TabTime</note>
+      </trans-unit>
+      <trans-unit id="8605819299263106886" datatype="html">
+        <source>Cancel</source>
+        <note priority="1" from="description">Label on button for user to press when not wanting to proceed.\n{lb}{lb}Identical|Cancel{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.dialogCancel</note>
+      </trans-unit>
+      <trans-unit id="8752560403919661459" datatype="html">
+        <source>Use the fruit catched and prepare a juice.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.prepareAndCatchJuiceTooltip</note>
+      </trans-unit>
+      <trans-unit id="8805313452236397665" datatype="html">
+        <source>Asks the customer about what he wants to drink.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.askForDrinkTooltip</note>
+      </trans-unit>
+      <trans-unit id="9022445905247781415" datatype="html">
+        <source>Reward of %0 if you achieve all the objectives above.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">NoBugs.rewardExplanation</note>
+      </trans-unit>
+      <trans-unit id="9055510737478198328" datatype="html">
+        <source>Each time the debug button is clicked, the cooker moves according of the program command (block). The highlighted block is the next to be executed. Click again on debug button.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.WhileDebugging</note>
+      </trans-unit>
+      <trans-unit id="9058775398469617066" datatype="html">
+        <source>SnackMan</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.catSnackMan</note>
+      </trans-unit>
+      <trans-unit id="9082327417136703948" datatype="html">
+        <source>Click in this button for remember what you must do in this mission.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">Hints.GoalButtonError</note>
+      </trans-unit>
+      <trans-unit id="9151382257658567281" datatype="html">
+        <source>a visual programming environment</source>
+        <note priority="1" from="description">A short description of Blockly.</note>
+        <note priority="1" from="meaning">Apps.subtitle</note>
+      </trans-unit>
+      <trans-unit id="9157372775450051583" datatype="html">
+        <source>Soft drink.</source>
+        <note priority="1" from="description">--</note>
+        <note priority="1" from="meaning">SnackMan.constSoftDrinkTooltip</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
