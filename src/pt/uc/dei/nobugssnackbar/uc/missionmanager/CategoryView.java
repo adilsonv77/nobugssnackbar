@@ -3,14 +3,12 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.List;
 
-
-
-
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+
+import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
@@ -22,13 +20,15 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{factoryDao.hintCategoryDao}")
+	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
 	private transient HintCategoryDao hintCategoryDao;
-
+	
+	@ManagedProperty(value="#{hintView}")
+	private HintView hw;
 
 
 	// #region private variables
-	private HintCategory hCategory = null;
+	private HintCategory hCategory;
 	private List<HintCategory> hCategories;
 	private CategoryProviderConverter cpc;
 	// #end
@@ -39,14 +39,20 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 		cpc.setProvider(this);
 	}
 	// #region getters and setters
-	public HintCategory getCategory() {
+	public HintView getHw() {
+		return hw;
+	}
+	public void setHw(HintView hw) {
+		this.hw = hw;
+	}
+	public HintCategory getHCategory() {
 		if (hCategory == null) {
 			hCategory = new HintCategory();
 		}
 		return hCategory;
 	}
 
-	public void setCategory(HintCategory category) {
+	public void setHCategory(HintCategory category) {
 		this.hCategory = category;
 	}
 	
@@ -74,12 +80,35 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	public List<HintCategory> getHintCategories() throws Exception {
 		if (hCategories == null) {
 			hCategories = hintCategoryDao.list();
-		}
+		};
 		return hCategories;
 	}
 	// #end
 	
 
 	// #region user defined methods
+	public void setElementByID(){
+		int selectedHCategoryID = Integer.parseInt(
+				FacesContext.
+				getCurrentInstance().
+				getExternalContext().
+				getRequestParameterMap().
+				get("hCategoryID")
+		);
+
+		hCategory = new HintCategory();
+		
+		for (int i = 0; i < hCategories.size(); i++) {
+			if (hCategories.get(i).getId() == selectedHCategoryID) {
+				hCategory.setId(hCategories.get(i).getId());
+				hCategory.setTitle(hCategories.get(i).getTitle());
+				hCategory.setDescription(hCategories.get(i).getDescription());
+				hCategory.setBody(hCategories.get(i).getBody());
+				break;
+			}
+		}
+
+		hw.getHint().setObjHintCategory(hCategory);
+	}
 	// #end
 }

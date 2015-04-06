@@ -3,11 +3,15 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import pt.uc.dei.nobugssnackbar.model.HintCategory;
+
 public class Hint implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// #region private variables
 	private String category;
+	private HintCategory hintCategory;
 	private int time;
 	private String text;
 	private boolean type;
@@ -19,12 +23,27 @@ public class Hint implements java.io.Serializable {
 		time = 0;
 		conditions = new ArrayList<>();
 		text = "";
-		type = false;
+		type = false;//false == tip
 	}
 	
 	// #region public getters and setters
-	public String getCategory() {
+	public String getCategory() {		
+		if(hintCategory != null){
+			category = hintCategory.getTitle();
+		}
+		else{
+			category = "";
+		}
 		return category;
+	}
+	public HintCategory getObjHintCategory() {
+		if(hintCategory == null){
+			//hintCategory = new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
+		}
+		return hintCategory;
+	}
+	public void setObjHintCategory(HintCategory hintCategory) {
+		this.hintCategory = hintCategory;
 	}
 	public List<Condition> getConditions() {
 		return conditions;

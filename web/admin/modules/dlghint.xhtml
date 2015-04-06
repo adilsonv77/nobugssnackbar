@@ -5,7 +5,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
-		<!-- each dialog must have its own form -->
 		<h:form id="formDlgHints">
 	
 			<p:panelGrid columns="2">
@@ -16,9 +15,12 @@
 				    <f:selectItem itemLabel="Error" itemValue="true" />
 				</p:selectOneRadio>
 			        
-			    <p:outputLabel for="btnChooseCategory" value="Cartegory:"/>
+			    <p:outputLabel for="btnChooseCategory" value="Category:"/>
+			    <p:panelGrid columns="2">
 			    <p:commandButton id="btnChooseCategory" value="Choose" 
 			    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
+			    	<h:outputText value="#{hintView.hint.category}"/>
+			    </p:panelGrid>
 			    
 			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
 			    <p:panelGrid columns="2">

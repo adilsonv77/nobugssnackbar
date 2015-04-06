@@ -1,5 +1,7 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.io.Serializable;
+
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
@@ -7,7 +9,10 @@ import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
 /* this class stay here because it is provided by database */
 
 @JdbcTable(name="missions")
-public class Mission{
+public class Mission implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 	
 	@JdbcField(name="missionid")
 	@JdbcPk

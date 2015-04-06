@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -65,11 +66,16 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		this.page = page;
 	}
 	
-	
 	public void addPage() {
 		if (page.getId() < 0) {
-			page.setId(pageIdCount++);
-			pages.add(page);
+			if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
+				page.setId(pageIdCount++);
+				pages.add(page);
+			}
+			else {
+				FacesContext context = FacesContext.getCurrentInstance();
+		        context.addMessage(null, new FacesMessage("Warning", "Message box is empty!") );
+			}
 		}
 		else {
 			editPage();
