@@ -14,12 +14,13 @@
 		<p:layoutUnit id="missionPnl" position="west" size="300" minSize="200" maxSize="400" resizable="true">
 	        <f:facet name="header">
 	        	<div class="clear">
-        			<h:outputText value="#{msg['Single.Mission']}" />
+        			<h:outputText value="#{msg['missions']}" />
         			<p:commandButton id="addMissionBtn" icon="ui-icon-circle-plus" />
         		</div>
     		</f:facet>
     			
-    		<p:dataTable id="missionDT" value="#{mm.missionList}" var="mission" styleClass="hide-column-names" selectionMode="single">
+    		<p:dataTable id="missionDT" value="#{mm.missionList}" var="mission" styleClass="hide-column-names" selectionMode="single" 
+    				emptyMessage="#{msg['nomissions']}">
     			<p:column>
     				<h:outputText value="#{mission.name}" />
     			</p:column>
@@ -32,10 +33,10 @@
         		<p:layoutUnit position="north">
         			<p:panelGrid columns="4">
         			
-        				<p:outputLabel value="Name :" for="missionNameCont" />
+        				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
         				<p:inputText id="missionNameCont" value="Some value" disabled="true" />
         				
-        				<p:outputLabel value="Language :" for="langMenu" />
+        				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
         				<p:selectOneMenu id="langMenu" style="width: 100px;">
             				<f:selectItem itemLabel="en" itemValue="en" />
             				<f:selectItem itemLabel="pt" itemValue="pt" />

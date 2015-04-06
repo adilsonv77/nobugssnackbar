@@ -34,7 +34,6 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	// #end
  
 	public CategoryView(){
-		System.out.println(" CategoryView created...");
 		cpc = new CategoryProviderConverter();
 		cpc.setProvider(this);
 	}
