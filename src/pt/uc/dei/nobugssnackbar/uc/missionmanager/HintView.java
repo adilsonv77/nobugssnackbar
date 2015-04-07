@@ -70,10 +70,12 @@ public class HintView implements Serializable {
 	public void addEditHint() {
 		if (this.add) {/*prevent from adding element when editing*/
 			if (hint.getType()) {/*check type if it is error or hint*/
-				errorsHints.add(hint);				
+				errorsHints.add(hint);
+				addMessageToGrowl(new Object[]{"title=newHintAdd","newErrorHintAdd"});
 			}
 			else {
 				tipsHints.add(hint);
+				addMessageToGrowl(new Object[]{"title=newHintAdd","newTipHintAdd"});
 			}
 		}
 		checkLists();
@@ -85,13 +87,15 @@ public class HintView implements Serializable {
 			if(hint.getType() == false/*tip*/){
 				tipsHints.add(hint);
 				errorsHints.remove(hint);
+				addMessageToGrowl(new Object[]{"title=hintMoved","hintMovedFromErrorsToTips"});
 				break;
 			}
 		}
 		for (Hint hint : tipsHints) {
 			if(hint.getType() == true/*error*/){
 				errorsHints.add(hint);
-				tipsHints.remove(hint);
+				tipsHints.remove(hint);			
+				addMessageToGrowl(new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
 				break;
 			}
 		}
@@ -101,9 +105,11 @@ public class HintView implements Serializable {
 	public void deleteHint(Hint hint){
 		if(hint.getType()){
 			errorsHints.remove(hint);
+			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromErrors"});
 		}
 		else{
 			tipsHints.remove(hint);
+			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromTips"});
 		}
 	}
 	
@@ -111,15 +117,49 @@ public class HintView implements Serializable {
 		this.hint = new Hint();
 	}
 	
+	public void addMessageToGrowl(String key){
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Notification", messageBundle.getString(key));
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		RequestContext.getCurrentInstance().update("growlMsgs");
+	}
+	
+	public void addMessageToGrowl(Object [] msgs){
+		
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		String title = "Notification";	
+		FacesMessage msg;
+		String finalText = "";
+				
+		for (Object obj : msgs) {
+			if(obj instanceof String){
+				if(!messageBundle.keySet().contains(obj)) {
+					if(obj.toString().startsWith("title=")){
+						title = messageBundle.getString(obj.toString().substring(6));
+					}else{
+						finalText += obj.toString();
+					}
+				}else{
+					finalText += messageBundle.getString(obj.toString());					
+				}
+			}
+			if(obj instanceof Integer){
+				finalText += obj.toString();
+			}						
+		}
+		
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		RequestContext.getCurrentInstance().update("growlMsgs");
+	}
+		
     public void onRowReorder(ReorderEvent event) {
-    	ResourceBundle messageBundle = ApplicationMessages.getMessage();
-        FacesMessage msg = new FacesMessage(
-        		FacesMessage.SEVERITY_INFO, 
-        		messageBundle.getString("movedRowMsg"), 
-        		messageBundle.getString("msgFrom") + ": " + event.getFromIndex() + 
-        		", " + messageBundle.getString("msgTo") + ": " + event.getToIndex());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
+    	
+    	addMessageToGrowl
+    	(
+    			new Object [] {"title=movedRowMsg","msgFrom"," : ",event.getFromIndex()," , ","msgTo"," : ",event.getToIndex()}
+    	);
+        
         RequestContext.getCurrentInstance().update("tbView:formDTT:dtTips");
         RequestContext.getCurrentInstance().update("tbView:formDTE:dtErorrs");
     }
