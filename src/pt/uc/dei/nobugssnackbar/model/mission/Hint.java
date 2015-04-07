@@ -31,9 +31,6 @@ public class Hint implements java.io.Serializable {
 		return category;
 	}
 	public HintCategory getObjHintCategory() {
-		if(hintCategory == null){
-			//hintCategory = new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
-		}
 		return hintCategory;
 	}
 	public void setObjHintCategory(HintCategory hintCategory) {

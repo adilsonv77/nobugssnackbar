@@ -19,7 +19,7 @@
 		
 					<p:column>	
 						<p:commandLink id="btnOKHintCatChoose" update=":tbView:formDlgHints,:tbView:dlgHintCategoryExtended"
-							actionListener="#{categoryView.setElementByID()}" action="#{hintView.enableDialog()}" oncomplete="PF('hintCategoryDialog').show()">
+							actionListener="#{categoryView.setElementByID()}" action="#{hintView.enableDialog()}">
 							<f:param name="hCategoryID" value="#{hCategory.id}" />
 							<h:outputText class="olElementHeader" value="#{hCategory.title}"/>
 							<h:outputText value="#{hCategory.description}"/>

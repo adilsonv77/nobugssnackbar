@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
@@ -111,7 +112,6 @@ public class HintView implements Serializable {
 	}
 	
     public void onRowReorder(ReorderEvent event) {
-    	this.hint = new Hint();
     	ResourceBundle messageBundle = ApplicationMessages.getMessage();
         FacesMessage msg = new FacesMessage(
         		FacesMessage.SEVERITY_INFO, 
@@ -120,61 +120,39 @@ public class HintView implements Serializable {
         		", " + messageBundle.getString("msgTo") + ": " + event.getToIndex());
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
+        RequestContext.getCurrentInstance().update("tbView:formDTT:dtTips");
+        RequestContext.getCurrentInstance().update("tbView:formDTE:dtErorrs");
     }
     
 	private boolean showDlgExt;
-
-	private int contador;
-
-	public int getContador() {
-		return contador;
-	}
 	
 	public boolean isShowDlgExt() {
 		return showDlgExt;
 	}
 
-    public void enableDialog() throws Exception {
-		this.showDlgExt = true;
-		this.contador++;
-    	
+    public void enableDialog() throws Exception {		    	
     	FacesContext context = FacesContext.getCurrentInstance();
     	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
     	if (hcHelper.render())
     	{
+    		addDialog();
     		this.showDlgExt = true;
     	}
     	else
     	{
     		this.showDlgExt = false;
     		hcHelper.submitForm();
+            RequestContext cont = RequestContext.getCurrentInstance();
+            cont.execute("PF('chooseHintCategoryDialog').hide()");
     	}
     }
     
     public void disableDialog() {
     	this.showDlgExt = false;
     }
-    
-   /* private HintCategory objHCategory;
-
-	private String strHCategory;
-    
-    public HintCategory getObjHCategory() {
-    	return new HintCategory(1, "Choose Category", "blabla", "<xml return='ChooseCategory(#{mm.missionContent.commands.indexOf(\"?{command}\")})'><row><item type=\"text\">According the commands available in this mission, select the category which is showed the hint</item></row><row><item type=\"list\" name=\"command\">#{mm.missionContent.commands}</item></row></xml>");
-	}
-
-	public void setObjHCategory(HintCategory objHCategory) {
-		this.objHCategory = objHCategory;
-		this.hint.setHintCategory(objHCategory);
-	}
-    
-	public void setStrHCategory(String hintCategory) {
-		this.strHCategory = hintCategory;
-	}
-	public String getStrHCategory() {
-		if(objHCategory != null){
-			strHCategory = objHCategory.getTitle();
-		}
-		return strHCategory;
-	}*/
+       
+    public void addDialog() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('hintCategoryDialog').show()");
+    }
 }

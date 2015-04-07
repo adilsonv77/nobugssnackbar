@@ -21,6 +21,8 @@
 	<h:form id="formDTT" style="margin-bottom: 35px;">
 		<p:outputLabel for="dtTips" value="#{msg['tips']}: "/>
 		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}" draggableRows="true">
+		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
+		    
 		    <p:column headerText="#{msg['category']}">
 		        <h:outputText value="#{hint.category}" />
 		    </p:column>
@@ -39,7 +41,7 @@
 		    <p:column headerText="#{msg['edit']}">
 		    
 		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
-		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
+		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -51,8 +53,9 @@
 	
 	<h:form id="formDTE">
 		<p:outputLabel for="dtErorrs" value="#{msg['errors']}: "/>
-		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableRows="true">
+		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableRows="true">		
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
+		    
 		    <p:column headerText="#{msg['category']}">
 		        <h:outputText value="#{error.category}" />
 		    </p:column>
@@ -71,7 +74,7 @@
 		    <p:column headerText="#{msg['edit']}">
 		       
 		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
-		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
+		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        

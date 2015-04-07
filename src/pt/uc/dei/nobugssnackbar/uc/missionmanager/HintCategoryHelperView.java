@@ -129,7 +129,7 @@ public class HintCategoryHelperView implements Serializable {
 				}
 			}
 			matcher = pattern.matcher(returnForm);
-		}
+		}		
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
@@ -139,7 +139,12 @@ public class HintCategoryHelperView implements Serializable {
 
 	    returnForm = (String) vex.getValue(elContext);
 	    
-		hintView.getHint().setCategory(returnForm);
+	    if(!returnForm.equals("")){
+	    	hintView.getHint().setCategory(returnForm);
+	    }
+	    else{
+	    	hintView.getHint().setCategory(this.returnCategory);
+	    }
 		hintView.disableDialog();
 		
 	}
