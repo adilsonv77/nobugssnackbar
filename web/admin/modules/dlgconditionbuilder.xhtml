@@ -14,7 +14,9 @@
 					<p:outputLabel for="chooseFPBtn" value="#{msg['funcProvider']}: " />
 					<p:panelGrid columns="2">
 						<p:commandButton id="chooseFPBtn" value="#{msg['choose']}" 
-							icon="ui-icon-search" onclick="PF('funcProvDlg').show()"/>
+							icon="ui-icon-search" oncomplete="PF('funcProvDlg').show()"
+							action="#{condVC.showFuncProv}"
+							update=":tbView:funcProvDialog"/>
 						<h:outputText rendered="#{condVC.condition.function != null}" value="#{condVC.condition.function.name}()"/>
 					</p:panelGrid>
 					

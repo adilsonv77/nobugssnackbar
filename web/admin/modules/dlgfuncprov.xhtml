@@ -4,8 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" showEffect="fade" hideEffect="fade" header="#{msg['chooseFuncProvider']}" minHeight="40">
-		<h:form id="formFuncProv">
+	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" showEffect="fade" hideEffect="fade" header="#{msg['chooseFuncProvider']}" minHeight="40" 
+	    >
+		<h:form id="formFuncProv" rendered="#{condVC.showDlgExt}">
 			<div class="searchBox">
 				<h:inputText id="searchFunction" value="#{funcVC.filterNameStr}">
 					<p:ajax event="keyup" update=":tbView:formFuncProv:fpList" listener="#{funcVC.handleKeyUpEvent}" />

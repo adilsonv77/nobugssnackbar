@@ -31,10 +31,11 @@
     	
         	<p:layout>
         		<p:layoutUnit position="north">
+        			<!-- change name value with mission controller's name -->
         			<p:panelGrid columns="4">
         			
         				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
-        				<p:inputText id="missionNameCont" value="#{msg['enterVal']}" disabled="true" />
+        				<p:inputText id="missionNameCont" value="#{msg['enterVal']}" />
         				
         				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
         				<p:selectOneMenu id="langMenu" style="width: 100px;">

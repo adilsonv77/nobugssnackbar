@@ -31,6 +31,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private List<Condition> conditionList;
 	private ConditionConverter converter;
 
+	private boolean showDlgExt;
+
+	public void showFuncProv() {
+		this.showDlgExt = true;
+	}
+	
+	public void hideFuncProv() {
+		this.showDlgExt = false;
+	}
+	
+	public boolean isShowDlgExt() {
+		return showDlgExt;
+	}
+	
 	private boolean expandedFieldset;
 
 	public ConditionVC() {

@@ -81,6 +81,8 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 		
 		cvc.getCondition().setFunction(func);	
 		filterNameStr = "";
+		
+		cvc.hideFuncProv();
 	}
 	
 	@Override
