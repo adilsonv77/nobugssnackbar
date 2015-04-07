@@ -34,7 +34,7 @@
         			<p:panelGrid columns="4">
         			
         				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
-        				<p:inputText id="missionNameCont" value="Some value" disabled="true" />
+        				<p:inputText id="missionNameCont" value="#{msg['enterVal']}" disabled="true" />
         				
         				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
         				<p:selectOneMenu id="langMenu" style="width: 100px;">
@@ -48,31 +48,31 @@
         		<p:layoutUnit position="center">
 					<p:tabView id="tbView" dynamic="true" effect="fade" effectDuration="fast" cache="false">
 				        
-				        <p:tab id="explTab" title="Explanation">
+				        <p:tab id="explTab" title="#{msg['explanation']}">
 				        	<ui:include src="modules/explanation.xhtml"/>
 				        </p:tab>
 				        
-				        <p:tab title="Commands">
+				        <p:tab title="#{msg['commands']}">
 							<ui:include src="modules/commands.xhtml"/>
 				        </p:tab>
 				        
-				        <p:tab title="Customers">
+				        <p:tab title="#{msg['customers']}">
 		
 				        </p:tab>
 				        
-				        <p:tab title="Objectives">
+				        <p:tab title="#{msg['objectives']}">
 		
 				        </p:tab>	
 				        
-				        <p:tab id="hintsTab" title="Hints">
+				        <p:tab id="hintsTab" title="#{msg['hints']}">
 							<ui:include src="modules/hints.xhtml"/>
 				        </p:tab>	
 				        
-				        <p:tab title="Machines">
+				        <p:tab title="#{msg['machines']}">
 		
 				        </p:tab>
 				        
-				        <p:tab title="Settings">
+				        <p:tab title="#{msg['settings']}">
 		
 				        </p:tab>			        			        			        	        		        		        
 			    	</p:tabView>
@@ -80,8 +80,8 @@
         		
         		<p:layoutUnit position="south">
         			<p:panelGrid id="footerBtnPnl" columns="2">
-        				<p:commandButton value="Test" icon="ui-icon-play"/>
-        				<p:commandButton value="Save" icon="ui-icon-circle-arrow-s"/>
+        				<p:commandButton value="#{msg['test']}" icon="ui-icon-play"/>
+        				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s"/>
         			</p:panelGrid>
        			</p:layoutUnit>
        			

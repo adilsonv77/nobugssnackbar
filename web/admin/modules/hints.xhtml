@@ -8,74 +8,74 @@
 	<p:panelGrid columns="2" style="margin-bottom: 20px;">
 		<span class="my-lightbulb"></span>
 		<h:outputText>
-			<f:attribute name="value" value="Here are the tips, shortcuts and helps that appears during the game play."/>
+			<f:attribute name="value" value="#{msg['hintsMsg']}"/>
 		</h:outputText>
 	</p:panelGrid>
 	
 	<p:panelGrid columns="2" style="margin: 0 auto 30px auto;">
-		<p:commandButton value="Add from database" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
-		<p:commandButton value="Add blank" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
+		<p:commandButton value="#{msg['addFromDB']}" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
+		<p:commandButton value="#{msg['addBlank']}" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
 			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints" icon="ui-icon-circle-plus" />
 	</p:panelGrid>
 		
 	<h:form id="formDTT" style="margin-bottom: 35px;">
-		<p:outputLabel for="dtTips" value="Tips:"/>
+		<p:outputLabel for="dtTips" value="#{msg['tips']}: "/>
 		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}" draggableRows="true">
-		    <p:column headerText="Category">
+		    <p:column headerText="#{msg['category']}">
 		        <h:outputText value="#{hint.category}" />
 		    </p:column>
 		 
-		    <p:column headerText="Time">
+		    <p:column headerText="#{msg['time']}">
 		        <h:outputText value="#{hint.time}" />
 		    </p:column>
 		 
-		    <p:column headerText="Text">
+		    <p:column headerText="#{msg['text']}">
 		        <h:outputText value="#{hint.text}" escape="false"/>
 		    </p:column>
 		 
-		    <p:column headerText="Action">
+		    <p:column headerText="#{msg['action']}">
 		        <h:outputText value="#{hint.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="Edit">
+		    <p:column headerText="#{msg['edit']}">
 		    
-		        <p:commandButton value="Edit" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
+		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
 		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(hint)}" update=":tbView:formDTT"/>
+		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(hint)}" update=":tbView:formDTT"/>
 		        	        
 		    </p:column>		    
 		</p:dataTable>	
 	</h:form>
 	
 	<h:form id="formDTE">
-		<p:outputLabel for="dtErorrs" value="Errors:"/>
+		<p:outputLabel for="dtErorrs" value="#{msg['errors']}: "/>
 		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableRows="true">
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
-		    <p:column headerText="Category">
+		    <p:column headerText="#{msg['category']}">
 		        <h:outputText value="#{error.category}" />
 		    </p:column>
 		 
-		    <p:column headerText="Time">
+		    <p:column headerText="#{msg['time']}">
 		        <h:outputText value="#{error.time}" />
 		    </p:column>
 		 
-		    <p:column headerText="Text">
+		    <p:column headerText="#{msg['text']}">
 		        <h:outputText value="#{error.text}" escape="false"/>
 		    </p:column>
 		 
-		    <p:column headerText="Action">
+		    <p:column headerText="#{msg['action']}">
 		        <h:outputText value="#{error.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="Edit">
+		    <p:column headerText="#{msg['edit']}">
 		       
-		        <p:commandButton value="Edit" oncomplete="PF('hintDialog').show()" 
+		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
 		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="Delete" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>
+		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>
 		        		        
 		    </p:column>		    
 		</p:dataTable>		

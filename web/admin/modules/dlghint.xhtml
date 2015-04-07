@@ -4,54 +4,51 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="Hints" minHeight="40" closable="false">
+	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false">
 		<h:form id="formDlgHints">
 	
 			<p:panelGrid columns="2">
 					
 			    <p:outputLabel for="hintType" value="Hint type:"/>
 				<p:selectOneRadio id="hintType" value="#{hintView.hint.type}">
-				    <f:selectItem itemLabel="Tip" itemValue="false"/>
-				    <f:selectItem itemLabel="Error" itemValue="true" />
+				    <f:selectItem itemLabel="#{msg['tip']}" itemValue="false"/>
+				    <f:selectItem itemLabel="#{msg['error']}" itemValue="true" />
 				</p:selectOneRadio>
 			        
-			    <p:outputLabel for="btnChooseCategory" value="Category:"/>
+			    <p:outputLabel for="btnChooseCategory" value="#{msg['category']}: "/>
 			    <p:panelGrid columns="2">
-			    <p:commandButton id="btnChooseCategory" value="Choose" 
+			    <p:commandButton id="btnChooseCategory" value="#{msg['choose']}" 
 			    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
 			    	<h:outputText value="#{hintView.hint.category}"/>
 			    </p:panelGrid>
 			    
-			    <p:outputLabel for="btnBuildCondition" value="Condition:"/>
+			    <p:outputLabel for="btnBuildCondition" value="#{msg['condition']}: "/>
 			    <p:panelGrid columns="2">
-			    	<p:commandButton id="btnBuildCondition" value="Build"
+			    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}"
 			    		actionListener="#{condVC.newOrEditCondList}"
 			    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
 			    		update=":tbView:formCondBuilder"/>
 			    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
 			    </p:panelGrid>
 			    
-			    <p:outputLabel for="hintTime" value="Time"/>
+			    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
 			    <p:inputText id="hintTime" value="#{hintView.hint.time}"/>
 			    		        
 			</p:panelGrid>
 			
 		    <p:panelGrid columns="1">
-			    <p:outputLabel for="hintText" value="Text explanation:"/>
+			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>
 			    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
 		    </p:panelGrid>
 		    		    
 		    <p:panelGrid columns="3" style="float: right;">    
-				<p:commandButton value="OK" id="btnAddEditHint" icon="ui-icon-check" 
+				<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
 					actionListener="#{hintView.addEditHint}" 
 					oncomplete="PF('hintDialog').hide()" 
 					update=":tbView:formDTT, :tbView:formDTE, :tbView:formDlgHints, :tbView:formCondBuilder"/>  
 			
-				<p:commandButton value="Cancel" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
+				<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 					oncomplete="PF('hintDialog').hide()"/> 
-			
-				<p:commandButton value="Test" action="#{hintView.enableDialog()}" update=":tbView:dlgHintCategoryExtended" 
-					oncomplete="PF('hintCategoryDialog').show()"/>
 			</p:panelGrid>
 	    </h:form>	
 	</p:dialog>	

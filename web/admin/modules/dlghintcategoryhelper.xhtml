@@ -28,9 +28,9 @@
 				</pe:dynaFormControl>
 ~
 		        <f:facet name="buttonBar">
-		            <p:commandButton value="Ok" action="#{hcHelper.submitForm}"
+		            <p:commandButton value="#{msg['ok']}" action="#{hcHelper.submitForm}"
 		               update=":tbView:formDlgHints"              
-		                             oncomplete="PF('hintCategoryDialog').hide(); PF('chooseHintCategoryDialog').hide()"/>
+		               oncomplete="PF('hintCategoryDialog').hide(); PF('chooseHintCategoryDialog').hide()"/>
 		        </f:facet>
         				
 			</pe:dynaForm>

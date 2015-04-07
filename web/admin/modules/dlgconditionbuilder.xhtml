@@ -5,20 +5,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="condBuilderDialog" showEffect="fade" hideEffect="fade" widgetVar="condBuilderDlg" 
-		header="Condition" minHeight="40" closable="false">
+		header="#{msg['condition']}" minHeight="40" closable="false">
 		
 		<h:form id="formCondBuilder">
 			<p:growl id="growlCB" showDetail="true" />
 			<p:fieldset legend="Condition" rendered="#{condVC.expandedFieldset == true}">
 				<p:panelGrid columns="2">
-					<p:outputLabel for="chooseFPBtn" value="Function Provider: " />
+					<p:outputLabel for="chooseFPBtn" value="#{msg['funcProvider']}: " />
 					<p:panelGrid columns="2">
-						<p:commandButton id="chooseFPBtn" value="Choose" 
+						<p:commandButton id="chooseFPBtn" value="#{msg['choose']}" 
 							icon="ui-icon-search" onclick="PF('funcProvDlg').show()"/>
 						<h:outputText rendered="#{condVC.condition.function != null}" value="#{condVC.condition.function.name}()"/>
 					</p:panelGrid>
 					
-					<p:outputLabel for="comparatorMenu" value="Comparator: " />
+					<p:outputLabel for="comparatorMenu" value="#{msg['comparator']}: " />
 					<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}" style="width: 50px;">
 						<f:selectItem itemLabel="&#62;" itemValue="&#62;" /> 			<!-- > -->
 						<f:selectItem itemLabel="&#60;" itemValue="&#60;" />			<!-- < -->
@@ -28,22 +28,22 @@
 						<f:selectItem itemLabel="&#60;&#61;" itemValue="&#60;&#61;" />	<!-- <= -->
 					</p:selectOneMenu>
 					
-					<p:outputLabel for="condValue" value="Value: " />
+					<p:outputLabel for="condValue" value="#{msg['value']}: " />
 					<p:inputText id="condValue" value="#{condVC.condition.value}" />
 				</p:panelGrid>
 
-				<p:watermark for="condValue" value="Enter some value..." />
-				<p:commandButton id="saveCondBtn" value="Save" icon="ui-icon-circle-arrow-s" 
+				<p:watermark for="condValue" value="#{msg['enterVal']}" />
+				<p:commandButton id="saveCondBtn" value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
 					update=":tbView:formCondBuilder" 
 					actionListener="#{condVC.addCondition}"
 					style="maring-top: 10px; float: right;" />
 			</p:fieldset>	
 				
 			<p:panelGrid columns="4">
-				<p:commandButton value="Add" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":tbView:formCondBuilder" />
-				<p:commandButton value="Delete" icon="ui-icon-trash" update=":tbView:formCondBuilder" actionListener="#{condVC.deleteCondition}" />
-				<p:commandButton value="Add [and]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
-				<p:commandButton value="Add [or]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
+				<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":tbView:formCondBuilder" />
+				<p:commandButton value="#{msg['delete']}" icon="ui-icon-trash" update=":tbView:formCondBuilder" actionListener="#{condVC.deleteCondition}" />
+				<p:commandButton value="#{msg['add']} [add]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
+				<p:commandButton value="#{msg['add']} [or]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
 			</p:panelGrid>
 			
 			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
@@ -56,10 +56,10 @@
 			</p:orderList>
 			
 			<p:panelGrid columns="2" style="float: right;">
-	    		<p:commandButton value="OK" icon="ui-icon-check" 
+	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{condVC.checkCondition}"
 	    			update=":tbView:formDlgHints, :tbView:formCondBuilder"/>
-	      		<p:commandButton value="Cancel" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
+	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
 	       	</p:panelGrid>
     	</h:form>
 	</p:dialog>
