@@ -48,12 +48,12 @@ body {
 	word-break: break-all;
 	overflow-y: hidden;
 }
-/*.orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
+.orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
 	display: block;
 	width: 148px;
 	height: 198px;
 	text-decoration: none;
-}*/
+}
 div.divExplEdit {
 	position: fixed;
 	margin-left: 116px; 

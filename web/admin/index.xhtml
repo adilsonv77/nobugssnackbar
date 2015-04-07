@@ -82,7 +82,7 @@
         		<p:layoutUnit position="south">
         			<p:panelGrid id="footerBtnPnl" columns="2">
         				<p:commandButton value="#{msg['test']}" icon="ui-icon-play"/>
-        				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s"/>
+        				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" actionListener="#{xmlgen.processExplanationPages()}"/>
         			</p:panelGrid>
        			</p:layoutUnit>
        			
