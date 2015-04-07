@@ -2,69 +2,97 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dialog Box for Sign Up</title>
+<title>dialogSignup Box for Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
 <link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
 <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
 <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+<script src="js/commons/common.js"></script>
 </head>
 <body>
-	<form id="dialog" method="post">
+	<form id="dialogSignup" method="post">
 		<div align="center" style="padding: 15px 5px 5px 5px; margin: 1px">
 			<input class="easyui-validatebox textbox" type="text" id="nickname"
 				maxlength="30" size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Nickname" name="nickname"
-				data-options="required:true,validType:'userAllowed'" autofocus></input>
+				name="nickname" data-options="required:true,validType:'userAllowed'"
+				autofocus></input>
 		</div>
-		<div align="center" style="padding: 5px; margin: 1px">
+		<div align="center" style="padding: 3px; margin: 1px">
 			<input class="easyui-validatebox" type="password" maxlength="30"
 				data-options="required:true,validType:'passwStrength'" size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				placeholder="Password" name="password" id="password" required></input>
 		</div>
-		<div align="center" style="padding: 5px; margin: 1px">
+		<div align="center" style="padding: 3px; margin: 1px">
 			<input class="easyui-validatebox" type="password" maxlength="30"
 				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Confirm Password" name="confirmpassword"
-				id="confirmpassword" required="required"
+				name="confirmpassword" id="confirmpassword" required="required"
 				validType="equals['#password']"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
 			<input class="easyui-validatebox" type="text" maxlength="30"
 				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Email" name="email" id="email"
-				data-options="required:true,validType:'email'"></input>
+				name="email" id="email"
+				data-options="required:true,validType:['email','emailAllowed']"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
 			<input class="easyui-validatebox textbox" type="text" maxlength="30"
 				size="10"
 				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
-				placeholder="Complete Name" name="completename" id="completename"
-				required></input>
+				name="completename" id="completename" required></input>
 		</div>
 		<div align="center"
-			style="text-align: center; padding: 5px; margin: 5px 5px 5px 33px; width: 300px; height: 25px; border: 1px groove #2E9AFE">
+			style="text-align: center; padding: 5px; margin: 5px 5px 5px 32px; width: 300px; height: 25px; border: 1px groove #2E9AFE">
 			<span class="panel-body panel-body-noheader panel-body-noborder"
-				style="font-size: 20px">Select your gender: </span> <input
+				style="font-size: 17px" id="gendertext">Select your gender: </span><label
+				id="genderisM" for="genderM"
+				style="font-size: 15px; font-weight: bold"><b>Male</b></label><input
 				class="easyui-validatebox" type="radio" name="gender" value="male"
-				id="gender" style="font-size: 15px"
-				data-options="validType:'requireRadio[\'input[name=gender]\', \'gender\']'"><span
-				style="font-size: 15px"><b>Male</b></span> <input
+				id="genderM" style="font-size: 15px"
+				data-options="validType:'requireRadio[\'input[name=gender]\', \'gender\']'">
+			<label id="genderisF" for="genderF"
+				style="font-size: 15px; font-weight: bold"><b>Female</b></label><input
 				class="easyui-validatebox" type="radio" name="gender" value="female"
-				id="gender"><span style="font-size: 15px"><b>Female</b></span>
+				id="genderF">
 		</div>
 		<div align="center" style="text-align: center">
 			<b><a href="javascript:void(0)" class="easyui-linkbutton"
-				style="margin: 10px" onclick="submitForm()"><font
-					size="3" id="signup">Sign Up</font></a></b> <b><a
-				href="javascript:void(0)" class="easyui-linkbutton"
-				style="margin: 10px" onclick="clearForm()"><font size="3">Clear</font></a></b>
+				style="margin: 10px" onclick="submitForm()"><font size="3"
+					id="signupbtn">Sign Up</font></a></b> <b><a href="javascript:void(0)"
+				class="easyui-linkbutton" style="margin: 10px" onclick="clearForm()"><font
+					size="3" id="clearformbtn">Clear</font></a></b>
 		</div>
 	</form>
 	<script>
+		document.getElementById("nickname").placeholder = BlocklyApps
+				.getMsg("Signup_nickName");
+		document.getElementById("password").placeholder = BlocklyApps
+				.getMsg("Signup_password");
+		document.getElementById("confirmpassword").placeholder = BlocklyApps
+				.getMsg("Signup_confirmpassword");
+		document.getElementById("email").placeholder = BlocklyApps
+				.getMsg("Signup_email");
+		document.getElementById("completename").placeholder = BlocklyApps
+				.getMsg("Signup_completename");
+		document.getElementById("gendertext").innerHTML = BlocklyApps
+				.getMsg("Signup_gendertext");
+		document.getElementById("genderisM").innerHTML = BlocklyApps
+				.getMsg("Signup_genderisM");
+		document.getElementById("genderisF").innerHTML = BlocklyApps
+				.getMsg("Signup_genderisF");
+		document.getElementById("signupbtn").innerHTML = BlocklyApps
+				.getMsg("Signup_signupbtn");
+		document.getElementById("clearformbtn").innerHTML = BlocklyApps
+				.getMsg("Signup_clearformbtn");
+
+		$.fn.validatebox.defaults.missingMessage = BlocklyApps
+				.getMsg("Signup_missingmsg");
+		$.fn.validatebox.defaults.rules.email.message = BlocklyApps
+				.getMsg("Signup_validemailgmsg");
+
 		$.extend($.fn.validatebox.defaults.rules, {
 			requireRadio : {
 				validator : function(value, param) {
@@ -75,7 +103,7 @@
 							});
 					return $(param[0] + ':checked').val() != undefined;
 				},
-				message : 'Please choose option for your {1}.'
+				message : BlocklyApps.getMsg("Signup_radiobtnmsg")
 			}
 		});
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -83,7 +111,7 @@
 				validator : function(value, param) {
 					return value == $(param[0]).val();
 				},
-				message : 'Field do not match.'
+				message : BlocklyApps.getMsg("Signup_notmatchmsg")
 			}
 		});
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -98,7 +126,23 @@
 					});
 					return ok;
 				},
-				message : "User doesn't allowed."
+				message : BlocklyApps.getMsg("Signup_unotallowedmsg")
+			}
+		});
+
+		$.extend($.fn.validatebox.defaults.rules, {
+			emailAllowed : {
+				validator : function(value) {
+					var ok = false;
+					UserControl.isEmailAllowed(value, {
+						callback : function(ret) {
+							ok = ret;
+						},
+						async : false
+					});
+					return ok;
+				},
+				message : BlocklyApps.getMsg("Signup_enotallowedmsg")
 			}
 		});
 
@@ -141,8 +185,12 @@
 						return true;
 					}
 
-					var msgs = [ "Your password is empty.", "Easy to guess",
-							"Weak", "Average", "Strong", "Very strong" ];
+					var msgs = [ BlocklyApps.getMsg("Signup_emptypassmsg"),
+							BlocklyApps.getMsg("Signup_tousepassmsg"),
+							BlocklyApps.getMsg("Signup_weakpassmsg"),
+							BlocklyApps.getMsg("Signup_averagepassmsg"),
+							BlocklyApps.getMsg("Signup_strongpassmsg"),
+							BlocklyApps.getMsg("Signup_verystrpassmsg") ];
 
 					if (password == "") {
 						this.myMsg = msgs[0];
@@ -166,51 +214,61 @@
 			}
 		});
 
-		$('#dialog').form(
-				{
-					onSubmit : function() {
-						return $(this).form('validate');
-					},
-					success : function() {
-						$.messager.alert('Info',
-								'Your registration was successful! Please, check your email!', 'info');
-						
-						var nickName = document.getElementById('nickname').value;
-						var userPassword = document.getElementById('password').value;
-						var userName = document.getElementById('completename').value;
-						var userMail = document.getElementById('email').value;
-						var sex = document.getElementById('gender').value;
-						
-						$.messager.alert(nickName.value);
-						
-						UserControl.registerUser(nickName, userPassword, userName, sex,
-								lang, userMail);
+		$('#dialogSignup')
+				.form(
+						{
+							onSubmit : function() {
+								return $(this).form('validate');
+							},
+							success : function() {
 
-						
-						$('#dialog').form('clear');
-						$('#sign').tooltip('hide');
-					}
-				});
+								var nickName = document
+										.getElementById('nickname').value;
+								var userPassword = document
+										.getElementById('password').value;
+								var userName = document
+										.getElementById('completename').value;
+								var userMail = document.getElementById('email').value;
+								var sexM = document.getElementById('genderM').checked;
+								var sexF = document.getElementById("genderF").checked;
+								var lang = BlocklyApps.getLang();
+								var sex;
+
+								if (sexM === true) {
+									sex = 'M';
+								} else {
+									sex = 'F';
+								}
+
+								UserControl
+										.registerUser(
+												nickName,
+												userPassword,
+												userName,
+												sex,
+												lang,
+												userMail,
+												function() {
+													$.messager
+															.alert(
+																	BlocklyApps
+																			.getMsg("Signup_signedinfo"),
+																	BlocklyApps
+																			.getMsg("Signup_showinfomsg"));
+													$('#dialogSignup').form(
+															'clear');
+													$('#sign').tooltip('hide');
+												});
+							}
+						});
 
 		function submitForm() {
-			$('#dialog').form('submit');
+			$('#dialogSignup').form('submit');
 		};
 
 		function clearForm() {
-			$('#dialog').form('clear');
+			$('#dialogSignup').form('clear');
 		};
-		/*function registerUser() {
-			var nickName = document.getElementById("nickname").value;
-			var userPassword = document.getElementById("password").value;
-			var userName = document.getElementById("completename").value;
-			var userMail = document.getElementById("email").value;
-			var sex = document.getElementById("gender").value;
-
-			UserControl.registerUser(nickName, userPassword, userName, sex,
-					lang, userMail);
-			$.messager.alert('Info',
-					'User is registered. Please, check your email!', 'info');
-		};*/
 	</script>
 </body>
 </html>

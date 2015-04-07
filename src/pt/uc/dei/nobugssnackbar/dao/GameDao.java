@@ -8,48 +8,59 @@ import pt.uc.dei.nobugssnackbar.model.User;
 public interface GameDao {
 
 	void finishMission(User user, long mission, long classid, int i,
-			int timeSpend, long execution, boolean b, String answer) throws Exception ;
+			int timeSpend, long execution, boolean b, String answer)
+			throws Exception;
 
-	User login(String nick, String encrypt) throws Exception ;
+	User login(String nick, String encrypt) throws Exception;
 
-	void updateUserLastTime(User user) throws Exception ;
+	void updateUserLastTime(User user) throws Exception;
 
-	void insertUser(String userNick, String userPassword, String userName, String sex, String userMail, long classes[]) throws Exception;
+	void insertUser(String userNick, String userPassword, String userName,
+			String sex, String userMail, long classes[]) throws Exception;
 
-	String[][] loadMission(User user, int clazzId, int levelId, int missionIdx) throws Exception ;
+	String[][] loadMission(User user, int clazzId, int levelId, int missionIdx)
+			throws Exception;
 
-	void insertAnswer(long questionnaireId, long questionId, long userId, String answer) throws Exception ;
+	void insertAnswer(long questionnaireId, long questionId, long userId,
+			String answer) throws Exception;
 
-	void addExecutionInMission(User user, long mission, long classid) throws Exception ;
+	void addExecutionInMission(User user, long mission, long classid)
+			throws Exception;
 
-	String loadAnswer(int idMission, long id) throws Exception ;
+	String loadAnswer(int idMission, long id) throws Exception;
 
-	Object[][] retrieveMissions(long id) throws Exception ;
+	Object[][] retrieveMissions(long id) throws Exception;
 
-	List<Questionnaire> retrieveQuestionnaire(User user, Object[][] missions) throws Exception ;
+	List<Questionnaire> retrieveQuestionnaire(User user, Object[][] missions)
+			throws Exception;
 
-	Long getUserId(String userName) throws Exception ;
+	Long getUserId(String userName) throws Exception;
 
 	void storeMissionFail(long execution, long id, long mission, long classid,
-			String[][] goals) throws Exception ;
+			String[][] goals) throws Exception;
 
 	void storeMissionError(int execution, long id, long mission, long classid,
-			String idError, String blockId, String errorMessage) throws Exception ;
+			String idError, String blockId, String errorMessage)
+			throws Exception;
 
-	String[] loadMachine(int code) throws Exception ;
+	String[] loadMachine(int code) throws Exception;
 
-	List<String> listMachines(long id) throws Exception ;
+	List<String> listMachines(long id) throws Exception;
 
-	void buyMachine(long id, int machineId) throws Exception ;
+	void buyMachine(long id, int machineId) throws Exception;
 
-	List<Object[]> loadMachineData(Integer[] machineid) throws Exception ;
+	List<Object[]> loadMachineData(Integer[] machineid) throws Exception;
 
-	List<Object[]> retrieveLeaderBoard(long id, List<Long> classesId) throws Exception ;
+	List<Object[]> retrieveLeaderBoard(long id, List<Long> classesId)
+			throws Exception;
 
-	boolean isUserAllowed(String usernick) throws Exception ;
+	boolean isUserAllowed(String usernick) throws Exception;
 
-	long getDefaultClass(String lang) throws Exception ;
+	boolean isEmailAllowed(String usermail) throws Exception;
 
-	Questionnaire retrieveParticularQuestionnaire(User user, long l) throws Exception ;
+	long getDefaultClass(String lang) throws Exception;
+
+	Questionnaire retrieveParticularQuestionnaire(User user, long l)
+			throws Exception;
 
 }

@@ -16,6 +16,7 @@
 	"Apps.dialogPrevious": "Anterior",
 	"Apps.dialogLogoff" : "Sair",
 	"Apps.close" : "Fechar",
+	"Apps.dialogSignUp" : "Registrar-se",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
@@ -155,6 +156,32 @@
 	"Victory.BaseValue"     : "Valor base", 
 	"Victory.Bonus"         : "B&#244;nus", 
 	"Victory.MaxCommands"   : "Para o m&#225;ximo de comandos",
-	"Victory.TimeBonus"     : "Para o seu tempo de %0"
+	"Victory.TimeBonus"     : "Para o seu tempo de %0",
 	 
+	 "Signup.title"	    	: "Por favor, preencha estes campos para se inscrever!", 
+	"Signup.nickName"	    : "Apelido",
+	"Signup.password"	    : "Senha",
+	"Signup.confirmpassword": "Confirme sua senha",
+	"Signup.email"	   		: "E-mail",
+	"Signup.completename"	: "Nome completo",
+	"Signup.gendertext"	    : "Sexo:  ",
+	"Signup.genderisM"	    : "Masculino",
+	"Signup.genderisF"	    : "Feminino",
+	"Signup.signupbtn"	    : "Registrar-se",
+	"Signup.clearformbtn"	: "Claro",
+	"Signup.radiobtnmsg"	: "Por favor, escolha uma das opГ§Гµes!",
+	"Signup.notmatchmsg"	: "O campo nГЈo coincidem!",
+	"Signup.unotallowedmsg"	: "UsuГЎrio nГЈo autorizados!",
+	"Signup.enotallowedmsg"	: "Este e-mail jГЎ estГЎ tomada!",
+	"Signup.missingmsg"		: "Este campo Г© obrigatГіrio!",
+	"Signup.validemailmsg"	: "Por favor insira um endereГ§o de e-mail vГЎlido!",
+	"Signup.emptypassmsg"	: "Sua senha Г© vazia!",
+	"Signup.tousepassmsg"	: "Por favor, use letras maiГєsculas e minГєsculas, nГєmeros e caracteres especiais!",
+	"Signup.weakpassmsg"	: "FRACO! Por favor, use A-Z, a-z, 0-9 e caracteres especiais!",
+	"Signup.averagepassmsg"	: "MГ‰DIA! Por favor, use A-Z, a-z, 0-9 e caracteres especiais!",
+	"Signup.strongpassmsg"	: "FORTE! Por favor, use A-Z, a-z, 0-9 e caracteres especiais!",
+	"Signup.verystrpassmsg"	: "MUITO FORTE!",
+	"Signup.signedinfo"		: "InformaГ§Гµes sobre o seu registo!",
+	"Signup.showinfomsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail!"
+	
 }

@@ -51,6 +51,7 @@
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/util.js"></script>
   <script type="text/javascript" src="dwr/interface/UserControl.js?v={$v}"></script>
+  <script type="text/javascript" src="js/nobugs/signup.js"></script>
 
   <script>
   dwr.util.useLoadingMessage();
@@ -62,6 +63,8 @@
   	<div>
   		<form class="farSide" onsubmit="return false">
 	  		<fieldset style="border: 0px none">
+	  		<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
+	  		<a href="#"onclick="changeLanguageToEn()" style="position: absolute; left: 40px"><img src="images/en.png" alt="Portuguese Language" height="30" width="30"></a>
 	  			<label class="user">
 	  				<input type="text" id="loginuser" placeHolder="{msg meaning="NoBugs.user" desc="--"}User{/msg}"/>
 	  			</label>
@@ -70,6 +73,9 @@
 	  			</label>
 	  			<button id="ButtonLogin" class="secondary" onclick="Game.login()">
 	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
+	    		</button>
+	    		<button class="secondary" onclick="location.href='javascript:void(0)'"  id="sign" >
+	    		{{msg meaning="Apps.dialogSignUp" desc="---"}}Sign Up{{/msg}}
 	    		</button>
 	  		</fieldset>
   		</form>
