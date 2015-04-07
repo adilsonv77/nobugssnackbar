@@ -28,12 +28,6 @@ public class Hint implements java.io.Serializable {
 	
 	// #region public getters and setters
 	public String getCategory() {		
-		if(hintCategory != null){
-			category = hintCategory.getTitle();
-		}
-		else{
-			category = "";
-		}
 		return category;
 	}
 	public HintCategory getObjHintCategory() {
