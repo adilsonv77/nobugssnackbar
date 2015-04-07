@@ -84,7 +84,7 @@ public class HintView implements Serializable {
 			if(hint.getType() == false/*tip*/){
 				tipsHints.add(hint);
 				errorsHints.remove(hint);
-				
+				break;
 			}
 		}
 		for (Hint hint : tipsHints) {
@@ -119,6 +119,7 @@ public class HintView implements Serializable {
         		messageBundle.getString("msgFrom") + ": " + event.getFromIndex() + 
         		", " + messageBundle.getString("msgTo") + ": " + event.getToIndex());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+
     }
     
 	private boolean showDlgExt;
@@ -134,14 +135,20 @@ public class HintView implements Serializable {
 	}
 
     public void enableDialog() throws Exception {
+		this.showDlgExt = true;
 		this.contador++;
     	
     	FacesContext context = FacesContext.getCurrentInstance();
     	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
     	if (hcHelper.render())
+    	{
     		this.showDlgExt = true;
+    	}
     	else
+    	{
+    		this.showDlgExt = false;
     		hcHelper.submitForm();
+    	}
     }
     
     public void disableDialog() {
