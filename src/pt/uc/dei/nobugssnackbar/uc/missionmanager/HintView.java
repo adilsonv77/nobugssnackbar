@@ -134,12 +134,14 @@ public class HintView implements Serializable {
 	}
 
     public void enableDialog() throws Exception {
-		this.showDlgExt = true;
 		this.contador++;
     	
     	FacesContext context = FacesContext.getCurrentInstance();
     	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
-    	hcHelper.render();
+    	if (hcHelper.render())
+    		this.showDlgExt = true;
+    	else
+    		hcHelper.submitForm();
     }
     
     public void disableDialog() {

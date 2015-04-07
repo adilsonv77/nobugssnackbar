@@ -47,7 +47,7 @@ public class HintCategoryHelperView implements Serializable {
 
 	private String returnCategory;
 	
-	public void render() throws Exception {
+	public boolean render() throws Exception {
 		model = new DynaFormModel();
 
 		HintCategory hintCategory = hintView.getHint().getObjHintCategory();
@@ -61,6 +61,9 @@ public class HintCategoryHelperView implements Serializable {
 		this.returnCategory = doc.getDocumentElement().getAttributes().getNamedItem("return").getNodeValue();
 		
 		NodeList nodes = doc.getDocumentElement().getChildNodes();
+		if (nodes.getLength() == 0) {
+			return false;
+		}
 		for (int i = 0; i < nodes.getLength(); i++) {
 
 			Node row = nodes.item(i);
@@ -101,7 +104,7 @@ public class HintCategoryHelperView implements Serializable {
 			}
 			
 		}
-		
+		return true;
 	}
 	
 	public DynaFormModel getModel() {
