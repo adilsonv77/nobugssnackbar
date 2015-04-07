@@ -26,7 +26,7 @@ public class FunctionProviderConverter implements Converter, Serializable {
 				if (f.getId() == id)
 					return f;
 		} catch (Exception e) {
-			System.out.println("Function Provider Converter - Fault!");
+			e.printStackTrace();
 		}
 		return null;
 	}

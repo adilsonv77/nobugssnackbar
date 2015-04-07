@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ReorderEvent;
 
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
@@ -110,7 +112,12 @@ public class HintView implements Serializable {
 	
     public void onRowReorder(ReorderEvent event) {
     	this.hint = new Hint();
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
+    	ResourceBundle messageBundle = ApplicationMessages.getMessage();
+        FacesMessage msg = new FacesMessage(
+        		FacesMessage.SEVERITY_INFO, 
+        		messageBundle.getString("movedRowMsg"), 
+        		messageBundle.getString("msgFrom") + ": " + event.getFromIndex() + 
+        		", " + messageBundle.getString("msgTo") + ": " + event.getToIndex());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     

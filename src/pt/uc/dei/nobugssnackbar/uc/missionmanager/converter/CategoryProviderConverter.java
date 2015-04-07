@@ -26,7 +26,7 @@ public class CategoryProviderConverter implements Converter, Serializable {
 				if (hc.getId() == id)
 					return hc;
 		} catch (Exception e) {
-			System.out.println("HintCategory Provider Converter - Fault!");
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -45,7 +45,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public void newOrEditCondList() {
-		if (hv.getAdd() == false) {
+		if (hv.getHint().getConditions() != null && hv.getHint().getConditions().size() > 0) {
 			conditionList = hv.getHint().getConditions();
 		} else {
 			conditionList = new ArrayList<>();
@@ -165,7 +165,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 					Integer.parseInt(condition.getValue());
 					return true;
 				} catch (Exception e) {
-					text = "\"" + condition.getValue() + "\" is not integer!";
+					text = "\"" + condition.getValue() + "\" " + ApplicationMessages.getMessage().getString("notInteger");
 					break;
 				}
 			case "float":
@@ -173,7 +173,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 					Float.parseFloat(condition.getValue());
 					return true;
 				} catch (Exception e) {
-					text = "\"" + condition.getValue() + "\" is not float!";
+					text = "\"" + condition.getValue() + "\" " + ApplicationMessages.getMessage().getString("notFloat");
 					break;
 				}
 			case "double":
@@ -181,7 +181,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 					Double.parseDouble(condition.getValue());
 					return true;
 				} catch (Exception e) {
-					text = "\"" + condition.getValue() + "\" is not double!";
+					text = "\"" + condition.getValue() + "\" " + ApplicationMessages.getMessage().getString("notDouble");
 					break;
 				}
 			case "boolean":
@@ -195,20 +195,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 					if (!condition.getComparator().equals("==")
 							&& !condition.getComparator().equals("!=")) {
 						text = "\"" + condition.getComparator()
-								+ "\" cannot be used with boolean!";
+								+ "\" " + ApplicationMessages.getMessage().getString("cannotUsedWithBool");
 					} else {
 						return true;
 					}
 
 				} else {
-					text = "\"" + condition.getValue() + "\" is not boolean!";
+					text = "\"" + condition.getValue() + "\" " + ApplicationMessages.getMessage().getString("notBoolean");
 				}
 				break;
 			case "String":
 				return true;
 			}
 		} else {
-			text = "Please fill out all required fields!";
+			text = ApplicationMessages.getMessage().getString("notFilledAllFields");
 		}
 
 		FacesMessage msg = new FacesMessage("", text);
@@ -224,8 +224,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 			condition = new Condition();
 		} else {
-			FacesMessage msg = new FacesMessage("",
-					"You did not select an item to delete!");
+			FacesMessage msg = new FacesMessage("", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}

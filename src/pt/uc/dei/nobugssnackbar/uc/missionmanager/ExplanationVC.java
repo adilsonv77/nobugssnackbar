@@ -3,12 +3,14 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
  
@@ -73,8 +75,9 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 				pages.add(page);
 			}
 			else {
+				ResourceBundle messageBundle = ApplicationMessages.getMessage();
 				FacesContext context = FacesContext.getCurrentInstance();
-		        context.addMessage(null, new FacesMessage("Warning", "Message box is empty!") );
+		        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
 			}
 		}
 		else {
