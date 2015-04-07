@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
 
@@ -132,9 +133,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		}
 
 		if (!result) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			ResourceBundle messageBundle = ResourceBundle.getBundle("Messages",
-					context.getViewRoot().getLocale());
+			
+			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			String text = (conditionList.size() > 0) ? messageBundle.getString("wrongCondition")
 					: messageBundle.getString("emptyConditionList");
 
