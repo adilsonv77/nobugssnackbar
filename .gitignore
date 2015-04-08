@@ -19,6 +19,7 @@ local.properties
 .loadpath
 db.properties
 web/js/generated/
+en.json
 
 # External tool builders
 .externalToolBuilders/
@@ -31,10 +32,4 @@ web/js/generated/
 
 # PDT-specific
 .buildpath
-
-
-web/admin/index.xhtml
-web/admin/modules/dlgconditionbuilder.xhtml
-web/admin/modules/dlgconditionbuilder.xhtml
-web/admin/modules/dlgconditionbuilder.xhtml
-web/admin/modules/dlghintcategoryhelper.xhtml
+src/pt/uc/dei/nobugssnackbar/i18n/en.json
