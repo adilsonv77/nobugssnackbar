@@ -32,15 +32,10 @@ public class XMLGenerator implements Serializable {
 		
 	}
 	
-	public void processExplanationPages() {
-		
-		/* if page has only img, without anything else, regex doesn't work!!!
-		 * */
-		
-		
+	public void processExplanationPages() {	
 		List<Page> pageList = evc.getPages();
 		String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
-		String imgTag = "(<div>\\s*<img[^>]*>\\s*</div>)";
+		String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";
 		
 		for (Page page : pageList) {
 			String text = page.getMsg();
