@@ -1,5 +1,8 @@
 package pt.uc.dei.nobugssnackbar.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -11,15 +14,31 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 
-	public void send(String dest) throws Exception {
-		final String username = "nobugssnackbar@gmail.com";
-		final String password = "withoutmistakes";
+	private Properties props;
+	private String password;
+	private String username;
 
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+	public SendMail(String appFolder) {
+		String mailProperties = appFolder + "/META-INF/mail.properties";
+		try {
+			
+			this.props = new Properties();
+
+			props.load(new InputStreamReader(new FileInputStream(new File(mailProperties))));
+			
+			this.username = props.getProperty("username"); 
+			this.password = props.getProperty("password");
+
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587");
+		} catch (Exception ex) {
+			
+		}
+	}
+	
+	public void sendWelcomeMail(String dest) throws Exception {
 
 		Session session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
@@ -45,6 +64,12 @@ public class SendMail {
 		//msg.setText(msgBody);
 		Transport.send(msg);
 
+	}
+
+	public void sendRegisterMail(String userMail, String userId) {
+		// TODO Auto-generated method stub
+		// "http://nobugssnackbar.dei.uc.pt/confirmUser?id" + userId
+		
 	}
 
 }

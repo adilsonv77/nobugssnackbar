@@ -63,4 +63,6 @@ public interface GameDao {
 	Questionnaire retrieveParticularQuestionnaire(User user, long l)
 			throws Exception;
 
+	String registerUser(String id) throws Exception;
+
 }

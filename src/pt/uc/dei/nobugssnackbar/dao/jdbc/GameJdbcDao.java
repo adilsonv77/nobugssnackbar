@@ -34,13 +34,13 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint from users where usernick = ? and userpassw = ?");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint from users where usernick = ? and userpassw = ? and userenabled = 'T'");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
 			ResultSet rs = ps.executeQuery();
 			if (!rs.next()) {
-				throw new Exception("User not found");
+				throw new Exception("User not found or not registered.");
 			}
 
 			u = new User();
@@ -1175,6 +1175,40 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 		return ret;
+	}
+
+	@Override
+	public String registerUser(String id) throws Exception  {
+		String mail = null;
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select userid, usermail from users where md5(usernick+username+usermail) = " + id);
+			long userid = 0;
+			if (rs.next()) {
+				userid = rs.getLong(1);
+				mail = rs.getString(2);
+			}
+			rs.close();
+			if (userid != 0)
+				st.executeUpdate("update users set userenabled = 'T' where userid = " + userid);
+			st.close();
+			
+			if (userid == 0)
+				throw new Exception("IdIncorrect");
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+							
+		
+		return mail;
 	}
 
 }

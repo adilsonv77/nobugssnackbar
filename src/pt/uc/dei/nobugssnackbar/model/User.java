@@ -31,6 +31,8 @@ public class User {
 	@RemoteProperty
 	private boolean showHint;
 
+	private boolean enabled;
+
 	public long getId() {
 		return id;
 	}
@@ -102,6 +104,14 @@ public class User {
 
 	public List<Long> getClassesId() {
 		return classesId;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		
+	}
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }

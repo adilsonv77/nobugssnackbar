@@ -18,6 +18,7 @@ local.properties
 .settings/
 .loadpath
 db.properties
+mail.properties
 web/js/generated/
 en.json
 
@@ -33,3 +34,4 @@ en.json
 # PDT-specific
 .buildpath
 src/pt/uc/dei/nobugssnackbar/i18n/en.json
+web/js/generated/en.js

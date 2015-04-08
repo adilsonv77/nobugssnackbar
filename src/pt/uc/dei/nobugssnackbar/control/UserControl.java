@@ -24,12 +24,16 @@ import pt.uc.dei.nobugssnackbar.util.SendMail;
 public class UserControl {
 
 	private GameDao gameDao;
+	private SendMail mail;
 
 	public UserControl() {
 		WebContext ctx = WebContextFactory.get();
 		AbstractFactoryDao factoryDao = (AbstractFactoryDao) ctx
 				.getServletContext().getAttribute("factoryDao");
 		this.gameDao = factoryDao.getGameDao();
+		
+		this.mail = new SendMail(ctx.getServletContext().getRealPath("/"));
+
 	}
 
 	public static String encrypt(String passw) throws NoSuchAlgorithmException {
@@ -303,7 +307,6 @@ public class UserControl {
 				userMail, new long[] { clazz });
 
 		// send a welcome email
-		SendMail mail = new SendMail();
-		mail.send(userMail);
+		mail.sendRegisterMail(userMail, encrypt(userNick + userName + userMail));
 	}
 }
