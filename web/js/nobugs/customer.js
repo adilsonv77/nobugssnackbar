@@ -52,6 +52,11 @@ PreloadImgs.put('$hotdog', 'images/$$hotdog.png');
 PreloadImgs.put('$juiceoforange', 'images/$$juiceoforange.png');
 PreloadImgs.put('$orange', 'images/$$orange.png');
 
+//Balloons
+PreloadImgs.put('baloon_1', 'images/baloon_1.png');
+PreloadImgs.put('baloon_2', 'images/baloon_2.png');
+PreloadImgs.put('baloon_3', 'images/baloon_3.png');
+
 
 // acts as a state machine
 CustOpt.createCustomerPath = function() {
