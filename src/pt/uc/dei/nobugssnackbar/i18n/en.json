@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-04-13 14:07:22.895000",
+		"lastupdated": "2015-04-13 17:08:19.069000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -159,6 +159,9 @@
 	"NoBugs.sponsoredBy": "Sponsored by",
 	"NoBugs.developedBy": "Developed by",
 	"NoBugs.logoffTooltip": "Logoff the game.",
+	"Single.YourCash": "Seu caixa",
+	"Single.SelectMission": "Select a Mission",
+	"Single.LeaderBoard": "Leader Board",
 	"NoBugs.debugTooltip": "Makes the snack man do what the next block say.",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say.",
 	"NoBugs.resetTooltip": "Restarts the execution.",
@@ -171,9 +174,6 @@
 	"NoBugs.noMoreMissions": "You're an expert !!! There aren't more missions for you.",
 	"NoBugs.goalAchievedFail": "You don't achieved this mission. You need to try again.",
 	"Apps.dialogLogoff": "Logoff",
-	"Single.YourCash": "Seu caixa",
-	"Single.SelectMission": "Select a Mission",
-	"Single.LeaderBoard": "Leader Board",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",
 	"SnackMan.constSnackMan": "Constants",

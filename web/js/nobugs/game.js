@@ -59,6 +59,37 @@ PreloadImgs.put('fundo', 'images/fundo.png');
 PreloadImgs.put('doors', 'images/doors.png');
 
 
+Game.generalInit = function() {
+	
+	  BlocklyApps.init();
+		
+	  NoBugsJavaScript.redefine();
+	  
+	  Game.rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
+	    
+	  Game.optResize = {
+		blocklyDivW: 600,
+		blocklyDivH: "90%",
+		varBoxT: true,
+		varBoxH: "90%"
+	  };
+	  
+	  // window.removeEventListener('resize',  Game.resizeMainWindow); //
+	  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+	  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
+
+	  // Add to reserved word list: API, local variables in execution environment
+	  // (execute) and the infinite loop detection function.
+	  Blockly.JavaScript.addReservedWords('Game, code');
+	  
+	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
+
+      PreloadImgs.loadImgs();
+	  Game.init();
+
+	  
+};
+
 /**
  * Initialize Blockly and SnackBar. Called on page load.
  */
@@ -66,7 +97,6 @@ Game.init = function() {
 	
 	Game.currTime = 0;
 	
-    PreloadImgs.loadImgs();
 
     // if there is some event added in before execution, than remove it
     window.removeEventListener('resize',  Game.resizeMainWindow);
@@ -91,6 +121,8 @@ Game.init = function() {
 			window.removeEventListener('unload', Game.unload);
 
   		    document.getElementById("mainBody").style.display = "none";
+  		    document.getElementById("selectMission").style.display = "none";
+  		    
 		    document.getElementById("initialBackground").style.display = "inline";
 		    Game.resizeMainWindow();
 		    
@@ -100,7 +132,7 @@ Game.init = function() {
 
 };
 
-window.addEventListener('load', Game.init);
+window.addEventListener('load', Game.generalInit);
 
 Game.resizeMainWindow = function() {
 	
@@ -264,7 +296,9 @@ Game.logged = function(missionsHistorical) {
 
 		// this is necessary when unloads
 	    document.getElementById("mainBody").style.display = "none";
-	    document.getElementById("initialBackground").style.display = "inline";
+	    document.getElementById("initialBackground").style.display = "none";
+	    document.getElementById("selectMission").style.display = "inline";
+
 	    Game.resizeMainWindow();
 	    
 		var idRoot = Game.missionsRetrieved(missionsHistorical);
@@ -278,7 +312,7 @@ Game.logged = function(missionsHistorical) {
 		    createsLeaderBoard("#"+idRoot);
 	    }
 	    
-	    
+	    /*
 	    
 	    
 		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
@@ -288,6 +322,7 @@ Game.logged = function(missionsHistorical) {
 						$("#" + idRoot).remove();
 				    	 
 					});
+					*/
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
@@ -379,12 +414,13 @@ Game.moveBlocksToZero = function() {
 	
 };
 
-
 Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	
   document.getElementById("initialBackground").style.display = "none";
-  
+  document.getElementById("selectMission").style.display = "none";
+
   document.getElementById("mainBody").style.display = "inline";
+  
   if (Game.counterInstruction != null) {
 	  mainBody.removeChild(Game.counterInstruction);
 	  Game.counterInstruction = null;
@@ -392,30 +428,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 	  			
   Game.removeChangeListeners();
 
-  BlocklyApps.init();
-	
-  NoBugsJavaScript.redefine();
-  
-  Game.rtl = BlocklyApps.isRtl(); // Right-To-Left language. I keep this, but it's not our initial intention
-    
-  Game.optResize = {
-	blocklyDivW: 600,
-	blocklyDivH: "90%",
-	varBoxT: true,
-	varBoxH: "90%"
-  };
-  
-  // window.removeEventListener('resize',  Game.resizeMainWindow); //
-  
   window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
-
-  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
-
-  // Add to reserved word list: API, local variables in execution environment
-  // (execute) and the infinite loop detection function.
-  Blockly.JavaScript.addReservedWords('Game, code');
 
   window.addEventListener('unload', Game.unload);
  
@@ -463,7 +477,7 @@ Game.saveMission = function() {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, timeSpent, Game.howManyRuns, Game.openMission.open, answer, 
+	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer, 
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -1182,8 +1196,8 @@ Game.logoffButtonClick = function() {
     document.getElementById('blockly').innerHTML = ""; // clean the editor
     window.removeEventListener('scroll', Game.scrollEvent);  
     window.removeEventListener('resize',  Game.resizeWindow);
-    
-	UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
+
+    UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
@@ -1635,7 +1649,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, timeSpent, Game.howManyRuns, Game.openMission.open, answer);
+			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer);
 
 			Game.currTime = now;
 		});

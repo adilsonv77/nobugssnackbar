@@ -60,6 +60,10 @@ Selector.prototype.build = function() {
 		
 	}
 	
+	if (document.getElementById("tt0") != null) {
+		$( "#tt0" ).remove();
+	}
+	
 	var wMax = 0;
 	for (var i = 0; i <data.length; i++) {
 		
