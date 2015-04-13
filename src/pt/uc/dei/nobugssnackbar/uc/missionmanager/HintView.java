@@ -68,6 +68,10 @@ public class HintView implements Serializable {
     }
     
 	public void addEditHint() {
+		if(hint.getCategory().equals("")){
+			addMessageToGrowl(new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
+			return;
+		}
 		if (this.add) {/*prevent from adding element when editing*/
 			if (hint.getType()) {/*check type if it is error or hint*/
 				errorsHints.add(hint);
@@ -78,6 +82,7 @@ public class HintView implements Serializable {
 				addMessageToGrowl(new Object[]{"title=newHintAdd","newTipHintAdd"});
 			}
 		}
+		
 		checkLists();
 		this.hint = new Hint();
 	}
@@ -135,10 +140,12 @@ public class HintView implements Serializable {
 				if(!messageBundle.keySet().contains(obj)) {
 					if(obj.toString().startsWith("title=")){
 						title = messageBundle.getString(obj.toString().substring(6));
-					}else{
+					}
+					else{
 						finalText += obj.toString();
 					}
-				}else{
+				}
+			else{
 					finalText += messageBundle.getString(obj.toString());					
 				}
 			}
@@ -148,7 +155,7 @@ public class HintView implements Serializable {
 		}
 		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
-		FacesContext.getCurrentInstance().addMessage(null, msg);		
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
 		

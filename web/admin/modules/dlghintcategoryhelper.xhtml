@@ -6,14 +6,14 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog" closable="false">
-		<h:form>
-			<pe:dynaForm id="dynaForm" value="#{hcHelper.model}" var="data" rendered="#{hintView.showDlgExt}">
+		<h:form style="width:350px;" >
+			<pe:dynaForm value="#{hcHelper.model}" var="data" rendered="#{hintView.showDlgExt}">
 			
 				<pe:dynaFormControl styleClass="pe-dynaform-label">  
 	            	<h:outputText value="#{data}"/> 
 	        	</pe:dynaFormControl> 
 	        
-				<pe:dynaFormControl type="text">
+				<pe:dynaFormControl type="text" styleClass="pe-dynaform-label">
 		            <h:outputText value="#{data.value}"/>
 				</pe:dynaFormControl>
 				
@@ -21,7 +21,7 @@
 					<p:inputText id="txt" value="#{data.value}" required="#{data.required}" />
 				</pe:dynaFormControl>
 				
-				<pe:dynaFormControl type="list" for="list">
+				<pe:dynaFormControl type="list" for="list" styleClass="pe-dynaform-list">
 					<p:selectOneListbox id="list" value="#{data.value}" required="#{data.required}">
 						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}" />
 					</p:selectOneListbox>
@@ -36,5 +36,20 @@
 			</pe:dynaForm>
 		</h:form>
 	</p:dialog>
+	
+	<h:outputStylesheet id="dynaFormCSS">  
+    	.pe-dynaform-label{
+    		white-space:normal !important;
+    		text-align: center !important;
+    		color : blue !important;
+    		font : bold;
+    	}
+    	.ui-selectonelistbox{
+    		text-align: center;
+    		width:60%;
+    		margin: auto;
+    		margin-top : 20px;
+    	}
+	</h:outputStylesheet>
 
 </ui:composition>
