@@ -68,13 +68,29 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		this.page = page;
 	}
 	
+	private boolean checkImages(String text) {
+		if (XMLGenerator.convertImgTagToHexImgTag(text) != null) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public void addPage() {
 		if (page.getId() < 0) {
 			if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
-				page.setId(pageIdCount++);
-				pages.add(page);
+				if (checkImages(page.getMsg()) == true) {
+					page.setId(pageIdCount++);
+					pages.add(page);
+				}
+				else {
+					ResourceBundle messageBundle = ApplicationMessages.getMessage();
+					FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
+							messageBundle.getString("tryAgainCheckImage"));
+					FacesContext.getCurrentInstance().addMessage("", msg);
+				}
 			}
-			else {
+			else {				
 				ResourceBundle messageBundle = ApplicationMessages.getMessage();
 				FacesContext context = FacesContext.getCurrentInstance();
 		        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
@@ -88,8 +104,15 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	public void editPage() {
 		if (page.getId() >= 0) {
 			int index = indexOfPageById(page.getId(), pages);
-			if (index > -1) {
+
+			if (index > -1 && checkImages(page.getMsg()) == true) {
 				pages.get(index).setMsg(page.getMsg());
+			}
+			else {
+				ResourceBundle messageBundle = ApplicationMessages.getMessage();
+				FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
+						messageBundle.getString("tryAgainCheckImage"));
+				FacesContext.getCurrentInstance().addMessage("", msg);
 			}
 		}
 		resetPage();

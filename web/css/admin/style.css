@@ -34,7 +34,17 @@ body {
 }
   	
 /*******************Start Explanation page css******************/
-
+ div.ui-editor {
+ 	width: 100% !important;
+ 	height: 98% !important;
+ }
+ .ui-editor iframe {
+	 width: 100% !important;
+	 height: 95% !important;
+ }
+.disable-scroll .ui-dialog-content {
+  overflow: hidden !important;
+}
 .orderListDiv .ui-orderlist-list {
 	width: 515px !important;
 	height: 216px !important;
