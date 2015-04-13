@@ -308,7 +308,12 @@ Game.missionsRetrieved = function(missions) {
 		var l = {name: missions[i][1], id: missions[i][5], 
 							 howManyItems: missions[i][2], 
 					 howManyItemsAchieved: missions[i][3], 
-					          repeateable: missions[i][6]};
+					          repeateable: [],
+					          cust:[]};
+		for (var j=0;j<missions[i][6].length;j++) {
+			l.repeateable.push(missions[i][6][j][0]);
+			l.cust.push(missions[i][6][j][1]);
+		}
 		rec.levels.push(l);
 	}
 	
@@ -349,8 +354,12 @@ Game.missionsRetrieved = function(missions) {
 		var mt = ma + 1;
 		return (idx == -1 && m == mt) || (idx > -1 && m <= mt);
 	};
+	
+	var f5 = function(i, j, m) {
+		return (data[i].levels[j].repeateable.indexOf(m) > -1);
+	};
 
-	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", "rerunBack", f1, f2, f3, f4);
+	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", "rerunBack", f1, f2, f3, f4, f5);
 	return sel.build();
 	
 };

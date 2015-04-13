@@ -26,7 +26,7 @@
 
 var Selector = {};
 Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass, rerunCssClass, clickTarget, genContent, 
-					fMissionEnabled, fMissionTarget, additionalComponent) {
+					fMissionEnabled, fMissionTarget, fMissionRerun) {
 	this.data = data;
 	this.clickTarget = clickTarget;
 	this.genContent = genContent;
@@ -37,6 +37,7 @@ Selector = function(data, levelZoom, tamCell, enabledCssClass, disabledCssClass,
 	
 	this.fMissionEnabled  = fMissionEnabled;
 	this.fMissionTarget   = fMissionTarget;
+	this.fMissionRerun    = fMissionRerun;
 	
 	Selector.tamCell = tamCell;
 };
@@ -141,7 +142,10 @@ Selector.prototype.createGridView = function (group, level, missionPanel, number
 				div.addClass('missionEnabled');
 			} else
 	    	if (this.fMissionTarget(group, level, i)) {
-				div.addClass(this.enabledCssClass);
+	    		if (this.fMissionRerun && this.fMissionRerun(group, level, i))
+					div.addClass(this.rerunCssClass);
+	    		else
+	    			div.addClass(this.enabledCssClass);
 	    		div.addClass('missionTarget');
 	    	} else {
 				div.addClass(this.disabledCssClass);

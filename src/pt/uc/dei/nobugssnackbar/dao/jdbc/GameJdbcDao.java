@@ -446,7 +446,7 @@ public class GameJdbcDao implements GameDao {
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
 						rs.getLong(3), rs.getLong(4), rs.getLong(5),
-						rs.getLong(6), new ArrayList<Integer>() };
+						rs.getLong(6), new ArrayList<Integer[]>() };
 
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));
@@ -456,7 +456,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select missionorder from classesmissions join missions using (missionid) where classid = ? and classlevelid = ? and missionrepeatable = 1");
+					.prepareStatement("select missionorder, missioncust from classesmissions join missions using (missionid) where classid = ? and classlevelid = ? and missionrepeatable = 1");
 
 			for (int i = 0; i < classesId.size(); i++) {
 
@@ -464,11 +464,11 @@ public class GameJdbcDao implements GameDao {
 				ps.setInt(2, classesLevelId.get(i));
 
 				@SuppressWarnings("unchecked")
-				List<Integer> missions = (List<Integer>) l.get(i)[6];
+				List<Integer[]> missions = (List<Integer[]>) l.get(i)[6];
 
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					missions.add(rs.getInt(1));
+					missions.add(new Integer[]{rs.getInt(1), rs.getInt(2)});
 				}
 
 			}

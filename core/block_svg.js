@@ -87,6 +87,9 @@ Blockly.BlockSvg.prototype.initSvg = function() {
   if (!Blockly.readOnly && !this.eventsInit_) {
     Blockly.bindEvent_(this.getSvgRoot(), 'mousedown', this,
                        this.onMouseDown_);
+    var thisBlock = this;
+    Blockly.bindEvent_(this.getSvgRoot(), 'touchstart', null,
+                       function(e) {Blockly.longStart_(e, thisBlock);});
   }
   // Bind an onchange function, if it exists.
   if (goog.isFunction(this.onchange) && !this.eventsInit_) {
@@ -294,6 +297,8 @@ Blockly.BlockSvg.prototype.snapToGrid_ = function() {
   var xy = this.getRelativeToSurfaceXY();
   var dx = Math.round((xy.x - half) / spacing) * spacing + half - xy.x;
   var dy = Math.round((xy.y - half) / spacing) * spacing + half - xy.y;
+  dx = Math.round(dx);
+  dy = Math.round(dy);
   if (dx != 0 || dy != 0) {
     this.moveBy(dx, dy);
   }
@@ -352,7 +357,10 @@ Blockly.BlockSvg.prototype.setCollapsed = function(collapsed) {
     for (var x = 0, block; block = renderList[x]; x++) {
       block.render();
     }
-    this.bumpNeighbours_();
+    // Don't bump neighbours.
+    // Although bumping neighbours would make sense, users often collapse
+    // all their functions and store them next to each other.  Expanding and
+    // bumping causes all their definitions to go out of alignment.
   }
 };
 
@@ -672,6 +680,7 @@ Blockly.BlockSvg.prototype.onMouseMove_ = function(e) {
       if (dr > Blockly.DRAG_RADIUS) {
         // Switch to unrestricted dragging.
         Blockly.dragMode_ = 2;
+        Blockly.longStop_();
         // Push this block to the very top of the stack.
         this_.setParent(null);
         this_.setDragging_(true);
