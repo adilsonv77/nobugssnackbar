@@ -125,7 +125,6 @@ public class HintView implements Serializable {
 	}
 	
 	public void addMessageToGrowl(Object [] msgs){
-		
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		String title = "Notification";	
 		FacesMessage msg;
@@ -149,7 +148,7 @@ public class HintView implements Serializable {
 		}
 		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().addMessage(null, msg);		
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
 		
@@ -157,7 +156,7 @@ public class HintView implements Serializable {
     	
     	addMessageToGrowl
     	(
-    			new Object [] {"title=movedRowMsg","msgFrom"," : ",event.getFromIndex()," , ","msgTo"," : ",event.getToIndex()}
+    		new Object [] {"title=movedRowMsg","msgFrom"," : ",event.getFromIndex()," , ","msgTo"," : ",event.getToIndex()}
     	);
         
         RequestContext.getCurrentInstance().update("tbView:formDTT:dtTips");
