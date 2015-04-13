@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-04-08 14:17:03.886000",
+		"lastupdated": "2015-04-13 14:07:22.895000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -171,6 +171,7 @@
 	"NoBugs.noMoreMissions": "You're an expert !!! There aren't more missions for you.",
 	"NoBugs.goalAchievedFail": "You don't achieved this mission. You need to try again.",
 	"Apps.dialogLogoff": "Logoff",
+	"Single.YourCash": "Seu caixa",
 	"Single.SelectMission": "Select a Mission",
 	"Single.LeaderBoard": "Leader Board",
 	"SnackMan.catSnackMan": "SnackMan",

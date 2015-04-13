@@ -427,8 +427,8 @@ public class GameJdbcDao implements GameDao {
 			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
-					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join classesmissions cm using (missionid, classid)"
-					+ "   where ma.userid = ? and ma.achieved = 'T' group by classid, classlevelid) maz "
+					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
+					+ "   where ma.userid = ? and ma.achieved = 'T' and missions.missionrepeatable = 0 group by classid, classlevelid) maz "
 					+ "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
 					+ " order by c.classname, classlevelid";
 
@@ -456,7 +456,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select missionorder, missioncust from classesmissions join missions using (missionid) where classid = ? and classlevelid = ? and missionrepeatable = 1");
+					.prepareStatement("select missionorder, missioncust from classesmissions join missions using (missionid) where classid = ? and classlevelid = ? and missionrepeatable = 1 order by missionorder");
 
 			for (int i = 0; i < classesId.size(); i++) {
 
@@ -465,11 +465,17 @@ public class GameJdbcDao implements GameDao {
 
 				@SuppressWarnings("unchecked")
 				List<Integer[]> missions = (List<Integer[]>) l.get(i)[6];
+				long qtasResolvidas = (long) l.get(i)[3];
 
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					missions.add(new Integer[]{rs.getInt(1), rs.getInt(2)});
+					int mr = rs.getInt(1);
+					missions.add(new Integer[]{mr, rs.getInt(2)});
+					if (mr <= qtasResolvidas+1)
+						qtasResolvidas++;
 				}
+				
+				l.get(i)[3] = qtasResolvidas;
 
 			}
 			ps.close();

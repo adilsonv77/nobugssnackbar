@@ -250,6 +250,10 @@ Game.finishIntro = function() {
 
 Game.logged = function(missionsHistorical) {
 	
+	  UserControl.retrieveMoney(function(ret) {
+		  document.getElementById("yourCash").innerHTML = ret;
+	  });
+
 	UserControl.updateUserLastTime();
 	
 	if (Game.variableBox != null)
@@ -273,6 +277,8 @@ Game.logged = function(missionsHistorical) {
 	    } else {
 		    createsLeaderBoard("#"+idRoot);
 	    }
+	    
+	    
 	    
 	    
 		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
@@ -457,7 +463,7 @@ Game.saveMission = function() {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer, 
+	UserControl.saveMission(0, timeSpent, Game.howManyRuns, Game.openMission.open, answer, 
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -1629,7 +1635,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer);
+			UserControl.saveMission(0, timeSpent, Game.howManyRuns, Game.openMission.open, answer);
 
 			Game.currTime = now;
 		});
