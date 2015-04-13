@@ -57,6 +57,7 @@ public class XMLGenerator implements Serializable {
 				}
 				else {
 					result = null;
+					break;
 				}
 				
 			} catch (IOException e) {

@@ -9,25 +9,10 @@
 </h:head>
 <h:body>
 	<p:growl id="growlMsgs" showDetail="true"/>
-	
-	<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
-	    <f:facet name="default">
-	        <h:outputText value="Status: StandBy" />
-	    </f:facet>
-	 
-	    <f:facet name="start">
-	        <p:graphicImage name="../images/ajaxLoadingBar.gif" />
-	    </f:facet>
-	 
-	    <f:facet name="complete">
-	        <h:outputText value="Status: Completed" />
-	    </f:facet>
-	</p:ajaxStatus>
-	 
-	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-	
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />	
 	<p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false">
-	    <p:graphicImage name="../images/ajaxLoadingBar.gif" />
+	    <p:graphicImage value="../images/ajaxLoadingBar.gif" />
 	</p:dialog>
 	
 	<p:layout fullPage="true">

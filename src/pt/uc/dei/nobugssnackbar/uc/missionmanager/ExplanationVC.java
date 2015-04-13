@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
@@ -24,6 +26,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
     private Page page;
     private List<Page> pages;
     private ExplanationPageConverter epc;
+    private boolean ok;
     
     public final String editorControls = 
     		"bold italic underline strikethrough subscript superscript | " + 
@@ -79,15 +82,9 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	public void addPage() {
 		if (page.getId() < 0) {
 			if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
-				if (checkImages(page.getMsg()) == true) {
+				if ( this.isOk()) {
 					page.setId(pageIdCount++);
 					pages.add(page);
-				}
-				else {
-					ResourceBundle messageBundle = ApplicationMessages.getMessage();
-					FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
-							messageBundle.getString("tryAgainCheckImage"));
-					FacesContext.getCurrentInstance().addMessage("", msg);
 				}
 			}
 			else {				
@@ -105,17 +102,10 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		if (page.getId() >= 0) {
 			int index = indexOfPageById(page.getId(), pages);
 
-			if (index > -1 && checkImages(page.getMsg()) == true) {
+			if (index > -1 && this.isOk()) {
 				pages.get(index).setMsg(page.getMsg());
 			}
-			else {
-				ResourceBundle messageBundle = ApplicationMessages.getMessage();
-				FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
-						messageBundle.getString("tryAgainCheckImage"));
-				FacesContext.getCurrentInstance().addMessage("", msg);
-			}
 		}
-		resetPage();
 	}
 	
 	public void getPageById() {
@@ -165,5 +155,28 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		}
 		
 		return result;
+	}
+
+	public boolean isOk() {
+		ok = checkImages(page.getMsg());
+		
+		if (ok == false) {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('pageDialog').show()");
+			
+			ResourceBundle messageBundle = ApplicationMessages.getMessage();
+			FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
+					messageBundle.getString("tryAgainCheckImage"));
+			FacesContext.getCurrentInstance().addMessage("", msg);
+		}
+		else {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('pageDialog').hide()");
+		}
+		return ok;
+	}
+
+	public void setOk(boolean ok) {
+		this.ok = ok;
 	}
 }

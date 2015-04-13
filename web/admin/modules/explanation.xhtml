@@ -32,12 +32,11 @@
 						<p:commandLink title="#{msg['edit']}" update=":tbView:explForm:explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explVC.getPageById}">
 							<f:param name="editPageID" value="#{p.id}" />
 							<span class="ui-icon ui-icon-pencil" />
-						</p:commandLink>					
+						</p:commandLink>
 					</div>
 					
 					<h:outputText value="#{p.msg}" escape="false" />
 				</p:column>
-				
 			</p:orderList>
 		</div>
 
@@ -49,11 +48,10 @@
    			<p:panelGrid columns="2" style="float: right;">
     			<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
     				update=":tbView:explForm:opList, :tbView:explForm:explPageDlg, msgs" 
-    				actionListener="#{explVC.addPage}" />
+    				actionListener="#{explVC.addPage}"/>
       			<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
       				update=":tbView:explForm:explPageDlg" actionListener="#{explVC.resetPage}" />
        		</p:panelGrid>
-       		<div class="clear" />
     	</p:dialog>
     	
 		<p:dialog widgetVar="confDeleteDlg" showEffect="fade" hideEffect="fade" header="#{msg['confirmation']}" closable="false">
