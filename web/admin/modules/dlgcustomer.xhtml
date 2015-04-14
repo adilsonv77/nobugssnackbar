@@ -4,9 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="customerDialog" widgetVar="customerDlg" showEffect="fade" hideEffect="fade" header="#{msg['customer']}">
+	<p:dialog id="customerDialog" widgetVar="customerDlg" maximizable="true" showEffect="clip" hideEffect="fade" header="#{msg['customer']}">
 		<h:form id="customerForm">
-			<p:layout style="min-width:400px;min-height:200px;">
+			<p:layout style="width:900px;height:500px;">
 				<p:layoutUnit position="north">
 				
 					<p:panelGrid columns="4">
@@ -34,12 +34,13 @@
 					
 				</p:layoutUnit>
 				
-				<p:layoutUnit position="west">
-				
-					<p:panelGrid columns="2">
-						<h:outputText value="#{msg['orders']}"/>
-						<p:commandButton icon="ui-icon-circle-plus"/>
-					</p:panelGrid>
+				<p:layoutUnit position="west" size="150">
+					<f:facet name="header">
+		        		<div class="clear">
+	        				<h:outputText value="#{msg['orders']}" />
+	        				<p:commandButton style="float: right;" icon="ui-icon-circle-plus" />
+	        			</div>
+	    			</f:facet>
 					
 					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single">
 		    			<p:column>
@@ -53,10 +54,10 @@
 						<div id="foodsContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText/>
+								<p:inputText style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText/>
+								<p:inputText style="width:100px;"/>
 								
 								<p:selectBooleanCheckbox />
 								<h:outputText value="#{msg['diffFromPrev']}"/>
@@ -66,6 +67,11 @@
 								<f:facet name="header">
 							        <h:outputText value="#{msg['foods']}"/>
 							    </f:facet>
+							    <f:facet name="footer">
+							    	<div class="clear">
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    	</div>
+					        	</f:facet>
 							    
 							    <p:column headerText="#{msg['type']}">
 							        <h:outputText />
@@ -89,17 +95,15 @@
 							        	        
 							    </p:column>		    
 							</p:dataTable>
-							
-							<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus"/>
 						</div>
 						
 						<div id="drinksContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText/>
+								<p:inputText style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText/>
+								<p:inputText style="width:100px;"/>
 								
 								<p:selectBooleanCheckbox />
 								<h:outputText value="#{msg['diffFromPrev']}"/>
@@ -109,7 +113,12 @@
 								<f:facet name="header">
 							        <h:outputText value="#{msg['drinks']}"/>
 							    </f:facet>
-							    			    
+							    <f:facet name="footer">
+							    	<div class="clear">
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    	</div>
+					        	</f:facet>
+					        	    
 							    <p:column headerText="#{msg['type']}">
 							        <h:outputText />
 							    </p:column>
@@ -132,8 +141,6 @@
 							        	        
 							    </p:column>		    
 							</p:dataTable>
-							
-							<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus"/>
 						</div>
 					</p:panelGrid>
 				</p:layoutUnit>
