@@ -1,14 +1,19 @@
 package nobugssnackbar;
 
-import pt.uc.dei.nobugssnackbar.i18n.Messages;
+import java.util.ResourceBundle;
+
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 
 public class TestJson {
 	
-	public static void main(String[] args) {
-		Messages m = new Messages();
-		String str = m.getString("Single.Mission");
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		 ResourceBundle m = ApplicationMessages.getMessage("en");
+		 System.out.println( m.getString("Single.Mission") );
+		 System.out.println( m.getString("nomissions") );
 		
-		System.out.println( str );
+		 m = ApplicationMessages.getMessage("pt");
+		 System.out.println( m.getString("Single.Mission") );
+		 System.out.println( m.getString("nomissions") );
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -11,6 +12,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 
 public class SendMail {
 
@@ -38,7 +41,7 @@ public class SendMail {
 		}
 	}
 	
-	public void sendWelcomeMail(String dest) throws Exception {
+	public void sendWelcomeMail(String dest, String locale) throws Exception {
 
 		Session session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
@@ -46,30 +49,54 @@ public class SendMail {
 						return new PasswordAuthentication(username, password);
 					}
 				});
-		
+
 		Message msg = new MimeMessage(session);
-		msg.setContent("<h1>Congratulations!</h1>"
-				+ "<p>"
-				+ "<p>"
-				+ "<p>You were successfully registered in our game NoBug's Snack Bar."
-				+ "<br>Thank you for playing our game!"
-				+ "<p>"
-				+ "<p>"
-				+ "<h3>Best regards,"
-				+ "<br>NoBug's Snack Bar team</h3>", "text/html");
-		msg.setFrom(new InternetAddress("nobugssnackbar@example.com"));
+		ResourceBundle m = ApplicationMessages.getMessage(locale);
+
+		String msgText = "<h1>" + m.getString("welcMailMsgCongratulations")
+				+ "</h1>" + "<p>" + "<p>" + "<p>"
+				+ m.getString("welcMailMsgSuccessfully") + "<br>"
+				+ m.getString("welcMailMsgNow") + "<br>"
+				+ m.getString("welcMailMsgThankYou") + "<p>" + "<p>" + "<h3>"
+				+ m.getString("welcMailMsgRegards") + "<br>"
+				+ m.getString("welcMailMsgNoBug'sTeam") + "</h3>";
+
+		msg.setContent(msgText, "text/html");
+		msg.setFrom(new InternetAddress("nobugssnackbar@gmail.com"));
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(dest));
 
-		msg.setSubject("Your NoBug's Snack Bar account has been created");
-		//msg.setText(msgBody);
+		msg.setSubject("Your NoBug's Snack Bar account has been created!");
 		Transport.send(msg);
 
 	}
 
-	public void sendRegisterMail(String userMail, String userId) {
-		// TODO Auto-generated method stub
-		// "http://nobugssnackbar.dei.uc.pt/confirmUser?id" + userId
-		
+	public void sendRegisterMail(String userMail, String userId, String locale)
+			throws Exception {
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
+
+		Message msg = new MimeMessage(session);
+		ResourceBundle m = ApplicationMessages.getMessage(locale);
+
+		String msgText = "<h1>" + m.getString("regMailMsgLastStep") + "</h1>"
+				+ "<p>" + "<p>" + "<p>" + m.getString("regMailMsgToComplete")
+				+ "<a href='http://nobugssnackbar.dei.uc.pt/confirmUser?id="
+				+ userId + "'>" + m.getString("here") + "</a>." + m.getString("regMailMsgWasn'tYou") + "<p>" + "<p>" + "<h3>"
+				+ m.getString("welcMailMsgRegards") + "<br>"
+				+ m.getString("welcMailMsgNoBug'sTeam") + "</h3>";
+
+		msg.setContent(msgText, "text/html");
+
+		msg.setFrom(new InternetAddress("nobugssnackbar@gmail.com"));
+		msg.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(userMail));
+
+		msg.setSubject("You must confirm your registration!");
+		Transport.send(msg);
 	}
 
 }

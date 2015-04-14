@@ -34,7 +34,17 @@ body {
 }
   	
 /*******************Start Explanation page css******************/
-
+ div.ui-editor {
+ 	width: 100% !important;
+ 	height: 98% !important;
+ }
+ .ui-editor iframe {
+	 width: 100% !important;
+	 height: 95% !important;
+ }
+.disable-scroll .ui-dialog-content {
+ 	overflow: hidden !important;
+}
 .orderListDiv .ui-orderlist-list {
 	width: 515px !important;
 	height: 216px !important;
@@ -46,7 +56,7 @@ body {
 	height: 200px;
 	margin: 5px;
 	word-break: break-all;
-	overflow-y: hidden;
+	overflow: hidden;
 }
 .orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
 	display: block;
@@ -55,8 +65,15 @@ body {
 	text-decoration: none;
 }
 div.divExplEdit {
-	position: fixed;
-	margin-left: 116px; 
+	position: relative;
+	top: 0;
+	left: 0;
+	float: left;
+	z-index: 1;
+}
+div.divExplEdit + img {
+	margin-top: -18px;
+	margin-left: -35px;
 }
 .orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {
 	display: inline;
@@ -66,9 +83,9 @@ div.divExplEdit {
 	visibility: visible;
 }
 .orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink span {
-	float: right;
 	border-radius: 10px;
 	background-color: #aaa;
+	float: left;
 }
 .orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink span:hover {
 	background-color: #aaf;

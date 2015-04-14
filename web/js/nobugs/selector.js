@@ -118,6 +118,7 @@ Selector.prototype.build = function() {
 		$('#tt'+i).tabs({
 		    width: wMax + 50
 		});
+		$('#tt'+i).tabs('resize');
 	}
 		
 	if (useAccordion)

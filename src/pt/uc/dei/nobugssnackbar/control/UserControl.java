@@ -304,9 +304,9 @@ public class UserControl {
 		long clazz = gameDao.getDefaultClass(lang);
 
 		gameDao.insertUser(userNick, encrypt(userPassword), userName, sex,
-				userMail, new long[] { clazz });
+				userMail, lang, new long[] { clazz });
 
 		// send a welcome email
-		mail.sendRegisterMail(userMail, encrypt(userNick + userName + userMail));
+		mail.sendRegisterMail(userMail, encrypt(userNick + userName + userMail), lang);
 	}
 }

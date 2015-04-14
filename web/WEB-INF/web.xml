@@ -61,6 +61,14 @@
     </init-param>
   </servlet>
   <servlet>
+    <servlet-name>confirmUser</servlet-name>
+    <servlet-class>pt.uc.dei.nobugssnackbar.servlets.ConfirmUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmUser</servlet-name>
+    <url-pattern>/confirmUser/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>hintImage</servlet-name>
     <servlet-class>pt.uc.dei.nobugssnackbar.servlets.HintImage</servlet-class>
   </servlet>

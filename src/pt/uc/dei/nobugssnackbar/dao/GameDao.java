@@ -16,7 +16,7 @@ public interface GameDao {
 	void updateUserLastTime(User user) throws Exception;
 
 	void insertUser(String userNick, String userPassword, String userName,
-			String sex, String userMail, long classes[]) throws Exception;
+			String sex, String userMail, String lang, long classes[]) throws Exception;
 
 	String[][] loadMission(User user, int clazzId, int levelId, int missionIdx)
 			throws Exception;
@@ -63,6 +63,6 @@ public interface GameDao {
 	Questionnaire retrieveParticularQuestionnaire(User user, long l)
 			throws Exception;
 
-	String registerUser(String id) throws Exception;
+	String[] registerUser(String id) throws Exception;
 
 }

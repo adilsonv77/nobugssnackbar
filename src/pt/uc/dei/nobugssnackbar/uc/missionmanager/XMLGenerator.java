@@ -23,62 +23,88 @@ public class XMLGenerator implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	private final static String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
+	private final static String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";
+	
 	@ManagedProperty(value="#{explVC}")
 	private ExplanationVC evc;
 	
-	private int imgIdCounter;
+	private static int imgIdCounter;
 
 	public XMLGenerator() {
 		
 	}
 	
+	public static String convertImgTagToHexImgTag(String text, boolean justTestImg) {
+		String result = text;
+		
+		Pattern p = Pattern.compile(srcAttr);
+		Matcher m = p.matcher(text);
+		while (m.find()) {
+			File file = getImageFromUrl(m.group(1));
+
+			try {
+				if (file != null) {
+					if (justTestImg == false) {
+						String hexImg = HexImage.toHex(file);
+						imgIdCounter++;
+						String imgHexTag = "<imghex id=\"p_img_" + imgIdCounter + "\">" + hexImg + "</imghex>";			
+						
+						result = text.replaceFirst(imgTag, imgHexTag);
+					}
+				}
+				else {
+					result = null;
+					break;
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
 	public void processExplanationPages() {	
 		List<Page> pageList = evc.getPages();
-		String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
-		String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";
 		
-		for (Page page : pageList) {
-			String text = page.getMsg();
+		for (Page page : pageList) {		
+			String result = convertImgTagToHexImgTag(page.getMsg(), false);
 			
-			Pattern p = Pattern.compile(srcAttr);
-			Matcher m = p.matcher(text);
-			while (m.find()) {
-				
-				File file = getImageFromUrl(m.group(1));
-				
-				try {
-					String hexImg = HexImage.toHex(file);
-					imgIdCounter++;
-					String imgHexTag = "<imghex id=\"p_img_" + imgIdCounter + "\">" + hexImg + "</imghex>";			
-					
-					//page.setMsg(text.replaceFirst(imgTag, imgHexTag));
-					text = text.replaceFirst(imgTag, imgHexTag);
-					System.out.println(text);
-					
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			System.out.println(result);
+//			page.setMsg(result);
 		}
 	}
 	
-    private File getImageFromUrl(String src) {
+    private static File getImageFromUrl(String src) {
         File file = null;
         
-		try {
-			String imgType = src.substring(src.lastIndexOf(".") + 1, src.length());
+ 		try {
+			URL url = new URL(src);
+			if (url.getQuery() != null) {
+				src = src.replaceFirst("\\?" + url.getQuery(), "");
+				url = new URL(src);
+			}
+
+			String filePath = url.getPath();
 			
-			BufferedImage image = (BufferedImage) ImageIO.read(new URL(src));
+			String imgType = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
+			BufferedImage image = ImageIO.read(url);
+			
 			file = new File("img." + imgType);
 			
 			ImageIO.write(image, imgType, file);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
-        return file;
+ 			
+ 		} catch (IOException e) {
+			/*ResourceBundle messageBundle = ApplicationMessages.getMessage();
+			FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
+					messageBundle.getString("tryAgainCheckImage"));
+			FacesContext.getCurrentInstance().addMessage("", msg);*/
+// 			e.printStackTrace();
+ 		}
+         
+         return file;
     }
 
 	public ExplanationVC getEvc() {

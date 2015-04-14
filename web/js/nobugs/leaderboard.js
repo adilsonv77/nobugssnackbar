@@ -64,10 +64,6 @@ function createsLeaderBoard(idRoot) {
 	$('#leaderBoard .datagrid-header-inner').hide();
 	$('#leaderBoard .panel-body, #leaderBoard .datagrid-header').css("border-style", "none");
 
-	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
-	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
-	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
-
 	addTooltip();
 	
 	var lbData = Game.loginData.leaderBoard;
@@ -114,29 +110,37 @@ function createsLeaderBoard(idRoot) {
 
 	// the styler is defined in template.soy
 	
+	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
 	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
 	
-	
+	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
 	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
 
+	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
 	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
 	
-	/* This stuff doesnt work :(
+	
 	$('#leaderBoard').tabs({
 		  onSelect: function(title,index){
 			  switch (index) {
-			  case 0 : $("#dgLeaderMoney").datagrid("scrollTo", "16"); //getRow(lbMoneyData));
+			  case 0 : $("#dgLeaderMoney").datagrid("scrollTo", getRow(lbMoneyData));
 			  		   break;
 			  		   
-			  case 1:  $("#dgLeaderTime").datagrid("highlightRow", getRow(lbTimeData));
+			  case 1:  $("#dgLeaderTime").datagrid("scrollTo", getRow(lbTimeData));
 	  		   		   break;
 	  		   
-			  case 2: $("#dgLeaderRun").datagrid("highlightRow", getRow(lbRunData));
+			  case 2: $("#dgLeaderRun").datagrid("scrollTo", getRow(lbRunData));
 			  	      break;
 			  }
 		  	}});
-	*/
+	
+	$('#leaderBoard').tabs({height: 342, width: 270});
+	$('#leaderBoard').tabs('resize');
 	$('#leaderBoard').tabs('select', 0);
+	$('#dgLeaderMoney').datagrid('resize');
+	
+	$("#dgLeaderMoney").datagrid("scrollTo", getRow(lbMoneyData));
+
 };
 
 function createNoLeaderBoardInfo() {
@@ -159,6 +163,8 @@ function createTabLeaderBoardInfo(idDiv, idGrid, msg, idDivDisplay, idGridDispla
 };
 	
 function leaderStyler(value, rowData, index) {
-	if (rowData.id == Game.loginData.userLogged.id) 
+	if (Game.loginData && rowData.id == Game.loginData.userLogged.id) 
 		return "font-weight: bold; color: red";
+	else
+		return null;
 }

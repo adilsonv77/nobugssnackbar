@@ -1,0 +1,144 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<p:dialog id="customerDialog" widgetVar="customerDlg" showEffect="fade" hideEffect="fade" header="#{msg['customer']}">
+		<h:form id="customerForm">
+			<p:layout style="min-width:400px;min-height:200px;">
+				<p:layoutUnit position="north">
+				
+					<p:panelGrid columns="4">
+						<h:outputText value="#{msg['skin']}:"/>
+						<p:selectOneMenu style="width:100px">
+						
+		        		</p:selectOneMenu>
+		        		
+		        		<h:outputText value="#{msg['rndmType']}:"/>
+		        		<p:selectOneRadio>
+				            <f:selectItem itemLabel="#{msg['none']}" itemValue="0" />
+				            <f:selectItem itemLabel="#{msg['atLeastOne']}" itemValue="1" />
+		        		</p:selectOneRadio>
+		        		
+		        		<h:outputText value="#{msg['startsFrom']}:"/>
+						<p:selectOneMenu style="width:125px">
+						
+		        		</p:selectOneMenu>
+		        		
+		        		<h:outputText value="#{msg['goesTo']}:"/>
+						<p:selectOneMenu style="width:125px">
+						
+		        		</p:selectOneMenu>
+					</p:panelGrid>
+					
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="west">
+				
+					<p:panelGrid columns="2">
+						<h:outputText value="#{msg['orders']}"/>
+						<p:commandButton icon="ui-icon-circle-plus"/>
+					</p:panelGrid>
+					
+					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single">
+		    			<p:column>
+		    				<h:outputText value="Default" />
+		    			</p:column>
+    				</p:dataTable>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="center">
+					<p:panelGrid columns="1">
+						<div id="foodsContainer">
+							<p:panelGrid columns="6">
+								<h:outputText value="#{msg['rndmMin']}:"/>
+								<p:inputText/>
+								
+								<h:outputText value="#{msg['rndmMax']}:"/>
+								<p:inputText/>
+								
+								<p:selectBooleanCheckbox />
+								<h:outputText value="#{msg['diffFromPrev']}"/>
+							</p:panelGrid>
+							
+							<p:dataTable id="foodsDT" draggableRows="true">
+								<f:facet name="header">
+							        <h:outputText value="#{msg['foods']}"/>
+							    </f:facet>
+							    
+							    <p:column headerText="#{msg['type']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['qtd']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['price']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['actions']}">
+							    
+							        <p:commandButton value="#{msg['edit']}" >
+		
+							        </p:commandButton>
+							        
+							        <p:commandButton value="#{msg['delete']}" />
+							        	        
+							    </p:column>		    
+							</p:dataTable>
+							
+							<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+						</div>
+						
+						<div id="drinksContainer">
+							<p:panelGrid columns="6">
+								<h:outputText value="#{msg['rndmMin']}:"/>
+								<p:inputText/>
+								
+								<h:outputText value="#{msg['rndmMax']}:"/>
+								<p:inputText/>
+								
+								<p:selectBooleanCheckbox />
+								<h:outputText value="#{msg['diffFromPrev']}"/>
+							</p:panelGrid>
+							
+							<p:dataTable id="drinksDT" draggableRows="true">
+								<f:facet name="header">
+							        <h:outputText value="#{msg['drinks']}"/>
+							    </f:facet>
+							    			    
+							    <p:column headerText="#{msg['type']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['qtd']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['price']}">
+							        <h:outputText />
+							    </p:column>
+							 
+							    <p:column headerText="#{msg['actions']}">
+							    
+							        <p:commandButton value="#{msg['edit']}" >
+		
+							        </p:commandButton>
+							        
+							        <p:commandButton value="#{msg['delete']}" />
+							        	        
+							    </p:column>		    
+							</p:dataTable>
+							
+							<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+						</div>
+					</p:panelGrid>
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+	</p:dialog>
+	
+</ui:composition>
