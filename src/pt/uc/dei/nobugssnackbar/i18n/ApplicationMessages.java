@@ -18,4 +18,10 @@ public class ApplicationMessages {
 
 	}
 	
+	public static ResourceBundle getMessage(String locale) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		
+		return (ResourceBundle) clazz.newInstance();
+		
+	}
+	
 }
