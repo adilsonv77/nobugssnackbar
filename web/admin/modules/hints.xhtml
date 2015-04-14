@@ -35,10 +35,10 @@
 		        <h:outputText value="#{hint.text}"  styleClass="dataTableEdit" escape="false"/>
 		    </p:column>
 		 
-		    <p:column headerText="#{msg['action']}">
+		    <p:column headerText="#{msg['condition']}">
 		        <h:outputText value="#{hint.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="#{msg['edit']}">
+		    <p:column headerText="#{msg['actions']}">
 		    
 		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
 		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">
@@ -68,10 +68,10 @@
 		        <h:outputText value="#{error.text}" styleClass="dataTableEdit" escape="false"/>
 		    </p:column>
 		 
-		    <p:column headerText="#{msg['action']}">
+		    <p:column headerText="#{msg['condition']}">
 		        <h:outputText value="#{error.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="#{msg['edit']}">
+		    <p:column headerText="#{msg['actions']}">
 		       
 		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
 		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">

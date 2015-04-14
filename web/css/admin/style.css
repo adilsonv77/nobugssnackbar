@@ -71,8 +71,8 @@ div.divExplEdit {
 	float: left;
 	z-index: 1;
 }
-div.divExplEdit + * {
-	margin-top: -3px;
+div.divExplEdit + img {
+	margin-top: -18px;
 	margin-left: -35px;
 }
 .orderListDiv .ui-orderlist-list li.ui-orderlist-item .ui-commandlink {

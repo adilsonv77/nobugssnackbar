@@ -72,7 +72,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	}
 	
 	private boolean checkImages(String text) {
-		if (XMLGenerator.convertImgTagToHexImgTag(text) != null) {
+		if (XMLGenerator.convertImgTagToHexImgTag(text, true) != null) {
 			return true;
 		}
 		

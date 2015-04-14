@@ -6,18 +6,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 
-import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.util.HexImage;
 
@@ -39,7 +35,7 @@ public class XMLGenerator implements Serializable {
 		
 	}
 	
-	public static String convertImgTagToHexImgTag(String text) {
+	public static String convertImgTagToHexImgTag(String text, boolean justTestImg) {
 		String result = text;
 		
 		Pattern p = Pattern.compile(srcAttr);
@@ -49,11 +45,13 @@ public class XMLGenerator implements Serializable {
 
 			try {
 				if (file != null) {
-					String hexImg = HexImage.toHex(file);
-					imgIdCounter++;
-					String imgHexTag = "<imghex id=\"p_img_" + imgIdCounter + "\">" + hexImg + "</imghex>";			
-					
-					result = text.replaceFirst(imgTag, imgHexTag);
+					if (justTestImg == false) {
+						String hexImg = HexImage.toHex(file);
+						imgIdCounter++;
+						String imgHexTag = "<imghex id=\"p_img_" + imgIdCounter + "\">" + hexImg + "</imghex>";			
+						
+						result = text.replaceFirst(imgTag, imgHexTag);
+					}
 				}
 				else {
 					result = null;
@@ -72,7 +70,7 @@ public class XMLGenerator implements Serializable {
 		List<Page> pageList = evc.getPages();
 		
 		for (Page page : pageList) {		
-			String result = convertImgTagToHexImgTag(page.getMsg());
+			String result = convertImgTagToHexImgTag(page.getMsg(), false);
 			
 			System.out.println(result);
 //			page.setMsg(result);
