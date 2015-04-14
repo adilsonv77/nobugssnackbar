@@ -108,7 +108,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon.setAutoCommit(false);
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermail, userlang, usermoney, showhint) values (?, ?, ?, ?, ?, ?, 0, 'T')");
+					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermail, userlang, usermoney, showhint, userenabled) values (?, ?, ?, ?, ?, ?, 0, 'T', 'F')");
 
 			ps.setString(1, userNick);
 			ps.setString(2, userPassword);
@@ -1192,7 +1192,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery("select userid, usermail, userlang from users where md5(usernick+username+usermail) = " + id);
+			ResultSet rs = st.executeQuery("select userid, usermail, userlang from users where md5(concat(usernick,username,usermail)) = '" + id + "'");
 			long userid = 0;
 			if (rs.next()) {
 				userid = rs.getLong(1);
