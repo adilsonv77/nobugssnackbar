@@ -128,3 +128,12 @@ div.divExplEdit {
 	border-radius: 5px;
 	margin-left: 3px;
 }
+
+.customersFieldset,.randomizationFieldset{
+	display: inline;
+	width: 45%;
+	float: left;
+}
+.randomizationPanelGrid{
+	color:red;
+}

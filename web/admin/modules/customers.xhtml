@@ -1,0 +1,33 @@
+<ui:composition  xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<p:panelGrid columns="2" style="margin-bottom: 50px;">
+		<span class="my-lightbulb"></span>
+		<h:outputText>
+			<f:attribute name="value" value="#{msg['customersMsg']}" />
+		</h:outputText>
+	</p:panelGrid>	
+	
+	<h:outputStylesheet name="css/admin/style.css"/> 
+	
+	<p:growl id="msgs" showDetail="true" />
+	
+	<p:fieldset legend="#{msg['customersLegend']}" styleClass="customersFieldset">
+
+		<ui:include src="customersfieldset.xhtml"/>
+       	
+   	</p:fieldset>
+   	
+   	<p:fieldset legend="#{msg['randomizationLegend']}" styleClass="randomizationFieldset">
+      
+        <ui:include src="randomization.xhtml"/>
+       	
+   	</p:fieldset>
+
+	
+	
+	
+</ui:composition>

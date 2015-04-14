@@ -64,12 +64,13 @@ public class HintView implements Serializable {
 	
     public void deleteTipsHint() {
         tipsHints.remove(hint);
-        hint = new Hint();
+        newHint();
     }
     
 	public void addEditHint() {
 		if(hint.getCategory().equals("")){
 			addMessageToGrowl(new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
+			newHint();
 			return;
 		}
 		if (this.add) {/*prevent from adding element when editing*/
@@ -84,7 +85,7 @@ public class HintView implements Serializable {
 		}
 		
 		checkLists();
-		this.hint = new Hint();
+		newHint();
 	}
 	
 	public void checkLists(){
