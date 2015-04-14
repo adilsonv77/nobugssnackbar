@@ -100,6 +100,7 @@
 	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\n\n- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\n\n",
 	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
 	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
+	"Error.incorrectID": "O de usuГЎrio ID, que vocГЄ estГЎ tentando usar estГЎ incorreto!",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
 	
 	"Single.Counter" : "no balc&#227;o",

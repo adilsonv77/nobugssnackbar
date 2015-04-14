@@ -24,12 +24,13 @@ public class SendMail {
 	public SendMail(String appFolder) {
 		String mailProperties = appFolder + "/META-INF/mail.properties";
 		try {
-			
+
 			this.props = new Properties();
 
-			props.load(new InputStreamReader(new FileInputStream(new File(mailProperties))));
-			
-			this.username = props.getProperty("username"); 
+			props.load(new InputStreamReader(new FileInputStream(new File(
+					mailProperties))));
+
+			this.username = props.getProperty("username");
 			this.password = props.getProperty("password");
 
 			props.put("mail.smtp.auth", "true");
@@ -37,10 +38,10 @@ public class SendMail {
 			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.port", "587");
 		} catch (Exception ex) {
-			
+
 		}
 	}
-	
+
 	public void sendWelcomeMail(String dest, String locale) throws Exception {
 
 		Session session = Session.getInstance(props,
@@ -65,7 +66,9 @@ public class SendMail {
 		msg.setFrom(new InternetAddress("nobugssnackbar@gmail.com"));
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(dest));
 
-		msg.setSubject("Your NoBug's Snack Bar account has been created!");
+		String subjMsgText = m.getString("welcMailMsgSubject");
+		
+		msg.setSubject(subjMsgText);
 		Transport.send(msg);
 
 	}
@@ -85,7 +88,8 @@ public class SendMail {
 		String msgText = "<h1>" + m.getString("regMailMsgLastStep") + "</h1>"
 				+ "<p>" + "<p>" + "<p>" + m.getString("regMailMsgToComplete")
 				+ "<a href='http://nobugssnackbar.dei.uc.pt/confirmUser?id="
-				+ userId + "'>" + m.getString("here") + "</a>." + m.getString("regMailMsgWasn'tYou") + "<p>" + "<p>" + "<h3>"
+				+ userId + "'>" + m.getString("here") + "</a>." + "<br>"
+				+ m.getString("regMailMsgWasn'tYou") + "<p>" + "<p>" + "<h3>"
 				+ m.getString("welcMailMsgRegards") + "<br>"
 				+ m.getString("welcMailMsgNoBug'sTeam") + "</h3>";
 
@@ -94,8 +98,10 @@ public class SendMail {
 		msg.setFrom(new InternetAddress("nobugssnackbar@gmail.com"));
 		msg.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(userMail));
+		
+		String subjMsgText = m.getString("regMailMsgSubject");
 
-		msg.setSubject("You must confirm your registration!");
+		msg.setSubject(subjMsgText);
 		Transport.send(msg);
 	}
 
