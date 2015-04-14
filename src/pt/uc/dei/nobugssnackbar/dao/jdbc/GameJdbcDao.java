@@ -100,7 +100,7 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	public void insertUser(String userNick, String userPassword,
-			String userName, String sex, String userMail, long classes[])
+			String userName, String sex, String userMail, String lang, long classes[])
 			throws SQLException {
 		Connection bdCon = null;
 		try {
@@ -108,13 +108,14 @@ public class GameJdbcDao implements GameDao {
 			bdCon.setAutoCommit(false);
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermail, usermoney, showhint) values (?, ?, ?, ?, ?, 0, 'T')");
+					.prepareStatement("insert into users (usernick, userpassw, usersex, username, usermail, userlang, usermoney, showhint) values (?, ?, ?, ?, ?, ?, 0, 'T')");
 
 			ps.setString(1, userNick);
 			ps.setString(2, userPassword);
 			ps.setString(3, sex);
 			ps.setString(4, userName);
 			ps.setString(5, userMail);
+			ps.setString(6, lang);
 
 			ps.executeUpdate();
 			ps.close();
@@ -1184,18 +1185,20 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	@Override
-	public String registerUser(String id) throws Exception  {
-		String mail = null;
+	public String[] registerUser(String id) throws Exception  {
+		String[] mail = new String[3];
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
 
 			Statement st = bdCon.createStatement();
-			ResultSet rs = st.executeQuery("select userid, usermail from users where md5(usernick+username+usermail) = " + id);
+			ResultSet rs = st.executeQuery("select userid, usermail, userlang from users where md5(usernick+username+usermail) = " + id);
 			long userid = 0;
 			if (rs.next()) {
 				userid = rs.getLong(1);
-				mail = rs.getString(2);
+				mail[0] = rs.getString(1);
+				mail[1] = rs.getString(2);
+				mail[2] = rs.getString(3);
 			}
 			rs.close();
 			if (userid != 0)

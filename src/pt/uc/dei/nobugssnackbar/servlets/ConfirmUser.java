@@ -37,10 +37,10 @@ public class ConfirmUser extends HttpServlet {
 			
 			AbstractFactoryDao factoryDao = (AbstractFactoryDao) request.getServletContext().getAttribute("factoryDao");
 			GameDao gameDao = factoryDao.getGameDao();
-			String userMail = gameDao.registerUser(id);
+			String[] user = gameDao.registerUser(id);
 			response.sendRedirect(request.getContextPath());
 			SendMail mail = new SendMail(request.getServletContext().getRealPath("/"));
-			mail.sendWelcomeMail(userMail);
+			mail.sendWelcomeMail(user[1], user[2]);
 
 		} catch (Exception ex) {
 			

@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>dialogSignup Box for Sign Up</title>
 <link rel="stylesheet" type="text/css" href="css/easyui/easyui.css">
 <link rel="stylesheet" type="text/css" href="css/easyui/icon.css">
 <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
@@ -12,40 +11,37 @@
 <body>
 	<form id="dialogSignup" method="post">
 		<div align="center" style="padding: 15px 5px 5px 5px; margin: 1px">
-			<input class="easyui-validatebox textbox" type="text" id="nickname"
-				maxlength="30" size="10"
-				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+			<input class="easyui-validatebox" type="text" id="nickname"
+				maxlength="30"
+				style="font-size: 16px; width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				name="nickname" data-options="required:true,validType:'userAllowed'"
 				autofocus></input>
 		</div>
-		<div align="center" style="padding: 3px; margin: 1px">
+		<div align="center" style="padding: 2px; margin: 1px">
 			<input class="easyui-validatebox" type="password" maxlength="30"
-				data-options="required:true,validType:'passwStrength'" size="10"
-				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				data-options="required:true,validType:'passwStrength'"
+				style="font-size: 16px; width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				placeholder="Password" name="password" id="password" required></input>
 		</div>
-		<div align="center" style="padding: 3px; margin: 1px">
+		<div align="center" style="padding: 2px; margin: 1px">
 			<input class="easyui-validatebox" type="password" maxlength="30"
-				size="10"
-				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				style="font-size: 16px; width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				name="confirmpassword" id="confirmpassword" required="required"
 				validType="equals['#password']"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
 			<input class="easyui-validatebox" type="text" maxlength="30"
-				size="10"
-				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+				style="font-size: 16px; width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				name="email" id="email"
 				data-options="required:true,validType:['email','emailAllowed']"></input>
 		</div>
 		<div align="center" style="padding: 5px; margin: 1px">
-			<input class="easyui-validatebox textbox" type="text" maxlength="30"
-				size="10"
-				style="width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
+			<input class="easyui-validatebox" type="text" maxlength="30"
+				style="font-size: 16px; width: 300px; height: 25px; padding: 5px; border: 1px groove #2E9AFE"
 				name="completename" id="completename" required></input>
 		</div>
 		<div align="center"
-			style="text-align: center; padding: 5px; margin: 5px 5px 5px 32px; width: 300px; height: 25px; border: 1px groove #2E9AFE">
+			style="text-align: center; padding: 5px; margin: 5px 5px 5px 34px; width: 300px; height: 25px; border: 1px groove #2E9AFE">
 			<span class="panel-body panel-body-noheader panel-body-noborder"
 				style="font-size: 17px" id="gendertext">Select your gender: </span><label
 				id="genderisM" for="genderM"
@@ -68,30 +64,30 @@
 	</form>
 	<script>
 		document.getElementById("nickname").placeholder = BlocklyApps
-				.getMsg("Signup_nickName");
+				.getMsg("SignUp_nickName");
 		document.getElementById("password").placeholder = BlocklyApps
-				.getMsg("Signup_password");
+				.getMsg("SignUp_password");
 		document.getElementById("confirmpassword").placeholder = BlocklyApps
-				.getMsg("Signup_confirmpassword");
+				.getMsg("SignUp_confirmPassword");
 		document.getElementById("email").placeholder = BlocklyApps
-				.getMsg("Signup_email");
+				.getMsg("SignUp_email");
 		document.getElementById("completename").placeholder = BlocklyApps
-				.getMsg("Signup_completename");
+				.getMsg("SignUp_completeName");
 		document.getElementById("gendertext").innerHTML = BlocklyApps
-				.getMsg("Signup_gendertext");
+				.getMsg("SignUp_genderText");
 		document.getElementById("genderisM").innerHTML = BlocklyApps
-				.getMsg("Signup_genderisM");
+				.getMsg("SignUp_genderIsM");
 		document.getElementById("genderisF").innerHTML = BlocklyApps
-				.getMsg("Signup_genderisF");
+				.getMsg("SignUp_genderIsF");
 		document.getElementById("signupbtn").innerHTML = BlocklyApps
-				.getMsg("Signup_signupbtn");
+				.getMsg("SignUp_signUpBtn");
 		document.getElementById("clearformbtn").innerHTML = BlocklyApps
-				.getMsg("Signup_clearformbtn");
+				.getMsg("SignUp_clearFormBtn");
 
 		$.fn.validatebox.defaults.missingMessage = BlocklyApps
-				.getMsg("Signup_missingmsg");
+				.getMsg("SignUp_missingMsg");
 		$.fn.validatebox.defaults.rules.email.message = BlocklyApps
-				.getMsg("Signup_validemailgmsg");
+				.getMsg("SignUp_validEmailMsg");
 
 		$.extend($.fn.validatebox.defaults.rules, {
 			requireRadio : {
@@ -103,7 +99,7 @@
 							});
 					return $(param[0] + ':checked').val() != undefined;
 				},
-				message : BlocklyApps.getMsg("Signup_radiobtnmsg")
+				message : BlocklyApps.getMsg("SignUp_radioBtnMsg")
 			}
 		});
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -111,7 +107,7 @@
 				validator : function(value, param) {
 					return value == $(param[0]).val();
 				},
-				message : BlocklyApps.getMsg("Signup_notmatchmsg")
+				message : BlocklyApps.getMsg("SignUp_notMatchMsg")
 			}
 		});
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -126,7 +122,7 @@
 					});
 					return ok;
 				},
-				message : BlocklyApps.getMsg("Signup_unotallowedmsg")
+				message : BlocklyApps.getMsg("SignUp_uNotAllowedMsg")
 			}
 		});
 
@@ -142,7 +138,7 @@
 					});
 					return ok;
 				},
-				message : BlocklyApps.getMsg("Signup_enotallowedmsg")
+				message : BlocklyApps.getMsg("SignUp_eNotAllowedMsg")
 			}
 		});
 
@@ -162,7 +158,7 @@
 					var pattern3 = /[0-9]/g; // Contains digits
 					var pattern4 = /[~`!@#$%^&*_+-]/g; // Contains a special character
 
-					if (password.length >= 7) {
+					if (password.length >= 8) {
 						strength += points;
 					}
 					if (password.match(pattern1) != null) {
@@ -177,7 +173,7 @@
 					if (password.match(pattern4) != null) {
 						strength += points;
 					}
-					if ((password.length >= 7)
+					if ((password.length >= 8)
 							&& (password.match(pattern1) != null)
 							&& (password.match(pattern2) != null)
 							&& (password.match(pattern3) != null)
@@ -185,12 +181,12 @@
 						return true;
 					}
 
-					var msgs = [ BlocklyApps.getMsg("Signup_emptypassmsg"),
-							BlocklyApps.getMsg("Signup_tousepassmsg"),
-							BlocklyApps.getMsg("Signup_weakpassmsg"),
-							BlocklyApps.getMsg("Signup_averagepassmsg"),
-							BlocklyApps.getMsg("Signup_strongpassmsg"),
-							BlocklyApps.getMsg("Signup_verystrpassmsg") ];
+					var msgs = [ BlocklyApps.getMsg("SignUp_emptyPassMsg"),
+							BlocklyApps.getMsg("SignUp_toUsePassMsg"),
+							BlocklyApps.getMsg("SignUp_weakPassMsg"),
+							BlocklyApps.getMsg("SignUp_averagePassMsg"),
+							BlocklyApps.getMsg("SignUp_strongPassMsg"),
+							BlocklyApps.getMsg("SignUp_veryStrPassMsg") ];
 
 					if (password == "") {
 						this.myMsg = msgs[0];
@@ -252,9 +248,9 @@
 													$.messager
 															.alert(
 																	BlocklyApps
-																			.getMsg("Signup_signedinfo"),
+																			.getMsg("SignUp_signedInfo"),
 																	BlocklyApps
-																			.getMsg("Signup_showinfomsg"));
+																			.getMsg("SignUp_showInfoMsg"));
 													$('#dialogSignup').form(
 															'clear');
 													$('#sign').tooltip('hide');
@@ -269,6 +265,7 @@
 		function clearForm() {
 			$('#dialogSignup').form('clear');
 		};
+		
 	</script>
 </body>
 </html>

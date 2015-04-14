@@ -7,7 +7,7 @@ $(function() {
 				width : 380,
 				height : 380,
 				border : false,
-				title : BlocklyApps.getMsg("Signup_title"),
+				title : BlocklyApps.getMsg("SignUp_title"),
 				href : 'dialog.html'
 			});
 		},
