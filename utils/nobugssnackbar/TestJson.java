@@ -11,7 +11,7 @@ public class TestJson {
 		 System.out.println( m.getString("Single.Mission") );
 		 System.out.println( m.getString("nomissions") );
 		
-		 m = ApplicationMessages.getMessage("pt");
+		 m = ApplicationMessages.getMessage("pt-PT");
 		 System.out.println( m.getString("Single.Mission") );
 		 System.out.println( m.getString("nomissions") );
 	}
