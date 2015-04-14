@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import java.io.Serializable;
 
-public class JdbcDao<T> {
+public class JdbcDao<T> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Class<T> persistentClass;
 	private List<Field> pks;
