@@ -20,6 +20,7 @@ public class ApplicationMessages {
 	
 	public static ResourceBundle getMessage(String locale) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		
+		Class<?> clazz = Class.forName("pt.uc.dei.nobugssnackbar.i18n.Messages"+(locale.equals("en")?"":"_"+locale));
 		return (ResourceBundle) clazz.newInstance();
 		
 	}
