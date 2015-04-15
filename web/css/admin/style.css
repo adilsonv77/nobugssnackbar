@@ -145,16 +145,21 @@ div.divExplEdit + img {
 	border-radius: 5px;
 	margin-left: 3px;
 }
-
+/*******************Start Customers page css******************/
 .customersFieldset,.randomizationFieldset{
 	display: inline;
 	width: 45%;
 	float: left;
 }
-.randomizationPanelGrid{
-	color:red;
+.randBtnSave{
+	display: block;
+	float:right;
 }
-
+.randBtnAdd{
+	display: block;
+	margin-bottom: 5px;
+}
+/*******************End Customers page css******************/
 .commandsCheckBox span {
 	background-color: yellow !important;
 }
