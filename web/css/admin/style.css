@@ -154,3 +154,7 @@ div.divExplEdit + img {
 .randomizationPanelGrid{
 	color:red;
 }
+
+.commandsCheckBox span {
+	background-color: yellow !important;
+}
