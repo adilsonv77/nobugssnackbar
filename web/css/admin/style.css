@@ -160,3 +160,6 @@ div.divExplEdit + img {
 	margin-bottom: 5px;
 }
 /*******************End Customers page css******************/
+.commandsCheckBox span {
+	background-color: yellow !important;
+}

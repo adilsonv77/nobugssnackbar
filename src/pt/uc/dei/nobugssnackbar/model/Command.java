@@ -19,6 +19,7 @@ public class Command implements Serializable {
 	@JdbcField(name="commandparent")
 	private Integer parentId;
 	
+	private boolean selected;
 	
 	public Command() {
 	}
@@ -26,14 +27,22 @@ public class Command implements Serializable {
 	public Command(String name, Integer parentId) {
 		this.name = name;
 		this.parentId = parentId;
+		this.selected = false;
 	}
 
 	public Command(Integer id, String name, Integer parentId) {
 		this.id = id;
 		this.name = name;
 		this.parentId = parentId;
+		this.selected = false;
 	}
 	
+	public Command(Integer id, String name, Integer parentId, boolean selected) {
+		this.id = id;
+		this.name = name;
+		this.parentId = parentId;
+		this.selected = selected;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -52,5 +61,11 @@ public class Command implements Serializable {
 	}
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

@@ -21,7 +21,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
-	private HintCategoryDao hintCategoryDao;
+	private transient HintCategoryDao hintCategoryDao;
 	
 	@ManagedProperty(value="#{hintView}")
 	private HintView hw;
