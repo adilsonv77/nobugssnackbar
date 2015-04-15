@@ -2,7 +2,6 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.util.ResourceBundle;
 
-import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 
@@ -14,7 +13,6 @@ public class Randomization implements java.io.Serializable {
 
 	public Randomization() {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
-		
 		qtd = 0;
 		set = messageBundle.getString("new");
 		type = messageBundle.getString("hungry");
@@ -24,7 +22,7 @@ public class Randomization implements java.io.Serializable {
 		this.set = set;
 	}
 	
-	public void setQtd(byte qtd) {
+	public void setQtd(byte qtd) {		
 		this.qtd = qtd;
 	}
 	

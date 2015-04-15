@@ -4,13 +4,17 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<h:form id="customersForm">
-		<p:growl id="msgs" showDetail="true" />
-		
-		<h:panelGrid cellpadding="5" styleClass="customersPanelGrid">
-		
-	    </h:panelGrid>
-	    
-	</h:form>
+	<p:fieldset legend="#{msg['customers']}" styleClass="customersFieldset">
+		<h:form id="customersForm">
+			<p:growl id="msgs" showDetail="true" />
+			
+			<h:panelGrid cellpadding="5" styleClass="customersPanelGrid">
+				
+				<p:graphicImage value="tileset/fundo03.png"/>
+				
+		    </h:panelGrid>
+		    
+		</h:form>
+	</p:fieldset>
 	
 </ui:composition>

@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 
 
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
@@ -15,7 +15,7 @@ import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.CategoryProviderConverter;
 
 @ManagedBean(name = "categoryView")
-@SessionScoped
+@ViewScoped
 public class CategoryView implements Serializable, IHintCategoryProvider {
 
 	private static final long serialVersionUID = 1L;

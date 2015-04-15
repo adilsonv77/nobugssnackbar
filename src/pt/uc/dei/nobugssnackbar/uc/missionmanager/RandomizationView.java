@@ -50,6 +50,7 @@ public class RandomizationView implements Serializable {
 	
 	/*flag for editing rand or adding new rand */
 	private boolean editing = false;
+	private boolean valid = true;
 	
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
@@ -143,6 +144,7 @@ public class RandomizationView implements Serializable {
 	}
 
 	public void save(){
+		
 		if(this.editing){
 			addMessageToGrowl(new Object[]{"changesSaved"});
 		}

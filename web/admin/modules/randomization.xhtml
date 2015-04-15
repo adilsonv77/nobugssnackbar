@@ -11,18 +11,20 @@
 			<h:panelGrid columns="2" cellpadding="5" styleClass="randomizationPanelGrid">
 			
 				<p:outputLabel for="qtdSpinner" value="#{msg['qtd']}: " disabled="#{randView.disabled}"/>	
-	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}"/>
+	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}">
+	        		<f:validateDoubleRange minimum="0"/>
+	        	</p:spinner>
 	        	
 	        	<p:outputLabel for="typeRadioGroup" value="#{msg['type']}: " disabled="#{randView.disabled}" />
 		        <p:selectOneRadio id="typeRadioGroup" value="#{randView.boolType}" disabled="#{randView.disabled}">
-		            <f:selectItem itemLabel="#{msg['hungry']}: " itemValue="true"/>
-		            <f:selectItem itemLabel="#{msg['thirsty']}: " itemValue="false"/>
+		            <f:selectItem itemLabel="#{msg['hungry']}" itemValue="true"/>
+		            <f:selectItem itemLabel="#{msg['thirsty']}" itemValue="false"/>
 		        </p:selectOneRadio>
 		        
 	        	<p:outputLabel for="setRadioGroup" value="#{msg['set']}: " disabled="#{randView.disabled}"/>
 		        <p:selectOneRadio id="setRadioGroup" value="#{randView.boolSet}" disabled="#{randView.disabled}">
-		            <f:selectItem itemLabel="#{msg['new']}: " itemValue="true"/>
-		            <f:selectItem itemLabel="#{msg['notthesame']}: " itemValue="false"/>
+		            <f:selectItem itemLabel="#{msg['new']}" itemValue="true"/>
+		            <f:selectItem itemLabel="#{msg['notthesame']}" itemValue="false"/>
 		        </p:selectOneRadio>   
 		             
 			</h:panelGrid>
@@ -48,15 +50,17 @@
 			        <h:outputText value="#{rand.qtd}"/>
 			    </p:column>		
 			    
-			    <p:column headerText="#{msg['edit']}">
+			    <p:column headerText="#{msg['actions']}">
+			    	<p:tooltip id="toolTipEdit" for="btnEdit" value="#{msg['edit']}"
+			    		showEffect="clip" hideEffect="clip"/>
 					<p:commandButton id="btnEdit" icon="ui-icon-wrench"
 						actionListener="#{randView.edit(rand)}"/>	
-			    </p:column>				        
-			 		
-			    <p:column headerText="#{msg['delete']}">
+						
+					<p:tooltip id="toolTipDelete" for="btnDelete" value="#{msg['delete']}"
+						showEffect="clip" hideEffect="clip"/>
 					<p:commandButton id="btnDelete" icon="ui-icon-close"
-						actionListener="#{randView.delete(rand)}"/>
-			    </p:column>	
+						actionListener="#{randView.delete(rand)}"/>						
+			    </p:column>				        			 		
 			    			 		    
 			</p:dataTable>			
 		    

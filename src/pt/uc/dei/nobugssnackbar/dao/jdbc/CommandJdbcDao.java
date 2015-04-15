@@ -9,6 +9,7 @@ import pt.uc.dei.nobugssnackbar.model.Command;
 
 public class CommandJdbcDao extends JdbcDao<Command> implements CommandDao {
 	
+
 	public void insertCommand(String name, Integer parentId) throws SQLException {
 
 		Connection bdCon = null;
