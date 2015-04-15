@@ -21,7 +21,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
-	private transient HintCategoryDao hintCategoryDao;
+	private HintCategoryDao hintCategoryDao;
 	
 	@ManagedProperty(value="#{hintView}")
 	private HintView hw;
@@ -78,7 +78,12 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	@Override
 	public List<HintCategory> getHintCategories() throws Exception {
 		if (hCategories == null) {
+			try {
 			hCategories = hintCategoryDao.list();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
 		};
 		return hCategories;
 	}

@@ -32,13 +32,21 @@ PreloadImgs.get = function(key) {
  */
 PreloadImgs.loadImgs = function() {
 	
+    var preloadImgs = document.getElementById("preloadimgsxx");
+	
 	for (var i = 0; i < PreloadImgs.keys.length; i++) {
 		var preload = PreloadImgs.imgs[PreloadImgs.keys[i]];
 		if (preload.img == null) {
+			preloadImgs.style.background = "url(" + preload.src + ")";
+			
 			preload.img = new Image();
 		    preload.img.src = preload.src;
 		}
 	}
+	
+	Blockly.loadAudio_(['media/click.mp3', 'media/click.wav', 'media/click.ogg'], 'click');
+	Blockly.loadAudio_(['media/delete.mp3', 'media/delete.wav', 'media/delete.ogg'], 'delete');
+	Blockly.preloadAudio_();
 	
 	PreloadImgs.loaded = true;
 };

@@ -42,7 +42,7 @@
 	"NoBugs.buyTooltip":"Comprar equipamentos.",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	
-	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o.  \nn \nn Voc&#234; recebeu no total %0.",
+	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.",
 	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. N&#227;o existem mais miss&#245;es para si.", 
 	"NoBugs.rewardExplanation" : "Receba %0 se cumprir todos os objetivos acima.",
@@ -72,8 +72,8 @@
 	"SnackMan.catchFruitsTooltip" : "Pega uma fruta da caixa necess&#225;ria para preparar o sumo.",
 	"SnackMan.goToJuiceMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de sumos.",
 	"SnackMan.prepareAndCatchJuiceTooltip" : "Usa a fruta p&#234;ga e prepara o sumo.",
-	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja.",
-	"SnackMan.constSoftDrinkTooltip" : "Refrigerante.",
+	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja",
+	"SnackMan.constSoftDrinkTooltip" : "Refrigerante",
 	
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
@@ -100,7 +100,7 @@
 	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\n\n- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\n\n",
 	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
 	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
-	"Error.incorrectID": "O de usuГЎrio ID, que vocГЄ estГЎ tentando usar estГЎ incorreto!",
+	"Error.incorrectID": "O ID do usu&#225;rio , que voc&#234; est&#225; tentando usar est&#225; incorreto.",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
 	
 	"Single.Counter" : "no balc&#227;o",
@@ -171,19 +171,20 @@
 	"SignUp.genderIsF"	    : "Feminino",
 	"SignUp.signUpBtn"	    : "Registrar-se",
 	"SignUp.clearFormBtn"	: "Limpar",
-	"SignUp.radioBtnMsg"	: "Por favor, escolha uma das opР“В§Р“Вµes!",
-	"SignUp.notMatchMsg"	: "Os campos nР“Р€o coincidem!",
-	"SignUp.uNotAllowedMsg"	: "UsuР“РЋrio nР“Р€o autorizado!",
-	"SignUp.eNotAllowedMsg"	: "Este e-mail jР“РЋ existe!",
-	"SignUp.missingMsg"		: "Este campo Р“В© obrigatР“С–rio!",
-	"SignUp.validEmailMsg"	: "Por favor insira um endereР“В§o de e-mail vР“РЋlido!",
-	"SignUp.emptyPassMsg"	: "Sua senha Р“В© vazia!",
-	"SignUp.toUsePassMsg"	: "Por favor, digitar mГ­nimo 8 sГ­mbolos, use letras maiР“С”sculas e minР“С”sculas, nР“С”meros e caracteres especiais!",
-	"SignUp.weakPassMsg"	: "FRACO! Por favor, digitar mГ­nimo 8 sГ­mbolos, use A-Z, a-z, 0-9 e caracteres especiais!",
-	"SignUp.averagePassMsg"	: "MР“вЂ°DIA! Por favor, digitar mГ­nimo 8 sГ­mbolos, use A-Z, a-z, 0-9 e caracteres especiais!",
-	"SignUp.strongPassMsg"	: "FORTE! Por favor, digitar mГ­nimo 8 sГ­mbolos, use A-Z, a-z, 0-9 e caracteres especiais!",
+	"SignUp.radioBtnMsg"	: "Por favor, escolha uma das op&#231;&#245;es.",
+	"SignUp.notMatchMsg"	: "Os campos n&#227;o coincidem.",
+	"SignUp.uNotAllowedMsg"	: "Usu&#225;rio n&#227;o autorizado.",
+	"SignUp.eNotAllowedMsg"	: "Este e-mail j&#225; existe.",
+	"SignUp.missingMsg"		: "Este campo &#233; obrigat&#234;rio.",
+	"SignUp.validEmailMsg"	: "Por favor insira um endere&#231;o de e-mail v&#225;lido.",
+	"SignUp.emptyPassMsg"	: "Sua senha est&#225; vazia.",
+	"SignUp.toUsePassMsg"	: "Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use letras mai&#250;sculas e min&#250;sculas, n&#250;meros e caracteres especiais.",
+	"SignUp.weakPassMsg"	: "FRACO! Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use A-Z, a-z, 0-9 e caracteres especiais.",
+	"SignUp.averagePassMsg"	: "M&#201;DIA! Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use A-Z, a-z, 0-9 e caracteres especiais.",
+	"SignUp.strongPassMsg"	: "FORTE! Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use A-Z, a-z, 0-9 e caracteres especiais.",
 	"SignUp.veryStrPassMsg"	: "MUITO FORTE!",
-	"SignUp.signedInfo"		: "InformaР“В§Р“Вµes sobre o seu registo!",
-	"SignUp.showInfoMsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail!"
+	"SignUp.signedInfo"		: "Informa&#231;&#245;es sobre o seu registo.",
+	"SignUp.showInfoMsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail."
+
 	
 }

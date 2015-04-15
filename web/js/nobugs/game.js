@@ -85,7 +85,13 @@ Game.generalInit = function() {
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 
       PreloadImgs.loadImgs();
-	  Game.init();
+      
+      // It's draw so early because it appears fast after load the mission 
+      Game.ctxDisplay = document.getElementById('display').getContext('2d');
+      Game.imgBackground = PreloadImgs.get("fundo");	
+      Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
+      
+      Game.init();
 
 	  
 };
@@ -443,9 +449,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
   
-  Game.ctxDisplay = document.getElementById('display').getContext('2d');
-  Game.imgBackground = PreloadImgs.get("fundo");	
-
   Game.imgDoor = PreloadImgs.get("doors");
   
   Game.lastErrorData = new Object();
@@ -580,7 +583,7 @@ Game.installMachines = function(toolbox) {
 
 		document.getElementById('blockly').innerHTML = ""; // clean the editor
 	    Blockly.inject(document.getElementById('blockly'),
-		     {path: '',
+		     { media: "media/",
 		       rtl: Game.rtl,
 		       toolbox: toolbox,
 		       trashcan: true,

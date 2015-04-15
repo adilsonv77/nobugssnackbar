@@ -3,16 +3,18 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Command;
 
 @ManagedBean(name="commandsVC")
-@SessionScoped
+@ViewScoped
 public class CommandsVC implements ICommandProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +29,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	private List<Command> selectedLeafCommands;
 
 	@ManagedProperty(value="#{factoryDao.commandDao}")
-	private transient CommandDao commandDao;
+	private CommandDao commandDao;
 	
 
 	public CommandsVC() {
@@ -109,6 +111,13 @@ public class CommandsVC implements ICommandProvider, Serializable {
 			leafCommands = new ArrayList<>();
 			
 			for (Command c : commands) {
+				
+				String name = c.getName();
+				if (name.startsWith("$")) {
+					ResourceBundle msg = ApplicationMessages.getMessage();
+					c.setName(msg.getString(name.substring(name.indexOf("#")+1)));
+				}
+				
 				if (c.getParentId() == null) {
 					rootCommands.add(c);
 				}
