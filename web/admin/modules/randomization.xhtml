@@ -4,13 +4,63 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<h:form id="randomizationForm">
-		<p:growl id="msgs" showDetail="true" />
-		
-		<h:panelGrid cellpadding="5" styleClass="randomizationPanelGrid">
-		
-	    </h:panelGrid>
-	    
-	</h:form>
+	<p:fieldset id="randFieladset" legend="#{msg['randomization']}" styleClass="randomizationFieldset">
+		<h:form id="randomizationForm">
+			<p:growl id="msgs" showDetail="true" />
+			
+			<h:panelGrid columns="2" cellpadding="5" styleClass="randomizationPanelGrid">
+			
+				<p:outputLabel for="qtdSpinner" value="#{msg['qtd']}: " disabled="#{randView.disabled}"/>	
+	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}"/>
+	        	
+	        	<p:outputLabel for="typeRadioGroup" value="#{msg['type']}: " disabled="#{randView.disabled}" />
+		        <p:selectOneRadio id="typeRadioGroup" value="#{randView.boolType}" disabled="#{randView.disabled}">
+		            <f:selectItem itemLabel="#{msg['hungry']}: " itemValue="true"/>
+		            <f:selectItem itemLabel="#{msg['thirsty']}: " itemValue="false"/>
+		        </p:selectOneRadio>
+		        
+	        	<p:outputLabel for="setRadioGroup" value="#{msg['set']}: " disabled="#{randView.disabled}"/>
+		        <p:selectOneRadio id="setRadioGroup" value="#{randView.boolSet}" disabled="#{randView.disabled}">
+		            <f:selectItem itemLabel="#{msg['new']}: " itemValue="true"/>
+		            <f:selectItem itemLabel="#{msg['notthesame']}: " itemValue="false"/>
+		        </p:selectOneRadio>   
+		             
+			</h:panelGrid>
+			
+			<p:commandButton value="#{msg['save']}" id="btnSave" icon="ui-icon-arrowthickstop-1-s"
+				actionListener="#{randView.save}" styleClass="randBtnSave"/>
+			<br/>
+			<p:commandButton value="#{msg['add']}" id="btnAdd" icon="ui-icon-circle-plus"
+				actionListener="#{randView.add}" styleClass="randBtnAdd"/>
+			
+			<p:dataTable  id="randomizationDataTable" var="rand" value="#{randView.randList}" draggableRows="true">
+			    <p:ajax event="rowReorder" listener="#{randView.onRowReorder}"/>			  
+			    
+			    <p:column headerText="#{msg['type']}">
+			    	<h:outputText value="#{rand.type}"/>   
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['set']}">
+			        <h:outputText value="#{rand.set}"/>
+			    </p:column>
+			    
+			    <p:column headerText="#{msg['qtd']}">
+			        <h:outputText value="#{rand.qtd}"/>
+			    </p:column>		
+			    
+			    <p:column headerText="#{msg['edit']}">
+					<p:commandButton id="btnEdit" icon="ui-icon-wrench"
+						actionListener="#{randView.edit(rand)}"/>	
+			    </p:column>				        
+			 		
+			    <p:column headerText="#{msg['delete']}">
+					<p:commandButton id="btnDelete" icon="ui-icon-close"
+						actionListener="#{randView.delete(rand)}"/>
+			    </p:column>	
+			    			 		    
+			</p:dataTable>			
+		    
+		</h:form>
+	</p:fieldset>
 	
 </ui:composition>

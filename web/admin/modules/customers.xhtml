@@ -15,19 +15,12 @@
 	
 	<p:growl id="msgs" showDetail="true" />
 	
-	<p:fieldset legend="#{msg['customersLegend']}" styleClass="customersFieldset">
+	<p:fieldset legend="#{msg['customers']}" styleClass="customersFieldset">
 
 		<ui:include src="customersfieldset.xhtml"/>
        	
    	</p:fieldset>
-   	
-   	<p:fieldset legend="#{msg['randomizationLegend']}" styleClass="randomizationFieldset">
-      
-        <ui:include src="randomization.xhtml"/>
-       	
-   	</p:fieldset>
-
-	
-	
+   	     
+    <ui:include src="randomization.xhtml"/>
 	
 </ui:composition>

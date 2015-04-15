@@ -1,11 +1,25 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import java.util.ResourceBundle;
+
+import org.primefaces.context.RequestContext;
+
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
+
 public class Randomization implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private byte qtd;
 	private String set;
-	private String msg;
+	private String type;
 
+	public Randomization() {
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		
+		qtd = 0;
+		set = messageBundle.getString("new");
+		type = messageBundle.getString("hungry");
+	}
+	
 	public void setSet(String set) {
 		this.set = set;
 	}
@@ -14,8 +28,8 @@ public class Randomization implements java.io.Serializable {
 		this.qtd = qtd;
 	}
 	
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setType(String msg) {
+		this.type = msg;
 	}
 	
 	public String getSet() {
@@ -26,7 +40,7 @@ public class Randomization implements java.io.Serializable {
 		return qtd;
 	}
 	
-	public String getMsg() {
-		return msg;
+	public String getType() {
+		return type;
 	}
 }
