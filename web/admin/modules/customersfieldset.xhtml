@@ -7,13 +7,63 @@
 	<p:fieldset legend="#{msg['customers']}" styleClass="customersFieldset">
 		<h:form id="customersForm">
 			<p:growl id="msgs" showDetail="true" />
-			
-			<h:panelGrid cellpadding="5" styleClass="customersPanelGrid">
+				<div>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:135px;margin-left:81px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:135px;margin-left:190px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:135px;margin-left:272px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:135px;margin-left:381px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:212px;margin-left:81px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:212px;margin-left:190px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
 				
-				<p:graphicImage value="tileset/fundo03.png"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:212px;margin-left:272px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:212px;margin-left:381px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
 				
-		    </h:panelGrid>
-		    
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:320px;margin-left:35px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:370px;margin-left:35px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+				
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:420px;margin-left:35px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+					<p:commandButton icon="ui-icon-circle-plus" 
+						style="margin-top:470px;margin-left:35px;" 
+						styleClass="customerInImgAddBtn"
+						oncomplete="PF('customerDlg').show()"/>
+				</div>
+
+				<p:graphicImage value="../images/customer_bg.png" />
 		</h:form>
 	</p:fieldset>
 	
