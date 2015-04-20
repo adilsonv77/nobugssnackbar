@@ -5,7 +5,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<link rel="stylesheet" type="text/css" href="../css/admin/style.css" />	
+	<link rel="stylesheet" type="text/css" href="../css/admin/style.css" />
+	
+	<style type="text/css">
+            #luNorth .ui-layout-unit-content, #luSouth .ui-layout-unit-content {                    
+                overflow:hidden !important;
+            }
+        </style>	
 </h:head>
 <h:body>
 	<p:growl id="growlMsgs" showDetail="true"/>
@@ -36,7 +42,7 @@
     	<p:layoutUnit position="center">
     	
         	<p:layout>
-        		<p:layoutUnit position="north">
+        		<p:layoutUnit id="luNorth" position="north">
         			<!-- change name value with mission controller's name -->
         			<p:panelGrid columns="4">
         			
@@ -52,7 +58,15 @@
         			</p:panelGrid>
         		</p:layoutUnit>
         		
-        		<p:layoutUnit position="center">
+        		<p:layoutUnit id="luSouth" position="south" >
+        			<p:panelGrid id="footerBtnPnl" columns="2">
+        				<p:commandButton value="#{msg['test']}" icon="ui-icon-play"/>
+        				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
+        					actionListener="#{xmlgen.processExplanationPages()}" update="growlMsgs"/>
+        			</p:panelGrid>
+       			</p:layoutUnit>
+       			
+         		<p:layoutUnit position="center">
 					<p:tabView id="tbView" dynamic="true" effect="fade" effectDuration="fast" cache="false">
 				        
 				        <p:tab id="explTab" title="#{msg['explanation']}">
@@ -85,15 +99,7 @@
 			    	</p:tabView>
         		</p:layoutUnit>
         		
-        		<p:layoutUnit position="south">
-        			<p:panelGrid id="footerBtnPnl" columns="2">
-        				<p:commandButton value="#{msg['test']}" icon="ui-icon-play"/>
-        				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
-        					actionListener="#{xmlgen.processExplanationPages()}" update="growlMsgs"/>
-        			</p:panelGrid>
-       			</p:layoutUnit>
-       			
-        	</p:layout>
+       	</p:layout>
         	
     	</p:layoutUnit>
  
