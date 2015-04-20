@@ -4,9 +4,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="customerDialog" widgetVar="customerDlg" modal="true" maximizable="true" showEffect="clip" hideEffect="fade" header="#{msg['customer']}">
-		<h:form id="customerForm">
-			<p:layout style="width:900px;height:500px;">
+	<p:dialog id="customerDialog" 
+	widgetVar="customerDlg" modal="true" showEffect="clip"
+	hideEffect="fade" header="#{msg['customer']}"
+	minWidth="900" width="900" minHeight="500" height="500"
+	onShow="PF('customerDlg').initPosition()">
+		<h:form id="customerForm" style="height:100%;">
+			<p:layout style="min-width:850px;min-height:490px;height:100%;">
 				<p:layoutUnit position="north">
 				
 					<p:panelGrid columns="4">

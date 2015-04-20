@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,22 +20,13 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{mm}")
-	private MissionManager missionManager;
-	
-	public MissionManager getMissionManager() {
-		return missionManager;
-	}
-	
-	public void setMissionManager(MissionManager missionManager) {
-		this.missionManager = missionManager;
-	}
-	
+	private MissionManager missionManager;	
 	
 	private Command selectedChildCommand;
 	private Command selectedRootCommand;
 	private List<Command> rootCommands;
 	
-	//private List<Command> selectedCommands; //does not include root commands
+	private List<Command> selectedCommands;
 
 
 	@PostConstruct
@@ -46,29 +38,37 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
 	}
-		
+
 	public void onRowSelectC(SelectEvent event) {
 		Command temp = ((Command)event.getObject());
 		temp.setSelected(!temp.isSelected());
 		
+		handleChildSelect(temp);
+	}
+	
+	public void handleRootSelect(Command item) {
+		selectedRootCommand = item;
+		List<Command> childs = selectedRootCommand.getChildren();
+
+		for (Command c : childs) {
+			c.setSelected(selectedRootCommand.isSelected());
+		}
+		
+		selectedRootCommand.setChildren(childs);
+	}
+	
+	public void handleChildSelect(Command item) {	
 		boolean flag = false;
 		
-		for (Command c : temp.getParent().getChildren()) {
+		for (Command c : item.getParent().getChildren()) {
 			if (c.isSelected() == true) {
 				flag = true;
 				break;
 			}
 		}
 
-		temp.getParent().setSelected(flag);
-	}
-	
-	private void checkRootCommand(boolean value) {
-		for (Command c : selectedRootCommand.getChildren()) {
-				c.setSelected(value);
-		}
+		item.getParent().setSelected(flag);
 	}
 		
 	public List<Command> getChilds() {
@@ -82,16 +82,22 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		
 		return rootCommands;
 	}
-/*
+
 	public List<Command> getSelectedCommands() {
-		if (commands != null) {
+		if (rootCommands != null) {
 			List<Command> result = new ArrayList<>();
-			for (Command c : commands) {
-				if (c.getParentId() != null && c.isSelected()) {
-					result.add(c);
+			
+			for (Command rc : rootCommands) {
+				for (Command cc : rc.getChildren()) {
+					if (cc.isSelected()) {
+						result.add(cc);
+					}
 				}
 			}
 			selectedCommands = result;
+		}
+		else {
+			selectedCommands = null;
 		}
 		
 		return selectedCommands;
@@ -100,7 +106,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	public void setSelectedCommands(List<Command> selectedCommands) {
 		this.selectedCommands = selectedCommands;
 	}
-	*/
+
 	public Command getSelectedRootCommand() {
 		return selectedRootCommand;
 	}
@@ -116,7 +122,13 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	public void setSelectedChildCommand(Command command) {
 		this.selectedChildCommand = command;
 	}
-
+	public MissionManager getMissionManager() {
+		return missionManager;
+	}
+	
+	public void setMissionManager(MissionManager missionManager) {
+		this.missionManager = missionManager;
+	}
 	@Override
 	public List<Command> getCommands() throws Exception {
 		return getRootCommands();
