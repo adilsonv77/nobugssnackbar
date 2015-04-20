@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog" closable="false" dynamic="true">
+	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog" closable="false" dynamic="true"  resizable="false" modal="true"
+		header="#{categoryVC.HCategory.title}">
 		<h:form style="width:350px;" >
 			<pe:dynaForm value="#{hcHelper.model}" var="data" rendered="#{hintView.showDlgExt}">
 			
