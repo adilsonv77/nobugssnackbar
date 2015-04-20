@@ -80,21 +80,24 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	}
 	
 	public void addPage() {
-		if (page.getId() < 0) {
-			if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
+		if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
+			if (page.getId() < 0) {
 				if ( this.isOk()) {
 					page.setId(pageIdCount++);
 					pages.add(page);
 				}
 			}
-			else {				
-				ResourceBundle messageBundle = ApplicationMessages.getMessage();
-				FacesContext context = FacesContext.getCurrentInstance();
-		        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
+			else {
+				editPage();
 			}
 		}
 		else {
-			editPage();
+			RequestContext rcontext = RequestContext.getCurrentInstance();
+			rcontext.execute("PF('pageDialog').show()");
+			
+			ResourceBundle messageBundle = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
 		}
 	}
 	
