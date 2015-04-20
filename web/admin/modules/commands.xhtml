@@ -16,10 +16,11 @@
 	    	selectionMode="single" selection="#{commandsVC.selectedRootCommand}"
 	    	rowKey="#{command.id}" style="margin-right:50px;min-width:200px;max-width:40%;float:left;">
 	    	
-	    	<p:ajax event="rowSelect" listener="#{commandsVC.onRowSelectR}" update=":tbView:commandsForm:commandsLeafDT" />
+	    	<p:ajax event="rowSelect" update=":tbView:commandsForm:commandsLeafDT" />
             
 	        <p:column style="width:16px;text-align:center">
-	        	<p:selectBooleanCheckbox value="#{command.selected}" disabled="true" styleClass="commandsCheckBox"/>
+	        	<p:selectBooleanCheckbox value="#{command.selected}" disabled="true" styleClass="commandsCheckBox"
+	        		/>
 	        </p:column>
 	        
 	        <p:column>

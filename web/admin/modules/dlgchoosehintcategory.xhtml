@@ -9,9 +9,6 @@
  	header="#{msg['chooseHintCategory']}" minHeight="40" dynamic="true" modal="true" resizable="false">
  			    
     	<h:form id="formDlgCHC">
-    		<p:growl id="msgs" showDetail="true" />
-			<p:commandButton value="#{msg['chooseCategory']}" oncomplete="PF('chooseCategoryDialog').show()"/>
-			
 		   	<div  class="orderListCHC">
 			   	<p:orderList value="#{categoryVC.hintCategories}" var="hCategory" 
 			   		itemLabel="#{hCategory.title}" itemValue="#{hCategory}" 

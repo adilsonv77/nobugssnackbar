@@ -1,140 +1,88 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.SelectEvent;
 
-import pt.uc.dei.nobugssnackbar.dao.CommandDao;
-import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Command;
 
 @ManagedBean(name="commandsVC")
 @ViewScoped
 public class CommandsVC implements ICommandProvider, Serializable {
+
 	private static final long serialVersionUID = 1L;
 
+	@ManagedProperty(value="#{mm}")
+	private MissionManager missionManager;
+	
+	public MissionManager getMissionManager() {
+		return missionManager;
+	}
+	
+	public void setMissionManager(MissionManager missionManager) {
+		this.missionManager = missionManager;
+	}
+	
+	
 	private Command selectedChildCommand;
 	private Command selectedRootCommand;
-	private List<Command> commands;
 	private List<Command> rootCommands;
-	private List<Command> childs;
-	private List<Command> selectedCommands; //does not include root commands
-
-	@ManagedProperty(value="#{factoryDao.commandDao}")
-	private CommandDao commandDao;
 	
+	//private List<Command> selectedCommands; //does not include root commands
 
-	public CommandsVC() {
-		this.selectedChildCommand = new Command();
+
+	@PostConstruct
+	private void init() {
+		
+		try {
+			this.rootCommands = missionManager.getMissionContent().getCommands();
+			this.selectedChildCommand = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 	}
 		
-	public void onRowSelectR(SelectEvent event) {
-		getChilds();
-	}
-	
 	public void onRowSelectC(SelectEvent event) {
 		Command temp = ((Command)event.getObject());
 		temp.setSelected(!temp.isSelected());
 		
 		boolean flag = false;
 		
-		for (Command c : commands) {
-			if (c.getParentId() == selectedRootCommand.getId() &&
-				c.isSelected() == true) {
+		for (Command c : temp.getParent().getChildren()) {
+			if (c.isSelected() == true) {
 				flag = true;
 				break;
 			}
 		}
-		checkRootCommand(flag);
+
+		temp.getParent().setSelected(flag);
 	}
 	
 	private void checkRootCommand(boolean value) {
-		for (Command c : commands) {
-			if (c.getId() == selectedRootCommand.getId()) {
+		for (Command c : selectedRootCommand.getChildren()) {
 				c.setSelected(value);
-				break;
-			}
 		}
 	}
 		
-	public CommandDao getCommandDao() {
-		return commandDao;
-	}
-
-	public void setCommandDao(CommandDao commandDao) {
-		this.commandDao = commandDao;
-	}
-
-	@Override
-	public List<Command> getCommands() throws Exception {
-		if (commands == null) {
-			commands = commandDao.list();
-			rootCommands = new ArrayList<>();
-			
-			for (Command c : commands) {
-				String name = c.getName();
-				
-				if (name.startsWith("$")) {
-					ResourceBundle msg = ApplicationMessages.getMessage();
-					c.setName(msg.getString(name.substring(name.indexOf("#")+1)));
-				}
-				
-				if (c.getParentId() == null) {
-					rootCommands.add(c);
-				}
-			}
-		}
-		
-		return commands;
-	}
-	
-	public void setCommands(List<Command> commands) {
-		this.commands = commands;
-	}
-
 	public List<Command> getChilds() {
-		if (selectedRootCommand != null) {
-			List<Command> result = new ArrayList<>();
-			
-			for (Command c : commands) {				
-				if (c.getParentId() == selectedRootCommand.getId()) {
-					result.add(c);
-				}
-			}
-			childs = result;
-		}
-		
-		return childs;
-	}
-
-	public void setChilds(List<Command> childs) {
-		this.childs = childs;
+		if (selectedRootCommand != null)
+			return selectedRootCommand.getChildren();
+		else
+			return null;
 	}
 
 	public List<Command> getRootCommands() throws Exception {
-		List<Command> result = new ArrayList<>();
-		getCommands();
-		for (Command c : commands) {				
-			if (c.getParentId() == null) {
-				result.add(c);
-			}
-		}
-		rootCommands = result;
 		
 		return rootCommands;
 	}
-
-	public void setRootCommands(List<Command> rootCommands) {
-		this.rootCommands = rootCommands;
-	}
-
+/*
 	public List<Command> getSelectedCommands() {
 		if (commands != null) {
 			List<Command> result = new ArrayList<>();
@@ -152,7 +100,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	public void setSelectedCommands(List<Command> selectedCommands) {
 		this.selectedCommands = selectedCommands;
 	}
-	
+	*/
 	public Command getSelectedRootCommand() {
 		return selectedRootCommand;
 	}
@@ -167,5 +115,10 @@ public class CommandsVC implements ICommandProvider, Serializable {
 
 	public void setSelectedChildCommand(Command command) {
 		this.selectedChildCommand = command;
+	}
+
+	@Override
+	public List<Command> getCommands() throws Exception {
+		return getRootCommands();
 	}
 }

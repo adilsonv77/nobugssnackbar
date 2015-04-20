@@ -1,6 +1,8 @@
 package pt.uc.dei.nobugssnackbar.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
@@ -20,6 +22,9 @@ public class Command implements Serializable {
 	private Integer parentId;
 	
 	private boolean selected;
+	private List<Command> children;
+
+	private Command parent;
 	
 	public Command() {
 	}
@@ -67,5 +72,27 @@ public class Command implements Serializable {
 	}
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	public List<Command> getChildren() {
+		if (children == null)
+			children = new ArrayList<>();
+		return children;
+	}
+	public void setChildren(List<Command> children) {
+		this.children = children;
+	}
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	public Command getParent() {
+		return parent;
+	}
+	
+	public void setParent(Command parent) {
+		this.parent = parent;
+		this.parentId = parent.getId();
+		
 	}
 }
