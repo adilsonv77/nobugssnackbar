@@ -12,8 +12,6 @@
 	</p:panelGrid>
 	
 	<h:form id="commandsForm">
-		<p:growl id="msgs" showDetail="true" />
-	
 	    <p:dataTable id="commandsDT" var="command" value="#{commandsVC.rootCommands}"
 	    	selectionMode="single" selection="#{commandsVC.selectedRootCommand}"
 	    	rowKey="#{command.id}" style="margin-right:50px;min-width:200px;max-width:40%;float:left;">
