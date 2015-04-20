@@ -6,29 +6,34 @@
 
 	<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
 		widgetVar="pageDialog" header="#{msg['pages']}" minHeight="300"
-		minWidth="688" closable="false" styleClass="disable-scroll"
-		modal="true" onShow="PF('pageDialog').initPosition()">
-		<h:form>
-			<p:editor value="#{explVC.page.msg}" style="height: 92%;" >
-				<f:attribute name="controls" value="#{explVC.editorControls}" />
-			</p:editor>
-	
-			<p:panelGrid columns="2" style="float: right;">
-			
-				<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
-					update=":tbView:explForm:opList, explPageDlg, growlMsgs"
-					actionListener="#{explVC.addPage}" />
+		minWidth="700" width="700" closable="false" style="overflow: hidden !important;"
+		modal="true" onShow="PF('pageDialog').initPosition()" dynamic="true">
+		<h:form style="height:100%;">
+			<p:layout style="width:100%;min-height:400px;height:100%;">
+				<p:layoutUnit position="center" styleClass="disable-scroll" style="border: none;">
+					<p:editor value="#{explVC.page.msg}" styleClass="explEdit">
+						<f:attribute name="controls" value="#{explVC.editorControls}" />
+					</p:editor>
+				</p:layoutUnit>
+				<p:layoutUnit position="south" style="border: none;">
+					<p:panelGrid columns="2" style="float: right;">
 					
-				<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
-					update="explPageDlg"
-					actionListener="#{explVC.resetPage}" />
-					
-			</p:panelGrid>
+						<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
+							update=":tbView:explForm:opList, explPageDlg, growlMsgs"
+							actionListener="#{explVC.addPage}" />
+							
+						<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
+							update="explPageDlg"
+							actionListener="#{explVC.resetPage}" />
+							
+					</p:panelGrid>
+				</p:layoutUnit>
+			</p:layout>
 		</h:form>
 	</p:dialog>
 
 	<p:dialog widgetVar="confDeleteDlg" showEffect="fade" hideEffect="fade"
-		header="#{msg['confirmation']}" closable="false" modal="true" resizable="false">
+		header="#{msg['confirmation']}" closable="false" modal="true" resizable="false" dynamic="true">
 
 		<h:form>
 			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">

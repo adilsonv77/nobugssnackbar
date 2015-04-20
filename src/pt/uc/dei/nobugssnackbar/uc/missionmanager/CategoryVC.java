@@ -14,14 +14,14 @@ import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.CategoryProviderConverter;
 
-@ManagedBean(name = "categoryView")
+@ManagedBean(name = "categoryVC")
 @ViewScoped
-public class CategoryView implements Serializable, IHintCategoryProvider {
+public class CategoryVC implements Serializable, IHintCategoryProvider {
 
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{factoryDao.hintCategoryDao}")
-	private transient HintCategoryDao hintCategoryDao;
+	private HintCategoryDao hintCategoryDao;
 	
 	@ManagedProperty(value="#{hintView}")
 	private HintView hw;
@@ -33,7 +33,7 @@ public class CategoryView implements Serializable, IHintCategoryProvider {
 	private CategoryProviderConverter cpc;
 	// #end
  
-	public CategoryView(){
+	public CategoryVC(){
 		cpc = new CategoryProviderConverter();
 		cpc.setProvider(this);
 	}

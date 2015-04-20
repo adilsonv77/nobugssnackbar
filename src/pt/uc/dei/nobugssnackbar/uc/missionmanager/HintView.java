@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -17,7 +17,7 @@ import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 
 @ManagedBean(name="hintView")
-@SessionScoped
+@ViewScoped
 public class HintView implements Serializable {
 
 	private static final long serialVersionUID = 1L;

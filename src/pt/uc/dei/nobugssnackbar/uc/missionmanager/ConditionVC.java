@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -18,7 +18,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
 
 @ManagedBean(name = "condVC")
-@SessionScoped
+@ViewScoped
 public class ConditionVC implements IConditionProvider, Serializable {
 
 	private static final long serialVersionUID = 1L;

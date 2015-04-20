@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
@@ -14,7 +14,7 @@ import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderConverter;
 
 @ManagedBean(name="funcVC")
-@SessionScoped
+@ViewScoped
 public class FunctionVC implements IFunctionProvider, Serializable {
 
 	private static final long serialVersionUID = 1L;

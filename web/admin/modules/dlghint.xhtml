@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false"
-			modal="true" onShow="PF('hintDialog').initPosition()" maximizable="true">
+			modal="true" onShow="PF('hintDialog').initPosition()" maximizable="true" dynamic="true">
+
 		<h:form id="formDlgHints">
 	
 			<p:panelGrid columns="2">
