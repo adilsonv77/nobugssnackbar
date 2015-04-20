@@ -70,4 +70,34 @@ public class MissionContent implements Serializable {
 		
 		return ret ;
 	}
+	
+	public List<Command> availableSubCommands(String categoryName) {
+		for (Command c:commands)
+			if (c.getName().equals(categoryName)) {
+				List<Command> ret = new ArrayList<>();
+				for (Command i:c.getChildren())
+					if (i.isSelected())
+						ret.add(i);
+				
+				return ret;
+			}
+		return null;
+	}
+	
+	public int getItemIndex(String categoryName, String commandName) {
+		for (Command c:commands)
+			if (c.getName().equals(categoryName)) {
+				int j = 0;
+				for (Command i:c.getChildren())
+					if (i.getName().equals(commandName))
+						break;
+					else
+						if (i.isSelected())
+							j++;
+				
+				return j;
+			}
+		return 0;
+		
+	}
 }

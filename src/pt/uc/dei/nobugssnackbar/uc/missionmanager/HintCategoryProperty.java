@@ -11,24 +11,34 @@ public class HintCategoryProperty implements Serializable {
 	private Object value;
 	private boolean required;
 	private List<?> items;
+
+	private String el;
+
+	private String updateComponent;
+
+	private HintCategoryHelperView hintCategoryHelperView;
 	
-	public HintCategoryProperty(String name, Object value) {
+	public HintCategoryProperty(HintCategoryHelperView hintCategoryHelperView, String name, Object value) {
+		this.hintCategoryHelperView = hintCategoryHelperView;
 		this.name = name;
 		this.value = value;
 	}
 
-	public HintCategoryProperty(String name, Object value, boolean required) {
+	public HintCategoryProperty(HintCategoryHelperView hintCategoryHelperView, String name, Object value, boolean required) {
+		this.hintCategoryHelperView = hintCategoryHelperView;
 		this.name = name;
 		this.value = value;
 		this.required = required;
 	}
 
-	public HintCategoryProperty(String name, boolean required) {
+	public HintCategoryProperty(HintCategoryHelperView hintCategoryHelperView, String name, boolean required) {
+		this.hintCategoryHelperView = hintCategoryHelperView;
 		this.name = name;
 		this.required = required;
 	}
 	
-	public HintCategoryProperty(String name, List<?> items, boolean required) {
+	public HintCategoryProperty(HintCategoryHelperView hintCategoryHelperView, String name, List<?> items, boolean required) {
+		this.hintCategoryHelperView = hintCategoryHelperView;
 		this.name = name;
 		this.required = required;
 		this.items = items;
@@ -61,5 +71,36 @@ public class HintCategoryProperty implements Serializable {
 	public void setItems(List<?> items) {
 		this.items = items;
 	}
+
+	public String getEl() {
+		return el;
+	}
+	
+	public void setProviderEL(String el) {
+		this.el = el;
+	}
+
+	private void updates(String name, Object value) {
+		
+		String s = this.hintCategoryHelperView.dealEl(el);
+		this.items = ApplicationUtils.processEL(s, List.class);
+	}
+
+	public String getUpdateComponent() {
+		return updateComponent;
+	}
+	
+	public void setUpdate(String updateComponent) {
+		this.updateComponent = updateComponent;
+		
+	}
+	
+	public void updateValues() {
+		List<HintCategoryProperty> props = this.hintCategoryHelperView.getProperties();
+		for (HintCategoryProperty hcp:props)
+			if (hcp.getName().equals(this.updateComponent))
+				hcp.updates(getName(), value);
+	}
+
 
 }
