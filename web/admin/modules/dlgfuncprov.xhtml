@@ -20,7 +20,7 @@
 					<p:column>
 						<p:commandLink title="Select"
 							actionListener="#{funcVC.getFunctionById}"
-							update=":tbView:formCondBuilder, :tbView:funcProvDialog"
+							update=":formCondBuilder, :tbView:funcProvDialog"
 							oncomplete="PF('funcProvDlg').hide()">
 							<f:param name="funcId" value="#{f.id}" />
 

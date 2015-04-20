@@ -15,7 +15,7 @@
 	<p:panelGrid columns="2" style="margin: 0 auto 30px auto;">
 		<p:commandButton value="#{msg['addFromDB']}" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
 		<p:commandButton value="#{msg['addBlank']}" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
-			actionListener="#{hintView.setAdd(true)}" update=":tbView:formDlgHints" icon="ui-icon-circle-plus" />
+			actionListener="#{hintView.setAdd(true)}" update=":formDlgHints" icon="ui-icon-circle-plus" />
 	</p:panelGrid>
 		
 	<h:form id="formDTT" style="margin-bottom: 35px;">
@@ -41,7 +41,7 @@
 		    <p:column headerText="#{msg['actions']}">
 		    
 		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
-		        	actionListener="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">
+		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:tbView:hintDlg">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -74,7 +74,7 @@
 		    <p:column headerText="#{msg['actions']}">
 		       
 		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
-		        	action="#{hintView.setAdd(false)}" update=":tbView:formDlgHints,:tbView:hintDlg">
+		        	action="#{hintView.setAdd(false)}" update=":formDlgHints,:tbView:hintDlg">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -83,8 +83,6 @@
 		    </p:column>		    
 		</p:dataTable>		
 	</h:form>
-
-	<ui:include src="dlghint.xhtml"/>  
 
 	<h:outputStylesheet >  
     	.dataTableEdit img{

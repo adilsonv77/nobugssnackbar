@@ -4,7 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false">
+	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false"
+			modal="true" onShow="PF('hintDialog').initPosition()">
 		<h:form id="formDlgHints">
 	
 			<p:panelGrid columns="2">
@@ -27,7 +28,7 @@
 			    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}"
 			    		actionListener="#{condVC.newOrEditCondList}"
 			    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
-			    		update=":tbView:formCondBuilder"/>
+			    		update=":formCondBuilder"/>
 			    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
 			    </p:panelGrid>
 			    
@@ -45,7 +46,7 @@
 				<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
 					actionListener="#{hintView.addEditHint}" 
 					oncomplete="PF('hintDialog').hide()" 
-					update=":tbView:formDTT, :tbView:formDTE, :tbView:formDlgHints, :tbView:formCondBuilder"/>  
+					update=":tbView:formDTT, :tbView:formDTE, :formDlgHints, :formCondBuilder"/>  
 			
 				<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 					oncomplete="PF('hintDialog').hide()"/> 

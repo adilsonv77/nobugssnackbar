@@ -36,16 +36,16 @@
 
 				<p:watermark for="condValue" value="#{msg['enterVal']}" />
 				<p:commandButton id="saveCondBtn" value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
-					update=":tbView:formCondBuilder" 
+					update=":formCondBuilder" 
 					actionListener="#{condVC.addCondition}"
 					style="maring-top: 10px; float: right;" />
 			</p:fieldset>	
 				
 			<p:panelGrid columns="4">
-				<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":tbView:formCondBuilder" />
-				<p:commandButton value="#{msg['delete']}" icon="ui-icon-trash" update=":tbView:formCondBuilder" actionListener="#{condVC.deleteCondition}" />
-				<p:commandButton value="#{msg['add']} [add]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
-				<p:commandButton value="#{msg['add']} [or]" update=":tbView:formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
+				<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":formCondBuilder" />
+				<p:commandButton value="#{msg['delete']}" icon="ui-icon-trash" update=":formCondBuilder" actionListener="#{condVC.deleteCondition}" />
+				<p:commandButton value="#{msg['add']} [add]" update=":formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
+				<p:commandButton value="#{msg['add']} [or]" update=":formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
 			</p:panelGrid>
 			
 			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
@@ -60,7 +60,7 @@
 			<p:panelGrid columns="2" style="float: right;">
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{condVC.checkCondition}"
-	    			update=":tbView:formDlgHints, :tbView:formCondBuilder"/>
+	    			update=":formDlgHints, :formCondBuilder"/>
 	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
 	       	</p:panelGrid>
     	</h:form>
