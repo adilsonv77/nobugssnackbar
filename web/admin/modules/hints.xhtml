@@ -41,7 +41,7 @@
 		    <p:column headerText="#{msg['actions']}">
 		    
 		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
-		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:tbView:hintDlg">
+		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -74,11 +74,11 @@
 		    <p:column headerText="#{msg['actions']}">
 		       
 		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
-		        	action="#{hintView.setAdd(false)}" update=":formDlgHints,:tbView:hintDlg">
+		        	action="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE"/>
+		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE" />
 		        		        
 		    </p:column>		    
 		</p:dataTable>		

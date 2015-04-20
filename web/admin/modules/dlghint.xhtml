@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false"
-			modal="true" onShow="PF('hintDialog').initPosition()">
+			modal="true" onShow="PF('hintDialog').initPosition()" maximizable="true">
 		<h:form id="formDlgHints">
 	
 			<p:panelGrid columns="2">
@@ -37,19 +37,22 @@
 			    		        
 			</p:panelGrid>
 			
-		    <p:panelGrid columns="1">
-			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>
-			    <p:editor id="hintText" value="#{hintView.hint.text}" width="400"/>	
-		    </p:panelGrid>
+		    
+		    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>
+		    <p:editor id="hintText" value="#{hintView.hint.text}" styleClass="dlgHintEditor"/>	
+		   <!--  <p:resizable for="hintText" animate="true" effect="swing" effectDuration="normal"/> -->
+		    
 		    		    
 		    <p:panelGrid columns="3" style="float: right;">    
-				<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
-					actionListener="#{hintView.addEditHint}" 
-					oncomplete="PF('hintDialog').hide()" 
-					update=":tbView:formDTT, :tbView:formDTE, :formDlgHints, :formCondBuilder"/>  
-			
-				<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
-					oncomplete="PF('hintDialog').hide()"/> 
+				<div class="btnContainer" >
+					<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
+						actionListener="#{hintView.addEditHint}" styleClass="dlgHintBtnOK"
+						oncomplete="PF('hintDialog').hide()" 
+						update=":tbView:formDTT, :tbView:formDTE, :formDlgHints, :formCondBuilder"/>  
+
+					<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
+						oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"/> 
+				</div>
 			</p:panelGrid>
 	    </h:form>	
 	</p:dialog>	
