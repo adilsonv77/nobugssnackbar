@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -17,7 +17,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
  
 @ManagedBean(name="explVC")
-@SessionScoped
+@ViewScoped
 public class ExplanationVC implements IPagesProvider, Serializable {
 
 	private static final long serialVersionUID = 1L;

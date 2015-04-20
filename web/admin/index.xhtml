@@ -11,7 +11,14 @@
             #luNorth .ui-layout-unit-content, #luSouth .ui-layout-unit-content {                    
                 overflow:hidden !important;
             }
-        </style>	
+			.ui-dialog
+			{
+			     position: absolute !important;
+			}
+			.ui-widget-overlay {
+				opacity: 0.60
+			}
+	</style>	
 </h:head>
 <h:body>
 	<p:growl id="growlMsgs" showDetail="true"/>
@@ -106,5 +113,7 @@
 	</p:layout>
 	
 	<ui:include src="modules/dlgcustomer.xhtml"/>
+	<ui:include src="modules/dlgexplanation.xhtml"/>
+	
 </h:body>
 </html>

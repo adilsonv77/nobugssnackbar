@@ -12,10 +12,9 @@
 	</p:panelGrid>
 	
 	<h:form id="explForm">
-		<p:growl id="msgs" showDetail="true" />
 		
 		<div class="orderListDiv">
-			<p:commandButton id="addPageBtn" update=":tbView:explForm" actionListener="#{explVC.resetPage}">
+			<p:commandButton id="addPageBtn" update=":explPageDlg" actionListener="#{explVC.resetPage}">
 				<f:attribute name="value" value="#{msg['clickAddPage']}" />
 				<f:attribute name="style" value="width: 156px; height: 217px; float: left; margin: 3px 2px 2px 8px" />
 				<f:attribute name="oncomplete" value="PF('pageDialog').show()" />
@@ -29,7 +28,7 @@
 							<span class="ui-icon ui-icon-closethick" />			
 						</p:commandLink>
 							
-						<p:commandLink title="#{msg['edit']}" update=":tbView:explForm:explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explVC.getPageById}">
+						<p:commandLink title="#{msg['edit']}" update=":explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explVC.getPageById}">
 							<f:param name="editPageID" value="#{p.id}" />
 							<span class="ui-icon ui-icon-pencil" />
 						</p:commandLink>
@@ -40,31 +39,6 @@
 			</p:orderList>
 		</div>
 
-	    <p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade" widgetVar="pageDialog" header="#{msg['pages']}" minHeight="300" minWidth="688" closable="false" styleClass="disable-scroll">	    	
-	    	<p:editor value="#{explVC.page.msg}" style="height: 92%;">
-	    		<f:attribute name="controls" value="#{explVC.editorControls}" />
-	    	</p:editor>
-
-   			<p:panelGrid columns="2" style="float: right;">
-    			<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
-    				update=":tbView:explForm:opList, :tbView:explForm:explPageDlg, msgs" 
-    				actionListener="#{explVC.addPage}"/>
-      			<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
-      				update=":tbView:explForm:explPageDlg" actionListener="#{explVC.resetPage}" />
-       		</p:panelGrid>
-    	</p:dialog>
-    	
-		<p:dialog widgetVar="confDeleteDlg" showEffect="fade" hideEffect="fade" header="#{msg['confirmation']}" closable="false">
-     		
-     		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
-     			<h:outputText value="#{msg['ruSureDelPage']}" />
-     			<p:commandButton value="#{msg['yes']}" styleClass="ui-confirmdialog-yes" 
-     				icon="ui-icon-check" update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}" 
-     				oncomplete="PF('confDeleteDlg').hide()" />
-    			<p:commandButton value="#{msg['no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
-    				actionListener="#{explVC.resetPage}" oncomplete="PF('confDeleteDlg').hide()" />
- 			</p:panelGrid>
- 		</p:dialog>
 	</h:form>
 	
 </ui:composition>
