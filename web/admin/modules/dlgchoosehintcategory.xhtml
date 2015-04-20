@@ -6,20 +6,20 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">   
 	
     <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
- 	header="#{msg['chooseHintCategory']}" minHeight="40">
+ 	header="#{msg['chooseHintCategory']}" minHeight="40" dynamic="true">
  			    
     	<h:form id="formDlgCHC">
     		<p:growl id="msgs" showDetail="true" />
 			<p:commandButton value="#{msg['chooseCategory']}" oncomplete="PF('chooseCategoryDialog').show()"/>
 			
 		   	<div  class="orderListCHC">
-			   	<p:orderList value="#{categoryView.hintCategories}" var="hCategory" 
+			   	<p:orderList value="#{categoryVC.hintCategories}" var="hCategory" 
 			   		itemLabel="#{hCategory.title}" itemValue="#{hCategory}" 
-			   		converter="#{categoryView.cpc}" controlsLocation="none">		   			   				
+			   		converter="#{categoryVC.cpc}" controlsLocation="none">		   			   				
 		
 					<p:column>	
 						<p:commandLink id="btnOKHintCatChoose" update=":formDlgHints,:dlgHintCategoryExtended"
-							actionListener="#{categoryView.setElementByID()}" action="#{hintView.enableDialog()}">
+							actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
 							<f:param name="hCategoryID" value="#{hCategory.id}" />
 							<h:outputText class="olElementHeader" value="#{hCategory.title}"/>
 							<h:outputText value="#{hCategory.description}"/>

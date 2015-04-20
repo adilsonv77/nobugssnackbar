@@ -7,7 +7,7 @@
 	<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
 		widgetVar="pageDialog" header="#{msg['pages']}" minHeight="300"
 		minWidth="688" closable="false" styleClass="disable-scroll"
-		modal="true" onShow="PF('pageDialog').initPosition()">
+		modal="true" onShow="PF('pageDialog').initPosition()" dynamic="true">
 		<h:form>
 			<p:editor value="#{explVC.page.msg}" style="height: 92%;" >
 				<f:attribute name="controls" value="#{explVC.editorControls}" />
@@ -28,7 +28,7 @@
 	</p:dialog>
 
 	<p:dialog widgetVar="confDeleteDlg" showEffect="fade" hideEffect="fade"
-		header="#{msg['confirmation']}" closable="false" modal="true" resizable="false">
+		header="#{msg['confirmation']}" closable="false" modal="true" resizable="false" dynamic="true">
 
 		<h:form>
 			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
