@@ -14,7 +14,7 @@ import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.CategoryProviderConverter;
 
-@ManagedBean(name = "categoryView")
+@ManagedBean(name = "categoryVC")
 @ViewScoped
 public class CategoryVC implements Serializable, IHintCategoryProvider {
 
