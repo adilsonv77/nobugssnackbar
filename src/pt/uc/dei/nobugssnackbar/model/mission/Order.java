@@ -1,44 +1,23 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Order implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Food> foods = new ArrayList<Food>();
-	private ArrayList<Drink> drinks = new ArrayList<Drink>();
-	private Food food = new Food();
-	private Drink drink = new Drink();
 	
-	public Food getFood() {
-		return food;
-	}
-	public void setFood(Food food) {
-		this.food = food;
-	}
-	public Drink getDrink() {
-		return drink;
-	}
-	public void setDrink(Drink drink) {
-		this.drink = drink;
-	}
+	private List<Food> foods;
+	private List<Drink> drinks;
 	
-	public ArrayList<Food> getFoods() {
+	public List<Food> getFoods() {
 		return foods;
 	}
-	public ArrayList<Drink> getDrinks() {
+	public void setFoods(List<Food> foods) {
+		this.foods = foods;
+	}
+	public List<Drink> getDrinks() {
 		return drinks;
 	}
-	
-	public void addFood() {
-		if (food != null) {
-			foods.add(food);
-		}
-		food = new Food();
-	}
-	public void addDrink() {
-		if (drink != null) {
-			drinks.add(drink);
-		}
-		drink = new Drink();
+	public void setDrinks(List<Drink> drinks) {
+		this.drinks = drinks;
 	}
 }
