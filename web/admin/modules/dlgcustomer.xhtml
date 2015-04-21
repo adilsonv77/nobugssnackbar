@@ -58,35 +58,39 @@
 						<div id="foodsContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMinFoods}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMaxFoods}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox />
+								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevFoods}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
-							<p:dataTable id="foodsDT" draggableRows="true">
+							<p:dataTable id="foodsDT" draggableRows="true" 
+								var="food"
+								value="#{custVC.customer.pattern.order.foods}">
 								<f:facet name="header">
 							        <h:outputText value="#{msg['foods']}"/>
 							    </f:facet>
 							    <f:facet name="footer">
 							    	<div class="clear">
-							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"
+							    			actionListener="#{custVC.setFoodstuffType(true)}"
+							    			oncomplete="PF('addFoodstuffDlg').show()"/>
 							    	</div>
 					        	</f:facet>
 							    
 							    <p:column headerText="#{msg['type']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.name}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['qtd']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.qtd}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['price']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.price}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['actions']}">
@@ -104,35 +108,39 @@
 						<div id="drinksContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMinDrinks}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMaxDrinks}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox />
+								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevDrinks}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
-							<p:dataTable id="drinksDT" draggableRows="true">
+							<p:dataTable id="drinksDT" draggableRows="true"
+								var="drink" 
+								value="#{custVC.customer.pattern.order.drinks}">
 								<f:facet name="header">
 							        <h:outputText value="#{msg['drinks']}"/>
 							    </f:facet>
 							    <f:facet name="footer">
 							    	<div class="clear">
-							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"
+							    			actionListener="#{custVC.setFoodstuffType(false)}"
+							    			oncomplete="PF('addFoodstuffDlg').show()"/>
 							    	</div>
 					        	</f:facet>
 					        	    
 							    <p:column headerText="#{msg['type']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.name}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['qtd']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.qtd}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['price']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.price}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['actions']}">
@@ -151,5 +159,7 @@
 			</p:layout>
 		</h:form>
 	</p:dialog>
+	
+	<ui:include src="dlgaddfoodstuff.xhtml"/>
 	
 </ui:composition>
