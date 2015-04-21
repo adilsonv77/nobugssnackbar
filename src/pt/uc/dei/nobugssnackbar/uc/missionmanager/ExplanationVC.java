@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -21,6 +23,9 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConve
 public class ExplanationVC implements IPagesProvider, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value="#{mm}")
+	private MissionManager missionManager;
 	
 	private int pageIdCount;
     private Page page;
@@ -39,6 +44,15 @@ public class ExplanationVC implements IPagesProvider, Serializable {
     		"cut copy paste pastetext";
     
  
+	@PostConstruct
+	private void init() {
+		try {
+			this.pages = missionManager.getMissionContent().getPages();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+    
 	public ExplanationVC() {
 		pageIdCount = 0;
     	page = new Page();
@@ -181,5 +195,13 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 
 	public void setOk(boolean ok) {
 		this.ok = ok;
+	}
+	
+	public MissionManager getMissionManager() {
+		return missionManager;
+	}
+	
+	public void setMissionManager(MissionManager missionManager) {
+		this.missionManager = missionManager;
 	}
 }

@@ -21,6 +21,7 @@ public class MissionContent implements Serializable {
 	private List<Hint> errorsHints = new ArrayList<>();
 
 	private List<Command> commands;
+    private List<Page> pages = new ArrayList<>();
 
 	public MissionContent() {
 	}
@@ -109,5 +110,13 @@ public class MissionContent implements Serializable {
 				ret.add(com);
 		
 		return ret;
+	}
+
+	public List<Page> getPages() {
+		return pages;
+	}
+
+	public void setPages(List<Page> pages) {
+		this.pages = pages;
 	}
 }
