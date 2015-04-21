@@ -4,8 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" showEffect="fade" hideEffect="fade" header="#{msg['chooseFuncProvider']}" minHeight="40" 
-	    modal="true"  dynamic="true" >
+	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" 
+		showEffect="fade" hideEffect="fade" 
+		header="#{msg['chooseFuncProvider']}" minHeight="40" 
+		modal="true" dynamic="true"
+		onShow="PF('funcProvDlg').initPosition()">
+		
 		<h:form id="formFuncProv" rendered="#{condVC.showDlgExt}">
 			<div class="searchBox">
 				<h:inputText id="searchFunction" value="#{funcVC.filterNameStr}">
@@ -20,7 +24,7 @@
 					<p:column>
 						<p:commandLink title="Select"
 							actionListener="#{funcVC.getFunctionById}"
-							update=":formCondBuilder, :funcProvDialog"
+							update=":formCondBuilder, :funcProvDialog, :formCondBuilder:comparatorMenu"
 							oncomplete="PF('funcProvDlg').hide()">
 							<f:param name="funcId" value="#{f.id}" />
 

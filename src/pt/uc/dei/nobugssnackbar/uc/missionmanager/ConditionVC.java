@@ -32,6 +32,9 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private ConditionConverter converter;
 
 	private boolean showDlgExt;
+	
+	private List<String> comparators;
+	private boolean boolFunction;
 
 	public void showFuncProv() {
 		this.showDlgExt = true;
@@ -56,6 +59,14 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		converter.setProvider(this);
 
 		hv = new HintView();
+		
+		comparators = new ArrayList<>();
+		comparators.add("==");
+		comparators.add("!=");
+		comparators.add(">");
+		comparators.add("<");
+		comparators.add(">=");
+		comparators.add("<=");
 	}
 
 	public void newOrEditCondList() {
@@ -149,15 +160,24 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		if (!result) {
 			
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
-			String text = (conditionList.size() > 0) ? messageBundle.getString("wrongCondition")
-					: messageBundle.getString("emptyConditionList");
-
-			FacesMessage msg = new FacesMessage("", text);
+			String additionalMsg, text;
+			
+			if (conditionList.size() > 0) {
+				text = messageBundle.getString("wrongCondition");
+				additionalMsg = messageBundle.getString("cannotEndWithAndOr");
+			}
+			else {
+				text = messageBundle.getString("emptyConditionList");
+				additionalMsg = "";
+			}
+			
+			FacesMessage msg = new FacesMessage(text, additionalMsg);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
 			hv.getHint().setConditions(conditionList);
 			RequestContext.getCurrentInstance().execute(
 					"PF('condBuilderDlg').hide()");
+			expandedFieldset = false;
 			condition = new Condition();
 		}
 
@@ -278,5 +298,24 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 	public void setExpandedFieldset(boolean expandedFieldset) {
 		this.expandedFieldset = expandedFieldset;
+	}
+
+	public List<String> getComparators() {
+		if (boolFunction == true) {
+			return comparators.subList(0, 2);
+		}
+		return comparators;
+	}
+
+	public void setComparators(List<String> comparators) {
+		this.comparators = comparators;
+	}
+
+	public boolean isBoolFunction() {
+		return boolFunction;
+	}
+
+	public void setBoolFunction(boolean boolFunction) {
+		this.boolFunction = boolFunction;
 	}
 }

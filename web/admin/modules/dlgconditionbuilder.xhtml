@@ -10,11 +10,15 @@
 		font-weight: bold;
 		background: none;
 		padding: 0px;
+		cursor: text !important;
 	}
 	</h:outputStylesheet>
 	
-	<p:dialog id="condBuilderDialog" showEffect="fade" hideEffect="fade" widgetVar="condBuilderDlg" 
-		header="#{msg['condition']}" minHeight="40" closable="false"  dynamic="true" modal="true" resizable="false">
+	<p:dialog id="condBuilderDialog" showEffect="fade" 
+		hideEffect="fade" widgetVar="condBuilderDlg" 
+		header="#{msg['condition']}" minHeight="40" 
+		closable="false" dynamic="true" modal="true" 
+		resizable="false" onShow="PF('condBuilderDlg').initPosition()">
 		
 		<h:form id="formCondBuilder">
 			<p:fieldset legend="#{msg['condition']}" rendered="#{condVC.expandedFieldset == true}">
@@ -29,13 +33,8 @@
 					</p:panelGrid>
 					
 					<p:outputLabel for="comparatorMenu" value="#{msg['comparator']}: " />
-					<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}" style="width: 50px;">
-						<f:selectItem itemLabel="&#62;" itemValue="&#62;" /> 			<!-- > -->
-						<f:selectItem itemLabel="&#60;" itemValue="&#60;" />			<!-- < -->
-						<f:selectItem itemLabel="&#61;&#61;" itemValue="&#61;&#61;" />	<!-- == -->
-						<f:selectItem itemLabel="&#33;&#61;" itemValue="&#33;&#61;" />	<!-- != -->
-						<f:selectItem itemLabel="&#62;&#61;" itemValue="&#62;&#61;" />	<!-- >= -->
-						<f:selectItem itemLabel="&#60;&#61;" itemValue="&#60;&#61;" />	<!-- <= -->
+					<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}">
+						<f:selectItems value="#{condVC.comparators}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="condValue" value="#{msg['value']}: " />
@@ -69,7 +68,9 @@
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{condVC.checkCondition}"
 	    			update=":formDlgHints, :formCondBuilder, :growlMsgs"/>
-	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
+	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
+	      			oncomplete="PF('condBuilderDlg').hide()" 
+	      			actionListener="#{condVC.setExpandedFieldset(false)}"/>
 	       	</p:panelGrid>
     	</h:form>
 	</p:dialog>
