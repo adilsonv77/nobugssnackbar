@@ -75,8 +75,9 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		return epc;
 	}
      
-    public void setPages(List<Page> pages) {
+    public void setPages(List<Page> pages) throws Exception {
 		this.pages = pages;
+		missionManager.getMissionContent().setPages(pages);
 	}    
     public Page getPage() {
 		return page;
