@@ -5,11 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<p:dialog id="funcProvDialog" widgetVar="funcProvDlg" showEffect="fade" hideEffect="fade" header="#{msg['chooseFuncProvider']}" minHeight="40" 
-	    >
+	    modal="true"  dynamic="true" >
 		<h:form id="formFuncProv" rendered="#{condVC.showDlgExt}">
 			<div class="searchBox">
 				<h:inputText id="searchFunction" value="#{funcVC.filterNameStr}">
-					<p:ajax event="keyup" update=":tbView:formFuncProv:fpList" listener="#{funcVC.handleKeyUpEvent}" />
+					<p:ajax event="keyup" update=":formFuncProv:fpList" listener="#{funcVC.handleKeyUpEvent}" />
 				</h:inputText>
 			</div>
 			
@@ -20,7 +20,7 @@
 					<p:column>
 						<p:commandLink title="Select"
 							actionListener="#{funcVC.getFunctionById}"
-							update=":formCondBuilder, :tbView:funcProvDialog"
+							update=":formCondBuilder, :funcProvDialog"
 							oncomplete="PF('funcProvDlg').hide()">
 							<f:param name="funcId" value="#{f.id}" />
 

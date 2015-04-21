@@ -100,4 +100,14 @@ public class MissionContent implements Serializable {
 		return 0;
 		
 	}
+	
+	public List<Command> allCommands() {
+		List<Command> ret = new ArrayList<>();
+		
+		for (Command categ: commands)
+			for (Command com: categ.getChildren())
+				ret.add(com);
+		
+		return ret;
+	}
 }

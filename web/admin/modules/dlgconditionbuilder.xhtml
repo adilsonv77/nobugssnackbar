@@ -4,19 +4,27 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
+	<h:outputStylesheet id="condBuilderCss">
+	#formCondBuilder .ui-fieldset-legend  {
+		border : none;
+		font-weight: bold;
+		background: none;
+		padding: 0px;
+	}
+	</h:outputStylesheet>
+	
 	<p:dialog id="condBuilderDialog" showEffect="fade" hideEffect="fade" widgetVar="condBuilderDlg" 
-		header="#{msg['condition']}" minHeight="40" closable="false"  dynamic="true">
+		header="#{msg['condition']}" minHeight="40" closable="false"  dynamic="true" modal="true" resizable="false">
 		
 		<h:form id="formCondBuilder">
-			<p:growl id="growlCB" showDetail="true" />
-			<p:fieldset legend="Condition" rendered="#{condVC.expandedFieldset == true}">
+			<p:fieldset legend="#{msg['condition']}" rendered="#{condVC.expandedFieldset == true}">
 				<p:panelGrid columns="2">
 					<p:outputLabel for="chooseFPBtn" value="#{msg['funcProvider']}: " />
 					<p:panelGrid columns="2">
 						<p:commandButton id="chooseFPBtn" value="#{msg['choose']}" 
 							icon="ui-icon-search" oncomplete="PF('funcProvDlg').show()"
 							action="#{condVC.showFuncProv}"
-							update=":tbView:funcProvDialog"/>
+							update=":funcProvDialog"/>
 						<h:outputText rendered="#{condVC.condition.function != null}" value="#{condVC.condition.function.name}()"/>
 					</p:panelGrid>
 					
@@ -36,7 +44,7 @@
 
 				<p:watermark for="condValue" value="#{msg['enterVal']}" />
 				<p:commandButton id="saveCondBtn" value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
-					update=":formCondBuilder" 
+					update=":formCondBuilder :growlMsgs" 
 					actionListener="#{condVC.addCondition}"
 					style="maring-top: 10px; float: right;" />
 			</p:fieldset>	
@@ -60,7 +68,7 @@
 			<p:panelGrid columns="2" style="float: right;">
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{condVC.checkCondition}"
-	    			update=":formDlgHints, :formCondBuilder"/>
+	    			update=":formDlgHints, :formCondBuilder, :growlMsgs"/>
 	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" onclick="PF('condBuilderDlg').hide()" />
 	       	</p:panelGrid>
     	</h:form>
