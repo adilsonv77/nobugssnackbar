@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmDeleteDialog"
+		header="#{msg['ruSureDelHint']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
+		resizable="false" dynamic="true">
+			
+		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{hintView.deleteHint}" 
+			oncomplete="PF('confirmDeleteDialog').hide()" update=":tbView:formDTE, :tbView:formDTT"/>
+		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmDeleteDialog').hide()" />
+	
+	</p:dialog>
+
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="randConfirmDeleteDialog"
+		header="#{msg['ruSureDelRand']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
+		resizable="false" dynamic="true">
+			
+		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{randView.delete()}" 
+			oncomplete="PF('randConfirmDeleteDialog').hide()"/>
+		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('randConfirmDeleteDialog').hide()" />	
+	</p:dialog>	
+	
+</ui:composition>

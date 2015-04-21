@@ -155,8 +155,8 @@ public class RandomizationView implements Serializable {
 
 	}
 	
-	public void delete(Randomization aRand){
-		randList.remove(aRand);
+	public void delete(){
+		randList.remove(this.rand);
 		this.editing = false;
 		addMessageToGrowl(new Object[]{"deletedRand"});
 		disableGrid();

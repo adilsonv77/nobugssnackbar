@@ -57,13 +57,13 @@
 						
 					<p:tooltip id="toolTipDelete" for="btnDelete" value="#{msg['delete']}"
 						showEffect="clip" hideEffect="clip"/>
-					<p:commandButton id="btnDelete" icon="ui-icon-close"
-						actionListener="#{randView.delete(rand)}"/>						
+					<p:commandButton id="btnDelete" action="#{randView.setRand(rand)}" icon="ui-icon-close" oncomplete="PF('randConfirmDeleteDialog').show()" />						
 			    </p:column>				        			 		
 			    			 		    
 			</p:dataTable>			
 		    
 		</h:form>
+			
 	</p:fieldset>
 	
 </ui:composition>
