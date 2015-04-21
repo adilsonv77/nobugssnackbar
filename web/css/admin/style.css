@@ -176,14 +176,6 @@ div.divExplEdit + img {
 /*******************End Customers page css******************/
 
 /*******************Start Dialog Hint page css******************/
-.dlgHintEditor{
-	margin-bottom: 30px;
-}
-.dlgHintEditor>div.ui-editor{
-	width: 99.5% !important;
- 	height: 98% !important;
-}	
-
 .btnContainer{
 	position: relative;
 }
@@ -198,5 +190,9 @@ div.divExplEdit + img {
 	/*top right bottom left*/
 	margin:0px 0px 10px -70px;
 	bottom: 0;
+}
+.formDlgHints{
+	height: 95%;
+	margin-bottom: 30px;
 }
 /*******************End Dialog Hint page css******************/

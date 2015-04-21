@@ -34,6 +34,9 @@ public class HintView implements Serializable {
 	
 	public void setAdd(boolean add) {
 		this.add = add;
+		if(add){
+			newHint();		
+		}
 	}
 	public boolean getAdd(){
 		return add;
@@ -84,8 +87,14 @@ public class HintView implements Serializable {
 			}
 		}
 		
+		hideDlgHint();
 		checkLists();
 		newHint();
+	}
+	
+	void hideDlgHint(){
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('hintDialog').hide()");
 	}
 	
 	public void checkLists(){
@@ -108,13 +117,14 @@ public class HintView implements Serializable {
 		
 	}
 	
-	public void deleteHint(Hint hint){
-		if(hint.getType()){
-			errorsHints.remove(hint);
+	public void deleteHint(){
+		
+		if(this.hint.getType()){
+			errorsHints.remove(this.hint);
 			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromErrors"});
 		}
 		else{
-			tipsHints.remove(hint);
+			tipsHints.remove(this.hint);
 			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromTips"});
 		}
 	}

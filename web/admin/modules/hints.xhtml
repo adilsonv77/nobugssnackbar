@@ -40,12 +40,14 @@
 		    </p:column>
 		    <p:column headerText="#{msg['actions']}">
 		    
-		        <p:commandButton value="#{msg['edit']}" id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
-		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
+		        <p:commandButton id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
+		        	actionListener="#{hintView.setAdd(false)}" icon="ui-icon-wrench" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(hint)}" update=":tbView:formDTT"/>
+		        <p:commandButton icon="ui-icon-close" oncomplete="PF('confirmDeleteDialog').show()">
+		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
+		        </p:commandButton>
 		        	        
 		    </p:column>		    
 		</p:dataTable>	
@@ -73,17 +75,20 @@
 		    </p:column>
 		    <p:column headerText="#{msg['actions']}">
 		       
-		        <p:commandButton value="#{msg['edit']}" oncomplete="PF('hintDialog').show()" 
-		        	action="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
+		        <p:commandButton id="btnErrorsHint" icon="ui-icon-wrench" oncomplete="PF('hintDialog').show()" 
+		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton value="#{msg['delete']}" actionListener="#{hintView.deleteHint(error)}" update=":tbView:formDTE" />
-		        		        
+		        <p:commandButton icon="ui-icon-close" oncomplete="PF('confirmDeleteDialog').show()">
+		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
+		        </p:commandButton>
+		        		        		        
 		    </p:column>		    
 		</p:dataTable>		
 	</h:form>
-
+		
+	
 	<h:outputStylesheet >  
     	.dataTableEdit img{
     		max-height:35px;
