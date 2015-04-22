@@ -7,9 +7,9 @@
 	<p:dialog id="addFoodstuffDialog" showEffect="fade" hideEffect="fade"
 		widgetVar="addFoodstuffDlg" header="#{msg['addFoodstuff']}" 
 		minHeight="300" closable="false" modal="true" 
-		dynamic="true" onShow="PF('pageDialog').initPosition()">
+		dynamic="true" onShow="PF('addFoodstuffDlg').initPosition()">
 		
-		<h:form>
+		<h:form id="foodstuffForm">
 			<p:panelGrid columns="2">
 				<h:outputText value="#{msg['type']}"/>
 				<p:inputText value="#{custVC.foodstuff.name}"/>
@@ -24,8 +24,10 @@
 			<p:panelGrid columns="2" style="float: right;">
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{custVC.addFoodstuff}"
-	    			update=":customerForm:foodsDT, :customerForm:drinksDT, :growlMsgs"/>
+	    			update=":customerForm:foodsDT, :customerForm:drinksDT, :growlMsgs, :foodstuffForm"/>
 	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
+	      			actionListener="#{custVC.reset()}"
+	      			update=":foodstuffForm"
 	      			oncomplete="PF('addFoodstuffDlg').hide()" />
 	       	</p:panelGrid>
 		</h:form>

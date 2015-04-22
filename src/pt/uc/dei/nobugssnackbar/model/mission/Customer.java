@@ -19,6 +19,7 @@ public class Customer implements java.io.Serializable  {
 
 	public Customer() {
 		pattern = new Pattern();
+		id = -1;
 	}
 	
 	public int getId() {
