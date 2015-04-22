@@ -6,26 +6,39 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">   
 	
     <p:dialog showEffect="fade" hideEffect="fade" widgetVar="chooseHintCategoryDialog" closable="false"
- 	header="#{msg['chooseHintCategory']}" minHeight="40" dynamic="true" modal="true" resizable="false">
+ 	header="#{msg['chooseHintCategory']}" styleClass="chooseHintCategoryDialog" minHeight="40" dynamic="true" modal="true" resizable="false">
  			    
     	<h:form id="formDlgCHC">
-		   	<div  class="orderListCHC">
-			   	<p:orderList value="#{categoryVC.hintCategories}" var="hCategory" 
-			   		itemLabel="#{hCategory.title}" itemValue="#{hCategory}" 
-			   		converter="#{categoryVC.cpc}" controlsLocation="none">		   			   				
-		
-					<p:column>	
-						<p:commandLink id="btnOKHintCatChoose" update=":formDlgHints,:dlgHintCategoryExtended"
-							actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
-							<f:param name="hCategoryID" value="#{hCategory.id}" />
-							<h:outputText class="olElementHeader" value="#{hCategory.title}"/>
-							<h:outputText value="#{hCategory.description}"/>
-						</p:commandLink>					 									
-					</p:column>
+		   
+		   	<p:dataTable value="#{categoryVC.hintCategories}" var="hCategory" styleClass="chooseHintCategoryDT" 
+		   		itemLabel="#{hCategory.title}" itemValue="#{hCategory}" scrollable="true" scrollHeight="450" scrollRows="10"
+		   		controlsLocation="none">		   				
+	
+				<p:column styleClass="leftColDT">	
+					<p:commandLink styleClass="cmndlinkDT" id="btnOKHintCatChoose" update=":formDlgHints,:dlgHintCategoryExtended"
+						actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
+						<f:param name="hCategoryID" value="#{hCategory.id}" />
+						
+						<h:outputText styleClass="cmndlinkDTHeader" class="olElementHeader" value="#{hCategory.title}"/>
+	
+					</p:commandLink>					 									
+				</p:column>
+				
+				<p:column>
+				
+					<p:commandLink styleClass="cmndlinkDT" id="btnOKHintCatChoose2" update=":formDlgHints,:dlgHintCategoryExtended"
+						actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
+						<f:param name="hCategoryID" value="#{hCategory.id}" />
+						
+						<h:outputText styleClass="cmndlinkDTText" value="#{hCategory.description}"/>
+	
+					</p:commandLink>					
 					
-			   	</p:orderList>		
-			</div>
-			<p:commandButton value="#{msg['cancel']}" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>		
+				</p:column>
+				
+		   	</p:dataTable>	
+		   		
+			<p:commandButton value="#{msg['cancel']}" styleClass="btnCancelCHCD" id="btnCancelHintCatChoose" oncomplete="PF('chooseHintCategoryDialog').hide()"/>		
 		
 		</h:form>
 		

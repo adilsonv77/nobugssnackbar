@@ -50,7 +50,6 @@ public class RandomizationView implements Serializable {
 	
 	/*flag for editing rand or adding new rand */
 	private boolean editing = false;
-	private boolean valid = true;
 	
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
@@ -144,7 +143,10 @@ public class RandomizationView implements Serializable {
 	}
 
 	public void save(){
-		
+		if(this.rand.getQtd() < 0){
+			addMessageToGrowl(new Object[]{"title=warningMsg","randNotValid"});
+			return;
+		}
 		if(this.editing){
 			addMessageToGrowl(new Object[]{"changesSaved"});
 		}
@@ -177,8 +179,12 @@ public class RandomizationView implements Serializable {
 	}
 	
 	public void add(){
-		
+
 		if(this.editing){
+			if(this.rand.getQtd() < 0){
+				addMessageToGrowl(new Object[]{"title=warningMsg","randNotValid"});
+				return;
+			}
 			addMessageToGrowl(new Object[]{"changesSaved"});
 		}
 		

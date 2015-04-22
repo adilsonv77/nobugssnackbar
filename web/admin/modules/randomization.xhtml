@@ -10,9 +10,7 @@
 			<h:panelGrid columns="2" cellpadding="5" styleClass="randomizationPanelGrid">
 			
 				<p:outputLabel for="qtdSpinner" value="#{msg['qtd']}: " disabled="#{randView.disabled}"/>	
-	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}">
-	        		<f:validateDoubleRange minimum="0"/>
-	        	</p:spinner>
+	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}"/>
 	        	
 	        	<p:outputLabel for="typeRadioGroup" value="#{msg['type']}: " disabled="#{randView.disabled}" />
 		        <p:selectOneRadio id="typeRadioGroup" value="#{randView.boolType}" disabled="#{randView.disabled}">
