@@ -7,7 +7,8 @@
 	<p:dialog id="customerDialog" 
 	widgetVar="customerDlg" modal="true" showEffect="clip"
 	hideEffect="fade" header="#{msg['customer']}"
-	minWidth="900" width="900" minHeight="500" height="500"
+	minWidth="900" width="900" minHeight="500" height="515"
+	closable="false"
 	onShow="PF('customerDlg').initPosition()">
 		<h:form id="customerForm" style="height:100%;">
 			<p:layout style="min-width:850px;width:100%;min-height:490px;height:100%;">
@@ -46,9 +47,11 @@
 	        			</div>
 	    			</f:facet>
 					
-					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single">
+					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single"
+						var="order" rowKey="order.id" emptyMessage="#{msg['default']}"
+						value="#{custVC.customer.pattern.orders}">
 		    			<p:column>
-		    				<h:outputText value="Default" />
+		    				<h:outputText value="#{msg['no']}: #{order.id}" />
 		    			</p:column>
     				</p:dataTable>
 				</p:layoutUnit>
@@ -58,97 +61,161 @@
 						<div id="foodsContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMinFoods}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMaxFoods}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox />
+								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevFoods}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
-							<p:dataTable id="foodsDT" draggableRows="true">
+							<p:dataTable id="foodsDT" var="food" 
+								value="#{custVC.customer.pattern.order.foods}">
 								<f:facet name="header">
 							        <h:outputText value="#{msg['foods']}"/>
 							    </f:facet>
 							    <f:facet name="footer">
 							    	<div class="clear">
-							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"
+							    			actionListener="#{custVC.setFoodstuffType(true)}"
+							    			oncomplete="PF('addFoodstuffDlg').show()"/>
 							    	</div>
 					        	</f:facet>
 							    
 							    <p:column headerText="#{msg['type']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.name}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['qtd']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.qtd}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['price']}">
-							        <h:outputText />
+							        <h:outputText value="#{food.price}"/>
 							    </p:column>
 							 
-							    <p:column headerText="#{msg['actions']}">
-							    
-							        <p:commandButton value="#{msg['edit']}" >
-		
+							    <p:column headerText="#{msg['actions']}" width="70">
+							        <p:commandButton icon="ui-icon-pencil"
+							        	update=":foodstuffForm"
+							    		oncomplete="PF('addFoodstuffDlg').show()">
+							    		<f:setPropertyActionListener value="#{food}" target="#{custVC.food}"/>
 							        </p:commandButton>
 							        
-							        <p:commandButton value="#{msg['delete']}" />
-							        	        
-							    </p:column>		    
+							        <p:commandButton icon="ui-icon-closethick"
+							        	oncomplete="PF('confDeleteFoodDlg').show()">
+							        	<f:setPropertyActionListener value="#{food}" target="#{custVC.food}"/>
+							        </p:commandButton>    	        
+							    </p:column>
 							</p:dataTable>
 						</div>
 						
 						<div id="drinksContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMinDrinks}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.pattern.order.randomMaxDrinks}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox />
+								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevDrinks}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
-							<p:dataTable id="drinksDT" draggableRows="true">
+							<p:dataTable id="drinksDT" var="drink" 
+								value="#{custVC.customer.pattern.order.drinks}">
 								<f:facet name="header">
 							        <h:outputText value="#{msg['drinks']}"/>
 							    </f:facet>
 							    <f:facet name="footer">
 							    	<div class="clear">
-							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"/>
+							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"
+							    			actionListener="#{custVC.setFoodstuffType(false)}"
+							    			oncomplete="PF('addFoodstuffDlg').show()"/>
 							    	</div>
 					        	</f:facet>
 					        	    
 							    <p:column headerText="#{msg['type']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.name}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['qtd']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.qtd}"/>
 							    </p:column>
 							 
 							    <p:column headerText="#{msg['price']}">
-							        <h:outputText />
+							        <h:outputText value="#{drink.price}"/>
 							    </p:column>
 							 
-							    <p:column headerText="#{msg['actions']}">
-							    
-							        <p:commandButton value="#{msg['edit']}" >
-		
+							    <p:column headerText="#{msg['actions']}" width="70">
+							        <p:commandButton icon="ui-icon-pencil"
+							        	update=":foodstuffForm"
+							    		oncomplete="PF('addFoodstuffDlg').show()">
+							    		<f:setPropertyActionListener value="#{drink}" target="#{custVC.drink}"/>
 							        </p:commandButton>
-							        
-							        <p:commandButton value="#{msg['delete']}" />
-							        	        
+							        	
+							        <p:commandButton icon="ui-icon-closethick"
+							        	oncomplete="PF('confDeleteDrinkDlg').show()">
+							        	<f:setPropertyActionListener value="#{drink}" target="#{custVC.drink}"/>
+							        </p:commandButton>
 							    </p:column>		    
 							</p:dataTable>
 						</div>
 					</p:panelGrid>
 				</p:layoutUnit>
+				
+				<p:layoutUnit position="south">
+					<p:panelGrid columns="2" style="float: right;">
+			    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
+			    			actionListener="#{custVC.saveCustomer}"
+			    			update=":customerForm, :tbView:customersForm"/>
+			      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
+			      			oncomplete="PF('customerDlg').hide()" />
+			       	</p:panelGrid>
+				</p:layoutUnit>
 			</p:layout>
+		</h:form>
+	</p:dialog>
+	
+	<ui:include src="dlgaddfoodstuff.xhtml"/>
+	
+	<p:dialog widgetVar="confDeleteFoodDlg" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
+		resizable="false" dynamic="true"
+		onShow="PF('confDeleteFoodDlg').initPosition()">
+
+		<h:form>
+			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+				<h:outputText value="#{msg['ruSureDelFood']}" />
+				<p:commandButton value="#{msg['yes']}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					update=":customerForm" actionListener="#{custVC.deleteFood}"
+					oncomplete="PF('confDeleteFoodDlg').hide()" />
+				<p:commandButton value="#{msg['no']}"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+					actionListener="#{custVC.resetFood}"
+					oncomplete="PF('confDeleteFoodDlg').hide()" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog widgetVar="confDeleteDrinkDlg" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
+		resizable="false" dynamic="true"
+		onShow="PF('confDeleteDrinkDlg').initPosition()">
+
+		<h:form>
+			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+				<h:outputText value="#{msg['ruSureDelDrink']}" />
+				<p:commandButton value="#{msg['yes']}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					update=":customerForm" actionListener="#{custVC.deleteDrink}"
+					oncomplete="PF('confDeleteDrinkDlg').hide()" />
+				<p:commandButton value="#{msg['no']}"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+					actionListener="#{custVC.resetDrink}"
+					oncomplete="PF('confDeleteDrinkDlg').hide()" />
+			</p:panelGrid>
 		</h:form>
 	</p:dialog>
 	

@@ -7,7 +7,7 @@ public class Customer implements java.io.Serializable  {
 	private String init;
 	private String dest;
 	private String randomType;
-	private Integer skin;
+	private int skin;
 	
 	/* 
 	 * If [pattern.getOrders().size() == 1] Then
@@ -17,6 +17,10 @@ public class Customer implements java.io.Serializable  {
 	 */
 	private Pattern pattern;
 
+	public Customer() {
+		pattern = new Pattern();
+		id = -1;
+	}
 	
 	public int getId() {
 		return id;
@@ -48,10 +52,10 @@ public class Customer implements java.io.Serializable  {
 	public void setRandomType(String randomType) {
 		this.randomType = randomType;
 	}
-	public Integer getSkin() {
+	public int getSkin() {
 		return skin;
 	}
-	public void setSkin(Integer skin) {
+	public void setSkin(int skin) {
 		this.skin = skin;
 	}
 }

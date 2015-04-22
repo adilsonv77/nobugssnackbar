@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<p:dialog id="addFoodstuffDialog" showEffect="fade" hideEffect="fade"
+		widgetVar="addFoodstuffDlg" header="#{msg['addFoodstuff']}" 
+		minHeight="300" closable="false" modal="true" 
+		dynamic="true" onShow="PF('addFoodstuffDlg').initPosition()">
+		
+		<h:form id="foodstuffForm">
+			<p:panelGrid columns="2">
+				<h:outputText value="#{msg['type']}"/>
+				<p:inputText value="#{custVC.foodstuff.name}"/>
+				
+				<h:outputText value="#{msg['qtd']}"/>
+				<p:spinner value="#{custVC.foodstuff.qtd}" min="0" />
+				
+				<h:outputText value="#{msg['price']}"/>
+				<p:spinner value="#{custVC.foodstuff.price}" min="0" stepFactor="0.25" />
+			</p:panelGrid>
+			
+			<p:panelGrid columns="2" style="float: right;">
+	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
+	    			actionListener="#{custVC.addFoodstuff}"
+	    			update=":customerForm:foodsDT, :customerForm:drinksDT, :growlMsgs, :foodstuffForm"/>
+	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
+	      			actionListener="#{custVC.reset()}"
+	      			update=":foodstuffForm"
+	      			oncomplete="PF('addFoodstuffDlg').hide()" />
+	       	</p:panelGrid>
+		</h:form>
+		
+	</p:dialog>
+	
+</ui:composition>
