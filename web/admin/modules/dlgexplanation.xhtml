@@ -2,7 +2,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	>
 
 	<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
 		widgetVar="pageDialog" header="#{msg['pages']}" minHeight="300"
@@ -11,9 +13,8 @@
 		<h:form style="height:100%;">
 			<p:layout style="width:100%;min-height:400px;height:100%;">
 				<p:layoutUnit position="center" styleClass="disable-scroll" style="border: none;">
-					<p:editor value="#{explVC.page.msg}" styleClass="explEdit">
-						<f:attribute name="controls" value="#{explVC.editorControls}" />
-					</p:editor>
+					<pe:ckEditor id="editExplPage" height="100%" width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}">
+					</pe:ckEditor>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" style="border: none;">
 					<p:panelGrid columns="2" style="float: right;">

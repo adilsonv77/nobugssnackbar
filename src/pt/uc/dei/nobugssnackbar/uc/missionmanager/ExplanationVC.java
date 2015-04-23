@@ -34,6 +34,12 @@ public class ExplanationVC implements IPagesProvider, Serializable {
     private boolean ok;
     
     public final String editorControls = 
+    		"[['Cut', 'Copy', 'Paste', 'PasteText'],"
+    		+ "[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],"
+    		+ "['Font', 'FontSize', 'TextColor', 'BGColor'],"
+    		+ "['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],"
+    		+ "['Undo', 'Redo'],['Image']]";
+    		/*
     		"bold italic underline strikethrough subscript superscript | " + 
     		"font size style color highlight | " + 
     		"bullets numbering | " +
@@ -42,6 +48,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
     		"undo redo | " + 
     		"rule image | " + 
     		"cut copy paste pastetext";
+    		*/
     
  
 	@PostConstruct
