@@ -19,6 +19,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Customer;
 import pt.uc.dei.nobugssnackbar.model.mission.Drink;
 import pt.uc.dei.nobugssnackbar.model.mission.Food;
 import pt.uc.dei.nobugssnackbar.model.mission.Foodstuff;
+import pt.uc.dei.nobugssnackbar.model.mission.Order;
 
 @ManagedBean(name="custVC")
 @ViewScoped
@@ -42,6 +43,23 @@ public class CustomerVC implements Serializable {
 		customers = new ArrayList<>(12);
 		for (int i = 0; i < 12; i++) {
 			customers.add(new Customer());
+		}
+	}
+	
+	public void newOrder() {
+		if (checkFields(customer.getPattern().getOrder())) {
+			Order order = customer.getPattern().getOrder();
+			int index = customer.getPattern().getOrders().indexOf(order);
+			
+			if (index >= 0) {
+				customer.getPattern().getOrders().set(index, order);
+				customer.getPattern().setOrder(new Order());
+				order = customer.getPattern().getOrder();
+				int id = customer.getPattern().getOrderIdCounter() + 1;
+				customer.getPattern().setOrderIdCounter(id);
+				order.setId(id);
+				customer.getPattern().getOrders().add(order);
+			}
 		}
 	}
 	
@@ -79,11 +97,37 @@ public class CustomerVC implements Serializable {
 		}
 	}
 	
-	public void saveCustomer() {
-		customers.set(customersPlaceId, customer);
-		customer = new Customer();
-		RequestContext rcontext = RequestContext.getCurrentInstance();
-		rcontext.execute("PF('customerDlg').hide()");
+	private boolean checkFields(Order order) {
+		int maxDrinks = order.getRandomMaxDrinks();
+		int minDrinks = order.getRandomMinDrinks();
+		int maxFoods = order.getRandomMaxFoods();
+		int minFoods = order.getRandomMinFoods();
+                
+		if (minFoods > maxFoods || minDrinks > maxDrinks) {
+			ResourceBundle msg = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(msg.getString("rndMinCannotGreater"), ""));
+			
+			return false;
+		}
+		/*if (order.getFoods().size() <= 0 || order.getDrinks().size() <= 0) {
+			ResourceBundle msg = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(msg.getString("noOrder"), ""));
+			
+			return false;
+		}*/
+		
+		return true;
+	}
+	
+	public void saveCustomer() {                
+		if (checkFields(customer.getPattern().getOrder())) {
+			customers.set(customersPlaceId, customer);
+			customer = new Customer();
+			RequestContext rcontext = RequestContext.getCurrentInstance();
+			rcontext.execute("PF('customerDlg').hide()");
+		}
 	}
 	
 	public void addFoodstuff() {
@@ -188,9 +232,6 @@ public class CustomerVC implements Serializable {
 		this.food = food;
 		setFoodstuffType(true);
 		foodstuff = (Foodstuff)  this.food;
-		/*foodstuff.setName(food.getName());
-		foodstuff.setPrice(food.getPrice());
-		foodstuff.setQtd(food.getQtd());*/
 	}
 
 	public Drink getDrink() {
@@ -201,10 +242,6 @@ public class CustomerVC implements Serializable {
 		this.drink = drink;
 		setFoodstuffType(false);
 		foodstuff = (Foodstuff)  this.drink;
-		
-		/*foodstuff.setName(drink.getName());
-		foodstuff.setPrice(drink.getPrice());
-		foodstuff.setQtd(drink.getQtd());*/
 	}
 
 }

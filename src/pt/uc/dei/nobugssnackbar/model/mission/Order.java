@@ -6,6 +6,7 @@ import java.util.List;
 public class Order implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private int randomMinFoods;
 	private int randomMaxFoods;
 	private boolean differentFromPrevFoods;
@@ -80,5 +81,13 @@ public class Order implements java.io.Serializable {
 
 	public void setRandomMaxDrinks(int randomMaxDrinks) {
 		this.randomMaxDrinks = randomMaxDrinks;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
