@@ -16,7 +16,7 @@
 	"Apps.dialogPrevious": "Anterior",
 	"Apps.dialogLogoff" : "Sair",
 	"Apps.close" : "Fechar",
-	"Apps.dialogSignUp" : "Registrar-se",
+	"Apps.dialogSignUp" : "Registar-se",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
@@ -75,6 +75,7 @@
 	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja",
 	"SnackMan.constSoftDrinkTooltip" : "Refrigerante",
 	
+	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente.",
@@ -99,8 +100,8 @@
 	"Error.doesntMatchPosition" : "A entrega n&#227;o corresponde &#224; mesma posi&#231;&#227;o do cliente.",
 	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\n\n- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\n\n",
 	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
-	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
-	"Error.incorrectID": "O ID do usu&#225;rio , que voc&#234; est&#225; tentando usar est&#225; incorreto.",
+	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. \nn &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
+	"Error.incorrectID": "O ID do usu&#225;rio, que voc&#234; est&#225; tentando usar est&#225; incorreto.",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
 	
 	"Single.Counter" : "no balc&#227;o",
@@ -161,7 +162,7 @@
 	"Victory.TimeBonus"     : "Para o seu tempo de %0",
 	 
 	"SignUp.title"	    	: "Por favor, preencha estes campos para se inscrever!",
-	"SignUp.nickName"	    : "Apelido",
+	"SignUp.nickName"	    : "Usu&#225;rio",
 	"SignUp.password"	    : "Senha",
 	"SignUp.confirmPassword": "Confirme sua senha",
 	"SignUp.email"	   		: "E-mail",
@@ -169,13 +170,13 @@
 	"SignUp.genderText"	    : "Sexo:  ",
 	"SignUp.genderIsM"	    : "Masculino",
 	"SignUp.genderIsF"	    : "Feminino",
-	"SignUp.signUpBtn"	    : "Registrar-se",
+	"SignUp.signUpBtn"	    : "Registar-se",
 	"SignUp.clearFormBtn"	: "Limpar",
 	"SignUp.radioBtnMsg"	: "Por favor, escolha uma das op&#231;&#245;es.",
 	"SignUp.notMatchMsg"	: "Os campos n&#227;o coincidem.",
-	"SignUp.uNotAllowedMsg"	: "Usu&#225;rio n&#227;o autorizado.",
+	"SignUp.uNotAllowedMsg"	: "Usu&#225;rio j&#225; registado.",
 	"SignUp.eNotAllowedMsg"	: "Este e-mail j&#225; existe.",
-	"SignUp.missingMsg"		: "Este campo &#233; obrigat&#234;rio.",
+	"SignUp.missingMsg"		: "Este campo &#233; obrigat&#243;rio.",
 	"SignUp.validEmailMsg"	: "Por favor insira um endere&#231;o de e-mail v&#225;lido.",
 	"SignUp.emptyPassMsg"	: "Sua senha est&#225; vazia.",
 	"SignUp.toUsePassMsg"	: "Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use letras mai&#250;sculas e min&#250;sculas, n&#250;meros e caracteres especiais.",
@@ -184,7 +185,8 @@
 	"SignUp.strongPassMsg"	: "FORTE! Por favor, digitar no m&#237;nimo 8 s&#234;mbolos. Use A-Z, a-z, 0-9 e caracteres especiais.",
 	"SignUp.veryStrPassMsg"	: "MUITO FORTE!",
 	"SignUp.signedInfo"		: "Informa&#231;&#245;es sobre o seu registo.",
-	"SignUp.showInfoMsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail."
-
+	"SignUp.showInfoMsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail.",
+	"SignUp.moreInfoContact": "Para mais informa&#231;&#245;es, por favor contacte nosso administrador :",
+	"SignUp.backHomePage"   : "Voltar para a home page do NoBug's Snack Bar"
 	
 }

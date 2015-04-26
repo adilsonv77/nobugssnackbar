@@ -43,13 +43,17 @@
 					<f:facet name="header">
 		        		<div class="clear">
 	        				<h:outputText value="#{msg['orders']}" />
-	        				<p:commandButton style="float: right;" icon="ui-icon-circle-plus" />
+	        				<p:commandButton style="float: right;" icon="ui-icon-circle-plus" 
+	        					actionListener="#{custVC.newOrder}"
+	        					update=":customerForm, :growlMsgs"/>
 	        			</div>
 	    			</f:facet>
 					
 					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single"
-						var="order" rowKey="order.id" emptyMessage="#{msg['default']}"
+						selection="#{custVC.customer.pattern.order}"
+						var="order" rowKey="#{order.id}" emptyMessage="#{msg['default']}"
 						value="#{custVC.customer.pattern.orders}">
+						<p:ajax event="rowSelect" update=":customerForm"/>
 		    			<p:column>
 		    				<h:outputText value="#{msg['no']}: #{order.id}" />
 		    			</p:column>
@@ -168,9 +172,7 @@
 					<p:panelGrid columns="2" style="float: right;">
 			    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 			    			actionListener="#{custVC.saveCustomer}"
-			    			update=":customerForm, :tbView:customersForm"/>
-			      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
-			      			oncomplete="PF('customerDlg').hide()" />
+			    			update=":customerForm, :tbView:customersForm, :growlMsgs"/>
 			       	</p:panelGrid>
 				</p:layoutUnit>
 			</p:layout>

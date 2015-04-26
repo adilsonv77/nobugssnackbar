@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>The id is incorrect!</title>
+		<script type="text/javascript" src="js/commons/common.js"></script>
+		<script src="js/nobugs.js"></script>
+  		<script src="js/_soy/soyutils.js"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				var main = document.getElementById("main").innerHTML;
+				document.getElementById("main").innerHTML = nobugspage.messages(
+							{}, null, {lang: BlocklyApps.LANG, langSrc: BlocklyApps.languagePack()}
+						) + main;
+				document.getElementById("incorrectIDError").appendChild(document.getElementById("Error_incorrectID"));
+			}
+		</script>
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="icon" href="images/fav-icon.ico">
+		<style type="text/css">
+			root {
+				display: block;
+			}
+			#content {
+				font-family: sans-serif;
+				text-align: center;
+				vertical-align: middle;
+     			margin-top: 15%;    
+     			
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+		<div id="content">
+			<h1 id="incorrectIDError"></h1>
+			<div>For more information, please contact with our Administrator : <a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a></div>
+			<div><h2><a href="http://nobugssnackbar.dei.uc.pt">Back to NoBug's Snack Bar's home page</a></h2></div>
+		</div>
+		</div>
+	</body>
+</html>
