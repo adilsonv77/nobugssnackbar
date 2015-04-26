@@ -2,7 +2,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	
 		<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false"
 				modal="true" onShow="PF('hintDialog').initPosition()" maximizable="true" dynamic="true" >
@@ -38,11 +39,10 @@
 				</p:panelGrid>
 				
 			    
-			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>
-			    <div class="wrapper" onresize="resizeElementHeight()">
-			    <p:editor id="hintText" value="#{hintView.hint.text}" styleClass="dlgHintEditor"/>	
-			   <!--  <p:resizable for="hintText" animate="true" effect="swing" effectDuration="normal"/> -->
-			    </div>
+			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>		    
+				<pe:ckEditor id="hintText" height="100%" width="100%" value="#{hintView.hint.text}"
+					toolbar="#{explVC.editorControls}">
+				</pe:ckEditor>			    	   
 			    		    
 			    <p:panelGrid columns="3" style="float: right;">    
 					<div class="btnContainer" >
