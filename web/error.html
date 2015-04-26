@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Error</title>
+		<title></title>
 		<script type="text/javascript" src="js/commons/common.js"></script>
 		<script src="js/nobugs.js"></script>
   		<script src="js/_soy/soyutils.js"></script>
@@ -13,6 +13,7 @@
 							{}, null, {lang: BlocklyApps.LANG, langSrc: BlocklyApps.languagePack()}
 						) + main;
 				document.getElementById("msgError").appendChild(document.getElementById("Error_navigatorNotSupported"));
+				document.title = document.getElementById("Error_error").innerHTML; 
 			}
 		</script>
 		<link rel="stylesheet" href="css/style.css">

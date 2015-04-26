@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>The id is incorrect!</title>
 		<script type="text/javascript" src="js/commons/common.js"></script>
 		<script src="js/nobugs.js"></script>
   		<script src="js/_soy/soyutils.js"></script>
@@ -13,10 +13,6 @@
 							{}, null, {lang: BlocklyApps.LANG, langSrc: BlocklyApps.languagePack()}
 						) + main;
 				document.getElementById("incorrectIDError").appendChild(document.getElementById("Error_incorrectID"));
-				document.title = document.getElementById("Error_incorrectID").innerHTML;
-				
-				document.getElementById("moreInfo").appendChild(document.getElementById("SignUp_moreInfoContact"));
-				document.getElementById("backHomePage").appendChild(document.getElementById("SignUp_backHomePage"));
 			}
 		</script>
 		<link rel="stylesheet" href="css/style.css">
@@ -38,8 +34,8 @@
 		<div id="main">
 		<div id="content">
 			<h1 id="incorrectIDError"></h1>
-			<div><span id="moreInfo"></span><a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a></div>
-			<div><h2><a href="http://nobugssnackbar.dei.uc.pt"><span id="backHomePage"></span></a></h2></div>
+			<div>For more information, please contact with our Administrator : <a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a></div>
+			<div><h2><a href="http://nobugssnackbar.dei.uc.pt">Back to NoBug's Snack Bar's home page</a></h2></div>
 		</div>
 		</div>
 	</body>
