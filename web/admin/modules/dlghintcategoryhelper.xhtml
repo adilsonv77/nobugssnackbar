@@ -18,21 +18,25 @@
 		            <h:outputText value="#{data.value}"/>
 				</pe:dynaFormControl>
 				
+				<pe:dynaFormControl type="emptyMsg" styleClass="dynaFormEmptyMsg">
+		            <h:outputText value="#{data.value}"/>
+				</pe:dynaFormControl>				
+				
 				<pe:dynaFormControl type="input" for="txt">
-					<p:inputText id="txt" value="#{data.value}" required="#{data.required}" />
+					<p:inputText id="txt" value="#{data.value}" /><!-- required="#{data.required}" -->
 				</pe:dynaFormControl>
 				
 				<pe:dynaFormControl type="list" for="list" styleClass="pe-dynaform-list">
-					<p:selectOneListbox id="list" value="#{data.value}" required="#{data.required}">
+					<p:selectOneListbox id="list" value="#{data.value}" ><!-- required="#{data.required}" -->
 						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}" />
  					 	 <p:ajax update="dynaFormCategory" event="change" listener="#{data.updateValues}" disabled="#{data.updateComponent == null}"/>
 					</p:selectOneListbox>
 				</pe:dynaFormControl>
 
 		        <f:facet name="buttonBar">
-		            <p:commandButton value="#{msg['ok']}" action="#{hcHelper.submitForm}"
-		               update=":formDlgHints"              
-		               oncomplete="PF('hintCategoryDialog').hide(); PF('chooseHintCategoryDialog').hide()"/>
+		            <p:commandButton value="#{msg['ok']}"  actionListener="#{hcHelper.submitForm}"
+		               update=":formDlgHints"           
+		               />
 		        </f:facet>
         				
 			</pe:dynaForm>

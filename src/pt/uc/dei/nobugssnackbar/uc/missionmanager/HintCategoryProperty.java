@@ -9,6 +9,7 @@ public class HintCategoryProperty implements Serializable {
 
 	private String name;
 	private Object value;
+	private boolean rendered = true;
 	private boolean required;
 	private List<?> items;
 
@@ -42,6 +43,15 @@ public class HintCategoryProperty implements Serializable {
 		this.name = name;
 		this.required = required;
 		this.items = items;
+	}
+	
+	
+	public void setRendered(boolean rendered) {
+		this.rendered = rendered;
+	}
+	
+	public boolean getRendered(){
+		return rendered;
 	}
 	
 	
@@ -81,7 +91,6 @@ public class HintCategoryProperty implements Serializable {
 	}
 
 	private void updates(String name, Object value) {
-		
 		String s = this.hintCategoryHelperView.dealEl(el);
 		this.items = ApplicationUtils.processEL(s, List.class);
 	}

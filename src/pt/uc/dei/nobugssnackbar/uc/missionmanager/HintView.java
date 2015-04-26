@@ -204,6 +204,12 @@ public class HintView implements Serializable {
     	}
     }
     
+    public void handleDialog(){
+    	RequestContext cont = RequestContext.getCurrentInstance();
+    	cont.execute("PF('hintCategoryDialog').hide()");
+    	/*cont.execute("PF('chooseHintCategoryDialog').hide()");*/
+    }
+    
     public void disableDialog() {
     	this.showDlgExt = false;
     }

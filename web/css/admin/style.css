@@ -136,11 +136,15 @@ div.divExplEdit + img {
     height: 100%;
     width: 100%; 
 }
-.ui-datatable tbody td{
-	height: 50px;;
+.chooseHintCategoryDT.ui-datatable tbody td{
+	height: 50px;
 }
 .btnCancelCHCD{
 	margin-top: 20px;
+}
+.dynaFormEmptyMsg{
+	font-weight: bold;
+	font-size:16px;
 }
 
 /*******************End ChooseHintCategory page css******************/

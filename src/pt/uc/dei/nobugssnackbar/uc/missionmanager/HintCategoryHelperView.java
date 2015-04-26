@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
@@ -25,6 +27,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
 @ManagedBean(name="hcHelper")
@@ -34,6 +37,9 @@ public class HintCategoryHelperView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Pattern pattern = Pattern.compile("[?][{]([a-z])\\w+}");
 
+	private boolean isListEmpty = false;
+	private boolean rendered;
+	
 	@ManagedProperty(value="#{hintView}")
 	private HintView hintView;
 
@@ -68,7 +74,7 @@ public class HintCategoryHelperView implements Serializable {
 		
 		NodeList nodes = doc.getDocumentElement().getChildNodes();
 		if (nodes.getLength() == 0) {
-			return false;
+			return rendered = false;
 		}
 		properties = new ArrayList<>();
 		model = new DynaFormModel();
@@ -93,7 +99,7 @@ public class HintCategoryHelperView implements Serializable {
 				Node value = item.getLastChild();
 				if (type.equals("text")) {
 					
-					formRow.addControl(new HintCategoryProperty(this, "", value.getNodeValue()), "text");
+					formRow.addControl(new HintCategoryProperty(this, "", value.getNodeValue()), "text");			
 					
 				} else {
 					String name = item.getAttributes().getNamedItem("name").getNodeValue();
@@ -106,6 +112,8 @@ public class HintCategoryHelperView implements Serializable {
 				    	HintCategoryProperty hcp = new HintCategoryProperty(this, name, true);
 				    	properties.add(hcp);
 				    	
+
+				    	
 				    	String nodeValue = value.getNodeValue();
 					    if (pattern.matcher(nodeValue).find())  {
 					    	hcp.setProviderEL(nodeValue);
@@ -113,24 +121,40 @@ public class HintCategoryHelperView implements Serializable {
 					    } else {
 					    	ValueExpression vex = expressionFactory.createValueExpression(elContext, 
 									nodeValue, List.class);
-					    	hcp.setItems((List<?>) vex.getValue(elContext));
-					    	
-					    }
-						
-					    Node updateNode = item.getAttributes().getNamedItem("update");
-					    if (updateNode != null)
-					    	hcp.setUpdate(updateNode.getNodeValue());
+					    	hcp.setItems((List<?>) vex.getValue(elContext));					 					    
+					    }						
 					    
+					    Node updateNode = item.getAttributes().getNamedItem("update");
+					    if (updateNode != null){
+					    	hcp.setUpdate(updateNode.getNodeValue());
+					    }					    					  
+					  					   
 					    formRow.addControl(hcp, "list");
-						
+
+				    	
+					    Node emptyMsg = item.getAttributes().getNamedItem("emptyMsg");
+					    if(emptyMsg != null && hcp.getItems().size() == 0){
+					    	
+					    	ResourceBundle messageBundle = ApplicationMessages.getMessage();
+					    	String msg = messageBundle.getString(emptyMsg.getNodeValue());
+					    	
+					    	model.getRegularRows().clear();	
+
+					    	formRow = model.createRegularRow();
+					    	
+					    	formRow.addLabel(msg);
+					    	this.isListEmpty = true;
+					    	
+					    	return rendered = true;
+					    }
 					}
 				}
 			}
 			
 		}
-		return true;
+		return rendered = true;
 	}
-	
+		
 	public DynaFormModel getModel() {
 		return model;
 	}
@@ -148,7 +172,11 @@ public class HintCategoryHelperView implements Serializable {
 				if (data.getClass() == HintCategoryProperty.class) {
 					HintCategoryProperty hcp = (HintCategoryProperty) data; 
 					if (name.equals(hcp.getName())) {
-						returnForm = matcher.replaceFirst(hcp.getValue().toString());
+						if(hcp.getValue() != null){
+							returnForm = matcher.replaceFirst(hcp.getValue().toString());
+						}else{
+							returnForm = "";
+						}
 						break;
 					}
 				}
@@ -163,14 +191,28 @@ public class HintCategoryHelperView implements Serializable {
 		String returnForm = dealEl(this.returnCategory);
 		returnForm = ApplicationUtils.processEL(returnForm, String.class);
 		
-	    if(!returnForm.equals("")){
-	    	hintView.getHint().setCategory(returnForm);
-	    }
-	    else{
-	    	hintView.getHint().setCategory(this.returnCategory);
-	    }
+		if(rendered){
+			if(isListEmpty){
+				hintView.getHint().setCategory("");
+				isListEmpty = false;
+			}else if(returnForm.equals("")){//not selected command/category
+				hintView.addMessageToGrowl(new Object[] {"title=error","selectCommand"});
+				return;
+			}else{//everything is OK
+				hintView.getHint().setCategory(returnForm);
+				RequestContext cont = RequestContext.getCurrentInstance();
+				cont.execute("PF('chooseHintCategoryDialog').hide()");				
+			}
+			
+		}else{
+			hintView.getHint().setCategory(returnCategory);
+		}
 		hintView.disableDialog();
-		
+		hintView.handleDialog();
+	}
+	
+	public void setModel(DynaFormModel model) {
+		this.model = model;
 	}
 	
 
