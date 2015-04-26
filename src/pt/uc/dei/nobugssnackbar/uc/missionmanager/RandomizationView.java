@@ -1,12 +1,12 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -27,7 +27,9 @@ public class RandomizationView implements Serializable {
 	}
 	
 	private Randomization rand;
-	private List<Randomization> randList = new ArrayList<>();
+	
+	@ManagedProperty(value="#{mm.missionContent.randList}")
+	private List<Randomization> randList;
 	
 	/*
 	 * I added boolType for using in p:selectOneRadio, because it works with

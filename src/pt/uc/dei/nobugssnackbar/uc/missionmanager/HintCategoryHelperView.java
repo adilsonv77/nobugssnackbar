@@ -190,22 +190,23 @@ public class HintCategoryHelperView implements Serializable {
 		
 		String returnForm = dealEl(this.returnCategory);
 		returnForm = ApplicationUtils.processEL(returnForm, String.class);
+		RequestContext cont = RequestContext.getCurrentInstance();
 		
 		if(rendered){
 			if(isListEmpty){
-				hintView.getHint().setCategory("");
 				isListEmpty = false;
 			}else if(returnForm.equals("")){//not selected command/category
 				hintView.addMessageToGrowl(new Object[] {"title=error","selectCommand"});
 				return;
 			}else{//everything is OK
-				hintView.getHint().setCategory(returnForm);
-				RequestContext cont = RequestContext.getCurrentInstance();
-				cont.execute("PF('chooseHintCategoryDialog').hide()");				
+				hintView.getHint().setCategory(returnForm);			
+				cont.execute("PF('chooseHintCategoryDialog').hide()");
+				cont.update("formDlgHints");
 			}
 			
 		}else{
 			hintView.getHint().setCategory(returnCategory);
+			cont.update("formDlgHints");
 		}
 		hintView.disableDialog();
 		hintView.handleDialog();

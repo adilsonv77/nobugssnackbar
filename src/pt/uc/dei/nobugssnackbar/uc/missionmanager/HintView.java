@@ -1,12 +1,12 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -22,14 +22,22 @@ public class HintView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public HintView() {
-		// TODO Auto-generated constructor stub
-	}
 	
-	private boolean add = false;//false = editing hint(NOT adding new hint)
+	/*
+	 * add == false when editing hint
+	 * add == true when adding new hint
+	 */
+	private boolean add = false;
+	
 	private Hint hint = new Hint();
-	private List<Hint> tipsHints = new ArrayList<>();
-	private List<Hint> errorsHints = new ArrayList<>();
+	
+	ResourceBundle messageBundle = ApplicationMessages.getMessage();
+	
+	@ManagedProperty(value="#{mm.missionContent.tipsHints}")
+	private List<Hint> tipsHints;
+	
+	@ManagedProperty(value="#{mm.missionContent.errorsHints}")
+	private List<Hint> errorsHints;
 
 	
 	public void setAdd(boolean add) {
@@ -68,6 +76,13 @@ public class HintView implements Serializable {
     public void deleteTipsHint() {
         tipsHints.remove(hint);
         newHint();
+    }
+    
+    public String getCategory(){
+    	if(hint.getCategory() != ""){
+    		return this.hint.getCategory();
+    	}
+    	return messageBundle.getString("hintCategoryEmptyMsg");
     }
     
 	public void addEditHint() {
@@ -134,14 +149,12 @@ public class HintView implements Serializable {
 	}
 	
 	public void addMessageToGrowl(String key){
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Notification", messageBundle.getString(key));
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
 	
 	public void addMessageToGrowl(Object [] msgs){
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		String title = "Notification";	
 		FacesMessage msg;
 		String finalText = "";
@@ -207,7 +220,10 @@ public class HintView implements Serializable {
     public void handleDialog(){
     	RequestContext cont = RequestContext.getCurrentInstance();
     	cont.execute("PF('hintCategoryDialog').hide()");
-    	/*cont.execute("PF('chooseHintCategoryDialog').hide()");*/
+    	/*
+    	 * I am not sure what must be the logic here.
+    	 * cont.execute("PF('chooseHintCategoryDialog').hide()");
+    	 */
     }
     
     public void disableDialog() {

@@ -18,10 +18,10 @@
 					</p:selectOneRadio>
 				        
 				    <p:outputLabel for="btnChooseCategory" value="#{msg['category']}: "/>
-				    <p:panelGrid columns="2">
+				    <p:panelGrid columns="3">
 				    <p:commandButton id="btnChooseCategory" value="#{msg['choose']}" 
 				    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
-				    	<h:outputText value="#{hintView.hint.category}"/>
+				    	<h:outputText value="#{hintView.category}"/>
 				    </p:panelGrid>
 				    
 				    <p:outputLabel for="btnBuildCondition" value="#{msg['condition']}: "/>
@@ -48,7 +48,7 @@
 					<div class="btnContainer" >
 						<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
 							actionListener="#{hintView.addEditHint}" styleClass="dlgHintBtnOK"
-							update=":tbView:formDTT, :tbView:formDTE, :formDlgHints, :formCondBuilder"/>  
+							update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
 	
 						<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
 							oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"/> 

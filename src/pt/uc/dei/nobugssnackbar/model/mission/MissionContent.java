@@ -22,6 +22,8 @@ public class MissionContent implements Serializable {
 
 	private List<Command> commands;
     private List<Page> pages = new ArrayList<>();
+    
+    private List<Randomization> randList = new ArrayList<>();
 
 	public MissionContent() {
 	}
@@ -46,6 +48,14 @@ public class MissionContent implements Serializable {
 		return commands;
 	}
 
+	public List<Randomization> getRandList() {
+		return randList;
+	}
+	
+	public void setRandList(List<Randomization> randList) {
+		this.randList = randList;
+	}
+	
 	public void setCommands(List<Command> commands) {
 		this.commands = commands;
 	}

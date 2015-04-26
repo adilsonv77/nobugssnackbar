@@ -15,7 +15,7 @@
 		   		controlsLocation="none">		   				
 	
 				<p:column styleClass="leftColDT">	
-					<p:commandLink styleClass="cmndlinkDT" id="btnOKHintCatChoose" update=":formDlgHints,:dlgHintCategoryExtended"
+					<p:commandLink styleClass="cmndlinkDT" id="btnOKHintCatChoose" update=":dlgHintCategoryExtended"
 						actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
 						<f:param name="hCategoryID" value="#{hCategory.id}" />
 						
@@ -26,7 +26,7 @@
 				
 				<p:column>
 				
-					<p:commandLink styleClass="cmndlinkDT" id="btnOKHintCatChoose2" update=":formDlgHints,:dlgHintCategoryExtended"
+					<p:commandLink styleClass="cmndlinkDT" update=":dlgHintCategoryExtended"
 						actionListener="#{categoryVC.setElementByID()}" action="#{hintView.enableDialog()}">
 						<f:param name="hCategoryID" value="#{hCategory.id}" />
 						
