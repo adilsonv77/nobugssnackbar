@@ -5,8 +5,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
-		<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" minHeight="40" closable="false"
-				modal="true" onShow="PF('hintDialog').initPosition()" maximizable="true" dynamic="true" >
+		<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" 
+		        minHeight="545" closable="false"
+				modal="true" onShow="PF('hintDialog').initPosition()" dynamic="true" 
+				style="overflow: hidden !important;">
 	
 			<h:form id="formDlgHints" styleClass="formDlgHints">
 				<p:panelGrid columns="2">
@@ -40,7 +42,7 @@
 				
 			    
 			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>		    
-				<pe:ckEditor id="hintText" height="100%" width="100%" value="#{hintView.hint.text}"
+				<pe:ckEditor id="hintText" widgetVar="ckEditorHintText" height="100%" width="100%" value="#{hintView.hint.text}"
 					toolbar="#{explVC.editorControls}">
 				</pe:ckEditor>			    	   
 			    		    
@@ -51,7 +53,8 @@
 							update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
 	
 						<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" actionListener="#{hintView.newHint}" 
-							oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"/> 
+							oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"
+							onsuccess="PF('ckEditorHintText').destroy()"/> 
 					</div>
 				</p:panelGrid>
 		    </h:form>	   

@@ -10,10 +10,12 @@
 		widgetVar="pageDialog" header="#{msg['pages']}" minHeight="300"
 		minWidth="700" width="700" closable="false" style="overflow: hidden !important;"
 		modal="true" onShow="PF('pageDialog').initPosition()" dynamic="true">
+		
 		<h:form style="height:100%;">
 			<p:layout style="width:100%;min-height:400px;height:100%;">
 				<p:layoutUnit position="center" styleClass="disable-scroll" style="border: none;">
-					<pe:ckEditor id="editExplPage" height="100%" width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}">
+					<pe:ckEditor id="editExplPage" widgetVar="ckEditorExplPage" 
+								height="100%" width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}">
 					</pe:ckEditor>
 				</p:layoutUnit>
 				<p:layoutUnit position="south" style="border: none;">
@@ -25,7 +27,8 @@
 							
 						<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
 							update="explPageDlg"
-							actionListener="#{explVC.resetPage}" />
+							actionListener="#{explVC.resetPage}" 
+							onsuccess="PF('ckEditorExplPage').destroy()"/>
 							
 					</p:panelGrid>
 				</p:layoutUnit>
