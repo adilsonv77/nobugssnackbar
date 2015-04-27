@@ -252,6 +252,7 @@ public class GameJdbcDao implements GameDao {
 
 	public void finishMission(User user, long idMission, long idClazz,
 			int money, int timeSpend, long execution, boolean achieved,
+			int typeRunning,
 			String answer) throws SQLException {
 
 		int localTimeSpend = loadMissionAccomplished(idMission, user.getId(),
@@ -290,7 +291,7 @@ public class GameJdbcDao implements GameDao {
 
 			psLog = bdCon
 					.prepareStatement("insert into logmissions "
-							+ "(timespend, answer, missionid, classid, userid, execution, moment) values (?, ?, ?, ?, ?, ?, now())");
+							+ "(timespend, answer, missionid, classid, userid, execution, typerunning, moment) values (?, ?, ?, ?, ?, ?, ?, now())");
 
 			psLog.setLong(1, timeSpend);
 			psLog.setString(2, answer);
@@ -298,6 +299,7 @@ public class GameJdbcDao implements GameDao {
 			psLog.setLong(4, idClazz);
 			psLog.setLong(5, user.getId());
 			psLog.setLong(6, execution);
+			psLog.setLong(7, typeRunning);
 			log.info("logging " + idMission + " " + idClazz + " "
 					+ user.getId());
 			psLog.executeUpdate();

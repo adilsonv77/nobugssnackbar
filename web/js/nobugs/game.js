@@ -482,7 +482,7 @@ Game.saveMission = function() {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer, 
+	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer,
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -932,7 +932,7 @@ Game.finishOpenMission = function() {
 	var r = Game.beforeFinishMission();
 	Game.runningStatus = 0;
 	
-	UserControl.saveMission(Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, r.answer, function(){
+	UserControl.saveMission(Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, 0, r.answer, function(){
 	
 		var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
 		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
@@ -1344,6 +1344,7 @@ Game.execute = function(debug) {
 	  // Reset the graphic.
 	  Game.reset();
 
+	  Game.runningStatus = debug;
 	  
 	  try {
 		  
@@ -1396,7 +1397,6 @@ Game.execute = function(debug) {
 	  };
   }
 
-  Game.runningStatus = debug;
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
 };
 
@@ -1564,7 +1564,7 @@ Game.nextStep = function() {
 			    	Game.globalMoney.amount = parseInt(Game.globalMoney.amount) + reward.total;
 			    	Game.display();
 
-			    	UserControl.saveMission(reward.total, r.timeSpent, Game.howManyRuns, true, r.answer, function(){
+			    	UserControl.saveMission(reward.total, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
@@ -1601,8 +1601,10 @@ Game.nextStep = function() {
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
 
-			    	
-			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, null,
+		    		var style = {};
+		    		style.width = "60%";
+
+			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
 			    			function() {
 				    			Hints.showErrorHint();
 			    			}
@@ -1657,7 +1659,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, answer);
+			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer);
 
 			Game.currTime = now;
 		});

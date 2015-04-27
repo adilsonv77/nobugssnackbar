@@ -74,7 +74,7 @@ public class UserControl {
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
 			gameDao.finishMission(this.user, this.mission, this.classid, 0,
-					timeSpend, execution, false, answer);
+					timeSpend, execution, false, -1, answer);
 
 		this.user = null;
 		this.classid = 0;
@@ -142,7 +142,7 @@ public class UserControl {
 
 	@RemoteMethod
 	public void saveMission(int money, int timeSpend, long execution,
-			boolean achieved, String answer) throws Exception {
+			boolean achieved, int typeRunning, String answer) throws Exception {
 
 		if (this.user == null)
 			return;
@@ -154,7 +154,7 @@ public class UserControl {
 		this.user.setMoney(this.user.getMoney() + money);
 
 		gameDao.finishMission(this.user, this.mission, this.classid, money,
-				timeSpend, execution, achieved, answer);
+				timeSpend, execution, achieved, typeRunning, answer);
 
 		if (achieved) {
 			// when saveMission is called with achieved = true, this means that
