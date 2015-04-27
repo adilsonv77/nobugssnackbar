@@ -29,7 +29,7 @@
 				<pe:dynaFormControl type="list" for="list" styleClass="pe-dynaform-list">
 					<p:selectOneListbox id="list" value="#{data.value}" ><!-- required="#{data.required}" -->
 						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}" />
- 					 	 <p:ajax update="dynaFormCategory" event="change" listener="#{data.updateValues}" disabled="#{data.updateComponent == null}"/>
+ 					 	 <p:ajax update="dynaFormCategory" event="change" listener="#{data.updateValues}"/>
 					</p:selectOneListbox>
 				</pe:dynaFormControl>
 

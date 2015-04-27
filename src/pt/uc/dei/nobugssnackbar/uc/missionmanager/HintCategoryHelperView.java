@@ -38,6 +38,7 @@ public class HintCategoryHelperView implements Serializable {
 	private static final Pattern pattern = Pattern.compile("[?][{]([a-z])\\w+}");
 
 	private boolean isListEmpty = false;
+	private boolean itemSelected = false;
 	private boolean rendered;
 	
 	@ManagedProperty(value="#{hintView}")
@@ -45,6 +46,14 @@ public class HintCategoryHelperView implements Serializable {
 
 	public HintView getHintView() {
 		return hintView;
+	}
+	
+	public void setItemSelected(boolean itemSelected) {
+		this.itemSelected = itemSelected;
+	}
+	
+	public boolean getItemSelected(){
+		return itemSelected;
 	}
 	
 	public void setHintView(HintView hintView) {
@@ -164,7 +173,7 @@ public class HintCategoryHelperView implements Serializable {
 		Matcher matcher = pattern.matcher(exp);
 		String returnForm = "";
 		
-		while (matcher.find()) {
+		while (matcher.find() && itemSelected) {
 			String name = matcher.group();
 			name = name.substring(2, name.length()-1);
 			for (DynaFormControl dynaFormControl : model.getControls()) {
@@ -175,7 +184,7 @@ public class HintCategoryHelperView implements Serializable {
 						if(hcp.getValue() != null){
 							returnForm = matcher.replaceFirst(hcp.getValue().toString());
 						}else{
-							returnForm = "";
+							returnForm = matcher.replaceFirst("null");
 						}
 						break;
 					}
@@ -195,9 +204,10 @@ public class HintCategoryHelperView implements Serializable {
 		if(rendered){
 			if(isListEmpty){
 				isListEmpty = false;
-			}else if(returnForm.equals("")){//not selected command/category
+			}else if(!itemSelected){//not selected command/category but has subcommands
 				hintView.addMessageToGrowl(new Object[] {"title=error","selectCommand"});
 				return;
+			
 			}else{//everything is OK
 				hintView.getHint().setCategory(returnForm);			
 				cont.execute("PF('chooseHintCategoryDialog').hide()");
@@ -208,6 +218,8 @@ public class HintCategoryHelperView implements Serializable {
 			hintView.getHint().setCategory(returnCategory);
 			cont.update("formDlgHints");
 		}
+		
+		itemSelected = false;
 		hintView.disableDialog();
 		hintView.handleDialog();
 	}

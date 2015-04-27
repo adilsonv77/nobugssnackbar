@@ -69,7 +69,8 @@ public class MissionContent implements Serializable {
 			if (c.isSelected())
 				i++;
 		}
-		return 0;
+		
+		return -1;
 	}
 	public List<Command> getAvailableCommands() {
 		
@@ -96,19 +97,25 @@ public class MissionContent implements Serializable {
 	}
 	
 	public int getItemIndex(String categoryName, String commandName) {
+		boolean exist = false;
 		for (Command c:commands)
 			if (c.getName().equals(categoryName)) {
 				int j = 0;
-				for (Command i:c.getChildren())
-					if (i.getName().equals(commandName))
+				for (Command i:c.getChildren()){
+					if (i.getName().equals(commandName)){
+						exist = true;
 						break;
-					else
+					}
+					else{
 						if (i.isSelected())
 							j++;
-				
-				return j;
+					}
+				}
+				if(exist)
+					return j;
+				return -1;
 			}
-		return 0;
+		return -1;
 		
 	}
 	
