@@ -4,11 +4,9 @@
 		<page>
 		<![CDATA[
 			Parab&#233;ns !!! Agora est&#225;s noutro patamar. J&#225; consegues
-			perguntar ao cliente o que deseja comer e
-			<br />
+			perguntar ao cliente o que deseja comer e		
 			beber. Mas temos que ser mais delicados ao falar com os clientes. A
-			partir de agora vais perguntar
-			<br />
+			partir de agora vais perguntar		
 			se tem sede, para depois perguntar o que deseja beber.
 			]]>
 		</page>
@@ -17,7 +15,6 @@
 		<![CDATA[
 			Vamos usar um novo bloco de comando "se ... ent&#227;o ...",
 			tamb&#233;m chamado <b>bloco condicional</b>. Ent&#227;o
-			<br />
 			vais perguntar ao cliente se tem sede, para depois perguntares o que
 			deseja beber e ir buscar a bebida.
 			]]>

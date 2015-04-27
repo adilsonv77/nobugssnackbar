@@ -301,7 +301,9 @@ Game.logged = function(missionsHistorical) {
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
 		// this is necessary when unloads
-	    document.getElementById("mainBody").style.display = "none";
+		window.removeEventListener('unload', Game.unload);
+
+		document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "none";
 	    document.getElementById("selectMission").style.display = "inline";
 
@@ -912,8 +914,11 @@ Game.showDialogVictory = function(out) {
 	
 	var vicText = document.getElementById("victoyText");
 	vicText.innerHTML = out;
+	
+	var style = {};
+	style.width = "60%";
 
-	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, null, 
+	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, style, 
 			function(){
 				Game.init();
 		});

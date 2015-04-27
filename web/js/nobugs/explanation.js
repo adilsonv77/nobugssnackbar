@@ -79,8 +79,7 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	
 	Explanation.evaluateObjectives(nrPage, container);
 	
-	var style = {top: '120px'}; 
-	style[Blockly.RTL ? 'right' : 'left'] = '215px';
+	var style = [];
 
 	MyBlocklyApps.showDialog(content, null,
 							 false, true, true, Game.missionTitle, style, afterclosed);
