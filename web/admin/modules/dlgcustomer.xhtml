@@ -12,28 +12,34 @@
 	onShow="PF('customerDlg').initPosition()">
 		<h:form id="customerForm" style="height:100%;">
 			<p:layout style="min-width:850px;width:100%;min-height:490px;height:100%;">
-				<p:layoutUnit position="north">
-				
+				<p:layoutUnit position="north">	
 					<p:panelGrid columns="4">
 						<h:outputText value="#{msg['skin']}:"/>
-						<p:selectOneMenu style="width:100px">
-						
+						<p:selectOneMenu style="width:100px" panelStyle="width:280px">
+							<f:selectItems value="#{custVC.customerImages}" var="img" itemValue="#{img}"/>
+							<p:column style="width: 50px">
+								<p:graphicImage value="#{img}" width="32" height="32"/>
+							</p:column>
+							
+							<p:column style="width:200px;">
+									
+							</p:column>
 		        		</p:selectOneMenu>
 		        		
 		        		<h:outputText value="#{msg['rndmType']}:"/>
-		        		<p:selectOneRadio>
-				            <f:selectItem itemLabel="#{msg['none']}" itemValue="0" />
-				            <f:selectItem itemLabel="#{msg['atLeastOne']}" itemValue="1" />
+		        		<p:selectOneRadio value="#{custVC.customer.randomType}">
+				            <f:selectItem itemLabel="#{msg['none']}" itemValue="none"  />
+				            <f:selectItem itemLabel="#{msg['atLeastOne']}" itemValue="atLeastOne" />
 		        		</p:selectOneRadio>
 		        		
 		        		<h:outputText value="#{msg['startsFrom']}:"/>
-						<p:selectOneMenu style="width:125px">
-						
+						<p:selectOneMenu value="#{custVC.customer.init}">
+							<f:selectItems value="#{custVC.initPositions}" />
 		        		</p:selectOneMenu>
 		        		
 		        		<h:outputText value="#{msg['goesTo']}:"/>
-						<p:selectOneMenu style="width:125px">
-						
+						<p:selectOneMenu value="#{custVC.customer.dest}">
+							<f:selectItems value="#{custVC.destPositions}" />
 		        		</p:selectOneMenu>
 					</p:panelGrid>
 					

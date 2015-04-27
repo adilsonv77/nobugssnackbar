@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 
 import org.primefaces.context.RequestContext;
 
@@ -31,11 +33,15 @@ public class CustomerVC implements Serializable {
 	private Foodstuff foodstuff;
 	private Customer customer;
 	private List<Customer> customers;
-	private int customersPlaceId;
-	
+	private int customersPlaceId;	
 	// true - food, false - drink
 	private boolean foodstuffType;
-
+	
+	private List<SelectItem> initPositions;
+	private List<SelectItem> destPositions;
+	private final int numberOfCustomers = 4;
+	private List<String> customersImagePaths;
+	
 	public CustomerVC() {
 		foodstuff = new Foodstuff();
 		customer = new Customer();
@@ -43,6 +49,54 @@ public class CustomerVC implements Serializable {
 		customers = new ArrayList<>(12);
 		for (int i = 0; i < 12; i++) {
 			customers.add(new Customer());
+		}
+		
+		initMainLists();
+	}
+
+	private void initMainLists() {
+		initPositions = new ArrayList<>();
+		destPositions = new ArrayList<>();
+		
+		SelectItemGroup sigDefault = new SelectItemGroup("Door");
+		sigDefault.setSelectItems(new SelectItem[] {new SelectItem("Door", "Door")});
+		initPositions.add(sigDefault);
+		
+		SelectItemGroup sigCounters = new SelectItemGroup("Counters");
+		SelectItemGroup sigTable = new SelectItemGroup("Tables and Chairs");;
+		SelectItem[] sic = new SelectItem[4];
+		SelectItem[] sit = new SelectItem[8];
+		StringBuilder itemValue = new StringBuilder();
+		
+		for (int i = 0, sitIndex = 0; i < sic.length; i++) {
+			int num = i + 1;
+			itemValue.append("Counter " + num);
+			sic[i] = new SelectItem(itemValue.toString(), itemValue.toString());
+			itemValue.delete(0, itemValue.length());
+			
+			for (int j = 1; j <= 2; j++, sitIndex++) {
+				itemValue.append("Table ");
+				itemValue.append(num);
+				itemValue.append(" Chair ");
+				itemValue.append(j);
+				sit[sitIndex] = new SelectItem(itemValue.toString(), itemValue.toString());
+				itemValue.delete(0, itemValue.length());
+			}
+		}
+		
+		sigCounters.setSelectItems(sic);
+		initPositions.add(sigCounters);
+		destPositions.add(sigCounters);
+		sigTable.setSelectItems(sit);
+		initPositions.add(sigTable);
+		destPositions.add(sigTable);
+		
+		/**************************************************************/
+		
+		customersImagePaths = new ArrayList<>();
+		String path = "../images/"; // it depends on xhtml file's location
+		for (int i = 1; i <= numberOfCustomers; i++) {			
+			customersImagePaths.add(path + String.format("$customer%02d_anger.png", i));
 		}
 	}
 	
@@ -242,6 +296,34 @@ public class CustomerVC implements Serializable {
 		this.drink = drink;
 		setFoodstuffType(false);
 		foodstuff = (Foodstuff)  this.drink;
+	}
+
+	public List<SelectItem> getInitPositions() {
+		return initPositions;
+	}
+
+	public void setInitPositions(List<SelectItem> initPositions) {
+		this.initPositions = initPositions;
+	}
+
+	public List<SelectItem> getDestPositions() {
+		return destPositions;
+	}
+
+	public void setDestPositions(List<SelectItem> destPositions) {
+		this.destPositions = destPositions;
+	}
+
+	public List<String> getCustomerImages() {
+		return customersImagePaths;
+	}
+
+	public void setCustomerImages(List<String> customerImages) {
+		this.customersImagePaths = customerImages;
+	}
+
+	public int getNumberOfCustomers() {
+		return numberOfCustomers;
 	}
 
 }

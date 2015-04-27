@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.i18n;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.ListResourceBundle;
 import java.util.Properties;
@@ -11,7 +12,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
 
-public class Messages extends ListResourceBundle {
+public class Messages extends ListResourceBundle implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	protected String fileName = "en";
 	

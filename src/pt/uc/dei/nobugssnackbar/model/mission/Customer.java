@@ -6,7 +6,8 @@ public class Customer implements java.io.Serializable  {
 	private int id;
 	private String init;
 	private String dest;
-	private String randomType;
+	// watch out with the value 'none', when you generate XML
+	private String randomType = "none";
 	private int skin;
 	
 	/* 
