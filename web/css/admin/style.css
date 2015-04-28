@@ -213,3 +213,19 @@ div.divExplEdit + img {
 	margin-bottom: 30px;
 }
 /*******************End Dialog Hint page css******************/
+.btnObjectives{
+	
+	display:inline-block;
+	float: right;
+}
+.btnAddObjectives{
+	margin-top:30px;
+	margin-bottom:20px;
+	display: block;
+}
+.fieldsetObjectives{
+	height: 350px !important;
+}
+.fieldsetObjectives300w{
+	width: 300px !important;
+}

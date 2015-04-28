@@ -17,35 +17,35 @@
  		
  		<p:panelGrid>
  			<h:outputLabel for="reward" value="Reward " />
-        	<p:spinner id="reward" value="" size="5"/>	
+        	<p:spinner id="reward" size="5"/>	
         </p:panelGrid>
         
         <p:panelGrid columns="3">
-			<p:selectBooleanCheckbox value=""/>        	
+			<p:selectBooleanCheckbox/>        	
  			<h:outputLabel for="variableQty" value="Variable quantity " />
-        	<p:spinner id="variableQty" value="" size="5"/>
+        	<p:spinner id="variableQty" size="5"/>
 			
-			<p:selectBooleanCheckbox value=""/>                  
+			<p:selectBooleanCheckbox  />                  
  			<h:outputLabel for="commandQty" value="Command quantity " />
-        	<p:spinner id="commandQty" value="" size="5"/>                
+        	<p:spinner id="commandQty"   size="5"/>                
 		</p:panelGrid>
 		
 		<p:panelGrid columns="2">
-        	<p:selectBooleanCheckbox value=""/>
+        	<p:selectBooleanCheckbox  />
         	<h:outputText value="Ordered:"/>
         			    			
-			<p:selectBooleanCheckbox value=""/>        			    			
+			<p:selectBooleanCheckbox  />        			    			
         	<h:outputText value="Button Debug:"/>        			
 		</p:panelGrid>
 	
 		<p:panelGrid columns="2">
-        	<p:selectBooleanCheckbox value=""/>		    
+        	<p:selectBooleanCheckbox  />		    
         	<h:outputText value="Button Buy:"/>
         	
-        	<p:selectBooleanCheckbox value=""/>
+        	<p:selectBooleanCheckbox  />
         	<h:outputText value="Button Run:"/>
         	        	
-        	<p:selectBooleanCheckbox value=""/>
+        	<p:selectBooleanCheckbox  />
         	<h:outputText value="Variable Window:"/>        	        			
 		</p:panelGrid>
 	
@@ -55,18 +55,18 @@
 	    <p:fieldset legend="Bonus time" styleClass="fieldsetObjectives fieldsetObjectives300w" toggleable="true" collapsed="true"> 
 	        <h:panelGrid columns="2">         
  				<h:outputLabel for="totalReward" value="Total reward " />
-        		<p:spinner id="totalReward" value="" size="5"/>	 
+        		<p:spinner id="totalReward"   size="5"/>	 
         		
-        		<p:spinner id="btnAddBonusTime" value="" size="5"/>	 
+        		<p:spinner id="btnAddBonusTime"   size="5"/>	 
         		<p:panelGrid columns="2">
         			<p:commandButton icon="ui-icon-circle-plus" title="Add"/>
         			<p:commandButton icon="ui-icon-arrowstop-1-s" title="Save"/>
         		</p:panelGrid>       
 	        </h:panelGrid>
 	        
-			<p:dataTable var="value"  value="">
+			<p:dataTable var="value"   >
 			    <p:column headerText="Value" width="50">
-			        <h:outputText value=""/>
+			        <h:outputText  />
 			    </p:column>
 						 
 			    <p:column headerText="Action">
@@ -79,16 +79,16 @@
 	    <p:fieldset legend="Objectives" styleClass="fieldsetObjectives">
 	        <h:panelGrid columns="4" >         
  				<h:outputLabel for="position" value="Position" />
-        		<p:selectOneMenu id="position" value="" size="1"/>	
+        		<p:selectOneMenu id="position"   size="1"/>	
         		
  				<h:outputLabel for="type" value="Type" />
-        		<p:selectOneMenu id="type" value="" size="1"/>
+        		<p:selectOneMenu id="type"   size="1"/>
 
  				<h:outputLabel for="place" value="Type" />
-        		<p:selectOneMenu id="place" value="" size="5"/>
+        		<p:selectOneMenu id="place"   size="5"/>
         		
  				<h:outputLabel for="distinct" value="Distinct" />
-        		<p:spinner id="distinct" value="" size="5"/>    
+        		<p:spinner id="distinct"   size="5"/>    
         		        		    		        		        		 	        
 	        </h:panelGrid>
 	        
@@ -97,13 +97,13 @@
 	        
 	        <p:commandButton icon="ui-icon-circle-plus" title="Add" styleClass="btnAddObjectives"/>
 	        
-			<p:dataTable var="objective"  value="">
+			<p:dataTable var="objective"   >
 			    <p:column headerText="Position">
-			        <h:outputText value=""/>
+			        <h:outputText  />
 			    </p:column>
 			    
 			    <p:column headerText="Type">
-			        <h:outputText value=""/>
+			        <h:outputText  />
 			    </p:column>			    
 						 
 			    <p:column headerText="Action">
@@ -117,10 +117,10 @@
     <p:fieldset legend="Max command bonus" toggleable="true" collapsed="true" styleClass="fieldsetObjectives300w">
         <h:panelGrid columns="4">         
  			<h:outputLabel for="quantity" value="Quantity " />
-        	<p:spinner id="quantity" value="" size="5"/>	
+        	<p:spinner id="quantity"   size="5"/>	
         	
  			<h:outputLabel for="rewardMaxCmdBonus" value="Reward " />
-        	<p:spinner id="rewardMaxCmdBonus" value="" size="5"/>	        	
+        	<p:spinner id="rewardMaxCmdBonus"   size="5"/>	        	
         </h:panelGrid>
     </p:fieldset>		
 	
