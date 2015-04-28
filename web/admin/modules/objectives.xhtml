@@ -16,110 +16,110 @@
 	<p:panelGrid columns="4">
  		
  		<p:panelGrid>
- 			<h:outputLabel for="reward" value="Reward " />
+ 			<h:outputLabel for="reward" value="#{msg['reward']} " />
         	<p:spinner id="reward" size="5"/>	
         </p:panelGrid>
         
         <p:panelGrid columns="3">
 			<p:selectBooleanCheckbox/>        	
- 			<h:outputLabel for="variableQty" value="Variable quantity " />
+ 			<h:outputLabel for="variableQty" value="#{msg['variableQuantity']}" />
         	<p:spinner id="variableQty" size="5"/>
 			
 			<p:selectBooleanCheckbox  />                  
- 			<h:outputLabel for="commandQty" value="Command quantity " />
+ 			<h:outputLabel for="commandQty" value="#{msg['commandQuantity']}" />
         	<p:spinner id="commandQty"   size="5"/>                
 		</p:panelGrid>
 		
 		<p:panelGrid columns="2">
         	<p:selectBooleanCheckbox  />
-        	<h:outputText value="Ordered:"/>
+        	<h:outputText value="#{msg['ordered']}:"/>
         			    			
 			<p:selectBooleanCheckbox  />        			    			
-        	<h:outputText value="Button Debug:"/>        			
+        	<h:outputText value="#{msg['btnDebug']}:"/>        			
 		</p:panelGrid>
 	
 		<p:panelGrid columns="2">
         	<p:selectBooleanCheckbox  />		    
-        	<h:outputText value="Button Buy:"/>
+        	<h:outputText value="#{msg['btnBuy']}:"/>
         	
         	<p:selectBooleanCheckbox  />
-        	<h:outputText value="Button Run:"/>
+        	<h:outputText value="#{msg['btnRun']}:"/>
         	        	
         	<p:selectBooleanCheckbox  />
-        	<h:outputText value="Variable Window:"/>        	        			
+        	<h:outputText value="#{msg['variableWindow']}"/>        	        			
 		</p:panelGrid>
 	
 	</p:panelGrid>
 	
 	<p:panelGrid columns="2">
-	    <p:fieldset legend="Bonus time" styleClass="fieldsetObjectives fieldsetObjectives300w" toggleable="true" collapsed="true"> 
+	    <p:fieldset legend="#{msg['bonusTime']}" styleClass="fieldsetObjectives fieldsetObjectives300w" toggleable="true" collapsed="true"> 
 	        <h:panelGrid columns="2">         
- 				<h:outputLabel for="totalReward" value="Total reward " />
-        		<p:spinner id="totalReward"   size="5"/>	 
+ 				<h:outputLabel for="totalReward" value="#{msg['totalReward']}" />
+        		<p:spinner id="totalReward" size="5"/>	 
         		
-        		<p:spinner id="btnAddBonusTime"   size="5"/>	 
+        		<p:spinner id="btnAddBonusTime" size="5"/>	 
         		<p:panelGrid columns="2">
-        			<p:commandButton icon="ui-icon-circle-plus" title="Add"/>
-        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="Save"/>
+        			<p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}"/>
+        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="#{msg['save']}"/>
         		</p:panelGrid>       
 	        </h:panelGrid>
 	        
 			<p:dataTable var="value"   >
-			    <p:column headerText="Value" width="50">
-			        <h:outputText  />
+			    <p:column headerText="#{msg['value']}" width="50">
+			        <h:outputText/>
 			    </p:column>
 						 
-			    <p:column headerText="Action">
-			        <p:commandButton icon="ui-icon-wrench" title="Edit"/>
-			        <p:commandButton icon="ui-icon-circle-close" title="Delete"/>
+			    <p:column headerText="#{msg['actions']}">
+			        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}"/>
+			        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}"/>
 			    </p:column>
 			</p:dataTable>	        
 	    </p:fieldset>
 	    
-	    <p:fieldset legend="Objectives" styleClass="fieldsetObjectives">
+	    <p:fieldset legend="#{msg['objectives']}" styleClass="fieldsetObjectives">
 	        <h:panelGrid columns="4" >         
- 				<h:outputLabel for="position" value="Position" />
+ 				<h:outputLabel for="position" value="#{msg['position']}" />
         		<p:selectOneMenu id="position"   size="1"/>	
         		
- 				<h:outputLabel for="type" value="Type" />
+ 				<h:outputLabel for="type" value="#{msg['type']}" />
         		<p:selectOneMenu id="type"   size="1"/>
 
- 				<h:outputLabel for="place" value="Type" />
+ 				<h:outputLabel for="place" value="#{msg['place']}" />
         		<p:selectOneMenu id="place"   size="5"/>
         		
- 				<h:outputLabel for="distinct" value="Distinct" />
+ 				<h:outputLabel for="distinct" value="#{msg['distinct']}" />
         		<p:spinner id="distinct"   size="5"/>    
         		        		    		        		        		 	        
 	        </h:panelGrid>
 	        
-        	<p:commandButton icon="ui-icon-check" title="OK" styleClass="btnObjectives"/>
-        	<p:commandButton icon="ui-icon-close" title="Cancel" styleClass="btnObjectives"/>	        
+        	<p:commandButton icon="ui-icon-check" title="#{msg['ok']}" styleClass="btnObjectives"/>
+        	<p:commandButton icon="ui-icon-close" title="#{msg['cancel']}" styleClass="btnObjectives"/>	        
 	        
-	        <p:commandButton icon="ui-icon-circle-plus" title="Add" styleClass="btnAddObjectives"/>
+	        <p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}" styleClass="btnAddObjectives"/>
 	        
 			<p:dataTable var="objective"   >
-			    <p:column headerText="Position">
+			    <p:column headerText="#{msg['position']}">
 			        <h:outputText  />
 			    </p:column>
 			    
-			    <p:column headerText="Type">
+			    <p:column headerText="#{msg['type']}">
 			        <h:outputText  />
 			    </p:column>			    
 						 
-			    <p:column headerText="Action">
-			        <p:commandButton icon="ui-icon-wrench" title="Edit"/>
-			        <p:commandButton icon="ui-icon-circle-close" title="Delete"/>
+			    <p:column headerText="#{msg['actions']}">
+			        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}"/>
+			        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}"/>
 			    </p:column>
 			</p:dataTable>	        
 	    </p:fieldset>	    
     </p:panelGrid>	
 
-    <p:fieldset legend="Max command bonus" toggleable="true" collapsed="true" styleClass="fieldsetObjectives300w">
+    <p:fieldset legend="#{msg['maxCommandsBonus']}" toggleable="true" collapsed="true" styleClass="fieldsetObjectives300w">
         <h:panelGrid columns="4">         
- 			<h:outputLabel for="quantity" value="Quantity " />
+ 			<h:outputLabel for="quantity" value="#{msg['quantity']} " />
         	<p:spinner id="quantity"   size="5"/>	
         	
- 			<h:outputLabel for="rewardMaxCmdBonus" value="Reward " />
+ 			<h:outputLabel for="rewardMaxCmdBonus" value="#{msg['reward']} " />
         	<p:spinner id="rewardMaxCmdBonus"   size="5"/>	        	
         </h:panelGrid>
     </p:fieldset>		
