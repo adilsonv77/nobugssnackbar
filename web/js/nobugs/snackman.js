@@ -2,7 +2,7 @@
  * NoBug's Snack Bar
  *
  * Copyright 2014 Adilson Vahldick.
- * https://nobugssnackbar.googlecode.com/
+ * https://github.com/adilsonv77/nobugssnackbar/
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,6 @@ SnackMan = function(objectives, mission) {
 	
 	this.imgCookerPlatter = PreloadImgs.get("$cooker_platter");
 	
-	this.showCooler = false;
 	this.cooler = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 4,
@@ -95,7 +94,6 @@ SnackMan = function(objectives, mission) {
 		img : PreloadImgs.get("cooler")
 	});
 	
-	this.showDisplay = false;
 	this.display = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 4,
@@ -247,9 +245,20 @@ SnackMan.prototype.draw = function(ctx) {
 	
 };
 
-/**********************************************************/
-/**          create the commands to evaluate             */
-/**********************************************************/
+/**********************************************************************/
+/**          create the commands to evaluate - the action part        */
+/**  actions (snackman and customers) are only performed in this time */
+/**********************************************************************/
+
+SnackMan.prototype.update = function() {
+	var param = [];
+	for (var i=0;i<arguments.length;i++)
+	 param.push(arguments[i]);
+	
+	BlocklyApps.log.push(param);
+	CustomerManager.update();
+};
+
 SnackMan.prototype.goToBarCounter = function(cust) {
 	
 	
@@ -295,12 +304,9 @@ SnackMan.prototype.isThereACustomer = function() {
 	
 	var found = this.getCustomer();
 	
-	BlocklyApps.log.push(['IM', 0]); // turn to front
-	CustomerManager.update();
-	BlocklyApps.log.push(['IM', 32]); // turn to left to find a customer in the counter
-	CustomerManager.update();
-	BlocklyApps.log.push(['IM', 0]); // turn to front
-	CustomerManager.update();
+	this.update('IM', 0);  // turn to front
+	this.update('IM', 32); // turn to left to find a customer in the counter
+	this.update('IM', 0);  // turn to front
 
 	return found != null;
 };
@@ -319,7 +325,9 @@ SnackMan.prototype.askForDrink = function() {
 		BlocklyApps.log.push(["fail", "Error_isntThirsty"]);
 		throw false;
 	}
-
+	
+	this.update('IM', 0);  // turn to front
+	
 	this.verifyObjectives("askForDrink", found);
 	
 	return drink;
@@ -352,26 +360,16 @@ SnackMan.prototype.pickUpDrink = function(order) {
 	}
 	
 	// open the cooler three times because there are three slides
-	BlocklyApps.log.push(['OC']); 
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['OC']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['OC']);
-	CustomerManager.update();
-	
-	// close the cooler 
-	BlocklyApps.log.push(['CC']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['CC']);
-	CustomerManager.update();
+	this.update('OC');
+	this.update('OC');
+	this.update('OC');
 
-	BlocklyApps.log.push(['CC']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['IP']);
+	// close the cooler 
+	this.update('CC');
+	this.update('CC');
+	this.update('CC');
+
+	this.update('IP');
 	
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType}; 
 	this.verifyObjectives("pickUpDrink", item);
@@ -390,6 +388,8 @@ SnackMan.prototype.hasThirsty = function() {
 		throw false;
 	}
 	
+	this.update('IM', 0);  // turn to front
+
 	return found.hasThirsty();
 	
 };
@@ -409,6 +409,8 @@ SnackMan.prototype.askForFood = function() {
 		throw false;
 	}
 	
+	this.update('IM', 0);  // turn to front
+
 	this.verifyObjectives("askForFood", found);
 	
 	return food;
@@ -421,6 +423,8 @@ SnackMan.prototype.hasHunger = function() {
 		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
 		throw false;
 	}
+	
+	this.update('IM', 0);  // turn to front
 	
 	return found.hasHunger();
 	
@@ -453,27 +457,16 @@ SnackMan.prototype.pickUpHotDog= function(order) {
 	}
 	
 	// open the display three times because there are three slides
-	BlocklyApps.log.push(['OD']); 
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['OD']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['OD']);
-	CustomerManager.update();
-	
-	// close the display 
-	BlocklyApps.log.push(['CD']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['CD']);
-	CustomerManager.update();
+	this.update('OD'); 
+	this.update('OD'); 
+	this.update('OD'); 
 
-	BlocklyApps.log.push(['CD']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['IP']);
-	
+	this.update('CD'); 
+	this.update('CD'); 
+	this.update('CD'); 
+
+	// close the display 
+	this.update('IP'); 
 	
 	// TODO in future version, maybe the display has limited stock
 	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food", source: order.data.source, sourceType: order.data.sourceType};
@@ -511,21 +504,14 @@ SnackMan.prototype.genericPickUp = function(order, machine) {
 	}
 	
 	// two animations slides: open machine
-	BlocklyApps.log.push(['OD']); 
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['OD']);
-	CustomerManager.update();
-	
-	// two animations slides: close machine
-	BlocklyApps.log.push(['CD']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['CD']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['IP']);
-	
+	this.update('OD'); 
+	this.update('OD'); 
+
+	this.update('CD'); 
+	this.update('CD'); 
+
+	this.update('IP'); 
+
 	var item = {type: "item", descr:"$$"+machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
 	
 	this.catched++;
@@ -567,12 +553,11 @@ SnackMan.prototype.deliver = function(item) {
 	if (amount.happy != Customer.DELIVERED_PARTIAL) {
 		// 11 times to execute the coin animation and erase the coin
 		for (var i=0; i<11; i++) {
-			BlocklyApps.log.push(['IM', 0]);
-			CustomerManager.update();
+
+			this.update('IM', 0);
 		}
 		
-		BlocklyApps.log.push(['IO', amount.money, this.catched - this.delivered]);
-		CustomerManager.update();
+		this.update('IO', amount.money, this.catched - this.delivered);
 	}
 	
 };
@@ -612,20 +597,14 @@ SnackMan.prototype.pickUpFruits = function(order) {
 	}
 	
 	// show a fruit two times because there are two slides
-	BlocklyApps.log.push(['SF']); 
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['SF']);
-	CustomerManager.update();
-	
-	// hide  the fruit 
-	BlocklyApps.log.push(['HF']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['HF']);
-	CustomerManager.update();
+	this.update('SF');
+	this.update('SF');
 
-	BlocklyApps.log.push(['IP']);
+	// hide  the fruit 
+	this.update('HF');
+	this.update('HF');
+
+	this.update('IP');
 	
 	// TODO in future version, maybe the display has limited stock
 	var item = {type: "item", descr:"$$"+order.data.descr.substring(9), drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType};
@@ -655,27 +634,17 @@ SnackMan.prototype.prepareAndPickUpJuice = function(order) {
 	}
 	
 	// make juice three times because there are three slides
-	BlocklyApps.log.push(['MJ']); 
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['MJ']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['MJ']);
-	CustomerManager.update();
+	this.update('MJ'); 
+	this.update('MJ'); 
+	this.update('MJ'); 
 	
 	// hide  the fruit 
-	BlocklyApps.log.push(['HJ']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['HJ']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['HJ']);
-	CustomerManager.update();
-	
-	BlocklyApps.log.push(['IP']);
-	
+	this.update('HJ'); 
+	this.update('HJ'); 
+	this.update('HJ'); 
+
+	this.update('IP'); 
+
 	// TODO in future version, maybe the display has limited stock
 	var item = {type: "item", descr:"$$juiceof"+order.data.descr.substring(2), drinkOrFood: "drink", source: order.data.source, sourceType: order.data.sourceType};
 	//this.verifyObjectives("catchFruits", item);
@@ -692,14 +661,11 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 		
 		var node = this.nodes[solution[i]];
 		
-		BlocklyApps.log.push(['MS', this.currentNode.x, this.currentNode.y,
-		                      		node.x, node.y]);
-		
+		this.update('MS', this.currentNode.x, this.currentNode.y, node.x, node.y); 
 		this.currentNode = node;
 		
-		CustomerManager.update();
 	}
-	BlocklyApps.log.push(['CO', 0]);
+	this.update('CO', 0);
 
 };
 
@@ -707,11 +673,77 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 /**                    draw methods                       */
 /**********************************************************/
 
+SnackMan.prototype.animate = function(command, values) {
+	  switch (command) {
+	    case 'AL' :
+	    	this.alertRun(values);
+	    	break;
+	    	
+	    case 'CO':
+	    	this.checkObjectives();
+	    	
+	  	case 'IM' :
+	  		this.changeSnackManImage(values);
+	  		break;
+	  
+	  	case 'MS' :
+	  		this.changeSnackManPosition(values.shift(), values.shift(), values.shift(), values.shift());
+	  		break;
+	  		
+	  	case 'OC' :
+	  		this.nextOpenCoolerImage();
+	  		break;
+	  		
+	  	case 'CC' :
+	  		this.nextCloseCoolerImage();
+	  		break;
+	  		
+	  	case 'OD' :
+	  		this.nextOpenDisplayImage();
+	  		break;
+	  		
+	  	case 'CD' :
+	  		this.nextCloseDisplayImage();
+	  		break;
+	  		
+	 	case 'IP' :
+	 		this.changeImagePlatter();
+	  		break;
+	  		
+	  	case 'IO' :
+	  		var value = values.shift();
+	  		if (value != null)
+	  			Game.missionMoney.amount += value;
+	  		
+	  		value = values.shift();
+	  		if (value == 0)
+	  			this.changeImageOriginal();
+	  		break;
+
+	 	case 'SF' :
+	 		this.nextShowFruitImage();
+	  		break;
+	  		
+	 	case 'HF' :
+	 		this.nextHideFruitImage();
+	  		break;
+	  		
+	 	case 'MJ':
+	 		this.nextShowJuiceMachineImage();
+	 		break;
+	  		
+	 	case 'HJ':
+	 		this.nextHideJuiceMachineImage();
+	 		break;
+	  }
+	  
+};
+
 SnackMan.prototype.changeSnackManImage = function(id) {
+
 	this.img.sourceY = id;
 	this.img.update();
 	
-	Game.display();
 };
 
 SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
@@ -729,8 +761,6 @@ SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	
 	this.img.x = nx;
 	this.img.y = ny - 32;
-	
-	Game.display();
 };
 
 SnackMan.prototype.nextOpenCoolerImage = function() {
@@ -752,10 +782,8 @@ SnackMan.prototype.nextCloseCoolerImage = function() {
 };
 
 SnackMan.prototype.updateCoolerImage = function() {
+
 	this.cooler.update();
-	this.showCooler = true;
-	Game.display();
-	this.showCooler = false;
 	
 };
 
@@ -776,8 +804,9 @@ SnackMan.prototype.nextHideFruitImage = function() {
 };
 
 SnackMan.prototype.updateBoxOfFruitsImage = function() {
+	
 	this.boxOfFruits.update();
-	Game.display();
+
 };
 
 SnackMan.prototype.nextShowJuiceMachineImage = function() {
@@ -798,7 +827,6 @@ SnackMan.prototype.nextHideJuiceMachineImage = function() {
 
 SnackMan.prototype.updateJuiceMachineImage = function() {
 	this.juiceMachine.update();
-	Game.display();
 };
 
 SnackMan.prototype.nextOpenDisplayImage = function() {
@@ -821,20 +849,14 @@ SnackMan.prototype.nextCloseDisplayImage = function() {
 
 SnackMan.prototype.updateDisplayImage = function() {
 	this.display.update();
-	this.showDisplay = true;
-	Game.display();
-	this.showDisplay = false;
-	
 };
 
 SnackMan.prototype.changeImagePlatter = function() {
 	this.img.image = this.imgCookerPlatter;
-	Game.display();
 };
 
 SnackMan.prototype.changeImageOriginal = function() {
 	this.img.image = this.imgCooker;
-	Game.display();
 };
 
 /**********************************************************/

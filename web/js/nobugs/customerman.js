@@ -321,8 +321,7 @@ CustomerManager.draw = function(ctx) {
 	var counters = [true, true, true, true];
 	
 	for (var i=0; i<customers.length; i++) {
-		customers[i].draw(ctx);
-		var nId = customers[i].currentNode.id;
+		var nId = customers[i].reallyCurrentNode.id;
 		for (var j=0; j<CustOpt.counter.length; j++) {
 			if (nId === CustOpt.counter[j]) {
 				counters[j] = false;
@@ -334,6 +333,8 @@ CustomerManager.draw = function(ctx) {
 	
 	CustomerManager.drawCounters(ctx, counters);
 	
+	for (var i=0; i<customers.length; i++) 
+		customers[i].draw(ctx);
 };
 
 CustomerManager.drawCounters = function(ctx, counters) {

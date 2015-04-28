@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-04-26 13:20:55.569000",
+		"lastupdated": "2015-04-27 16:55:05.640000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -73,6 +73,7 @@
 	"SnackMan.goToBarCounterTooltip": "Moves the snack man to the customer.",
 	"SnackMan.isThereACustomerTooltip": "Verify if there is a customer in the currently position.",
 	"SnackMan.deliverTooltip": "Delivers the food or drink to the customer near the cooker.",
+	"SnackMan.waittip": "Wait some seconds before the next command.",
 	"SnackMan.goToDisplayTooltip": "Moves the snack man to the display.",
 	"SnackMan.askForFoodTooltip": "Asks the customer about what he wants to eat.",
 	"SnackMan.catchFoodTooltip": "Catches the food from the display and put it on a platter ready will deliver to the customer.",

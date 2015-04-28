@@ -46,7 +46,8 @@
   <script type="text/javascript" src="js/jquery.countup/base.js?v={$v}"></script>
   <script type="text/javascript" src="js/jquery.countup/jquery.countup.js?v={$v}"></script>
 
-  <script type="text/javascript" src="js/jsinterpreter/acorn_interpreter.js?v={$v}"></script>
+  <script type="text/javascript" src="js/jsinterpreter/acorn.js?v={$v}"></script>
+  <script type="text/javascript" src="js/jsinterpreter/interpreter.js?v={$v}"></script>
 
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/util.js"></script>
@@ -495,6 +496,15 @@
 			</value>
 	      </block>{/if}
 	
+	      {if $ij.enabled['wait']}
+	      <block type="do_wait"> 
+	      <value name="VALUE">
+	          <block type="math_number">
+	            <field name="NUM">5</field>
+	          </block>
+			</value>
+	      </block>{/if}
+	      
 	    </category>
     {/if}
     {if $ij.enabled['vars']}
