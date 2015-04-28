@@ -2,7 +2,7 @@
  * NoBug's Snack Bar
  *
  * Copyright 2014 Adilson Vahldick.
- * https://meteoricsnackbar.googlecode.com/
+ * https://github.com/adilsonv77/nobugssnackbar
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,6 +82,27 @@ Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
 	  return ['isThereACustomer( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	
 	};
+	
+Blockly.Blocks['do_wait'] = {
+		init : function() {
+		    this.setColour(160);
+		    this.interpolateMsg(
+		    	'wait %1 s',
+		    	['VALUE', null, Blockly.ALIGN_RIGHT],
+		        Blockly.ALIGN_RIGHT);
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip('SnackMan_waitTooltip');
+		}
+	  };
+	
+Blockly.JavaScript['do_wait'] = function(block) {
+	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+	  
+	  return 'WAIT_NOBUGS[' + (parseInt(value)*1000) + ']';
+	};
+
 	
 /******************************************************************************
  *                          Snackman Food

@@ -2,7 +2,7 @@
  * NoBug's Snack Bar
  *
  * Copyright 2014 Adilson Vahldick.
- * https://nobugssnackbar.googlecode.com/
+ * https://github.com/adilsonv77/nobugssnackbar/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1127,7 +1127,7 @@ Game.killAll = function() {
  */
 Game.display = function() {
 
-	CustomerManager.animation();
+//	CustomerManager.animation();
 
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
 
@@ -1365,10 +1365,15 @@ Game.execute = function(debug) {
 		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Game.semanticAnalysis);
 		
   	    var code = "var NoBugsJavaScript = {};\n";
+  	    var subcode = Game.convertWaits(js.workspaceToCode());
+
+        // never happens that stop receives true !!! 
   	    if (Game.openMission.open) {
-  	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + js.workspaceToCode() + "\n } ";
+  	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + subcode + "\n } ";
   	    } else 
-  	    	code += js.workspaceToCode();
+  	    	code += subcode ;
+  	    
+  	   // code = "var xp = function() { " + code + "}; xp(); ";
   	    
       //  alert(code);
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
@@ -1398,6 +1403,30 @@ Game.execute = function(debug) {
   }
 
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
+};
+
+Game.convertWaits = function(code) {
+	
+	var c = 1;
+	var i = code.search(/(WAIT_NOBUGS\[[0-9]*\])/g);
+	while (i > -1) {
+		
+		var peace = code.substring(i+11);
+		peace = /(\[[0-9]*\])/g.exec(peace)[0];
+		peace = peace.substring(1, peace.length-1);
+		
+		
+		code = code.replace(/(WAIT_NOBUGS\[[0-9]*\])/g, "var f"+c+" = function() { ");
+		
+		code = code + "}; \n NoBugsJavaScript.timeOut=false; mySetTimeout('f"+c + "', " + peace + "); while(!NoBugsJavaScript.timeOut);\n";
+		
+		c++;
+		i = code.search(/(WAIT_NOBUGS\[[0-9]*\])/g);
+	}
+	
+	
+	
+	return code;
 };
 
 Game.semanticAnalysis  = function(block) {
@@ -1524,10 +1553,15 @@ Game.nextStep = function() {
 		try {
 			if (Game.jsInterpreter.step()) {
 				
-				if (BlocklyApps.log.length > 0 || Game.highlightPause) {
+				if (BlocklyApps.log.length > 0 || Game.highlightPause || Game.waitFunction) {
 					
-					if (Game.runningStatus != 2  || Game.highlightPause === false) {
+					if (Game.runningStatus != 2  || Game.highlightPause === false  || Game.waitFunction) {
+						
+						if (Game.waitFunction)
+							hero.update('IM', 0);
+							
 						BlocklyApps.log.push(['nextStep']);
+						
 					}
 					else {
 
@@ -1544,6 +1578,15 @@ Game.nextStep = function() {
 				}
 				
 			} else {
+				
+				if (Game.waitFunction) {
+					
+					hero.update('IM', 0);					
+					BlocklyApps.log.push(['nextStep']);
+					
+					Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
+					return;
+				}
 				
 				// if there isn't more lines to evaluate
 				Game.resetButtons();
@@ -1562,7 +1605,7 @@ Game.nextStep = function() {
 			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 			    	Game.globalMoney.amount = parseInt(Game.globalMoney.amount) + reward.total;
-			    	Game.display();
+			    	Game.display(); // updates the GlobalMoney
 
 			    	UserControl.saveMission(reward.total, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
 			    		
@@ -1710,7 +1753,14 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'updateVariables',
           interpreter.createNativeFunction(wrapper));
 
-    var wrapper = function(id) {
+    wrapper = function(id) {
+        return interpreter.createPrimitive(alert(id));
+      };
+    
+    interpreter.setProperty(scope, 'alert',
+          interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function(id) {
         id = id ? id.toString() : '';
         return interpreter.createPrimitive(Game.highlightBlock(id));
       };
@@ -1718,13 +1768,21 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'highlightBlock',
           interpreter.createNativeFunction(wrapper));
 
-	var wrapper = function(a0, a1, op) {
+	wrapper = function(a0, a1, op) {
         return interpreter.createPrimitive(nobugsComparison(a0, a1, op));
       };
     
     interpreter.setProperty(scope, 'nobugsComparison',
           interpreter.createNativeFunction(wrapper));
 
+    wrapper = function(f, t) {
+        return interpreter.createPrimitive(Game.setTimeout(f.data, t.data));
+      };
+    
+    interpreter.setProperty(scope, 'mySetTimeout',
+          interpreter.createNativeFunction(wrapper));
+    
+    
     // Move commands
 	wrapper = function(n) {
       return interpreter.createPrimitive(hero.goToBarCounter(n));
@@ -1813,8 +1871,6 @@ Game.initApi = function(interpreter, scope) {
 	interpreter.setProperty(scope, 'prepareAndPickUpJuice',
 		  interpreter.createNativeFunction(wrapper));
 	
-	
-	
 	// other commands
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.pickUpHotDog(o));
@@ -1851,6 +1907,33 @@ Game.initApi = function(interpreter, scope) {
     }
   
 };
+
+/**********************************************************************************************************/ 
+/**                                     Wait command management                                          **/
+/**********************************************************************************************************/ 
+
+Game.waitFunction = false;
+
+Game.setTimeout = function(funcName, time) {
+	Game.waitFunction = true;
+	Game.funcName = funcName;
+	setTimeout(Game.runFunction, time);
+};
+
+Game.runFunction = function() {
+	Game.waitFunction = false;
+	
+	var node = {type: "CallExpression", callee: {name: Game.funcName, type: "Identifier"}, arguments: []};
+	Game.jsInterpreter.stateStack.unshift({node: node, components: true});
+	
+	var noBugs = Game.jsInterpreter.getValueFromScope("NoBugsJavaScript");
+	noBugs.properties.timeOut.data = true;
+	
+};
+
+/**********************************************************************************************************/ 
+/**                                     Highlight management                                             **/
+/**********************************************************************************************************/ 
 
 Game.highlightPause = false;
 
@@ -1910,73 +1993,19 @@ Game.animate = function() {
  * @param {!Array} values List of arguments for the command.
  */
 Game.step = function(command, values) {
-  switch (command) {
-    case 'AL' :
-    	hero.alertRun(values);
-    	break;
-    	
-    case 'CO':
-    	hero.checkObjectives();
-  	case 'IM' :
-  		hero.changeSnackManImage(values);
-  		break;
-  
-  	case 'MS' :
-  		hero.changeSnackManPosition(values.shift(), values.shift(), values.shift(), values.shift());
-  		break;
-  		
-  	case 'OC' :
-  		hero.nextOpenCoolerImage();
-  		break;
-  		
-  	case 'CC' :
-  		hero.nextCloseCoolerImage();
-  		break;
-  		
-  	case 'OD' :
-  		hero.nextOpenDisplayImage();
-  		break;
-  		
-  	case 'CD' :
-  		hero.nextCloseDisplayImage();
-  		break;
-  		
- 	case 'IP' :
-  		hero.changeImagePlatter();
-  		break;
-  		
-  	case 'IO' :
-  		var value = values.shift();
-  		if (value != null)
-  			Game.missionMoney.amount += value;
-  		
-  		value = values.shift();
-  		if (value == 0)
-  			hero.changeImageOriginal();
-  		break;
-
- 	case 'SF' :
-  		hero.nextShowFruitImage();
-  		break;
-  		
- 	case 'HF' :
-  		hero.nextHideFruitImage();
-  		break;
-  		
- 	case 'MJ':
- 		hero.nextShowJuiceMachineImage();
- 		break;
-  		
- 	case 'HJ':
- 		hero.nextHideJuiceMachineImage();
- 		break;
-  		
-  	case 'fail':
+	
+	if (command === 'fail') {
   		Game.showError(values);
   		return false;
-  }
-  
-  return true;
+	}
+	
+	hero.animate(command, values);
+	CustomerManager.animation();
+	
+	Game.display();
+	
+	return true;
+
 };
 
 Game.showError = function(iderror) {
@@ -1986,7 +2015,12 @@ Game.showError = function(iderror) {
 	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
-	container.innerHTML = BlocklyApps.getMsg(iderror[0]);
+	var msg = iderror[0];
+	if (msg.startsWith("$")) {
+		UserControl.getMessage(msg.substring(1), BlocklyApps.LANG, {callback:function(msgret) {msg = msgret;}, async:false});
+		container.innerHTML = msg;
+	} else
+		container.innerHTML = BlocklyApps.getMsg(msg);
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	

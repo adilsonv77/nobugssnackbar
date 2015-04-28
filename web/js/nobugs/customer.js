@@ -81,6 +81,7 @@ Customer = function(options) {
 	this.fUnfulfilled = 0;
 	
 	this.currentNode = CustOpt.nodes[options.init];
+	this.reallyCurrentNode = this.currentNode;
 	this.dest = CustOpt.nodes[options.place.id];
 	
 	this.place = options.place.id;
@@ -177,7 +178,7 @@ Customer.prototype.update = function() {
 				break;
 			
 	// turn to front
-	case 7: this.log.push(['MC', this.currentNode.x, this.currentNode.y, this.currentNode.x, this.currentNode.y]);
+	case 7: this.log.push(['MC', this.currentNode.x, this.currentNode.y, this.currentNode.x, this.currentNode.y, this.currentNode.id]);
 			break;
 			
 	// finish state: nothing to do on this moment
@@ -250,9 +251,13 @@ Customer.prototype.update = function() {
 
 	
 	case 38: 
-		CustomerManager.removeCustomer(this);
-		if (this.openMission)
-			CustomerManager.createCustomerByPattern(this.idxPattern, CustOpt.door);
+		if (this.log.length == 0) {
+			// only performs if there is not before animations
+			CustomerManager.removeCustomer(this);
+			if (this.openMission)
+				CustomerManager.createCustomerByPattern(this.idxPattern, CustOpt.door);
+			
+		}
 		return; // think about the next state
 	}
 
@@ -265,7 +270,7 @@ Customer.prototype.moveToSomePlace = function() {
 	var node = this.path.shift();
 	if (node) {
 		node = CustOpt.nodes[node];
-		this.log.push(['MC', this.currentNode.x, this.currentNode.y, node.x, node.y]);
+		this.log.push(['MC', this.currentNode.x, this.currentNode.y, node.x, node.y, node.id]);
 		this.currentNode = node;
 		
 		return true;
@@ -327,6 +332,8 @@ Customer.prototype.changeCustomerPosition = function(pos) {
 	this.img.update();
 	this.img.x = pos[2];
 	this.img.y = pos[3] - 32;
+	
+	this.reallyCurrentNode = CustOpt.nodes[pos[4]];
 };
 
 Customer.prototype.draw = function(ctx) {

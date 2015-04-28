@@ -1,10 +1,13 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
+import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
+import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 
 public class FactoryJdbcDao implements AbstractFactoryDao {
@@ -59,6 +62,33 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (gameDao == null)
 			gameDao = new GameJdbcDao();
 		return gameDao;
+	}
+
+	private ClazzDao clazzDao;
+	
+	@Override
+	public ClazzDao getClazzDao() {
+		if (clazzDao == null)
+			clazzDao = new ClazzJdbcDao();
+		return clazzDao;
+	}
+	
+	private LanguageDao languageDao;
+
+	@Override
+	public LanguageDao getLanguageDao() {
+		if (languageDao == null) 
+			languageDao = new LanguageJdbcDao();
+		return languageDao;
+	}
+	
+	private MessageDao messageDao;
+
+	@Override
+	public MessageDao getMessageDao() {
+		if (messageDao == null)
+			messageDao = new MessageJdbcDao();
+		return messageDao;
 	}
 	
 }

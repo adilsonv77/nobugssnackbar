@@ -66,7 +66,7 @@
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
 		<category name="deliver" show="true" />
-		
+		<category name="wait" show="true"/>
 
 		<category name="vars" show="true" />
 
@@ -116,7 +116,14 @@
 		</customer>
 	</customers>
 	<objectives buttonBuy="true"/> 
+	
 	<xml alwaysNew = "true">
-
+	      <block type="do_wait"> 
+		      <value name="VALUE">
+		          <block type="math_number">
+		            <field name="NUM">5</field>
+		          </block>
+			  </value>
+	      </block>
 	</xml>
 </mission>
