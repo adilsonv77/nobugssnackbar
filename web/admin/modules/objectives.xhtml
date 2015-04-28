@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">  
+	
+	<p:panelGrid columns="2" style="margin-bottom: 20px;">
+		<span class="my-lightbulb"></span>
+		<h:outputText>
+			<f:attribute name="value" value="#{msg['objectivesMsg']}"/>
+		</h:outputText>
+	</p:panelGrid>
+	
+	
+	<p:panelGrid columns="4">
+ 		
+ 		<p:panelGrid>
+ 			<h:outputLabel for="reward" value="Reward " />
+        	<p:spinner id="reward" value="" size="5"/>	
+        </p:panelGrid>
+        
+        <p:panelGrid columns="3">
+			<p:selectBooleanCheckbox value=""/>        	
+ 			<h:outputLabel for="variableQty" value="Variable quantity " />
+        	<p:spinner id="variableQty" value="" size="5"/>
+			
+			<p:selectBooleanCheckbox value=""/>                  
+ 			<h:outputLabel for="commandQty" value="Command quantity " />
+        	<p:spinner id="commandQty" value="" size="5"/>                
+		</p:panelGrid>
+		
+		<p:panelGrid columns="2">
+        	<p:selectBooleanCheckbox value=""/>
+        	<h:outputText value="Ordered:"/>
+        			    			
+			<p:selectBooleanCheckbox value=""/>        			    			
+        	<h:outputText value="Button Debug:"/>        			
+		</p:panelGrid>
+	
+		<p:panelGrid columns="2">
+        	<p:selectBooleanCheckbox value=""/>		    
+        	<h:outputText value="Button Buy:"/>
+        	
+        	<p:selectBooleanCheckbox value=""/>
+        	<h:outputText value="Button Run:"/>
+        	        	
+        	<p:selectBooleanCheckbox value=""/>
+        	<h:outputText value="Variable Window:"/>        	        			
+		</p:panelGrid>
+	
+	</p:panelGrid>
+	
+	<p:panelGrid columns="2">
+	    <p:fieldset legend="Bonus time" styleClass="fieldsetObjectives fieldsetObjectives300w" toggleable="true" collapsed="true"> 
+	        <h:panelGrid columns="2">         
+ 				<h:outputLabel for="totalReward" value="Total reward " />
+        		<p:spinner id="totalReward" value="" size="5"/>	 
+        		
+        		<p:spinner id="btnAddBonusTime" value="" size="5"/>	 
+        		<p:panelGrid columns="2">
+        			<p:commandButton icon="ui-icon-circle-plus" title="Add"/>
+        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="Save"/>
+        		</p:panelGrid>       
+	        </h:panelGrid>
+	        
+			<p:dataTable var="value"  value="">
+			    <p:column headerText="Value" width="50">
+			        <h:outputText value=""/>
+			    </p:column>
+						 
+			    <p:column headerText="Action">
+			        <p:commandButton icon="ui-icon-wrench" title="Edit"/>
+			        <p:commandButton icon="ui-icon-circle-close" title="Delete"/>
+			    </p:column>
+			</p:dataTable>	        
+	    </p:fieldset>
+	    
+	    <p:fieldset legend="Objectives" styleClass="fieldsetObjectives">
+	        <h:panelGrid columns="4" >         
+ 				<h:outputLabel for="position" value="Position" />
+        		<p:selectOneMenu id="position" value="" size="1"/>	
+        		
+ 				<h:outputLabel for="type" value="Type" />
+        		<p:selectOneMenu id="type" value="" size="1"/>
+
+ 				<h:outputLabel for="place" value="Type" />
+        		<p:selectOneMenu id="place" value="" size="5"/>
+        		
+ 				<h:outputLabel for="distinct" value="Distinct" />
+        		<p:spinner id="distinct" value="" size="5"/>    
+        		        		    		        		        		 	        
+	        </h:panelGrid>
+	        
+        	<p:commandButton icon="ui-icon-check" title="OK" styleClass="btnObjectives"/>
+        	<p:commandButton icon="ui-icon-close" title="Cancel" styleClass="btnObjectives"/>	        
+	        
+	        <p:commandButton icon="ui-icon-circle-plus" title="Add" styleClass="btnAddObjectives"/>
+	        
+			<p:dataTable var="objective"  value="">
+			    <p:column headerText="Position">
+			        <h:outputText value=""/>
+			    </p:column>
+			    
+			    <p:column headerText="Type">
+			        <h:outputText value=""/>
+			    </p:column>			    
+						 
+			    <p:column headerText="Action">
+			        <p:commandButton icon="ui-icon-wrench" title="Edit"/>
+			        <p:commandButton icon="ui-icon-circle-close" title="Delete"/>
+			    </p:column>
+			</p:dataTable>	        
+	    </p:fieldset>	    
+    </p:panelGrid>	
+
+    <p:fieldset legend="Max command bonus" toggleable="true" collapsed="true" styleClass="fieldsetObjectives300w">
+        <h:panelGrid columns="4">         
+ 			<h:outputLabel for="quantity" value="Quantity " />
+        	<p:spinner id="quantity" value="" size="5"/>	
+        	
+ 			<h:outputLabel for="rewardMaxCmdBonus" value="Reward " />
+        	<p:spinner id="rewardMaxCmdBonus" value="" size="5"/>	        	
+        </h:panelGrid>
+    </p:fieldset>		
+	
+</ui:composition>
