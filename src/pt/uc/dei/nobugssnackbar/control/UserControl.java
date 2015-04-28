@@ -14,6 +14,10 @@ import org.directwebremoting.annotations.ScriptScope;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
+import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
+import pt.uc.dei.nobugssnackbar.dao.MessageDao;
+import pt.uc.dei.nobugssnackbar.model.Language;
+import pt.uc.dei.nobugssnackbar.model.Message;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
@@ -25,10 +29,11 @@ public class UserControl {
 
 	private GameDao gameDao;
 	private SendMail mail;
+	private AbstractFactoryDao factoryDao;
 
 	public UserControl() {
 		WebContext ctx = WebContextFactory.get();
-		AbstractFactoryDao factoryDao = (AbstractFactoryDao) ctx
+		this.factoryDao = (AbstractFactoryDao) ctx
 				.getServletContext().getAttribute("factoryDao");
 		this.gameDao = factoryDao.getGameDao();
 		
@@ -308,5 +313,19 @@ public class UserControl {
 
 		// send a welcome email
 		mail.sendRegisterMail(userMail, encrypt(userNick + userName + userMail), lang);
+	}
+	
+	@RemoteMethod
+	public String getMessage(String code, String lang) throws Exception {
+		
+		LanguageDao langDao = factoryDao.getLanguageDao();
+		List<Language> langs = langDao.listSimilarCode(lang);
+		Language l = langs.get(0);
+		
+		MessageDao msgDao = factoryDao.getMessageDao();
+		Message m = msgDao.readMessage(code, l.getId());
+		
+		return m.getMessageText();
+		
 	}
 }

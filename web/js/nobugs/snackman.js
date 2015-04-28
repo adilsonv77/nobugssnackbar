@@ -499,7 +499,7 @@ SnackMan.prototype.genericPickUp = function(order, machine) {
 	
 	// does the order have the food/drink of this place ?
 	if (order.data.descr.indexOf(machine.typeOfDrinkFood) == -1) {
-		BlocklyApps.log.push(["fail", "Error_only"+machine.typeOfDrinkFood.substring(0,1).toUpperCase() + machine.typeOfDrinkFood.substring(1)]);
+		BlocklyApps.log.push(["fail", "$Error_only"+machine.typeOfDrinkFood.substring(0,1).toUpperCase() + machine.typeOfDrinkFood.substring(1)]);
 		throw false;
 	}
 	
@@ -921,7 +921,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		};
 		
 		Blockly.JavaScript[com[0]] = function(block){
-			
+
 			var xpt = eval(Blockly.Blocks[block.type].bodyFunc);
 			return xpt;
 				

@@ -2015,7 +2015,12 @@ Game.showError = function(iderror) {
 	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
-	container.innerHTML = BlocklyApps.getMsg(iderror[0]);
+	var msg = iderror[0];
+	if (msg.startsWith("$")) {
+		UserControl.getMessage(msg.substring(1), BlocklyApps.LANG, {callback:function(msgret) {msg = msgret;}, async:false});
+		container.innerHTML = msg;
+	} else
+		container.innerHTML = BlocklyApps.getMsg(msg);
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	
