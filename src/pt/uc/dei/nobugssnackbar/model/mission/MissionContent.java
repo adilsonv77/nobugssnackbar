@@ -24,6 +24,8 @@ public class MissionContent implements Serializable {
     private List<Page> pages = new ArrayList<>();
     
     private List<Randomization> randList = new ArrayList<>();
+    
+    private List<Customer> customers = new ArrayList<>();
 
 	public MissionContent() {
 	}
@@ -59,7 +61,23 @@ public class MissionContent implements Serializable {
 	public void setCommands(List<Command> commands) {
 		this.commands = commands;
 	}
+	
+	public List<Page> getPages() {
+		return pages;
+	}
 
+	public void setPages(List<Page> pages) {
+		this.pages = pages;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+	
 	public int getCommandIndex(String commandName) {
 		
 		int i = 0;
@@ -129,11 +147,4 @@ public class MissionContent implements Serializable {
 		return ret;
 	}
 
-	public List<Page> getPages() {
-		return pages;
-	}
-
-	public void setPages(List<Page> pages) {
-		this.pages = pages;
-	}
 }
