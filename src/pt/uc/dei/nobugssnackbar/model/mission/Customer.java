@@ -8,7 +8,7 @@ public class Customer implements java.io.Serializable  {
 	private String dest;
 	// watch out with the value 'none', when you generate XML
 	private String randomType = "none";
-	private int skin;
+	private Skin skin;
 	
 	/* 
 	 * If [pattern.getOrders().size() == 1] Then
@@ -20,6 +20,7 @@ public class Customer implements java.io.Serializable  {
 
 	public Customer() {
 		pattern = new Pattern();
+		skin = new Skin();
 		id = -1;
 	}
 	
@@ -53,10 +54,10 @@ public class Customer implements java.io.Serializable  {
 	public void setRandomType(String randomType) {
 		this.randomType = randomType;
 	}
-	public int getSkin() {
+	public Skin getSkin() {
 		return skin;
 	}
-	public void setSkin(int skin) {
+	public void setSkin(Skin skin) {
 		this.skin = skin;
 	}
 }

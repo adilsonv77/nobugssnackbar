@@ -15,14 +15,15 @@
 				<p:layoutUnit position="north">	
 					<p:panelGrid columns="4">
 						<h:outputText value="#{msg['skin']}:"/>
-						<p:selectOneMenu style="width:100px" panelStyle="width:280px">
-							<f:selectItems value="#{custVC.customerImages}" var="img" itemValue="#{img}"/>
-							<p:column style="width: 50px">
-								<p:graphicImage value="#{img}" width="32" height="32"/>
+		        		<p:selectOneMenu style="width:100px" value="#{custVC.customer.skin}" 
+							effect="fade" converter="#{custVC.sc}" var="s">
+							<f:selectItems value="#{custVC.customerSkins}" var="skin" itemLabel="#{skin.displayName}" itemValue="#{skin}"/>
+							<p:column>
+								<p:graphicImage value="#{s.image}" width="32" height="32"/>
 							</p:column>
 							
-							<p:column style="width:200px;">
-									
+							<p:column>
+								#{s.displayName}
 							</p:column>
 		        		</p:selectOneMenu>
 		        		

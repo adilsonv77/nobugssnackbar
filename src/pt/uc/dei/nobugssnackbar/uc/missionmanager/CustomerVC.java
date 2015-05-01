@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -22,10 +23,12 @@ import pt.uc.dei.nobugssnackbar.model.mission.Drink;
 import pt.uc.dei.nobugssnackbar.model.mission.Food;
 import pt.uc.dei.nobugssnackbar.model.mission.Foodstuff;
 import pt.uc.dei.nobugssnackbar.model.mission.Order;
+import pt.uc.dei.nobugssnackbar.model.mission.Skin;
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.SkinConverter;
 
 @ManagedBean(name="custVC")
 @ViewScoped
-public class CustomerVC implements Serializable {
+public class CustomerVC implements ISkinProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Food food;
@@ -40,9 +43,17 @@ public class CustomerVC implements Serializable {
 	private List<SelectItem> initPositions;
 	private List<SelectItem> destPositions;
 	private final int numberOfCustomers = 4;
-	private List<String> customersImagePaths;
+	private List<Skin> customerSkins;
+	private SkinConverter sc;
 	
-	public CustomerVC() {
+	@PostConstruct
+	private void init() {
+		try {
+			// this.pages = missionManager.getMissionContent().getPages();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		foodstuff = new Foodstuff();
 		customer = new Customer();
 		
@@ -52,6 +63,11 @@ public class CustomerVC implements Serializable {
 		}
 		
 		initMainLists();
+	}
+	
+	public CustomerVC() {
+		this.sc = new SkinConverter();
+		this.sc.setProvider(this);
 	}
 
 	private void initMainLists() {
@@ -93,10 +109,11 @@ public class CustomerVC implements Serializable {
 		
 		/**************************************************************/
 		
-		customersImagePaths = new ArrayList<>();
+		customerSkins = new ArrayList<>();
 		String path = "../images/"; // it depends on xhtml file's location
-		for (int i = 1; i <= numberOfCustomers; i++) {			
-			customersImagePaths.add(path + String.format("$customer%02d_anger.png", i));
+		for (int i = 1; i <= numberOfCustomers; i++) {
+			Skin skin = new Skin(i, path + String.format("$customer%02d_anger.png", i), "Skin " + i);
+			customerSkins.add(skin);
 		}
 	}
 	
@@ -171,6 +188,14 @@ public class CustomerVC implements Serializable {
 			
 			return false;
 		}*/
+		
+		if (customer.getSkin() == null || customer.getSkin().getImage().isEmpty()) {
+			ResourceBundle msg = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(msg.getString("selectSkin"), ""));
+			
+			return false;
+		}
 		
 		return true;
 	}
@@ -314,16 +339,28 @@ public class CustomerVC implements Serializable {
 		this.destPositions = destPositions;
 	}
 
-	public List<String> getCustomerImages() {
-		return customersImagePaths;
+	public List<Skin> getCustomerSkins() {
+		return customerSkins;
 	}
 
-	public void setCustomerImages(List<String> customerImages) {
-		this.customersImagePaths = customerImages;
+	public void setCustomerSkins(List<Skin> customerSkins) {
+		this.customerSkins = customerSkins;
 	}
 
 	public int getNumberOfCustomers() {
 		return numberOfCustomers;
 	}
 
+	@Override
+	public List<Skin> getSkins() {
+		return this.customerSkins;
+	}
+	
+	public SkinConverter getSc() {
+		return sc;
+	}
+
+	public void setSc(SkinConverter sc) {
+		this.sc = sc;
+	}
 }
