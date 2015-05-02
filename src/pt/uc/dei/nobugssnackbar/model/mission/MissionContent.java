@@ -24,10 +24,11 @@ public class MissionContent implements Serializable {
     private List<Page> pages = new ArrayList<>();
     
     private List<Randomization> randList = new ArrayList<>();
+    
 
 	public MissionContent() {
 	}
-
+	
 	public List<Hint> getTipsHints() {
 		return tipsHints;
 	}

@@ -1,8 +1,9 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Objectives  implements java.io.Serializable {
+public class Objectives  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Objective objectiveItem = new Objective();
 	private ArrayList<Objective> objectiveList = new ArrayList<Objective>();
@@ -18,6 +19,7 @@ public class Objectives  implements java.io.Serializable {
 	private int varQtd;
 	private String bonusTime;
 	private String bonusTimeReward;
+	
 	
 	public ArrayList<Objective> getObjectiveList() {
 		return objectiveList;

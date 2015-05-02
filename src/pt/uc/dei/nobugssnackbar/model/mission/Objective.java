@@ -18,8 +18,7 @@ public class Objective implements java.io.Serializable {
 	}
 	public String getValue() {
 		return value;
-	}
-	
+	}	
 	public void setPos(int pos) {
 		this.pos = pos;
 	}
