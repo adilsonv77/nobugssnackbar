@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -46,21 +47,28 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	private List<Skin> customerSkins;
 	private SkinConverter sc;
 	
+	@ManagedProperty(value="#{mm}")
+	private MissionManager missionManager;
+	
 	@PostConstruct
 	private void init() {
 		try {
-			// this.pages = missionManager.getMissionContent().getPages();
+			this.customers = missionManager.getMissionContent().getCustomers();
+			if (customers.size() == 0) {
+				customers = new ArrayList<>(12);
+				for (int i = 0; i < 12; i++) {
+					customers.add(new Customer());
+				}
+			}
+			if (customers.size() != 12) {
+				System.err.println("The customer list must be with size 12!");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		foodstuff = new Foodstuff();
 		customer = new Customer();
-		
-		customers = new ArrayList<>(12);
-		for (int i = 0; i < 12; i++) {
-			customers.add(new Customer());
-		}
 		
 		initMainLists();
 	}
@@ -203,12 +211,26 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	public void saveCustomer() {                
 		if (checkFields(customer.getPattern().getOrder())) {
 			customers.set(customersPlaceId, customer);
+			try {
+				missionManager.getMissionContent().setCustomers(customers);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			customer = new Customer();
 			RequestContext rcontext = RequestContext.getCurrentInstance();
 			rcontext.execute("PF('customerDlg').hide()");
 		}
 	}
 	
+	public MissionManager getMissionManager() {
+		return missionManager;
+	}
+
+	public void setMissionManager(MissionManager missionManager) {
+		this.missionManager = missionManager;
+	}
+
 	public void addFoodstuff() {
 		if (foodstuff.getName().isEmpty() ||
 			foodstuff.getQtd() <= 0 ||
