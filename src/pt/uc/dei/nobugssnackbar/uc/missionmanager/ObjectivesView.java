@@ -8,9 +8,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.component.fieldset.Fieldset;
 import org.primefaces.context.RequestContext;
@@ -59,6 +61,7 @@ public class ObjectivesView implements Serializable {
 	private boolean isMaxCommands = false;
 	private boolean isBonusTime = false;
 	private boolean editing,editingBonusTime = false;
+	private boolean objDisabled = true;
 	private boolean isVariableQty,isCommandQty;
 
 	private Map<String,String> places = new HashMap<String, String>();
@@ -184,16 +187,37 @@ public class ObjectivesView implements Serializable {
 		this.objectives.setObjectiveItem(obj);
 	}
 	
-	public void SaveObjective(){
-		if(!editing){
-			addObjectiveToList();		
-		}
-		newObjectiveItem();
-		editing = false;
+	private void disableObjective() {
+		objDisabled = true;
 	}
 	
 	public List<Objective> getObjList(){
 		return this.objectives.getObjectiveList();
+	}
+	
+	private void enableObjective() {
+		objDisabled = false;
+	}
+	
+	public void SaveObjective(){
+		addMessageToGrowl(new Object[] {"savedObjective"});
+		if(!editing){
+			addObjectiveToList();	
+			addMessageToGrowl(new Object[] {"addedObjective"});
+		}
+		newObjectiveItem();
+		editing = false;
+		disableObjective();
+	}
+	
+	public void addObjectiveItem(){
+		newObjectiveItem();
+		enableObjective();
+		addMessageToGrowl(new Object[] {"newObjective"});
+	}
+	
+	public void canselObjective(){
+		// TO DO :
 	}
 	
 	private void addObjectiveToList(){
@@ -201,19 +225,23 @@ public class ObjectivesView implements Serializable {
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
-	public void delete(){
-		getObjList().remove(getObjItem());
-		newObjectiveItem();
-	}
-	
 	public void editObjective(){
 		editing = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
+		enableObjective();
+		addMessageToGrowl(new Object[] {"title=editObjTitle","objOpenedForEdit"});
 	}
 	
-	public void newObjectiveItem(){
+	private void newObjectiveItem(){
 		setObjItem(new Objective());
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
+	}
+	
+	public void delete(){
+		getObjList().remove(getObjItem());
+		newObjectiveItem();
+		disableObjective();
+		addMessageToGrowl(new Object[] {"deletedObj"});
 	}
 	
 	public void handleToggle(ToggleEvent event){
@@ -255,5 +283,42 @@ public class ObjectivesView implements Serializable {
 		newBonusTime();
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 		translateToString();
+	}
+	
+	public void addMessageToGrowl(Object [] msgs){
+		String title = "Notification";	
+		FacesMessage msg;
+		String finalText = "";
+				
+		for (Object obj : msgs) {
+			if(obj instanceof String){
+				if(!messageBundle.keySet().contains(obj)) {
+					if(obj.toString().startsWith("title=")){
+						title = messageBundle.getString(obj.toString().substring(6));
+					}
+					else{
+						finalText += obj.toString();
+					}
+				}
+			else{
+					finalText += messageBundle.getString(obj.toString());					
+				}
+			}
+			if(obj instanceof Integer){
+				finalText += obj.toString();
+			}						
+		}
+		
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		RequestContext.getCurrentInstance().update("growlMsgs");
+	}
+
+	public boolean isObjDisabled() {
+		return objDisabled;
+	}
+
+	public void setObjDisabled(boolean objDisabled) {
+		this.objDisabled = objDisabled;
 	}
 }
