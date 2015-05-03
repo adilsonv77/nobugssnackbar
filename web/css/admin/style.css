@@ -224,13 +224,13 @@ div.divExplEdit + img {
 	display: block;
 }
 .fieldsetObjectives{
-	height: 300px !important;
 	width: 400px !important;
 }
 .fieldsetBonusTime{
-	float:left;
 	width: 300px !important;
+	float: left;
 }
 .fieldsetMaxxCmdBonus{
+	width: 300px !important;
 	float: left;
 }

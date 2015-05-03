@@ -204,7 +204,7 @@ public class HintView implements Serializable {
     	FacesContext context = FacesContext.getCurrentInstance();
     	HintCategoryHelperView hcHelper = context.getApplication().evaluateExpressionGet(context, "#{hcHelper}", HintCategoryHelperView.class);
     	if (hcHelper.render())
-    	{
+    	{		
     		addDialog();
     		this.showDlgExt = true;
     	}

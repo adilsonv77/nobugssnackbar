@@ -14,7 +14,7 @@
 		</p:panelGrid>
 		
 		
-		<p:panelGrid columns="4">
+		<p:panelGrid id="objectivesTopElements" columns="4">
 	 		
 	 		<p:panelGrid>
 	 			<h:outputLabel for="reward" value="#{msg['reward']} " />
@@ -74,64 +74,63 @@
 		
 		</p:panelGrid>
 		
-		<p:panelGrid columns="2">
-		    <p:fieldset id="bonusTime" legend="#{msg['bonusTime']}" styleClass="fieldsetBonusTime"
-		    	toggleable="true" collapsed="#{!objView.bonusTime}"> 
-		    	<p:ajax event="toggle" listener="#{objView.handleToggle}"/>
-		        
-		        <p:panelGrid id="addEditBonusTime" columns="2">  
-		               
-	 				<h:outputLabel for="spinnerBonutTime" value="#{msg['bonusTime']}" />
-	        		<p:spinner id="spinnerBonutTime" size="5" value="#{objView.objectives.bonusTime}" min="0">	 
-	        			<p:ajax process="@this"/>
-	        		</p:spinner>
-	        		
-	        		<p:spinner  size="5" value="#{objView.currentBonusTimeReward.value}" min="0"/>	 
-	        		<p:panelGrid columns="2">
-	        			<p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}" value="#{msg['add']}"
-	        				actionListener="#{objView.newBonusTime}"/>
-	        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="#{msg['save']}" value="#{msg['save']}"
-	        				actionListener="#{objView.saveBonusTime}"/>
-	        		</p:panelGrid>   
-	        		    
-		        </p:panelGrid>
-		        
-				<p:dataTable id="dtBonusTime" var="myInt"  value="#{objView.listBonusTimeReward}" draggableRows="true">
-				    <p:column headerText="#{msg['value']}" width="50">
-				        <h:outputText value="#{myInt.value}"/>
-				    </p:column>
-							 
-				    <p:column headerText="#{msg['actions']}">
-				        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}"
-				        	action="#{objView.editBonusTime}">
-				        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>
-				        </p:commandButton>
-				        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}"
-				        	action="#{objView.deleteBonusTime}">
-				        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>
-				        </p:commandButton>
-				    </p:column>
-				</p:dataTable>	        
-		    </p:fieldset>
-		    
-		    <p:fieldset id="maxCommandBonus" legend="#{msg['maxCommandsBonus']}" toggleable="true"
-		    	collapsed="#{!objView.maxCommands}" styleClass="fieldsetMaxxCmdBonus">
-		    	<p:ajax event="toggle" listener="#{objView.handleToggle}"/>
-		        <p:panelGrid columns="4">         
-		 			<h:outputLabel for="quantity" value="#{msg['quantity']} " />
-		        	<p:spinner id="quantity" size="5" value="#{objView.objectives.maxCommands}" min="0">
-		        		<p:ajax process="@this"/>
-		        	</p:spinner>	
-		        	
-		 			<h:outputLabel for="rewardMaxCmdBonus" value="#{msg['reward']} " />
-		        	<p:spinner id="rewardMaxCmdBonus" size="5" value="#{objView.objectives.maxCommandsReward}" min="0">
-		        		<p:ajax process="@this"/>
-		        	</p:spinner>	        	
-		        </p:panelGrid>
-		    </p:fieldset>			    
-		    
-	    </p:panelGrid>	
+	
+	    <p:fieldset id="bonusTime" legend="#{msg['bonusTime']}" styleClass="fieldsetBonusTime"
+	    	toggleable="true" collapsed="#{!objView.bonusTime}"> 
+	    	<p:ajax event="toggle" listener="#{objView.handleToggle}"/>
+	        
+	        <p:panelGrid id="addEditBonusTime" columns="2">  
+	               
+ 				<h:outputLabel for="spinnerBonutTime" value="#{msg['bonusTime']}" />
+        		<p:spinner id="spinnerBonutTime" size="5" value="#{objView.objectives.bonusTime}" min="0">	 
+        			<p:ajax process="@this"/>
+        		</p:spinner>
+        		
+        		<p:spinner  size="5" value="#{objView.currentBonusTimeReward.value}" min="0" 
+        			disabled="#{objView.bonusTimeDisabled}"/>	 
+        		<p:panelGrid columns="2">
+        			<p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}" value="#{msg['add']}"
+        				actionListener="#{objView.addBonusTime}"/>
+        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="#{msg['save']}" value="#{msg['save']}"
+        				actionListener="#{objView.saveBonusTime}" disabled="#{objView.bonusTimeDisabled}"/>
+        		</p:panelGrid>   
+        		    
+	        </p:panelGrid>
+	        
+			<p:dataTable id="dtBonusTime" var="myInt" style="width:60%;"  value="#{objView.listBonusTimeReward}" draggableRows="true">
+			    <p:column headerText="#{msg['value']}" width="8">
+			        <h:outputText value="#{myInt.value}"/>
+			    </p:column>
+						 
+			    <p:column headerText="#{msg['actions']}" width="30">
+			        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}"
+			        	action="#{objView.editBonusTime}">
+			        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>
+			        </p:commandButton>
+			        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}"
+			        	 oncomplete="PF('confirmBonusTimeDeleteDialog').show()">
+			        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>
+			        </p:commandButton>
+			    </p:column>
+			</p:dataTable>	        
+	    </p:fieldset>
 	    
+	    <p:fieldset id="maxCommandBonus" legend="#{msg['maxCommandsBonus']}" toggleable="true"
+	    	collapsed="#{!objView.maxCommands}" styleClass="fieldsetMaxxCmdBonus">
+	    	<p:ajax event="toggle" listener="#{objView.handleToggle}"/>
+	        <p:panelGrid columns="4">         
+	 			<h:outputLabel for="quantity" value="#{msg['quantity']} " />
+	        	<p:spinner id="quantity" size="5" value="#{objView.objectives.maxCommands}" min="0">
+	        		<p:ajax process="@this"/>
+	        	</p:spinner>	
+	        	
+	 			<h:outputLabel for="rewardMaxCmdBonus" value="#{msg['reward']} " />
+	        	<p:spinner id="rewardMaxCmdBonus" size="5" value="#{objView.objectives.maxCommandsReward}" min="0">
+	        		<p:ajax process="@this"/>
+	        	</p:spinner>	        	
+	        </p:panelGrid>
+	    </p:fieldset>			    
+		        
 	    <p:fieldset id="AddEditObjective" legend="#{msg['objectives']}" styleClass="fieldsetObjectives">
 	        <p:panelGrid columns="4" >         
  				<h:outputLabel for="position" value="#{msg['position']}" />

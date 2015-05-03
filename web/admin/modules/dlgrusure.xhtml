@@ -25,7 +25,7 @@
 	</p:dialog>	
 	
 	<!-- Objectives -->
-		<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmObjectiveDeleteDialog"
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmObjectiveDeleteDialog"
 		header="#{msg['ruSureDelObjective']}" minHeight="40" closable="false" modal="true"
 		resizable="false" dynamic="true">
 			
@@ -35,4 +35,14 @@
 	
 	</p:dialog>
 
+	<!-- Bonus time -->
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmBonusTimeDeleteDialog"
+		header="#{msg['ruSureDelBonusTime']}" minHeight="40" closable="false" modal="true"
+		resizable="false" dynamic="true">
+			
+		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.deleteBonusTime}" 
+			oncomplete="PF('confirmBonusTimeDeleteDialog').hide()"/>
+		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmBonusTimeDeleteDialog').hide()" />
+	
+	</p:dialog>
 </ui:composition>

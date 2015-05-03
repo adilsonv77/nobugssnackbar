@@ -54,16 +54,16 @@ public class ObjectivesView implements Serializable {
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
 	
 	//@ManagedProperty(value="#{mm.missionContent.objectives}")
-	private Objectives objectives;
-	
-	private myInt currentBonusTimeReward;
-	private List<myInt> listBonusTimeReward;	
+	private Objectives objectives;	
 	private boolean isMaxCommands = false;
 	private boolean isBonusTime = false;
-	private boolean editing,editingBonusTime = false;
+	private boolean editing = false;
+	private boolean editingBonusTime = false;
 	private boolean objDisabled = true;
+	private boolean bonusTimeDisabled = true;
 	private boolean isVariableQty,isCommandQty;
-
+	private myInt currentBonusTimeReward;
+	private List<myInt> listBonusTimeReward;
 	private Map<String,String> places = new HashMap<String, String>();
 	private Map<String,String> positions = new HashMap<String, String>();
 	private Map<String,String> types = new HashMap<String, String>();
@@ -130,7 +130,6 @@ public class ObjectivesView implements Serializable {
 		}
 		
 		this.objectives.setBonusTimeReward(text);
-		System.out.println(text);
 	}
 
 	public boolean isMaxCommands() {
@@ -199,6 +198,14 @@ public class ObjectivesView implements Serializable {
 		objDisabled = false;
 	}
 	
+	private void disableBonusTime(){
+		setBonusTimeDisabled(true);
+	}
+	
+	private void enableBonusTime(){
+		setBonusTimeDisabled(false);
+	}
+	
 	public void SaveObjective(){
 		addMessageToGrowl(new Object[] {"savedObjective"});
 		if(!editing){
@@ -255,12 +262,15 @@ public class ObjectivesView implements Serializable {
 	}
 	
 	public void saveBonusTime(){
+		addMessageToGrowl(new Object[] {"savedBonusTime"});
 		if(!editingBonusTime){
-			addBonusTimeToList();		
+			addBonusTimeToList();	
+			addMessageToGrowl(new Object[] {"addedBonusTime"});
 		}
 		newBonusTime();
 		editingBonusTime = false;
 		translateToString();
+		disableBonusTime();
 	}
 	
 	public void addBonusTimeToList(){
@@ -268,7 +278,13 @@ public class ObjectivesView implements Serializable {
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 	}
 	
-	public void newBonusTime(){
+	public void addBonusTime(){
+		newBonusTime();
+		addMessageToGrowl(new Object[] {"newBonusTime"});
+		enableBonusTime();
+	}
+	
+	private void newBonusTime(){
 		currentBonusTimeReward = new myInt();
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:bonusTime");
 	}
@@ -276,6 +292,8 @@ public class ObjectivesView implements Serializable {
 	public void editBonusTime(){
 		editingBonusTime = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:addEditBonusTime");
+		addMessageToGrowl(new Object[] {"title=editBonusTimeTitle","bonusTimeOpenedForEdit"});
+		enableBonusTime();
 	}
 	
 	public void deleteBonusTime(){
@@ -283,6 +301,8 @@ public class ObjectivesView implements Serializable {
 		newBonusTime();
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 		translateToString();
+		addMessageToGrowl(new Object[] {"deletedBonusTime"});
+		disableBonusTime();
 	}
 	
 	public void addMessageToGrowl(Object [] msgs){
@@ -320,5 +340,13 @@ public class ObjectivesView implements Serializable {
 
 	public void setObjDisabled(boolean objDisabled) {
 		this.objDisabled = objDisabled;
+	}
+
+	public boolean isBonusTimeDisabled() {
+		return bonusTimeDisabled;
+	}
+
+	public void setBonusTimeDisabled(boolean bonusTimeDisabled) {
+		this.bonusTimeDisabled = bonusTimeDisabled;
 	}
 }
