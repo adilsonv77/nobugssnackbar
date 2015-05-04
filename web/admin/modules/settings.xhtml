@@ -1,0 +1,81 @@
+<ui:composition  xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:panelGrid columns="2" style="margin-bottom: 50px;">
+		<span class="my-lightbulb"></span>
+		<h:outputText>
+			<f:attribute name="value" value="#{msg['commandsMsg']}"/>
+		</h:outputText>
+	</p:panelGrid>
+	
+	<h:form id="settingsForm" style="width:700px;">
+		<p:fieldset toggleable="false">
+			<f:facet name="legend">
+				<p:selectBooleanCheckbox value="#{msVC.mission.repeatable}">
+					<p:ajax event="change" update=":tbView:settingsForm"/>
+				</p:selectBooleanCheckbox>
+				#{msg['repeatableMission']}
+			</f:facet>
+			
+			<p:panelGrid columns="2">
+				<h:outputText value="#{msg['timeLimit']}:"/>
+				<p:inputText value="#{msVC.timeLimit}" disabled="#{!msVC.mission.repeatable}">
+					<p:ajax process="@this"/>
+					<pe:keyFilter regEx="/[0-9]/"/>
+				</p:inputText>
+			</p:panelGrid>
+		</p:fieldset>
+		
+		<p:panelGrid columns="2">
+			<h:outputText value="#{msg['timesBeforeShowSlider']}:" />
+			<p:inputText value="#{msVC.slider.timesBefore}" disabled="#{!msVC.mission.repeatable}">
+				<p:ajax process="@this"/>
+				<pe:keyFilter regEx="/[0-9]/"/>
+			</p:inputText>
+			
+			<h:outputText value="#{msg['cookStartsFrom']}:"/>
+			<p:selectOneMenu value="#{msVC.cook.startPosition}">
+				<p:ajax event="change"/>
+				<f:selectItems value="#{msVC.cookStartsFromList}" var="csf" 
+					itemLabel="#{selectedCookPosition}" itemValue="#{selectedCookPosition}"/>
+			</p:selectOneMenu>
+				
+			
+			<h:outputText value="#{msg['xmlBlocks']}:"/>
+			<p:outputPanel>
+				<p:selectOneRadio id="customRadioXml" value="#{msVC.selectedXmlOption}" layout="custom">
+					<p:ajax event="change" update=":tbView:settingsForm"/>
+					<f:selectItem itemLabel="#{msg['nothing']}" itemValue="#{msg['nothing']}"/>
+					<f:selectItem itemLabel="#{msg['alwaysNew']}" itemValue="#{msg['alwaysNew']}"/>
+					<f:selectItem itemLabel="#{msg['loadPrevMission']}" itemValue="#{msg['loadPrevMission']}"/>
+					<f:selectItem itemLabel="#{msg['loadBlocks']}" itemValue="#{msg['loadBlocks']}"/>
+				</p:selectOneRadio>
+				
+				<p:panelGrid columns="3" cellpadding="5">
+					<p:radioButton for="customRadioXml" itemIndex="0" />
+            		<h:outputText value="#{msg['nothing']}"/>
+            		<h:outputText value=""/>
+            		
+            		<p:radioButton for="customRadioXml" itemIndex="1" />
+            		<h:outputText value="#{msg['alwaysNew']}"/>
+            		<h:outputText value=""/>
+            		
+            		<p:radioButton for="customRadioXml" itemIndex="2"/>
+           			<h:outputText value="#{msg['loadPrevMission']}"/>
+           			<p:selectOneMenu value="#{msVC.mission.name}" disabled="#{!msVC.choseMission}">
+           				<p:ajax event="change"/>
+           			</p:selectOneMenu>
+
+            		<p:radioButton for="customRadioXml" itemIndex="3" onchange="PF('loadBlocksDlg').show()"/>
+            		<h:outputText value="#{msg['loadBlocks']}"/>
+            		<h:outputText value=""/>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:panelGrid>
+	</h:form>
+	
+</ui:composition>
