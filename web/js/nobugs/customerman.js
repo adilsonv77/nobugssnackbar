@@ -97,7 +97,8 @@ CustomerManager.reset = function() {
 			
 			var hasRandom = (customer.getAttribute("randomType") != null) || (_foods.getAttribute("randomMin") != null) || (_drinks.getAttribute("randomMin") != null);
 			
-			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks, openMission: this.openMission}));
+			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks, openMission: this.openMission,
+										 baloonLeft: customers.length % 2 == 0}));
 			
 		} else {
 			
@@ -205,7 +206,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							id: this.patterns[i].id, 
 							hasRandom: this.patterns[i].hasRandom, 
 							foods: foods, drinks: drinks,
-							openMission: this.openMission, idxPattern: i}));
+							openMission: this.openMission, idxPattern: i,
+							baloonLeft: customers.length % 2 == 0}));
 	
 	// TODO thinking this method using the transformSN method
 	

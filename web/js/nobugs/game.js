@@ -2018,7 +2018,7 @@ Game.showError = function(iderror) {
 	var msg = iderror[0];
 	if (msg.startsWith("$")) {
 		UserControl.getMessage(msg.substring(1), BlocklyApps.LANG, {callback:function(msgret) {msg = msgret;}, async:false});
-		container.innerHTML = msg;
+		container.innerHTML = msg.replace(/\\nn/g, '<br/>');
 	} else
 		container.innerHTML = BlocklyApps.getMsg(msg);
 	Game.lastErrorData.block = Blockly.selected;

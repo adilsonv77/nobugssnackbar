@@ -54,8 +54,11 @@ PreloadImgs.put('$orange', 'images/$$orange.png');
 
 //Balloons
 PreloadImgs.put('baloon_1', 'images/baloon_1.png');
+PreloadImgs.put('baloonr_1', 'images/baloonr_1.png');
 PreloadImgs.put('baloon_2', 'images/baloon_2.png');
+PreloadImgs.put('baloonr_2', 'images/baloonr_2.png');
 PreloadImgs.put('baloon_3', 'images/baloon_3.png');
+PreloadImgs.put('baloonr_3', 'images/baloonr_3.png');
 
 
 // acts as a state machine
@@ -146,6 +149,7 @@ Customer = function(options) {
 	
 	this.openMission = options.openMission;
 	this.idxPattern = options.idxPattern;
+	this.baloonLeft = options.baloonLeft;
 
 };
 
@@ -366,7 +370,7 @@ Customer.prototype.draw = function(ctx) {
 				ordersUnfulfilled.push(PreloadImgs.get("duvida"));
 			
 			if (ordersUnfulfilled.length > 0) {
-				Baloon.draw(ctx, this.img.x, this.img.y, ordersUnfulfilled, 0.7);
+				Baloon.draw(ctx, this.img.x, this.img.y, ordersUnfulfilled, this.baloonLeft);
 			}
 		}
 	}
