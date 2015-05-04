@@ -142,6 +142,35 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		}
 	}
 	
+	public void deleteOrder() {
+		Order order = customer.getPattern().getOrder();
+		
+		if (order != null) {
+			ResourceBundle msg = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+			
+			if (customer.getPattern().getOrders().size() > 1) {
+				if (customer.getPattern().getOrders().remove(order)) {
+					context.addMessage(null, new FacesMessage(msg.getString("succRemovedOrder"), ""));					
+					customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));
+				}
+				else {
+					context.addMessage(null, new FacesMessage(msg.getString("warningMsg"), 
+							msg.getString("notRemovedOrder")));
+				}
+			}
+			else if (customer.getPattern().getOrders().size() == 1) {
+				customer.getPattern().setOrderIdCounter(0);
+				customer.getPattern().getOrders().set(0, new Order());
+				customer.getPattern().getOrders().get(0).setId(0);
+				customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));				
+						
+				context.addMessage(null, new FacesMessage(msg.getString("succRemovedOrder"), ""));
+				context.addMessage(null, new FacesMessage(msg.getString("orderCounterIsReset"), ""));				
+			}
+		}
+	}
+	
 	public void deleteFood() {
 		if (food != null) {
 			customer.getPattern().getOrder().getFoods().remove(this.food);
@@ -214,7 +243,6 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			try {
 				missionManager.getMissionContent().setCustomers(customers);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			customer = new Customer();

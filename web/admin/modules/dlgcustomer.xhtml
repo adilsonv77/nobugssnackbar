@@ -61,8 +61,14 @@
 						var="order" rowKey="#{order.id}" emptyMessage="#{msg['default']}"
 						value="#{custVC.customer.pattern.orders}">
 						<p:ajax event="rowSelect" update=":customerForm"/>
-		    			<p:column>
+		    			<p:column style="width:74%;">
 		    				<h:outputText value="#{msg['no']}: #{order.id}" />
+		    			</p:column>
+		    			<p:column style="padding:2px;">
+		    				<p:commandButton icon="ui-icon-closethick"
+								oncomplete="PF('confDeleteOrderDlg').show()">
+								<f:setPropertyActionListener value="#{order}" target="#{custVC.customer.pattern.order}"/>
+							</p:commandButton>
 		    			</p:column>
     				</p:dataTable>
 				</p:layoutUnit>
@@ -224,6 +230,25 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close"
 					actionListener="#{custVC.resetDrink}"
 					oncomplete="PF('confDeleteDrinkDlg').hide()" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog widgetVar="confDeleteOrderDlg" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
+		resizable="false" dynamic="true"
+		onShow="PF('confDeleteOrderDlg').initPosition()">
+
+		<h:form>
+			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+				<h:outputText value="#{msg['ruSureDelOrder']}" />
+				<p:commandButton value="#{msg['yes']}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					update=":customerForm,:growlMsgs" actionListener="#{custVC.deleteOrder}"
+					oncomplete="PF('confDeleteOrderDlg').hide()" />
+				<p:commandButton value="#{msg['no']}"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+					oncomplete="PF('confDeleteOrderDlg').hide()" />
 			</p:panelGrid>
 		</h:form>
 	</p:dialog>
