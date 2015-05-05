@@ -40,8 +40,8 @@
 			<h:outputText value="#{msg['cookStartsFrom']}:"/>
 			<p:selectOneMenu value="#{msVC.cook.startPosition}">
 				<p:ajax event="change"/>
-				<f:selectItems value="#{msVC.cookStartsFromList}" var="csf" 
-					itemLabel="#{selectedCookPosition}" itemValue="#{selectedCookPosition}"/>
+				<f:selectItems value="#{msVC.cookStartsFromList}"
+					itemLabel="#{selectedCookPosition}"/>
 			</p:selectOneMenu>
 				
 			
@@ -66,8 +66,9 @@
             		
             		<p:radioButton for="customRadioXml" itemIndex="2"/>
            			<h:outputText value="#{msg['loadPrevMission']}"/>
-           			<p:selectOneMenu value="#{msVC.mission.name}" disabled="#{!msVC.choseMission}">
+           			<p:selectOneMenu value="#{msVC.mission}" converter="#{msVC.mc}" disabled="#{!msVC.choseMission}">
            				<p:ajax event="change"/>
+           				<f:selectItems value="#{msVC.missionList}" var="m" itemLabel="#{m.name}" itemValue="#{m}"/>
            			</p:selectOneMenu>
 
             		<p:radioButton for="customRadioXml" itemIndex="3" onchange="PF('loadBlocksDlg').show()"/>

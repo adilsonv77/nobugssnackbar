@@ -25,8 +25,11 @@ public class MissionContent implements Serializable {
     
     private List<Randomization> randList = new ArrayList<>();
     
-
     private List<Customer> customers = new ArrayList<>();
+
+	private Cook cook = new Cook();
+	private XmlTag xmltag = new XmlTag();
+	private Slider slider = new Slider();
 
 	public MissionContent() {
 	}
@@ -146,6 +149,30 @@ public class MissionContent implements Serializable {
 				ret.add(com);
 		
 		return ret;
+	}
+
+	public Cook getCook() {
+		return cook;
+	}
+
+	public void setCook(Cook cook) {
+		this.cook = cook;
+	}
+
+	public XmlTag getXmltag() {
+		return xmltag;
+	}
+
+	public void setXmltag(XmlTag xmltag) {
+		this.xmltag = xmltag;
+	}
+
+	public Slider getSlider() {
+		return slider;
+	}
+
+	public void setSlider(Slider slider) {
+		this.slider = slider;
 	}
 
 }

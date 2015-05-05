@@ -27,11 +27,12 @@ import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 public class MissionManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@PostConstruct
 	private void init() {
 		try {
 			List<Command> commands = commandDao.list();
+			this.missionList = missionDao.list();
 			this.rootCommands = new ArrayList<>();
 
 			for (Command c : commands) {
@@ -90,10 +91,9 @@ public class MissionManager implements Serializable {
 	public void setCommandDao(CommandDao commandDao) {
 		this.commandDao = commandDao;
 	}
-
 	// #region private variables
 	private Mission mission = new Mission();
-	private ArrayList<Mission> missionList = new ArrayList<Mission>();
+	private List<Mission> missionList;
 
 	// #end
 
@@ -106,11 +106,11 @@ public class MissionManager implements Serializable {
 		this.mission = mission;
 	}
 
-	public ArrayList<Mission> getMissionList() {
+	public List<Mission> getMissionList() {
 		return missionList;
 	}
 
-	public void setMissionList(ArrayList<Mission> missionList) {
+	public void setMissionList(List<Mission> missionList) {
 		this.missionList = missionList;
 	}
 

@@ -38,11 +38,14 @@
         			<p:commandButton id="addMissionBtn" icon="ui-icon-circle-plus" />
         		</div>
     		</f:facet>
-    			
-    		<p:dataTable id="missionDT" value="#{mm.missionList}" var="mission" styleClass="hide-column-names" selectionMode="single" 
-    				emptyMessage="#{msg['nomissions']}">
+    		
+   			<p:dataTable id="missionDT" styleClass="hide-column-names" selectionMode="single"
+				selection="#{missionVC.mission}"
+				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
+				value="#{missionVC.missionList}">
+    			<p:ajax event="rowSelect" listener="#{missionVC.ss}" update=":missionNameCont" />
     			<p:column>
-    				<h:outputText value="#{mission.name}" />
+    				<h:outputText value="#{m.name}"/>
     			</p:column>
     		</p:dataTable>
 	    </p:layoutUnit>
@@ -51,11 +54,10 @@
     	
         	<p:layout>
         		<p:layoutUnit id="luNorth" position="north">
-        			<!-- change name value with mission controller's name -->
         			<p:panelGrid columns="4">
         			
         				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
-        				<p:inputText id="missionNameCont" value="#{msg['enterVal']}" />
+        				<p:inputText id="missionNameCont" value="#{missionVC.mission.name}" disabled="true"/>
         				
         				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
         				<p:selectOneMenu id="langMenu" style="width: 100px;">
