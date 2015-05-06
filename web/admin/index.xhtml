@@ -43,7 +43,7 @@
 				selection="#{missionVC.mission}"
 				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
 				value="#{missionVC.missionList}">
-    			<p:ajax event="rowSelect" listener="#{missionVC.ss}" update=":missionNameCont" />
+    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameCont" />
     			<p:column>
     				<h:outputText value="#{m.name}"/>
     			</p:column>

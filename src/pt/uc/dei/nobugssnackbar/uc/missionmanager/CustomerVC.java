@@ -120,7 +120,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		customerSkins = new ArrayList<>();
 		String path = "../images/"; // it depends on xhtml file's location
 		for (int i = 1; i <= numberOfCustomers; i++) {
-			Skin skin = new Skin(i, path + String.format("$customer%02d_anger.png", i), "Skin " + i);
+			Skin skin = new Skin(i, path + String.format("$customer%02d_n.png", i), "Skin " + i);
 			customerSkins.add(skin);
 		}
 	}
