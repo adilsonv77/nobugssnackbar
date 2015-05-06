@@ -1,0 +1,40 @@
+{namespace editor}
+
+/**
+ * Soy Doc required
+ */
+{template .start}
+	
+	{call commonheader.start/}
+    
+    {let $v: 2/}
+    
+    <script type="text/javascript" src="js/nobugs/language.js?v={$v}"></script>
+	<script type="text/javascript" src="js/nobugs/utils.js?v={$v}"></script>
+	<script type="text/javascript" src="js/nobugs/blockly.js?v={$v}"></script>
+	<script type="text/javascript" src="js/nobugs/navigator.js?v={$v}"></script>
+    <script type="text/javascript" src="js/nobugs/nobugsblocklygeneratorjavascript.js?v={$v}"></script>
+	
+	<script type="text/javascript" src="js/nobugs/editor.js?v={$v}"></script>
+	
+	{call commonheader.messages /}
+
+	  <table width="100%">
+	    <tr>
+	      <td>
+		    <div id="title">
+			  <img src="images/logotipo.png" height="60px" width="185px"/>
+			</div>
+	      </td>
+	      <td class="farSide">
+	    		<button class="secondary" onclick="EditorNoBug.clickSave()"  id="save" >
+	    		{{msg meaning="Apps.save" desc="---"}}Save{{/msg}}
+	    		</button>
+	      </td>
+	    </tr>
+	  </table>
+
+	<div id="blockly" style="width: 100%; height: 90%"></div>
+	
+	
+{/template}

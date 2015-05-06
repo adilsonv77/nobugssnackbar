@@ -78,7 +78,7 @@
 		<attribute name="fileimport"/>
 		<sequential>
 			<java jar="_soy/SoyMsgExtractor.jar" fork="true">
-				<arg line="--outputFile src/pt/uc/dei/nobugssnackbar/i18n/extracted_msgs.xlf --srcs @{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
+				<arg line="--outputFile src/pt/uc/dei/nobugssnackbar/i18n/extracted_msgs.xlf --srcs @{fileimport},hints.soy,common.soy,messages.soy,commonheader.soy,editor.soy,template.soy"/>
 			</java>
 		
 			<exec executable="python">
@@ -92,6 +92,8 @@
 				<arg value="hints.soy"/>
 				<arg value="common.soy"/>
 				<arg value="messages.soy"/>
+				<arg value="commonheader.soy"/>
+				<arg value="editor.soy"/>
 				<arg value="template.soy"/>
 			</exec>
 			
@@ -101,7 +103,7 @@
 				<arg value="--path_to_jar=.\_soy"/>
 				<arg value="--output_dir=web/js/generated"/>
 				<arg value="--template"/>
-				<arg value="@{fileimport},hints.soy,common.soy,messages.soy,template.soy"/>
+				<arg value="@{fileimport},hints.soy,common.soy,messages.soy,commonheader.soy,editor.soy,template.soy"/>
 				<arg value="src/pt/uc/dei/nobugssnackbar/i18n/*.json"/>
 			</exec>
 			

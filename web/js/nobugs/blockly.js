@@ -163,6 +163,8 @@ Blockly.onMouseDown_ = function(e) {
 };
 
 Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
+	var Game = Blockly.BlockSvg.Game;
+	
 	var notNull = base.nextConnection.targetConnection != null;
 	for (var i = 0; i < base.childBlocks_.length; i++) {
 		var testBlock = base.childBlocks_[i];
@@ -199,6 +201,9 @@ Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 };
 
 Blockly.BlockSvg.prototype.select = function() {
+	
+	var Game = Blockly.BlockSvg.Game;
+	
 	myIsTargetSvg = false;
     // Unselect any previously selected block.
 	if (!Game.CTRLPRESSED) {
@@ -309,6 +314,8 @@ Blockly.BlockSvg.prototype.select = function() {
 };
 
 Blockly.BlockSvg.prototype.unselect = function() {
+	var Game = Blockly.BlockSvg.Game;
+	
 	if (Game.blocksSelected.length > 0 && myIsTargetSvg) {
 		Game.blocksSelected.forEach(function(block) { block.removeSelect(); });
 		Game.blocksSelected = [];
@@ -326,6 +333,8 @@ Blockly.BlockSvg.prototype.unselect = function() {
 };
 
 Blockly.copy_ = function(block) {
+	var Game = Blockly.BlockSvg.Game;
+	
 	if (Game.blocksSelected.length > 0) {
 
 		Blockly.clipboard_ = [];
@@ -365,6 +374,8 @@ Blockly.littleCopy_ = function(block) {
 };
 
 Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
+	var Game = Blockly.BlockSvg.Game;
+	
 	var workspaceSvg = this;
 	var pastedBlocks = [];
 	var lastBlock = null;
@@ -392,6 +403,8 @@ Blockly.onKeyDown_ = function (e) {
 	    // When focused on an HTML text input widget, don't trap any keys.
 	    return;
     }
+	
+	var Game = Blockly.BlockSvg.Game;
 	
 	beforeMyKeyDown(e);
 	
@@ -426,6 +439,8 @@ Blockly.onKeyDown_ = function (e) {
 };
 
 Blockly.onMouseMove_ = function(e) {
+	
+	var Game = Blockly.BlockSvg.Game;
 	
 	Game.blocksSelected.forEach(function(block) {
 

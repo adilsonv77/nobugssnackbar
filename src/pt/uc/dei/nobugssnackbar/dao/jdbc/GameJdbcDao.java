@@ -1,5 +1,8 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -896,7 +899,7 @@ public class GameJdbcDao implements GameDao {
 
 	}
 
-	public String[] loadMachine(int code) throws SQLException {
+	public String[] loadMachine(int code, String destFolder) throws Exception {
 		Connection bdCon = null;
 		String[] ret = null;
 		try {
@@ -904,12 +907,13 @@ public class GameJdbcDao implements GameDao {
 
 			Statement st = bdCon.createStatement();
 			ResultSet rs = st
-					.executeQuery("select machinename, machinecost from machines where machineid = "
+					.executeQuery("select machinename, machinecost, machinecomercialimg from machines where machineid = "
 							+ code);
 			rs.next();
 			ret = new String[2];
 			ret[0] = rs.getString(1);
 			ret[1] = rs.getInt(2) + "";
+			transformBlobToImg(rs.getBinaryStream(3), destFolder, "com"+code);
 			st.close();
 
 		} finally {
@@ -989,8 +993,8 @@ public class GameJdbcDao implements GameDao {
 
 	}
 
-	public List<Object[]> loadMachineData(Integer[] machineid)
-			throws SQLException {
+	public List<Object[]> loadMachineData(Integer[] machineid, String destFolder)
+			throws Exception {
 		Connection bdCon = null;
 		List<Object[]> ret = new ArrayList<Object[]>();
 
@@ -1004,13 +1008,17 @@ public class GameJdbcDao implements GameDao {
 
 				Statement st = bdCon.createStatement();
 				ResultSet rs = st
-						.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce from machines where machineid in ("
+						.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce, machineimg from machines where machineid in ("
 								+ lista + ")");
+				
 				while (rs.next()) {
+					
+					transformBlobToImg(rs.getBinaryStream(10), destFolder, rs.getString(1));
 					ret.add(new Object[] { rs.getString(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getString(5),
 							rs.getString(6), rs.getString(7), rs.getString(8),
-							rs.getString(9), null });
+							rs.getString(9), null});
+					
 				}
 				st.close();
 
@@ -1042,6 +1050,19 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 		return ret;
+	}
+
+	private void transformBlobToImg(InputStream is, String destFolder, String machineId) throws Exception {
+		
+		String fileName = destFolder + "/machine"+machineId+".png";
+		File image = new File(fileName);
+	    FileOutputStream fos = new FileOutputStream(image);
+		
+		byte[] buffer = new byte[1];
+	    while (is.read(buffer) > 0) {
+	    	fos.write(buffer);
+	    }
+	    fos.close();
 	}
 
 	public List<Object[]> retrieveLeaderBoard(long userid, List<Long> classesId)

@@ -17,6 +17,7 @@
 	"Apps.dialogLogoff" : "Sair",
 	"Apps.close" : "Fechar",
 	"Apps.dialogSignUp" : "Registrar-se",
+	"Apps.save" : "Salvar",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
@@ -113,8 +114,6 @@
 	"Single.King" : "o Rei",
 	"Single.Queen" : "a Rainha",
 	"Single.Questionnaire" : "Question&#225;rio",
-	"Single.IceCreamMachine" : "Gelado",
-	"Single.FrenchFryer" : "Fritadeira de batatas",
 	"Single.AddNewEquipment" : "Adicione um novo equipamento ao seu estabelecimento",
 	"Single.Equipments" : "Equipamentos",
 	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o %0.",

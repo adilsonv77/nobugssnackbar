@@ -80,7 +80,7 @@ Game.generalInit = function() {
 
 	  // Add to reserved word list: API, local variables in execution environment
 	  // (execute) and the infinite loop detection function.
-	  Blockly.JavaScript.addReservedWords('Game, code');
+	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');
 	  
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 
@@ -90,6 +90,8 @@ Game.generalInit = function() {
       Game.ctxDisplay = document.getElementById('display').getContext('2d');
       Game.imgBackground = PreloadImgs.get("fundo");	
       Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
+      
+      Blockly.BlockSvg.Game = Game;
       
       Game.init();
 
@@ -573,15 +575,21 @@ Game.installMachines = function(toolbox) {
 
 		for (var i = 0; i < ret.length; i++) {
 			
-			var m = ret[i][1].toLowerCase();
-			var m2 = 'images/_' + m + '.png';
-			PreloadImgs.put(m, m2, true);
+			var k = "machine" + ret[i][0];
+			var imgsrc = "images/" + k + ".png";
+			PreloadImgs.put(k, imgsrc, true);
 			
-			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9]);
+			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9], k);
 		}
 		
-		if (ret.length > 0) 
+		if (ret.length > 0) {
 			toolbox = Game.loadToolBoxWithMachines(toolbox);
+			var machines = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0].children;
+			if (ret.length == machines.length)
+				Game.disableButton('buyButton');
+			
+		}
+			
 
 		document.getElementById('blockly').innerHTML = ""; // clean the editor
 	    Blockly.inject(document.getElementById('blockly'),
@@ -648,12 +656,15 @@ Game.continueSelectMachine = function() {
 		
 		i--;
 		
-		var m = Game.machines[i].name.toLowerCase();
-		PreloadImgs.put(m, 'images/_' + m + '.png');
+		var k = "machinecom" + Game.machines[i].id;
+		var imgsrc = 'images/' + k + '.png';
+		PreloadImgs.put(k, imgsrc, true);
+
 		
-		var t = BlocklyApps.getMsg( "Text_" + Game.machines[i].name );
+		var t = "";
+		UserControl.getMessage(Game.machines[i].name, BlocklyApps.LANG, {callback:function(msgret) {t = msgret;}, async:false});
 		
-		return "<img src='images/"+m+".png'/> <br/> " + t + "<br/>"+Game.machines[i].cust+" <img style='vertical-align:middle' src='images/coin2.png'/>";
+		return "<img src='" + imgsrc + "'/> <br/> " + t + "<br/>"+Game.machines[i].cust+" <img style='vertical-align:middle' src='images/coin2.png'/>";
 			
 	};
 	
@@ -668,6 +679,11 @@ Game.continueSelectMachine = function() {
 	var sel = new Selector(data, 1, 180, null, null, null, f1, f2, f3, f4);
 	var selBuilt = sel.build();
 
+	$('#tt0').tabs({ // selBuilt
+	    width: "auto",
+	    height: "auto"
+	});
+	
 	var content = $("<div/>")
 			.append($("#" + selBuilt))
 			.append(nobugspage.buyButton(null, null, null));
@@ -681,6 +697,7 @@ Game.continueSelectMachine = function() {
 	    	 
 		});
 
+	$('#tt0').tabs("resize");
 };
 
 Game.loadMachines = function(selectMachineOpts, idx) {
@@ -716,7 +733,15 @@ Game.buyMachineButtonClick = function() {
 	UserControl.buyMachine(idmachine, function() {
 
 		UserControl.loadWholeMachineData([idmachine], function(machine) {
-				hero.installMachine(idmachine, machine[0][1], machine[0][2], machine[0][3], machine[0][4], machine[0][5], machine[0][6], machine[0][7], machine[0][8], machine[0][9]);
+			
+				var k = "machine" + idmachine;
+				var imgsrc = "images/" + k + ".png";
+				PreloadImgs.put(k, imgsrc, true);
+
+				hero.installMachine(idmachine, machine[0][1], machine[0][2], 
+							machine[0][3], machine[0][4], machine[0][5], 
+							machine[0][6], machine[0][7], machine[0][8], 
+							machine[0][9], k);
 				 
 				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
 				PreloadImgs.loadImgs();

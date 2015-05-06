@@ -43,13 +43,13 @@ public interface GameDao {
 			String idError, String blockId, String errorMessage)
 			throws Exception;
 
-	String[] loadMachine(int code) throws Exception;
+	String[] loadMachine(int code, String destFolder) throws Exception;
 
 	List<String> listMachines(long id) throws Exception;
 
 	void buyMachine(long id, int machineId) throws Exception;
 
-	List<Object[]> loadMachineData(Integer[] machineid) throws Exception;
+	List<Object[]> loadMachineData(Integer[] machineid, String destFolder) throws Exception;
 
 	List<Object[]> retrieveLeaderBoard(long id, List<Long> classesId)
 			throws Exception;

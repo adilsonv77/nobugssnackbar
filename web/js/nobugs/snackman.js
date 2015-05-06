@@ -504,11 +504,11 @@ SnackMan.prototype.genericPickUp = function(order, machine) {
 	}
 	
 	// two animations slides: open machine
-	this.update('OD'); 
-	this.update('OD'); 
+	this.update('OM', machine); 
+	this.update('OM', machine); 
 
-	this.update('CD'); 
-	this.update('CD'); 
+	this.update('CM', machine); 
+	this.update('CM', machine); 
 
 	this.update('IP'); 
 
@@ -735,6 +735,12 @@ SnackMan.prototype.animate = function(command, values) {
 	 	case 'HJ':
 	 		this.nextHideJuiceMachineImage();
 	 		break;
+	 		
+	 	case 'OM':
+	 		break;
+	 		
+	 	case 'CM':
+	 		break;
 	  }
 	  
 };
@@ -870,7 +876,9 @@ SnackMan.prototype.drawInstalledMachines = function(ctx) {
 };
 
 SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, 
-		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands) {
+		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands, machineImg) {
+	
+	
 	
 	var machine = new Sprite({
 		ticksPerFrame: 0,
@@ -879,7 +887,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		x: machinex, y: machiney,
 		width: 32, height: 192,
 		sourceX: 0, sourceY: 0,
-		img : PreloadImgs.get(machinename.toLowerCase()),
+		img : PreloadImgs.get(machineImg)
 	});
 	
 	this.installedMachines.push(machine);

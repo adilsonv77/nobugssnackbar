@@ -30,6 +30,7 @@ public class UserControl {
 	private GameDao gameDao;
 	private SendMail mail;
 	private AbstractFactoryDao factoryDao;
+	private String appFolder;
 
 	public UserControl() {
 		WebContext ctx = WebContextFactory.get();
@@ -37,8 +38,18 @@ public class UserControl {
 				.getServletContext().getAttribute("factoryDao");
 		this.gameDao = factoryDao.getGameDao();
 		
-		this.mail = new SendMail(ctx.getServletContext().getRealPath("/"));
+		this.appFolder = ctx.getServletContext().getRealPath("/");
+		this.mail = new SendMail(this.appFolder);
 
+	}
+	
+	// use this constructor for test
+	public UserControl(AbstractFactoryDao factoryDao, String appFolder) {
+		this.factoryDao = factoryDao;
+		this.gameDao = factoryDao.getGameDao();
+		this.appFolder = appFolder;
+		
+		this.mail = new SendMail(appFolder);
 	}
 
 	public static String encrypt(String passw) throws NoSuchAlgorithmException {
@@ -254,7 +265,7 @@ public class UserControl {
 
 	@RemoteMethod
 	public String[] loadMachine(int code) throws Exception {
-		return gameDao.loadMachine(code);
+		return gameDao.loadMachine(code, this.appFolder + "/images");
 	}
 
 	@RemoteMethod
@@ -271,7 +282,7 @@ public class UserControl {
 	@RemoteMethod
 	public List<Object[]> loadWholeMachineData(Integer[] machineid)
 			throws Exception {
-		return gameDao.loadMachineData(machineid);
+		return gameDao.loadMachineData(machineid, this.appFolder + "/images");
 	}
 
 	@RemoteMethod
