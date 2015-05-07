@@ -688,7 +688,7 @@ Game.continueSelectMachine = function() {
 			.append($("#" + selBuilt))
 			.append(nobugspage.buyButton(null, null, null));
 			
-	PreloadImgs.loadImgs();
+	//PreloadImgs.loadImgs();
 	
 	MyBlocklyApps.showDialog(content[0], null, false, true, true,
 		BlocklyApps.getMsg("Text_AddNewEquipment"), null, 
@@ -729,7 +729,7 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 };
 
 Game.buyMachineButtonClick = function() {
-	var idmachine = Game.selectedMachine.getAttribute("iditem");
+	var idmachine = Game.machines[Game.selectedMachine.getAttribute("iditem")-1].id;
 	UserControl.buyMachine(idmachine, function() {
 
 		UserControl.loadWholeMachineData([idmachine], function(machine) {
@@ -744,7 +744,7 @@ Game.buyMachineButtonClick = function() {
 							machine[0][9], k);
 				 
 				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
-				PreloadImgs.loadImgs();
+				//PreloadImgs.loadImgs();
 				
 				var dom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 				
@@ -759,8 +759,14 @@ Game.buyMachineButtonClick = function() {
 				
 				Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
 				
-				Game.display();
-				BlocklyApps.hideDialog(false);
+				var f = function() {
+					
+					BlocklyApps.hideDialog(false);
+					Game.display();
+				};
+				
+				window.setTimeout(f, 500); // i dont know why, but with this approach the game is able to draw the machine
+				
 		});
 	});
 };
