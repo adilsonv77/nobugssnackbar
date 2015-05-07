@@ -1008,7 +1008,8 @@ public class GameJdbcDao implements GameDao {
 
 				Statement st = bdCon.createStatement();
 				ResultSet rs = st
-						.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, machinedrinkorfood, machineorder, machineproduce, machineimg from machines where machineid in ("
+						.executeQuery("select machineid, machinename, machinex, machiney, machinepath, machinemsgerrorisntfront, "
+								+ "machinedrinkorfood, machineorder, machineproduce, machineimg, machinenumberofframes, machineheight from machines where machineid in ("
 								+ lista + ")");
 				
 				while (rs.next()) {
@@ -1017,7 +1018,8 @@ public class GameJdbcDao implements GameDao {
 					ret.add(new Object[] { rs.getString(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getString(5),
 							rs.getString(6), rs.getString(7), rs.getString(8),
-							rs.getString(9), null});
+							rs.getString(9), null,
+							rs.getString(11), rs.getString(12)});
 					
 				}
 				st.close();

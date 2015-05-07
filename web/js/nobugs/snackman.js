@@ -876,16 +876,17 @@ SnackMan.prototype.drawInstalledMachines = function(ctx) {
 };
 
 SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, 
-		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands, machineImg) {
+		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands, machineImg,
+		                   machineNumberOfFrames, machineHeight) {
 	
 	
 	
 	var machine = new Sprite({
 		ticksPerFrame: 0,
-		numberOfFrames: 3,
+		numberOfFrames: machineNumberOfFrames,
 		horzSeq: false,
 		x: machinex, y: machiney,
-		width: 32, height: 192,
+		width: 32, height: machineHeight,
 		sourceX: 0, sourceY: 0,
 		img : PreloadImgs.get(machineImg)
 	});
