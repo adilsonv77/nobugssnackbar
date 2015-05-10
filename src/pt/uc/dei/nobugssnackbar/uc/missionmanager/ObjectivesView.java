@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -32,7 +31,9 @@ public class ObjectivesView implements Serializable {
 	 * there is some issue with setter of currentBonusTimeReward when editing bonusTime dataTable.
 	 * It return new object with same value instead of same object.
 	 * */
-	public class myInt{
+	public class myInt implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
 		private int value = 0;
 		
 		public myInt(){

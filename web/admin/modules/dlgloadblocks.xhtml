@@ -3,12 +3,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-	<p:dialog showEffect="fade" hideEffect="fade"
-		widgetVar="loadBlocksDlg" minHeight="545"
-		closable="true" dynamic="true" modal="true"
-		onShow="PF('loadBlocksDlg').initPosition()" >
-		Do something!
-	</p:dialog>
 	
+
+	
+	<p:dialog showEffect="fade" hideEffect="fade"
+		widgetVar="loadBlocksDlg" width="1024" height="768" fitViewport="true"
+		closable="true" dynamic="true" modal="true"
+		onShow="PF('loadBlocksDlg').initPosition()">
+		
+		<iframe src="../editor.html" style="width:100%;height:100%;">
+		</iframe>
+		
+	</p:dialog>
 </ui:composition>
+
