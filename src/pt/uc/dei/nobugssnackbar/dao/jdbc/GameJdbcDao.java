@@ -913,7 +913,7 @@ public class GameJdbcDao implements GameDao {
 			ret = new String[2];
 			ret[0] = rs.getString(1);
 			ret[1] = rs.getInt(2) + "";
-			transformBlobToImg(rs.getBinaryStream(3), destFolder, "com"+code);
+			transformBlobToImg(rs.getBinaryStream(3), destFolder, "com"+code, "");
 			st.close();
 
 		} finally {
@@ -1014,11 +1014,13 @@ public class GameJdbcDao implements GameDao {
 				
 				while (rs.next()) {
 					
-					transformBlobToImg(rs.getBinaryStream(10), destFolder, rs.getString(1));
+					transformBlobToImg(rs.getBinaryStream(10), destFolder, rs.getString(1), "");
+					transformBlobToImg(rs.getBinaryStream(9), destFolder, rs.getString(1) + "-prod", "$$");
+					
 					ret.add(new Object[] { rs.getString(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getString(5),
 							rs.getString(6), rs.getString(7), rs.getString(8),
-							rs.getString(9), null,
+							null,
 							rs.getString(11), rs.getString(12)});
 					
 				}
@@ -1030,7 +1032,7 @@ public class GameJdbcDao implements GameDao {
 					ps.setString(1, (String) obj[0]);
 
 					List<String[]> lcomms = new ArrayList<String[]>();
-					obj[9] = lcomms;
+					obj[8] = lcomms;
 
 					rs = ps.executeQuery();
 					while (rs.next()) {
@@ -1054,9 +1056,9 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
-	private void transformBlobToImg(InputStream is, String destFolder, String machineId) throws Exception {
+	private void transformBlobToImg(InputStream is, String destFolder, String machineId, String prefix) throws Exception {
 		
-		String fileName = destFolder + "/machine"+machineId+".png";
+		String fileName = destFolder + "/" + prefix + "machine" + machineId + ".png";
 		File image = new File(fileName);
 	    FileOutputStream fos = new FileOutputStream(image);
 		

@@ -503,16 +503,16 @@ SnackMan.prototype.genericPickUp = function(order, machine) {
 		throw false;
 	}
 	
-	// two animations slides: open machine
-	this.update('OM', machine); 
-	this.update('OM', machine); 
+	var c = machine.numberOfFrames - 1;
+	for (var x = 0; x < c; x++)
+		this.update('OM', machine); 
 
-	this.update('CM', machine); 
-	this.update('CM', machine); 
+	for (var x = 0; x < c; x++)
+		this.update('CM', machine); 
 
 	this.update('IP'); 
 
-	var item = {type: "item", descr:"$$"+machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
+	var item = {type: "item", descr:"$$"+machine.typeOfDrinkFood, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
 	
 	this.catched++;
 	
@@ -737,9 +737,17 @@ SnackMan.prototype.animate = function(command, values) {
 	 		break;
 	 		
 	 	case 'OM':
+	 		var machine = values.shift().machine;
+	 		if (machine.invert == true)
+	 			machine.invertDirection();	 		
+	 		machine.update();
 	 		break;
 	 		
 	 	case 'CM':
+	 		var machine = values.shift().machine;
+	 		if (machine.invert == false)
+	 			machine.invertDirection();	 		
+	 		machine.update();
 	 		break;
 	  }
 	  
@@ -876,10 +884,10 @@ SnackMan.prototype.drawInstalledMachines = function(ctx) {
 };
 
 SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, machiney, machinepath, 
-		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, machineProduce, commands, machineImg,
+		                   machineErrorIsntFront, machineDrinkOrFood, machineTypeOfDrinkFood, commands, machineImg,
 		                   machineNumberOfFrames, machineHeight) {
 	
-	
+	var machineProduce = "machine" + idmachine + "-prod";
 	
 	var machine = new Sprite({
 		ticksPerFrame: 0,
@@ -915,8 +923,10 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 	machineCfg.drinkOrFood = machineDrinkOrFood;
 	machineCfg.typeOfDrinkFood = machineTypeOfDrinkFood;
 	machineCfg.produce = machineProduce;
+	machineCfg.numberOfFrames = machineNumberOfFrames;
+	machineCfg.machine = machine;
 	
-	PreloadImgs.put('$' + machineProduce, 'images/$$' + machineProduce + '.png', true);	
+	PreloadImgs.put('$' + machineTypeOfDrinkFood, 'images/$$' + machineProduce + '.png', true);	
 	
 	machine.machineCfg = machineCfg;
 
@@ -960,7 +970,7 @@ SnackMan.prototype.hasMachineFor = function(product) {
 	for( var i= 0; i < this.installedMachines.length; i++ ) {
 		
 		var machine = this.installedMachines[i].machineCfg;
-		if (machine.produce === product)
+		if (machine.typeOfDrinkFood === product)
 			return true;
 		
 	}

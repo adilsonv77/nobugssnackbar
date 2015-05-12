@@ -579,7 +579,7 @@ Game.installMachines = function(toolbox) {
 			var imgsrc = "images/" + k + ".png";
 			PreloadImgs.put(k, imgsrc, true);
 			
-			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], ret[i][9], k, ret[i][10], ret[i][11]);
+			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], k, ret[i][9], ret[i][10]);
 		}
 		
 		if (ret.length > 0) {
@@ -741,7 +741,7 @@ Game.buyMachineButtonClick = function() {
 				hero.installMachine(idmachine, machine[0][1], machine[0][2], 
 							machine[0][3], machine[0][4], machine[0][5], 
 							machine[0][6], machine[0][7], machine[0][8], 
-							machine[0][9], k, machine[0][10], machine[0][11]);
+							k, machine[0][9], machine[0][10]);
 				 
 				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
 				//PreloadImgs.loadImgs();
