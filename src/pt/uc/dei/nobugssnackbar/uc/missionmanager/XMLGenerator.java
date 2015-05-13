@@ -11,14 +11,14 @@ import java.util.regex.Pattern;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.imageio.ImageIO;
 
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.util.HexImage;
 
 @ManagedBean(name = "xmlgen")
-@SessionScoped
+@ViewScoped
 public class XMLGenerator implements Serializable {
 
 	private static final long serialVersionUID = 1L;
