@@ -13,21 +13,22 @@
 	</p:panelGrid>
 	
 	<p:panelGrid columns="2" style="margin: 0 auto 30px auto;">
-		<p:commandButton value="#{msg['addFromDB']}" id="btnAddFromDB" icon="ui-icon-circle-plus"/>
+		<p:commandButton value="#{msg['addFromDB']}" id="btnAddFromDB"
+			oncomplete="PF('addHintFromDB').show()" icon="ui-icon-circle-plus"/>
 		<p:commandButton value="#{msg['addBlank']}" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
 			actionListener="#{hintView.setAdd(true)}" update=":formDlgHints" icon="ui-icon-circle-plus" />
 	</p:panelGrid>
 		
-	<h:form id="formDTT" style="margin-bottom: 35px;">
+	<h:form id="formDTT" styleClass="formDTT">
 		<p:outputLabel for="dtTips" value="#{msg['tips']}: "/>
 		<p:dataTable id="dtTips" var="hint" value="#{hintView.tipsHints}" draggableRows="true">
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
 		    
-		    <p:column headerText="#{msg['category']}">
+		    <p:column headerText="#{msg['category']}" >
 		        <h:outputText value="#{hint.category}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg['time']}">
+		    <p:column headerText="#{msg['time']}" width="50">
 		        <h:outputText value="#{hint.time}" />
 		    </p:column>
 		 
@@ -38,7 +39,7 @@
 		    <p:column headerText="#{msg['condition']}">
 		        <h:outputText value="#{hint.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="#{msg['actions']}">
+		    <p:column headerText="#{msg['actions']}" width="100">
 		    
 		        <p:commandButton id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
 		        	actionListener="#{hintView.setAdd(false)}" icon="ui-icon-wrench" update=":formDlgHints,:hintDlg">
@@ -53,7 +54,7 @@
 		</p:dataTable>	
 	</h:form>
 	
-	<h:form id="formDTE">
+	<h:form id="formDTE" styleClass="formDTE">
 		<p:outputLabel for="dtErorrs" value="#{msg['errors']}: "/>
 		<p:dataTable id="dtErorrs" var="error" value="#{hintView.errorsHints}" draggableRows="true">		
 		    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
@@ -62,7 +63,7 @@
 		        <h:outputText value="#{error.category}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg['time']}">
+		    <p:column headerText="#{msg['time']}" width="50">
 		        <h:outputText value="#{error.time}" />
 		    </p:column>
 		 
@@ -73,7 +74,7 @@
 		    <p:column headerText="#{msg['condition']}">
 		        <h:outputText value="#{error.conditionsAsString}" />
 		    </p:column>
-		    <p:column headerText="#{msg['actions']}">
+		    <p:column headerText="#{msg['actions']}" width="100">
 		       
 		        <p:commandButton id="btnErrorsHint" icon="ui-icon-wrench" oncomplete="PF('hintDialog').show()" 
 		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">

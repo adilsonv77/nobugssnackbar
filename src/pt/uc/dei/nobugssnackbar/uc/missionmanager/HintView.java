@@ -30,7 +30,7 @@ public class HintView implements Serializable {
 	private boolean add = false;
 	
 	private Hint hint = new Hint();
-	
+
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
 	
 	@ManagedProperty(value="#{mm.missionContent.tipsHints}")

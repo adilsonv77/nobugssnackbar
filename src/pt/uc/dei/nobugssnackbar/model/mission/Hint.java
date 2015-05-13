@@ -4,20 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
+@JdbcTable(name="hints")
 public class Hint implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+
 	
 	// #region private variables
+	@JdbcField(name="hintsid")
+	@JdbcPk
+	private Integer id;
+	
+	@JdbcField(name="hintscategory")
 	private String category;
 	private HintCategory hintCategory;
+	
+	@JdbcField(name="hintstime")
 	private int time;
+	
+	@JdbcField(name="hintstextexplanation")
 	private String text;
+	
+	/*
+	 * true = error hint
+	 * false = tip hint
+	 */
+	@JdbcField(name="hintstype")
 	private boolean type;
+	
 	private List<Condition> conditions;
+	
+	@JdbcField(name="hintscondition")
 	private String conditionsAsString;
 	// #end
+	
+
 	public Hint(){
 		category = "";
 		time = 0;
@@ -27,6 +56,14 @@ public class Hint implements java.io.Serializable {
 	}
 	
 	// #region public getters and setters
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public String getCategory() {		
 		return category;
 	}
@@ -68,12 +105,13 @@ public class Hint implements java.io.Serializable {
 	public String getConditionsAsString() {
 		StringBuilder result = new StringBuilder();
 		
-		for (Condition c : conditions) {
-			result.append(c.getConditionString());
-			result.append(" ");
+		if(conditionsAsString == "" || conditionsAsString == null || conditionsAsString.equals("")){
+			for (Condition c : conditions) {
+				result.append(c.getConditionString());
+				result.append(" ");
+			}
+			conditionsAsString = result.toString().trim();
 		}
-		conditionsAsString = result.toString().trim();
-		
 		return conditionsAsString;
 	}
 

@@ -125,12 +125,12 @@ public class ObjectivesView implements Serializable {
 
 	private void translateToString() {
 		String text = "";
-		this.objectives.setBonusTimeReward("");
+		this.getObjectives().setBonusTimeReward("");
 		for (myInt myInt : listBonusTimeReward) {
 			text += myInt.value + " ";
 		}
 		
-		this.objectives.setBonusTimeReward(text);
+		this.getObjectives().setBonusTimeReward(text);
 	}
 
 	public boolean isMaxCommands() {
@@ -180,11 +180,11 @@ public class ObjectivesView implements Serializable {
 	}	
 	
 	public Objective getObjItem(){
-		return this.objectives.getObjectiveItem();
+		return this.getObjectives().getObjectiveItem();
 	}
 	
 	public void setObjItem(Objective obj){
-		this.objectives.setObjectiveItem(obj);
+		this.getObjectives().setObjectiveItem(obj);
 	}
 	
 	private void disableObjective() {
@@ -192,7 +192,7 @@ public class ObjectivesView implements Serializable {
 	}
 	
 	public List<Objective> getObjList(){
-		return this.objectives.getObjectiveList();
+		return this.getObjectives().getObjectiveList();
 	}
 	
 	private void enableObjective() {

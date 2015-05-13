@@ -4,7 +4,7 @@ body {
 .my-lightbulb {
 	display: inline-block;
 	width: 36px;
-	height: 36px;
+		: 36px;
 	background: transparent url('../../images/light-bulb-icon.png') no-repeat local center;
 	background-size: 36px 36px;
 }
@@ -192,6 +192,22 @@ div.divExplEdit + img {
 }
 /*******************End Customers page css******************/
 
+/*******************Start Hint page css******************/
+.formDTT{
+	white-space: nowrap !important;
+	margin-bottom: 35px;
+}
+.formDTE{
+	white-space: nowrap;
+}
+.formDTT .dataTableEdit p{
+	display: inline;
+}
+.formDTE .dataTableEdit p{
+	display: inline;
+}
+/*******************End Hint page css******************/
+
 /*******************Start Dialog Hint page css******************/
 .btnContainer{
 	position: relative;
@@ -213,6 +229,8 @@ div.divExplEdit + img {
 	margin-bottom: 30px;
 }
 /*******************End Dialog Hint page css******************/
+
+/*******************Start Objectives page css******************/
 .btnObjectives{
 	
 	display:inline-block;
@@ -233,4 +251,15 @@ div.divExplEdit + img {
 .fieldsetMaxxCmdBonus{
 	width: 300px !important;
 	float: left;
+}
+/*******************End Objectives css******************/
+.addFromDBDT span.dataTableEdit{
+	display: inline-block;
+}
+.addFromDBDT{
+	white-space: nowrap;
+}
+/*Data table hover background*/
+.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
+    background: #78BCFF;
 }

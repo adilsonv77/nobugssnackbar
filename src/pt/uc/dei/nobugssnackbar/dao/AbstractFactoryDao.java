@@ -11,4 +11,5 @@ public interface AbstractFactoryDao {
 	ClazzDao getClazzDao();
 	LanguageDao getLanguageDao();
 	MessageDao getMessageDao();
+	HintDao getHintDao();
 }
