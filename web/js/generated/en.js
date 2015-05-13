@@ -97,7 +97,7 @@ if (typeof editor == 'undefined') { var editor = {}; }
 
 editor.start = function(opt_data, opt_ignored, opt_ijData) {
   var output = commonheader.start(null, null, opt_ijData);
-  var v__soy581 = 2;
+  var v__soy581 = 3;
   output += '<script type="text/javascript" src="js/nobugs/language.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script><script type="text/javascript" src="js/nobugs/utils.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script><script type="text/javascript" src="js/nobugs/blockly.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script><script type="text/javascript" src="js/nobugs/navigator.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script><script type="text/javascript" src="js/nobugs/nobugsblocklygeneratorjavascript.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script><script type="text/javascript" src="js/nobugs/editor.js?v=' + soy.$$escapeHtml(v__soy581) + '"><\/script>' + commonheader.messages(null, null, opt_ijData) + '<table width="100%"><tr><td><div id="title"><img src="images/logotipo.png" height="60px" width="185px"/></div></td><td class="farSide"><button class="secondary" onclick="EditorNoBug.clickSave()"  id="save" >Save</button></td></tr></table><div id="blockly" style="width: 100%; height: 90%"></div>';
   return output;
 };
