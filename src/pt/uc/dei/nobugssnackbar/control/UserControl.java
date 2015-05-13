@@ -339,4 +339,14 @@ public class UserControl {
 		return m.getMessageText();
 		
 	}
+	
+	@RemoteMethod
+	public String loadBlocksToEditor() {
+		return "<xml></xml>";
+	}
+	
+	@RemoteMethod
+	public void saveBlocksFromEditor(String xml) {
+		System.out.println(xml);
+	}
 }

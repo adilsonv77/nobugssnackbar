@@ -85,11 +85,15 @@ EditorNoBug.init = function() {
     window.addEventListener('keydown',  EditorNoBug.keyDown);
     window.addEventListener('keyup',  EditorNoBug.keyUp);
     
-/*    ask the application which blocks need to read
-    var xml = Blockly.Xml.textToDom(answer);
-    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-*/
+    /*    ask the application which blocks need to read */
+    UserControl.loadBlocksToEditor(function (answer) {
+    	
+        var xml = Blockly.Xml.textToDom(answer);
+        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+        
+    });
 
+alert()
 
 };
 
@@ -102,11 +106,14 @@ EditorNoBug.keyUp = function(evt) {
 };
 
 EditorNoBug.clickSave = function() {
-	//TODO connect with the application
-	var xml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-	// the content of xml variable can send to the server
 	
-	window.close();
+	var xml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+	UserControl.saveBlocksFromEditor(xml, function(){
+
+//		window.close();
+		
+	});
+	
 };
 
 window.addEventListener('load', EditorNoBug.init);
