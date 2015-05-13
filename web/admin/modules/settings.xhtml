@@ -56,11 +56,11 @@
 				</p:selectOneRadio>
 				
 				<p:panelGrid columns="3" cellpadding="5">
-					<p:radioButton for="customRadioXml" itemIndex="0" />
+					<p:radioButton for="customRadioXml" itemIndex="0"/>
             		<h:outputText value="#{msg['nothing']}"/>
             		<h:outputText value=""/>
             		
-            		<p:radioButton for="customRadioXml" itemIndex="1" />
+            		<p:radioButton for="customRadioXml" itemIndex="1"/>
             		<h:outputText value="#{msg['alwaysNew']}"/>
             		<h:outputText value=""/>
             		
@@ -71,9 +71,9 @@
            				<f:selectItems value="#{msVC.missionList}" var="m" itemLabel="#{m.name}" itemValue="#{m}"/>
            			</p:selectOneMenu>
 
-            		<p:radioButton for="customRadioXml" itemIndex="3" onchange="PF('loadBlocksDlg').show()"/>
+            		<p:radioButton for="customRadioXml" itemIndex="3"/>
             		<h:outputText value="#{msg['loadBlocks']}"/>
-            		<h:outputText value=""/>
+            		<p:commandButton value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()" disabled="#{!msVC.choseLoadBlocks}"/>
 				</p:panelGrid>
 			</p:outputPanel>
 		</p:panelGrid>

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -36,6 +37,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private List<SelectItem> cookStartsFromList;
 	private String selectedXmlOption;
 	private boolean choseMission;
+	private boolean choseLoadBlocks;
 	
 	@ManagedProperty(value="#{mm}")
 	private MissionManager missionManager;
@@ -61,6 +63,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			
 			mc = new MissionConverter();
 			mc.setProvider(this);
+			
+			FacesContext ctx = FacesContext.getCurrentInstance();
+			ctx.getExternalContext().getSessionMap().put("blocks", "<xml></xml>");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -112,16 +117,20 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		return selectedXmlOption;
 	}
 
-	public void setSelectedXmlOption(String selectedXmlOption) {
+	public void setSelectedXmlOption(String selectedXmlOption) {		
 		ResourceBundle msg = ApplicationMessages.getMessage();
 		xmltag.setAlwaysNew(false);
 		choseMission = false;
+		choseLoadBlocks = false;
 		
 		if (selectedXmlOption.equals(msg.getString("alwaysNew"))) {
 			xmltag.setAlwaysNew(true);
 		}
 		else if (selectedXmlOption.equals(msg.getString("loadPrevMission"))) {
 			choseMission = true;
+		}
+		else if (selectedXmlOption.equals(msg.getString("loadBlocks"))) {
+			choseLoadBlocks = true;
 		}
 		this.selectedXmlOption = selectedXmlOption;
 	}
@@ -182,6 +191,14 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setMc(MissionConverter mc) {
 		this.mc = mc;
+	}
+
+	public boolean isChoseLoadBlocks() {
+		return choseLoadBlocks;
+	}
+
+	public void setChoseLoadBlocks(boolean choseLoadBlocks) {
+		this.choseLoadBlocks = choseLoadBlocks;
 	}
 
 }

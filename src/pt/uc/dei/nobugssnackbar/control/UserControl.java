@@ -342,11 +342,15 @@ public class UserControl {
 	
 	@RemoteMethod
 	public String loadBlocksToEditor() {
-		return "<xml></xml>";
+		WebContext ctx = WebContextFactory.get();
+		String blocks = (String) ctx.getSession().getAttribute("blocks");
+		
+		return blocks;
 	}
 	
 	@RemoteMethod
 	public void saveBlocksFromEditor(String xml) {
-		System.out.println(xml);
+		WebContext ctx = WebContextFactory.get();
+		ctx.getSession().setAttribute("blocks", xml);
 	}
 }
