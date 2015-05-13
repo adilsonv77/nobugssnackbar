@@ -4,6 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<!-- Hints in Hint tab -->
 	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmDeleteDialog"
 		header="#{msg['ruSureDelHint']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
 		resizable="false" dynamic="true">
@@ -45,4 +46,77 @@
 		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmBonusTimeDeleteDialog').hide()" />
 	
 	</p:dialog>
+	
+	<!-- Add hint from DB dialog -->
+	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="addHintFromDB"
+		header="#{msg['selectHintToAdd']}" minHeight="40" closable="false" modal="true"
+		resizable="false" dynamic="true">
+			
+		<h:form id="fromAddTipsHintFromDB" style="width:600px; margin-bottom: 30px;">
+			<p:outputLabel for="dtTipsHintsDB" value="#{msg['tips']}:"/>
+			<p:dataTable id="dtTipsHintsDB" var="hint" value="#{hintDBView.tipsHintFromDB}"
+				scrollable="true" scrollHeight="200" scrollRows="10" styleClass="addFromDBDT">		
+			    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>
+			    		    
+			    
+			    <p:column headerText="#{msg['category']}" width="150">
+			        <h:outputText value="#{hint.category}" />
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['time']}">
+			        <h:outputText value="#{hint.time}" />
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['text']}" >
+			        <h:outputText value="#{hint.text}" styleClass="dataTableEdit" escape="false"/>
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['condition']}">
+			        <h:outputText value="#{hint.conditionsAsString}" />
+			    </p:column>
+			    <p:column headerText="#{msg['actions']}" width="35">
+			       
+			        <p:commandButton id="addHintFromDB" icon="ui-icon-circle-plus" action="#{hintDBView.addHint}">
+			        	<f:setPropertyActionListener value="#{hint}" target="#{hintDBView.hint}"/>
+			        </p:commandButton>
+			                		        
+			    </p:column>		    
+			</p:dataTable>	
+		</h:form>
+		
+		<h:form id="fromAddErrorsHintFromDB" style="width:600px;">
+			<p:outputLabel for="dtErrosHintsDB" value="#{msg['errors']}:"/>
+			<p:dataTable id="dtErrosHintsDB" var="hint" value="#{hintDBView.errorsHintFromDB}"
+				scrollable="true" scrollHeight="200" scrollRows="10" styleClass="addFromDBDT">		
+			    <p:ajax event="rowReorder" listener="#{hintView.onRowReorder}"/>			    		    
+			    
+			    <p:column headerText="#{msg['category']}" width="150">
+			        <h:outputText value="#{hint.category}" />
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['time']}">
+			        <h:outputText value="#{hint.time}" />
+			    </p:column>
+			 
+			    <p:column headerText="#{msg['text']}" >
+			        <h:outputText id="addFromDBErrorsText" value="#{hint.text}" styleClass="dataTableEdit" escape="false"/>	
+			    </p:column>					   
+			 
+			    <p:column headerText="#{msg['condition']}">
+			        <h:outputText value="#{hint.conditionsAsString}" />
+			    </p:column>
+			    <p:column headerText="#{msg['actions']}" width="35">
+			       
+			        <p:commandButton id="addHintFromDB" icon="ui-icon-circle-plus" action="#{hintDBView.addHint}">
+			        	<f:setPropertyActionListener value="#{hint}" target="#{hintDBView.hint}"/>
+			        </p:commandButton>
+			                		        
+			    </p:column>		    
+			</p:dataTable>	
+			
+			<p:commandButton value="#{msg['close']}" icon="ui-icon-close"  oncomplete="PF('addHintFromDB').hide()"/>	
+		</h:form>
+	
+	</p:dialog>	
+	
 </ui:composition>
