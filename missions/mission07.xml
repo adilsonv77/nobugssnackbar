@@ -80,8 +80,7 @@
 			<pattern>
 				<order>
 					<foods>
-						<food price="1">icecream</food>
-						<food price="1">icecream</food>
+						<food price="1">machine1-prod</food>
 						<food price="1">hotdog</food>
 					</foods>
 					<drinks>
@@ -90,12 +89,6 @@
 				<order>
 					<foods>
 						<food price="1">hotdog</food>
-					</foods>
-					<drinks></drinks>
-				</order>
-				<order>
-					<foods>
-						<food price="1">frenchfries</food>
 					</foods>
 					<drinks></drinks>
 				</order>
@@ -109,6 +102,12 @@
 				<order>
 					<foods>
 						<food price="1">hotdog</food>
+					</foods>
+					<drinks></drinks>
+				</order>
+				<order>
+					<foods>
+						<food price="1">machine2-prod</food>
 					</foods>
 					<drinks></drinks>
 				</order>

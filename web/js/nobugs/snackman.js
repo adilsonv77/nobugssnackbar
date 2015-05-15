@@ -214,6 +214,9 @@ SnackMan.prototype.createGraph = function() {
 SnackMan.prototype.reset = function() {
 	this.currentNode = this.initialPosition;
 	
+	this.catched = 0;
+	this.delivered = 0;
+	
 	this.img.image = this.imgCooker;
 	
 	this.img.x = this.currentNode.x;
@@ -228,6 +231,9 @@ SnackMan.prototype.reset = function() {
 	this.allObjectivesAchieved = false;
 	for (var i=0; i<this.objective.objectives.length; i++)
 		this.objective.objectives[i].achieved = false;
+	
+	for (var i = 0; i < this.installedMachines.length; i++) 
+		this.installedMachines[i].machineCfg.production = [];
 
 };
 
@@ -478,8 +484,8 @@ SnackMan.prototype.pickUpHotDog= function(order) {
 	
 };
 
-SnackMan.prototype.genericPickUp = function(order, machine) {
-
+SnackMan.prototype.verifyGenericPickUp = function(order, machine) {
+	
 	if (this.currentNode.id != machine.node.id) {
 		BlocklyApps.log.push(["fail", machine.errorIsntFront]);
 		throw false;
@@ -498,26 +504,83 @@ SnackMan.prototype.genericPickUp = function(order, machine) {
 	}
 	
 	// does the order have the food/drink of this place ?
-	if (order.data.descr.indexOf(machine.typeOfDrinkFood) == -1) {
+	if (order.data.descr.indexOf(machine.produce) == -1) {
 		BlocklyApps.log.push(["fail", "$Error_only"+machine.typeOfDrinkFood.substring(0,1).toUpperCase() + machine.typeOfDrinkFood.substring(1)]);
 		throw false;
 	}
 	
-	var c = machine.numberOfFrames - 1;
-	for (var x = 0; x < c; x++)
-		this.update('OM', machine); 
+};
 
-	for (var x = 0; x < c; x++)
-		this.update('CM', machine); 
-
-	this.update('IP'); 
-
-	var item = {type: "item", descr:"$$"+machine.typeOfDrinkFood, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
+SnackMan.prototype.finishPickUp = function(order, machine) {
+	var item = {type: "item", descr:"$$"+machine.produce, drinkOrFood: machine.drinkOrFood, source: order.data.source, sourceType: order.data.sourceType};
 	
 	this.catched++;
 	
 	return item; 
+};
+
+SnackMan.prototype.genericPickUp = function(order, machineCfg) {
+
+	this.verifyGenericPickUp(order, machineCfg);
 	
+	var c = machineCfg.numberOfFrames - 1;
+	for (var x = 0; x < c; x++)
+		this.update('OM', machineCfg); 
+
+	for (var x = 0; x < c; x++)
+		this.update('CM', machineCfg); 
+
+	this.update('IP'); 
+
+	return this.finishPickUp(order, machineCfg);
+	
+};
+
+SnackMan.prototype.genericPrepare = function(machineCfg, idxConfig) {
+	
+	if (this.currentNode.id != machineCfg.node.id) {
+		BlocklyApps.log.push(["fail", machineCfg.errorIsntFront]);
+		throw false;
+	}
+	
+	// can only produce if there is no product in stock
+	if (machineCfg.production.length > 0) {
+		BlocklyApps.log.push(["fail", "$Error_StillHasProductInStock"]);
+		throw false;
+	}
+
+	var confProd = machineCfg.commsProduce[idxConfig];
+	var production = [];
+	for (var i = 0; i < machineCfg.commsProduce[idxConfig].qtProduce; i++) {
+		production.push({prodX: confProd.prodX, prodY: confProd.prodY, 
+							prodXDelta: confProd.prodXDelta, prodYDelta: confProd.prodYDelta, 
+							   prodImg: confProd.prodImg });	
+	}
+		
+	var c = machineCfg.numberOfFrames;
+	for (var x = 0; x < c; x++)
+		this.update('OM', machineCfg); 
+	
+	this.update('PM', machineCfg, production);
+	
+};
+
+SnackMan.prototype.genericOnlyPickUp = function(order, machineCfg) {
+
+	this.verifyGenericPickUp(order, machineCfg);
+
+	// is there some in stock ?
+	if (machineCfg.production.length == 0) {
+		BlocklyApps.log.push(["fail", "$Error_DoesntHaveProductInStock"]);
+		throw false;
+	}
+	
+	machineCfg.production.shift();
+	this.update('KM', machineCfg);
+	this.update('IP');
+	
+	var p = this.finishPickUp(order, machineCfg);
+	return p;
 };
 
 SnackMan.prototype.deliver = function(item) {
@@ -558,7 +621,9 @@ SnackMan.prototype.deliver = function(item) {
 		}
 		
 		this.update('IO', amount.money, this.catched - this.delivered);
-	}
+	} else
+		this.update('IO', null, this.catched - this.delivered);
+
 	
 };
 
@@ -749,6 +814,15 @@ SnackMan.prototype.animate = function(command, values) {
 	 			machine.invertDirection();	 		
 	 		machine.update();
 	 		break;
+	 		
+	 	case 'PM':
+	 		var machine = values.shift();
+	 		machine.production = values.shift();
+	 		break;
+	 		
+	 	case 'KM':
+	 		break;
+	 	
 	  }
 	  
 };
@@ -879,7 +953,7 @@ SnackMan.prototype.changeImageOriginal = function() {
 
 SnackMan.prototype.drawInstalledMachines = function(ctx) {
 	for (var i = 0; i < this.installedMachines.length; i++) {
-		this.installedMachines[i].draw(ctx);
+		this.installedMachines[i].drawExt(ctx);
 	}
 };
 
@@ -893,11 +967,23 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 		ticksPerFrame: 0,
 		numberOfFrames: machineNumberOfFrames,
 		horzSeq: false,
-		x: machinex, y: machiney,
+		x: parseInt(machinex), y: parseInt(machiney),
 		width: 32, height: machineHeight,
 		sourceX: 0, sourceY: 0,
 		img : PreloadImgs.get(machineImg)
 	});
+	
+	machine.drawExt = function (ctx) {
+		this.draw(ctx);
+		
+		for (var i = 0; i < this.machineCfg.production.length; i++) {
+			var p = this.machineCfg.production[i];
+			
+			var img = PreloadImgs.get(p.prodImg);
+			ctx.drawImage(img, this.x + p.prodX + (i*p.prodXDelta), this.y + p.prodY + (i*p.prodYDelta));
+			
+		}
+	};
 	
 	this.installedMachines.push(machine);
 
@@ -926,10 +1012,13 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 	machineCfg.numberOfFrames = machineNumberOfFrames;
 	machineCfg.machine = machine;
 	
-	PreloadImgs.put('$' + machineTypeOfDrinkFood, 'images/$$' + machineProduce + '.png', true);	
+	machineCfg.production = [];
+	
+	PreloadImgs.put('$' + machineProduce, 'images/$$' + machineProduce + '.png', true);	
 	
 	machine.machineCfg = machineCfg;
 
+	machineCfg.commsProduce = [];
 	// link the commands
 	for (var i = 0; i < commands.length; i++) {
 		var com = commands[i];
@@ -955,6 +1044,28 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 				run = new Function("machine", "order", "return hero.genericPickUp( order, machine ); ");
 			    break;
 		
+			case "P" :
+				
+				var confProduce = {};
+				
+				confProduce.qtProduce = parseInt(com[5]);
+				confProduce.prodX = parseInt(com[6]);
+				confProduce.prodY = parseInt(com[7]);
+				confProduce.prodXDelta = parseInt(com[8]);
+				confProduce.prodYDelta = parseInt(com[9]);
+				confProduce.prodImg = com[10];
+				
+				machineCfg.commsProduce.push(confProduce);
+				
+				PreloadImgs.put(confProduce.prodImg, 'images/machine' + confProduce.prodImg + '.png', true);	
+				
+				run = new Function("machine", "hero.genericPrepare( machine, " +(machineCfg.commsProduce.length-1)+ " ); ");
+				break;
+			
+			case "K" :
+				run = new Function("machine", "order", "return hero.genericOnlyPickUp( order, machine ); ");
+				break;
+		
 		}
 		
 		this.extendedCommands.push({name: com[0], nameLang: com[1], run: run, machine: machineCfg});
@@ -970,7 +1081,7 @@ SnackMan.prototype.hasMachineFor = function(product) {
 	for( var i= 0; i < this.installedMachines.length; i++ ) {
 		
 		var machine = this.installedMachines[i].machineCfg;
-		if (machine.typeOfDrinkFood === product)
+		if (machine.produce === product)
 			return true;
 		
 	}

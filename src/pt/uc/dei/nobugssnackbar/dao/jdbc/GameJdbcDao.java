@@ -1027,7 +1027,9 @@ public class GameJdbcDao implements GameDao {
 				st.close();
 
 				PreparedStatement ps = bdCon
-						.prepareStatement("select machinecommandname, machinecommandlang, machinecommandblocks, machinecommandjavascript, machinecommandtype from machinescommands where machineid = ?");
+						.prepareStatement("select machinecommandname, machinecommandlang, machinecommandblocks, machinecommandjavascript, machinecommandtype, machinecommandproductqtd,"
+										    + "machinecommandproductx, machinecommandproducty, machinecommandproductdeltax, machinecommandproductdeltay, machinecommandid, machinecommandproductimg from machinescommands "
+											+ "left outer join machinescommandproduct using (machinecommandid) where machineid = ? order by machinecommandid");
 				for (Object[] obj : ret) {
 					ps.setString(1, (String) obj[0]);
 
@@ -1037,9 +1039,18 @@ public class GameJdbcDao implements GameDao {
 					rs = ps.executeQuery();
 					while (rs.next()) {
 
+						String id = "";
+						if (rs.getString(10) != null) {
+							
+							id = rs.getString(11) + "-comm";
+							transformBlobToImg(rs.getBinaryStream(12), destFolder, id, "");
+							
+						}
+						
 						lcomms.add(new String[] { rs.getString(1),
 								rs.getString(2), rs.getString(3),
-								rs.getString(4), rs.getString(5) });
+								rs.getString(4), rs.getString(5), 
+								rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), id});
 
 					}
 					rs.close();

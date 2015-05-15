@@ -29,7 +29,7 @@ Baloon.draw = function(ctx, x, y, orders, left) {
 			case 2: {
 				ctx.drawImage(PreloadImgs.get(baloon2), startX, startY);
 				for (var i = 0;i < orders.length;i++) {
-					ctx.drawImage(orders[i], startX+startFoodX+5, startY+2+(18*i), 18, 18);
+					ctx.drawImage(orders[i], startX+startFoodX+6, startY+2+(18*i), 18, 18);
 				}
 				break;
 			}

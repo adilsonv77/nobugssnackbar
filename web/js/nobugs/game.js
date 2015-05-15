@@ -585,8 +585,12 @@ Game.installMachines = function(toolbox) {
 		if (ret.length > 0) {
 			toolbox = Game.loadToolBoxWithMachines(toolbox);
 			var machines = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0].children;
-			if (ret.length == machines.length)
+			if (ret.length == machines.length) {
+
+				Game.enabledBuy = false;
 				Game.disableButton('buyButton');
+				
+			}
 			
 		}
 			
@@ -1929,7 +1933,6 @@ Game.initApi = function(interpreter, scope) {
     	wrapper = function(o) {
     	  var ex = interpreter.stateStack[0].func_.ex;
     	  return interpreter.createPrimitive(ex.run(ex.machine, o));
-  	      //return interpreter.createPrimitive(ex.run(o));
   	    };
   	    
   	  var nf = interpreter.createNativeFunction(wrapper);
