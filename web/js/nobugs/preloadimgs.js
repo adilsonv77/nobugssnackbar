@@ -43,11 +43,11 @@ PreloadImgs.loadImgs = function() {
 		    preload.img.src = preload.src;
 		}
 	}
-	
-	Blockly.loadAudio_(['media/click.mp3', 'media/click.wav', 'media/click.ogg'], 'click');
-	Blockly.loadAudio_(['media/delete.mp3', 'media/delete.wav', 'media/delete.ogg'], 'delete');
-	Blockly.preloadAudio_();
-	
+	/*
+	Blockly.mainWorkspace.loadAudio_(['media/click.mp3', 'media/click.wav', 'media/click.ogg'], 'click');
+	Blockly.mainWorkspace.loadAudio_(['media/delete.mp3', 'media/delete.wav', 'media/delete.ogg'], 'delete');
+	Blockly.mainWorkspace.preloadAudio_();
+	*/
 	PreloadImgs.loaded = true;
 };
 
