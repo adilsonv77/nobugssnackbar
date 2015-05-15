@@ -1746,7 +1746,7 @@ Game.logEvent = null;
 Game.startSaveUserProgress = function() {
 	
 	if (Game.logEvent == null)
-		Game.logEvent = Blockly.addChangeListener(function() {
+		Game.logEvent = Blockly.mainWorkspace.addChangeListener(function() {
 			
 			if (Blockly.Block.dragMode_ != 0)
 				return;
@@ -1788,18 +1788,22 @@ Game.removeChangeListeners = function() {
 	  MyBlocklyApps.unbindClick('logoffButton', Game.logoffButtonClick);
 	  
   }
-	
-  if (Game.logEvent != null) {
-
-	  Blockly.removeChangeListener(Game.logEvent);
-	  Game.logEvent = null;
-  }
   
-  if (Hints.evtChangeListener != null) {
+  if (Blockly.mainWorkspace != null) {
+	  
+	  if (Game.logEvent != null) {
 
-	  Blockly.removeChangeListener(Hints.evtChangeListener);
-	  Hints.evtChangeListener = null;
+		  Blockly.mainWorkspace.removeChangeListener(Game.logEvent);
+		  Game.logEvent = null;
+	  }
+	  
+	  if (Hints.evtChangeListener != null) {
+
+		  Blockly.mainWorkspace.removeChangeListener(Hints.evtChangeListener);
+		  Hints.evtChangeListener = null;
+	  }
   }
+	
 };
 
 

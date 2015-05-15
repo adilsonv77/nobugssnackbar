@@ -62,7 +62,7 @@ Hints.init = function(hints) {
 
 	
 	if (Hints.evtChangeListener == null)
-		Hints.evtChangeListener = Blockly.addChangeListener(Hints.changeListener);
+		Hints.evtChangeListener = Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
 		
 	if (hints != null) {
 		
@@ -408,7 +408,7 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	if (bindEvent == undefined || bindEvent == null)
 		bindEvent = Hints.hideHintWithTimer;
 	
-	Hints.bindEvent1 = Blockly.addChangeListener(bindEvent);
+	Hints.bindEvent1 = Blockly.mainWorkspace.addChangeListener(bindEvent);
 	
 	if (Blockly.mainWorkspace.toolbox_ != undefined)
 		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));

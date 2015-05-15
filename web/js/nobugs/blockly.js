@@ -370,6 +370,8 @@ Blockly.littleCopy_ = function(block) {
 	var xy = block.getRelativeToSurfaceXY();
 	xmlBlock.setAttribute('x', Blockly.RTL ? -xy.x : xy.x);
 	xmlBlock.setAttribute('y', xy.y);
+	Blockly.clipboardXml_ = xmlBlock;
+	Blockly.clipboardSource_ = block.workspace;
 	return xmlBlock;
 };
 
