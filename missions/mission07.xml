@@ -80,7 +80,6 @@
 			<pattern>
 				<order>
 					<foods>
-						<food price="1">machine1-prod</food>
 						<food price="1">hotdog</food>
 					</foods>
 					<drinks>
@@ -88,6 +87,7 @@
 				</order>
 				<order>
 					<foods>
+						<food price="1">machine1-prod</food>
 						<food price="1">hotdog</food>
 					</foods>
 					<drinks></drinks>

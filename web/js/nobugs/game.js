@@ -525,7 +525,7 @@ Game.missionLoaded = function(ret){
 	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
   }
   // if the slider is not loaded in the begin, then the hint show it 
-  if (Game.howManyRuns >= Game.slider.timesBefore) {
+  if (!Game.openMission.open && Game.howManyRuns >= Game.slider.timesBefore) {
 	  Game.slider.svg.style.visibility = "visible";
   }
    
@@ -584,11 +584,22 @@ Game.installMachines = function(toolbox) {
 		
 		if (ret.length > 0) {
 			toolbox = Game.loadToolBoxWithMachines(toolbox);
-			var machines = Game.mission.childNodes[0].getElementsByTagName("selectMachine")[0].children;
-			if (ret.length == machines.length) {
+			var selectedMachines = Game.mission.childNodes[0].getElementsByTagName("selectMachine");
+			if (selectedMachines.length > 0) {
 
-				Game.enabledBuy = false;
-				Game.disableButton('buyButton');
+				var machines = selectedMachines[0].children;
+				if (ret.length == machines.length) {
+
+					Game.enabledBuy = false;
+					Game.disableButton('buyButton');
+					
+				}
+				
+				if (hero.installedMachines.length == 1) { // reduce a half the slider capacity
+					Game.speedSlider.setValue(1);
+					Game.speedMultFactor = 125; 
+				}
+				Game.slider.svg.style.visibility = "visible";
 				
 			}
 			
@@ -748,8 +759,24 @@ Game.buyMachineButtonClick = function() {
 							k, machine[0][9], machine[0][10]);
 				 
 				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
-				//PreloadImgs.loadImgs();
 				
+				if (Game.machines.length  == 1) {
+
+					Game.enabledBuy = false;
+					Game.disableButton('buyButton');
+					
+				}
+					
+				if (hero.installedMachines.length == 1) { // reduce a half the slider capacity
+					Game.speedSlider.setValue(1);
+					Game.speedMultFactor = 125; 
+				} else {
+					Game.speedSlider.setValue(0.5);
+					Game.speedMultFactor = 0; 
+					
+				}
+				Game.slider.svg.style.visibility = "visible";
+					
 				var dom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 				
 				document.getElementById('blockly').innerHTML = ""; // clean the editor
@@ -777,7 +804,8 @@ Game.buyMachineButtonClick = function() {
 
 Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	
-  Game.speedSlider.setValue(0.5); 
+  Game.speedSlider.setValue(0.5);
+  Game.speedMultFactor = 0;
 		
   var xml = Blockly.Xml.textToDom(answer);
   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
@@ -1414,7 +1442,7 @@ Game.execute = function(debug) {
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
-        Game.stepSpeed = 1000 * Math.pow(0.5, 3);
+        Game.stepSpeed = (1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor ;
 	    
         Game.lockBlockly();
         
@@ -2010,7 +2038,7 @@ Game.animate = function() {
 
 	  // call the next animate when the animation of the last command has finished
 	  //if (Game.runningStatus === 1) 
-	  Game.stepSpeed = 1000 * Math.pow(1 - Game.speedSlider.getValue(), 3);
+	  Game.stepSpeed =  (1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor ;
 
 	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
