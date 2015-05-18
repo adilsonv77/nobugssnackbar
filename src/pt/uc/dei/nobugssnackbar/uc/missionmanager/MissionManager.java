@@ -185,4 +185,19 @@ public class MissionManager implements Serializable {
 	private MissionContent processMissionContent(String content) {
 		return new MissionContent();
 	}
+	
+	public void save() {
+		String xml = MissionToXML.missionToXML(mission, missionContent);
+		
+		if (xml != null) {
+			mission.setContent(xml);
+			// TODO: save Mission in DB
+		}
+		else {
+			ResourceBundle messageBundle = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
+		}
+	}
+	
 }

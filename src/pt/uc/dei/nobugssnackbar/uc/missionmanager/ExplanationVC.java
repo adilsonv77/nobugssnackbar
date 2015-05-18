@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
+import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
  
 @ManagedBean(name="explVC")
 @ViewScoped
@@ -94,7 +95,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	}
 	
 	private boolean checkImages(String text) {
-		if (XMLGenerator.convertImgTagToHexImgTag(text, true) != null) {
+		if (ImgTagConvertor.convertImgTagToHexImgTag(text, true) != null) {
 			return true;
 		}
 		

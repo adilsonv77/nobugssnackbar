@@ -74,7 +74,7 @@
         			<p:panelGrid id="footerBtnPnl" columns="2">
         				<p:commandButton value="#{msg['test']}" icon="ui-icon-play"/>
         				<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
-        					actionListener="#{xmlgen.processExplanationPages()}" update="growlMsgs"/>
+        					 update="growlMsgs"/>
         			</p:panelGrid>
        			</p:layoutUnit>
        			
@@ -101,13 +101,14 @@
 							<ui:include src="modules/hints.xhtml"/>
 				        </p:tab>	
 				        
-				        <p:tab title="#{msg['machines']}">
-			
-				        </p:tab>
-				        
 				        <p:tab title="#{msg['settings']}">
 							<ui:include src="modules/settings.xhtml"/>
-				        </p:tab>			        			        			        	        		        		        
+				        </p:tab>
+				        
+				        <p:tab title="#{msg['machines']}">
+							In process of developing!
+				        </p:tab>
+				        			        			        			        	        		        		        
 			    	</p:tabView>
         		</p:layoutUnit>
         		

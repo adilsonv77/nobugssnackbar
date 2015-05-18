@@ -1,39 +1,20 @@
-package pt.uc.dei.nobugssnackbar.uc.missionmanager;
+package pt.uc.dei.nobugssnackbar.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 import javax.imageio.ImageIO;
 
-import pt.uc.dei.nobugssnackbar.model.mission.Page;
-import pt.uc.dei.nobugssnackbar.util.HexImage;
-
-@ManagedBean(name = "xmlgen")
-@ViewScoped
-public class XMLGenerator implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class ImgTagConvertor {
 	
 	private final static String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
-	private final static String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";
-	
-	@ManagedProperty(value="#{explVC}")
-	private ExplanationVC evc;
+	private final static String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";	
 	
 	private static int imgIdCounter;
-
-	public XMLGenerator() {
-		
-	}
 	
 	public static String convertImgTagToHexImgTag(String text, boolean justTestImg) {
 		String result = text;
@@ -66,17 +47,6 @@ public class XMLGenerator implements Serializable {
 		return result;
 	}
 	
-	public void processExplanationPages() {	
-		List<Page> pageList = evc.getPages();
-		
-		for (Page page : pageList) {		
-			String result = convertImgTagToHexImgTag(page.getMsg(), false);
-			
-			System.out.println(result);
-//			page.setMsg(result);
-		}
-	}
-	
     private static File getImageFromUrl(String src) {
         File file = null;
         
@@ -101,18 +71,10 @@ public class XMLGenerator implements Serializable {
 			FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
 					messageBundle.getString("tryAgainCheckImage"));
 			FacesContext.getCurrentInstance().addMessage("", msg);*/
-// 			e.printStackTrace();
+ 			// e.printStackTrace();
  		}
          
          return file;
     }
 
-	public ExplanationVC getEvc() {
-		return evc;
-	}
-
-	public void setEvc(ExplanationVC evc) {
-		this.evc = evc;
-	}
-	
 }

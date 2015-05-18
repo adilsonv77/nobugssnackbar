@@ -26,10 +26,13 @@ public class MissionContent implements Serializable {
     private List<Randomization> randList = new ArrayList<>();
     
     private List<Customer> customers = new ArrayList<>();
+    
+    private Objectives objectives = new Objectives();
 
 	private Cook cook = new Cook();
 	private XmlTag xmltag = new XmlTag();
 	private Slider slider = new Slider();
+	private boolean selectedLoadBlocks = false;
 
 	public MissionContent() {
 	}
@@ -173,6 +176,22 @@ public class MissionContent implements Serializable {
 
 	public void setSlider(Slider slider) {
 		this.slider = slider;
+	}
+
+	public Objectives getObjectives() {
+		return objectives;
+	}
+
+	public void setObjectives(Objectives objectives) {
+		this.objectives = objectives;
+	}
+
+	public boolean isSelectedLoadBlocks() {
+		return selectedLoadBlocks;
+	}
+
+	public void setSelectedLoadBlocks(boolean selectedLoadBlocks) {
+		this.selectedLoadBlocks = selectedLoadBlocks;
 	}
 
 }

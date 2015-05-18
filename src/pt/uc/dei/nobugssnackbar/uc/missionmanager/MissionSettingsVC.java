@@ -60,6 +60,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			cook = missionManager.getMissionContent().getCook();
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
+			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();
 			
 			mc = new MissionConverter();
 			mc.setProvider(this);
@@ -117,7 +118,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		return selectedXmlOption;
 	}
 
-	public void setSelectedXmlOption(String selectedXmlOption) {		
+	public void setSelectedXmlOption(String selectedXmlOption) throws Exception {		
 		ResourceBundle msg = ApplicationMessages.getMessage();
 		xmltag.setAlwaysNew(false);
 		choseMission = false;
@@ -132,6 +133,8 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		else if (selectedXmlOption.equals(msg.getString("loadBlocks"))) {
 			choseLoadBlocks = true;
 		}
+		
+		missionManager.getMissionContent().setSelectedLoadBlocks(choseLoadBlocks);
 		this.selectedXmlOption = selectedXmlOption;
 	}
 

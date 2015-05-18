@@ -60,9 +60,9 @@ public class CustomerVC implements ISkinProvider, Serializable {
 					customers.add(new Customer());
 				}
 			}
-			if (customers.size() != 12) {
+			/*if (customers.size() != 12) {
 				System.err.println("The customer list must be with size 12!");
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -190,7 +190,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	}
 	
 	public void resetDrink() {
-		drink = null;		
+		drink = null;
 	}
 
 	public void handleCustomer(ActionEvent event) {

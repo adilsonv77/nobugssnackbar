@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -54,7 +55,7 @@ public class ObjectivesView implements Serializable {
 	
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
 	
-	//@ManagedProperty(value="#{mm.missionContent.objectives}")
+	@ManagedProperty(value="#{mm.missionContent.objectives}")
 	private Objectives objectives;	
 	private boolean isMaxCommands = false;
 	private boolean isBonusTime = false;
