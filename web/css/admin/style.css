@@ -4,7 +4,7 @@ body {
 .my-lightbulb {
 	display: inline-block;
 	width: 36px;
-		: 36px;
+	height: 36px;
 	background: transparent url('../../images/light-bulb-icon.png') no-repeat local center;
 	background-size: 36px 36px;
 }
