@@ -253,12 +253,14 @@ div.divExplEdit + img {
 	float: left;
 }
 /*******************End Objectives css******************/
+
 .addFromDBDT span.dataTableEdit{
 	display: inline-block;
 }
 .addFromDBDT{
 	white-space: nowrap;
 }
+
 /*Data table hover background*/
 .ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
     background: #78BCFF;

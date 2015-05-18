@@ -99,9 +99,16 @@ public class HintDBView implements Serializable{
 		RequestContext.getCurrentInstance().update("tbView:formDTE");
 	}
 	
+	public void viewHint(){
+		this.hintView.setDlgHintDisabled(true);
+		RequestContext.getCurrentInstance().update("formDlgHints");
+	}
+	
 	private void newHint(){
 		this.hint = new Hint();
 	}
 	
-
+	public void onChange(){
+		System.out.println("change");	
+	}
 }

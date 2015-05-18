@@ -4,6 +4,20 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<script>
+		var editor;
+
+		// The instanceReady event is fired when an instance of CKEditor has finished
+		// its initialization.
+
+
+		function toggleReadOnly( isReadOnly ) {
+			// Change the read-only state of the editor.
+			// http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-setReadOnly
+			editor.setReadOnly( isReadOnly );
+		}
+	</script>
+
 	<!-- Hints in Hint tab -->
 	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmDeleteDialog"
 		header="#{msg['ruSureDelHint']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
@@ -49,7 +63,7 @@
 	
 	<!-- Add hint from DB dialog -->
 	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="addHintFromDB"
-		header="#{msg['selectHintToAdd']}" minHeight="40" closable="false" modal="true"
+		header="#{msg['selectHintToAdd']}" minHeight="40" modal="true"
 		resizable="false" dynamic="true">
 			
 		<h:form id="fromAddTipsHintFromDB" style="width:600px; margin-bottom: 30px;">
@@ -74,11 +88,18 @@
 			    <p:column headerText="#{msg['condition']}">
 			        <h:outputText value="#{hint.conditionsAsString}" />
 			    </p:column>
-			    <p:column headerText="#{msg['actions']}" width="35">
+			    <p:column headerText="#{msg['actions']}" width="65">
 			       
 			        <p:commandButton id="addHintFromDB" icon="ui-icon-circle-plus" action="#{hintDBView.addHint}">
 			        	<f:setPropertyActionListener value="#{hint}" target="#{hintDBView.hint}"/>
 			        </p:commandButton>
+			        <p:tooltip for="addHintFromDB" value="#{msg['add']}"/>
+			        
+			        <p:commandButton id="viewHintFromDB" icon="ui-icon-newwin" action="#{hintDBView.viewHint}"
+			        	oncomplete="PF('hintDialog').show()">
+			        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
+			        </p:commandButton>		
+			        <p:tooltip for="viewHintFromDB" value="#{msg['view']}"/>	        
 			                		        
 			    </p:column>		    
 			</p:dataTable>	
@@ -105,13 +126,22 @@
 			    <p:column headerText="#{msg['condition']}">
 			        <h:outputText value="#{hint.conditionsAsString}" />
 			    </p:column>
-			    <p:column headerText="#{msg['actions']}" width="35">
+			    
+			    <p:column headerText="#{msg['actions']}" width="65">
 			       
-			        <p:commandButton id="addHintFromDB" icon="ui-icon-circle-plus" action="#{hintDBView.addHint}">
+			        <p:commandButton id="addErrorFromDB" icon="ui-icon-circle-plus" action="#{hintDBView.addHint}">
 			        	<f:setPropertyActionListener value="#{hint}" target="#{hintDBView.hint}"/>
 			        </p:commandButton>
+			        <p:tooltip for="addErrorFromDB" value="#{msg['add']}"/>
+			        
+			        <p:commandButton id="viewErrorFromDB" icon="ui-icon-newwin" action="#{hintDBView.viewHint}"
+			        	oncomplete="PF('hintDialog').show()">			        
+			        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
+			        </p:commandButton>
+			        <p:tooltip for="viewErrorFromDB" value="#{msg['view']}"/>		        
 			                		        
-			    </p:column>		    
+			    </p:column>		
+			        
 			</p:dataTable>	
 			
 			<p:commandButton value="#{msg['close']}" icon="ui-icon-close"  oncomplete="PF('addHintFromDB').hide()"/>	

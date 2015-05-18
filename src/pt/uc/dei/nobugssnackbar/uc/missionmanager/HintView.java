@@ -29,6 +29,8 @@ public class HintView implements Serializable {
 	 */
 	private boolean add = false;
 	
+	private boolean dlgHintDisabled = false;
+	
 	private Hint hint = new Hint();
 
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
@@ -86,24 +88,34 @@ public class HintView implements Serializable {
     }
     
 	public void addEditHint() {
-		if(hint.getCategory().equals("")){
-			addMessageToGrowl(new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
-			newHint();
-			return;
+		if(this.dlgHintDisabled){
+			this.dlgHintDisabled = false;
 		}
-		if (this.add) {/*prevent from adding element when editing*/
-			if (hint.getType()) {/*check type if it is error or hint*/
-				errorsHints.add(hint);
-				addMessageToGrowl(new Object[]{"title=newHintAdd","newErrorHintAdd"});
+		else{
+			if(hint.getCategory().equals("")){
+				addMessageToGrowl(new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
+				newHint();
+				return;
 			}
-			else {
-				tipsHints.add(hint);
-				addMessageToGrowl(new Object[]{"title=newHintAdd","newTipHintAdd"});
+			if (this.add) {/*prevent from adding element when editing*/
+				if (hint.getType()) {/*check type if it is error or hint*/
+					errorsHints.add(hint);
+					addMessageToGrowl(new Object[]{"title=newHintAdd","newErrorHintAdd"});
+				}
+				else {
+					tipsHints.add(hint);
+					addMessageToGrowl(new Object[]{"title=newHintAdd","newTipHintAdd"});
+				}
 			}
+			checkLists();
 		}
 		
 		hideDlgHint();
-		checkLists();
+		newHint();
+	}
+	
+	public void cancel(){
+		dlgHintDisabled = false;
 		newHint();
 	}
 	
@@ -220,10 +232,6 @@ public class HintView implements Serializable {
     public void handleDialog(){
     	RequestContext cont = RequestContext.getCurrentInstance();
     	cont.execute("PF('hintCategoryDialog').hide()");
-    	/*
-    	 * I am not sure what must be the logic here.
-    	 * cont.execute("PF('chooseHintCategoryDialog').hide()");
-    	 */
     }
     
     public void disableDialog() {
@@ -234,4 +242,10 @@ public class HintView implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('hintCategoryDialog').show()");
     }
+	public boolean isDlgHintDisabled() {
+		return dlgHintDisabled;
+	}
+	public void setDlgHintDisabled(boolean dlgHintDisabled) {
+		this.dlgHintDisabled = dlgHintDisabled;
+	}
 }
