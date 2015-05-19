@@ -5,63 +5,78 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
+		<h:outputScript>
+			function resizeCkEditorHint() {
+				if (PF('ckEditorHintText').instance != null)
+					PF('ckEditorHintText').instance.resize('100%', document.getElementById('formDlgHints:centerHintPage').clientHeight-30);
+					
+			}; 
+		</h:outputScript>
+		
 		<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" 
-		        minHeight="545" closable="false" minWidth="400" styleClass="dlhHint" 
-				modal="true" position="center" dynamic="true" 
-				style="overflow: hidden !important;">
+		        minHeight="584" closable="false" minWidth="700" width="700"
+				modal="true" dynamic="true" 
+				style="overflow: hidden !important;" onShow="PF('hintDialog').initPosition(); resizeCkEditorHint();" >
 	
-			<h:form id="formDlgHints" styleClass="formDlgHints">
-				<p:panelGrid columns="2">
-						
-				    <p:outputLabel for="hintType" value="Hint type:"/>
-					<p:selectOneRadio id="hintType" value="#{hintView.hint.type}"
-						disabled="#{hintView.dlgHintDisabled}">
-					    <f:selectItem itemLabel="#{msg['tip']}" itemValue="false"/>
-					    <f:selectItem itemLabel="#{msg['error']}" itemValue="true" />
-					</p:selectOneRadio>
-				        
-				    <p:outputLabel for="btnChooseCategory" value="#{msg['category']}: "/>
-				    <p:panelGrid columns="3">
-				    <p:commandButton id="btnChooseCategory" value="#{msg['choose']}" disabled="#{hintView.dlgHintDisabled}"
-				    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
-				    	<h:outputText value="#{hintView.category}"/>
-				    </p:panelGrid>
+			<h:form style="height:100%;"  id="formDlgHints">
+				<p:layout style="width:100%;min-height:497px;height:100%;" onResize="if (e.edge) { resizeCkEditorHint();}">
+					<p:layoutUnit position="north" style="border: none;"  size="180">
+						<p:panelGrid columns="2">
+								
+						    <p:outputLabel for="hintType" value="Hint type:"/>
+							<p:selectOneRadio id="hintType" value="#{hintView.hint.type}"
+								disabled="#{hintView.dlgHintDisabled}">
+							    <f:selectItem itemLabel="#{msg['tip']}" itemValue="false"/>
+							    <f:selectItem itemLabel="#{msg['error']}" itemValue="true" />
+							</p:selectOneRadio>
+						        
+						    <p:outputLabel for="btnChooseCategory" value="#{msg['category']}: "/>
+						    <p:panelGrid columns="3">
+						    <p:commandButton id="btnChooseCategory" value="#{msg['choose']}" disabled="#{hintView.dlgHintDisabled}"
+						    	oncomplete="PF('chooseHintCategoryDialog').show()" icon="ui-icon-search"/>
+						    	<h:outputText value="#{hintView.category}"/>
+						    </p:panelGrid>
+						    
+						    <p:outputLabel for="btnBuildCondition" value="#{msg['condition']}: "/>
+						    <p:panelGrid columns="2">
+						    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}" disabled="#{hintView.dlgHintDisabled}"
+						    		actionListener="#{condVC.newOrEditCondList}"
+						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
+						    		update=":formCondBuilder"/>
+						    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
+						    </p:panelGrid>
+						    
+						    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
+						    <p:inputText id="hintTime" value="#{hintView.hint.time}"
+						    	disabled="#{hintView.dlgHintDisabled}"/>
+						    		        
+						</p:panelGrid>
+					</p:layoutUnit>
+					<p:layoutUnit id="centerHintPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >
+						<p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>	
+						<pe:ckEditor id="hintText" widgetVar="ckEditorHintText" width="99%"
+							value="#{hintView.hint.text}" toolbar="#{explVC.editorControls}"
+							readonly="#{hintView.dlgHintDisabled}"
+							customConfig="#{request.contextPath}/admin/modules/config.js">
+							<pe:javascript event="initialize" execute="resizeCkEditorHint();"/>
+							<p:ajax event="change" listener="#{hintDBView.onChange}"/>
+						</pe:ckEditor>			    	   
+				    </p:layoutUnit>
 				    
-				    <p:outputLabel for="btnBuildCondition" value="#{msg['condition']}: "/>
-				    <p:panelGrid columns="2">
-				    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}" disabled="#{hintView.dlgHintDisabled}"
-				    		actionListener="#{condVC.newOrEditCondList}"
-				    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
-				    		update=":formCondBuilder"/>
-				    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
-				    </p:panelGrid>
-				    
-				    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
-				    <p:inputText id="hintTime" value="#{hintView.hint.time}"
-				    	disabled="#{hintView.dlgHintDisabled}"/>
-				    		        
-				</p:panelGrid>
-				
-			    
-			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>		    
-				<pe:ckEditor id="hintText" widgetVar="ckEditorHintText" height="100%" width="100%"
-					value="#{hintView.hint.text}" toolbar="#{explVC.editorControls}"
-					readonly="#{hintView.dlgHintDisabled}">
-					<p:ajax event="change" listener="#{hintDBView.onChange}"/>
-				</pe:ckEditor>			    	   
-			    		    
-			    <p:panelGrid columns="3" style="float: right;">    
-					<div class="btnContainer" >
-						<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
-							actionListener="#{hintView.addEditHint}" styleClass="dlgHintBtnOK"
-							update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
-	
-						<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" 
-							actionListener="#{hintView.cancel}" 
-							oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"
-							onsuccess="PF('ckEditorHintText').destroy()"/> 
-					</div>
-				</p:panelGrid>
+				    <p:layoutUnit position="south" style="border: none;" size="50">
+					    <p:panelGrid columns="2" style="float: right;">    
+							<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
+								actionListener="#{hintView.addEditHint}" 
+								update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
+		
+							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" 
+								actionListener="#{hintView.cancel}" 
+								update="hintDlg"
+								onsuccess="PF('ckEditorHintText').destroy()"/> 
+						</p:panelGrid>
+					</p:layoutUnit>
+					
+				</p:layout>
 		    </h:form>	   
 		</p:dialog>			
 	

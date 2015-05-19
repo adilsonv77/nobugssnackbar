@@ -209,25 +209,7 @@ div.divExplEdit + img {
 /*******************End Hint page css******************/
 
 /*******************Start Dialog Hint page css******************/
-.btnContainer{
-	position: relative;
-}
-.dlgHintBtnOK{
-	position: absolute;
-	/*top right bottom left*/
-	margin:0px 0px 10px -120px;
-	bottom: 0;
-}
-.dlgHintBtnCancel{
-	position: absolute;
-	/*top right bottom left*/
-	margin:0px 0px 10px -70px;
-	bottom: 0;
-}
-.formDlgHints{
-	height: 95%;
-	margin-bottom: 30px;
-}
+
 /*******************End Dialog Hint page css******************/
 
 /*******************Start Objectives page css******************/

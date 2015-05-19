@@ -13,7 +13,7 @@
 					PF('ckEditorExplPage').instance.resize('100%', document.getElementById('formExplPage:centerExplPage').clientHeight-10);
 			}; 
 			
-			function handleRequest(xhr, status, args) {
+			function handleRequestExplPage(xhr, status, args) {
         		if(!args.validationFailed) {
         			PF('ckEditorExplPage').destroy();
         			explPageUpdateComponents();
@@ -33,10 +33,10 @@
 				<p:growl id="specificGrowl" showDetail="true" autoUpdate="true"/>
 				<p:remoteCommand name="explPageUpdateComponents" update=":tbView:explForm:opList, explPageDlg" />
 			
-				<p:layout style="width:100%;min-height:400px;height:100%;" onResize="if (e.edge) { resizeCkEditorExpl();}">
+				<p:layout style="width:100%;min-height:458px;height:100%;" onResize="if (e.edge) { resizeCkEditorExpl();}">
 					<p:layoutUnit id="centerExplPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >
 						<pe:ckEditor id="editExplPage" widgetVar="ckEditorExplPage"
-									width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}"
+									width="99%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}"
 									customConfig="#{request.contextPath}/admin/modules/config.js">
 									
 							<pe:javascript event="initialize" execute="resizeCkEditorExpl();"/>
@@ -47,7 +47,7 @@
 						
 							<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
 								actionListener="#{explVC.addPage}"
-								oncomplete="handleRequest(xhr, status, args)"
+								oncomplete="handleRequestExplPage(xhr, status, args)"
 								/>
 								
 							<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
