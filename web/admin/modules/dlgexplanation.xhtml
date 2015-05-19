@@ -8,45 +8,58 @@
 	
 		<h:outputScript>
 		
-			function resizeCkEditor() {
+			function resizeCkEditorExpl() {
 				if (PF('ckEditorExplPage').instance != null)
 					PF('ckEditorExplPage').instance.resize('100%', document.getElementById('formExplPage:centerExplPage').clientHeight-10);
 			}; 
+			
+			function handleRequest(xhr, status, args) {
+        		if(!args.validationFailed) {
+        			PF('ckEditorExplPage').destroy();
+        			explPageUpdateComponents();
+        		}
+        }
+
 
 		</h:outputScript>
 		
-	<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
-		widgetVar="pageDialog" header="#{msg['pages']}" minHeight="545"
-		minWidth="700" width="700" closable="false" style="overflow: hidden !important;"
-		modal="true" onShow="PF('pageDialog').initPosition(); resizeCkEditor();" dynamic="true">
-		
-		<h:form style="height:100%;" id="formExplPage">
-			<p:layout style="width:100%;min-height:400px;height:100%;" onResize="if (e.edge) { resizeCkEditor();}">
-				<p:layoutUnit id="centerExplPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >
-					<pe:ckEditor id="editExplPage" widgetVar="ckEditorExplPage" 
-								width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}"
-								customConfig="#{request.contextPath}/admin/modules/config.js">
+	
+		<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
+			widgetVar="pageDialog" header="#{msg['pages']}" minHeight="545"
+			minWidth="700" width="700" closable="false" style="overflow: hidden !important;"
+			modal="true" onShow="PF('pageDialog').initPosition(); resizeCkEditorExpl();" dynamic="true"
+			>
+			<h:form style="height:100%;" id="formExplPage">
+				<p:growl id="specificGrowl" showDetail="true" autoUpdate="true"/>
+				<p:remoteCommand name="explPageUpdateComponents" update=":tbView:explForm:opList, explPageDlg" />
+			
+				<p:layout style="width:100%;min-height:400px;height:100%;" onResize="if (e.edge) { resizeCkEditorExpl();}">
+					<p:layoutUnit id="centerExplPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >
+						<pe:ckEditor id="editExplPage" widgetVar="ckEditorExplPage"
+									width="100%" value="#{explVC.page.msg}" toolbar="#{explVC.editorControls}"
+									customConfig="#{request.contextPath}/admin/modules/config.js">
+									
+							<pe:javascript event="initialize" execute="resizeCkEditorExpl();"/>
+						</pe:ckEditor>
+					</p:layoutUnit>
+					<p:layoutUnit position="south" style="border: none;" size="50">
+						<p:panelGrid columns="2" style="float: right;">
+						
+							<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
+								actionListener="#{explVC.addPage}"
+								oncomplete="handleRequest(xhr, status, args)"
+								/>
 								
-						<pe:javascript event="initialize" execute="resizeCkEditor();"/>
-					</pe:ckEditor>
-				</p:layoutUnit>
-				<p:layoutUnit position="south" style="border: none;" size="50">
-					<p:panelGrid columns="2" style="float: right;">
-					
-						<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
-							update=":tbView:explForm:opList, explPageDlg, growlMsgs"
-							actionListener="#{explVC.addPage}" />
-							
-						<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
-							update="explPageDlg"
-							actionListener="#{explVC.resetPage}" 
-							onsuccess="PF('ckEditorExplPage').destroy();"/>
-							
-					</p:panelGrid>
-				</p:layoutUnit>
-			</p:layout>
-		</h:form>
-	</p:dialog>
+							<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
+								update="explPageDlg"
+								actionListener="#{explVC.resetPage}"
+								onsuccess = "PF('ckEditorExplPage').destroy();"/>
+								
+						</p:panelGrid>
+					</p:layoutUnit>
+				</p:layout>
+			</h:form>
+		</p:dialog>
 
 	<p:dialog widgetVar="confDeleteDlg" header="#{msg['confirmation']}" 
 		closable="false" modal="true" 
