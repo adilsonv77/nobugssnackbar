@@ -113,14 +113,14 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 			else {
 				editPage();
 			}
+			
+			resetPage();
 		}
 		else {
-			RequestContext rcontext = RequestContext.getCurrentInstance();
-			rcontext.execute("PF('pageDialog').show()");
-			
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
+			context.validationFailed();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
 		}
 	}
 	
