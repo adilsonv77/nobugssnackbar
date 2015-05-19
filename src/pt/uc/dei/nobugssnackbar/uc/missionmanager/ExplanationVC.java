@@ -12,8 +12,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
-
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ExplanationPageConverter;
@@ -105,7 +103,7 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 	public void addPage() {
 		if (page.getMsg() != null && !page.getMsg().trim().isEmpty()) {
 			if (page.getId() < 0) {
-				if ( this.isOk()) {
+				if (this.isOk()) {
 					page.setId(pageIdCount++);
 					pages.add(page);
 				}
@@ -187,18 +185,14 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 		ok = checkImages(page.getMsg());
 		
 		if (ok == false) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('pageDialog').show()");
-			
+			FacesContext.getCurrentInstance().validationFailed();
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
-			FacesMessage msg = new FacesMessage(messageBundle.getString("invalidImage"),
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					messageBundle.getString("invalidImage"),
 					messageBundle.getString("tryAgainCheckImage"));
-			FacesContext.getCurrentInstance().addMessage("", msg);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		else {
-			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('pageDialog').hide()");
-		}
+
 		return ok;
 	}
 
