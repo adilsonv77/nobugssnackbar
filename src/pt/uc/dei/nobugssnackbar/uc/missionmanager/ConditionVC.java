@@ -171,7 +171,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				additionalMsg = "";
 			}
 			
-			FacesMessage msg = new FacesMessage(text, additionalMsg);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, text, additionalMsg);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
 			hv.getHint().setConditions(conditionList);
@@ -245,7 +245,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			text = ApplicationMessages.getMessage().getString("notFilledAllFields");
 		}
 
-		FacesMessage msg = new FacesMessage("", text);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", text);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		return false;
@@ -258,7 +258,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 			condition = new Condition();
 		} else {
-			FacesMessage msg = new FacesMessage("", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}

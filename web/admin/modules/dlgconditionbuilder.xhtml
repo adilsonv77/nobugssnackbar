@@ -51,8 +51,8 @@
 			<p:panelGrid columns="4">
 				<p:commandButton value="#{msg['add']}" icon="ui-icon-circle-plus" actionListener="#{condVC.setExpandedFieldset(true)}" update=":formCondBuilder" />
 				<p:commandButton value="#{msg['delete']}" icon="ui-icon-trash" update=":formCondBuilder" actionListener="#{condVC.deleteCondition}" />
-				<p:commandButton value="#{msg['add']} [add]" update=":formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
-				<p:commandButton value="#{msg['add']} [or]" update=":formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
+				<p:commandButton value="#{msg['add']} [AND]" update=":formCondBuilder" actionListener="#{condVC.addCondition(true)}" />
+				<p:commandButton value="#{msg['add']} [OR]" update=":formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
 			</p:panelGrid>
 			
 			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
