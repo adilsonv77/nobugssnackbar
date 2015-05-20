@@ -118,7 +118,8 @@ public class ExplanationVC implements IPagesProvider, Serializable {
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.validationFailed();
-	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+	        		messageBundle.getString("warningMsg"), messageBundle.getString("emptyMsgbox")));
 		}
 	}
 	

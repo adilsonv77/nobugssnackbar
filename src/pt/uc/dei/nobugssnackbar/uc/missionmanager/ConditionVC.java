@@ -34,6 +34,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private boolean showDlgExt;
 	
 	private List<String> comparators;
+	private List<String> boolValues;
 	private boolean boolFunction;
 
 	public void showFuncProv() {
@@ -51,7 +52,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private boolean expandedFieldset;
 
 	public ConditionVC() {
-		idCounter = 0;
+		idCounter = 1;
 		condition = new Condition();
 		conditionList = new ArrayList<>();
 
@@ -67,6 +68,10 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		comparators.add("<");
 		comparators.add(">=");
 		comparators.add("<=");
+		
+		boolValues = new ArrayList<String>();
+		boolValues.add("true");
+		boolValues.add("false");
 	}
 
 	public void newOrEditCondList() {
@@ -104,6 +109,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				condition.setLogicalOperator(conditionList.get(i)
 						.getLogicalOperator());
 				condition.setComparator(conditionList.get(i).getComparator());
+				condition.setValue(conditionList.get(i).getValue());
 				break;
 			}
 		}
@@ -124,11 +130,31 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 	public void addCondition() {
 		if (checkFields()) {
-
-			condition.setId(idCounter++);
-			condition.setLogicalOperator(null);
-			conditionList.add(condition);
-
+			int index = -1;
+			for (int i = 0; i < conditionList.size(); i++) {
+				if (conditionList.get(i).getId() == condition.getId()) {
+					index = i;
+					break;
+				}
+			}
+			if (index < 0) {
+				condition.setId(idCounter++);
+				condition.setLogicalOperator(null);
+				conditionList.add(condition);
+			}
+			else {
+				if (conditionList.get(index).getLogicalOperator() != null && 
+					conditionList.get(index).getLogicalOperator().length() > 0) {
+					
+					FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+							ApplicationMessages.getMessage().getString("cannotEditCond"), "");
+					FacesContext.getCurrentInstance().validationFailed();
+					FacesContext.getCurrentInstance().addMessage(null, msg);
+				}
+				else {
+					conditionList.set(index, condition);
+				}
+			}
 			condition = new Condition();
 			expandedFieldset = false;
 		}
@@ -163,15 +189,26 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			String additionalMsg, text;
 			
 			if (conditionList.size() > 0) {
-				text = messageBundle.getString("wrongCondition");
-				additionalMsg = messageBundle.getString("cannotEndWithAndOr");
+				String logOpB = conditionList.get(0).getConditionString();
+				String logOpE = conditionList.get(conditionList.size() - 1).getConditionString();
+				
+				if (logOpB.equals("and") || logOpB.equals("or") ||
+					logOpE.equals("and") || logOpE.equals("or")) {
+					text = messageBundle.getString("wrongCondition");
+					additionalMsg = messageBundle.getString("cannotStartEndWithAndOr");
+				}
+				else {
+					text = messageBundle.getString("wrongCondition");
+					additionalMsg = messageBundle.getString("noANDORbtwnCond");
+				}
 			}
 			else {
 				text = messageBundle.getString("emptyConditionList");
 				additionalMsg = "";
 			}
 			
-			FacesMessage msg = new FacesMessage(text, additionalMsg);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, text, additionalMsg);
+			FacesContext.getCurrentInstance().validationFailed();
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
 			hv.getHint().setConditions(conditionList);
@@ -245,7 +282,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			text = ApplicationMessages.getMessage().getString("notFilledAllFields");
 		}
 
-		FacesMessage msg = new FacesMessage("", text);
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", text);
+		FacesContext.getCurrentInstance().validationFailed();
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		return false;
@@ -258,7 +296,9 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 			condition = new Condition();
 		} else {
-			FacesMessage msg = new FacesMessage("", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, 
+					"", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));
+			FacesContext.getCurrentInstance().validationFailed();
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -297,6 +337,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public void setExpandedFieldset(boolean expandedFieldset) {
+		condition = new Condition();
 		this.expandedFieldset = expandedFieldset;
 	}
 
@@ -317,5 +358,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 	public void setBoolFunction(boolean boolFunction) {
 		this.boolFunction = boolFunction;
+	}
+
+	public List<String> getBoolValues(String q) {
+		List<String> filtered = new ArrayList<>();
+		for (int i = 0; i < boolValues.size(); i++) {
+			if (boolValues.get(i).startsWith(q)) {
+				filtered.add(boolValues.get(i));
+			}
+		}
+		
+		return filtered;
+	}
+
+	public void setBoolValues(List<String> boolValues) {
+		this.boolValues = boolValues;
 	}
 }

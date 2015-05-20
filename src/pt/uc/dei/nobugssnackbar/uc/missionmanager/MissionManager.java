@@ -196,7 +196,9 @@ public class MissionManager implements Serializable {
 		else {
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage(messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
+			context.validationFailed();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+	        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
 		}
 	}
 	

@@ -14,7 +14,7 @@ public class ImgTagConvertor {
 	private final static String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
 	private final static String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";	
 	
-	private static int imgIdCounter;
+	private static long imgId;
 	
 	public static String convertImgTagToHexImgTag(String text, boolean justTestImg) {
 		String result = text;
@@ -28,8 +28,8 @@ public class ImgTagConvertor {
 				if (file != null) {
 					if (justTestImg == false) {
 						String hexImg = HexImage.toHex(file);
-						imgIdCounter++;
-						String imgHexTag = "<imghex id=\"p_img_" + imgIdCounter + "\">" + hexImg + "</imghex>";			
+						imgId = System.currentTimeMillis();
+						String imgHexTag = "<imghex id=\"p_img_" + imgId + "\">" + hexImg + "</imghex>";			
 						
 						result = text.replaceFirst(imgTag, imgHexTag);
 					}

@@ -151,11 +151,14 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			
 			if (customer.getPattern().getOrders().size() > 1) {
 				if (customer.getPattern().getOrders().remove(order)) {
-					context.addMessage(null, new FacesMessage(msg.getString("succRemovedOrder"), ""));					
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+							msg.getString("succRemovedOrder"), ""));					
 					customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));
 				}
 				else {
-					context.addMessage(null, new FacesMessage(msg.getString("warningMsg"), 
+					context.validationFailed();
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+							msg.getString("warningMsg"), 
 							msg.getString("notRemovedOrder")));
 				}
 			}
@@ -165,8 +168,10 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				customer.getPattern().getOrders().get(0).setId(0);
 				customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));				
 						
-				context.addMessage(null, new FacesMessage(msg.getString("succRemovedOrder"), ""));
-				context.addMessage(null, new FacesMessage(msg.getString("orderCounterIsReset"), ""));				
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						msg.getString("succRemovedOrder"), ""));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+						msg.getString("orderCounterIsReset"), ""));				
 			}
 		}
 	}
@@ -214,14 +219,18 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (minFoods > maxFoods || minDrinks > maxDrinks) {
 			ResourceBundle msg = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(msg.getString("rndMinCannotGreater"), ""));
+			context.validationFailed();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					msg.getString("rndMinCannotGreater"), ""));
 			
 			return false;
 		}
 		/*if (order.getFoods().size() <= 0 || order.getDrinks().size() <= 0) {
 			ResourceBundle msg = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(msg.getString("noOrder"), ""));
+			context.validationFailed();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+				msg.getString("noOrder"), ""));
 			
 			return false;
 		}*/
@@ -229,7 +238,9 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (customer.getSkin() == null || customer.getSkin().getImage().isEmpty()) {
 			ResourceBundle msg = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(msg.getString("selectSkin"), ""));
+			context.validationFailed();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					msg.getString("selectSkin"), ""));
 			
 			return false;
 		}
@@ -266,7 +277,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
-	        context.addMessage(null, new FacesMessage(
+			context.validationFailed();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
 	        		messageBundle.getString("warningMsg"),
 	        		messageBundle.getString("notFilledAllFields") + " " + 
 	        		messageBundle.getString("correctly")));

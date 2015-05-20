@@ -21,7 +21,7 @@
 		resizable="false" onShow="PF('condBuilderDlg').initPosition()">
 		
 		<h:form id="formCondBuilder">
-			<p:fieldset legend="#{msg['condition']}" rendered="#{condVC.expandedFieldset == true}">
+			<p:fieldset id="field" legend="#{msg['condition']}" rendered="#{condVC.expandedFieldset == true}">
 				<p:panelGrid columns="2">
 					<p:outputLabel for="chooseFPBtn" value="#{msg['funcProvider']}: " />
 					<p:panelGrid columns="2">
@@ -38,7 +38,7 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="condValue" value="#{msg['value']}: " />
-					<p:inputText id="condValue" value="#{condVC.condition.value}" />
+					<p:autoComplete id="condValue" value="#{condVC.condition.value}" completeMethod="#{condVC.getBoolValues}" />
 				</p:panelGrid>
 
 				<p:watermark for="condValue" value="#{msg['enterVal']}" />
@@ -57,7 +57,7 @@
 			
 			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
 				<p:column>
-					<p:commandLink actionListener="#{condVC.getConditionById}" style="display: block; text-decoration: none !important;">
+					<p:commandLink actionListener="#{condVC.getConditionById}" style="display: block; text-decoration: none !important;" update=":formCondBuilder:field">
 						<f:param name="editConditionID" value="#{c.id}" />
 						<h:outputText value="#{c.conditionString}" />
 					</p:commandLink>
