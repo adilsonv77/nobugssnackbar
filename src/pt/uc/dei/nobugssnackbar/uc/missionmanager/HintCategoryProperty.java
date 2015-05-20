@@ -85,7 +85,6 @@ public class HintCategoryProperty implements Serializable {
 	
 	private void updates(String name, Object value) {
 		String s = this.hintCategoryHelperView.dealEl(el);
-		System.out.println(s);
 		this.items = ApplicationUtils.processEL(s, List.class);			
 	}
 

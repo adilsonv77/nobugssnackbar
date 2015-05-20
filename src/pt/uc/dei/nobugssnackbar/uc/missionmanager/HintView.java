@@ -190,7 +190,7 @@ public class HintView implements Serializable {
 			}						
 		}
 		
-		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
+		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,title,finalText);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
