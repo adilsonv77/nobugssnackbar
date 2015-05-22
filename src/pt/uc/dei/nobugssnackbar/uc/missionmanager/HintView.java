@@ -15,6 +15,7 @@ import org.primefaces.event.ReorderEvent;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
+import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 
 @ManagedBean(name="hintView")
@@ -42,17 +43,6 @@ public class HintView implements Serializable {
 	@ManagedProperty(value="#{mm.missionContent.errorsHints}")
 	private List<Hint> errorsHints;
 	
-	@ManagedProperty(value="#{xmlgen}")
-	private XMLGenerator xmlgen;
-	
-	
-	public XMLGenerator getXmlgen() {
-		return xmlgen;
-	}
-	
-	public void setXmlgen(XMLGenerator xmlgen) {
-		this.xmlgen = xmlgen;
-	}
 	
 	public void setAdd(boolean add) {
 		this.add = add;
@@ -93,7 +83,7 @@ public class HintView implements Serializable {
     }
 
     public String getText() throws Exception{
-    	hint.setText(xmlgen.replaceImagesInHex(hint.getText(),XMLGenerator.regexImghex,"png"));
+    	hint.setText(ImgTagConvertor.replaceImagesInHex(hint.getText(),ImgTagConvertor.regexImghex,"png"));
 		return hint.getText();
     }
 

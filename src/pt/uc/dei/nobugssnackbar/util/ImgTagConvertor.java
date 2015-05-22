@@ -5,17 +5,13 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
+
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-=
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
@@ -98,7 +94,7 @@ public class ImgTagConvertor {
      * @return If < imghex> exist returns string like this < img src=images/[name].[imageType]> otherwise retuns original text
      * @throws Exception
      */
-    public String getImgTagFromHex(String imghextag,String imageType) throws Exception {
+    public static String getImgTagFromHex(String imghextag,String imageType) throws Exception {
     	
     	String result = imghextag;
 		String relativeWebPath = "",absoluteDiskPath = "";				
@@ -136,7 +132,7 @@ public class ImgTagConvertor {
 		return result;
     }
     
-    public String replaceImagesInHex(String src, String regex, String imgType) throws Exception{
+    public static String replaceImagesInHex(String src, String regex, String imgType) throws Exception{
     	String result = src;
 		Pattern pattern = Pattern.compile(regexImghex);
 		Matcher matcher = pattern.matcher(result);
@@ -154,13 +150,5 @@ public class ImgTagConvertor {
 		}
 		return result;
     }
-    
-	public ExplanationVC getEvc() {
-		return evc;
-	}
-
-	public void setEvc(ExplanationVC evc) {
-		this.evc = evc;
-	}
 
 }

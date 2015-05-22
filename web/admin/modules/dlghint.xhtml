@@ -1,3 +1,4 @@
+
 <ui:composition  xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
@@ -5,6 +6,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
+		<h:outputScript>
+			function resizeCkEditorHint() {
+				if (PF('ckEditorHintText').instance != null)
+					PF('ckEditorHintText').instance.resize('100%', document.getElementById('formDlgHints:centerHintPage').clientHeight-30);
+					
+			}; 
+		</h:outputScript>
+		
 		<p:dialog id="hintDlg" showEffect="fade" hideEffect="fade" widgetVar="hintDialog" header="#{msg['hints']}" 
 		        minHeight="584" closable="false" minWidth="700" width="700"
 				modal="true" dynamic="true" 
@@ -35,7 +44,7 @@
 						    		actionListener="#{condVC.newOrEditCondList}"
 						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
 						    		update=":formCondBuilder"/>
-						    	<h:outputText value="#{hintView.hint.conditionsAsString}"/>
+						    	<h:outputText value="#{hintView.hint.conditionsAsString}" escape="false"/>
 						    </p:panelGrid>
 						    
 						    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
@@ -47,14 +56,14 @@
 					<p:layoutUnit id="centerHintPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >
 						<p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>	
 						<pe:ckEditor id="hintText" widgetVar="ckEditorHintText" width="99%"
-							value="#{hintView.hint.text}" toolbar="#{explVC.editorControls}"
+							value="#{hintView.text}" toolbar="#{explVC.editorControls}"
 							readonly="#{hintView.dlgHintDisabled}"
 							customConfig="#{request.contextPath}/admin/modules/config.js">
 							<pe:javascript event="initialize" execute="resizeCkEditorHint();"/>
 							<p:ajax event="change" listener="#{hintDBView.onChange}"/>
 						</pe:ckEditor>			    	   
-				    </p:layoutUnit>			    
-
+				    </p:layoutUnit>
+				    
 				    <p:layoutUnit position="south" style="border: none;" size="50">
 					    <p:panelGrid columns="2" style="float: right;">    
 							<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
@@ -69,42 +78,6 @@
 					</p:layoutUnit>
 					
 				</p:layout>
-				
-				    <p:outputLabel for="btnBuildCondition" value="#{msg['condition']}: "/>
-				    <p:panelGrid columns="2">
-				    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}" disabled="#{hintView.dlgHintDisabled}"
-				    		actionListener="#{condVC.newOrEditCondList}"
-				    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
-				    		update=":formCondBuilder"/>
-				    	<h:outputText escape="false" value="#{hintView.hint.conditionsAsString}"/>
-				    </p:panelGrid>
-				    
-				    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
-				    <p:inputText id="hintTime" value="#{hintView.hint.time}"
-				    	disabled="#{hintView.dlgHintDisabled}"/>
-				    		        
-				</p:panelGrid>
-				
-			    
-			    <p:outputLabel for="hintText" value="#{msg['txtExplanation']}: "/>		    
-				<pe:ckEditor id="hintText" widgetVar="ckEditorHintText" height="100%" width="100%"
-					value="#{hintView.text}" toolbar="#{explVC.editorControls}"
-					readonly="#{hintView.dlgHintDisabled}"><!-- readonly does not work. I dont know why -->
-				</pe:ckEditor>			    	   
-			    		    
-			    <p:panelGrid columns="3" style="float: right;">    
-					<div class="btnContainer" >
-						<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
-							actionListener="#{hintView.addEditHint}" styleClass="dlgHintBtnOK"
-							update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
-	
-						<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" 
-							actionListener="#{hintView.cancel}" 
-							oncomplete="PF('hintDialog').hide()" styleClass="dlgHintBtnCancel"
-							onsuccess="PF('ckEditorHintText').destroy()"/> 
-					</div>
-				</p:panelGrid>
-
 		    </h:form>	   
 		</p:dialog>			
 	
