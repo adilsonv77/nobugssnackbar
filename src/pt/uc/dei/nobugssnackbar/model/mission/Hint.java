@@ -3,10 +3,6 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;

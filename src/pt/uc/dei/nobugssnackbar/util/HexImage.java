@@ -22,7 +22,7 @@ public class HexImage {
 		return result.toString();
 	}
 	
-	public static byte[] toImage(String hex) throws IOException {
+	public static byte[] toImage(String hex) throws IOException {		
 		int len = hex.length();
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) {

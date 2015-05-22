@@ -109,6 +109,6 @@ public class HintDBView implements Serializable{
 	}
 	
 	public void onChange(){
-		System.out.println("change");	
+		// TO DO:
 	}
 }

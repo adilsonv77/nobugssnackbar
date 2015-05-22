@@ -8,10 +8,10 @@ public class Objectives  implements Serializable {
 	private Objective objectiveItem = new Objective();
 	private ArrayList<Objective> objectiveList = new ArrayList<Objective>();
 	private boolean ordered;
-	private boolean buttonDebug;
-	private boolean buttonRun;
+	private boolean buttonDebug = true;
+	private boolean buttonRun = true;
 	private boolean buttonBuy;
-	private boolean variableWindow;
+	private boolean variableWindow = true;
 	private int reward;
 	private int commQtd;
 	private int maxCommands;

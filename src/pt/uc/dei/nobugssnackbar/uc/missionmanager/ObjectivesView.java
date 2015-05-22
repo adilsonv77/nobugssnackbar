@@ -190,6 +190,7 @@ public class ObjectivesView implements Serializable {
 	
 	private void disableObjective() {
 		objDisabled = true;
+		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
 	public List<Objective> getObjList(){
@@ -226,12 +227,12 @@ public class ObjectivesView implements Serializable {
 	}
 	
 	public void canselObjective(){
-		// TO DO :
+		disableObjective();
+		System.out.println("cancel");
 	}
 	
 	private void addObjectiveToList(){
-		getObjList().add(getObjItem());
-		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
+		getObjList().add(getObjItem());		
 	}
 	
 	public void editObjective(){
@@ -257,9 +258,11 @@ public class ObjectivesView implements Serializable {
 		Fieldset fieldset = (Fieldset)event.getSource();
 		if(fieldset.getId().equals("maxCommandBonus")){
 			isMaxCommands = event.getVisibility() == Visibility.VISIBLE ? true : false;
+			System.out.println("" +isMaxCommands);
 		}
 		if(fieldset.getId().equals("bonusTime")){
 			isBonusTime = event.getVisibility() == Visibility.VISIBLE ? true : false;
+			System.out.println("" +isBonusTime);
 		}
 	}
 	

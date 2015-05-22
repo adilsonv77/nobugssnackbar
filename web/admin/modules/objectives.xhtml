@@ -156,13 +156,13 @@
         			<p:ajax event="change"/>
         		</p:selectBooleanCheckbox>	        		    
         		        		    		        		        		 	        
-	        </p:panelGrid>
-	        
-        	<p:commandButton icon="ui-icon-check" title="#{msg['save']}" styleClass="btnObjectives" 
-        		value="#{msg['save']}" actionListener="#{objView.SaveObjective}" disabled="#{objView.objDisabled}"/>
+	        </p:panelGrid>	               	
         	
         	<p:commandButton icon="ui-icon-close" title="#{msg['cancel']}" styleClass="btnObjectives" 
         		value="#{msg['cancel']}" actionListener="#{objView.canselObjective}" disabled="#{objView.objDisabled}"/>	        
+	        
+			<p:commandButton icon="ui-icon-check" title="#{msg['save']}" styleClass="btnObjectives" 
+        		value="#{msg['save']}" actionListener="#{objView.SaveObjective}" disabled="#{objView.objDisabled}"/>	        
 	        
 	        <p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}" value="#{msg['add']}"
 	        styleClass="btnAddObjectives" actionListener="#{objView.addObjectiveItem}"/>
