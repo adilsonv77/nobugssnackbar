@@ -104,18 +104,18 @@ public class HintView implements Serializable {
 		}
 		else{
 			if(hint.getCategory().equals("")){
-				addMessageToGrowl(new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
+				addMessageToGrowl(FacesMessage.SEVERITY_WARN,new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
 				newHint();
 				return;
 			}
 			if (this.add) {/*prevent from adding element when editing*/
 				if (hint.getType()) {/*check type if it is error or hint*/
 					errorsHints.add(hint);
-					addMessageToGrowl(new Object[]{"title=newHintAdd","newErrorHintAdd"});
+					addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=newHintAdd","newErrorHintAdd"});
 				}
 				else {
 					tipsHints.add(hint);
-					addMessageToGrowl(new Object[]{"title=newHintAdd","newTipHintAdd"});
+					addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=newHintAdd","newTipHintAdd"});
 				}
 			}
 			checkLists();
@@ -140,7 +140,7 @@ public class HintView implements Serializable {
 			if(hint.getType() == false/*tip*/){
 				tipsHints.add(hint);
 				errorsHints.remove(hint);
-				addMessageToGrowl(new Object[]{"title=hintMoved","hintMovedFromErrorsToTips"});
+				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromErrorsToTips"});
 				break;
 			}
 		}
@@ -148,7 +148,7 @@ public class HintView implements Serializable {
 			if(hint.getType() == true/*error*/){
 				errorsHints.add(hint);
 				tipsHints.remove(hint);			
-				addMessageToGrowl(new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
+				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
 				break;
 			}
 		}
@@ -159,11 +159,11 @@ public class HintView implements Serializable {
 		
 		if(this.hint.getType()){
 			errorsHints.remove(this.hint);
-			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromErrors"});
+			addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintDeleted","hintDeletedFromErrors"});
 		}
 		else{
 			tipsHints.remove(this.hint);
-			addMessageToGrowl(new Object[]{"title=hintDeleted","hintDeletedFromTips"});
+			addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintDeleted","hintDeletedFromTips"});
 		}
 	}
 	
@@ -177,7 +177,7 @@ public class HintView implements Serializable {
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
 	
-	public void addMessageToGrowl(Object [] msgs){
+	public void addMessageToGrowl(FacesMessage.Severity severity, Object [] msgs){
 		String title = "Notification";	
 		FacesMessage msg;
 		String finalText = "";
@@ -201,7 +201,7 @@ public class HintView implements Serializable {
 			}						
 		}
 		
-		msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,title,finalText);
+		msg = new FacesMessage(severity,title,finalText);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
@@ -210,6 +210,7 @@ public class HintView implements Serializable {
     	
     	addMessageToGrowl
     	(
+    		FacesMessage.SEVERITY_INFO,
     		new Object [] {"title=movedRowMsg","msgFrom"," : ",event.getFromIndex()," , ","msgTo"," : ",event.getToIndex()}
     	);
         
