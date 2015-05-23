@@ -41,9 +41,9 @@
 	
 	<!-- Objectives -->
 	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmObjectiveDeleteDialog"
-		header="#{msg['ruSureDelObjective']}" minHeight="40" closable="false" modal="true"
+		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true"
 		resizable="false" dynamic="true">
-			
+		<h:outputText value="#{msg['ruSureDelObjective']}"/>	
 		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.delete}" 
 			oncomplete="PF('confirmObjectiveDeleteDialog').hide()"/>
 		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmObjectiveDeleteDialog').hide()" />
@@ -52,9 +52,9 @@
 
 	<!-- Bonus time -->
 	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmBonusTimeDeleteDialog"
-		header="#{msg['ruSureDelBonusTime']}" minHeight="40" closable="false" modal="true"
+		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true"
 		resizable="false" dynamic="true">
-			
+		<h:outputText value="#{msg['ruSureDelBonusTime']}"/>	
 		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.deleteBonusTime}" 
 			oncomplete="PF('confirmBonusTimeDeleteDialog').hide()"/>
 		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmBonusTimeDeleteDialog').hide()" />

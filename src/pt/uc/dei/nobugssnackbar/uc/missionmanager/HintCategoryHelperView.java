@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -205,7 +206,7 @@ public class HintCategoryHelperView implements Serializable {
 			if(isListEmpty){
 				isListEmpty = false;
 			}else if(!itemSelected){//not selected command/category but has subcommands
-				hintView.addMessageToGrowl(new Object[] {"title=error","selectCommand"});
+				hintView.addMessageToGrowl(FacesMessage.SEVERITY_ERROR,new Object[] {"title=error","selectCommand"});
 				return;
 			
 			}else{//everything is OK

@@ -2,11 +2,25 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 
 public class Objective implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private int pos;
 	private String place;
 	private boolean distinct;
 	private String value;
 	
+	public Objective() {
+		// TODO Auto-generated constructor stub
+	}
+	public Objective(int id){
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}	
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getPos() {
 		return pos;
 	}

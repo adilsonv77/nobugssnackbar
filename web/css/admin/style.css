@@ -221,18 +221,32 @@ div.divExplEdit + img {
 .btnAddObjectives{
 	margin-top:30px;
 	margin-bottom:20px;
-	display: block;
+	display: inline	;
 }
 .fieldsetObjectives{
 	width: 400px !important;
+	position: absolute;
+	left: 500px;
+	top: 235px;
+}
+.fieldsetObjectives .ui-fieldset-legend {
+    background: none;
+    padding :0px;
+    border : none;    
 }
 .fieldsetBonusTime{
 	width: 300px !important;
-	float: left;
+}
+.bonusTimeSpinner .ui-panelgrid-cell{
+	padding-left: 0px;
+	padding-right: 5px;
+}
+.fieldsetBonusTime .ui-datatable-tablewrapper {
+	padding-left: 10px;	
+ 	width: 200px;
 }
 .fieldsetMaxxCmdBonus{
-	width: 300px !important;
-	float: left;
+	width: 300px !important;	
 }
 /*******************End Objectives css******************/
 
