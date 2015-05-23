@@ -78,10 +78,8 @@ public class ObjectivesView implements Serializable {
 		 * second column is key
 		 * */
 		places = new HashMap<String, String>();
-		places.put("place1","place1");
-		places.put("place2","place2");
-		places.put("place3","place3");
-		places.put("place4","place4");
+		places.put("counter","counter");
+		places.put("","");
 		
 		positions = new HashMap<String, String>();
 		positions.put("1","1");
@@ -90,10 +88,12 @@ public class ObjectivesView implements Serializable {
 		positions.put("4","4");
 		
 		types = new HashMap<String, String>();
-		types.put("type1","type1");
-		types.put("type2","type2");
-		types.put("type3","type3");
-		types.put("type4","type4");
+		types.put("askForFood","askForFood");
+		types.put("pickUpFood","pickUpFood");
+		types.put("counter","counter");		
+		types.put("deliver","deliver");
+		types.put("askForDrink","askForDrink");
+		types.put("pickUpDrink","pickUpDrink");
 	}
 	
 	public Objectives getObjectives() {
@@ -246,7 +246,7 @@ public class ObjectivesView implements Serializable {
 		editing = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 		enableObjective();
-		addMessageToGrowl(new Object[] {"title=editObjTitle","objOpenedForEdit"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[] {"title=editObjTitle","objOpenedForEdit"});
 	}
 	
 	private int objItemId = 0;
@@ -259,7 +259,7 @@ public class ObjectivesView implements Serializable {
 		disableObjective();
 		getObjList().remove(getObjItem());
 		newObjectiveItem();
-		addMessageToGrowl(new Object[] {"deletedObj"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[] {"deletedObj"});
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
@@ -302,7 +302,7 @@ public class ObjectivesView implements Serializable {
 		editingBonusTime = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:addEditBonusTime");
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
-		addMessageToGrowl(new Object[] {"title=editBonusTimeTitle","bonusTimeOpenedForEdit"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[] {"title=editBonusTimeTitle","bonusTimeOpenedForEdit"});
 		enableBonusTime();
 	}
 	
@@ -311,11 +311,11 @@ public class ObjectivesView implements Serializable {
 		newBonusTime();
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 		translateToString();
-		addMessageToGrowl(new Object[] {"deletedBonusTime"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[] {"deletedBonusTime"});
 		disableBonusTime();
 	}
 	
-	public void addMessageToGrowl(Object [] msgs){
+	public void addMessageToGrowl(FacesMessage.Severity severity,Object [] msgs){
 		String title = "Notification";	
 		FacesMessage msg;
 		String finalText = "";
@@ -339,7 +339,7 @@ public class ObjectivesView implements Serializable {
 			}						
 		}
 		
-		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
+		msg = new FacesMessage(severity,title,finalText);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
