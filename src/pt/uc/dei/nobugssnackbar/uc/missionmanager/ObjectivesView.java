@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.primefaces.component.fieldset.Fieldset;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
@@ -210,10 +211,8 @@ public class ObjectivesView implements Serializable {
 	}
 	
 	public void SaveObjective(){
-		addMessageToGrowl(new Object[] {"savedObjective"});
 		if(!editing){
 			addObjectiveToList();	
-			addMessageToGrowl(new Object[] {"addedObjective"});
 		}
 		newObjectiveItem();
 		editing = false;
@@ -223,54 +222,60 @@ public class ObjectivesView implements Serializable {
 	public void addObjectiveItem(){
 		newObjectiveItem();
 		enableObjective();
-		addMessageToGrowl(new Object[] {"newObjective"});
 	}
 	
-	public void canselObjective(){
+	public void cancelObjective(){
 		disableObjective();
-		System.out.println("cancel");
+		if(editing){
+			int index = getObjList().indexOf(getObjItem());
+			getObjList().remove(index);
+			getObjList().add(index, objItemClone);
+		}
+		editing = false;
+		newObjectiveItem();
 	}
+	
 	
 	private void addObjectiveToList(){
 		getObjList().add(getObjItem());		
 	}
 	
+	Objective objItemClone;
 	public void editObjective(){
+		objItemClone = SerializationUtils.clone(getObjItem());
 		editing = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 		enableObjective();
 		addMessageToGrowl(new Object[] {"title=editObjTitle","objOpenedForEdit"});
 	}
 	
+	private int objItemId = 0;
 	private void newObjectiveItem(){
-		setObjItem(new Objective());
+		setObjItem(new Objective(objItemId++));
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
 	public void delete(){
+		disableObjective();
 		getObjList().remove(getObjItem());
 		newObjectiveItem();
-		disableObjective();
 		addMessageToGrowl(new Object[] {"deletedObj"});
+		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
 	public void handleToggle(ToggleEvent event){
 		Fieldset fieldset = (Fieldset)event.getSource();
 		if(fieldset.getId().equals("maxCommandBonus")){
 			isMaxCommands = event.getVisibility() == Visibility.VISIBLE ? true : false;
-			System.out.println("" +isMaxCommands);
 		}
 		if(fieldset.getId().equals("bonusTime")){
 			isBonusTime = event.getVisibility() == Visibility.VISIBLE ? true : false;
-			System.out.println("" +isBonusTime);
 		}
 	}
 	
 	public void saveBonusTime(){
-		addMessageToGrowl(new Object[] {"savedBonusTime"});
 		if(!editingBonusTime){
-			addBonusTimeToList();	
-			addMessageToGrowl(new Object[] {"addedBonusTime"});
+			addBonusTimeToList();				
 		}
 		newBonusTime();
 		editingBonusTime = false;
@@ -284,8 +289,7 @@ public class ObjectivesView implements Serializable {
 	}
 	
 	public void addBonusTime(){
-		newBonusTime();
-		addMessageToGrowl(new Object[] {"newBonusTime"});
+		newBonusTime();		
 		enableBonusTime();
 	}
 	
@@ -297,6 +301,7 @@ public class ObjectivesView implements Serializable {
 	public void editBonusTime(){
 		editingBonusTime = true;
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:addEditBonusTime");
+		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 		addMessageToGrowl(new Object[] {"title=editBonusTimeTitle","bonusTimeOpenedForEdit"});
 		enableBonusTime();
 	}
@@ -353,5 +358,13 @@ public class ObjectivesView implements Serializable {
 
 	public void setBonusTimeDisabled(boolean bonusTimeDisabled) {
 		this.bonusTimeDisabled = bonusTimeDisabled;
+	}
+	
+	public boolean getEditing(){
+		return this.editing;
+	}
+	
+	public boolean getEditingBonusTime(){
+		return editingBonusTime;
 	}
 }
