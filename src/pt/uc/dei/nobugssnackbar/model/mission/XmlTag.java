@@ -2,7 +2,7 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 
 public class XmlTag implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	private int preload;
+	private int preload = -1;
 	private boolean alwaysNew;
 	private String xmlns;
 	

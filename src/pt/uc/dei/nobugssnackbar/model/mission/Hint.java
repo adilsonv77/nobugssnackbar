@@ -6,7 +6,6 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
-import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
 @JdbcTable(name="hints")
@@ -24,7 +23,7 @@ public class Hint implements java.io.Serializable {
 	private HintCategory hintCategory;
 	
 	@JdbcField(name="hintstime")
-	private int time;
+	private int time = -1;
 	
 	@JdbcField(name="hintstextexplanation")
 	private String text;

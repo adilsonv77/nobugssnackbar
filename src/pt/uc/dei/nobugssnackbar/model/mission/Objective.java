@@ -9,7 +9,7 @@ public class Objective implements java.io.Serializable {
 	private String value;
 	
 	public Objective() {
-		// TODO Auto-generated constructor stub
+
 	}
 	public Objective(int id){
 		this.id = id;

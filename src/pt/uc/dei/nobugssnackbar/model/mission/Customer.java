@@ -1,5 +1,9 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import java.util.ResourceBundle;
+
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
+
 public class Customer implements java.io.Serializable  {
 	private static final long serialVersionUID = 1L;
 	
@@ -7,7 +11,7 @@ public class Customer implements java.io.Serializable  {
 	private String init;
 	private String dest;
 	// watch out with the value 'none', when you generate XML
-	private String randomType = "none";
+	private String randomType;
 	private Skin skin;
 	
 	/* 
@@ -22,6 +26,8 @@ public class Customer implements java.io.Serializable  {
 		pattern = new Pattern();
 		skin = new Skin();
 		id = -1;
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		randomType = messageBundle.getString("none").toLowerCase();
 	}
 	
 	public int getId() {

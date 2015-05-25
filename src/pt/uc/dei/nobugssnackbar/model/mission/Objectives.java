@@ -21,6 +21,11 @@ public class Objectives  implements Serializable {
 	private String bonusTimeReward;
 	
 	
+	private boolean boolVariableQty;
+	private boolean boolCommandQty;
+	private boolean boolMaxCommands;
+	private boolean boolBonusTime;
+	
 	public ArrayList<Objective> getObjectiveList() {
 		return objectiveList;
 	}
@@ -107,5 +112,29 @@ public class Objectives  implements Serializable {
 	public void addObjective() {
 		this.objectiveList.add(this.objectiveItem);
 		this.objectiveItem = new Objective();
+	}
+	public boolean isBoolVariableQty() {
+		return boolVariableQty;
+	}
+	public void setBoolVariableQty(boolean isVariableQty) {
+		this.boolVariableQty = isVariableQty;
+	}
+	public boolean isBoolCommandQty() {
+		return boolCommandQty;
+	}
+	public void setBoolCommandQty(boolean isCommandQty) {
+		this.boolCommandQty = isCommandQty;
+	}
+	public boolean isBoolMaxCommands() {
+		return boolMaxCommands;
+	}
+	public void setBoolMaxCommands(boolean isMaxCommands) {
+		this.boolMaxCommands = isMaxCommands;
+	}
+	public boolean isBoolBonusTime() {
+		return boolBonusTime;
+	}
+	public void setBoolBonusTime(boolean isBonusTime) {
+		this.boolBonusTime = isBonusTime;
 	}
 }

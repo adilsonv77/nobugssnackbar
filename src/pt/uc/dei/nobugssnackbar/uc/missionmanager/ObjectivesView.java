@@ -134,7 +134,15 @@ public class ObjectivesView implements Serializable {
 		
 		this.getObjectives().setBonusTimeReward(text);
 	}
+	public void setMaxCommands(boolean isMaxCommands) {
+		this.isMaxCommands = isMaxCommands;
+		objectives.setBoolMaxCommands(isMaxCommands);
+	}
 
+	public void setBonusTime(boolean isBonusTime) {
+		this.isBonusTime = isBonusTime;
+		objectives.setBoolBonusTime(isBonusTime);
+	}
 	public boolean isMaxCommands() {
 		return isMaxCommands;
 	}
@@ -157,6 +165,7 @@ public class ObjectivesView implements Serializable {
 
 	public void setVariableQty(boolean isVariableQty) {
 		this.isVariableQty = isVariableQty;
+		objectives.setBoolVariableQty(isVariableQty);
 	}
 
 	public boolean isCommandQty() {
@@ -165,6 +174,7 @@ public class ObjectivesView implements Serializable {
 
 	public void setCommandQty(boolean isCommandQty) {
 		this.isCommandQty = isCommandQty;
+		objectives.setBoolCommandQty(isCommandQty);
 	}
 	
 	public Map<String, String> getPositions() {

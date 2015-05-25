@@ -29,6 +29,7 @@ public class MissionContent implements Serializable {
     
     private Objectives objectives = new Objectives();
 
+    private long timeLimit;
 	private Cook cook = new Cook();
 	private XmlTag xmltag = new XmlTag();
 	private Slider slider = new Slider();
@@ -192,6 +193,14 @@ public class MissionContent implements Serializable {
 
 	public void setSelectedLoadBlocks(boolean selectedLoadBlocks) {
 		this.selectedLoadBlocks = selectedLoadBlocks;
+	}
+
+	public long getTimeLimit() {
+		return timeLimit;
+	}
+
+	public void setTimeLimit(long timeLimit) {
+		this.timeLimit = timeLimit;
 	}
 
 }

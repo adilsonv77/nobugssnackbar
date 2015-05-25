@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-import pt.uc.dei.nobugssnackbar.model.mission.Category;
+//import pt.uc.dei.nobugssnackbar.model.mission.Category;
 import pt.uc.dei.nobugssnackbar.model.mission.Customer;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.MachineType;
@@ -45,12 +45,12 @@ public class MissionOld{
 	private Hint hint = new Hint();
 	private Customer customer = new Customer();
 	private Randomization randomization = new Randomization();
-	private Category category = new Category();
+	//private Category category = new Category();
 	private ArrayList<Page> pageExplList = new ArrayList<Page>();
 	private ArrayList<Hint> hintSeqList = new ArrayList<Hint>();
 	private ArrayList<Hint> hintErrorList = new ArrayList<Hint>();
 	private ArrayList<MachineType> machineTypeList = new ArrayList<MachineType>();
-	private ArrayList<Category> commandList = new ArrayList<Category>();
+	//private ArrayList<Category> commandList = new ArrayList<Category>();
 	private ArrayList<Randomization> randList = new ArrayList<Randomization>();
 	private ArrayList<Customer> customers = new ArrayList<Customer>();
 	private Objectives objectives = new Objectives();
@@ -132,13 +132,13 @@ public class MissionOld{
 		return machineType;
 	}
 	
-	public Category getCategory() {
+	/*public Category getCategory() {
 		return category;
 	}
 	
 	public ArrayList<Category> getCommandList() {
 		return commandList;
-	}
+	}*/
 	
 	public ArrayList<MachineType> getMachineTypeList() {
 		return machineTypeList;
@@ -158,9 +158,9 @@ public class MissionOld{
 	public void setObjectives(Objectives objectives) {
 		this.objectives = objectives;
 	}
-	public void setCategory(Category category) {
+	/*public void setCategory(Category category) {
 		this.category = category;
-	}
+	}*/
 	
 	public void setPage(Page page) {
 		this.page = page;
@@ -234,12 +234,12 @@ public class MissionOld{
 		this.addInErrorList = false;
 	}
 	
-	public void addCategory(){
+	/*public void addCategory(){
 		if(category != null){
 			this.commandList.add(category);
 		}
 		this.category = new Category();
-	}
+	}*/
 	
 	public void addRandomization(){
 		if(randomization!= null){

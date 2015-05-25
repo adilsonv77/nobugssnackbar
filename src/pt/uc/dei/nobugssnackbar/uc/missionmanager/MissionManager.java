@@ -190,8 +190,7 @@ public class MissionManager implements Serializable {
 		String xml = MissionToXML.missionToXML(mission, missionContent);
 		
 		if (xml != null) {
-			mission.setContent(xml);
-			// TODO: save Mission in DB
+			System.out.println(xml);
 		}
 		else {
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();

@@ -25,7 +25,7 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.MissionConverter;
 public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private int timeLimit; // mission's attribute
+	private long timeLimit; // mission's attribute
 	
 	private List<Mission> missionList;
 	private Mission mission;
@@ -50,14 +50,17 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	@PostConstruct
 	private void init() {
 		try {
+			ResourceBundle msg = ApplicationMessages.getMessage();
 			missionList = missionManager.getMissionList();
 			cookStartsFromList = new ArrayList<SelectItem>(customerVC.getInitPositions().
 					subList(1, customerVC.getInitPositions().size()));
-			SelectItemGroup sigDefault = new SelectItemGroup("Initial");
-			sigDefault.setSelectItems(new SelectItem[] {new SelectItem("Initial", "Initial")});
+			SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("initial"));
+			sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("initial"), msg.getString("initial"))});
 			cookStartsFromList.add(0, sigDefault);
 			
+			timeLimit = missionManager.getMissionContent().getTimeLimit();
 			cook = missionManager.getMissionContent().getCook();
+			cook.setStartPosition(msg.getString("initial"));
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
 			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();
@@ -137,6 +140,10 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		missionManager.getMissionContent().setSelectedLoadBlocks(choseLoadBlocks);
 		this.selectedXmlOption = selectedXmlOption;
 	}
+	
+	public void handlePrevMissionChange() {
+		xmltag.setPreload(mission.getId());
+	}
 
 	public Slider getSlider() {
 		return slider;
@@ -147,12 +154,13 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		missionManager.getMissionContent().setSlider(slider);
 	}
 
-	public int getTimeLimit() {
+	public long getTimeLimit() {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(int timeLimit) {
+	public void setTimeLimit(long timeLimit) throws Exception {
 		this.timeLimit = timeLimit;
+		missionManager.getMissionContent().setTimeLimit(timeLimit);
 	}
 
 	public boolean isChoseMission() {

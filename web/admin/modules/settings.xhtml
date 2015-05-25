@@ -67,7 +67,7 @@
             		<p:radioButton for="customRadioXml" itemIndex="2"/>
            			<h:outputText value="#{msg['loadPrevMission']}"/>
            			<p:selectOneMenu value="#{msVC.mission}" converter="#{msVC.mc}" disabled="#{!msVC.choseMission}">
-           				<p:ajax event="change"/>
+           				<p:ajax event="change" listener="#{msVC.handlePrevMissionChange}"/>
            				<f:selectItems value="#{msVC.missionList}" var="m" itemLabel="#{m.name}" itemValue="#{m}"/>
            			</p:selectOneMenu>
 
