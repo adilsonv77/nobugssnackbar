@@ -108,8 +108,9 @@ public class HintCategoryHelperView implements Serializable {
 				
 				Node value = item.getLastChild();
 				if (type.equals("text")) {
-					
-					formRow.addControl(new HintCategoryProperty(this, "", value.getNodeValue()), "text");			
+					HintCategoryProperty hcp = new HintCategoryProperty(this, "", value.getNodeValue());
+					hcp.setType(type);
+					formRow.addControl(hcp, "text");			
 					
 				} else {
 					String name = item.getAttributes().getNamedItem("name").getNodeValue();
@@ -120,9 +121,8 @@ public class HintCategoryHelperView implements Serializable {
 				    if (type.equals("list")) {
 				    	
 				    	HintCategoryProperty hcp = new HintCategoryProperty(this, name, true);
-				    	properties.add(hcp);
-				    	
-
+				    	hcp.setType(type);
+				    	properties.add(hcp);				    
 				    	
 				    	String nodeValue = value.getNodeValue();
 					    if (pattern.matcher(nodeValue).find())  {
@@ -206,7 +206,7 @@ public class HintCategoryHelperView implements Serializable {
 			if(isListEmpty){
 				isListEmpty = false;
 			}else if(!itemSelected){//not selected command/category but has subcommands
-				hintView.addMessageToGrowl(FacesMessage.SEVERITY_ERROR,new Object[] {"title=error","selectCommand"});
+				hintView.addMessageToGrowl(FacesMessage.SEVERITY_ERROR,new Object[] {FacesMessage.SEVERITY_ERROR,"title=error","selectCommand"});
 				return;
 			
 			}else{//everything is OK

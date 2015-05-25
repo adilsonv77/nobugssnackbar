@@ -225,22 +225,19 @@ div.divExplEdit + img {
 	top:0px;
 	left:0px;
 }
-.ui-panelgrid .fieldsetObjectives{
-	border: 1px solid  #DDDDDB !important;
-}
-.ui-panelgrid .fieldsetBonusTime{
-	border: 1px solid  #DDDDDB !important;
-}
-.dtBonusTime .ui-panelgrid tr, .ui-panelgrid td {
+.ui-panelgrid .fieldsetObjectives, .ui-panelgrid .fieldsetBonusTime, .dtBonusTime .ui-panelgrid tr, 
+.dtBonusTime .ui-panelgrid .ui-widget-content, .dtBonusTime .ui-panelgrid .ui-panelgrid-cell, 
+.dtObjectives .ui-panelgrid tr, .dtObjectives .ui-panelgrid td 
+{
 	border: 1px solid  #DDDDDB !important;
 }
 
-.dtObjectives .ui-panelgrid tr, .ui-panelgrid td {
-	border: 1px solid  #DDDDDB !important;
+.ui-datatable tbody td{
+	border: 1px solid  #DDDDDD !important;
 }
 
 .ui-panelgrid .fieldsetMaxxCmdBonus{
-	border: 1px solid  #DDDDDB !important;
+	border: 1px solid  #DDDDDD !important;
 }
 
 .fieldsetObjectives .ui-fieldset-legend {
@@ -263,9 +260,6 @@ div.divExplEdit + img {
 .fieldsetBonusTime .ui-datatable-tablewrapper {
 	padding-left: 10px;	
  	width: 200px;
-}
-wrapperMaxCmdBonus{
-	position: relative;
 }
 .fieldsetMaxxCmdBonus{
 	width: 300px !important;

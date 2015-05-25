@@ -11,6 +11,8 @@ public class HintCategoryProperty implements Serializable {
 	private Object value;
 	private boolean required;
 	private List<?> items;
+	private String type ;
+	private boolean selected = false;
 
 	private String el;
 
@@ -75,6 +77,14 @@ public class HintCategoryProperty implements Serializable {
 		return el;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	public void setProviderEL(String el) {
 		this.el = el;
 	}
@@ -98,15 +108,20 @@ public class HintCategoryProperty implements Serializable {
 	}
 		
 	public void updateValues() {
+		this.selected = true;
 		this.hintCategoryHelperView.setItemSelected(true);
 		List<HintCategoryProperty> props = this.hintCategoryHelperView.getProperties();
-		for (HintCategoryProperty hcp:props)
+		for (HintCategoryProperty hcp:props){
 			if (hcp.getName().equals(this.updateComponent)){
 				hcp.updates(getName(), value);
-				if(hcp.items.size() > 0){
-					this.hintCategoryHelperView.setItemSelected(false);
-				}
 			}
+		}
+		for (HintCategoryProperty hcp:props){
+			System.out.println("type:" + hcp.getType().equals("list") + " selected:" +hcp.selected );
+			if(hcp.getType().equals("list") && !hcp.selected && (hcp.items.size() > 0)){
+				this.hintCategoryHelperView.setItemSelected(false);
+			}
+		}
 	}
 
 
