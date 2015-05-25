@@ -213,30 +213,49 @@ div.divExplEdit + img {
 /*******************End Dialog Hint page css******************/
 
 /*******************Start Objectives page css******************/
-.btnObjectives{
-	
-	display:inline-block;
-	float: right;
-}
+
 .btnAddObjectives{
 	margin-top:30px;
 	margin-bottom:20px;
 	display: inline	;
 }
 .fieldsetObjectives{
-	width: 400px !important;
+	width: 450px !important;
 	position: absolute;
-	left: 500px;
-	top: 235px;
+	top:0px;
+	left:0px;
 }
+.ui-panelgrid .fieldsetObjectives{
+	border: 1px solid  #DDDDDB !important;
+}
+.ui-panelgrid .fieldsetBonusTime{
+	border: 1px solid  #DDDDDB !important;
+}
+.dtBonusTime .ui-panelgrid tr, .ui-panelgrid td {
+	border: 1px solid  #DDDDDB !important;
+}
+
+.dtObjectives .ui-panelgrid tr, .ui-panelgrid td {
+	border: 1px solid  #DDDDDB !important;
+}
+
+.ui-panelgrid .fieldsetMaxxCmdBonus{
+	border: 1px solid  #DDDDDB !important;
+}
+
 .fieldsetObjectives .ui-fieldset-legend {
     background: none;
-    padding :0px;
+    padding :10px;
     border : none;    
+    box-shadow: none;
 }
 .fieldsetBonusTime{
 	width: 300px !important;
+	position: absolute;
+	top:125px;
+	left:520px;
 }
+
 .bonusTimeSpinner .ui-panelgrid-cell{
 	padding-left: 0px;
 	padding-right: 5px;
@@ -245,8 +264,14 @@ div.divExplEdit + img {
 	padding-left: 10px;	
  	width: 200px;
 }
+wrapperMaxCmdBonus{
+	position: relative;
+}
 .fieldsetMaxxCmdBonus{
-	width: 300px !important;	
+	width: 300px !important;
+	position: absolute;
+	top:0px;
+	left:520px;	
 }
 /*******************End Objectives css******************/
 

@@ -133,11 +133,10 @@ public class RandomizationView implements Serializable {
 	void addRand(){
 		if(!this.editing){
 			if(!this.disabled){
-				this.randList.add(this.rand);
-				addMessageToGrowl(new Object[]{"title=newRandomization","addedRand"});
+				this.randList.add(this.rand);				
 			}
 			else{
-				addMessageToGrowl(new Object[]{"title=warningMsg","pressAddForAdd"});
+				addMessageToGrowl(FacesMessage.SEVERITY_WARN,new Object[]{"title=warningMsg","pressAddForAdd"});
 			}
 		}
 		
@@ -146,11 +145,8 @@ public class RandomizationView implements Serializable {
 
 	public void save(){
 		if(this.rand.getQtd() < 0){
-			addMessageToGrowl(new Object[]{"title=warningMsg","randNotValid"});
+			addMessageToGrowl(FacesMessage.SEVERITY_WARN,new Object[]{"title=warningMsg","randNotValid"});
 			return;
-		}
-		if(this.editing){
-			addMessageToGrowl(new Object[]{"changesSaved"});
 		}
 		addRand();
 		newRand();	
@@ -162,7 +158,7 @@ public class RandomizationView implements Serializable {
 	public void delete(){
 		randList.remove(this.rand);
 		this.editing = false;
-		addMessageToGrowl(new Object[]{"deletedRand"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"deletedRand"});
 		disableGrid();
 		newRand();	
 		RequestContext.getCurrentInstance().update("tbView:randomizationForm");
@@ -172,7 +168,7 @@ public class RandomizationView implements Serializable {
 		this.rand = aRand;
 		this.editing = true;
 		this.disabled = false;
-		addMessageToGrowl(new Object[]{"title=editRandTitle","randOpenedForEdit"});
+		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=editRandTitle","randOpenedForEdit"});
 		RequestContext.getCurrentInstance().update("tbView:randomizationForm");	
 	}
 	
@@ -184,14 +180,12 @@ public class RandomizationView implements Serializable {
 
 		if(this.editing){
 			if(this.rand.getQtd() < 0){
-				addMessageToGrowl(new Object[]{"title=warningMsg","randNotValid"});
+				addMessageToGrowl(FacesMessage.SEVERITY_WARN,new Object[]{"title=warningMsg","randNotValid"});
 				return;
 			}
-			addMessageToGrowl(new Object[]{"changesSaved"});
 		}
 		
-		newRand();
-		addMessageToGrowl(new Object[]{"newRandomization"});		
+		newRand();	
 		
 		this.editing = false;
 		enableGrid();
@@ -202,7 +196,7 @@ public class RandomizationView implements Serializable {
 		this.disabled = false;
 	}
 	
-	public void addMessageToGrowl(Object [] msgs){
+	public void addMessageToGrowl(FacesMessage.Severity severity, Object [] msgs){
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		String title = "Notification";	
 		FacesMessage msg;
@@ -227,18 +221,22 @@ public class RandomizationView implements Serializable {
 			}						
 		}
 		
-		msg = new FacesMessage(FacesMessage.SEVERITY_INFO,title,finalText);
+		msg = new FacesMessage(severity,title,finalText);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		RequestContext.getCurrentInstance().update("growlMsgs");
 	}
 		
+	public boolean getEditing(){
+		return editing;
+	}
+	
     public void onRowReorder(ReorderEvent event) {
     	
     	addMessageToGrowl
     	(
+    		FacesMessage.SEVERITY_INFO,	
     		new Object [] {"title=movedRowMsg","msgFrom"," : ",event.getFromIndex()," , ","msgTo"," : ",event.getToIndex()}
-    	);
-        
+    	);       
         RequestContext.getCurrentInstance().update("tbView:randomizationForm:randomizationDataTable");
     }
     

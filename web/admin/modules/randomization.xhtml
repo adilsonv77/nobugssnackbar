@@ -12,7 +12,7 @@
 				<p:outputLabel for="qtdSpinner" value="#{msg['qtd']}: " disabled="#{randView.disabled}"/>	
 	        	<p:spinner id="qtdSpinner" value="#{randView.rand.qtd}" disabled="#{randView.disabled}"/>
 	        	
-	        	<p:outputLabel for="typeRadioGroup" value="#{msg['type']}: " disabled="#{randView.disabled}" />
+	        	<p:outputLabel for="typeRadioGroup" value="#{msg['type']}: " />
 		        <p:selectOneRadio id="typeRadioGroup" value="#{randView.boolType}" disabled="#{randView.disabled}">
 		            <f:selectItem itemLabel="#{msg['hungry']}" itemValue="true"/>
 		            <f:selectItem itemLabel="#{msg['thirsty']}" itemValue="false"/>
@@ -30,7 +30,7 @@
 				actionListener="#{randView.save}" styleClass="randBtnSave"/>
 			<br/>
 			<p:commandButton value="#{msg['add']}" id="btnAdd" icon="ui-icon-circle-plus"
-				actionListener="#{randView.add}" styleClass="randBtnAdd"/>
+				actionListener="#{randView.add}" styleClass="randBtnAdd" disabled="#{randView.editing}"/>
 			
 			<p:dataTable  id="randomizationDataTable" var="rand" value="#{randView.randList}" draggableRows="true">
 			    <p:ajax event="rowReorder" listener="#{randView.onRowReorder}"/>			  
@@ -51,11 +51,12 @@
 			    	<p:tooltip id="toolTipEdit" for="btnEdit" value="#{msg['edit']}"
 			    		showEffect="clip" hideEffect="clip"/>
 					<p:commandButton id="btnEdit" icon="ui-icon-wrench"
-						actionListener="#{randView.edit(rand)}"/>	
+						actionListener="#{randView.edit(rand)}" disabled="#{randView.editing}"/>	
 						
 					<p:tooltip id="toolTipDelete" for="btnDelete" value="#{msg['delete']}"
 						showEffect="clip" hideEffect="clip"/>
-					<p:commandButton id="btnDelete" action="#{randView.setRand(rand)}" icon="ui-icon-close" oncomplete="PF('randConfirmDeleteDialog').show()" />						
+					<p:commandButton id="btnDelete" action="#{randView.setRand(rand)}" icon="ui-icon-close"
+						disabled="#{randView.editing}" oncomplete="PF('randConfirmDeleteDialog').show()" />						
 			    </p:column>				        			 		
 			    			 		    
 			</p:dataTable>			
