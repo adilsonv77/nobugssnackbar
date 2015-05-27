@@ -57,12 +57,16 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			if (customers.size() == 0) {
 				customers = new ArrayList<>(12);
 				for (int i = 0; i < 12; i++) {
-					customers.add(new Customer());
+					Customer c = new Customer(System.currentTimeMillis());
+					customers.add(c);
 				}
 			}
-			/*if (customers.size() != 12) {
-				System.err.println("The customer list must be with size 12!");
-			}*/
+			else if (customers.size() < 12) { // if you have some problem look here
+				for (int i = customers.size() - 1; i < 12; i++) {
+					Customer c = new Customer(System.currentTimeMillis());
+					customers.add(c);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,11 +207,10 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				getComponent().getAttributes().get("customersPlaceId"));
 		
 		if (customersPlaceId >= 0 && customersPlaceId < customers.size()) {
-			if (customers.get(customersPlaceId).getId() < 0) {
-				// edit customer
-				customer = customers.get(customersPlaceId);
-			}
+			// edit customer
+			customer = customers.get(customersPlaceId);
 		}
+		
 	}
 	
 	private boolean checkFields(Order order) {
@@ -252,7 +255,18 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (checkFields(customer.getPattern().getOrder())) {
 			customers.set(customersPlaceId, customer);
 			try {
-				missionManager.getMissionContent().setCustomers(customers);
+				List<Customer> res = new ArrayList<>();
+				for (Customer c : customers) {
+					for (Order o : c.getPattern().getOrders()) {
+						if ((o.getDrinks() != null && o.getDrinks().size() > 0) ||
+							(o.getFoods() != null && o.getFoods().size() > 0)) {
+							res.add(c);
+							break;
+						}
+					}
+				}
+				if (res != null && res.size() > 0)
+					missionManager.getMissionContent().setCustomers(res);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

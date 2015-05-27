@@ -7,19 +7,12 @@ import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 public class Customer implements java.io.Serializable  {
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private long id;
 	private String init;
 	private String dest;
 	// watch out with the value 'none', when you generate XML
 	private String randomType;
 	private Skin skin;
-	
-	/* 
-	 * If [pattern.getOrders().size() == 1] Then
-	 *    generate Foods/Drinks;
-	 * Else
-	 *    generate Pattern->order[i]->Foods/Drinks
-	 */
 	private Pattern pattern;
 
 	public Customer() {
@@ -29,12 +22,19 @@ public class Customer implements java.io.Serializable  {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		randomType = messageBundle.getString("none").toLowerCase();
 	}
+	public Customer(long id) {
+		pattern = new Pattern();
+		skin = new Skin();
+		this.id = id;
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		randomType = messageBundle.getString("none").toLowerCase();
+	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(long l) {
+		this.id = l;
 	}
 	public String getInit() {
 		return init;

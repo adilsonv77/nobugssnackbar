@@ -1,6 +1,5 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
@@ -9,6 +8,7 @@ import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Command;
 import pt.uc.dei.nobugssnackbar.model.Mission;
 import pt.uc.dei.nobugssnackbar.model.mission.Customer;
+import pt.uc.dei.nobugssnackbar.model.mission.Drink;
 import pt.uc.dei.nobugssnackbar.model.mission.Food;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
@@ -17,6 +17,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Objectives;
 import pt.uc.dei.nobugssnackbar.model.mission.Order;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.model.mission.Randomization;
+import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 
 public class MissionToXML {
@@ -44,7 +45,6 @@ public class MissionToXML {
 			/********************************************START SLIDER*/
 			if (mission.isRepeatable() && missionContent.getSlider().getTimesBefore() > 0) {
 				result.append("<slider timesBefore=\"").
-					append(missionContent.getSlider()).
 					append(missionContent.getSlider().getTimesBefore()).
 					append("\"/>");
 			}
@@ -54,64 +54,80 @@ public class MissionToXML {
 			result.append("<explanation>");
 			
 			for (Page p : missionContent.getPages()) {
-				result.append("<page>");
-				result.append(p.getMsg());				
-				result.append("</page>");
+				result.append("<page><![CDATA[");
+				String r = ImgTagConvertor.convertImgTagToHexImgTag(p.getMsg(), false);
+				if (r != null) {
+					result.append(r);
+				}
+				result.append("]]></page>");
 			}
 					
 			result.append("</explanation>");
 			/********************************************END EXPLANATION*/
 			/******/
 			/********************************************START HINTS*/
-			result.append("<hints>");
-			
-			result.append("<sequence>");
-			for (Hint h : missionContent.getTipsHints()) {
-				result.append("<hint ");
-				if (h.getTime() > -1) { /*if you have any problem check here*/
-					result.append("time=\"").append(h.getTime()).append("\" ");
+			if ((missionContent.getTipsHints() != null && missionContent.getTipsHints().size() > 0) ||
+				(missionContent.getErrorsHints() != null && missionContent.getErrorsHints().size() > 0)) {
+				result.append("<hints>");
+				
+				if (missionContent.getTipsHints() != null && missionContent.getTipsHints().size() > 0) {
+					result.append("<sequence>");
+					for (Hint h : missionContent.getTipsHints()) {
+						result.append("<hint ");
+						if (h.getTime() > -1) { /*if you have some problem check here*/
+							result.append("time=\"").append(h.getTime()).append("\" ");
+						}
+						if (h.getCategory() != null && h.getCategory() != "") {
+							result.append("category=\"").append(h.getCategory()).append("\" ");
+						}
+						if (h.getConditionsAsString() != null && h.getConditionsAsString() != "") {
+							result.append("condition=\"").append(h.getConditionsAsString()).append("\"");
+						}
+						if (h.getText() != null && h.getText() != "") {
+							result.append("><![CDATA["); // close hint tag
+							String r = ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false);
+							if (r != null) {
+								result.append(r);
+							}
+							result.append("]]></hint>");
+						}
+						else {
+							result.append("/>");
+						}
+					}
+					result.append("</sequence>");
 				}
-				if (h.getCategory() != null && h.getCategory() != "") {
-					result.append("category=\"").append(h.getCategory()).append("\" ");
+				
+				if (missionContent.getErrorsHints() != null && missionContent.getErrorsHints().size() > 0) {
+					result.append("<errors>");
+					for (Hint h : missionContent.getErrorsHints()) {
+						result.append("<hint ");
+						if (h.getTime() > -1) { /*if you have any problem check here*/
+							result.append("time=\"").append(h.getTime()).append("\" ");
+						}
+						if (h.getCategory() != null && h.getCategory() != "") {
+							result.append("category=\"").append(h.getCategory()).append("\" ");
+						}
+						if (h.getConditionsAsString() != null && h.getConditionsAsString() != "") {
+							result.append("condition=\"").append(h.getConditionsAsString()).append("\"");
+						}
+						if (h.getText() != null && h.getText() != "") {
+							result.append("><![CDATA["); // close hint tag
+							String r = ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false);
+							if (r != null) {
+								result.append(r);
+							}
+							result.append("]]></hint>");
+						}
+						else {
+							result.append("/>");
+						}
+					}
+					result.append("</errors>");
 				}
-				if (h.getConditionsAsString() != null && h.getConditionsAsString() != "") {
-					result.append("condition=\"").append(h.getConditionsAsString()).append("\"");
-				}
-				if (h.getText() != null && h.getText() != "") {
-					result.append(">"); // close hint tag
-					result.append(h.getText());
-					result.append("</hint>");
-				}
-				else {
-					result.append("/>");
-				}
+				
+				result.append("</hints>");
 			}
-			result.append("</sequence>");
-			
-			result.append("<errors>");
-			for (Hint h : missionContent.getErrorsHints()) {
-				result.append("<hint ");
-				if (h.getTime() > -1) { /*if you have any problem check here*/
-					result.append("time=\"").append(h.getTime()).append("\" ");
-				}
-				if (h.getCategory() != null && h.getCategory() != "") {
-					result.append("category=\"").append(h.getCategory()).append("\" ");
-				}
-				if (h.getConditionsAsString() != null && h.getConditionsAsString() != "") {
-					result.append("condition=\"").append(h.getConditionsAsString()).append("\"");
-				}
-				if (h.getText() != null && h.getText() != "") {
-					result.append(">"); // close hint tag
-					result.append(h.getText());
-					result.append("</hint>");
-				}
-				else {
-					result.append("/>");
-				}
-			}
-			result.append("</errors>");
-			
-			result.append("</hints>");
 			/********************************************END HINTS*/
 			/******/
 			/********************************************START SELECTMACHINE*/
@@ -120,10 +136,10 @@ public class MissionToXML {
 			/******/
 			/********************************************START COMMANDS*/
 			result.append("<commands>");
-			
-			if (missionContent.getCommands() != null &&
-				missionContent.getCommands().size() > 0) {
-				for (Command c : missionContent.getCommands()) {
+/*********** You sould ask if you have to add root commands too */			
+			if (missionContent.getSelectedCommands() != null &&
+				missionContent.getSelectedCommands().size() > 0) {
+				for (Command c : missionContent.getSelectedCommands()) {
 					result.append("<category name=\"").
 						append(c.getName()).append("\"").
 						append(" show=\"true\"").append("/>");
@@ -141,15 +157,14 @@ public class MissionToXML {
 			/******/
 			/********************************************START CUSTOMERSsn*/
 			if (missionContent.getRandList() != null &&
-				missionContent.getRandList().size() > 0) {
-				
-				
+				missionContent.getRandList().size() > 0) {	
 				result.append("<customersSN>");
 				for (Randomization r : missionContent.getRandList()) {
 					result.append("<randomization qtd=\"");
 					result.append(r.getQtd()).append("\"");
 					if (r.getSet() != null && r.getSet() != messageBundle.getString("new")) {
-						result.append(" set=\"").append(r.getSet()).append("\"");
+						String setR = r.getSet().replaceAll(" ", "");
+						result.append(" set=\"").append(setR).append("\"");
 					}
 					result.append(">"); // close randomization					
 					result.append(r.getType());					
@@ -163,31 +178,29 @@ public class MissionToXML {
 			/********************************************START CUSTOMERS*/
 			result.append("<customers>");
 			for (Customer cu : missionContent.getCustomers()) {
-				if (checkOrder(cu)) {
-					result.append("<customer");
-					if (cu.getRandomType() != null && cu.getRandomType() != "" &&
-						cu.getRandomType() != messageBundle.getString("none")) {
-						result.append(" randomType=\"").append(cu.getRandomType()).append("\"");
-					}
-					result.append(">");
-					result.append("<id>").append(cu.getId()).append("</id>");
-					result.append("<init>").append(cu.getInit()).append("</init>");
-					result.append("<dest>").append(cu.getDest()).append("</dest>");
-					if (cu.getPattern().getOrders().size() > 1) {
-						result.append("<pattern>");
-						for (Order o : cu.getPattern().getOrders()) {
-							result.append("<order>");
-							result.append(xmlOfFoodsAndDrinks(o));
-							result.append("</order>");
-						}
-						result.append("</pattern>");
-					}
-					else if (cu.getPattern().getOrders().size() > 0) {
-						result.append(xmlOfFoodsAndDrinks(cu.getPattern().getOrders().get(0)));
-					}
-					
-					result.append("</customer>");
+				result.append("<customer");
+				if (cu.getRandomType() != null && cu.getRandomType() != "" &&
+					cu.getRandomType().compareTo(messageBundle.getString("none").toLowerCase()) != 0) {
+					result.append(" randomType=\"").append(cu.getRandomType()).append("\"");
 				}
+				result.append(">");
+				result.append("<id>").append(cu.getId()).append("</id>");
+				result.append("<init>").append(cu.getInit()).append("</init>");
+				result.append("<dest>").append(cu.getDest()).append("</dest>");
+				if (cu.getPattern().getOrders().size() > 1) {
+					result.append("<pattern>");
+					for (Order o : cu.getPattern().getOrders()) {
+						result.append("<order>");
+						result.append(xmlOfFoodsAndDrinks(o));
+						result.append("</order>");
+					}
+					result.append("</pattern>");
+				}
+				else if (cu.getPattern().getOrders().size() > 0) {
+					result.append(xmlOfFoodsAndDrinks(cu.getPattern().getOrders().get(0)));
+				}
+				
+				result.append("</customer>");
 			}
 			result.append("</customers>");
 			/********************************************END CUSTOMERS*/
@@ -217,8 +230,8 @@ public class MissionToXML {
 			result.append(" buttonDebug=\"").append(obj.isButtonDebug()).append("\"");
 			result.append(" buttonRun=\"").append(obj.isButtonRun()).append("\"");
 			result.append(" buttonBuy=\"").append(obj.isButtonBuy()).append("\"");
-			result.append(">");
 			if (!mission.isRepeatable()) {
+				result.append(">");
 				if (obj.getObjectiveList() != null && obj.getObjectiveList().size() > 0) {
 					for (Objective o : obj.getObjectiveList()) {
 						result.append("<objective pos=\"");
@@ -242,21 +255,22 @@ public class MissionToXML {
 			/********************************************END OBJECTIVES*/
 			/******/
 			/********************************************START XML Blocks*/
-			result.append("<xml");
+			StringBuilder xml_v = new StringBuilder();
+			xml_v.append("<xml");
 			if (missionContent.getXmltag().getPreload() > -1) {
-				result.append(" preload=\"").
+				xml_v.append(" preload=\"").
 				append(missionContent.getXmltag().getPreload()).
 				append("\"");
 			}
-			result.append(" alwaysNew=\"").
+			xml_v.append(" alwaysNew=\"").
 			append(missionContent.getXmltag().isAlwaysNew()).
 			append("\"");
-			result.append(">");
+			xml_v.append(">");
 /*************You should ask for this!!!!!!!!*/
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			String content = (String) ctx.getExternalContext().getSessionMap().get("blocks");
-			result.append(content);
-			result.append("</xml>");
+			xml_v.append(content.substring(content.indexOf(">") + 1, content.length()));
+			result.append(xml_v);
 			
 			/********************************************END XML Blocks*/
 			
@@ -308,11 +322,11 @@ public class MissionToXML {
 		}
 		result.append(">");
 		
-		for (Food f : order.getFoods()) {
+		for (Drink d : order.getDrinks()) {
 			result.append("<drink");
-			result.append(" qtd=\"").append(f.getQtd()).append("\"");
-			result.append(" price=\"").append(f.getPrice()).append("\">");
-			result.append(f.getName());
+			result.append(" qtd=\"").append(d.getQtd()).append("\"");
+			result.append(" price=\"").append(d.getPrice()).append("\">");
+			result.append(d.getName());
 			result.append("</drink>");
 		}
 		result.append("</drinks>");
@@ -332,16 +346,13 @@ public class MissionToXML {
 				 missionContent.getCustomers().size() == 0) {
 			errorMessage = messageBundle.getString("missingCustomerError");
 		}
-		else if (!checkOrders(missionContent.getCustomers())) {
-			errorMessage = messageBundle.getString("missingOrderError");
-		}
 		else if (missionContent.getObjectives() == null ||
 				missionContent.getObjectives().getObjectiveList() == null ||
 				missionContent.getObjectives().getObjectiveList().size() == 0) {
 			errorMessage = messageBundle.getString("missingObjectiveError");
 		}
-		else if ((missionContent.getCommands() == null ||
-				 missionContent.getCommands().size() == 0) &&
+		else if ((missionContent.getSelectedCommands() == null ||
+				 missionContent.getSelectedCommands().size() == 0) &&
 				 missionContent.isSelectedLoadBlocks() == false) {
 			errorMessage = messageBundle.getString("notSelectedCommandOrBlockError");
 		}
@@ -350,30 +361,5 @@ public class MissionToXML {
 		}
 		
 		return false;
-	}
-	
-	private static boolean checkOrders(List<Customer> customers) {		
-		if (customers != null) {
-			for (int i = 0; i < customers.size(); i++) {
-				if (checkOrder(customers.get(i))) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-
-	private static boolean checkOrder(Customer customer) {
-		List<Order> orders = customer.getPattern().getOrders();
-		if (orders != null) {
-			for (int j = 0; j < orders.size(); j++) {
-				if ((orders.get(j).getDrinks() != null && orders.get(j).getDrinks().size() > 0) ||
-					(orders.get(j).getFoods() != null && orders.get(j).getFoods().size() > 0)) {
-					return true;
-				}
-			}
-		}
-		return true;
 	}
 }

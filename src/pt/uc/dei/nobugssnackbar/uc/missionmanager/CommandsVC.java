@@ -40,14 +40,14 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		}
 	}
 
-	public void onRowSelectC(SelectEvent event) {
+	public void onRowSelectC(SelectEvent event) throws Exception {
 		Command temp = ((Command)event.getObject());
 		temp.setSelected(!temp.isSelected());
 		
 		handleChildSelect(temp);
 	}
 	
-	public void handleRootSelect(Command item) {
+	public void handleRootSelect(Command item) throws Exception {
 		selectedRootCommand = item;
 		List<Command> childs = selectedRootCommand.getChildren();
 
@@ -56,9 +56,10 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		}
 		
 		selectedRootCommand.setChildren(childs);
+		missionManager.getMissionContent().setSelectedCommands(getSelectedCommands());
 	}
 	
-	public void handleChildSelect(Command item) {	
+	public void handleChildSelect(Command item) throws Exception {	
 		boolean flag = false;
 		
 		for (Command c : item.getParent().getChildren()) {
@@ -69,6 +70,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		}
 
 		item.getParent().setSelected(flag);
+		missionManager.getMissionContent().setSelectedCommands(getSelectedCommands());
 	}
 		
 	public List<Command> getChilds() {
@@ -78,7 +80,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 			return null;
 	}
 
-	public List<Command> getRootCommands() throws Exception {
+	public List<Command> getRootCommands() {
 		
 		return rootCommands;
 	}
@@ -86,13 +88,18 @@ public class CommandsVC implements ICommandProvider, Serializable {
 	public List<Command> getSelectedCommands() {
 		if (rootCommands != null) {
 			List<Command> result = new ArrayList<>();
-			
+			//boolean flag;
 			for (Command rc : rootCommands) {
+				//flag = false;
 				for (Command cc : rc.getChildren()) {
 					if (cc.isSelected()) {
 						result.add(cc);
+						//flag = true;
 					}
 				}
+				/*if (flag) {
+					result.add(0, rc);
+				}*/
 			}
 			selectedCommands = result;
 		}

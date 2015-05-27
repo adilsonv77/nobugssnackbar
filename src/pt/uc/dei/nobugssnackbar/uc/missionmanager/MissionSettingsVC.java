@@ -69,6 +69,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			mc.setProvider(this);
 			
 			FacesContext ctx = FacesContext.getCurrentInstance();
+			// don't change the value. If you did: maybe you will have some problem with the generation of XML
 			ctx.getExternalContext().getSessionMap().put("blocks", "<xml></xml>");
 		} catch (Exception ex) {
 			ex.printStackTrace();

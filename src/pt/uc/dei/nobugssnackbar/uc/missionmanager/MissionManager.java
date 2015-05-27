@@ -186,15 +186,22 @@ public class MissionManager implements Serializable {
 		return new MissionContent();
 	}
 	
-	public void save() {
+	public void save() throws Exception {
 		String xml = MissionToXML.missionToXML(mission, missionContent);
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if (xml != null) {
 			System.out.println(xml);
+			mission.setContent(xml);
+			//mission.setId(System.currentTimeMillis());
+			// TODO save mission in DB
+			// missionDao.save(mission);
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
+	        		messageBundle.getString("missionSuccSaved")));			
 		}
 		else {
-			ResourceBundle messageBundle = ApplicationMessages.getMessage();
-			FacesContext context = FacesContext.getCurrentInstance();
+
 			context.validationFailed();
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
 	        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));

@@ -21,6 +21,7 @@ public class MissionContent implements Serializable {
 	private List<Hint> errorsHints = new ArrayList<>();
 
 	private List<Command> commands;
+	private List<Command> selectedCommands;
     private List<Page> pages = new ArrayList<>();
     
     private List<Randomization> randList = new ArrayList<>();
@@ -201,6 +202,14 @@ public class MissionContent implements Serializable {
 
 	public void setTimeLimit(long timeLimit) {
 		this.timeLimit = timeLimit;
+	}
+
+	public List<Command> getSelectedCommands() {
+		return selectedCommands;
+	}
+
+	public void setSelectedCommands(List<Command> selectedCommands) {
+		this.selectedCommands = selectedCommands;
 	}
 
 }
