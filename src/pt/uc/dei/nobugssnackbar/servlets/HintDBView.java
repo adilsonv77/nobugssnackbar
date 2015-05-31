@@ -8,11 +8,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.nobugssnackbar.dao.HintDao;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.HintView;
+import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 @ManagedBean(name="hintDBView")
 @ViewScoped
@@ -40,7 +42,11 @@ public class HintDBView implements Serializable{
 	
 	private List<Hint> getHintsFromDB() throws Exception{
 		if(hintsFromDB == null){
-			hintsFromDB = hintDao.list();
+			hintsFromDB = new ArrayList<Hint>();
+			for (Hint hint : hintDao.list()) {
+				hint.setText(ImgTagConvertor.removeCDATA(hint.getText()));
+				hintsFromDB.add(hint);
+			}
 		}	
 		return hintsFromDB;	
 	}
@@ -91,7 +97,8 @@ public class HintDBView implements Serializable{
 	public void addHint(){
 		
 		hintView.setAdd(true);
-		hintView.setHint(this.hint);
+		Hint clone = SerializationUtils.clone(this.hint);
+		hintView.setHint(clone);
 		hintView.addEditHint();
 		hintView.setAdd(false);
 		newHint();

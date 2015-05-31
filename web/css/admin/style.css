@@ -221,9 +221,6 @@ div.divExplEdit + img {
 }
 .fieldsetObjectives{
 	width: 450px !important;
-	position: absolute;
-	top:0px;
-	left:0px;
 }
 .ui-panelgrid .fieldsetObjectives, .ui-panelgrid .fieldsetBonusTime, .dtBonusTime .ui-panelgrid tr, 
 .dtBonusTime .ui-panelgrid .ui-widget-content, .dtBonusTime .ui-panelgrid .ui-panelgrid-cell, 
@@ -248,9 +245,6 @@ div.divExplEdit + img {
 }
 .fieldsetBonusTime{
 	width: 300px !important;
-	position: absolute;
-	top:125px;
-	left:520px;
 }
 
 .bonusTimeSpinner .ui-panelgrid-cell{
@@ -263,9 +257,6 @@ div.divExplEdit + img {
 }
 .fieldsetMaxxCmdBonus{
 	width: 300px !important;
-	position: absolute;
-	top:0px;
-	left:520px;	
 }
 /*******************End Objectives css******************/
 

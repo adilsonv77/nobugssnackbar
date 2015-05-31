@@ -18,10 +18,10 @@ import javax.servlet.ServletContext;
 public class ImgTagConvertor {
 	
 	private final static String srcAttr = "<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
-
+	//private final static String	imgTagFromFile = "(<\\s*img\\s*src\\s*=\\s*[\\\'\\\"]{1})([\\w\\/]+)([\\\'\\\"]{1}\\s*\\/\\s*\\>)";
 	private final static String imgTag = "(<div>)*\\s*<img[^>]*>\\s*(</div>)*";
-	public final static String regexImghex = "(<\\s*imghex\\s*id\\s*=\\s*[\\\"|\\\']{1}([a-z0-9_]*)[\\\"|\\\']{1}\\s*>)([A-Za-z0-9-_]*)(<\\s*\\/\\s*imghex\\s*>)";	
-	//private final static String regexCDATA = "(\\[\\s*CDATA\\s*\\[\\s*)(.*)(\\s*\\]\\s*\\])";
+	public final static String regexCADATA = "(\\<\\!\\s*\\[\\s*CDATA\\s*\\[\\s*)(.*)(\\s*\\]\\s*\\]\\s*\\>)";	
+	public final static String regexImghex = "(<\\s*imghex\\s*id\\s*=\\s*[\\\"|\\\']{1}([a-z0-9_]*)[\\\"|\\\']{1}\\s*>)([A-Za-z0-9-_]*)(<\\s*\\/\\s*imghex\\s*>)";
 
 	
 	private static long imgId;
@@ -33,6 +33,13 @@ public class ImgTagConvertor {
 		Matcher m = p.matcher(text);
 		while (m.find()) {
 			File file = getImageFromUrl(m.group(1));
+			
+			if(file == null){
+				file = new File(getDiskPath(m.group(1)));
+				if(!file.exists()){
+					file = null;
+				}
+			}
 
 			try {
 				if (file != null) {
@@ -55,6 +62,16 @@ public class ImgTagConvertor {
 		}
 		
 		return result;
+	}
+	
+	public static String getDiskPath(String relativePath){
+		String path;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		ServletContext servletContext = (ServletContext) externalContext.getContext();
+		path = servletContext.getRealPath("admin/" + relativePath);
+		return path;
+				
 	}
 	
     private static File getImageFromUrl(String src) {
@@ -109,14 +126,11 @@ public class ImgTagConvertor {
 	    	InputStream in = new ByteArrayInputStream(HexImage.toImage(result));
 			BufferedImage bi = ImageIO.read(in);
 			
-			try{
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				ExternalContext externalContext = facesContext.getExternalContext();
-				ServletContext servletContext = (ServletContext) externalContext.getContext();
-				
+			try
+			{
 				relativeWebPath = "images/" + id + "." + imageType;
 				
-				absoluteDiskPath = servletContext.getRealPath("admin/" + relativeWebPath);
+				absoluteDiskPath = getDiskPath(relativeWebPath);
 	
 				File temp = new File(absoluteDiskPath);
 				temp.createNewFile();
@@ -126,29 +140,31 @@ public class ImgTagConvertor {
 			catch(Exception e){
 				throw e;
 			}
-			result = "<img src='" + relativeWebPath + "'/>";
+			result = "<img src=\"" + relativeWebPath + "\"/>";
 		}
 	
 		return result;
     }
     
-    public static String replaceImagesInHex(String src, String regex, String imgType) throws Exception{
+    public static String removeCDATA(String src){
+		
+		Pattern pattern = Pattern.compile(regexCADATA);
+		Matcher matcher = pattern.matcher(src);
+		while(matcher.find()){
+			src = matcher.group(2);
+		}
+    	return src; 	
+    }
+    
+    public static String replaceHexWithImages(String src, String imgType) throws Exception{
     	String result = src;
+		
 		Pattern pattern = Pattern.compile(regexImghex);
 		Matcher matcher = pattern.matcher(result);
 		
-		/*Pattern pattern = Pattern.compile(regexCDATA);
-		Matcher matcher = pattern.matcher(result);
-		while (matcher.find()) {
-			//removes CDATA tag
-			result = matcher.group(2);
-		}
-		*/
-		
 		while(matcher.find()){
-			result = result.replaceFirst(regex, getImgTagFromHex(result,imgType));
+			result = result.replaceFirst(regexImghex, getImgTagFromHex(result,imgType));
 		}
 		return result;
     }
-
 }

@@ -81,7 +81,7 @@
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['time']}" width="40">
-			        <h:outputText value="#{hint.time}" />
+			        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['text']}" >
@@ -119,7 +119,7 @@
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['time']}" width="40">
-			        <h:outputText value="#{hint.time}" />
+			        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['text']}" >

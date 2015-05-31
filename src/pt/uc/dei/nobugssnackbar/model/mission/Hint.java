@@ -6,6 +6,7 @@ import java.util.List;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.HintCategory;
 
 @JdbcTable(name="hints")
@@ -23,7 +24,9 @@ public class Hint implements java.io.Serializable {
 	private HintCategory hintCategory;
 	
 	@JdbcField(name="hintstime")
-	private int time = -1;
+
+	private int time;
+	private String strTime;
 	
 	@JdbcField(name="hintstextexplanation")
 	private String text;
@@ -44,7 +47,7 @@ public class Hint implements java.io.Serializable {
 
 	public Hint(){
 		category = "";
-		time = 0;
+		time = -1;
 		conditions = new ArrayList<>();
 		text = "";
 		type = false;//false == tip
@@ -114,4 +117,23 @@ public class Hint implements java.io.Serializable {
 		this.conditionsAsString = conditionsAsString;
 	}
 	// #end
+
+	public String getStrTime() {
+		if(time > -1)
+			strTime = String.valueOf(time);
+		else
+			strTime = "";
+		return strTime;
+	}
+
+	public void setStrTime(String strTime) {
+
+		try{			
+			time = Integer.parseInt(strTime);
+		}
+		catch(NumberFormatException e){	
+			//throw e;
+			return;
+		}
+	}
 }

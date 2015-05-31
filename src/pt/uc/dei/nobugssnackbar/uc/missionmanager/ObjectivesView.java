@@ -15,10 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.primefaces.component.fieldset.Fieldset;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.ToggleEvent;
-import org.primefaces.model.Visibility;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.mission.Objective;
@@ -31,7 +28,7 @@ public class ObjectivesView implements Serializable {
 	/*
 	 * I added this class to wrap int , because when i used Integer class
 	 * there is some issue with setter of currentBonusTimeReward when editing bonusTime dataTable.
-	 * It return new object with same value instead of same object.
+	 * It returns new object with same value instead of same object.
 	 * */
 	public class myInt implements Serializable {
 		private static final long serialVersionUID = 1L;
@@ -58,6 +55,7 @@ public class ObjectivesView implements Serializable {
 	
 	@ManagedProperty(value="#{mm.missionContent.objectives}")
 	private Objectives objectives;	
+	private Objective objItemClone;
 	private boolean isMaxCommands = false;
 	private boolean isBonusTime = false;
 	private boolean editing = false;
@@ -79,6 +77,7 @@ public class ObjectivesView implements Serializable {
 		 * */
 		places = new HashMap<String, String>();
 		places.put("counter","counter");
+		places.put("table","table");
 		places.put("","");
 		
 		positions = new HashMap<String, String>();
@@ -146,9 +145,15 @@ public class ObjectivesView implements Serializable {
 	public boolean isMaxCommands() {
 		return isMaxCommands;
 	}
+	public void setMaxCommands(boolean isMaxCommands) {
+		this.isMaxCommands = isMaxCommands;
+	}
 	
 	public boolean isBonusTime() {
 		return isBonusTime;
+	}
+	public void setBonusTime(boolean isBonusTime) {
+		this.isBonusTime = isBonusTime;
 	}
 	
 	public Map<String,String> getPlaces() {
@@ -250,7 +255,6 @@ public class ObjectivesView implements Serializable {
 		getObjList().add(getObjItem());		
 	}
 	
-	Objective objItemClone;
 	public void editObjective(){
 		objItemClone = SerializationUtils.clone(getObjItem());
 		editing = true;
@@ -273,15 +277,6 @@ public class ObjectivesView implements Serializable {
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:AddEditObjective");
 	}
 	
-	public void handleToggle(ToggleEvent event){
-		Fieldset fieldset = (Fieldset)event.getSource();
-		if(fieldset.getId().equals("maxCommandBonus")){
-			isMaxCommands = event.getVisibility() == Visibility.VISIBLE ? true : false;
-		}
-		if(fieldset.getId().equals("bonusTime")){
-			isBonusTime = event.getVisibility() == Visibility.VISIBLE ? true : false;
-		}
-	}
 	
 	public void saveBonusTime(){
 		if(!editingBonusTime){

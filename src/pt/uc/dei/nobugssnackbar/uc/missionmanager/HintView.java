@@ -83,7 +83,7 @@ public class HintView implements Serializable {
     }
 
     public String getText() throws Exception{
-    	hint.setText(ImgTagConvertor.replaceImagesInHex(hint.getText(),ImgTagConvertor.regexImghex,"png"));
+    	hint.setText(ImgTagConvertor.replaceHexWithImages(hint.getText(),"png"));
 		return hint.getText();
     }
 
@@ -98,6 +98,27 @@ public class HintView implements Serializable {
     	return messageBundle.getString("hintCategoryEmptyMsg");
     }
     
+	public boolean isOk() {
+		boolean ok = checkImages(hint.getText());
+		
+		if (ok == false) {
+			addMessageToGrowl
+			(
+					FacesMessage.SEVERITY_ERROR,
+					new Object[]{"title=invalidImage","tryAgainCheckImage"}
+			);
+		}
+
+		return ok;
+	}
+	
+	private boolean checkImages(String text) {
+		if (ImgTagConvertor.convertImgTagToHexImgTag(text, true) != null) {
+			return true;
+		}	
+		return false;
+	}
+    
 	public void addEditHint() {
 		if(this.dlgHintDisabled){
 			this.dlgHintDisabled = false;
@@ -105,7 +126,10 @@ public class HintView implements Serializable {
 		else{
 			if(hint.getCategory().equals("")){
 				addMessageToGrowl(FacesMessage.SEVERITY_WARN,new Object[]{"title=warningMsg","hintCategoryEmptyMsg"});
-				newHint();
+				//newHint();
+				return;
+			}
+			if(!isOk()){
 				return;
 			}
 			if (this.add) {/*prevent from adding element when editing*/
