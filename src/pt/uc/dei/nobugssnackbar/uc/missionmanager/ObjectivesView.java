@@ -145,15 +145,9 @@ public class ObjectivesView implements Serializable {
 	public boolean isMaxCommands() {
 		return isMaxCommands;
 	}
-	public void setMaxCommands(boolean isMaxCommands) {
-		this.isMaxCommands = isMaxCommands;
-	}
 	
 	public boolean isBonusTime() {
 		return isBonusTime;
-	}
-	public void setBonusTime(boolean isBonusTime) {
-		this.isBonusTime = isBonusTime;
 	}
 	
 	public Map<String,String> getPlaces() {
