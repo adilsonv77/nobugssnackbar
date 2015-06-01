@@ -59,6 +59,10 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	
 	@PostConstruct
 	private void init() {
+		foodstuff = new Foodstuff();
+		customer = new Customer();		
+		initMainLists();
+		
 		try {
 			this.customers = missionManager.getMissionContent().getCustomers();
 			
@@ -66,12 +70,16 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				customers = new ArrayList<>(12);
 				for (int i = 0; i < 12; i++) {
 					Customer c = new Customer(System.currentTimeMillis());
+					c.setInit(tablesChairsNormalList.get(i));
+					c.setDest(tablesChairsNormalList.get(i));
 					customers.add(c);
 				}
 			}
 			else if (customers.size() < 12) { // if you have some problem look here
 				for (int i = customers.size() - 1; i < 12; i++) {
 					Customer c = new Customer(System.currentTimeMillis());
+					c.setInit(tablesChairsNormalList.get(i));
+					c.setDest(tablesChairsNormalList.get(i));
 					customers.add(c);
 				}
 			}
@@ -82,10 +90,6 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		foodstuff = new Foodstuff();
-		customer = new Customer();
-		
-		initMainLists();
 	}
 	
 	public CustomerVC() {
@@ -238,13 +242,6 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (customersPlaceId >= 0 && customersPlaceId < customers.size()) {
 			// edit customer
 			customer = customers.get(customersPlaceId);
-			if (customersPlaceId < tablesChairsNormalList.size()) {
-				customer.setInit(tablesChairsNormalList.get(customersPlaceId));
-				customer.setDest(tablesChairsNormalList.get(customersPlaceId));
-			}
-			else {
-				System.err.println("Error - customer place");
-			}
 			customerIcons.set(customersPlaceId, CUSTOMER_ICON);
 		}
 		
