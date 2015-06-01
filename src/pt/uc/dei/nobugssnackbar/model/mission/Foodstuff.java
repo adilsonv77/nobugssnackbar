@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class Foodstuff implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	private int qtd;
-	private BigDecimal price;
+	private int qtd = 1;
+	private BigDecimal price = new BigDecimal("0");
 	private String name;
 	
 	public int getQtd() {

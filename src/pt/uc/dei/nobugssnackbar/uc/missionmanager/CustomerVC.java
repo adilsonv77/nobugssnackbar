@@ -31,6 +31,8 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.SkinConverter;
 @ViewScoped
 public class CustomerVC implements ISkinProvider, Serializable {
 	private static final long serialVersionUID = 1L;
+	private String CUSTOMER_ICON_DEFF = "ui-icon-circle-plus";
+	private String CUSTOMER_ICON = "ui-icon-person";
 	
 	private Food food;
 	private Drink drink;
@@ -50,10 +52,16 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	@ManagedProperty(value="#{mm}")
 	private MissionManager missionManager;
 	
+	private List<String> foodValues;
+	private List<String> drinkValues;
+	private List<String> tablesChairsNormalList;
+	private List<String> customerIcons;
+	
 	@PostConstruct
 	private void init() {
 		try {
 			this.customers = missionManager.getMissionContent().getCustomers();
+			
 			if (customers.size() == 0) {
 				customers = new ArrayList<>(12);
 				for (int i = 0; i < 12; i++) {
@@ -67,10 +75,13 @@ public class CustomerVC implements ISkinProvider, Serializable {
 					customers.add(c);
 				}
 			}
+			customerIcons = new ArrayList<>();
+			for (int i = 0; i < customers.size(); i++) {
+				customerIcons.add(CUSTOMER_ICON_DEFF);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		foodstuff = new Foodstuff();
 		customer = new Customer();
 		
@@ -83,33 +94,51 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	}
 
 	private void initMainLists() {
+		ResourceBundle msg = ApplicationMessages.getMessage();		
+		
+		foodValues = new ArrayList<>();
+		
+		foodValues.add(msg.getString("pizza"));
+		foodValues.add(msg.getString("hamburger"));
+		foodValues.add(msg.getString("taco"));
+		drinkValues = new ArrayList<>();
+		drinkValues.add(msg.getString("water"));
+		drinkValues.add(msg.getString("cola"));
+		drinkValues.add(msg.getString("juice"));
+		
 		initPositions = new ArrayList<>();
 		destPositions = new ArrayList<>();
+		tablesChairsNormalList = new ArrayList<>();
 		
-		SelectItemGroup sigDefault = new SelectItemGroup("Door");
-		sigDefault.setSelectItems(new SelectItem[] {new SelectItem("Door", "Door")});
+		SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("door"));
+		sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("door"), msg.getString("door"))});
 		initPositions.add(sigDefault);
 		
-		SelectItemGroup sigCounters = new SelectItemGroup("Counters");
-		SelectItemGroup sigTable = new SelectItemGroup("Tables and Chairs");;
+		SelectItemGroup sigCounters = new SelectItemGroup(msg.getString("counters"));
+		SelectItemGroup sigTable = new SelectItemGroup(msg.getString("tablesAndChairs"));;
 		SelectItem[] sic = new SelectItem[4];
 		SelectItem[] sit = new SelectItem[8];
 		StringBuilder itemValue = new StringBuilder();
 		
 		for (int i = 0, sitIndex = 0; i < sic.length; i++) {
 			int num = i + 1;
-			itemValue.append("Counter " + num);
+			itemValue.append(msg.getString("counter") + " " + num);
 			sic[i] = new SelectItem(itemValue.toString(), itemValue.toString());
+			
 			itemValue.delete(0, itemValue.length());
 			
 			for (int j = 1; j <= 2; j++, sitIndex++) {
-				itemValue.append("Table ");
+				itemValue.append(msg.getString("table") + " ");
 				itemValue.append(num);
-				itemValue.append(" Chair ");
+				itemValue.append(" " + msg.getString("chair") + " ");
 				itemValue.append(j);
 				sit[sitIndex] = new SelectItem(itemValue.toString(), itemValue.toString());
+				tablesChairsNormalList.add(itemValue.toString());
 				itemValue.delete(0, itemValue.length());
 			}
+		}
+		for (int i = 0; i < sic.length; i++) {
+			tablesChairsNormalList.add(sic[i].getLabel());
 		}
 		
 		sigCounters.setSelectItems(sic);
@@ -209,6 +238,14 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (customersPlaceId >= 0 && customersPlaceId < customers.size()) {
 			// edit customer
 			customer = customers.get(customersPlaceId);
+			if (customersPlaceId < tablesChairsNormalList.size()) {
+				customer.setInit(tablesChairsNormalList.get(customersPlaceId));
+				customer.setDest(tablesChairsNormalList.get(customersPlaceId));
+			}
+			else {
+				System.err.println("Error - customer place");
+			}
+			customerIcons.set(customersPlaceId, CUSTOMER_ICON);
 		}
 		
 	}
@@ -286,8 +323,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 
 	public void addFoodstuff() {
 		if (foodstuff.getName().isEmpty() ||
-			foodstuff.getQtd() <= 0 ||
-			foodstuff.getPrice().compareTo(new BigDecimal("0")) <= 0) {
+			foodstuff.getQtd() < 1 ||
+			foodstuff.getPrice().compareTo(new BigDecimal("0")) < 0) {
 			
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -330,6 +367,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			reset();
 			RequestContext rcontext = RequestContext.getCurrentInstance();
 			rcontext.execute("PF('addFoodstuffDlg').hide()");
+			rcontext.execute("PF('addBeverageDlg').hide()");
 		}
 	}
 	
@@ -338,7 +376,29 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		food = null;
 		drink = null;
 	}
-
+	
+	public List<String> getFoodValues(String q) {
+		List<String> filtered = new ArrayList<>();
+		for (int i = 0; i < foodValues.size(); i++) {
+			if (foodValues.get(i).startsWith(q)) {
+				filtered.add(foodValues.get(i));
+			}
+		}
+		
+		return filtered;
+	}
+	
+	public List<String> getDrinkValues(String q) {
+		List<String> filtered = new ArrayList<>();
+		for (int i = 0; i < drinkValues.size(); i++) {
+			if (drinkValues.get(i).startsWith(q)) {
+				filtered.add(drinkValues.get(i));
+			}
+		}
+		
+		return filtered;
+	}
+	
 	public List<Customer> getCustomers() {
 		return customers;
 	}
@@ -439,4 +499,37 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	public void setSc(SkinConverter sc) {
 		this.sc = sc;
 	}
+
+	public List<String> getFoodValues() {
+		return foodValues;
+	}
+
+	public void setFoodValues(List<String> foodValues) {
+		this.foodValues = foodValues;
+	}
+
+	public List<String> getDrinkValues() {
+		return drinkValues;
+	}
+
+	public void setDrinkValues(List<String> drinkValues) {
+		this.drinkValues = drinkValues;
+	}
+
+	public List<String> getTablesChairsNormalList() {
+		return tablesChairsNormalList;
+	}
+
+	public void setTablesChairsNormalList(List<String> tablesChairsNormalList) {
+		this.tablesChairsNormalList = tablesChairsNormalList;
+	}
+
+	public List<String> getCustomerIcons() {
+		return customerIcons;
+	}
+
+	public void setCustomerIcons(List<String> customerIcons) {
+		this.customerIcons = customerIcons;
+	}
+
 }

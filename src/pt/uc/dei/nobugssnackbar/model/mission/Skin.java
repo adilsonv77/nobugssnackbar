@@ -35,5 +35,5 @@ public class Skin implements Serializable {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-
+	
 }

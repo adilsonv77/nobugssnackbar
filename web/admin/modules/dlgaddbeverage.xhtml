@@ -5,15 +5,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	
-	<p:dialog id="addFoodstuffDialog" showEffect="fade" hideEffect="fade"
-		widgetVar="addFoodstuffDlg" header="#{msg['addFoodstuff']}" 
+	<p:dialog id="addBeverageDialog" showEffect="fade" hideEffect="fade"
+		widgetVar="addBeverageDlg" header="#{msg['addBeverage']}" 
 		minHeight="300" closable="false" modal="true" 
-		dynamic="true" onShow="PF('addFoodstuffDlg').initPosition()">
+		dynamic="true" onShow="PF('addBeverageDlg').initPosition()">
 		
-		<h:form id="foodstuffForm">
+		<h:form id="beverageForm">
 			<p:panelGrid columns="2">
 				<h:outputText value="#{msg['type']}"/>
-				<p:autoComplete dropdown="true" value="#{custVC.foodstuff.name}" completeMethod="#{custVC.getFoodValues}" />
+				<p:autoComplete dropdown="true" value="#{custVC.foodstuff.name}" completeMethod="#{custVC.getDrinkValues}" />
 				
 				<h:outputText value="#{msg['qtd']}"/>
 				<p:spinner value="#{custVC.foodstuff.qtd}" min="1" />
@@ -25,11 +25,11 @@
 			<p:panelGrid columns="2" style="float: right;">
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{custVC.addFoodstuff}"
-	    			update=":customerForm:foodsDT, :customerForm:drinksDT, :growlMsgs, :foodstuffForm"/>
+	    			update=":customerForm:foodsDT, :customerForm:drinksDT, :growlMsgs, :beverageForm"/>
 	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
 	      			actionListener="#{custVC.reset()}"
-	      			update=":foodstuffForm"
-	      			oncomplete="PF('addFoodstuffDlg').hide()" />
+	      			update=":beverageForm"
+	      			oncomplete="PF('addBeverageDlg').hide()" />
 	       	</p:panelGrid>
 		</h:form>
 		

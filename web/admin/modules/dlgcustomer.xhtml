@@ -59,7 +59,9 @@
 					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single"
 						selection="#{custVC.customer.pattern.order}"
 						var="order" rowKey="#{order.id}" emptyMessage="#{msg['default']}"
-						value="#{custVC.customer.pattern.orders}">
+						value="#{custVC.customer.pattern.orders}"
+						draggableRows="true">
+						<p:ajax event="rowReorder" update=":customerForm"/>
 						<p:ajax event="rowSelect" update=":customerForm"/>
 		    			<p:column style="width:74%;">
 		    				<h:outputText value="#{msg['no']}: #{order.id}" />
@@ -88,7 +90,9 @@
 							</p:panelGrid>
 							
 							<p:dataTable id="foodsDT" var="food" 
-								value="#{custVC.customer.pattern.order.foods}">
+								value="#{custVC.customer.pattern.order.foods}" draggableRows="true">
+								<p:ajax event="rowReorder" update=":customerForm:foodsDT"/>
+								
 								<f:facet name="header">
 							        <h:outputText value="#{msg['foods']}"/>
 							    </f:facet>
@@ -140,7 +144,8 @@
 							</p:panelGrid>
 							
 							<p:dataTable id="drinksDT" var="drink" 
-								value="#{custVC.customer.pattern.order.drinks}">
+								value="#{custVC.customer.pattern.order.drinks}" draggableRows="true">
+								<p:ajax event="rowReorder" update=":customerForm:drinksDT"/>
 								<f:facet name="header">
 							        <h:outputText value="#{msg['drinks']}"/>
 							    </f:facet>
@@ -148,7 +153,7 @@
 							    	<div class="clear">
 							    		<p:commandButton style="float: right;" value="#{msg['add']}" icon="ui-icon-circle-plus"
 							    			actionListener="#{custVC.setFoodstuffType(false)}"
-							    			oncomplete="PF('addFoodstuffDlg').show()"/>
+							    			oncomplete="PF('addBeverageDlg').show()"/>
 							    	</div>
 					        	</f:facet>
 					        	    
@@ -166,8 +171,8 @@
 							 
 							    <p:column headerText="#{msg['actions']}" width="70">
 							        <p:commandButton icon="ui-icon-pencil"
-							        	update=":foodstuffForm"
-							    		oncomplete="PF('addFoodstuffDlg').show()">
+							        	update=":beverageForm"
+							    		oncomplete="PF('addBeverageDlg').show()">
 							    		<f:setPropertyActionListener value="#{drink}" target="#{custVC.drink}"/>
 							        </p:commandButton>
 							        	
@@ -193,6 +198,7 @@
 	</p:dialog>
 	
 	<ui:include src="dlgaddfoodstuff.xhtml"/>
+	<ui:include src="dlgaddbeverage.xhtml"/>
 	
 	<p:dialog widgetVar="confDeleteFoodDlg" header="#{msg['confirmation']}" 
 		closable="false" modal="true" 

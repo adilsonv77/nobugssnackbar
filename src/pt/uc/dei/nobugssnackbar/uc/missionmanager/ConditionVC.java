@@ -49,7 +49,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		return showDlgExt;
 	}
 	
-	private boolean expandedFieldset;
+	private boolean allowedFieldset;
 
 	public ConditionVC() {
 		idCounter = 1;
@@ -93,6 +93,23 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		}
 
 		return result;
+	}
+	public void editCondition() {
+		getConditionById();
+
+		if (condition.getLogicalOperator() != null &&
+			condition.getLogicalOperator().length() > 0) {
+			
+			allowedFieldset = false;
+			condition = new Condition();
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					ApplicationMessages.getMessage().getString("cannotEditCond"), "");
+			FacesContext.getCurrentInstance().validationFailed();
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		else {
+			allowedFieldset = true;
+		}
 	}
 
 	public void getConditionById() {
@@ -138,6 +155,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				}
 			}
 			if (index < 0) {
+				allowedFieldset = false;
 				condition.setId(idCounter++);
 				condition.setLogicalOperator(null);
 				conditionList.add(condition);
@@ -156,7 +174,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				}
 			}
 			condition = new Condition();
-			expandedFieldset = false;
+			allowedFieldset = false;
 		}
 	}
 
@@ -214,7 +232,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			hv.getHint().setConditions(conditionList);
 			RequestContext.getCurrentInstance().execute(
 					"PF('condBuilderDlg').hide()");
-			expandedFieldset = false;
+			allowedFieldset = false;
 			condition = new Condition();
 		}
 
@@ -290,6 +308,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public void deleteCondition() {
+		getConditionById();
+		
 		int index = indexOfConditionById(condition.getId(), conditionList);
 		if (index > -1) {
 			conditionList.remove(index);
@@ -332,13 +352,13 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		this.hv = hv;
 	}
 
-	public boolean isExpandedFieldset() {
-		return expandedFieldset;
+	public boolean isAllowedFieldset() {
+		return allowedFieldset;
 	}
 
-	public void setExpandedFieldset(boolean expandedFieldset) {
+	public void setAllowedFieldset(boolean allowedFieldset) {
 		condition = new Condition();
-		this.expandedFieldset = expandedFieldset;
+		this.allowedFieldset = allowedFieldset;
 	}
 
 	public List<String> getComparators() {
