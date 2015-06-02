@@ -17,6 +17,7 @@ import org.primefaces.event.UnselectEvent;
 
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Command;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -187,24 +188,31 @@ public class MissionManager implements Serializable {
 	}
 	
 	public void save() throws Exception {
-		String xml = MissionToXML.missionToXML(mission, missionContent);
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		if (xml != null) {
-			System.out.println(xml);
-			mission.setContent(xml);
-			//mission.setId(System.currentTimeMillis());
-			// TODO save mission in DB
-			// missionDao.save(mission);
-	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
-	        		messageBundle.getString("missionSuccSaved")));			
+		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
+			String xml = MissionToXML.missionToXML(mission, missionContent);
+			
+			if (xml != null) {
+				System.out.println(xml);
+				mission.setContent(xml);
+				MissionJdbcDao missionJdbcDao = new MissionJdbcDao();
+				missionJdbcDao.insert(mission);
+				System.out.println(mission.getName());
+		        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
+		        		messageBundle.getString("missionSuccSaved")));			
+			}
+			else {
+				context.validationFailed();
+		        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+		        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
+			}
 		}
 		else {
-
 			context.validationFailed();
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-	        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
+	        		messageBundle.getString("warningMsg"), messageBundle.getString("noMissionName")));
 		}
 	}
 	

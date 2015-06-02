@@ -220,7 +220,7 @@ public class MissionToXML {
 			}
 			if (obj.isBoolBonusTime()) {
 				result.append(" bonusTime=\"").append(obj.getBonusTime()).append("\"");
-				result.append(" bonusTimeReward=\"").append(obj.getBonusTimeReward()).append("\"");
+				result.append(" bonusTimeReward=\"").append(obj.getBonusTimeReward().trim()).append("\"");
 			}
 			if (obj.isBoolMaxCommands()) {
 				result.append(" maxCommands=\"").append(obj.getMaxCommands()).append("\"");
@@ -266,7 +266,7 @@ public class MissionToXML {
 			append(missionContent.getXmltag().isAlwaysNew()).
 			append("\"");
 			xml_v.append(">");
-/*************You should ask for this!!!!!!!!*/
+
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			String content = (String) ctx.getExternalContext().getSessionMap().get("blocks");
 			xml_v.append(content.substring(content.indexOf(">") + 1, content.length()));
@@ -309,7 +309,7 @@ public class MissionToXML {
 		result.append("</foods>");
 		
 		result.append("<drinks");
-		/* if there is some changes random max should be greater than 0 */
+		/* if there is some changes - random max should be greater than 0 */
 		if (order.getRandomMaxFoods() != 0) {
 			result.append(" randomMin=\"").
 				append(order.getRandomMinFoods()).append("\"");

@@ -383,7 +383,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public List<String> getBoolValues(String q) {
 		List<String> filtered = new ArrayList<>();
 		for (int i = 0; i < boolValues.size(); i++) {
-			if (boolValues.get(i).startsWith(q)) {
+			if (boolValues.get(i).toLowerCase().startsWith(q.toLowerCase())) {
 				filtered.add(boolValues.get(i));
 			}
 		}

@@ -45,7 +45,7 @@
 				selection="#{missionVC.mission}"
 				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
 				value="#{missionVC.missionList}">
-    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameCont" />
+    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont" />
     			<p:column>
     				<h:outputText value="#{m.name}"/>
     			</p:column>
@@ -56,18 +56,20 @@
     	
         	<p:layout>
         		<p:layoutUnit id="luNorth" position="north">
-        			<p:panelGrid columns="4">
-        			
-        				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
-        				<p:inputText id="missionNameCont" value="#{missionVC.mission.name}" disabled="true"/>
-        				
-        				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
-        				<p:selectOneMenu id="langMenu" style="width: 100px;">
-            				<f:selectItem itemLabel="en" itemValue="en" />
-            				<f:selectItem itemLabel="pt" itemValue="pt" />
-        				</p:selectOneMenu>
-        				
-        			</p:panelGrid>
+        		    <h:form id="missionNameLangForm">
+	        			<p:panelGrid columns="4">
+	        				<p:outputLabel value="#{msg['name']} :" for="missionNameCont" />
+	        				<p:inputText id="missionNameCont" value="#{mm.mission.name}">
+	        					<p:ajax process="@this"/>
+	        				</p:inputText>
+	        				
+	        				<p:outputLabel value="#{msg['language']} :" for="langMenu" />
+	        				<p:selectOneMenu id="langMenu" style="width: 100px;">
+	            				<f:selectItem itemLabel="en" itemValue="en" />
+	            				<f:selectItem itemLabel="pt" itemValue="pt" />
+	        				</p:selectOneMenu>	        				
+	        			</p:panelGrid>
+        			</h:form>
         		</p:layoutUnit>
         		
         		<p:layoutUnit id="luSouth" position="south" >

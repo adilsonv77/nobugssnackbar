@@ -58,7 +58,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 		}
 	}
 	
-	public void getFunctionById(){
+	public void getFunctionById() throws Exception{
 		int selectedFunctionID = Integer.parseInt(
 				FacesContext.
 				getCurrentInstance().
@@ -79,11 +79,12 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 			}
 		}
 		
-		cvc.getCondition().setFunction(func);	
+		cvc.getCondition().setFunction(func);
 		filterNameStr = "";
 		boolean val = func.getReturnType().toLowerCase().compareTo("boolean") == 0;
 		cvc.setBoolFunction(val);
 		cvc.hideFuncProv();
+		handleKeyUpEvent();
 	}
 	
 	@Override
