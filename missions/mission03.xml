@@ -70,7 +70,7 @@
 	</customers>
 	<objectives ordered="false" reward="5" buttonRun="false">
 		<objective pos="1" place="counter">askForFood</objective>
-		<objective pos="4">counter</objective>
+		<objective pos="4" place="counter">goesTo</objective>
 	</objectives>
 	<xml>
 		<block type="variables_set" inline="true" x = "300" y = "1" deletable = "false" >

@@ -84,8 +84,8 @@
 		</customer>
 	</customers>
 	<objectives ordered="true" reward="5" buttonDebug="false">
-		<objective pos="1">counter</objective>
-		<objective pos="4">counter</objective>
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="4" place="counter">goesTo</objective>
 	</objectives>
 	<xml>
 	</xml>
