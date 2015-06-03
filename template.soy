@@ -88,58 +88,26 @@
   		<tr>
   			<td id="tdSelectMission" style="height: 342px">
   				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.SelectMission" desc="--"}Select a Mission{/msg}</span>
+		 		<div id="schoolMap">
+					<canvas id="city_map" width="400" height="300"/>
+				</div>
   			</td>
   			
   			<td style="height: 342px">
   				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.LeaderBoard" desc="--"}Leader Board{/msg}</span>
-  				<div id="leaderBoard" class="easyui-tabs" style="height: 342px; width: 270px">
-  					<div id="tdLeaderMoney" data-options="iconCls: 'leaderMoney'">
-	  					<table id="dgLeaderMoney" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true"  style="height: 311px;">
-						    <thead>
-						        <tr>
-						        <!-- the widths are slighty lower than the total width because the game showed a horizontal bar -->
-						            <th data-options="field:'name', width: 148, styler: leaderStyler"></th>
-						            <th data-options="field:'money', width: 68, styler: leaderStyler, align: 'right'"></th>
-						        </tr>
-						    </thead>
-						</table>
-						<div id="notEnabledLeaderMoney" style="display: none; height: 100%">
-							<span style="position: relative; top: 40%;">
-							</span>
-						</div>
-  					</div>
-  					<div id="tdLeaderTime" data-options="iconCls: 'leaderTime'">
-	  					<table id="dgLeaderTime" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true"  style="height: 311px;">
-						    <thead>
-						        <tr>
-						            <th data-options="field:'name', width: 120, styler: leaderStyler"></th>
-						            <th data-options="field:'time', width: 100, styler: leaderStyler"></th>
-						        </tr>
-						    </thead>
-						</table>
-						<div id="notEnabledLeaderTime" style="display: none; height: 100%">
-							<span style="position: relative; top: 40%;">
-							</span>
-						</div>
-						
-  					</div>
-  					<div id="tdLeaderRun" data-options="iconCls: 'leaderRun'">
-	  					<table id="dgLeaderRun" class="easyui-datagrid" data-options="rownumbers:true, singleSelect:true"  style="height: 311px;">
-						    <thead>
-						        <tr>
-						            <th data-options="field:'name', width: 160, styler: leaderStyler"></th>
-						            <th data-options="field:'runs', width: 60, styler: leaderStyler, align: 'right'"></th>
-						        </tr>
-						    </thead>
-						</table>
-						<div id="notEnabledLeaderRun" style="display: none; height: 100%">
-							<span style="position: relative; top: 40%;">
-							</span>
-						</div>
-						
-  					</div>
-  				
-  				</div>
+				<div id="leaderboard">
+					<ul id='leaderboard_tabs'>
+						<li id="leaderpoints" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-points"><img src="images/badge_points_gold.png"/></a></li>
+						<li id="leadertime" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-time"><img src="images/badge_time_gold.png"/></a></li>
+						<li id="leaderruns" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-runs"><img src="images/badge_runs_gold.png"/></a></li>
+					</ul>
+					<div id="tabs-points">
+					</div>
+					<div id="tabs-time">
+					</div>
+					<div id="tabs-runs">
+					</div>
+				</div>  				
   			</td>
   		</tr>
   	</table>
@@ -368,6 +336,13 @@
   	
     {call .logoffDlgButton /}
   </div>
+  
+  <div id = "dialogSelectMission" class="dialogHiddenContent">
+  	
+  	<div id = "selectMissionBoard" class="blackboard">
+  	</div>
+  	
+  </div>  
   
 {/template}
 

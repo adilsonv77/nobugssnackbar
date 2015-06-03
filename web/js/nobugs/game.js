@@ -279,16 +279,16 @@ Game.continueLoginProcess = function() {
 				null, false, true, true, "Intro", {width: "540px"},null);
 		
 	} else 
-		Game.logged(Game.loginData.missionHist);
+		Game.logged();
 	
 };
 
 Game.finishIntro = function() {
 	BlocklyApps.hideDialog(false);
-	Game.logged(Game.loginData.missionHist);
+	Game.logged();
 };
 
-Game.logged = function(missionsHistorical) {
+Game.logged = function() {
 	
 	  UserControl.retrieveMoney(function(ret) {
 		  document.getElementById("yourCash").innerHTML = ret;
@@ -311,108 +311,17 @@ Game.logged = function(missionsHistorical) {
 
 	    Game.resizeMainWindow();
 	    
-		var idRoot = Game.missionsRetrieved(missionsHistorical);
-		
-		$("#" + idRoot).css("height", "342px");
-	    $("#tdSelectMission").append($("#" + idRoot));
+	    CityMap.init({onclick: SelectMission.generateBoard});
 	    
-	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) {
+	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) 
 	    	createNoLeaderBoardInfo();
-	    } else {
-		    createsLeaderBoard("#"+idRoot);
-	    }
+	    else
+	    	createsLeaderBoard();
 	    
-	    /*
-	    
-	    
-		MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), 
-					null, false, true, true,
-					BlocklyApps.getMsg("Text_YourProgress"), null, //  
-					function() { 
-						$("#" + idRoot).remove();
-				    	 
-					});
-					*/
+	    CityMap.startAnimation();
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
-};
-
-
-Game.missionsRetrieved = function(missions) {
-	var s = [];
-	
-	var data = [];
-	for (var i= 0; i<missions.length; i++){
-		var rec = null;
-		var idx = s.indexOf(missions[i][0]);
-		if (idx == -1) {
-			s.push(missions[i][0]);
-			
-			rec = {group: missions[i][0], groupId: missions[i][4], levels:[]};
-			data.push(rec); 
-			
-		} else {
-			rec = data[idx];
-		}
-		
-		var l = {name: missions[i][1], id: missions[i][5], 
-							 howManyItems: missions[i][2], 
-					 howManyItemsAchieved: missions[i][3], 
-					          repeateable: [],
-					          cust:[]};
-		for (var j=0;j<missions[i][6].length;j++) {
-			l.repeateable.push(missions[i][6][j][0]);
-			l.cust.push(missions[i][6][j][1]);
-		}
-		rec.levels.push(l);
-	}
-	
-	var f1 = function (evt) {
-		 
-		 var itemId = this.getAttribute("idgroup");
-		 var missionIdx = this.getAttribute("iditem");
-		 var levelId = this.getAttribute("idlevel");
-		 BlocklyApps.hideDialog(true);
-  	 
-		 Game.missionSelected(itemId, levelId, missionIdx);
-		 
-	};
-	
-	var f2 = function(i) {
-		
-    	var imgs = generateImages(i, 2);
-		var html = $.each(imgs, function(i){
-			   imgs[i] = "<img src='images/"+this+"'/>";
-		         });
-		
-		return html;
-	};
-	
-	var f3 = function(i, j, m) {
-		if (data[i].levels[j].repeateable.indexOf(m) > -1) // repeateable missions never are enabled
-			return false;
-		
-		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
-		var mt = ma + 1;
-		
-		return m < mt;
-	};
-	
-	var f4 = function(i, j, m) {
-		var idx = data[i].levels[j].repeateable.indexOf(m);
-		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
-		var mt = ma + 1;
-		return (idx == -1 && m == mt) || (idx > -1 && m <= mt);
-	};
-	
-	var f5 = function(i, j, m) {
-		return (data[i].levels[j].repeateable.indexOf(m) > -1);
-	};
-
-	var sel = new Selector(data, 1, 70, "unlockBack", "lockBack", "rerunBack", f1, f2, f3, f4, f5);
-	return sel.build();
-	
 };
 
 Game.moveBlocksToZero = function() {
@@ -1248,10 +1157,11 @@ Game.logoffButtonClick = function() {
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
-
+/*
 	$('#vars').datagrid('loadData', {
 		"total": 0, "rows": []
 	});
+	*/
     Game.doResizeWindow("none");
     Game.killAll();
     Game.runningStatus = 0;
@@ -1268,6 +1178,11 @@ Game.logoffButtonClick = function() {
     window.removeEventListener('scroll', Game.scrollEvent);  
     window.removeEventListener('resize',  Game.resizeWindow);
 
+    $("#tabs-points").empty();
+    $("#tabs-time").empty();
+    $("#tabs-runs").empty();
+    CityMap.stopAnimation();
+    
     UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
@@ -1344,7 +1259,7 @@ Game.debugButtonClick = function() {
 
 		if (Game.enabledVarWindow) {
 			Game.doResizeWindow("inline");
-			$('#vars').datagrid('resize');
+			// $('#vars').datagrid('resize');
 		}
 		
 		Blockly.mainWorkspace.traceOn(true);
@@ -1377,10 +1292,14 @@ Game.resetButtons = function(hideVars) {
 	
 	Game.runningStatus = 0;
 	
-	if (hideVars == undefined || hideVars == true)
+	if (hideVars == undefined || hideVars == true) {
+		/*
 		$('#vars').datagrid('loadData', {
 			"total": 0, "rows": []
 		});
+		*/
+		
+	}
 };
 
 
@@ -1400,10 +1319,11 @@ Game.execute = function(debug) {
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
 		
-		$('#vars').datagrid('loadData', {
+		/*
+	  $('#vars').datagrid('loadData', {
 			"total": 0, "rows": []
 		});
-
+*/
 	  // Reset the graphic.
 	  Game.reset();
 
@@ -1602,10 +1522,11 @@ Game.updateVariables = function() {
 			rows.push({"name":entry.name, "value": data});
 		}
 	});
-	
+	/*
 	$('#vars').datagrid('loadData', {
 		"total": totalrows, "rows": rows
 	});
+	*/
 };
 
 Game.nextStep = function() {

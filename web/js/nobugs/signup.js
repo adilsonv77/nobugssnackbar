@@ -1,4 +1,5 @@
 $(function() {
+	/*
 	$('#sign').tooltip({
 		content : $('<div></div>'),
 		showEvent : 'click',
@@ -20,6 +21,7 @@ $(function() {
 			});
 		}
 	});
+	*/
 });
 
 function changeLanguageToPt() {

@@ -14,6 +14,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
   BlocklyApps.dialogDispose_ = disposeFunc;
   
   var dialog = document.getElementById('dialog');
+  
   dialog.style["width"] = "80%";
   dialog.style["height"] = "auto";
 
@@ -85,6 +86,12 @@ MyBlocklyApps.hideDialog = function(opt_animate) {
 	  var shadow = document.getElementById('dialogShadow');
 	  var border = document.getElementById('dialogBorder');
 
+	  if(dialog.style.setAttribute)
+		  dialog.style.setAttribute("cssText", "" );
+	  else
+		  dialog.setAttribute("style", "" );
+	  
+	  
 	  shadow.style.opacity = 0;
 
 	  function endResult() {

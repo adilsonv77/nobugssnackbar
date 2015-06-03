@@ -86,7 +86,7 @@ Objective.factory = function(key) {
 	
 	switch (key) {
 	
-	case "counter": 
+	case "goesTo": 
 		this.factories[key] = new Objective.Counter();
 		break;
 

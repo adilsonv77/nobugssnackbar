@@ -413,7 +413,7 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	if (Blockly.mainWorkspace.toolbox_ != undefined)
 		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
 	
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.svg, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
 		Hints.bindEvents.push(specialEvent);
@@ -438,7 +438,7 @@ Hints.hideHints = function() {
 	MyBlocklyApps.hideDialog(false);
 	
 	if (Hints.bindEvent1 != null) {
-		Blockly.removeChangeListener(Hints.bindEvent1);
+		Blockly.mainWorkspace.removeChangeListener(Hints.bindEvent1);
 		Hints.bindEvent1 = null;
 	}
 	

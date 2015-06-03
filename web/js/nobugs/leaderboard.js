@@ -29,48 +29,84 @@
 
 function addTooltip() {
 	
-	// adding the tooltip
-	$('.leaderMoney').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabMoney")+ '</span>')
+	new Tooltip({
+		  target: document.getElementById("leaderpoints"),
+		  position: 'top left',
+		  content: BlocklyApps.getMsg("Tooltip_TabMoney")
 	});
-	
-	$('.leaderTime').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabTime")+ '</span>')
+
+	new Tooltip({
+		  target: document.getElementById("leadertime"),
+		  position: 'top left',
+		  content: BlocklyApps.getMsg("Tooltip_TabTime")
 	});
-	
-	$('.leaderRun').parent().tooltip({
-		position: 'top',
-		content: $('<span>' + BlocklyApps.getMsg("Tooltip_TabRun")+ '</span>')
+
+	new Tooltip({
+		  target: document.getElementById("leaderruns"),
+		  position: 'top left',
+		  content: BlocklyApps.getMsg("Tooltip_TabRun")
 	});
 	
 };
 
-function getRow(data) {
-	for (var i = 0; i < data.length; i++)
-		if (data[i].id == Game.loginData.userLogged.id)
-			return i;
+function createTable(table) {
+	table.ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
+				  gridClass: 'leaderboard-table',
+				  headerClass: 'leaderboard-table-header',
+				  colWidths: [25, 74, 140],
+				  colClasses: ['leaderboard-table-col-position', 'leaderboard-table-col-picture', 'leaderboard-table-col-name']});
 }
 
-function createsLeaderBoard(idRoot) {
+function populateLBTables(table, data) {
+	
+	  var tBody = $("<tbody/>");
+	  var contaRow = 1;
+	  
+	  data.forEach(function(entry) {
+		  
+		  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
+		  
+		  tr.append($("<td>").html(contaRow));
+		  tr.append($("<td>").html("<img src='images/profile_blank.png'/>"));
+		  tr.append($("<td>").html(entry.name + "<br/>" + entry.value));
+		 
+		  tBody.append(tr);
+		  
+		  contaRow++;
 
-	// Only to display or hide elements
-	createTabLeaderBoardInfo("#notEnabledLeaderMoney", "#dgLeaderMoney", "", "none", "");
-	createTabLeaderBoardInfo("#notEnabledLeaderTime", "#dgLeaderTime", "", "none", "");
-	createTabLeaderBoardInfo("#notEnabledLeaderRun", "#dgLeaderRun", "", "none", "");
+	  });
+	  
+	  var tTable = $("<table id = " + table + "/>");
+	  
+	  var trHead = $("<tr/>");
+	  trHead.append($("<th/>")); trHead.append($("<th/>")); trHead.append($("<th/>"));
+	  
+	  tTable.append($("<thead/>").append(trHead));
 
-	// Adjusting the styles
-	$('#leaderBoard .datagrid-header-inner').hide();
-	$('#leaderBoard .panel-body, #leaderBoard .datagrid-header').css("border-style", "none");
+	  tTable.append(tBody);
+	  
+	  return tTable;
+}
 
+function goToLine(tabName, idrow) {
+	
+	 $(tabName + " .mCustomScrollbar" ).mCustomScrollbar("scrollTo", $(idrow), {scrollInertia:0});
+	 
+}
+
+
+function highlightCurrentUser(idrow) {
+    $(idrow).addClass('leaderboard-row-me');
+}  
+
+function createsLeaderBoard() {
 	addTooltip();
 	
 	var lbData = Game.loginData.leaderBoard;
 	var lbMoneyData = [], lbTimeData = [], lbRunData = [];
 	
 	lbData.forEach(function(entry) {
-		lbMoneyData.push({"id": entry[0], "name": entry[1], "money": entry[2] });
+		lbMoneyData.push({"id": entry[0], "name": entry[1], "value": entry[2] });
 		
 		var s = entry[3];
 		var m = Math.floor(s / 60);
@@ -86,11 +122,11 @@ function createsLeaderBoard(idRoot) {
 			h = "";
 		}
 		
-		lbTimeData.push({"id": entry[0], "name": entry[1], "time": h + addZeros(m, 2) + "min " + addZeros(s, 2) + "s", "missionDone": entry[5], "timeSeconds" : entry[3] });
-		lbRunData.push({"id": entry[0], "name": entry[1], "runs": entry[4], "missionDone": entry[5] });
+		lbTimeData.push({"id": entry[0], "name": entry[1], "value": h + addZeros(m, 2) + "min " + addZeros(s, 2) + "s", "missionDone": entry[5], "timeSeconds" : entry[3] });
+		lbRunData.push({"id": entry[0], "name": entry[1], "value": entry[4], "missionDone": entry[5] });
 	});
 	
-	lbMoneyData.sort(function(a,b) {return b.money - a.money;});
+	lbMoneyData.sort(function(a,b) {return b.value - a.value;});
 	
 	lbTimeData.sort(function(a,b) { 
 		var r = b.missionDone - a.missionDone;
@@ -103,68 +139,61 @@ function createsLeaderBoard(idRoot) {
 	lbRunData.sort(function(a,b) { 
 		var r = b.missionDone - a.missionDone;
 		if (r == 0)
-			return a.runs - b.runs;
+			return a.value - b.value;
 		else
 			return r;
 	});
+	
+	$("#tabs-points").append(populateLBTables("table_points", lbMoneyData));
+	$("#tabs-time").append(populateLBTables("table_time", lbTimeData));
+	$("#tabs-runs").append(populateLBTables("table_runs", lbRunData));
 
-	// the styler is defined in template.soy
+	var rowId = "#table_points_" + Game.loginData.userLogged.id;
+	$("#tabs-points").attr("rowId", rowId);
 	
-	$('#dgLeaderMoney').datagrid('getPanel').addClass("lines-no");
-	$("#dgLeaderMoney").datagrid("loadData", {"total": lbMoneyData.length, "rows": lbMoneyData});
+	$("#tabs-time").attr("rowId", "#table_time_" + Game.loginData.userLogged.id);
+	$("#tabs-runs").attr("rowId", "#table_runs_" + Game.loginData.userLogged.id);
 	
-	$('#dgLeaderTime').datagrid('getPanel').addClass("lines-no");
-	$("#dgLeaderTime").datagrid("loadData", {"total": lbTimeData.length, "rows": lbTimeData});
+	$('#leaderboard').easytabs({updateHash: false, animate: false});
+	$('#leaderboard').easytabs('select', '#tabs-points');
+	$('#leaderboard')
+		.bind('easytabs:after', function(evt, clicked, targetPanel) {
+           goToLine(targetPanel.selector, targetPanel.attr("rowId"));
+		});
 
-	$('#dgLeaderRun').datagrid('getPanel').addClass("lines-no");
-	$("#dgLeaderRun").datagrid("loadData", {"total": lbRunData.length, "rows": lbRunData});
+	createTable($("#table_points"));
+	highlightCurrentUser(rowId);
+
+	createTable($("#table_time"));
+	highlightCurrentUser($("#tabs-time").attr("rowId"));
 	
+	createTable($("#table_runs"));
+	highlightCurrentUser($("#tabs-runs").attr("rowId"));
+
+	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
+		.mCustomScrollbar({ theme:"nobug" });
 	
-	$('#leaderBoard').tabs({
-		  onSelect: function(title,index){
-			  switch (index) {
-			  case 0 : $("#dgLeaderMoney").datagrid("scrollTo", getRow(lbMoneyData));
-			  		   break;
-			  		   
-			  case 1:  $("#dgLeaderTime").datagrid("scrollTo", getRow(lbTimeData));
-	  		   		   break;
-	  		   
-			  case 2: $("#dgLeaderRun").datagrid("scrollTo", getRow(lbRunData));
-			  	      break;
-			  }
-		  	}});
-	
-	$('#leaderBoard').tabs({height: 342, width: 270});
-	$('#leaderBoard').tabs('resize');
-	$('#leaderBoard').tabs('select', 0);
-	$('#dgLeaderMoney').datagrid('resize');
-	
-	$("#dgLeaderMoney").datagrid("scrollTo", getRow(lbMoneyData));
+	goToLine("#tabs-points", rowId);
 
 };
 
 function createNoLeaderBoardInfo() {
 	addTooltip();
 	
-	var tabs = $('#leaderBoard').tabs("tabs");
+	var data = [{id: 0, name: BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]), value: ""}];
 	
-	var msg = BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]);
+	$("#tabs-points").append(populateLBTables("table_points", data));
+	$("#tabs-time").append(populateLBTables("table_time", data));
+	$("#tabs-runs").append(populateLBTables("table_runs", data));
 	
-	createTabLeaderBoardInfo("#notEnabledLeaderMoney", "#dgLeaderMoney", msg, "inline", "none");
-	createTabLeaderBoardInfo("#notEnabledLeaderTime", "#dgLeaderTime", msg, "inline", "none");
-	createTabLeaderBoardInfo("#notEnabledLeaderRun", "#dgLeaderRun", msg, "inline", "none");
-};
+	$('#leaderboard').easytabs({updateHash: false, animate: false});
+	$('#leaderboard').easytabs('select', '#tabs-points');
+	
+	createTable($("#table_points"));
+	createTable($("#table_time"));
+	createTable($("#table_runs"));
 
-function createTabLeaderBoardInfo(idDiv, idGrid, msg, idDivDisplay, idGridDisplay) {
-	$(idGrid).parent().parent().parent().css("display", idGridDisplay);
+	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
+		.mCustomScrollbar({ theme:"nobug" });
 	
-	$(idDiv).css("display", idDivDisplay);
-	$(idDiv + " span").text(msg);
 };
-	
-function leaderStyler(value, rowData, index) {
-	if (Game.loginData && rowData.id == Game.loginData.userLogged.id) 
-		return "font-weight: bold; color: red";
-	else
-		return null;
-}

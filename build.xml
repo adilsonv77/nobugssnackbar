@@ -168,6 +168,8 @@
 			<arg line="${js.home}/baloon.js" />
 			<arg line="${js.home}/progressmoney.js" />
 			<arg line="${js.home}/leaderboard.js" />
+			<arg line="${js.home}/citymap.js" />
+			<arg line="${js.home}/selectmission.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

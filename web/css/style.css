@@ -195,62 +195,7 @@ p.item {
 	
 }
 
-.missionSquare {
-	-webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
-	border: 1px solid #088231;
-	-webkit-box-shadow: #B3B3B3 7px 7px 7px;
-	-moz-box-shadow: #B3B3B3 7px 7px 7px;
-	box-shadow: #B3B3B3 7px 7px 7px;
-}
-
-.unlockBack {
-	background-image: url('../images/unlock.png');
-	background-repeat: no-repeat;
-	background-position: bottom; 
-}
-
-.rerunBack {
-	background-image: url('../images/replay.png');
-	background-repeat: no-repeat;
-	background-position: bottom; 
-}
-
-.missionEnabled {
-	background-color: #77DD77;
-	cursor: default;
-}
-
-
-.missionTarget {
-	background-color: #7777DD;
-	cursor: pointer;
-}
-
-.missionTarget:hover {
-	background-color: #BBBBEE;
-}
-
-.lockBack {
-	background-image: url('../images/lock.png');
-	background-repeat: no-repeat;
-	background-position: bottom; 
-}
-
-.missionDisabled {
-	cursor: default;
-	background-color: #FF6961;
-}
-
-.selectMissionPanel {
-    margin: 0 auto;
-}
-
-.gridViewChild {
-  padding: 10px;
-  text-align: center;
-}   
+/* dialog victory */ 
 
 table.tableVictory  {
  border-collapse: collapse;
@@ -264,22 +209,4 @@ table.tableVictory td  {
 .questionnaireDiv {
 	padding: 5px; 
 	background-color: rgb(250, 250, 125);
-}
-
-.leaderMoney{
-	background:url('../images/iconmoney.png') no-repeat center center;
-}
-.leaderTime{
-	background:url('../images/icontime.png') no-repeat center center;
-}
-.leaderRun{
-	background:url('../images/iconrun.png') no-repeat center center;
-}
-
-.lines-no .datagrid-body td{
-	border-right:1px dotted transparent;
-    border-bottom:1px dotted transparent;
-}
-#leaderBoard .datagrid-row-over, #leaderBoard .datagrid-row-selected {
-	background-color: transparent;
 }

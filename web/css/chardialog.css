@@ -46,6 +46,7 @@
    background-color: #4d90fe;
    background-repeat: no-repeat;
    border: 1px solid #0A57D7;
+   border-radius: 6px;
    cursor: pointer;
    position: absolute;
 }
