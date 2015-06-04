@@ -36,5 +36,5 @@ en.json
 src/pt/uc/dei/nobugssnackbar/i18n/en.json
 web/js/generated/en.js
 *.xlf
-/core/
-/blocks/
+core/
+blocks/
