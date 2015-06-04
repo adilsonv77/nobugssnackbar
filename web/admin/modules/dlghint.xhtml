@@ -41,7 +41,7 @@
 						    <p:panelGrid columns="2">
 						    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}" disabled="#{hintView.dlgHintDisabled}"
 						    		actionListener="#{condVC.newOrEditCondList}"
-						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
+						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-pencil"
 						    		update=":formCondBuilder"/>
 						    	<h:outputText value="#{hintView.hint.conditionsAsString}" escape="false"/>
 						    </p:panelGrid>

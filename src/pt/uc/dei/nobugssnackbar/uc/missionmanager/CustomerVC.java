@@ -64,7 +64,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		initMainLists();
 		
 		try {
-			this.customers = missionManager.getMissionContent().getCustomers();
+			customerIcons = new ArrayList<>();
+			this.customers = new ArrayList<>(missionManager.getMissionContent().getCustomers());
 			
 			if (customers.size() == 0) {
 				customers = new ArrayList<>(12);
@@ -73,20 +74,22 @@ public class CustomerVC implements ISkinProvider, Serializable {
 					c.setInit(tablesChairsNormalList.get(i));
 					c.setDest(tablesChairsNormalList.get(i));
 					customers.add(c);
+					customerIcons.add(CUSTOMER_ICON_DEFF);
 				}
 			}
-			else if (customers.size() < 12) { // if you have some problem look here
-				for (int i = customers.size() - 1; i < 12; i++) {
+			else if (customers.size() <= 12) { // if you have some problem look here
+				for (int i = 0; i < customers.size(); i++) {
+					customerIcons.add(CUSTOMER_ICON);
+				}
+				for (int i = customers.size(); i < 12; i++) {
 					Customer c = new Customer(System.currentTimeMillis());
 					c.setInit(tablesChairsNormalList.get(i));
 					c.setDest(tablesChairsNormalList.get(i));
 					customers.add(c);
+					customerIcons.add(CUSTOMER_ICON_DEFF);
 				}
 			}
-			customerIcons = new ArrayList<>();
-			for (int i = 0; i < customers.size(); i++) {
-				customerIcons.add(CUSTOMER_ICON_DEFF);
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -242,9 +245,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		if (customersPlaceId >= 0 && customersPlaceId < customers.size()) {
 			// edit customer
 			customer = customers.get(customersPlaceId);
-			customerIcons.set(customersPlaceId, CUSTOMER_ICON);
+			if (customer.getOrders().getOrders() != null &&
+				customer.getOrders().getOrders().size() > 0) {
+				customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));
+			}
 		}
-		
 	}
 	
 	private boolean checkFields(Order order) {
@@ -288,6 +293,14 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	public void saveCustomer() {                
 		if (checkFields(customer.getOrders().getOrder())) {
 			customers.set(customersPlaceId, customer);
+			Order order = customer.getOrders().getOrder();
+			if ((order.getDrinks() != null &&
+				order.getDrinks().size() > 0) ||
+				(order.getFoods() != null &&
+				order.getFoods().size() > 0)) {
+				customerIcons.set(customersPlaceId, CUSTOMER_ICON);
+			}
+
 			try {
 				List<Customer> res = new ArrayList<>();
 				for (Customer c : customers) {

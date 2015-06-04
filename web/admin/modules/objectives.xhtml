@@ -121,7 +121,7 @@
 				    </p:column>			    
 							 
 				    <p:column headerText="#{msg['actions']}">
-				        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}" disabled="#{objView.editing}"
+				        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}" disabled="#{objView.editing}"
 				        	action="#{objView.editObjective}">
 				        	<f:setPropertyActionListener value="#{objective}" target="#{objView.objItem}"/>
 				        </p:commandButton>
@@ -201,7 +201,7 @@
 				    </p:column>
 							 
 				    <p:column headerText="#{msg['actions']}" width="30">
-				        <p:commandButton icon="ui-icon-wrench" title="#{msg['edit']}"
+				        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}"
 				        	action="#{objView.editBonusTime}"
 				        	disabled="#{objView.editingBonusTime || !objView.bonusTime}">
 				        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>

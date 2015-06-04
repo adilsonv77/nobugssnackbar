@@ -44,7 +44,7 @@
 		    <p:column headerText="#{msg['actions']}" width="100">
 		    
 		        <p:commandButton id="btnTipsHint" oncomplete="PF('hintDialog').show()" 
-		        	actionListener="#{hintView.setAdd(false)}" icon="ui-icon-wrench" update=":formDlgHints,:hintDlg">
+		        	actionListener="#{hintView.setAdd(false)}" icon="ui-icon-pencil" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
@@ -78,7 +78,7 @@
 		    </p:column>
 		    <p:column headerText="#{msg['actions']}" width="100">
 		       
-		        <p:commandButton id="btnErrorsHint" icon="ui-icon-wrench" oncomplete="PF('hintDialog').show()" 
+		        <p:commandButton id="btnErrorsHint" icon="ui-icon-pencil" oncomplete="PF('hintDialog').show()" 
 		        	actionListener="#{hintView.setAdd(false)}" update=":formDlgHints,:hintDlg">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>

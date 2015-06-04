@@ -43,7 +43,7 @@ public class Drinks implements Serializable {
 	public List<Drink> getDrinks() {
 		return drinks;
 	}
-	@XmlElement(name="drink",type=Food.class)
+	@XmlElement(name="drink",type=Drink.class)
 	public void setDrinks(List<Drink> drinks) {
 		this.drinks = drinks;
 	}
