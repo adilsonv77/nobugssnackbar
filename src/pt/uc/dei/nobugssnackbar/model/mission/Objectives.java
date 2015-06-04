@@ -65,6 +65,9 @@ public class Objectives  implements Serializable {
 		variableWindow = true;
 		buttonDebug = true;
 		buttonRun = true;
+		boolMaxCommands = false;
+		boolBonusTime = false;
+		reward = -1;
 	}
 	
 	public ArrayList<Objective> getObjectiveList() {

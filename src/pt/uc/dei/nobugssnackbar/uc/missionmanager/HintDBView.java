@@ -1,4 +1,4 @@
-package pt.uc.dei.nobugssnackbar.servlets;
+package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.nobugssnackbar.dao.HintDao;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
-import pt.uc.dei.nobugssnackbar.uc.missionmanager.HintView;
 import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 @ManagedBean(name="hintDBView")

@@ -28,10 +28,8 @@ public class Hint implements java.io.Serializable {
 	private String category;
 	
 	private HintCategory hintCategory;
-	
-	private int time;
-	
 	@JdbcField(name="hintstime")
+	private int time;	
 	private String strTime;
 	
 	@XmlValue

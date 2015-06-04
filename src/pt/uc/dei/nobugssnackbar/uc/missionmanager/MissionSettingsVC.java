@@ -12,6 +12,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -30,14 +32,19 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private List<Mission> missionList;
 	private Mission mission;
 	
+	@ManagedProperty(value="#{mm.missionContent.cook}")
 	private Cook cook;
 	private XmlTag xmltag;
+	@ManagedProperty(value="#{mm.missionContent.slider}")
 	private Slider slider;
 	
 	private List<SelectItem> cookStartsFromList;
 	private String selectedXmlOption;
 	private boolean choseMission;
 	private boolean choseLoadBlocks;
+	@XmlAttribute(name="open")
+	@ManagedProperty(value="#{mm.missionContent.repeatable}")
+	private boolean repeatable;
 	
 	@ManagedProperty(value="#{mm}")
 	private MissionManager missionManager;
@@ -106,7 +113,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setCook(Cook cook) throws Exception {
 		this.cook = cook;
-		missionManager.getMissionContent().setCook(cook);
+		//missionManager.getMissionContent().setCook(cook);
 	}
 
 	public XmlTag getXmltag() {
@@ -115,7 +122,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setXmltag(XmlTag xmltag) throws Exception {
 		this.xmltag = xmltag;
-		missionManager.getMissionContent().setXmltag(xmltag);
+		//missionManager.getMissionContent().setXmltag(xmltag);
 	}
 
 	public String getSelectedXmlOption() {
@@ -152,7 +159,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setSlider(Slider slider) throws Exception {
 		this.slider = slider;
-		missionManager.getMissionContent().setSlider(slider);
+		//missionManager.getMissionContent().setSlider(slider);
 	}
 
 	public long getTimeLimit() {
@@ -161,7 +168,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setTimeLimit(long timeLimit) throws Exception {
 		this.timeLimit = timeLimit;
-		missionManager.getMissionContent().setTimeLimit(timeLimit);
+		//missionManager.getMissionContent().setTimeLimit(timeLimit);
 	}
 
 	public boolean isChoseMission() {
@@ -211,6 +218,14 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setChoseLoadBlocks(boolean choseLoadBlocks) {
 		this.choseLoadBlocks = choseLoadBlocks;
+	}
+	
+	public boolean isRepeatable() {
+		return repeatable;
+	}
+	
+	public void setRepeatable(boolean repeatable) {
+		this.repeatable = repeatable;
 	}
 
 }

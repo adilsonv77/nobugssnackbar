@@ -1,9 +1,21 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="xml")
 public class XmlTag implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@XmlAttribute(name="preload")
 	private int preload = -1;
+	@XmlAttribute
 	private boolean alwaysNew;
+	@XmlValue
 	private String xmlns;
 	
 	public int getPreload() {

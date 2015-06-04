@@ -1,12 +1,12 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.io.Serializable;
-import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,30 +53,25 @@ public class MissionContent implements Serializable {
     @XmlElement(name="objectives")
     private Objectives objectives = new Objectives();
 
+    @XmlAttribute(name="timeLimit")
     private long timeLimit;
+    
+    @XmlElement(name="cooker",type=Cook.class)
 	private Cook cook = new Cook();
+    
+    @XmlElement(name="xml")
 	private XmlTag xmltag = new XmlTag();
+	
+	@XmlElement(name="slider",type=Slider.class)
 	private Slider slider = new Slider();
+	
 	private boolean selectedLoadBlocks = false;
+	
+	@XmlAttribute(name="open")
+	private boolean repeatable;
 
 	public MissionContent() {
 	}
-	
-	/*@XmlElement(name="hint", type=Hint.class)
-	@XmlElementWrapper(name="sequence")
-	public void setTipsHints(List<Hint> tipsHints) {
-		this.hints.setTipsHints(tipsHints);
-	}
-
-	public List<Hint> getErrorsHints() {
-		return hints.getErrorsHints();
-	}
-	
-	@XmlElement(name="hint", type=Hint.class)
-	@XmlElementWrapper(name="errors")
-	public void setErrorsHints(List<Hint> errorsHints) {
-		this.setErrorsHints(errorsHints);
-	}*/
 
 	public List<Command> getCommands() {
 		return commands;
@@ -241,5 +236,13 @@ public class MissionContent implements Serializable {
 	
 	public void setHints(Hints hints) {
 		this.hints = hints;
+	}
+	
+	public void setRepeatable(boolean repeatable) {
+		this.repeatable = repeatable;
+	}
+	
+	public boolean isRepeatable() {
+		return repeatable;
 	}
 }

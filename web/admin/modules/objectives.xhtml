@@ -28,7 +28,7 @@
 				</p:selectBooleanCheckbox>        	
 	 			<h:outputLabel for="variableQty" value="#{msg['variableQuantity']}"/>
 	        	<p:spinner id="variableQty" size="5" value="#{objView.objectives.varQtd}" disabled="#{!objView.variableQty}"
-	        		prefix="#{!objView.variableQty ? msg['disabled'] : ''}" min="0">
+	        		prefix="#{!objView.variableQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>
 				
@@ -37,7 +37,7 @@
 				</p:selectBooleanCheckbox> 				                  
 	 			<h:outputLabel for="commandQty" value="#{msg['commandQuantity']}" />
 	        	<p:spinner id="commandQty" size="5" value="#{objView.objectives.commQtd}" disabled="#{!objView.commandQty}"
-	        		prefix="#{!objView.commandQty ? msg['disabled'] : ''}" min="0">
+	        		prefix="#{!objView.commandQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>	        	                
 			</p:panelGrid>

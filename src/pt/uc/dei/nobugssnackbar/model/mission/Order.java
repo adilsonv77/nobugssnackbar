@@ -24,7 +24,9 @@ public class Order implements java.io.Serializable {
 	private boolean differentFromPrevDrinks;
 	
 	//private List<Drink> drinks;
+	@XmlElement(name="foods",type=Foods.class)
 	private Foods foods;
+	@XmlElement(name="drinks",type=Drinks.class)
 	private Drinks drinks;
 	
 	public Order() {
@@ -52,14 +54,6 @@ public class Order implements java.io.Serializable {
 	public void setDrinks(List<Drink> drinks) {
 		//this.drinks = drinks;
 		this.drinks.setDrinks(drinks);
-	}
-	@XmlElement(name="drinks",type=Drinks.class)
-	public void setDrinkz(Drinks drinks){
-		this.drinks = drinks;
-	}
-	@XmlElement(name="foods",type=Foods.class)
-	public void setFoodz(Foods foods){
-		this.foods = foods;
 	}
 	
 	public boolean isDifferentFromPrevFoods() {

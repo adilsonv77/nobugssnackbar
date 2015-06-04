@@ -14,7 +14,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
-import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.Hints;
 import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
@@ -40,12 +39,6 @@ public class HintView implements Serializable {
 	private Hints hints;
 
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
-	
-	/*@ManagedProperty(value="#{mm.missionContent.tipsHints}")
-	private List<Hint> tipsHints;
-	
-	@ManagedProperty(value="#{mm.missionContent.errorsHints}")
-	private List<Hint> errorsHints;*/
 	
 	public void setAdd(boolean add) {
 		this.add = add;
@@ -176,6 +169,7 @@ public class HintView implements Serializable {
 				getTipsHints().add(hint);
 				getErrorsHints().remove(hint);
 				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromErrorsToTips"});
+				closeDlgHint();
 			}
 		}
 		for (Hint hint : getTipsHints()) {
@@ -183,6 +177,7 @@ public class HintView implements Serializable {
 				getErrorsHints().add(hint);
 				getTipsHints().remove(hint);			
 				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
+				closeDlgHint();
 			}
 		}
 		
@@ -281,6 +276,11 @@ public class HintView implements Serializable {
     
     public void disableDialog() {
     	this.showDlgExt = false;
+    }
+    
+    public void closeDlgHint(){
+    	RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('hintDialog').hide()");
     }
        
     public void addDialog() {

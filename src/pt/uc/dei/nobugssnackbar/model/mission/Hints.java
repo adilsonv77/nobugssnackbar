@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,6 +24,9 @@ public class Hints  implements Serializable{
 	}
 	
 	public List<Hint> getErrorsHints() {
+		if(errorsHints == null){
+			errorsHints = new ArrayList<Hint>();
+		}
 		return errorsHints;
 	}
 	
@@ -33,6 +37,9 @@ public class Hints  implements Serializable{
 	}
 	
 	public List<Hint> getTipsHints() {
+		if(tipsHints == null){
+			tipsHints = new ArrayList<Hint>();
+		}
 		return tipsHints;
 	}
 	

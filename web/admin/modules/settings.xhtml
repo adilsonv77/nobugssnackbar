@@ -15,7 +15,7 @@
 	<h:form id="settingsForm" style="width:700px;">
 		<p:fieldset toggleable="false">
 			<f:facet name="legend">
-				<p:selectBooleanCheckbox value="#{msVC.missionManager.mission.repeatable}">
+				<p:selectBooleanCheckbox value="#{msVC.repeatable}">
 					<p:ajax event="change" update=":tbView:settingsForm" />
 				</p:selectBooleanCheckbox>
 				#{msg['repeatableMission']}
@@ -23,7 +23,7 @@
 			
 			<p:panelGrid columns="2">
 				<h:outputText value="#{msg['timeLimit']}:"/>
-				<p:inputText value="#{msVC.timeLimit}" disabled="#{!msVC.missionManager.mission.repeatable}">
+				<p:inputText value="#{msVC.timeLimit}" disabled="#{!msVC.repeatable}">
 					<p:ajax process="@this"/>
 					<pe:keyFilter regEx="/[0-9]/"/>
 				</p:inputText>
@@ -32,7 +32,7 @@
 		
 		<p:panelGrid columns="2">
 			<h:outputText value="#{msg['timesBeforeShowSlider']}:" />
-			<p:inputText value="#{msVC.slider.timesBefore}" disabled="#{!msVC.missionManager.mission.repeatable}">
+			<p:inputText value="#{msVC.slider.timesBefore}" disabled="#{!msVC.repeatable}">
 				<p:ajax process="@this"/>
 				<pe:keyFilter regEx="/[0-9]/"/>
 			</p:inputText>
