@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="drinks")
 public class Drinks implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@XmlAttribute(name="randomMin")
+    @XmlAttribute(name="randomMin")
     public int randomMin;
 
     @XmlAttribute(name="randomMax")

@@ -39,7 +39,6 @@ public class Order implements java.io.Serializable {
 		return foods.getFoods();
 	}
 
-	@XmlElement(name="foods",type=Foods.class)
 	public void setFoods(List<Food> foods) {
 		//this.foods = foods;
 		this.foods.setFoods(foods);
@@ -49,12 +48,20 @@ public class Order implements java.io.Serializable {
 		return drinks.getDrinks();
 	}
 
-	@XmlElement(name="drinks",type=Drinks.class)
+	
 	public void setDrinks(List<Drink> drinks) {
 		//this.drinks = drinks;
 		this.drinks.setDrinks(drinks);
 	}
-
+	@XmlElement(name="drinks",type=Drinks.class)
+	public void setDrinkz(Drinks drinks){
+		this.drinks = drinks;
+	}
+	@XmlElement(name="foods",type=Foods.class)
+	public void setFoodz(Foods foods){
+		this.foods = foods;
+	}
+	
 	public boolean isDifferentFromPrevFoods() {
 		return differentFromPrevFoods;
 	}

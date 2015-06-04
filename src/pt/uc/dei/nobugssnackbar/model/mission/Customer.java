@@ -1,6 +1,5 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.xml.bind.annotation.XmlAccessType;
