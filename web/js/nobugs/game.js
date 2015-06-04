@@ -514,7 +514,6 @@ Game.installMachines = function(toolbox) {
 			
 		}
 			
-
 		document.getElementById('blockly').innerHTML = ""; // clean the editor
 	    Blockly.inject(document.getElementById('blockly'),
 		     { media: "media/",
@@ -1175,6 +1174,11 @@ Game.logoffButtonClick = function() {
     }
 
     document.getElementById('blockly').innerHTML = ""; // clean the editor
+    
+    $(".blocklyWidgetDiv").remove();
+    $(".blocklyTooltipDiv").remove();
+    $(".blocklyToolboxDiv").remove();
+    
     window.removeEventListener('scroll', Game.scrollEvent);  
     window.removeEventListener('resize',  Game.resizeWindow);
 

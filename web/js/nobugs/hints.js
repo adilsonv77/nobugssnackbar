@@ -31,7 +31,7 @@ Hints.dealError = false;
 var countInstructions, countTopInstructions, menuSelected, showedHint; 
 
 Hints.init = function(hints) {
-	
+
 	if (!Game.loginData.userLogged.showHint)
 		return;
 

@@ -560,7 +560,7 @@ BlocklyApps.getBBox_ = function(element) {
     var bBox = element.getBBox();
     var height = bBox.height;
     var width = bBox.width;
-    var xy = Blockly.getAbsoluteXY_(element);
+    var xy = goog.style.getPageOffset(element); // Blockly.getAbsoluteXY_(element);
     var x = xy.x;
     var y = xy.y;
   } else {
