@@ -41,20 +41,20 @@ public class CommandsVC implements ICommandProvider, Serializable {
 				for (Command rc : rootCommands) {
 					for (Command c : selectedCommands) {
 						if (!rc.isSelected()) {
-							if (selectedChildCommand == null)
-								selectedChildCommand = rc;
 							if (c.getName().compareToIgnoreCase(rc.getName()) == 0) {
 								rc.setSelected(true);
-								break;
 							}
 							else if (c.getName().compareToIgnoreCase("const") == 0 && 
 									rc.getName().compareToIgnoreCase("Constants") == 0) {
 								rc.setSelected(true);
-								break;
 							}
 							else if (c.getName().compareToIgnoreCase("vars") == 0 && 
 									rc.getName().compareToIgnoreCase("Variables") == 0) {
 								rc.setSelected(true);
+							}
+							if (rc.isSelected()) {
+								if (selectedRootCommand == null)
+									selectedRootCommand = rc;
 								break;
 							}
 						}
