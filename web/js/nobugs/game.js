@@ -452,6 +452,17 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(objectives, mission);
   Game.mission = mission;
 
+  $("#vars").ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
+		  gridClass: 'varsgrid',
+		  headerClass: 'varsgrid-header',
+		  colWidths: [100, 100],
+		  resizableCols: false,
+		  ingridIDPrefix: '_varsgrid',
+		  ingridBaseClass: 'basevarsgrid'});
+  // a bug in ingrid
+  $("div[class=varsgrid-header]").css("display", "none");
+
+  
   Game.installMachines(toolbox);
 };
 
@@ -1147,6 +1158,10 @@ Game.goalButtonClick = function() {
 	
 };
 
+Game.emptyLines = function() {
+	InGrid.emptyLines("#_varsgrid_vars_0 div:nth-child(2) table");
+};
+
 Game.logoffButtonClick = function() {
 	
 	Hints.stopHints();
@@ -1156,11 +1171,9 @@ Game.logoffButtonClick = function() {
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
-/*
-	$('#vars').datagrid('loadData', {
-		"total": 0, "rows": []
-	});
-	*/
+	
+	Game.emptyLines();
+	
     Game.doResizeWindow("none");
     Game.killAll();
     Game.runningStatus = 0;
@@ -1263,7 +1276,6 @@ Game.debugButtonClick = function() {
 
 		if (Game.enabledVarWindow) {
 			Game.doResizeWindow("inline");
-			// $('#vars').datagrid('resize');
 		}
 		
 		Blockly.mainWorkspace.traceOn(true);
@@ -1297,12 +1309,7 @@ Game.resetButtons = function(hideVars) {
 	Game.runningStatus = 0;
 	
 	if (hideVars == undefined || hideVars == true) {
-		/*
-		$('#vars').datagrid('loadData', {
-			"total": 0, "rows": []
-		});
-		*/
-		
+		Game.emptyLines();
 	}
 };
 
@@ -1322,12 +1329,9 @@ Game.execute = function(debug) {
 	  
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
-		
-		/*
-	  $('#vars').datagrid('loadData', {
-			"total": 0, "rows": []
-		});
-*/
+
+	  Game.emptyLines();
+	  
 	  // Reset the graphic.
 	  Game.reset();
 
@@ -1352,7 +1356,7 @@ Game.execute = function(debug) {
 		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Game.semanticAnalysis);
 		
   	    var code = "var NoBugsJavaScript = {};\n";
-  	    var subcode = Game.convertWaits(js.workspaceToCode());
+  	    var subcode = Game.convertWaits(js.workspaceToCode(Blockly.mainWorkspace));
 
         // never happens that stop receives true !!! 
   	    if (Game.openMission.open) {
@@ -1510,7 +1514,6 @@ Game.unlockBlockly = function() {
 
 Game.updateVariables = function() {
 	
-	var totalrows = Game.jsInterpreter.variables.length;
 	var rows = [];
 	
 	Game.jsInterpreter.variables.forEach(function(entry) {
@@ -1526,11 +1529,8 @@ Game.updateVariables = function() {
 			rows.push({"name":entry.name, "value": data});
 		}
 	});
-	/*
-	$('#vars').datagrid('loadData', {
-		"total": totalrows, "rows": rows
-	});
-	*/
+	
+	InGrid.loadLines('#_varsgrid_vars_0 div:nth-child(2) table', rows);
 };
 
 Game.nextStep = function() {

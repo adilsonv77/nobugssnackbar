@@ -170,6 +170,7 @@
 			<arg line="${js.home}/leaderboard.js" />
 			<arg line="${js.home}/citymap.js" />
 			<arg line="${js.home}/selectmission.js" />
+			<arg line="${js.home}/nobugsingrid.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

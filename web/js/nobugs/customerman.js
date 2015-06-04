@@ -87,7 +87,9 @@ CustomerManager.reset = function() {
 		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
-		var pattern = customer.getElementsByTagName("pattern")[0];
+		var orders = customer.getElementsByTagName("orders")[0].getElementsByTagName("order");
+		/*
+		var pattern = customer.getElementsByTagName("orders")[0];
 		if (pattern == null) {
 			
 			var _foods = customer.getElementsByTagName("foods")[0];
@@ -104,29 +106,37 @@ CustomerManager.reset = function() {
 			
 			// this means the customers go away and will come new customers at same place
 			var orders = pattern.getElementsByTagName("order");
-			
+			*/
 			var custPattern = [];
 			
 			for (var i = 0; i < orders.length; i++) {
 
-				var foods = CustomerManager.extractItems("food", orders[i].getElementsByTagName("foods")[0]);
-				var drinks =  CustomerManager.extractItems("drink", orders[i].getElementsByTagName("drinks")[0], orders[i].getAttribute("randomType"), foods.length);
+				var _foods = orders[i].getElementsByTagName("foods")[0];
+				var _drinks = orders[i].getElementsByTagName("drinks")[0];
+				var foods = CustomerManager.extractItems("food", _foods);
+				var drinks =  CustomerManager.extractItems("drink", _drinks, _drinks.getAttribute("randomType"), foods.length);
 			
+				var fRMin = _foods.getAttribute("randomMin");
+				fRMin = parseInt(fRMin == null?"0":fRMin);
+				
+				var dRMin = _drinks.getAttribute("randomMin");
+				dRMin = parseInt(dRMin == null?"0":dRMin);
 				
 				if (foods.length > 0 || drinks.length > 0)
-					custPattern.push({ hasRandom: orders[i].getAttribute("randomType")!=null, foods: foods, drinks: drinks});
+					custPattern.push({ hasRandom: (orders[i].getAttribute("randomType")!=null) || (fRMin > 0) || (dRMin > 0) ,
+										   foods: foods, drinks: drinks});
 			}
 			
 			if (custPattern.length > 0)
 				this.patterns.push({init: init, place: dest, id: id, pattern: custPattern, idxCustPattern: 0});
 			
-		}
+	/*	}*/
 		
 		customer = customer.nextElementSibling;
 	}
 	
 	this.createCustomersBasedOnPattern();
-	this.transformSN(); // this doesnt work with pattern options
+	this.transformSN();
 };
 
 /**
@@ -237,6 +247,8 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 	
 	var randomMin = list.getAttribute("randomMin");
+	randomMin = parseInt(randomMin == null?"0":randomMin);
+	
 	var differentFromPrevious = list.getAttribute("differentFromPrevious") === "true";
 	
 	var isDrinkList = foodsLen != undefined;
@@ -247,8 +259,7 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		selected[j] = j;
 	}
 	
-	if (randomMin != null) {
-		randomMin = parseInt(randomMin);
+	if (randomMin > 0) {
 		var randomMax = parseInt(list.getAttribute("randomMax"));
 		
 		var howMany = Math.floor((Math.random() * ((randomMax-randomMin)+1))) + randomMin;
