@@ -14,7 +14,9 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.ReorderEvent;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
+import pt.uc.dei.nobugssnackbar.model.HintCategory;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
+import pt.uc.dei.nobugssnackbar.model.mission.Hints;
 import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 
@@ -22,8 +24,7 @@ import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 @ViewScoped
 public class HintView implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
 	
 	/*
 	 * add == false when editing hint
@@ -34,15 +35,17 @@ public class HintView implements Serializable {
 	private boolean dlgHintDisabled = false;
 	
 	private Hint hint = new Hint();
+	
+	@ManagedProperty(value="#{mm.missionContent.hints}")
+	private Hints hints;
 
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
 	
-	@ManagedProperty(value="#{mm.missionContent.tipsHints}")
+	/*@ManagedProperty(value="#{mm.missionContent.tipsHints}")
 	private List<Hint> tipsHints;
 	
 	@ManagedProperty(value="#{mm.missionContent.errorsHints}")
-	private List<Hint> errorsHints;
-	
+	private List<Hint> errorsHints;*/
 	
 	public void setAdd(boolean add) {
 		this.add = add;
@@ -63,22 +66,30 @@ public class HintView implements Serializable {
 		return hint;
 	}
 	
+	public Hints getHints() {
+		return hints;
+	}
+	
+	public void setHints(Hints hints) {
+		this.hints = hints;
+	}
+	
 	public void setTipsHints(List<Hint> tipsHints) {
-		this.tipsHints = tipsHints;
+		this.hints.setTipsHints(tipsHints);
 	}
 	public List<Hint> getTipsHints() {
-		return tipsHints;
+		return hints.getTipsHints();
 	}
 	
 	public void setErrorsHints(List<Hint> errorsHints) {
-		this.errorsHints = errorsHints;
+		this.hints.setErrorsHints(errorsHints);
 	}
 	public List<Hint> getErrorsHints() {
-		return errorsHints;
+		return hints.getErrorsHints();
 	}
 	
     public void deleteTipsHint() {
-        tipsHints.remove(hint);
+    	getTipsHints().remove(hint);
         newHint();
     }
 
@@ -134,11 +145,11 @@ public class HintView implements Serializable {
 			}
 			if (this.add) {/*prevent from adding element when editing*/
 				if (hint.getType()) {/*check type if it is error or hint*/
-					errorsHints.add(hint);
+					getErrorsHints().add(hint);
 					addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=newHintAdd","newErrorHintAdd"});
 				}
 				else {
-					tipsHints.add(hint);
+					getTipsHints().add(hint);
 					addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=newHintAdd","newTipHintAdd"});
 				}
 			}
@@ -160,20 +171,18 @@ public class HintView implements Serializable {
 	}
 	
 	public void checkLists(){
-		for (Hint hint : errorsHints) {
+		for (Hint hint : getErrorsHints()) {
 			if(hint.getType() == false/*tip*/){
-				tipsHints.add(hint);
-				errorsHints.remove(hint);
+				getTipsHints().add(hint);
+				getErrorsHints().remove(hint);
 				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromErrorsToTips"});
-				break;
 			}
 		}
-		for (Hint hint : tipsHints) {
+		for (Hint hint : getTipsHints()) {
 			if(hint.getType() == true/*error*/){
-				errorsHints.add(hint);
-				tipsHints.remove(hint);			
+				getErrorsHints().add(hint);
+				getTipsHints().remove(hint);			
 				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
-				break;
 			}
 		}
 		
@@ -182,11 +191,11 @@ public class HintView implements Serializable {
 	public void deleteHint(){
 		
 		if(this.hint.getType()){
-			errorsHints.remove(this.hint);
+			getErrorsHints().remove(this.hint);
 			addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintDeleted","hintDeletedFromErrors"});
 		}
 		else{
-			tipsHints.remove(this.hint);
+			getTipsHints().remove(this.hint);
 			addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintDeleted","hintDeletedFromTips"});
 		}
 	}

@@ -66,13 +66,13 @@ public class MissionToXML {
 			/********************************************END EXPLANATION*/
 			/******/
 			/********************************************START HINTS*/
-			if ((missionContent.getTipsHints() != null && missionContent.getTipsHints().size() > 0) ||
-				(missionContent.getErrorsHints() != null && missionContent.getErrorsHints().size() > 0)) {
+			if ((missionContent.getHints().getTipsHints() != null && missionContent.getHints().getTipsHints().size() > 0) ||
+				(missionContent.getHints().getErrorsHints() != null && missionContent.getHints().getErrorsHints().size() > 0)) {
 				result.append("<hints>");
 				
-				if (missionContent.getTipsHints() != null && missionContent.getTipsHints().size() > 0) {
+				if (missionContent.getHints().getTipsHints() != null && missionContent.getHints().getTipsHints().size() > 0) {
 					result.append("<sequence>");
-					for (Hint h : missionContent.getTipsHints()) {
+					for (Hint h : missionContent.getHints().getTipsHints()) {
 						result.append("<hint ");
 						if (h.getTime() > -1) { /*if you have some problem check here*/
 							result.append("time=\"").append(h.getTime()).append("\" ");
@@ -98,9 +98,9 @@ public class MissionToXML {
 					result.append("</sequence>");
 				}
 				
-				if (missionContent.getErrorsHints() != null && missionContent.getErrorsHints().size() > 0) {
+				if (missionContent.getHints().getErrorsHints() != null && missionContent.getHints().getErrorsHints().size() > 0) {
 					result.append("<errors>");
-					for (Hint h : missionContent.getErrorsHints()) {
+					for (Hint h : missionContent.getHints().getErrorsHints()) {
 						result.append("<hint ");
 						if (h.getTime() > -1) { /*if you have any problem check here*/
 							result.append("time=\"").append(h.getTime()).append("\" ");
@@ -187,17 +187,17 @@ public class MissionToXML {
 				result.append("<id>").append(cu.getId()).append("</id>");
 				result.append("<init>").append(cu.getInit()).append("</init>");
 				result.append("<dest>").append(cu.getDest()).append("</dest>");
-				if (cu.getPattern().getOrders().size() > 1) {
+				if (cu.getOrders().getOrders().size() > 1) {
 					result.append("<pattern>");
-					for (Order o : cu.getPattern().getOrders()) {
+					for (Order o : cu.getOrders().getOrders()) {
 						result.append("<order>");
 						result.append(xmlOfFoodsAndDrinks(o));
 						result.append("</order>");
 					}
 					result.append("</pattern>");
 				}
-				else if (cu.getPattern().getOrders().size() > 0) {
-					result.append(xmlOfFoodsAndDrinks(cu.getPattern().getOrders().get(0)));
+				else if (cu.getOrders().getOrders().size() > 0) {
+					result.append(xmlOfFoodsAndDrinks(cu.getOrders().getOrders().get(0)));
 				}
 				
 				result.append("</customer>");

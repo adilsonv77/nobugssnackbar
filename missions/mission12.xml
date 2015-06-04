@@ -97,26 +97,43 @@
 			<drinks>
 				<drink qt="1" price="0">coke</drink>
 			</drinks>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 		<customer>
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
-			<foods>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 		<customer>
 			<id>03</id>
 			<init>counter3</init>
 			<dest>counter3</dest>
-			<foods>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="15">

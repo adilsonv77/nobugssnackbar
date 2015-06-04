@@ -47,9 +47,11 @@
 						    </p:panelGrid>
 						    
 						    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
-						    <p:inputText id="hintTime" value="#{hintView.hint.strTime}"
-						    	disabled="#{hintView.dlgHintDisabled}"/>
-						    		        
+						    <p:panelGrid columns="2">
+							    <p:inputText id="hintTime" value="#{hintView.hint.strTime}"
+							    	disabled="#{hintView.dlgHintDisabled}"/>
+							   <p:outputLabel value="#{msg['disableTime']}"/>
+						    </p:panelGrid>		        
 						</p:panelGrid>
 					</p:layoutUnit>
 					<p:layoutUnit id="centerHintPage" position="center" styleClass="disable-scroll" style="border: none;" resizable="true" >

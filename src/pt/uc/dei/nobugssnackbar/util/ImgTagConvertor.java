@@ -70,8 +70,7 @@ public class ImgTagConvertor {
 		ExternalContext externalContext = facesContext.getExternalContext();
 		ServletContext servletContext = (ServletContext) externalContext.getContext();
 		path = servletContext.getRealPath("admin/" + relativePath);
-		return path;
-				
+		return path;			
 	}
 	
     private static File getImageFromUrl(String src) {

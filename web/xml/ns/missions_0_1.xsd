@@ -89,14 +89,12 @@
   </xs:complexType>
   <xs:complexType name="customerType">
     <xs:sequence>
-      <xs:element type="xs:integer" name="id"/>
-      <xs:element type="xs:string" name="init"/>
-      <xs:element type="xs:string" name="dest"/>
-      <xs:element type="patternType" name="pattern"  maxOccurs="unbounded" minOccurs="0"/>      
-      <xs:element type="wishesType" name="foods"  maxOccurs="unbounded" minOccurs="0"/>     
-      <xs:element type="wishesType" name="drinks"  maxOccurs="unbounded" minOccurs="0"/>
+    	<xs:element type="xs:integer" name="id" />
+    	<xs:element type="xs:string" name="init" />
+    	<xs:element type="xs:string" name="dest" />
+    	<xs:element name="orders" type="OrdersType"></xs:element>
     </xs:sequence>
-    	<xs:attribute type="xs:string" name="randomType" use="optional"/>
+    <xs:attribute type="xs:string" name="randomType" use="optional"/>
         <xs:attribute type="xs:integer" name="randomMin" use="optional" />
     </xs:complexType>    
   <xs:complexType name="customersType">
@@ -216,7 +214,7 @@
 		</xs:sequence>
 	</xs:complexType>
   
-	<xs:complexType name="patternType">
+	<xs:complexType name="OrdersType">
 		<xs:sequence>
 			<xs:element type="orderType" name="order" maxOccurs="unbounded" minOccurs="0"/>
 		</xs:sequence>

@@ -53,45 +53,61 @@
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods>
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 		<customer>
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
-			<foods>
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>	
 		</customer>
 		<customer>
 			<id>03</id>
 			<init>counter3</init>
 			<dest>counter3</dest>
-			<foods>
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>	
 		</customer>
 		<customer>
 			<id>04</id>
 			<init>counter4</init>
 			<dest>counter4</dest>
-			<foods>
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>	
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="7" bonusTime="300" bonusTimeReward="50 40 30" varQtd="2">

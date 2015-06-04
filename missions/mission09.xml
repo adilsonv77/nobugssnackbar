@@ -61,12 +61,16 @@
 			<id>01</id>
 			<init>counter3</init>
 			<dest>counter3</dest>
-			<foods>
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="7" maxCommands="10" maxCommandsReward="15" >

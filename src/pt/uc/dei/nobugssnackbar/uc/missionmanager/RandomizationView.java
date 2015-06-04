@@ -63,7 +63,13 @@ public class RandomizationView implements Serializable {
 	
 	public boolean getBoolSet(){
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
-		
+		try{
+			String s = messageBundle.getString(rand.getSet().toLowerCase());
+				rand.setSet(s);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		if(this.rand.getSet().equals(messageBundle.getString("new"))){
 			this.boolSet = true;
 		}
@@ -87,6 +93,13 @@ public class RandomizationView implements Serializable {
 	
 	public boolean getBoolType(){
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		try{
+		String s = messageBundle.getString(rand.getType().toLowerCase());
+			rand.setType(s);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		if(this.rand.getType().equals(messageBundle.getString("hungry"))){
 			this.boolType = true;
@@ -120,6 +133,15 @@ public class RandomizationView implements Serializable {
 	}
 	
 	public List<Randomization> getRandList() {
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		for (Randomization randomization : randList) {
+			try{
+				randomization.setSet(messageBundle.getString(randomization.getSet().toLowerCase()));
+			}catch(Exception e){}
+			try{
+				randomization.setType(messageBundle.getString(randomization.getType().toLowerCase()));
+			}catch(Exception e){}
+		}
 		return randList;
 	}
 	public void setRandList(List<Randomization> randList) {

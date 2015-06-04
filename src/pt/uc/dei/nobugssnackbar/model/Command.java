@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
 
-
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="category")
 @JdbcTable(name="commands")
 public class Command implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,12 +22,16 @@ public class Command implements Serializable {
 	@JdbcField(name="commandid")
 	@JdbcPk
 	private Integer id;
+	
+	@XmlAttribute(name="name")
 	@JdbcField(name="commandname")
 	private String name;
 	@JdbcField(name="commandparent")
 	private Integer parentId;
 	
+	@XmlAttribute(name="show")
 	private boolean selected;
+	
 	private List<Command> children;
 
 	private Command parent;

@@ -38,23 +38,31 @@
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods randomMin="0" randomMax="1">
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks randomMin="0" randomMax="1">
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="1">
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks randomMin="0" randomMax="1">
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 		<customer randomType="atLeastOne">
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
-			<foods randomMin="0" randomMax="1">
-				<food qt="1" price="0">hotdog</food>
-			</foods>
-			<drinks randomMin="0" randomMax="1">
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="1">
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks randomMin="0" randomMax="1">
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="15">

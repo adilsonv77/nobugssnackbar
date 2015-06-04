@@ -77,7 +77,7 @@
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<pattern>
+			<orders>
 				<order>
 					<foods>
 						<food price="1">hotdog</food>
@@ -92,13 +92,13 @@
 					</foods>
 					<drinks></drinks>
 				</order>
-			</pattern>
+			</orders>
 		</customer>
 		<customer>
 			<id>02</id>
 			<init>counter4</init>
 			<dest>counter4</dest>
-			<pattern>
+			<orders>
 				<order>
 					<foods>
 						<food price="1">hotdog</food>
@@ -111,7 +111,7 @@
 					</foods>
 					<drinks></drinks>
 				</order>
-			</pattern>
+			</orders>
 		</customer>
 	</customers>
 	<objectives buttonBuy="true"/> 

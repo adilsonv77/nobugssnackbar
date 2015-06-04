@@ -3,21 +3,56 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="objectives")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Objectives  implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	private Objective objectiveItem = new Objective();
+	
+	@XmlElement(name="objective",type=Objective.class)
 	private ArrayList<Objective> objectiveList = new ArrayList<Objective>();
+	
+	@XmlAttribute(name="ordered")
 	private boolean ordered;
-	private boolean buttonDebug = true;
-	private boolean buttonRun = true;
+	
+	@XmlAttribute(name="buttonDebug")
+	private boolean buttonDebug;
+	
+	@XmlAttribute(name="buttonRun")
+	private boolean buttonRun;
+	
+	@XmlAttribute(name="buttonBuy")
 	private boolean buttonBuy;
-	private boolean variableWindow = true;
+	
+	@XmlAttribute(name="variableWindow")
+	private boolean variableWindow;
+	
+	@XmlAttribute(name="reward")
 	private int reward;
+	
+	@XmlAttribute(name="commQtd")
 	private int commQtd;
+	
+	@XmlAttribute(name="maxCommands")
 	private int maxCommands;
+	
+	@XmlAttribute(name="maxCommandsReward")
 	private int maxCommandsReward;
+	
+	@XmlAttribute(name="varQtd")
 	private int varQtd;
+	
+	@XmlAttribute(name="bonusTime")
 	private String bonusTime;
+	
+	@XmlAttribute(name="bonusTimeReward")
 	private String bonusTimeReward;
 	
 	
@@ -25,6 +60,12 @@ public class Objectives  implements Serializable {
 	private boolean boolCommandQty;
 	private boolean boolMaxCommands;
 	private boolean boolBonusTime;
+	
+	public Objectives() {
+		variableWindow = true;
+		buttonDebug = true;
+		buttonRun = true;
+	}
 	
 	public ArrayList<Objective> getObjectiveList() {
 		return objectiveList;

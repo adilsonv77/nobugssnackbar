@@ -163,34 +163,34 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	}
 	
 	public void newOrder() {
-		if (checkFields(customer.getPattern().getOrder())) {
-			Order order = customer.getPattern().getOrder();
-			int index = customer.getPattern().getOrders().indexOf(order);
+		if (checkFields(customer.getOrders().getOrder())) {
+			Order order = customer.getOrders().getOrder();
+			int index = customer.getOrders().getOrders().indexOf(order);
 			
 			if (index >= 0) {
-				customer.getPattern().getOrders().set(index, order);
-				customer.getPattern().setOrder(new Order());
-				order = customer.getPattern().getOrder();
-				int id = customer.getPattern().getOrderIdCounter() + 1;
-				customer.getPattern().setOrderIdCounter(id);
+				customer.getOrders().getOrders().set(index, order);
+				customer.getOrders().setOrder(new Order());
+				order = customer.getOrders().getOrder();
+				int id = customer.getOrders().getOrderIdCounter() + 1;
+				customer.getOrders().setOrderIdCounter(id);
 				order.setId(id);
-				customer.getPattern().getOrders().add(order);
+				customer.getOrders().getOrders().add(order);
 			}
 		}
 	}
 	
 	public void deleteOrder() {
-		Order order = customer.getPattern().getOrder();
+		Order order = customer.getOrders().getOrder();
 		
 		if (order != null) {
 			ResourceBundle msg = ApplicationMessages.getMessage();
 			FacesContext context = FacesContext.getCurrentInstance();
 			
-			if (customer.getPattern().getOrders().size() > 1) {
-				if (customer.getPattern().getOrders().remove(order)) {
+			if (customer.getOrders().getOrders().size() > 1) {
+				if (customer.getOrders().getOrders().remove(order)) {
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
 							msg.getString("succRemovedOrder"), ""));					
-					customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));
+					customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));
 				}
 				else {
 					context.validationFailed();
@@ -199,11 +199,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 							msg.getString("notRemovedOrder")));
 				}
 			}
-			else if (customer.getPattern().getOrders().size() == 1) {
-				customer.getPattern().setOrderIdCounter(0);
-				customer.getPattern().getOrders().set(0, new Order());
-				customer.getPattern().getOrders().get(0).setId(0);
-				customer.getPattern().setOrder(customer.getPattern().getOrders().get(0));				
+			else if (customer.getOrders().getOrders().size() == 1) {
+				customer.getOrders().setOrderIdCounter(0);
+				customer.getOrders().getOrders().set(0, new Order());
+				customer.getOrders().getOrders().get(0).setId(0);
+				customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));				
 						
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
 						msg.getString("succRemovedOrder"), ""));
@@ -215,7 +215,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	
 	public void deleteFood() {
 		if (food != null) {
-			customer.getPattern().getOrder().getFoods().remove(this.food);
+			customer.getOrders().getOrder().getFoods().remove(this.food);
 			resetFood();
 		}
 	}
@@ -226,7 +226,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 
 	public void deleteDrink() {
 		if (drink != null) {
-			customer.getPattern().getOrder().getDrinks().remove(this.drink);
+			customer.getOrders().getOrder().getDrinks().remove(this.drink);
 			resetDrink();
 		}
 	}
@@ -286,12 +286,12 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	}
 	
 	public void saveCustomer() {                
-		if (checkFields(customer.getPattern().getOrder())) {
+		if (checkFields(customer.getOrders().getOrder())) {
 			customers.set(customersPlaceId, customer);
 			try {
 				List<Customer> res = new ArrayList<>();
 				for (Customer c : customers) {
-					for (Order o : c.getPattern().getOrders()) {
+					for (Order o : c.getOrders().getOrders()) {
 						if ((o.getDrinks() != null && o.getDrinks().size() > 0) ||
 							(o.getFoods() != null && o.getFoods().size() > 0)) {
 							res.add(c);
@@ -339,11 +339,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				ffood.setPrice(foodstuff.getPrice());
 				ffood.setQtd(foodstuff.getQtd());
 				if (food != null) {
-					int index = customer.getPattern().getOrder().getFoods().indexOf(food);
-					customer.getPattern().getOrder().getFoods().set(index, ffood);
+					int index = customer.getOrders().getOrder().getFoods().indexOf(food);
+					customer.getOrders().getOrder().getFoods().set(index, ffood);
 				}
 				else {
-					customer.getPattern().getOrder().getFoods().add(ffood);
+					customer.getOrders().getOrder().getFoods().add(ffood);
 				}
 			}
 			else {
@@ -354,11 +354,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				ddrink.setQtd(foodstuff.getQtd());
 				
 				if (drink != null) {
-					int index = customer.getPattern().getOrder().getDrinks().indexOf(drink);
-					customer.getPattern().getOrder().getDrinks().set(index, ddrink);
+					int index = customer.getOrders().getOrder().getDrinks().indexOf(drink);
+					customer.getOrders().getOrder().getDrinks().set(index, ddrink);
 				}
 				else {
-					customer.getPattern().getOrder().getDrinks().add(ddrink);
+					customer.getOrders().getOrder().getDrinks().add(ddrink);
 				}
 			}
 			reset();

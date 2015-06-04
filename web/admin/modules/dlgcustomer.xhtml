@@ -57,11 +57,12 @@
 	    			</f:facet>
 					
 					<p:dataTable id="ordersDT" styleClass="hide-column-names" selectionMode="single"
-						selection="#{custVC.customer.pattern.order}"
+						selection="#{custVC.customer.orders.order}"
 						var="order" rowKey="#{order.id}" emptyMessage="#{msg['default']}"
-						value="#{custVC.customer.pattern.orders}"
+						value="#{custVC.customer.orders.orders}"
 						draggableRows="true">
 						<p:ajax event="rowReorder" update=":customerForm"/>
+
 						<p:ajax event="rowSelect" update=":customerForm"/>
 		    			<p:column style="width:74%;">
 		    				<h:outputText value="#{msg['no']}: #{order.id}" />
@@ -69,7 +70,7 @@
 		    			<p:column style="padding:2px;">
 		    				<p:commandButton icon="ui-icon-closethick"
 								oncomplete="PF('confDeleteOrderDlg').show()">
-								<f:setPropertyActionListener value="#{order}" target="#{custVC.customer.pattern.order}"/>
+								<f:setPropertyActionListener value="#{order}" target="#{custVC.customer.orders.order}"/>
 							</p:commandButton>
 		    			</p:column>
     				</p:dataTable>
@@ -80,19 +81,19 @@
 						<div id="foodsContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText value="#{custVC.customer.pattern.order.randomMinFoods}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.randomMinFoods}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText value="#{custVC.customer.pattern.order.randomMaxFoods}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.randomMaxFoods}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevFoods}"/>
+								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.differentFromPrevFoods}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
-							<p:dataTable id="foodsDT" var="food" 
-								value="#{custVC.customer.pattern.order.foods}" draggableRows="true">
+							<p:dataTable id="foodsDT" var="food"
+								value="#{custVC.customer.orders.order.foods}" draggableRows="true">
 								<p:ajax event="rowReorder" update=":customerForm:foodsDT"/>
-								
+
 								<f:facet name="header">
 							        <h:outputText value="#{msg['foods']}"/>
 							    </f:facet>
@@ -134,18 +135,20 @@
 						<div id="drinksContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText value="#{custVC.customer.pattern.order.randomMinDrinks}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.randomMinDrinks}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText value="#{custVC.customer.pattern.order.randomMaxDrinks}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.randomMaxDrinks}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox value="#{custVC.customer.pattern.order.differentFromPrevDrinks}"/>
+								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.differentFromPrevDrinks}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
 							<p:dataTable id="drinksDT" var="drink" 
-								value="#{custVC.customer.pattern.order.drinks}" draggableRows="true">
+
+								value="#{custVC.customer.orders.order.drinks}" draggableRows="true">
 								<p:ajax event="rowReorder" update=":customerForm:drinksDT"/>
+
 								<f:facet name="header">
 							        <h:outputText value="#{msg['drinks']}"/>
 							    </f:facet>

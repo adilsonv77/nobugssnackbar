@@ -12,8 +12,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+
 
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
@@ -190,6 +192,7 @@ public class MissionManager implements Serializable {
 	public void save() throws Exception {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
+
 		
 		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
 			String xml = MissionToXML.missionToXML(mission, missionContent);
@@ -209,11 +212,22 @@ public class MissionManager implements Serializable {
 		        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
 			}
 		}
-		else {
-			context.validationFailed();
-	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-	        		messageBundle.getString("warningMsg"), messageBundle.getString("noMissionName")));
-		}
 	}
 	
+	public void load(){
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		MissionContent mc = XmlToMission.load("missionX.xml");
+		if(mc == null){
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", 
+	        		"GREDA"));	      
+		}
+		else{
+			this.setMissionContent(mc);
+			RequestContext.getCurrentInstance().update("tbView");
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
+	        		messageBundle.getString("missionSuccSaved")));	        
+		}       
+	}	
 }

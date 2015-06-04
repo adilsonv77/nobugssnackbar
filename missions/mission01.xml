@@ -70,17 +70,27 @@
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods>
-			</foods>
-			<drinks></drinks>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
 		</customer>
 		<customer>
 			<id>02</id>
 			<init>counter4</init>
 			<dest>counter4</dest>
-			<foods>
-			</foods>
-			<drinks></drinks>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
 		</customer>
 	</customers>
 	<objectives ordered="true" reward="5" buttonDebug="false">

@@ -3,14 +3,21 @@ package pt.uc.dei.nobugssnackbar.model.mission;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pattern implements java.io.Serializable {	
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name="orders")
+public class Orders implements java.io.Serializable {	
 	private static final long serialVersionUID = 1L;
 	
 	private int orderIdCounter;
 	private Order order;
 	private List<Order> orders;
 
-	public Pattern() {
+	public Orders() {
 		order = new Order();
 		orders = new ArrayList<>();
 		orders.add(order);
@@ -20,6 +27,7 @@ public class Pattern implements java.io.Serializable {
 		return orders;
 	}
 
+	@XmlElement(name="order",type=Order.class)
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}

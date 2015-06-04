@@ -65,23 +65,31 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho.
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods>
-			</foods>
-			<drinks randomMin="1" randomMax="1">
-				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">juiceoforange</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>			
 		</customer>
 		<customer>
 			<id>02</id>
 			<init>counter3</init>
 			<dest>counter3</dest>
-			<foods>
-			</foods>
-			<drinks randomMin="1" randomMax="1" differentFromPrevious="true">
-				<drink qt="1" price="0">coke</drink>
-				<drink qt="1" price="0">juiceoforange</drink>
-			</drinks>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>	
 		</customer>
 	</customers>
 	<objectives ordered="false" reward="15" bonusTime="180" bonusTimeReward="45 30">

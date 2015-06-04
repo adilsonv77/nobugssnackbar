@@ -136,6 +136,7 @@ changesSaved=Changes are saved!
 enterPosNum=Enter positive number!
 cannotStartEndWithAndOr=Condition cannot start or end with AND/OR
 randNotValid="Qtd" must be positive number!
+addFoodstuff=Add Foodstuff
 correctly=correctly
 default=Default
 selectCommand=Please select command!
@@ -189,21 +190,8 @@ notSelectedCommandOrBlockError=Please select a command or 'Load blocks...' from 
 noANDORbtwnCond=Between each pair of conditions have to have AND/OR
 cannotEditCond=Cannot edit this kind of condition (AND/OR)
 settingsMsg=Here are the mission's settings.
+<<<<<<< e8d3fe3acf2574451fe365e815224026e948f254
 missionSuccSaved=Mission is saved!
+=======
 null=null
-pizza=Pizza
-hamburger=Hamburger
-taco=Taco
-water=Water
-cola=Coca Cola
-juice=Juice
-addFoodstuff=Add Foodstuff
-addBeverage=Add Beverage
-table=Table
-chair=Chair
-tablesAndChairs=Tables and Chairs
-counter=Counter
-counters=Counters
-door=Door
-noMissionName=Please enter the name of the mission
-disableTime=Write "-1" to disable time
+>>>>>>> 4fedc443a928cd99fe2e16850489592c4628fe91

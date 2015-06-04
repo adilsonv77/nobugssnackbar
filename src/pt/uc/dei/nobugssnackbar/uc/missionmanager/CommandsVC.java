@@ -110,7 +110,7 @@ public class CommandsVC implements ICommandProvider, Serializable {
 		return selectedCommands;
 	}
 
-	public void setSelectedCommands(List<Command> selectedCommands) {
+	public void setSelectedCommands(List<Command> selectedCommands) throws Exception {	
 		this.selectedCommands = selectedCommands;
 	}
 

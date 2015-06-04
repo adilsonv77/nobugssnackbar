@@ -1,8 +1,15 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
 import java.io.Serializable;
+import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import pt.uc.dei.nobugssnackbar.model.Command;
 
@@ -13,21 +20,37 @@ import pt.uc.dei.nobugssnackbar.model.Command;
  * @author adilsonv77
  * 
  */
+@XmlRootElement(name="mission")
+@XmlAccessorType(XmlAccessType.NONE)
 public class MissionContent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Hint> tipsHints = new ArrayList<>();
-	private List<Hint> errorsHints = new ArrayList<>();
+	/*private List<Hint> tipsHints = new ArrayList<>();
+	private List<Hint> errorsHints = new ArrayList<>();*/
+	
+	@XmlElement(name="hints",type=Hints.class)
+	private Hints hints = new Hints();
 
 	private List<Command> commands;
+	
+	@XmlElementWrapper(name="commands")
+	@XmlElement(name="category",type=Command.class)
 	private List<Command> selectedCommands;
+	
+	@XmlElementWrapper(name="explanation")
+	@XmlElement(name="page",type=Page.class)
     private List<Page> pages = new ArrayList<>();
     
+	@XmlElementWrapper(name="customersSN")
+	@XmlElement(name="randomization",type=Randomization.class)
     private List<Randomization> randList = new ArrayList<>();
     
+	@XmlElementWrapper(name="customers")
+	@XmlElement(name="customer",type=Customer.class)
     private List<Customer> customers = new ArrayList<>();
     
+    @XmlElement(name="objectives")
     private Objectives objectives = new Objectives();
 
     private long timeLimit;
@@ -39,21 +62,21 @@ public class MissionContent implements Serializable {
 	public MissionContent() {
 	}
 	
-	public List<Hint> getTipsHints() {
-		return tipsHints;
-	}
-
+	/*@XmlElement(name="hint", type=Hint.class)
+	@XmlElementWrapper(name="sequence")
 	public void setTipsHints(List<Hint> tipsHints) {
-		this.tipsHints = tipsHints;
+		this.hints.setTipsHints(tipsHints);
 	}
 
 	public List<Hint> getErrorsHints() {
-		return errorsHints;
+		return hints.getErrorsHints();
 	}
-
+	
+	@XmlElement(name="hint", type=Hint.class)
+	@XmlElementWrapper(name="errors")
 	public void setErrorsHints(List<Hint> errorsHints) {
-		this.errorsHints = errorsHints;
-	}
+		this.setErrorsHints(errorsHints);
+	}*/
 
 	public List<Command> getCommands() {
 		return commands;
@@ -212,4 +235,11 @@ public class MissionContent implements Serializable {
 		this.selectedCommands = selectedCommands;
 	}
 
+	public Hints getHints() {
+		return hints;
+	}
+	
+	public void setHints(Hints hints) {
+		this.hints = hints;
+	}
 }
