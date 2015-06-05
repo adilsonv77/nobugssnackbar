@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -62,12 +61,12 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			cookStartsFromList = new ArrayList<SelectItem>(customerVC.getInitPositions().
 					subList(1, customerVC.getInitPositions().size()));
 			SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("initial"));
-			sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("initial"), msg.getString("initial"))});
+			sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("initial").toLowerCase(), msg.getString("initial"))});
 			cookStartsFromList.add(0, sigDefault);
 			
 			timeLimit = missionManager.getMissionContent().getTimeLimit();
 			cook = missionManager.getMissionContent().getCook();
-			cook.setStartPosition(msg.getString("initial"));
+			cook.setStartPosition(msg.getString("initial").toLowerCase());
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
 			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();

@@ -118,7 +118,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		tablesChairsNormalList = new ArrayList<>();
 		
 		SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("door"));
-		sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("door"), msg.getString("door"))});
+		sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("door").toLowerCase(), msg.getString("door"))});
 		initPositions.add(sigDefault);
 		
 		SelectItemGroup sigCounters = new SelectItemGroup(msg.getString("counters"));
@@ -130,7 +130,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 		for (int i = 0, sitIndex = 0; i < sic.length; i++) {
 			int num = i + 1;
 			itemValue.append(msg.getString("counter") + " " + num);
-			sic[i] = new SelectItem(itemValue.toString(), itemValue.toString());
+			sic[i] = new SelectItem(itemValue.toString().replace(" ", "").toLowerCase(), itemValue.toString());
 			
 			itemValue.delete(0, itemValue.length());
 			
@@ -139,7 +139,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				itemValue.append(num);
 				itemValue.append(" " + msg.getString("chair") + " ");
 				itemValue.append(j);
-				sit[sitIndex] = new SelectItem(itemValue.toString(), itemValue.toString());
+				sit[sitIndex] = new SelectItem(itemValue.toString().replace(" ", "").toLowerCase(), itemValue.toString());
 				tablesChairsNormalList.add(itemValue.toString());
 				itemValue.delete(0, itemValue.length());
 			}
