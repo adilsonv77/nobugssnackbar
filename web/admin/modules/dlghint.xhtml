@@ -46,7 +46,7 @@
 						    	<h:outputText value="#{hintView.hint.conditionsAsString}" escape="false"/>
 						    </p:panelGrid>
 						    
-						    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
+						    <p:outputLabel for="hintTime" value="#{msg['time']}:"/>
 						    <p:panelGrid columns="2">
 							    <p:inputText id="hintTime" value="#{hintView.hint.time}"
 							    	disabled="#{hintView.dlgHintDisabled}"/>
@@ -71,7 +71,7 @@
 								actionListener="#{hintView.addEditHint}" 
 								update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
 		
-							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" 
+							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-closethick" 
 								actionListener="#{hintView.cancel}" 
 								update="hintDlg"
 								onsuccess="PF('ckEditorHintText').destroy()"/> 

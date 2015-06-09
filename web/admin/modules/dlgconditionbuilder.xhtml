@@ -49,7 +49,7 @@
 						update=":formCondBuilder :growlMsgs" 
 						actionListener="#{condVC.addCondition}"
 						disabled="#{condVC.allowedFieldset == false}"/>
-					<p:commandButton id="cancelCondBtn" value="#{msg['cancel']}" icon="ui-icon-close" 
+					<p:commandButton id="cancelCondBtn" value="#{msg['cancel']}" icon="ui-icon-closethick" 
 						update=":formCondBuilder :growlMsgs" 
 						actionListener="#{condVC.setAllowedFieldset(false)}"
 						disabled="#{condVC.allowedFieldset == false}"/>
@@ -66,12 +66,12 @@
 				<p:column>
 					<h:outputText value="#{c.conditionString}" />
 					
-					<p:commandLink actionListener="#{condVC.editCondition}" style="border-radius: 10px;float: right !important;" update=":formCondBuilder:field,:growlMsgs">
+					<p:commandLink title="#{msg['edit']}" actionListener="#{condVC.editCondition}" style="border-radius: 10px;float: right !important;" update=":formCondBuilder:field,:growlMsgs">
 						<f:param name="editConditionID" value="#{c.id}" />
 						<span class="ui-icon ui-icon-pencil" />
 					</p:commandLink>
 					
-					<p:commandLink actionListener="#{condVC.deleteCondition}" style="border-radius: 10px;float: right !important;" update=":formCondBuilder">
+					<p:commandLink title="#{msg['delete']}" actionListener="#{condVC.deleteCondition}" style="border-radius: 10px;float: right !important;" update=":formCondBuilder,:growlMsgs">
 						<f:param name="editConditionID" value="#{c.id}" />
 						<span class="ui-icon ui-icon-trash" />
 					</p:commandLink>
@@ -83,7 +83,7 @@
 	    		<p:commandButton value="#{msg['ok']}" icon="ui-icon-check" 
 	    			actionListener="#{condVC.checkCondition}"
 	    			update=":formDlgHints, :formCondBuilder, :growlMsgs"/>
-	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close" 
+	      		<p:commandButton value="#{msg['cancel']}" icon="ui-icon-closethick" 
 	      			oncomplete="PF('condBuilderDlg').hide()" 
 	      			actionListener="#{condVC.setAllowedFieldset(false)}"/>
 	       	</p:panelGrid>

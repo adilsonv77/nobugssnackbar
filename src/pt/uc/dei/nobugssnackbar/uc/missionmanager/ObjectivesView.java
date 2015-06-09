@@ -86,7 +86,7 @@ public class ObjectivesView implements Serializable {
 		types = new HashMap<String, String>();
 		types.put("askForFood","askForFood");
 		types.put("pickUpFood","pickUpFood");
-		types.put("counter","counter");		
+		types.put("counter","counter");
 		types.put("deliver","deliver");
 		types.put("askForDrink","askForDrink");
 		types.put("pickUpDrink","pickUpDrink");
@@ -120,7 +120,7 @@ public class ObjectivesView implements Serializable {
 		}
 		return listBonusTimeReward;
 	}
-
+	
 	private void translateToString() {
 		String text = "";
 		this.getObjectives().setBonusTimeReward("");
@@ -130,6 +130,7 @@ public class ObjectivesView implements Serializable {
 		
 		this.getObjectives().setBonusTimeReward(text);
 	}
+	
 	public void setMaxCommands(boolean isMaxCommands) {
 		objectives.setBoolMaxCommands(isMaxCommands);
 	}
