@@ -29,8 +29,8 @@ public class Hint implements java.io.Serializable {
 	
 	private HintCategory hintCategory;
 	@JdbcField(name="hintstime")
-	private int time;	
-	private String strTime;
+	private Integer time;	
+	//private String strTime;
 	
 	@XmlValue
 	@JdbcField(name="hintstextexplanation")
@@ -53,7 +53,7 @@ public class Hint implements java.io.Serializable {
 
 	public Hint(){
 		category = "";
-		time = -1;
+		time = null;
 		conditions = new ArrayList<>();
 		text = "";
 		type = false;//false == tip
@@ -83,7 +83,7 @@ public class Hint implements java.io.Serializable {
 	public String getText() {
 		return text;
 	}
-	public int getTime() {
+	public Integer getTime() {
 		return time;
 	}
 	
@@ -97,7 +97,8 @@ public class Hint implements java.io.Serializable {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public void setTime(int time) {
+	@XmlAttribute(name="time")
+	public void setTime(Integer time) {
 		this.time = time;
 	}	
 
@@ -126,15 +127,15 @@ public class Hint implements java.io.Serializable {
 	}
 	// #end
 
-	public String getStrTime() {
+	/*public String getStrTime() {
 		if(time > -1)
 			strTime = String.valueOf(time);
 		else
 			strTime = "";
 		return strTime;
-	}
+	}*/
 
-	@XmlAttribute(name="time")
+	/*@XmlAttribute(name="time")
 	public void setStrTime(String strTime) {
 		
 		try{			
@@ -144,5 +145,5 @@ public class Hint implements java.io.Serializable {
 			e.printStackTrace();;
 			return;
 		}
-	}
+	}*/
 }

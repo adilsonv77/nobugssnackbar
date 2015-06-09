@@ -61,12 +61,12 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			cookStartsFromList = new ArrayList<SelectItem>(customerVC.getInitPositions().
 					subList(1, customerVC.getInitPositions().size()));
 			SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("initial"));
-			sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("initial").toLowerCase(), msg.getString("initial"))});
+			sigDefault.setSelectItems(new SelectItem[] {new SelectItem("initial", msg.getString("initial"))});
 			cookStartsFromList.add(0, sigDefault);
-			
+
 			timeLimit = missionManager.getMissionContent().getTimeLimit();
 			cook = missionManager.getMissionContent().getCook();
-			cook.setStartPosition(msg.getString("initial").toLowerCase());
+			cook.setStartPosition("initial");
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
 			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();

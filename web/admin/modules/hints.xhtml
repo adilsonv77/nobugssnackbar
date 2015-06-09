@@ -31,7 +31,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['time']}" width="50">
-		        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
+		        <h:outputText value="#{hint.time}" />
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['text']}">
@@ -66,7 +66,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['time']}" width="50">
-		        <h:outputText value="#{error.time>=0?error.strTime:msg['null']}" />
+		        <h:outputText value="#{error.time}" />
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['text']}" >
