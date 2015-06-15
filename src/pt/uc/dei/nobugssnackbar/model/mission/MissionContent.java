@@ -59,7 +59,6 @@ public class MissionContent implements Serializable {
     @XmlElement(name="cooker",type=Cook.class)
 	private Cook cook = new Cook();
     
-    @XmlElement(name="xml")
 	private XmlTag xmltag = new XmlTag();
 	
 	@XmlElement(name="slider",type=Slider.class)
@@ -186,6 +185,7 @@ public class MissionContent implements Serializable {
 		return xmltag;
 	}
 
+    @XmlElement(name="xml",type=XmlTag.class)
 	public void setXmltag(XmlTag xmltag) {
 		this.xmltag = xmltag;
 	}

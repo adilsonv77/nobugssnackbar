@@ -47,34 +47,34 @@
 			
 			<h:outputText value="#{msg['xmlBlocks']}:"/>
 			<p:outputPanel>
-				<p:selectOneRadio id="customRadioXml" value="#{msVC.selectedXmlOption}" layout="custom">
-					<p:ajax event="change" update=":tbView:settingsForm"/>
-					<f:selectItem itemLabel="#{msg['nothing']}" itemValue="#{msg['nothing']}"/>
-					<f:selectItem itemLabel="#{msg['alwaysNew']}" itemValue="#{msg['alwaysNew']}"/>
-					<f:selectItem itemLabel="#{msg['loadPrevMission']}" itemValue="#{msg['loadPrevMission']}"/>
-					<f:selectItem itemLabel="#{msg['loadBlocks']}" itemValue="#{msg['loadBlocks']}"/>
-				</p:selectOneRadio>
-				
-				<p:panelGrid columns="3" cellpadding="5">
-					<p:radioButton for="customRadioXml" itemIndex="0"/>
-            		<h:outputText value="#{msg['nothing']}"/>
-            		<h:outputText value=""/>
-            		
-            		<p:radioButton for="customRadioXml" itemIndex="1"/>
-            		<h:outputText value="#{msg['alwaysNew']}"/>
-            		<h:outputText value=""/>
-            		
-            		<p:radioButton for="customRadioXml" itemIndex="2"/>
-           			<h:outputText value="#{msg['loadPrevMission']}"/>
-           			<p:selectOneMenu value="#{msVC.mission}" converter="#{msVC.mc}" disabled="#{!msVC.choseMission}">
-           				<p:ajax event="change" listener="#{msVC.handlePrevMissionChange}"/>
-           				<f:selectItems value="#{msVC.missionList}" var="m" itemLabel="#{m.name}" itemValue="#{m}"/>
-           			</p:selectOneMenu>
-
-            		<p:radioButton for="customRadioXml" itemIndex="3"/>
-            		<h:outputText value="#{msg['loadBlocks']}"/>
-            		<p:commandButton value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()" disabled="#{!msVC.choseLoadBlocks}"/>
-				</p:panelGrid>
+				 <p:panelGrid columns="1" >
+				 	<p:column >
+		       			 <p:selectBooleanCheckbox value="#{msVC.alwaysNew}">
+		       			 	<p:ajax event="change" update="@this" />
+		       			 </p:selectBooleanCheckbox>	       			 
+		       			 <h:outputText value=" #{msg['alwaysNew']}" />
+	       			 </p:column>
+	       			 
+	       			 <p:column>					 
+		       			<p:selectBooleanCheckbox value="#{msVC.preload}">
+		       				<p:ajax event="change" update="@this,loadMission" />
+		       			</p:selectBooleanCheckbox>
+		       			<h:outputText value=" #{msg['loadPrevMission']} "/>
+						<p:selectOneMenu id="loadMission" value="#{msVC.mission}" converter="#{msVC.mc}" disabled="#{!msVC.preload}">
+		        			<p:ajax event="change" listener="#{msVC.handlePrevMissionChange}"/>
+		        			<f:selectItems value="#{msVC.missionList}" var="m" itemLabel="#{m.name}" itemValue="#{m}"/>
+		        		</p:selectOneMenu>		       			 
+	       			 </p:column>
+	       			 
+	       			 <p:column>					 
+		       			 <p:selectBooleanCheckbox value="#{msVC.loadBlocks}">
+		       			 	<p:ajax event="change" update="@this,loadBlocks" />
+		       			 </p:selectBooleanCheckbox>
+		       			 <h:outputText value=" #{msg['loadBlocks']} "/>
+		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()"
+		        			disabled="#{!msVC.loadBlocks}"/>
+	        		</p:column>
+        		</p:panelGrid>
 			</p:outputPanel>
 		</p:panelGrid>
 	</h:form>

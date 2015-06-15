@@ -27,7 +27,8 @@
 					<p:ajax event="change" update="cbVariableQty, variableQty" />
 				</p:selectBooleanCheckbox>        	
 	 			<h:outputLabel for="variableQty" value="#{msg['variableQuantity']}"/>
-	        	<p:spinner id="variableQty" size="5" value="#{objView.objectives.varQtd}" disabled="#{!objView.variableQty}" min="0">
+	        	<p:spinner id="variableQty" size="5" value="#{objView.objectives.varQtd}"
+	        		disabled="#{!objView.variableQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>
 				
@@ -35,7 +36,8 @@
 					<p:ajax event="change" update="cbCommandQty, commandQty" />
 				</p:selectBooleanCheckbox> 				                  
 	 			<h:outputLabel for="commandQty" value="#{msg['commandQuantity']}" />
-	        	<p:spinner id="commandQty" size="5" value="#{objView.objectives.commQtd}" disabled="#{!objView.commandQty}" min="0">
+	        	<p:spinner id="commandQty" size="5" value="#{objView.objectives.commQtd}" 
+	        	disabled="#{!objView.commandQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>	        	                
 			</p:panelGrid>

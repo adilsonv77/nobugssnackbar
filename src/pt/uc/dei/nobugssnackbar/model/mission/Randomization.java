@@ -1,20 +1,10 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
-import java.util.ResourceBundle;
-
-
-
-
-
-
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
-
-import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="randomization")
 public class Randomization implements java.io.Serializable {
@@ -28,10 +18,9 @@ public class Randomization implements java.io.Serializable {
 	private String type;
 
 	public Randomization() {
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		qtd = 0;
-		set = messageBundle.getString("new");
-		type = messageBundle.getString("hungry");
+		set = "new";
+		type = "hungry";
 	}
 	
 	public void setQtd(byte qtd) {		

@@ -1,14 +1,10 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
-import java.util.ResourceBundle;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="customer")
@@ -27,15 +23,13 @@ public class Customer implements java.io.Serializable  {
 		orders = new Orders();
 		skin = new Skin();
 		id = -1;
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
-		randomType = messageBundle.getString("none").toLowerCase();
+		randomType = "none";
 	}
 	public Customer(long id) {
 		orders = new Orders();
 		skin = new Skin();
 		this.id = id;
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
-		randomType = messageBundle.getString("none").toLowerCase();
+		randomType = "none";
 	}
 	
 	public long getId() {

@@ -12,7 +12,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
-import javax.xml.bind.annotation.XmlAttribute;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -26,6 +25,7 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.MissionConverter;
 public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@ManagedProperty(value="#{mm.missionContent.timeLimit}")
 	private long timeLimit; // mission's attribute
 	
 	private List<Mission> missionList;
@@ -33,15 +33,17 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	
 	@ManagedProperty(value="#{mm.missionContent.cook}")
 	private Cook cook;
+	@ManagedProperty(value="#{mm.missionContent.xmltag}")
 	private XmlTag xmltag;
 	@ManagedProperty(value="#{mm.missionContent.slider}")
 	private Slider slider;
 	
 	private List<SelectItem> cookStartsFromList;
-	private String selectedXmlOption;
+	//private String selectedXmlOption;
 	private boolean choseMission;
 	private boolean choseLoadBlocks;
-	@XmlAttribute(name="open")
+
+	
 	@ManagedProperty(value="#{mm.missionContent.repeatable}")
 	private boolean repeatable;
 	
@@ -76,7 +78,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			// don't change the value. If you did: maybe you will have some problem with the generation of XML
-			ctx.getExternalContext().getSessionMap().put("blocks", "<xml></xml>");
+			ctx.getExternalContext().getSessionMap().put("blocks",
+					this.xmltag.getXmlns()== null || this.xmltag.getXmlns()== ""
+					? "<xml></xml>" : this.xmltag.getXmlns());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -85,9 +89,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	public MissionSettingsVC() {
 		mission = new Mission();
 		
-		ResourceBundle msg = ApplicationMessages.getMessage();	
+		//ResourceBundle msg = ApplicationMessages.getMessage();	
 		
-		selectedXmlOption = msg.getString("nothing");
+		//selectedXmlOption = msg.getString("nothing");
 	}
 	
 	public List<SelectItem> getCookStartsFromList() {
@@ -123,7 +127,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		this.xmltag = xmltag;
 		//missionManager.getMissionContent().setXmltag(xmltag);
 	}
-
+/*
 	public String getSelectedXmlOption() {
 		return selectedXmlOption;
 	}
@@ -146,6 +150,26 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		
 		missionManager.getMissionContent().setSelectedLoadBlocks(choseLoadBlocks);
 		this.selectedXmlOption = selectedXmlOption;
+	}
+	*/
+	
+	public boolean isAlwaysNew(){
+		if(xmltag.isAlwaysNew() == null)
+			return false;
+		return xmltag.isAlwaysNew();
+	}
+	
+	public void setAlwaysNew(Boolean alwaysNew){
+		xmltag.setAlwaysNew(alwaysNew);
+	}
+	
+	public boolean isLoadBlocks(){
+		if(xmltag.isLoadBlocks() == null)
+			return false;
+		return xmltag.isLoadBlocks();
+	}
+	public void setLoadBlocks(Boolean loadBlocks){
+		xmltag.setLoadBlocks(loadBlocks);
 	}
 	
 	public void handlePrevMissionChange() {
@@ -225,6 +249,23 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	
 	public void setRepeatable(boolean repeatable) {
 		this.repeatable = repeatable;
+	}
+
+	public boolean isPreload() {
+		if(xmltag.getPreload() != null){
+			return true;
+		}
+		return false;
+	}
+
+	public void setPreload(boolean preload) {
+		if(preload){			
+			xmltag.setPreload(1);
+		}
+		else{
+			xmltag.setPreload(null);
+		}
+		choseMission = preload;
 	}
 
 }

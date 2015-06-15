@@ -142,7 +142,6 @@ public class Hint implements java.io.Serializable {
 			time = Integer.parseInt(strTime);
 		}
 		catch(NumberFormatException e){	
-			e.printStackTrace();;
 			return;
 		}
 	}*/
