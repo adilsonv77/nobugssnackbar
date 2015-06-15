@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -75,7 +77,21 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 				mission = selectMission(xmltag.getPreload());
 				preload = true;
 			}
-			if (xmltag.getXmlns() != null && !xmltag.getXmlns().isEmpty() && !xmltag.getXmlns().equals("<xml></xml>")) {
+			if (this.xmltag.getXmlns() == null) {
+				this.xmltag.setXmlns("<xml></xml>");
+			}
+			FacesContext ctx = FacesContext.getCurrentInstance();			
+			ctx.getExternalContext().getSessionMap().put("blocks", this.xmltag.getXmlns());
+
+			String XML_TAG_ALL = "(<\\s*xml[\\s\\w=\\\"\\/:.]*>)([\\w<\\s=\\\">\\/]*)(<\\s*\\/\\s*xml\\s*>)";
+			Pattern p = Pattern.compile(XML_TAG_ALL);
+			Matcher m = p.matcher(xmltag.getXmlns());
+			String xstr = xmltag.getXmlns();
+			if (m.find()) {
+				xstr = m.group(2).replace(" ", "");
+			}
+
+			if (xmltag.getXmlns() != null && !xmltag.getXmlns().isEmpty() && !xstr.isEmpty()) {
 				selectedLoadBlocks = true;
 			}
 			else {
@@ -84,11 +100,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			
 			mc = new MissionConverter();
 			mc.setProvider(this);
-			
-			FacesContext ctx = FacesContext.getCurrentInstance();			
-			ctx.getExternalContext().getSessionMap().put("blocks",
-					(this.xmltag.getXmlns() == null || this.xmltag.getXmlns() == "")
-					? "<xml></xml>" : "<xml>" + this.xmltag.getXmlns() + "</xml>");
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

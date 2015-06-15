@@ -72,7 +72,7 @@
 		       			 
 		       			 <h:outputText value=" #{msg['loadBlocks']} "/>
 		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()"
-		        			disabled="#{!msVC.loadBlocks}"/>
+		        			disabled="#{!msVC.selectedLoadBlocks}" update="loadBlocksDialog"/>
 	        		</p:column>
         		</p:panelGrid>
 			</p:outputPanel>

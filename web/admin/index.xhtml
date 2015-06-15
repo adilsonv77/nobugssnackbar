@@ -45,12 +45,9 @@
 				selection="#{missionVC.mission}"
 				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
 				value="#{missionVC.missionList}">
-    			<!-- <p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont" /> -->
+    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont,growlMsgs" />
     			<p:column>
-    				<p:commandLink value="#{m.name}" styleClass="cmndlinkDT" action="#{mm.load}"
-    					update=":missionNameLangForm:missionNameCont,growlMsgs">
-    					<f:setPropertyActionListener value="#{m}" target="#{mm.mission}"/>
-    				</p:commandLink>
+    				<h:outputText value="#{m.name}"/>
     			</p:column>
     		</p:dataTable>
 	    </p:layoutUnit>

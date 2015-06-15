@@ -43,6 +43,7 @@ public class MissionVC implements IMissionProvider, Serializable {
 	public void handleMissionSelect(SelectEvent event) {
 		mission = (Mission)event.getObject();
 		missionManager.setMission(mission);
+		missionManager.load();
 	}
 	
 	public void handleKeyEvent() {

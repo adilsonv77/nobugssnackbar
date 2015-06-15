@@ -130,12 +130,6 @@ div.divExplEdit + img {
 .leftColDT{
 	width: 150px;
 }
-.cmndlinkDT,.cmndlinkDTText,.olElementHeader {
-    text-decoration: none;
-    display: block;
-    height: 100%;
-    width: 100%; 
-}
 .chooseHintCategoryDT.ui-datatable tbody td{
 	height: 50px;
 }

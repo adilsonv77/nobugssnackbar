@@ -200,7 +200,7 @@ public class MissionManager implements Serializable {
 				String xml = XmlToMission.missionToXML(missionContent);
 				
 				if (xml != null) {
-					System.out.println(xml);
+					// System.out.println(xml);
 					
 					mission.setContent(xml);
 					MissionJdbcDao missionJdbcDao = new MissionJdbcDao();

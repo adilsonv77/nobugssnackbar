@@ -58,7 +58,7 @@ public class XmlToMission {
 			else {
 				mc.getXmltag().setLoadBlocks(false);
 			}
-			
+
 			return mc;
 		}
 		catch(Exception e){
@@ -78,7 +78,7 @@ public class XmlToMission {
 			if (!missionContent.isRepeatable()) {		
 				missionContent.setSlider(null);
 				missionContent.setTimeLimit(null);
-				missionContent.getObjectives().setObjectiveList(null);
+				// missionContent.getObjectives().setObjectiveList(null); !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ?
 			}
 			
 			if (!missionContent.isSelectedLoadBlocks()) {
