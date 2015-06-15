@@ -47,7 +47,9 @@
 				value="#{missionVC.missionList}">
     			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont" />
     			<p:column>
-    				<h:outputText value="#{m.name}"/>
+    				<h:outputText value="#{m.name}">
+    					<p:commandButton value="Unmarshal" 	actionListener="#{mm.load}"/>
+    				</h:outputText>
     			</p:column>
     		</p:dataTable>
 	    </p:layoutUnit>

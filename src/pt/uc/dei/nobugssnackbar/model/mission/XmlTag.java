@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
+
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.XmlTagHandler;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="xml")
@@ -17,7 +20,7 @@ public class XmlTag implements Serializable {
 	private Boolean alwaysNew;
 	private Boolean loadBlocks;	
 	//@XmlAnyElement(XmlTagHandler.class)
-	@XmlValue
+	@XmlAnyElement(value=XmlTagHandler.class)
 	private String xmlns;	
 	
 	public Integer getPreload() {
@@ -35,7 +38,7 @@ public class XmlTag implements Serializable {
 		this.alwaysNew = alwaysNew;
 	}
 	public String getXmlns() {
-		return xmlns;
+		return "<xml>" + xmlns + "</xml>";
 	}
 	public void setXmlns(String xmlns) {
 		this.xmlns = xmlns;

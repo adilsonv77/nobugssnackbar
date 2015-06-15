@@ -11,6 +11,7 @@ import javax.xml.transform.stream.StreamSource;
 public class XmlTagHandler implements DomHandler<String, StreamResult> {
     
     private StringWriter xmlWriter = new StringWriter();
+    private String XML_VERSION_REPLACE = "<\\?xml\\s*version\\=\"1.0\" encoding=\"UTF-8\"\\?>"; 
 	
     public StreamResult createUnmarshaller(ValidationEventHandler errorHandler) {
         return new StreamResult(xmlWriter);
@@ -18,7 +19,7 @@ public class XmlTagHandler implements DomHandler<String, StreamResult> {
  
     public String getElement(StreamResult rt) {
         String xml = rt.getWriter().toString();
-		
+        xml = xml.replaceAll(XML_VERSION_REPLACE, "");
 		return xml;
     }
  

@@ -76,8 +76,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			mc = new MissionConverter();
 			mc.setProvider(this);
 			
-			FacesContext ctx = FacesContext.getCurrentInstance();
-			// don't change the value. If you did: maybe you will have some problem with the generation of XML
+			FacesContext ctx = FacesContext.getCurrentInstance();			
 			ctx.getExternalContext().getSessionMap().put("blocks",
 					(this.xmltag.getXmlns() == null || this.xmltag.getXmlns() == "")
 					? "<xml></xml>" : this.xmltag.getXmlns());
@@ -169,6 +168,12 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		return xmltag.isLoadBlocks();
 	}
 	public void setLoadBlocks(boolean loadBlocks){
+<<<<<<< db4b44cfe4e9e4ec86cccf70161c5f4fa1ed8e09
+=======
+		if(loadBlocks == false){
+			xmltag.setXmlns("");
+		}
+>>>>>>> 23ac64edad58cb11124de12a611eec0f0764a476
 		xmltag.setLoadBlocks(loadBlocks);
 	}
 	

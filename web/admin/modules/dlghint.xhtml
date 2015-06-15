@@ -68,7 +68,9 @@
 				    <p:layoutUnit position="south" style="border: none;" size="50">
 					    <p:panelGrid columns="2" style="float: right;">    
 							<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
+
 								actionListener="#{hintView.addEditHint}" rendered="#{!hintView.dlgHintDisabled}"
+
 								update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
 		
 							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-closethick" 

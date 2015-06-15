@@ -67,7 +67,8 @@
 	       			 
 	       			 <p:column>					 
 		       			 <p:selectBooleanCheckbox value="#{msVC.loadBlocks}">
-		       			 	<p:ajax event="change" update="@this, loadBlocks" />
+		       			 	<p:ajax event="change" update="@this,loadBlocks"/>
+
 		       			 </p:selectBooleanCheckbox>
 		       			 <h:outputText value=" #{msg['loadBlocks']} "/>
 		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()"
