@@ -31,7 +31,7 @@
 	    <p:graphicImage value="../images/ajaxLoadingBar.gif" />
 	</p:dialog>
 	
-	<p:layout fullPage="true">
+	<p:layout id="fullPage" fullPage="true">
 		 
 		<p:layoutUnit id="missionPnl" position="west" size="300" minSize="200" maxSize="400" resizable="true">
 	        <f:facet name="header">
@@ -45,11 +45,12 @@
 				selection="#{missionVC.mission}"
 				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
 				value="#{missionVC.missionList}">
-    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont" />
+    			<!-- <p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont" /> -->
     			<p:column>
-    				<h:outputText value="#{m.name}">
-    					<p:commandButton value="Unmarshal" 	actionListener="#{mm.load}"/>
-    				</h:outputText>
+    				<p:commandLink value="#{m.name}" styleClass="cmndlinkDT" action="#{mm.load}"
+    					update=":missionNameLangForm:missionNameCont,growlMsgs">
+    					<f:setPropertyActionListener value="#{m}" target="#{mm.mission}"/>
+    				</p:commandLink>
     			</p:column>
     		</p:dataTable>
 	    </p:layoutUnit>
@@ -82,7 +83,7 @@
         			</p:panelGrid>
        			</p:layoutUnit>
        			
-         		<p:layoutUnit position="center">
+         		<p:layoutUnit id="mainTabs" position="center">
 					<p:tabView id="tbView" dynamic="true" effect="fade" effectDuration="fast" cache="false">
 				        
 				        <p:tab id="explTab" title="#{msg['explanation']}">

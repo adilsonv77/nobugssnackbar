@@ -22,7 +22,7 @@ public class XmlToMission {
 	//private static final String REGEX_XMLTAG_FIRST = "(\\<\\s*\\?\\s*xml[\\w=\".\\s-]*\\?*\\s*\\>)";
 	
 	public static MissionContent load(String xml){
-		xml = mxml;
+		//xml = mxml;
 		JAXBContext jaxbContext;
 		try {
 			jaxbContext = JAXBContext.newInstance(MissionContent.class);
@@ -67,15 +67,6 @@ public class XmlToMission {
 		}
 	}
 	
-	/*public ObjectGraph unmarshalarOG(){
-		
-		  ObjectGraph contactInfo = JAXBHelper.getJAXBContext(jc).createObjectGraph(Customer.class);
-	        contactInfo.addAttributeNodes("name");
-	        Subgraph location = contactInfo.addSubgraph("billingAddress");
-	        location.addAttributeNodes("city", "province");
-	        Subgraph simple = contactInfo.addSubgraph("phoneNumbers");
-	        simple.addAttributeNodes("value");
-	}*/
 
 	
 	public static String missionToXML(MissionContent mc) {		
@@ -112,9 +103,9 @@ public class XmlToMission {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
 			writer = new StringWriter();
 			jaxbMarshaller.marshal(missionContent, writer);
-			
+
 			return writer.toString();
-			
+
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

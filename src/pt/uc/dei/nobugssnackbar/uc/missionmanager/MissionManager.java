@@ -19,10 +19,6 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 
-
-
-
-
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
@@ -36,7 +32,6 @@ import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 public class MissionManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	
 	@PostConstruct
 	private void init() {
@@ -238,26 +233,24 @@ public class MissionManager implements Serializable {
 	public void load() {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
+
+		MissionContent mc = XmlToMission.load(mission.getContent());		
 		
-		MissionContent mc = XmlToMission.load("missionX.xml");
-		if (mc == null) {
+		if(mc == null){
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", 
-	        		"GREDA"));	      
+	        		messageBundle.getString("cantLoadMission")));	 
 		}
 		else {
 			this.setMissionContent(mc);
 			RequestContext.getCurrentInstance().update("tbView");
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
-	        		messageBundle.getString("missionSuccSaved")));	        
+	        		messageBundle.getString("missionLoaded")));	        
 		}
+
 		reloadPage();
 	}
 	
 	private static String errorMessage;
-	
-	public static String getErrorMessage() {
-		return errorMessage;
-	}
 	
 	public static boolean verification(MissionContent missionContent) {
 		errorMessage = "";

@@ -17,8 +17,6 @@
 			oncomplete="PF('addHintFromDB').show()" icon="ui-icon-circle-plus"/>
 		<p:commandButton value="#{msg['addBlank']}" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
 			actionListener="#{hintView.setAdd(true)}" update=":formDlgHints" icon="ui-icon-circle-plus" />
-			
-		<p:commandButton value="Unmarshal" 	actionListener="#{mm.load}"/>		
 
 	</p:panelGrid>
 		

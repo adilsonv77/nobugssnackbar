@@ -88,7 +88,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			FacesContext ctx = FacesContext.getCurrentInstance();			
 			ctx.getExternalContext().getSessionMap().put("blocks",
 					(this.xmltag.getXmlns() == null || this.xmltag.getXmlns() == "")
-					? "<xml></xml>" : this.xmltag.getXmlns());
+					? "<xml></xml>" : "<xml>" + this.xmltag.getXmlns() + "</xml>");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

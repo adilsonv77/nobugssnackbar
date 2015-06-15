@@ -22,7 +22,7 @@ public class XmlTag implements Serializable {
 	@XmlValue
 	private String xmlns;
 	
-	private Boolean loadBlocks;	
+	private Boolean loadBlocks;
 	
 	public Integer getPreload() {
 		return preload;
