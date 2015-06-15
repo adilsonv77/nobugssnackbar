@@ -39,8 +39,6 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private Slider slider;
 	
 	private List<SelectItem> cookStartsFromList;
-	//private String selectedXmlOption;
-	private boolean choseMission;
 	private boolean choseLoadBlocks;
 
 	
@@ -159,7 +157,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		return xmltag.isAlwaysNew();
 	}
 	
-	public void setAlwaysNew(Boolean alwaysNew){
+	public void setAlwaysNew(boolean alwaysNew){
 		xmltag.setAlwaysNew(alwaysNew);
 	}
 	
@@ -168,7 +166,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			return false;
 		return xmltag.isLoadBlocks();
 	}
-	public void setLoadBlocks(Boolean loadBlocks){
+	public void setLoadBlocks(boolean loadBlocks){
 		xmltag.setLoadBlocks(loadBlocks);
 	}
 	
@@ -192,14 +190,6 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	public void setTimeLimit(long timeLimit) throws Exception {
 		this.timeLimit = timeLimit;
 		//missionManager.getMissionContent().setTimeLimit(timeLimit);
-	}
-
-	public boolean isChoseMission() {
-		return choseMission;
-	}
-
-	public void setChoseMission(boolean choseMission) {
-		this.choseMission = choseMission;
 	}
 
 	public MissionManager getMissionManager() {
@@ -259,13 +249,12 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	}
 
 	public void setPreload(boolean preload) {
-		if(preload){			
+		if (preload) {			
 			xmltag.setPreload(1);
 		}
 		else{
 			xmltag.setPreload(null);
 		}
-		choseMission = preload;
 	}
 
 }

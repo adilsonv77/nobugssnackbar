@@ -68,7 +68,7 @@
 		    				<h:outputText value="#{msg['no']}: #{order.id}" />
 		    			</p:column>
 		    			<p:column style="padding:2px;">
-		    				<p:commandButton icon="ui-icon-closethickthick"
+		    				<p:commandButton icon="ui-icon-trash"
 								oncomplete="PF('confDeleteOrderDlg').show()">
 								<f:setPropertyActionListener value="#{order}" target="#{custVC.customer.orders.order}"/>
 							</p:commandButton>
@@ -124,7 +124,7 @@
 							    		<f:setPropertyActionListener value="#{food}" target="#{custVC.food}"/>
 							        </p:commandButton>
 							        
-							        <p:commandButton icon="ui-icon-closethickthick"
+							        <p:commandButton icon="ui-icon-trash"
 							        	oncomplete="PF('confDeleteFoodDlg').show()">
 							        	<f:setPropertyActionListener value="#{food}" target="#{custVC.food}"/>
 							        </p:commandButton>    	        
@@ -178,7 +178,7 @@
 							    		<f:setPropertyActionListener value="#{drink}" target="#{custVC.drink}"/>
 							        </p:commandButton>
 							        	
-							        <p:commandButton icon="ui-icon-closethickthick"
+							        <p:commandButton icon="ui-icon-trash"
 							        	oncomplete="PF('confDeleteDrinkDlg').show()">
 							        	<f:setPropertyActionListener value="#{drink}" target="#{custVC.drink}"/>
 							        </p:commandButton>
