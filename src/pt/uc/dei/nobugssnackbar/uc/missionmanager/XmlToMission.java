@@ -1,11 +1,16 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.faces.context.FacesContext;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 import pt.uc.dei.nobugssnackbar.model.mission.XmlTag;
 
@@ -71,4 +76,23 @@ public class XmlToMission {
 	        simple.addAttributeNodes("value");
 	}*/
 
+	public static String missionToXML(MissionContent missionContent) {
+		StringWriter writer = null;
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(MissionContent.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true); // !!!
+			writer = new StringWriter();
+			jaxbMarshaller.marshal(missionContent, writer);
+			writer.toString();
+			
+			System.out.println(writer.toString());
+			
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

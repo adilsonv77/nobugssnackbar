@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="xml")
@@ -16,7 +17,7 @@ public class XmlTag implements Serializable {
 	private Boolean alwaysNew;
 	private Boolean loadBlocks;	
 	//@XmlAnyElement(XmlTagHandler.class)
-	//@XmlValue
+	@XmlValue
 	private String xmlns;	
 	
 	public Integer getPreload() {

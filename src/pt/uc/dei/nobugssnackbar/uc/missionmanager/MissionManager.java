@@ -190,7 +190,9 @@ public class MissionManager implements Serializable {
 	}
 	
 	public void save() throws Exception {
-		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		XmlToMission.missionToXML(missionContent);
+
+		/*ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
@@ -215,7 +217,7 @@ public class MissionManager implements Serializable {
 			context.validationFailed();
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
 	        		messageBundle.getString("warningMsg"), messageBundle.getString("noMissionName")));
-		}
+		}*/
 	}
 	
 	public void load() {

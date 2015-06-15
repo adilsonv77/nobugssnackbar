@@ -66,7 +66,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 			timeLimit = missionManager.getMissionContent().getTimeLimit();
 			cook = missionManager.getMissionContent().getCook();
-			cook.setStartPosition("initial");
+			if (cook.getStartPosition() == null || cook.getStartPosition().isEmpty()) {
+				cook.setStartPosition("initial");
+			}
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
 			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();
@@ -77,7 +79,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			// don't change the value. If you did: maybe you will have some problem with the generation of XML
 			ctx.getExternalContext().getSessionMap().put("blocks",
-					this.xmltag.getXmlns()== null || this.xmltag.getXmlns()== ""
+					(this.xmltag.getXmlns() == null || this.xmltag.getXmlns() == "")
 					? "<xml></xml>" : this.xmltag.getXmlns());
 		} catch (Exception ex) {
 			ex.printStackTrace();
