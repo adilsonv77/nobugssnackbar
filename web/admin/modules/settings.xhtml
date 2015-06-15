@@ -54,7 +54,7 @@
 		       			 <h:outputText value=" #{msg['alwaysNew']}" />
 	       			 </p:column>
 	       			 
-	       			 <p:column>					 
+	       			 <p:column>
 		       			<p:selectBooleanCheckbox value="#{msVC.preload}">
 		       				<p:ajax event="change" update="@this,loadMission" />
 		       			</p:selectBooleanCheckbox>
@@ -66,10 +66,10 @@
 	       			 </p:column>
 	       			 
 	       			 <p:column>					 
-		       			 <p:selectBooleanCheckbox value="#{msVC.loadBlocks}">
+		       			 <p:selectBooleanCheckbox value="#{msVC.selectedLoadBlocks}">
 		       			 	<p:ajax event="change" update="@this,loadBlocks"/>
-
 		       			 </p:selectBooleanCheckbox>
+		       			 
 		       			 <h:outputText value=" #{msg['loadBlocks']} "/>
 		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()"
 		        			disabled="#{!msVC.loadBlocks}"/>

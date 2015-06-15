@@ -4,41 +4,41 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-import pt.uc.dei.nobugssnackbar.uc.missionmanager.XmlTagHandler;
-
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="xml")
 public class XmlTag implements Serializable {
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	
+	@XmlAttribute(name="preload")
 	private Integer preload;
+	
+	@XmlAttribute(name="alwaysNew")
 	private Boolean alwaysNew;
+	
+	@XmlValue
+	private String xmlns;
+	
 	private Boolean loadBlocks;	
-	//@XmlAnyElement(XmlTagHandler.class)
-	@XmlAnyElement(value=XmlTagHandler.class)
-	private String xmlns;	
 	
 	public Integer getPreload() {
 		return preload;
 	}
-	@XmlAttribute(name="preload")
 	public void setPreload(Integer preload) {
 		this.preload = preload;
 	}
 	public Boolean isAlwaysNew() {
 		return alwaysNew;
 	}
-	@XmlAttribute(name="alwaysNew")
+
 	public void setAlwaysNew(Boolean alwaysNew) {
 		this.alwaysNew = alwaysNew;
 	}
 	public String getXmlns() {
-		return "<xml>" + xmlns + "</xml>";
+		return xmlns;
 	}
 	public void setXmlns(String xmlns) {
 		this.xmlns = xmlns;

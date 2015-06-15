@@ -112,13 +112,18 @@ public class Hint implements java.io.Serializable {
 	public String getConditionsAsString() {
 		StringBuilder result = new StringBuilder();
 		
-		if(conditionsAsString == "" || conditionsAsString == null || conditionsAsString.equals("")){
+		if (conditionsAsString == null || conditionsAsString.equals("")){
 			for (Condition c : conditions) {
 				result.append(c.getConditionString());
 				result.append(" ");
 			}
 			conditionsAsString = result.toString().trim();
 		}
+		
+		if (conditionsAsString != null && conditionsAsString.length() == 0) {
+			conditionsAsString = null;
+		}
+		
 		return conditionsAsString;
 	}
 

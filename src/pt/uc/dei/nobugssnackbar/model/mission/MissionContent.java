@@ -54,7 +54,7 @@ public class MissionContent implements Serializable {
     private Objectives objectives = new Objectives();
 
     @XmlAttribute(name="timeLimit")
-    private long timeLimit;
+    private Long timeLimit;
     
     @XmlElement(name="cooker",type=Cook.class)
 	private Cook cook = new Cook();
@@ -214,11 +214,11 @@ public class MissionContent implements Serializable {
 		this.selectedLoadBlocks = selectedLoadBlocks;
 	}
 
-	public long getTimeLimit() {
+	public Long getTimeLimit() {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(long timeLimit) {
+	public void setTimeLimit(Long timeLimit) {
 		this.timeLimit = timeLimit;
 	}
 
