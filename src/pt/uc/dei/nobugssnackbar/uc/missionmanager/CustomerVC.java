@@ -24,6 +24,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Drink;
 import pt.uc.dei.nobugssnackbar.model.mission.Food;
 import pt.uc.dei.nobugssnackbar.model.mission.Foodstuff;
 import pt.uc.dei.nobugssnackbar.model.mission.Order;
+import pt.uc.dei.nobugssnackbar.model.mission.Orders;
 import pt.uc.dei.nobugssnackbar.model.mission.Skin;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.SkinConverter;
 
@@ -87,6 +88,16 @@ public class CustomerVC implements ISkinProvider, Serializable {
 					c.setDest(tablesChairsNormalList.get(i));
 					customers.add(c);
 					customerIcons.add(CUSTOMER_ICON_DEFF);
+				}
+			}
+			
+			for (Customer c : customers) {
+				for (Order o : c.getOrders().getOrders()) {
+					int index = c.getOrders().getOrders().indexOf(o);
+					int id = Orders.getOrderIdCounter() + 1;
+					Orders.setOrderIdCounter(id);
+					o.setId(id);
+					c.getOrders().getOrders().set(index, o);
 				}
 			}
 			
@@ -174,8 +185,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				customer.getOrders().getOrders().set(index, order);
 				customer.getOrders().setOrder(new Order());
 				order = customer.getOrders().getOrder();
-				int id = customer.getOrders().getOrderIdCounter() + 1;
-				customer.getOrders().setOrderIdCounter(id);
+				int id = Orders.getOrderIdCounter() + 1;
+				Orders.setOrderIdCounter(id);
 				order.setId(id);
 				customer.getOrders().getOrders().add(order);
 			}
@@ -203,7 +214,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				}
 			}
 			else if (customer.getOrders().getOrders().size() == 1) {
-				customer.getOrders().setOrderIdCounter(0);
+				Orders.setOrderIdCounter(0);
 				customer.getOrders().getOrders().set(0, new Order());
 				customer.getOrders().getOrders().get(0).setId(0);
 				customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));				

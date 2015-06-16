@@ -52,8 +52,12 @@ public class ExplanationVC implements IPagesProvider, Serializable {
  
 	@PostConstruct
 	private void init() {
+		pageIdCount = 0;
 		try {
 			this.pages = missionManager.getMissionContent().getPages();
+			for (Page p : pages) {
+				p.setId(pageIdCount++);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

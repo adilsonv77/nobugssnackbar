@@ -60,12 +60,12 @@
 						selection="#{custVC.customer.orders.order}"
 						var="order" rowKey="#{order.id}" emptyMessage="#{msg['default']}"
 						value="#{custVC.customer.orders.orders}"
-						draggableRows="true">
+						draggableRows="true" rowIndexVar="rowIndex">
 						<p:ajax event="rowReorder" update=":customerForm"/>
 
 						<p:ajax event="rowSelect" update=":customerForm"/>
 		    			<p:column style="width:74%;">
-		    				<h:outputText value="#{msg['no']}: #{order.id}" />
+		    				<h:outputText value="#{msg['no']}: #{rowIndex}" />
 		    			</p:column>
 		    			<p:column style="padding:2px;">
 		    				<p:commandButton icon="ui-icon-trash"

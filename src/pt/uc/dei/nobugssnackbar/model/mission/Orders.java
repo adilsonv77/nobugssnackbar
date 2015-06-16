@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Orders implements java.io.Serializable {	
 	private static final long serialVersionUID = 1L;
 	
-	private int orderIdCounter;
+	private static int orderIdCounter;
 	private Order order;
 	private List<Order> orders;
 
@@ -40,12 +40,13 @@ public class Orders implements java.io.Serializable {
 		this.order = order;
 	}
 
-	public int getOrderIdCounter() {
+	public static int getOrderIdCounter() {
 		return orderIdCounter;
 	}
 
-	public void setOrderIdCounter(int orderIdCounter) {
-		this.orderIdCounter = orderIdCounter;
+	public static void setOrderIdCounter(int orderIdCounter) {
+		Orders.orderIdCounter = orderIdCounter;
 	}
+
 
 }
