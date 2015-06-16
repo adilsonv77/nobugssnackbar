@@ -74,13 +74,14 @@ public class UserControl {
 	private int missionidx;
 	private boolean registeredUserLastTime;
 	private Object[][] missions;
+	private List<Object[]> avatar;
 
 	@RemoteMethod
 	public Object[] verifyLogged() throws Exception {
 		this.missions = (user == null ? null : retrieveMissions());
 		return new Object[] { user != null, this.user, this.missions,
-				(user == null ? null : retrieveLeaderBoard()), this.classid,
-				this.levelid, this.missionidx };
+				(user == null ? null : retrieveLeaderBoard()), this.avatar,
+				this.classid, this.levelid, this.missionidx };
 	}
 
 	@RemoteMethod
@@ -108,15 +109,20 @@ public class UserControl {
 			this.user = gameDao.login(nick, encrypt(passw));
 
 			this.missions = retrieveMissions();
+			this.avatar = retrieveAvatarParts();
 
-			return new Object[] { null, this.user, this.missions,
-					retrieveLeaderBoard() }; // no errors
+			return new Object[] { null, this.user, this.missions, 
+					retrieveLeaderBoard(), this.avatar }; // no errors
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Object[] { "Error_login" };
 		}
 
+	}
+
+	private List<Object[]> retrieveAvatarParts() throws Exception {
+		return gameDao.retrieveAvatarParts(this.user.getId());
 	}
 
 	@RemoteMethod

@@ -1,3 +1,4 @@
+/* This file is not in the third folder, because I modified it. */
 .tooltip-element,.tooltip-element:after,.tooltip-element:before,.tooltip-element *,.tooltip-element *:after,.tooltip-element *:before
 	{
 	-moz-box-sizing: border-box;
@@ -24,9 +25,10 @@
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	position: relative;
-	font-family: inherit; 
-	background: #AACDFE;
-	color: white;
+	font-family: inherit;
+	color: black;
+	font-weight: none; 
+	background: #FDEBD4;
 	line-height: 1.5em;
 }
 
@@ -51,7 +53,7 @@
 	top: 100%;
 	left: 50%;
 	margin-left: -8px;
-	border-top-color: #AACDFE;
+	border-top-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-top.tooltip-element-attached-center .tooltip-content
@@ -64,7 +66,7 @@
 	bottom: 100%;
 	left: 50%;
 	margin-left: -8px;
-	border-bottom-color: #AACDFE;
+	border-bottom-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-right.tooltip-element-attached-middle .tooltip-content
@@ -77,7 +79,7 @@
 	left: 100%;
 	top: 50%;
 	margin-top: -8px;
-	border-left-color: #AACDFE;
+	border-left-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-left.tooltip-element-attached-middle .tooltip-content
@@ -90,7 +92,7 @@
 	right: 100%;
 	top: 50%;
 	margin-top: -8px;
-	border-right-color: #AACDFE;
+	border-right-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-top.tooltip-element-attached-left.tooltip-target-attached-bottom .tooltip-content
@@ -102,7 +104,7 @@
 	{
 	bottom: 100%;
 	left: 8px;
-	border-bottom-color: #AACDFE;
+	border-bottom-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-top.tooltip-element-attached-right.tooltip-target-attached-bottom .tooltip-content
@@ -114,7 +116,7 @@
 	{
 	bottom: 100%;
 	right: 8px;
-	border-bottom-color: #AACDFE;
+	border-bottom-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-bottom.tooltip-element-attached-left.tooltip-target-attached-top .tooltip-content
@@ -126,7 +128,7 @@
 	{
 	top: 100%;
 	left: 8px;
-	border-top-color: #AACDFE;
+	border-top-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-bottom.tooltip-element-attached-right.tooltip-target-attached-top .tooltip-content
@@ -138,7 +140,7 @@
 	{
 	top: 100%;
 	right: 8px;
-	border-top-color: #AACDFE;
+	border-top-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-top.tooltip-element-attached-right.tooltip-target-attached-left .tooltip-content
@@ -150,7 +152,7 @@
 	{
 	top: 8px;
 	left: 100%;
-	border-left-color: #AACDFE;
+	border-left-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-top.tooltip-element-attached-left.tooltip-target-attached-right .tooltip-content
@@ -162,7 +164,7 @@
 	{
 	top: 8px;
 	right: 100%;
-	border-right-color: #AACDFE;
+	border-right-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-bottom.tooltip-element-attached-right.tooltip-target-attached-left .tooltip-content
@@ -174,7 +176,7 @@
 	{
 	bottom: 8px;
 	left: 100%;
-	border-left-color: #AACDFE;
+	border-left-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows.tooltip-element-attached-bottom.tooltip-element-attached-left.tooltip-target-attached-right .tooltip-content
@@ -186,7 +188,7 @@
 	{
 	bottom: 8px;
 	right: 100%;
-	border-right-color: #AACDFE;
+	border-right-color: #FDEBD4;
 }
 
 .tooltip-element.tooltip-theme-arrows {

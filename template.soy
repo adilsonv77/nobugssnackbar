@@ -25,10 +25,10 @@
 	  			<label class="password">
 	  			    <input type="password" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"/>
 	  			</label>
-	  			<button id="ButtonLogin" class="secondary" onclick="Game.login()">
+	  			<button id="ButtonLogin" class="nobugs_button" onclick="Game.login()">
 	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
 	    		</button>
-	    		<button class="secondary" onclick="location.href='javascript:void(0)'"  id="sign" >
+	    		<button class="nobugs_button" onclick="location.href='javascript:void(0)'"  id="sign" >
 	    		{{msg meaning="Apps.dialogSignUp" desc="---"}}Sign Up{{/msg}}
 	    		</button>
 	  		</fieldset>
@@ -60,41 +60,61 @@
   {call commonheader.messages /}
   
   <div id="selectMission" style="display: none">
-  	  <table width="100%">
+  	  <table width="100%" class="nobugs_background">
 	    <tr>
-	      <td>
+	      <td rowspan="2" style="width: 200px">
 	          <span id="selectMissionTitle">
 	           <img src="images/logotipo.png" height="60px" width="185px"/>
 	          </span>
 	      </td>
-	      <td class="farSide">
+	      <td id="playerName" class="nobugs_font" style="width:80%">
+	      </td>
+	      <td rowspan="2" class="farSide">
 	         <div>
-	  	     	 <button id="selectMissionLogoffButton" style="background-color: white" title="{msg meaning="NoBugs.logoffTooltip" desc="--"}Logoff the game.{/msg}">
+	  	     	 <button id="selectMissionLogoffButton" style="background-color: transparent; border: 0px" title="{msg meaning="NoBugs.logoffTooltip" desc="--"}Logoff the game.{/msg}">
 		        	<img src="images/logoff.png" style="width:32px; height:32px"/>
 		         </button>
 	         </div>
 	      </td>
 	    </tr>
+	    <tr>
+	      <td>
+	      	<div class="playerReward">
+	      		<div class="playerRewardIcon" style="background-image: url('images/xp.png');"></div>
+  				<span id="yourXP"></span>
+	      	</div>
+	      	<div class="playerReward">
+	      		<div class="playerRewardIcon" style="background-image: url('images/coin2.png');"></div>
+	      		<span id="yourCash"></span>
+	      	</div>
+	      </td>
+	    </tr>
 	  </table>
   
-    	<table style="margin: auto">
-  		<tr>
-  			<td colspan="2" class="farSide">
-  				<span>{msg meaning="Single.YourCash" desc="--"}Your money{/msg}</span>&nbsp;:&nbsp;
-  				<span style="font-weight: bold" id="yourCash"></span>
-  				<img style='vertical-align: middle;' src="images/coin2.png"/>
-  			</td>
-  		</tr>
+  	  <div id="playerInfo" class="inverse_nobugs_background" style="text-align: center" title="{msg meaning="NoBugs.avatarTooltip" desc="--"}Change your avatar.{/msg}">
+  	  
+      	<canvas id="avatarPlayer" width="72" height="116"></canvas>
+      	<button class="nobugs_button" style="font-size: 14px; width: 80px">
+      	Avatar
+      	</button>
+      	
+      	<button class="nobugs_button" style="font-size: 14px; width: 80px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
+      	{{msg meaning="NoBugs.Profile" desc="---"}}Profile{{/msg}}
+      	</button>
+      	
+  	  </div>
+  
+  
+  	  <table id="tbSelectMission" style="margin: auto">
   		<tr>
   			<td id="tdSelectMission" style="height: 342px">
-  				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.SelectMission" desc="--"}Select a Mission{/msg}</span>
+  				
 		 		<div id="schoolMap">
 					<canvas id="city_map" width="400" height="300"/>
 				</div>
   			</td>
   			
   			<td style="height: 342px">
-  				<span class="tabs-title" style="font-weight: bold">{msg meaning="Single.LeaderBoard" desc="--"}Leader Board{/msg}</span>
 				<div id="leaderboard">
 					<ul id='leaderboard_tabs'>
 						<li id="leaderpoints" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-points"><img src="images/badge_points_gold.png"/></a></li>
@@ -110,11 +130,15 @@
 				</div>  				
   			</td>
   		</tr>
-  	</table>
+  	  </table>
   
   </div>
   
   <div id="preloadimgsxx" style="height: 0px; width: 0px"></div>
+  
+  <div id="avatarEditor" style="display: none">
+  	{call avatareditor.body /}
+  </div>
 
   <div id="mainBody" style="display: none">
 	  <table width="100%">
@@ -340,6 +364,7 @@
   <div id = "dialogSelectMission" class="dialogHiddenContent">
   	
   	<div id = "selectMissionBoard" class="blackboard">
+  		 
   	</div>
   	
   </div>  

@@ -1,0 +1,51 @@
+#avatar-tabs { 
+	height: 464px; 
+	border-top: none;
+	position: relative;
+	top: -7;
+}
+
+#avatar-tabs ul { height: 464px; list-style: none; margin: 0; padding: 0; background: #FCDBA1; float: left; border-right: solid 1px; }
+#avatar-tabs ul li { width: 100px; margin: 0; padding: 0; text-align: center; }
+#avatar-tabs ul li a { display: block; padding: 15px 0; outline: none; text-decoration: none; color: #000 }
+#avatar-tabs ul li a:hover { font-weight: bold; }
+#avatar-tabs ul li.selected-tab { background: #ffc578; position: relative; left: 1px; border-style: solid; border-width: 1px 0; }
+#avatar-tabs ul li:first-child.selected-tab { border-top: none; }
+#avatar-tabs ul li a.selected-tab {  }
+#avatar-tabs .avatar-container { padding-top: 5px; padding-left: 120px; }	
+
+.avatar-item:hover { cursor: pointer; background-color: #ccc; }
+
+#playerid {
+   height: 50px;
+   text-align: center;
+   line-height: 50px;
+   margin-left: 3px;
+}
+
+#playerid span {
+   vertical-align: center;
+   display: inline-block;
+}
+
+#profileditor {
+	width: 750px;
+}
+
+.colorPickerSquare {
+	border: 1px orange solid;
+	width: 255px;
+	border-radius: 5px;
+	background-color: #FCDBA1;
+}
+
+.colorPickerSquare_font{
+	font-size: 14px;
+	color: black;
+}
+
+/* modifying the evo css */
+.evo-palette td:hover {
+	opacity: 0.5;
+}
+

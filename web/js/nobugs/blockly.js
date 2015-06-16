@@ -5,7 +5,7 @@
 var MyBlocklyApps = {};
 
 MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, title, style,
-                                  disposeFunc) {
+                                  disposeFunc, closeButtonFunc) {
   if (BlocklyApps.isDialogVisible_) {
 	  MyBlocklyApps.hideDialog(false);
   }
@@ -31,7 +31,23 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
     var header = document.createElement('div');
     header.id = 'dialogHeader';
     if (title != null)
-    	header.innerHTML = "<b>" + title + "</b>";
+    	header.innerHTML = "<b style='position:absolute;left:5px'>" + title + "</b>";
+    
+    if (closeButtonFunc != undefined || closeButtonFunc != null) {
+    	header.style.textAlign = "right";
+    	var bClose = document.createElement('button');
+    	bClose.style.padding = "0px";
+    	bClose.style.margin = "0px";
+    	bClose.style.minWidth = "0px";
+    	bClose.style.backgroundColor = "transparent";
+    	bClose.innerHTML = "<img src='images/closedialog.png' style='width:16px;height:16px'/>";
+    	bClose.onclick = function() { 
+    		closeButtonFunc();
+
+    		MyBlocklyApps.hideDialog('false'); 
+    	};
+    	header.appendChild(bClose);
+    }
     
     dialog.appendChild(header);
     BlocklyApps.dialogMouseDownWrapper_ =

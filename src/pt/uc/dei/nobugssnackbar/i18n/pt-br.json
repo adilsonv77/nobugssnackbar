@@ -53,7 +53,11 @@
 	"NoBugs.finishOpenMission" : "O tempo da miss&#227;o acabou. &#60;br/&#62;&#60;br/&#62; Voc&#234; recebeu no total &#60;b&#62;%0&#60;/b&#62; pelas entregas dos pedidos.",
 	
 	"NoBugs.order" : "pedido",
+	"NoBugs.Profile" : "Perfil",
 	
+	"NoBugs.avatarTooltip"  : "Alterar o seu avatar.",
+	"NoBugs.profileTooltip" : "Alterar o seu perfil.",
+		
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
 	"NoBugs.password" : "Senha",
@@ -109,15 +113,13 @@
 	"Single.counter" : "Balc&#227;o",
 	"Single.Mission" : "miss&#227;o",
 	"Single.YourProgress" : "Seu Progresso", 
-	"Single.SelectMission": "Selecione uma Miss&#227;o",
-	"Single.LeaderBoard": "Ranking",
 	"Single.King" : "o Rei",
 	"Single.Queen" : "a Rainha",
 	"Single.Questionnaire" : "Question&#225;rio",
 	"Single.AddNewEquipment" : "Adicione um novo equipamento ao seu estabelecimento",
 	"Single.Equipments" : "Equipamentos",
 	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o %0.",
-	"Single.YourCash" : "Seu caixa",
+	"Single.SelectMission" : "Clique num quadro para selecionar a miss&#227;o.",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente %0 deseja comer.",
@@ -186,6 +188,15 @@
 	"SignUp.signedInfo"		: "Informa&#231;&#245;es sobre o seu registo.",
 	"SignUp.showInfoMsg"	: "O seu registo foi bem sucedido! Por favor, verifique seu e-mail.",
 	"SignUp.moreInfoContact": "Para mais informa&#231;&#245;es, por favor contacte nosso administrador :",
-	"SignUp.backHomePage"   : "Voltar para a home page do NoBug's Snack Bar"
+	"SignUp.backHomePage"   : "Voltar para a home page do NoBug's Snack Bar",
+	
+	"Avatar.Body" 			: "Corpo",
+	"Avatar.Hat"  			: "Chap&#233;u",
+	"Avatar.Clothes" 		: "Roupas",
+	"Avatar.Eyes" 			: "Olhos",
+	"Avatar.Skin" 			: "Pele",
+	"Avatar.Coat" 			: "Casaco",
+	"Avatar.Scarf"			: "Len&#231;o"
+	
 	
 }

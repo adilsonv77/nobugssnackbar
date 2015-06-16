@@ -1,0 +1,80 @@
+{namespace avatareditor}
+
+/**
+ * Web page structure.
+ */
+{template .body}
+<div id="profileditor">
+	<div id="playerid" class="nobugs_border nobugs_font nobugs_background"><span id="playername"></span></div>
+
+	<table>
+	<tr>
+		<td style="width: 400px; height: 464px">
+		
+		<div id="avatar-tabs" class="nobugs_border nobugs_background nobugs_font_light" style="display:none">
+		 <ul>
+		  <li><a href="#tab-body">{msg meaning="Avatar.Body" desc="--"}Body{/msg}</a></li>
+		  <li><a href="#tab-hats">{msg meaning="Avatar.Hat" desc="--"}Hat{/msg}</a></li>
+		  <li><a href="#tab-clothes">{msg meaning="Avatar.Clothes" desc="--"}Clothes{/msg}</a></li>
+		 </ul>
+		 <div class="avatar-container">
+		  <div id="tab-body">
+		  
+			<table>
+			  <tr>
+				<td  class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
+					{msg meaning="Avatar.Eyes" desc="--"}Eyes{/msg}< <span id="cpEyes"></span>
+				</td>
+			  </tr>
+			  <tr>
+				<td class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
+					{msg meaning="Avatar.Skin" desc="--"}Skin{/msg} <span id="cpSkin"></span>
+				</td>
+			  </tr>
+			</table>
+		  
+		  </div>
+		  <div id="tab-hats" class="colorPickerSquare">
+			<table>
+			  <tr><td><div id="cpHat" class="nobugs_center_horz"></div></td></tr>
+			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-1" width="200px" height="100px"/></div></td></tr>
+			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-2" width="200px" height="100px"/></div></td></tr>
+			</table>
+		  </div>
+		  <div id="tab-clothes">
+			<table>
+				<tr>
+					<td class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
+					{msg meaning="Avatar.Coat" desc="--"}Coat{/msg}
+					<div id="cpCoat"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
+					{msg meaning="Avatar.Scarf" desc="--"}Scarf{/msg}<div id="cpScarf"></div>
+					</td>
+				</tr>
+				<tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Clothes-1" width="200px" height="124px"/></div></td></tr>
+			</table>
+		  </div>
+		 </div>
+		</div>
+		
+		</td>
+
+		<td>
+			<canvas id="avatar" width = "288" height = "464"/>
+		</td>
+	</tr>
+	</table>
+	
+	<canvas id="avatarTemp" style="display:none"  width = "360" height = "580"></canvas>
+	<canvas id="avatarTemp2" style="display:none"  width = "360" height = "580"></canvas>
+
+	<div class="nobugs_buttons">
+		<button class="nobugs_button">{msg meaning="Apps.dialogOk" desc="IBID"}OK{/msg}</button>
+		<button class="nobugs_button">{msg meaning="Apps.dialogCancel" desc="IBID"}Cancel{/msg}</button>
+	</div>
+</div>
+
+{/template}

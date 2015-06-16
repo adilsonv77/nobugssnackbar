@@ -93,6 +93,8 @@ Game.generalInit = function() {
       
       Blockly.BlockSvg.Game = Game;
       
+      AvatarImgMaker.init();
+      
       Game.init();
 
 	  
@@ -123,7 +125,7 @@ Game.init = function() {
 		
 		if (ret[0]) {
 			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7]);
 			
 		} else {
 			window.removeEventListener('unload', Game.unload);
@@ -178,7 +180,7 @@ Game.login = function() {
 	  			
 	  			error.innerHTML = "";
 	  			
-  				Game.renderQuestionnaire(ret[1], ret[2], ret[3]);
+  				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4]);
 	  			
 	  				  			
 	  		} else {
@@ -188,7 +190,7 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, clazzId, levelId, missionIdx) {
+Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, clazzId, levelId, missionIdx) {
 	/*
 	 * missionsHistorical [...][n], where n are 
 	 *   0 - class name
@@ -210,7 +212,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, clazzId,
 	 *   ----
 	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
-	Game.loginData = {userLogged: u, missionHist: missionsHistorical, leaderBoard: leaderBoard, 
+	Game.loginData = {userLogged: u, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx };
 	
 	try {
@@ -290,10 +292,13 @@ Game.finishIntro = function() {
 
 Game.logged = function() {
 	
-	  UserControl.retrieveMoney(function(ret) {
+	UserControl.retrieveMoney(function(ret) {
 		  document.getElementById("yourCash").innerHTML = ret;
-	  });
+	});
 
+	$("#playerName").html(Game.loginData.userLogged.name);
+	AvatarImgMaker.createBody(document.getElementById("avatarPlayer").getContext("2d"), Game.loginData.avatar, 72, 116);
+	
 	UserControl.updateUserLastTime();
 	
 	if (Game.variableBox != null)

@@ -24,7 +24,6 @@
 	display: inline-block;
 	zoom: 1;
 	*display: inline;
-	border: solid 1px #999;
 	-moz-border-radius: 4px 4px 0 0;
 	-webkit-border-radius: 4px 4px 0 0;
 }
@@ -34,11 +33,12 @@
 }
 
 .bbtab.active {
-	padding-top: 6px;
 	position: relative;
 	top: 1px;
-	border-color: #666;
-	border-bottom: none
+	border: solid 1px #ccc;
+	border-bottom: none;
+	background-color: #1D7E41;
+	z-index: 100;
 }
 
 .bbtab a {
@@ -113,4 +113,14 @@
 
 .missionTargetFlat {
 	background-color: none;
+}
+
+#bbLineSeparator {
+	
+    position:  absolute;
+    border-bottom: 1px solid white;
+    height: 0px;
+    width: 430px;
+    top: 40px;
+	
 }

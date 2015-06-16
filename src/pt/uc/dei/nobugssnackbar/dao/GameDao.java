@@ -65,4 +65,6 @@ public interface GameDao {
 
 	String[] registerUser(String id) throws Exception;
 
+	List<Object[]> retrieveAvatarParts(long id) throws Exception;
+
 }

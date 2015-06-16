@@ -6,11 +6,17 @@ SelectMission.generateBoard = function(evt) {
 	var idRoot = SelectMission.missionsRetrieved(Game.loginData.missionHist);
 	
     $("#selectMissionBoard").append($("#" + idRoot));
+	$("#" + idRoot).append($('<div id="bbLineSeparator">'));
 	
 	Cufon.set('fontFamily', 'DK Crayon Crumble');
 	Cufon('.bbtabs');
 	
-	MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), null, false, true, true, null, {width: "480px", height: "350px"}, null);
+	var fClose = function() {
+		$("#selectMissionBoard").empty();
+	};
+	
+	MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), null, false, true, true, 
+					BlocklyApps.getMsg("Text_SelectMission"), {width: "480px", height: "350px"}, null, fClose);
 	SelectMission.stopAnimation = false;
 	
 	window.setTimeout(SelectMission.blinkTarget, 50);

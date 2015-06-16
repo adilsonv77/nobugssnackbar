@@ -1258,4 +1258,53 @@ public class GameJdbcDao implements GameDao {
 		return mail;
 	}
 
+	@Override
+	public List<Object[]> retrieveAvatarParts(long id) throws Exception {
+		Connection bdCon = null;
+		List<Object[]> lret = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("select avatarparttype, avatarpartvalue, avatarpartcolor from usersavatar where userid = ?");
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+			lret = new ArrayList<Object[]>();
+			while (rs.next()) {
+				Object[] l = new Object[4];
+				l[0] = rs.getString("avatarparttype");
+				l[1] = rs.getString("avatarpartvalue");
+				
+				String colors = rs.getString("avatarpartcolor");
+				if (colors.indexOf("-") > -1) {
+					l[2] = "#" + colors.substring(0, colors.indexOf("-") - 1);
+					l[3] = "#" + colors.substring(colors.indexOf("-"));
+				} else
+					l[2] = "#" + colors;
+					
+					
+				lret.add(l);
+			}
+			
+			if (lret.size() == 0) {
+				
+				lret.add(new Object[]{"skin", "", "#F39C7A"});
+				lret.add(new Object[]{"eyes", "", "#000000"});
+				lret.add(new Object[]{"hat", "Hat-1", "#FFFFFF"});
+				lret.add(new Object[]{"clothes", "Clothes-1", "#FFFFFF", "#FF0000"});
+				
+			}
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+			
+		}
+		
+		return lret;
+	}
+
 }
