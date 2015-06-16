@@ -73,6 +73,9 @@ public class Objectives  implements Serializable {
 	public ArrayList<Objective> getObjectiveList() {
 		return objectiveList;
 	}
+	public void setObjectiveList(ArrayList<Objective> objectiveList) {
+		this.objectiveList = objectiveList;
+	}
 	public Objective getObjectiveItem() {
 		return objectiveItem;
 	}

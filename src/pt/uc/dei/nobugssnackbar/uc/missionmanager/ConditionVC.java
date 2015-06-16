@@ -95,7 +95,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		return result;
 	}
 	public void editCondition() {
-		getConditionById();
+		condition = getConditionById();
 
 		if (condition.getLogicalOperator() != null &&
 			condition.getLogicalOperator().length() > 0) {
@@ -112,24 +112,25 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		}
 	}
 
-	public void getConditionById() {
+	public Condition getConditionById() {
 		int editConditionID = Integer.parseInt(FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("editConditionID"));
 
-		condition = new Condition();
+		Condition result = new Condition();
 
 		for (int i = 0; i < conditionList.size(); i++) {
 			if (conditionList.get(i).getId() == editConditionID) {
-				condition.setId(conditionList.get(i).getId());
-				condition.setFunction(conditionList.get(i).getFunction());
-				condition.setLogicalOperator(conditionList.get(i)
+				result.setId(conditionList.get(i).getId());
+				result.setFunction(conditionList.get(i).getFunction());
+				result.setLogicalOperator(conditionList.get(i)
 						.getLogicalOperator());
-				condition.setComparator(conditionList.get(i).getComparator());
-				condition.setValue(conditionList.get(i).getValue());
+				result.setComparator(conditionList.get(i).getComparator());
+				result.setValue(conditionList.get(i).getValue());
 				break;
 			}
 		}
+		return result;
 	}
 
 	public void addCondition(boolean logicalOperator) {
@@ -308,13 +309,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public void deleteCondition() {
-		getConditionById();
+		Condition c = getConditionById();
 		
-		int index = indexOfConditionById(condition.getId(), conditionList);
+		int index = indexOfConditionById(c.getId(), conditionList);
+		int indexOfEditCond = indexOfConditionById(condition.getId(), conditionList);
 		if (index > -1) {
-			conditionList.remove(index);
-
-			condition = new Condition();
+			if (index != indexOfEditCond) {
+				conditionList.remove(index);
+			}
+			else {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+						"", ApplicationMessages.getMessage().getString("cannotBeDeleted"));
+				FacesContext.getCurrentInstance().validationFailed();
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, 
 					"", ApplicationMessages.getMessage().getString("notSelectedItemToDelete"));

@@ -26,7 +26,7 @@
 		             
 			</h:panelGrid>
 			
-			<p:commandButton value="#{msg['save']}" id="btnSave" icon="ui-icon-arrowthickstop-1-s"
+			<p:commandButton value="#{msg['save']}" id="btnSave" icon="ui-icon-circle-arrow-s"
 				actionListener="#{randView.save}" styleClass="randBtnSave"/>
 			<br/>
 			<p:commandButton value="#{msg['add']}" id="btnAdd" icon="ui-icon-circle-plus"
@@ -48,14 +48,10 @@
 			    </p:column>		
 			    
 			    <p:column headerText="#{msg['actions']}">
-			    	<p:tooltip id="toolTipEdit" for="btnEdit" value="#{msg['edit']}"
-			    		showEffect="clip" hideEffect="clip"/>
 					<p:commandButton id="btnEdit" icon="ui-icon-pencil"
 						actionListener="#{randView.edit(rand)}" disabled="#{randView.editing}"/>	
 						
-					<p:tooltip id="toolTipDelete" for="btnDelete" value="#{msg['delete']}"
-						showEffect="clip" hideEffect="clip"/>
-					<p:commandButton id="btnDelete" action="#{randView.setRand(rand)}" icon="ui-icon-close"
+					<p:commandButton id="btnDelete" action="#{randView.setRand(rand)}" icon="ui-icon-trash"
 						disabled="#{randView.editing}" oncomplete="PF('randConfirmDeleteDialog').show()" />						
 			    </p:column>				        			 		
 			    			 		    

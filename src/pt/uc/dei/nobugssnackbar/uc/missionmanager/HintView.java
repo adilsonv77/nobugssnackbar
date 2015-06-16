@@ -179,8 +179,7 @@ public class HintView implements Serializable {
 				addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[]{"title=hintMoved","hintMovedFromTipsToErrors"});
 				closeDlgHint();
 			}
-		}
-		
+		}	
 	}
 	
 	public void deleteHint(){

@@ -17,8 +17,7 @@
 			oncomplete="PF('addHintFromDB').show()" icon="ui-icon-circle-plus"/>
 		<p:commandButton value="#{msg['addBlank']}" id="btnAddBlank" oncomplete="PF('hintDialog').show()" 
 			actionListener="#{hintView.setAdd(true)}" update=":formDlgHints" icon="ui-icon-circle-plus" />
-			
-		<p:commandButton value="Unmarshal" 	actionListener="#{mm.load}"/>			
+
 	</p:panelGrid>
 		
 	<h:form id="formDTT" styleClass="formDTT">
@@ -31,7 +30,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['time']}" width="50">
-		        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
+		        <h:outputText value="#{hint.time}" />
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['text']}">
@@ -48,7 +47,7 @@
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton icon="ui-icon-close" oncomplete="PF('confirmDeleteDialog').show()">
+		        <p:commandButton icon="ui-icon-trash" oncomplete="PF('confirmDeleteDialog').show()">
 		        	<f:setPropertyActionListener value="#{hint}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        	        
@@ -66,7 +65,7 @@
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['time']}" width="50">
-		        <h:outputText value="#{error.time>=0?error.strTime:msg['null']}" />
+		        <h:outputText value="#{error.time}" />
 		    </p:column>
 		 
 		    <p:column headerText="#{msg['text']}" >
@@ -83,7 +82,7 @@
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        
-		        <p:commandButton icon="ui-icon-close" oncomplete="PF('confirmDeleteDialog').show()">
+		        <p:commandButton icon="ui-icon-trash" oncomplete="PF('confirmDeleteDialog').show()">
 		        	<f:setPropertyActionListener value="#{error}" target="#{hintView.hint}"/>
 		        </p:commandButton>
 		        		        		        

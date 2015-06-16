@@ -130,12 +130,6 @@ div.divExplEdit + img {
 .leftColDT{
 	width: 150px;
 }
-.cmndlinkDT,.cmndlinkDTText,.olElementHeader {
-    text-decoration: none;
-    display: block;
-    height: 100%;
-    width: 100%; 
-}
 .chooseHintCategoryDT.ui-datatable tbody td{
 	height: 50px;
 }
@@ -227,7 +221,7 @@ div.divExplEdit + img {
 	display: inline	;
 }
 .fieldsetObjectives{
-	width: 450px !important;
+	width: 450px;
 }
 .ui-panelgrid .fieldsetObjectives, .ui-panelgrid .fieldsetBonusTime, .dtBonusTime .ui-panelgrid tr, 
 .dtBonusTime .ui-panelgrid .ui-widget-content, .dtBonusTime .ui-panelgrid .ui-panelgrid-cell, 

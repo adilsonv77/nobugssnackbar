@@ -41,16 +41,16 @@
 						    <p:panelGrid columns="2">
 						    	<p:commandButton id="btnBuildCondition" value="#{msg['build']}" disabled="#{hintView.dlgHintDisabled}"
 						    		actionListener="#{condVC.newOrEditCondList}"
-						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-pencil"
+						    		oncomplete="PF('condBuilderDlg').show()" icon="ui-icon-wrench"
 						    		update=":formCondBuilder"/>
 						    	<h:outputText value="#{hintView.hint.conditionsAsString}" escape="false"/>
 						    </p:panelGrid>
 						    
-						    <p:outputLabel for="hintTime" value="#{msg['time']}"/>
+						    <p:outputLabel for="hintTime" value="#{msg['time']}:"/>
 						    <p:panelGrid columns="2">
-							    <p:inputText id="hintTime" value="#{hintView.hint.strTime}"
+							    <p:inputText id="hintTime" value="#{hintView.hint.time}"
 							    	disabled="#{hintView.dlgHintDisabled}"/>
-							   <p:outputLabel value="#{msg['disableTime']}"/>
+							   <!-- <p:outputLabel value="#{msg['disableTime']}"/> -->
 						    </p:panelGrid>		        
 						</p:panelGrid>
 					</p:layoutUnit>
@@ -68,10 +68,12 @@
 				    <p:layoutUnit position="south" style="border: none;" size="50">
 					    <p:panelGrid columns="2" style="float: right;">    
 							<p:commandButton value="#{msg['ok']}" id="btnAddEditHint" icon="ui-icon-check" 
-								actionListener="#{hintView.addEditHint}" 
+
+								actionListener="#{hintView.addEditHint}" rendered="#{!hintView.dlgHintDisabled}"
+
 								update=":tbView:formDTT, :tbView:formDTE, :formCondBuilder"/>  
 		
-							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-close" 
+							<p:commandButton value="#{msg['cancel']}" id="btnCancelHint" icon="ui-icon-closethick" 
 								actionListener="#{hintView.cancel}" 
 								update="hintDlg"
 								onsuccess="PF('ckEditorHintText').destroy()"/> 

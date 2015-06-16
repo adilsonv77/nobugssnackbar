@@ -50,7 +50,7 @@
 								oncomplete="handleRequestExplPage(xhr, status, args)"
 								/>
 								
-							<p:commandButton value="#{msg['cancel']}" icon="ui-icon-close"
+							<p:commandButton value="#{msg['cancel']}" icon="ui-icon-closethick"
 								update="explPageDlg"
 								actionListener="#{explVC.resetPage}"
 								onsuccess = "PF('ckEditorExplPage').destroy();"/>
@@ -60,23 +60,5 @@
 				</p:layout>
 			</h:form>
 		</p:dialog>
-
-	<p:dialog widgetVar="confDeleteDlg" header="#{msg['confirmation']}" 
-		closable="false" modal="true" 
-		resizable="false" dynamic="true">
-
-		<h:form>
-			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
-				<h:outputText value="#{msg['ruSureDelPage']}" />
-				<p:commandButton value="#{msg['yes']}"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-					update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}"
-					oncomplete="PF('confDeleteDlg').hide()" />
-				<p:commandButton value="#{msg['no']}"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-					actionListener="#{explVC.resetPage}"
-					oncomplete="PF('confDeleteDlg').hide()" />
-			</p:panelGrid>
-		</h:form>
-	</p:dialog>
+		
 </ui:composition>

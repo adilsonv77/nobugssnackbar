@@ -19,49 +19,72 @@
 	</script>
 
 	<!-- Hints in Hint tab -->
-	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmDeleteDialog"
-		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
+	<p:dialog widgetVar="confirmDeleteDialog" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
 		resizable="false" dynamic="true">
-			
-		<h:outputText value="#{msg['ruSureDelHint']}"/>	
-		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{hintView.deleteHint}" 
-			oncomplete="PF('confirmDeleteDialog').hide()" update=":tbView:formDTE, :tbView:formDTT"
-			style="margin-left:10px"/>
-		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmDeleteDialog').hide()" />
+		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+			<h:outputText value="#{msg['ruSureDelHint']}"/>	
+			<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{hintView.deleteHint}" 
+				oncomplete="PF('confirmDeleteDialog').hide()" update=":tbView:formDTE, :tbView:formDTT"
+				style="margin-left:10px"/>
+			<p:commandButton value="#{msg['no']}" icon="ui-icon-cancel"  oncomplete="PF('confirmDeleteDialog').hide()" />
+		</p:panelGrid>
+	</p:dialog>
 	
+	<!-- Explanation -->
+	<p:dialog widgetVar="confDeleteExplDlg" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
+		resizable="false" dynamic="true">
+
+		<h:form>
+			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+				<h:outputText value="#{msg['ruSureDelPage']}" />
+				<p:commandButton value="#{msg['yes']}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					update=":tbView:explForm" actionListener="#{explVC.deleteExplPage}"
+					oncomplete="PF('confDeleteExplDlg').hide()" />
+				<p:commandButton value="#{msg['no']}"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-cancel"
+					actionListener="#{explVC.resetPage}"
+					oncomplete="PF('confDeleteExplDlg').hide()" />
+			</p:panelGrid>
+		</h:form>
 	</p:dialog>
 	
 	<!-- Randomization -->
-	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="randConfirmDeleteDialog"
-		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true" onShow="PF('hintDialog').initPosition()"
+	<p:dialog widgetVar="randConfirmDeleteDialog" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
 		resizable="false" dynamic="true">
-		
-		<h:outputText value="#{msg['ruSureDelHint']}"/>		
-		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{randView.delete()}" 
-			style="margin-left:10px" oncomplete="PF('randConfirmDeleteDialog').hide()"/>
-		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('randConfirmDeleteDialog').hide()" />	
+		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+			<h:outputText value="#{msg['ruSureDelRand']}"/>		
+			<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{randView.delete()}" 
+				style="margin-left:10px" oncomplete="PF('randConfirmDeleteDialog').hide()"/>
+			<p:commandButton value="#{msg['no']}" icon="ui-icon-cancel"  oncomplete="PF('randConfirmDeleteDialog').hide()" />
+		</p:panelGrid>
 	</p:dialog>	
 	
 	<!-- Objectives -->
-	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmObjectiveDeleteDialog"
-		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true"
+	<p:dialog widgetVar="confirmObjectiveDeleteDialog" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
 		resizable="false" dynamic="true">
-		<h:outputText value="#{msg['ruSureDelObjective']}"/>	
-		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.delete}" 
-			style="margin-left:10px" oncomplete="PF('confirmObjectiveDeleteDialog').hide()"/>
-		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmObjectiveDeleteDialog').hide()" />
-	
+		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+			<h:outputText value="#{msg['ruSureDelObjective']}"/>	
+			<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.delete}" 
+				style="margin-left:10px" oncomplete="PF('confirmObjectiveDeleteDialog').hide()"/>
+			<p:commandButton value="#{msg['no']}" icon="ui-icon-cancel"  oncomplete="PF('confirmObjectiveDeleteDialog').hide()" />
+		</p:panelGrid>
 	</p:dialog>
 
 	<!-- Bonus time -->
-	<p:dialog showEffect="fade" hideEffect="fade" widgetVar="confirmBonusTimeDeleteDialog"
-		header="#{msg['confirmation']}" minHeight="40" closable="false" modal="true"
+	<p:dialog widgetVar="confirmBonusTimeDeleteDialog" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
 		resizable="false" dynamic="true">
-		<h:outputText value="#{msg['ruSureDelBonusTime']}"/>	
-		<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.deleteBonusTime}" 
-			style="margin-left:10px" oncomplete="PF('confirmBonusTimeDeleteDialog').hide()"/>
-		<p:commandButton value="#{msg['no']}" icon="ui-icon-close"  oncomplete="PF('confirmBonusTimeDeleteDialog').hide()" />
-	
+		<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+			<h:outputText value="#{msg['ruSureDelBonusTime']}"/>	
+			<p:commandButton value="#{msg['yes']}" icon="ui-icon-check" actionListener="#{objView.deleteBonusTime}" 
+				style="margin-left:10px" oncomplete="PF('confirmBonusTimeDeleteDialog').hide()"/>
+			<p:commandButton value="#{msg['no']}" icon="ui-icon-cancel"  oncomplete="PF('confirmBonusTimeDeleteDialog').hide()" />
+		</p:panelGrid>	
 	</p:dialog>
 	
 	<!-- Add hint from DB dialog -->
@@ -81,7 +104,7 @@
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['time']}" width="40">
-			        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
+			        <h:outputText value="#{hint.time}" />
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['text']}" >
@@ -119,7 +142,7 @@
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['time']}" width="40">
-			        <h:outputText value="#{hint.time>=0?hint.strTime:msg['null']}" />
+			        <h:outputText value="#{hint.time}" />
 			    </p:column>
 			 
 			    <p:column headerText="#{msg['text']}" >
@@ -147,7 +170,9 @@
 			        
 			</p:dataTable>	
 			
-			<p:commandButton value="#{msg['close']}" icon="ui-icon-close"  oncomplete="PF('addHintFromDB').hide()"/>	
+
+			<p:commandButton value="#{msg['close']}" icon="ui-icon-closethick"
+				style="float:right;" oncomplete="PF('addHintFromDB').hide()"/>	
 		</h:form>
 	
 	</p:dialog>	

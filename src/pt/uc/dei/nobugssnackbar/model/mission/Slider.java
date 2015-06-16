@@ -12,18 +12,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Slider implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@XmlAttribute(name="timesBefore")
-	private int timesBefore;
+	
+	private Integer timesBefore;
 
 	public Slider() {
 
 	}
 
-	public int getTimesBefore() {
+	public Integer getTimesBefore() {
 		return timesBefore;
 	}
-
-	public void setTimesBefore(int timesBefore) {
+	@XmlAttribute(name="timesBefore")
+	public void setTimesBefore(Integer timesBefore) {
 		this.timesBefore = timesBefore;
 	}
 

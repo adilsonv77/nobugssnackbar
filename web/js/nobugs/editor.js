@@ -108,7 +108,7 @@ EditorNoBug.clickSave = function() {
 	var xml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 	UserControl.saveBlocksFromEditor(xml, function() {
 		parent.PF('loadBlocksDlg').hide();
-	});	
+	});
 };
 
 window.addEventListener('load', EditorNoBug.init);

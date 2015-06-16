@@ -23,9 +23,9 @@
 			<p:orderList id="opList" value="#{explVC.pages}" var="p" itemValue="#{p}" converter="#{explVC.converter}" controlsLocation="right">      		
 				<p:column>
 					<div class="divExplEdit">	
-						<p:commandLink title="#{msg['delete']}" update=":tbView:explForm" actionListener="#{explVC.getPageById}" oncomplete="PF('confDeleteDlg').show()">
+						<p:commandLink title="#{msg['delete']}" update=":tbView:explForm" actionListener="#{explVC.getPageById}" oncomplete="PF('confDeleteExplDlg').show()">
 							<f:param name="editPageID" value="#{p.id}" />
-							<span class="ui-icon ui-icon-closethick" />			
+							<span class="ui-icon ui-icon-trash" />			
 						</p:commandLink>
 							
 						<p:commandLink title="#{msg['edit']}" update=":explPageDlg" oncomplete="PF('pageDialog').show()" actionListener="#{explVC.getPageById}">

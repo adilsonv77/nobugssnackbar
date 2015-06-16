@@ -17,7 +17,7 @@
 	 		
 	 		<p:panelGrid>
 	 			<h:outputLabel for="reward" value="#{msg['reward']} " />
-	        	<p:spinner id="reward" size="5" value="#{objView.objectives.reward}" min="0">
+	        	<p:spinner id="reward" size="5" value="#{objView.objectives.reward}" min="-1">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>	
 	        </p:panelGrid>
@@ -27,8 +27,8 @@
 					<p:ajax event="change" update="cbVariableQty, variableQty" />
 				</p:selectBooleanCheckbox>        	
 	 			<h:outputLabel for="variableQty" value="#{msg['variableQuantity']}"/>
-	        	<p:spinner id="variableQty" size="5" value="#{objView.objectives.varQtd}" disabled="#{!objView.variableQty}"
-	        		prefix="#{!objView.variableQty}" min="0">
+	        	<p:spinner id="variableQty" size="5" value="#{objView.objectives.varQtd}"
+	        		disabled="#{!objView.variableQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>
 				
@@ -36,8 +36,8 @@
 					<p:ajax event="change" update="cbCommandQty, commandQty" />
 				</p:selectBooleanCheckbox> 				                  
 	 			<h:outputLabel for="commandQty" value="#{msg['commandQuantity']}" />
-	        	<p:spinner id="commandQty" size="5" value="#{objView.objectives.commQtd}" disabled="#{!objView.commandQty}"
-	        		prefix="#{!objView.commandQty}" min="0">
+	        	<p:spinner id="commandQty" size="5" value="#{objView.objectives.commQtd}" 
+	        	disabled="#{!objView.commandQty}" min="0">
 	        		<p:ajax process="@this"/>
 	        	</p:spinner>	        	                
 			</p:panelGrid>
@@ -101,11 +101,11 @@
 	        		        		    		        		        		 	        
 		        </p:panelGrid>	               	
 	        	
-	        	<p:commandButton icon="ui-icon-close" title="#{msg['cancel']}" styleClass="btnObjectives" 
-	        		value="#{msg['cancel']}" actionListener="#{objView.cancelObjective}" disabled="#{objView.objDisabled}"/>	        
-		        
-				<p:commandButton icon="ui-icon-check" title="#{msg['save']}" styleClass="btnObjectives" 
-	        		value="#{msg['save']}" actionListener="#{objView.SaveObjective}" disabled="#{objView.objDisabled}"/>	        
+	        	<p:commandButton icon="ui-icon-circle-arrow-s" title="#{msg['save']}" styleClass="btnObjectives" 
+	        		value="#{msg['save']}" actionListener="#{objView.SaveObjective}" disabled="#{objView.objDisabled}"/>
+	        	
+	        	<p:commandButton icon="ui-icon-closethick" title="#{msg['cancel']}" styleClass="btnObjectives" 
+	        		value="#{msg['cancel']}" actionListener="#{objView.cancelObjective}" disabled="#{objView.objDisabled}"/>	        	        
 		        
 		        <p:commandButton icon="ui-icon-circle-plus" title="#{msg['add']}" value="#{msg['add']}" disabled="#{objView.editing}"
 		        styleClass="btnAddObjectives" actionListener="#{objView.addObjectiveItem}"/>
@@ -125,7 +125,7 @@
 				        	action="#{objView.editObjective}">
 				        	<f:setPropertyActionListener value="#{objective}" target="#{objView.objItem}"/>
 				        </p:commandButton>
-				        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}" disabled="#{objView.editing}"
+				        <p:commandButton icon="ui-icon-trash" title="#{msg['delete']}" disabled="#{objView.editing}"
 				        	oncomplete="PF('confirmObjectiveDeleteDialog').show()">
 				        	<f:setPropertyActionListener value="#{objective}" target="#{objView.objItem}"/>
 				        </p:commandButton>
@@ -186,7 +186,7 @@
 	        		<p:panelGrid columns="2" styleClass="bonusTimeSpinner">
 	        			<p:spinner  size="5" value="#{objView.currentBonusTimeReward.value}" min="0"
 	        				disabled="#{objView.bonusTimeDisabled || !objView.bonusTime}"/>
-	        			<p:commandButton icon="ui-icon-arrowstop-1-s" title="#{msg['save']}" value="#{msg['save']}"
+	        			<p:commandButton icon="ui-icon-circle-arrow-s" title="#{msg['save']}" value="#{msg['save']}"
 	        				actionListener="#{objView.saveBonusTime}"
 	        				disabled="#{!objView.bonusTime || objView.bonusTimeDisabled}"
 	        				styleClass="btnSaveBonusTime"/>
@@ -206,7 +206,7 @@
 				        	disabled="#{objView.editingBonusTime || !objView.bonusTime}">
 				        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>
 				        </p:commandButton>
-				        <p:commandButton icon="ui-icon-circle-close" title="#{msg['delete']}"
+				        <p:commandButton icon="ui-icon-trash" title="#{msg['delete']}"
 				        	 oncomplete="PF('confirmBonusTimeDeleteDialog').show()"
 				        	 disabled="#{objView.editingBonusTime || !objView.bonusTime}">
 				        	<f:setPropertyActionListener value="#{myInt}" target="#{objView.currentBonusTimeReward}"/>

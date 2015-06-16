@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -12,8 +14,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Mission;
@@ -27,24 +27,21 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.MissionConverter;
 public class MissionSettingsVC implements IMissionProvider, Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private long timeLimit; // mission's attribute
+	@ManagedProperty(value="#{mm.missionContent.timeLimit}")
+	private Long timeLimit; // mission's attribute
 	
 	private List<Mission> missionList;
 	private Mission mission;
 	
-	@ManagedProperty(value="#{mm.missionContent.cook}")
 	private Cook cook;
 	private XmlTag xmltag;
-	@ManagedProperty(value="#{mm.missionContent.slider}")
 	private Slider slider;
 	
 	private List<SelectItem> cookStartsFromList;
-	private String selectedXmlOption;
-	private boolean choseMission;
-	private boolean choseLoadBlocks;
-	@XmlAttribute(name="open")
-	@ManagedProperty(value="#{mm.missionContent.repeatable}")
+	private boolean selectedLoadBlocks;
+
 	private boolean repeatable;
+	private boolean preload;
 	
 	@ManagedProperty(value="#{mm}")
 	private MissionManager missionManager;
@@ -62,22 +59,48 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			cookStartsFromList = new ArrayList<SelectItem>(customerVC.getInitPositions().
 					subList(1, customerVC.getInitPositions().size()));
 			SelectItemGroup sigDefault = new SelectItemGroup(msg.getString("initial"));
-			sigDefault.setSelectItems(new SelectItem[] {new SelectItem(msg.getString("initial"), msg.getString("initial"))});
+			sigDefault.setSelectItems(new SelectItem[] {new SelectItem("initial", msg.getString("initial"))});
 			cookStartsFromList.add(0, sigDefault);
-			
+
 			timeLimit = missionManager.getMissionContent().getTimeLimit();
 			cook = missionManager.getMissionContent().getCook();
-			cook.setStartPosition(msg.getString("initial"));
+			if (cook.getStartPosition() == null || cook.getStartPosition().isEmpty()) {
+				cook.setStartPosition("initial");
+			}
 			xmltag = missionManager.getMissionContent().getXmltag();
 			slider = missionManager.getMissionContent().getSlider();
-			choseLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();
+			selectedLoadBlocks = missionManager.getMissionContent().isSelectedLoadBlocks();
+			
+			repeatable = missionManager.getMissionContent().isRepeatable();
+			
+			if (xmltag.getPreload() != null) {
+				mission = selectMission(xmltag.getPreload());
+				preload = true;
+			}
+			if (this.xmltag.getXmlns() == null) {
+				this.xmltag.setXmlns("<xml></xml>");
+			}
+			FacesContext ctx = FacesContext.getCurrentInstance();			
+			ctx.getExternalContext().getSessionMap().put("blocks", this.xmltag.getXmlns());
+
+			String XML_TAG_ALL = "(<\\s*xml[\\s\\w=\\\"\\/:.]*>)([\\w<\\s=\\\">\\/]*)(<\\s*\\/\\s*xml\\s*>)";
+			Pattern p = Pattern.compile(XML_TAG_ALL);
+			Matcher m = p.matcher(xmltag.getXmlns());
+			String xstr = xmltag.getXmlns();
+			if (m.find()) {
+				xstr = m.group(2).replace(" ", "");
+			}
+
+			if (xmltag.getXmlns() != null && !xmltag.getXmlns().isEmpty() && !xstr.isEmpty()) {
+				selectedLoadBlocks = true;
+			}
+			else {
+				selectedLoadBlocks = false;
+			}
 			
 			mc = new MissionConverter();
 			mc.setProvider(this);
-			
-			FacesContext ctx = FacesContext.getCurrentInstance();
-			// don't change the value. If you did: maybe you will have some problem with the generation of XML
-			ctx.getExternalContext().getSessionMap().put("blocks", "<xml></xml>");
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -86,9 +109,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	public MissionSettingsVC() {
 		mission = new Mission();
 		
-		ResourceBundle msg = ApplicationMessages.getMessage();	
+		//ResourceBundle msg = ApplicationMessages.getMessage();	
 		
-		selectedXmlOption = msg.getString("nothing");
+		//selectedXmlOption = msg.getString("nothing");
 	}
 	
 	public List<SelectItem> getCookStartsFromList() {
@@ -113,7 +136,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setCook(Cook cook) throws Exception {
 		this.cook = cook;
-		//missionManager.getMissionContent().setCook(cook);
+		missionManager.getMissionContent().setCook(cook);
 	}
 
 	public XmlTag getXmltag() {
@@ -122,9 +145,9 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setXmltag(XmlTag xmltag) throws Exception {
 		this.xmltag = xmltag;
-		//missionManager.getMissionContent().setXmltag(xmltag);
+		missionManager.getMissionContent().setXmltag(xmltag);
 	}
-
+/*
 	public String getSelectedXmlOption() {
 		return selectedXmlOption;
 	}
@@ -148,6 +171,26 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		missionManager.getMissionContent().setSelectedLoadBlocks(choseLoadBlocks);
 		this.selectedXmlOption = selectedXmlOption;
 	}
+	*/
+	
+	public boolean isAlwaysNew(){
+		if(xmltag.isAlwaysNew() == null)
+			return false;
+		return xmltag.isAlwaysNew();
+	}
+	
+	public void setAlwaysNew(boolean alwaysNew){
+		xmltag.setAlwaysNew(alwaysNew);
+	}
+	
+	public boolean isLoadBlocks(){
+		if(xmltag.isLoadBlocks() == null)
+			return false;
+		return xmltag.isLoadBlocks();
+	}
+	public void setLoadBlocks(boolean loadBlocks){
+		xmltag.setLoadBlocks(loadBlocks);
+	}
 	
 	public void handlePrevMissionChange() {
 		xmltag.setPreload(mission.getId());
@@ -159,24 +202,15 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public void setSlider(Slider slider) throws Exception {
 		this.slider = slider;
-		//missionManager.getMissionContent().setSlider(slider);
+		missionManager.getMissionContent().setSlider(slider);
 	}
 
-	public long getTimeLimit() {
+	public Long getTimeLimit() {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(long timeLimit) throws Exception {
+	public void setTimeLimit(Long timeLimit) {
 		this.timeLimit = timeLimit;
-		//missionManager.getMissionContent().setTimeLimit(timeLimit);
-	}
-
-	public boolean isChoseMission() {
-		return choseMission;
-	}
-
-	public void setChoseMission(boolean choseMission) {
-		this.choseMission = choseMission;
 	}
 
 	public MissionManager getMissionManager() {
@@ -212,20 +246,47 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		this.mc = mc;
 	}
 
-	public boolean isChoseLoadBlocks() {
-		return choseLoadBlocks;
+	public boolean isSelectedLoadBlocks() {
+		return selectedLoadBlocks;
 	}
 
-	public void setChoseLoadBlocks(boolean choseLoadBlocks) {
-		this.choseLoadBlocks = choseLoadBlocks;
+	public void setSelectedLoadBlocks(boolean selectedLoadBlocks) throws Exception {
+		this.selectedLoadBlocks = selectedLoadBlocks;
+		missionManager.getMissionContent().setSelectedLoadBlocks(selectedLoadBlocks);
 	}
 	
 	public boolean isRepeatable() {
 		return repeatable;
 	}
 	
-	public void setRepeatable(boolean repeatable) {
+	public void setRepeatable(boolean repeatable) throws Exception {
 		this.repeatable = repeatable;
+		missionManager.getMissionContent().setRepeatable(repeatable);
 	}
 
+	public boolean isPreload() {
+		return this.preload;
+	}
+
+	public void setPreload(boolean preload) throws Exception {
+		this.preload = preload;
+		if (!preload) {
+			missionManager.getMissionContent().getXmltag().setPreload(null);
+			mission = null;
+		}
+		else {
+			mission = selectMission(missionManager.getMissionContent().getXmltag().getPreload());
+		}
+	}
+
+	private Mission selectMission(Integer id) {
+		Mission result = null;
+		for (Mission m:missionList) {
+			if (m.getId() == id) {
+				result = m;
+				break;
+			}
+		}
+		return result;
+	}
 }

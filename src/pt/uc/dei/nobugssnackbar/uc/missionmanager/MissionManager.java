@@ -7,9 +7,11 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
@@ -194,21 +196,31 @@ public class MissionManager implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
-			String xml = MissionToXML.missionToXML(mission, missionContent);
-			
-			if (xml != null) {
-				System.out.println(xml);
-				mission.setContent(xml);
-				MissionJdbcDao missionJdbcDao = new MissionJdbcDao();
-				missionJdbcDao.insert(mission);
-				System.out.println(mission.getName());
-		        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
-		        		messageBundle.getString("missionSuccSaved")));			
+			if (verification(missionContent)) {
+				String xml = XmlToMission.missionToXML(missionContent);
+				
+				if (xml != null) {
+					// System.out.println(xml);
+					
+					mission.setContent(xml);
+					MissionJdbcDao missionJdbcDao = new MissionJdbcDao();
+					missionJdbcDao.insert(mission);
+					this.missionList = getMissionDao().list();
+					
+			        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
+			        		messageBundle.getString("missionSuccSaved")));
+			        reloadPage();
+				}
+				else {
+					context.validationFailed();
+			        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+			        		messageBundle.getString("warningMsg"), "Some error")); /// !!!!!!!!!!!!!!!!!!!!!!!!!!!
+				}
 			}
 			else {
 				context.validationFailed();
 		        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-		        		messageBundle.getString("warningMsg"), MissionToXML.getErrorMessage()));
+		        		messageBundle.getString("warningMsg"), errorMessage));
 			}
 		}
 		else {
@@ -221,17 +233,60 @@ public class MissionManager implements Serializable {
 	public void load() {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
+
+		MissionContent mc = XmlToMission.load(mission.getContent());		
 		
-		MissionContent mc = XmlToMission.load("missionX.xml");
 		if(mc == null){
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", 
-	        		"GREDA"));	      
+	        		messageBundle.getString("cantLoadMission")));	 
 		}
-		else{
+		else {
 			this.setMissionContent(mc);
 			RequestContext.getCurrentInstance().update("tbView");
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
-	        		messageBundle.getString("missionSuccSaved")));	        
-		}       
-	}	
+	        		messageBundle.getString("missionLoaded")));	        
+		}
+
+		reloadPage();
+	}
+	
+	private static String errorMessage;
+	
+	public static boolean verification(MissionContent missionContent) {
+		errorMessage = "";
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();
+		
+		if (missionContent.getPages() == null ||
+			missionContent.getPages().size() == 0) {
+			errorMessage = messageBundle.getString("missingExplPageError");
+		}
+		else if (missionContent.getCustomers() == null || 
+				 missionContent.getCustomers().size() == 0) {
+			errorMessage = messageBundle.getString("missingCustomerError");
+		}
+		else if (missionContent.getObjectives() == null ||
+				missionContent.getObjectives().getObjectiveList() == null ||
+				missionContent.getObjectives().getObjectiveList().size() == 0) {
+			errorMessage = messageBundle.getString("missingObjectiveError");
+		}
+		else if ((missionContent.getSelectedCommands() == null ||
+				 missionContent.getSelectedCommands().size() == 0) &&
+				 missionContent.isSelectedLoadBlocks() == false) {
+			errorMessage = messageBundle.getString("notSelectedCommandOrBlockError");
+		}
+		else {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private static void reloadPage() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String viewId = context.getViewRoot().getViewId(); 
+		ViewHandler handler = context.getApplication().getViewHandler(); 
+		UIViewRoot root = handler.createView(context, viewId); 
+		root.setViewId(viewId); 
+		context.setViewRoot(root); 
+	}
 }
