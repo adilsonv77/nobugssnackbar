@@ -135,6 +135,7 @@ div.divExplEdit + img {
 }
 .btnCancelCHCD{
 	margin-top: 20px;
+	float: right;
 }
 .dynaFormEmptyMsg{
 	font-weight: bold;
@@ -258,6 +259,12 @@ div.divExplEdit + img {
 }
 .fieldsetMaxxCmdBonus{
 	width: 300px !important;
+}
+.cmndlinkDT,.cmndlinkDTText,.olElementHeader {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+    width: 100%; 
 }
 /*******************End Objectives css******************/
 

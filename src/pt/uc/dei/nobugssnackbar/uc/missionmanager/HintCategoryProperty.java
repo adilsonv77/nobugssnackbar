@@ -116,8 +116,7 @@ public class HintCategoryProperty implements Serializable {
 				hcp.updates(getName(), value);
 			}
 		}
-		for (HintCategoryProperty hcp:props){
-			System.out.println("type:" + hcp.getType().equals("list") + " selected:" +hcp.selected );
+		for (HintCategoryProperty hcp:props){		
 			if(hcp.getType().equals("list") && !hcp.selected && (hcp.items.size() > 0)){
 				this.hintCategoryHelperView.setItemSelected(false);
 			}
