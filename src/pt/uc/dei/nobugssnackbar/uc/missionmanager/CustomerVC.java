@@ -142,7 +142,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			int num = i + 1;
 			itemValue.append(msg.getString("counter") + " " + num);
 			sic[i] = new SelectItem("counter" + num, itemValue.toString());
-			
+
 			itemValue.delete(0, itemValue.length());
 			
 			for (int j = 1; j <= 2; j++, sitIndex++) {
@@ -150,13 +150,14 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				itemValue.append(num);
 				itemValue.append(" " + msg.getString("chair") + " ");
 				itemValue.append(j);
-				sit[sitIndex] = new SelectItem("table" + num + "chair" + j, itemValue.toString());
-				tablesChairsNormalList.add(itemValue.toString());
+				String value = "table" + num + "chair" + j;
+				sit[sitIndex] = new SelectItem(value, itemValue.toString());
+				tablesChairsNormalList.add(value);
 				itemValue.delete(0, itemValue.length());
 			}
 		}
 		for (int i = 0; i < sic.length; i++) {
-			tablesChairsNormalList.add(sic[i].getLabel());
+			tablesChairsNormalList.add(sic[i].getValue().toString());
 		}
 		
 		sigCounters.setSelectItems(sic);

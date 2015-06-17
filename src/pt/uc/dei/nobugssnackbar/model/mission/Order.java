@@ -78,6 +78,7 @@ public class Order implements java.io.Serializable {
 
 	public void setRandomMinFoods(int randomMinFoods) {
 		this.randomMinFoods = randomMinFoods;
+		foods.setRandomMin(randomMinFoods);
 	}
 
 	public int getRandomMaxFoods() {
@@ -86,6 +87,7 @@ public class Order implements java.io.Serializable {
 
 	public void setRandomMaxFoods(int randomMaxFoods) {
 		this.randomMaxFoods = randomMaxFoods;
+		foods.setRandomMax(randomMaxFoods);
 	}
 
 	public int getRandomMinDrinks() {
@@ -94,6 +96,7 @@ public class Order implements java.io.Serializable {
 
 	public void setRandomMinDrinks(int randomMinDrinks) {
 		this.randomMinDrinks = randomMinDrinks;
+		drinks.setRandomMin(randomMinDrinks);
 	}
 
 	public int getRandomMaxDrinks() {
@@ -102,6 +105,7 @@ public class Order implements java.io.Serializable {
 
 	public void setRandomMaxDrinks(int randomMaxDrinks) {
 		this.randomMaxDrinks = randomMaxDrinks;
+		drinks.setRandomMax(randomMaxDrinks);
 	}
 
 	public int getId() {

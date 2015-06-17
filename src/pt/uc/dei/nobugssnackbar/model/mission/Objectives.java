@@ -35,7 +35,7 @@ public class Objectives  implements Serializable {
 	private boolean variableWindow;
 	
 	@XmlAttribute(name="reward")
-	private int reward;
+	private Integer reward;
 	
 	@XmlAttribute(name="commQtd")
 	private int commQtd;
@@ -94,7 +94,7 @@ public class Objectives  implements Serializable {
 	public boolean isVariableWindow() {
 		return variableWindow;
 	}
-	public int getReward() {
+	public Integer getReward() {
 		return reward;
 	}
 	public int getCommQtd() {
@@ -134,7 +134,7 @@ public class Objectives  implements Serializable {
 	public void setVariableWindow(boolean variableWindow) {
 		this.variableWindow = variableWindow;
 	}
-	public void setReward(int reward) {
+	public void setReward(Integer reward) {
 		this.reward = reward;
 	}
 	public void setCommQtd(int commQtd) {
@@ -153,7 +153,7 @@ public class Objectives  implements Serializable {
 		this.bonusTime = bonusTime;
 	}
 	public void setBonusTimeReward(String bonusTimeReward) {
-		this.bonusTimeReward = bonusTimeReward;
+		this.bonusTimeReward = bonusTimeReward.trim();
 	}
 	
 	public void addObjective() {

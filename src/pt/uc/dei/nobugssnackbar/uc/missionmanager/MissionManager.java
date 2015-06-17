@@ -200,12 +200,12 @@ public class MissionManager implements Serializable {
 				String xml = XmlToMission.missionToXML(missionContent);
 				
 				if (xml != null) {
-					// System.out.println(xml);
+					System.out.println(xml);
 					
-					mission.setContent(xml);
+					/*mission.setContent(xml);
 					MissionJdbcDao missionJdbcDao = new MissionJdbcDao();
 					missionJdbcDao.insert(mission);
-					this.missionList = getMissionDao().list();
+					this.missionList = getMissionDao().list();*/
 					
 			        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
 			        		messageBundle.getString("missionSuccSaved")));
