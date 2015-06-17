@@ -40,10 +40,19 @@ public class XmlToMission {
 			 * Place for further adjustments
 			 * */
 			/*Because there isn't any id and type attributes in xml so I set them here */
-			for (int i = 0; i < mc.getHints().getErrorsHints().size(); i++) {
-				(mc.getHints().getErrorsHints()).get(i).setType(true);
-				(mc.getHints().getErrorsHints()).get(i).setId(i);
+			int id = 0;
+			for (Hint h : mc.getHints().getErrorsHints()) {
+				h.setType(true);
+				h.setId(id++);
+				h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
 			}
+			for (Hint h : mc.getHints().getTipsHints()) {
+				h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
+			}
+			for (Page pp : mc.getPages()) {
+				pp.setMsg(ImgTagConvertor.replaceHexWithImages(pp.getMsg(), "png"));
+			}
+			
 			if(mc.getObjectives().getBonusTime() != null || mc.getObjectives().getBonusTime() != ""){
 				mc.getObjectives().setBoolBonusTime(true);
 			}
@@ -64,7 +73,7 @@ public class XmlToMission {
 			else {
 				mc.getXmltag().setLoadBlocks(false);
 			}
-
+			
 			return mc;
 		}
 		catch(Exception e){

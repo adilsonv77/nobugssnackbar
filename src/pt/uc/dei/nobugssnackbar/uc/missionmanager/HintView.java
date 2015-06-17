@@ -87,7 +87,7 @@ public class HintView implements Serializable {
     }
 
     public String getText() throws Exception{
-    	hint.setText(ImgTagConvertor.replaceHexWithImages(hint.getText(),"png"));
+    	//hint.setText(ImgTagConvertor.replaceHexWithImages(hint.getText(),"png"));
 		return hint.getText();
     }
 
