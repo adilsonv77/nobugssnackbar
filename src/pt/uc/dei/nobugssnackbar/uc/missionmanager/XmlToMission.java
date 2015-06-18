@@ -156,13 +156,19 @@ public class XmlToMission {
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(MissionContent.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false); // set 'false'
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
 			writer = new StringWriter();
 			jaxbMarshaller.marshal(missionContent, writer);
 			
 			String result = writer.toString();
 			
 			result = result.replace("&lt;", "<").replace("&gt;", ">");
+
+			/* It is not tested */
+			for (Hint h : missionContent.getHints().getErrorsHints()) {
+				String newCond = h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;");
+				result = result.replace(h.getConditionsAsString(), newCond);
+			}
 			
 			return result;
 
