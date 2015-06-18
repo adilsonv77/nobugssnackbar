@@ -90,6 +90,7 @@ public class ObjectivesView implements Serializable {
 		types.put("deliver","deliver");
 		types.put("askForDrink","askForDrink");
 		types.put("pickUpDrink","pickUpDrink");
+		types.put("goesTo","goesTo");
 	}
 	
 	public Objectives getObjectives() {
@@ -116,14 +117,15 @@ public class ObjectivesView implements Serializable {
 
 	public List<myInt> getListBonusTimeReward() {
 		if(listBonusTimeReward == null){
-			listBonusTimeReward = new ArrayList<>();
+			listBonusTimeReward = stringToBonusTime(getObjectives().getBonusTimeReward());
+			//listBonusTimeReward = new ArrayList<>();
 		}
 		return listBonusTimeReward;
 	}
 	
 	private void translateToString() {
 		String text = "";
-		this.getObjectives().setBonusTimeReward("");
+		//this.getObjectives().setBonusTimeReward("");
 		for (myInt myInt : listBonusTimeReward) {
 			text += myInt.value + " ";
 		}
@@ -278,6 +280,7 @@ public class ObjectivesView implements Serializable {
 	
 	public void addBonusTimeToList(){
 		this.listBonusTimeReward.add(currentBonusTimeReward);
+		translateToString();
 		RequestContext.getCurrentInstance().update("tbView:formObjectives:dtBonusTime");
 	}
 	
@@ -307,7 +310,17 @@ public class ObjectivesView implements Serializable {
 		addMessageToGrowl(FacesMessage.SEVERITY_INFO,new Object[] {"deletedBonusTime"});
 		disableBonusTime();
 	}
-	
+	private List<myInt> stringToBonusTime(String str){
+		if(str == null || str ==""){
+			return new ArrayList<ObjectivesView.myInt>();
+		}
+		List<myInt> lst = new ArrayList<ObjectivesView.myInt>();
+		String[] splited = str.split("\\s+");
+		for (int i = 0; i < splited.length; i++) {
+			lst.add(new myInt(Integer.valueOf(splited[i])));
+		}
+		return lst;
+	}
 	public void addMessageToGrowl(FacesMessage.Severity severity,Object [] msgs){
 		String title = "Notification";	
 		FacesMessage msg;

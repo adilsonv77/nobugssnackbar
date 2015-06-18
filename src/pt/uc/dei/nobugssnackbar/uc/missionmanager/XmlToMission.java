@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +21,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.model.mission.XmlTag;
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.ObjectivesView.myInt;
 import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 public class XmlToMission {
@@ -36,46 +38,9 @@ public class XmlToMission {
 			StringReader reader = new StringReader(xml);
 			MissionContent mc = (MissionContent) jaxbUnmarshaller.unmarshal(reader);
 			
-			/*
-			 * Place for further adjustments
-			 * */
-			/*Because there isn't any id and type attributes in xml so I set them here */
-			int id = 0;
-			for (Hint h : mc.getHints().getErrorsHints()) {
-				h.setType(true);
-				h.setId(id++);
-				h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
-			}
-			for (Hint h : mc.getHints().getTipsHints()) {
-				h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
-			}
-			for (Page pp : mc.getPages()) {
-				pp.setMsg(ImgTagConvertor.replaceHexWithImages(pp.getMsg(), "png"));
-			}
-			
-			if(mc.getObjectives().getBonusTime() != null || mc.getObjectives().getBonusTime() != ""){
-				mc.getObjectives().setBoolBonusTime(true);
-			}
-			if(mc.getObjectives().getReward() > -1){
-				mc.getObjectives().setBoolBonusTime(true);
-			}
-						
-			Pattern p = Pattern.compile(XML_TAG_ALL);
-			Matcher m = p.matcher(xml);
-			
-			if (m.find()) {
-				if(mc.getXmltag() == null){
-					mc.setXmltag(new XmlTag());
-				}
-				
-				mc.getXmltag().setXmlns(m.group());
-				mc.getXmltag().setLoadBlocks(true);
-	 		}
-			else {
-				mc.getXmltag().setLoadBlocks(false);
-			}
-			
+			mc = adjustVariablesAfterUnmarshaling(mc,xml);
 			return mc;
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -83,7 +48,58 @@ public class XmlToMission {
 		}
 	}
 	
-
+	private static MissionContent adjustVariablesAfterUnmarshaling(MissionContent mc,String xml) throws Exception{
+		int id = 0;
+		for (Hint h : mc.getHints().getErrorsHints()) {
+			h.setType(true);
+			h.setId(id++);
+			h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
+		}
+		for (Hint h : mc.getHints().getTipsHints()) {
+			h.setText(ImgTagConvertor.replaceHexWithImages(h.getText(), "png"));
+		}
+		for (Page pp : mc.getPages()) {
+			pp.setMsg(ImgTagConvertor.replaceHexWithImages(pp.getMsg(), "png"));
+		}
+		
+		/*Bonus time
+		 * */
+		if(mc.getObjectives().getBonusTime() != null
+		|| mc.getObjectives().getBonusTimeReward() != null){
+			mc.getObjectives().setBoolBonusTime(true);
+		}
+		/*Max commands
+		 * */
+		if(mc.getObjectives().getMaxCommands() != null
+		|| mc.getObjectives().getMaxCommandsReward() != null){
+			mc.getObjectives().setBoolMaxCommands(true);
+		}
+		/*Top elements in objectives		 
+		 */
+		if(mc.getObjectives().getVarQtd()!=null){
+			mc.getObjectives().setBoolVariableQty(true);
+		}
+		if(mc.getObjectives().getCommQtd()!=null){
+			mc.getObjectives().setBoolCommandQty(true);
+		}
+					
+		Pattern p = Pattern.compile(XML_TAG_ALL);
+		Matcher m = p.matcher(xml);
+		
+		if (m.find()) {
+			if(mc.getXmltag() == null){
+				mc.setXmltag(new XmlTag());
+			}
+			
+			mc.getXmltag().setXmlns(m.group());
+			mc.getXmltag().setLoadBlocks(true);
+ 		}
+		else {
+			mc.getXmltag().setLoadBlocks(false);
+		}
+		
+		return mc;
+	}
 	
 	public static String missionToXML(MissionContent mc) {		
 		StringWriter writer = null;
@@ -163,6 +179,8 @@ public class XmlToMission {
 			String result = writer.toString();
 			
 			result = result.replace("&lt;", "<").replace("&gt;", ">");
+			result = result.replace(" < ", " &lt; ").replace(" > ", " &gt; ");
+			result = result.replace(" <= ", " &lt;&#61; ").replace(" >= ", " &gt;&#61; ");
 			
 			return result;
 
