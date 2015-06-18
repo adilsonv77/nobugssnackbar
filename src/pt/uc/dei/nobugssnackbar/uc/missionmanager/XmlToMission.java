@@ -16,12 +16,13 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.lang3.SerializationUtils;
 
 import pt.uc.dei.nobugssnackbar.model.Command;
+import pt.uc.dei.nobugssnackbar.model.Function;
+import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.model.mission.Customer;
 import pt.uc.dei.nobugssnackbar.model.mission.Hint;
 import pt.uc.dei.nobugssnackbar.model.mission.MissionContent;
 import pt.uc.dei.nobugssnackbar.model.mission.Page;
 import pt.uc.dei.nobugssnackbar.model.mission.XmlTag;
-import pt.uc.dei.nobugssnackbar.uc.missionmanager.ObjectivesView.myInt;
 import pt.uc.dei.nobugssnackbar.util.ImgTagConvertor;
 
 public class XmlToMission {
@@ -30,7 +31,7 @@ public class XmlToMission {
 	//private static final String REGEX_XMLTAG_FIRST = "(\\<\\s*\\?\\s*xml[\\w=\".\\s-]*\\?*\\s*\\>)";
 	
 	public static MissionContent load(String xml){
-		// xml = mxml;
+		//xml = mxml;
 		JAXBContext jaxbContext;
 		try {
 			jaxbContext = JAXBContext.newInstance(MissionContent.class);
@@ -39,6 +40,14 @@ public class XmlToMission {
 			MissionContent mc = (MissionContent) jaxbUnmarshaller.unmarshal(reader);
 			
 			mc = adjustVariablesAfterUnmarshaling(mc,xml);
+			for (Hint h : mc.getHints().getErrorsHints()) {
+				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0)
+					h.setConditions(stringConditionToObject(h.getConditionsAsString()));
+			}
+			for (Hint h : mc.getHints().getTipsHints()) {
+				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0)
+					h.setConditions(stringConditionToObject(h.getConditionsAsString()));
+			}
 			return mc;
 			
 		}
@@ -46,6 +55,34 @@ public class XmlToMission {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static List<Condition> stringConditionToObject(String conditionAsString) {
+		ArrayList<Condition> list = new ArrayList<>();
+		String parts[] = conditionAsString.split(" ");
+			
+		if (parts != null) {
+			for (int i = 0; i < parts.length; i += 3) {
+				if (i % 3 == 0 && (parts[i].equalsIgnoreCase("&amp;&amp;") || parts[i].equalsIgnoreCase("||"))) {
+					Condition cond = new Condition();
+					cond.setLogicalOperator(parts[i]);
+					list.add(cond);
+					i -= 2;
+				}
+				else {
+					Condition cond = new Condition();
+					Function func = new Function();
+					func.setName(parts[i].replace("()", ""));
+					cond.setFunction(func);
+					cond.setComparator(parts[i+1]);
+					cond.setValue(parts[i+2]);
+					cond.setLogicalOperator(null);
+					list.add(cond);
+				}
+			}
+		}
+		
+		return list;
 	}
 	
 	private static MissionContent adjustVariablesAfterUnmarshaling(MissionContent mc,String xml) throws Exception{
@@ -181,8 +218,18 @@ public class XmlToMission {
 			result = result.replace("&lt;", "<").replace("&gt;", ">");
 
 			for (Hint h : missionContent.getHints().getErrorsHints()) {
-				String newCond = h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;");
-				result = result.replace(h.getConditionsAsString(), newCond);
+				if (h.getConditionsAsString() != null) {
+					String newCond = new String(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
+					System.out.println(newCond);
+					result = result.replace(h.getConditionsAsString(), newCond);
+				}
+			}
+			for (Hint h : missionContent.getHints().getTipsHints()) {
+				if (h.getConditionsAsString() != null) {
+					String newCond = new String(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
+					System.out.println(newCond);
+					result = result.replace(h.getConditionsAsString(), newCond);
+				}
 			}
 
 			

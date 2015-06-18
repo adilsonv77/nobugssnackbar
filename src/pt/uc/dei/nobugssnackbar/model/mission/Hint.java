@@ -117,7 +117,8 @@ public class Hint implements java.io.Serializable {
 				result.append(c.getConditionString());
 				result.append(" ");
 			}
-			conditionsAsString = result.toString().trim();
+			if (result.length() > 0)
+				conditionsAsString = result.toString().trim();
 		//}
 		
 		/*if (conditionsAsString != null && conditionsAsString.length() == 0) {

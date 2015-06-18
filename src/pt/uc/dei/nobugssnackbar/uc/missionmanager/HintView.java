@@ -37,6 +37,7 @@ public class HintView implements Serializable {
 	
 	@ManagedProperty(value="#{mm.missionContent.hints}")
 	private Hints hints;
+	
 
 	ResourceBundle messageBundle = ApplicationMessages.getMessage();
 	
@@ -292,4 +293,5 @@ public class HintView implements Serializable {
 	public void setDlgHintDisabled(boolean dlgHintDisabled) {
 		this.dlgHintDisabled = dlgHintDisabled;
 	}
+		
 }

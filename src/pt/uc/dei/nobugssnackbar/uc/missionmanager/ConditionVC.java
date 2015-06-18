@@ -94,6 +94,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 		return result;
 	}
+	
 	public void editCondition() {
 		condition = getConditionById();
 
