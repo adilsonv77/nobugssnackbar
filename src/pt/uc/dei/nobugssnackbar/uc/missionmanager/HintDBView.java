@@ -44,6 +44,7 @@ public class HintDBView implements Serializable{
 			hintsFromDB = new ArrayList<Hint>();
 			for (Hint hint : hintDao.list()) {
 				hint.setText(ImgTagConvertor.removeCDATA(hint.getText()));
+				hint.setText(ImgTagConvertor.replaceHexWithImages(hint.getText(), "png"));
 				hintsFromDB.add(hint);
 			}
 		}	

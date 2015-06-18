@@ -279,3 +279,18 @@ div.divExplEdit + img {
 .ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
     background: #78BCFF;
 }
+.dynaFormCategory .pe-dynaform-label{
+	white-space:normal !important;
+	text-align: center !important;
+	color : blue !important;
+	font : bold;
+}
+.dynaFormCategory .ui-selectonelistbox{
+	text-align: center;
+	width:100%;
+	height:100px;
+	margin: auto;
+}
+.dynaFormCategory .ui-selectlistbox-listcontainer{
+ 	height:100px !important;
+}
