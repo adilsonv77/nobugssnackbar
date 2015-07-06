@@ -82,8 +82,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			}
 			FacesContext ctx = FacesContext.getCurrentInstance();			
 			ctx.getExternalContext().getSessionMap().put("blocks", this.xmltag.getXmlns());
-
-			String XML_TAG_ALL = "(<\\s*xml[\\s\\w=\\\"\\/:.]*>)([\\w<\\s=\\\">\\/]*)(<\\s*\\/\\s*xml\\s*>)";
+			String XML_TAG_ALL = "(<\\s*xml[\\s\\w=\\\"\\/:.]*>)([\\w<\\s=\\\">\\/.,]*)(<\\s*\\/\\s*xml\\s*>)";
 			Pattern p = Pattern.compile(XML_TAG_ALL);
 			Matcher m = p.matcher(xmltag.getXmlns());
 			String xstr = xmltag.getXmlns();
@@ -97,7 +96,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			else {
 				selectedLoadBlocks = false;
 			}
-			
+			missionManager.getMissionContent().setXmltag(xmltag);
 			mc = new MissionConverter();
 			mc.setProvider(this);
 

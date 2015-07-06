@@ -59,4 +59,5 @@ public class Condition implements java.io.Serializable {
 		
 		return conditionString;
 	}
+	
 }

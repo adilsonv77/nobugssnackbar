@@ -5,12 +5,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
+import com.sun.xml.internal.txw2.annotation.XmlCDATA;
+
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name="page")
 public class Page implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
-	
+		
 	@XmlValue
 	private String msg;
 	
@@ -30,10 +32,12 @@ public class Page implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@XmlCDATA
 	public String getMsg() {
 		return msg;
 	}
 	
+	@XmlCDATA
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}

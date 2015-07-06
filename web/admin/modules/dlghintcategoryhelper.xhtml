@@ -7,7 +7,7 @@
 
 	<p:dialog id="dlgHintCategoryExtended" widgetVar="hintCategoryDialog" closable="false" dynamic="true"  resizable="false" modal="true"
 		header="#{categoryVC.HCategory.title}">
-		<h:form id="dynaFormCategory" style="width:350px;" >
+		<h:form id="dynaFormCategory" style="width:350px;" styleClass="dynaFormCategory" >
 			<pe:dynaForm value="#{hcHelper.model}" var="data" rendered="#{hintView.showDlgExt}">
 			
 				<pe:dynaFormControl>  
@@ -27,32 +27,19 @@
 				</pe:dynaFormControl>
 				
 				<pe:dynaFormControl type="list" for="list" styleClass="pe-dynaform-list">
-					<p:selectOneListbox id="list" value="#{data.value}" ><!-- required="#{data.required}" -->
-						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+					<p:selectOneListbox id="list" value="#{data.value}"><!-- required="#{data.required}" -->
+						 <f:selectItems value="#{data.items}" var="item" itemLabel="#{item}" itemValue="#{item}"/>
  					 	 <p:ajax update="dynaFormCategory" event="change" listener="#{data.updateValues}"/>
 					</p:selectOneListbox>
 				</pe:dynaFormControl>
 
 		        <f:facet name="buttonBar">
 		            <p:commandButton value="#{msg['ok']}"  actionListener="#{hcHelper.submitForm}"/>
+		            <p:commandButton value="#{msg['cancel']}"  oncomplete="PF('hintCategoryDialog').hide()"/>
 		        </f:facet>
         				
 			</pe:dynaForm>
 		</h:form>
 	</p:dialog>
 	
-	<h:outputStylesheet id="dynaFormCSS">  
-    	.pe-dynaform-label{
-    		white-space:normal !important;
-    		text-align: center !important;
-    		color : blue !important;
-    		font : bold;
-    	}
-    	.ui-selectonelistbox{
-    		text-align: center;
-    		width:100%;
-    		margin: auto;
-    	}
-	</h:outputStylesheet>
-
 </ui:composition>

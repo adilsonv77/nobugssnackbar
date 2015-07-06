@@ -112,17 +112,18 @@ public class Hint implements java.io.Serializable {
 	public String getConditionsAsString() {
 		StringBuilder result = new StringBuilder();
 		
-		if (conditionsAsString == null || conditionsAsString.equals("")){
+		//if (conditionsAsString == null || conditionsAsString.equals("")){
 			for (Condition c : conditions) {
 				result.append(c.getConditionString());
 				result.append(" ");
 			}
-			conditionsAsString = result.toString().trim();
-		}
+			if (result.length() > 0)
+				conditionsAsString = result.toString().trim();
+		//}
 		
-		if (conditionsAsString != null && conditionsAsString.length() == 0) {
+		/*if (conditionsAsString != null && conditionsAsString.length() == 0) {
 			conditionsAsString = null;
-		}
+		}*/
 		
 		return conditionsAsString;
 	}
@@ -132,22 +133,4 @@ public class Hint implements java.io.Serializable {
 	}
 	// #end
 
-	/*public String getStrTime() {
-		if(time > -1)
-			strTime = String.valueOf(time);
-		else
-			strTime = "";
-		return strTime;
-	}*/
-
-	/*@XmlAttribute(name="time")
-	public void setStrTime(String strTime) {
-		
-		try{			
-			time = Integer.parseInt(strTime);
-		}
-		catch(NumberFormatException e){	
-			return;
-		}
-	}*/
 }

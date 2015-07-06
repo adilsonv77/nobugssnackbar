@@ -35,19 +35,19 @@ public class Objectives  implements Serializable {
 	private boolean variableWindow;
 	
 	@XmlAttribute(name="reward")
-	private int reward;
+	private Integer reward;
 	
 	@XmlAttribute(name="commQtd")
-	private int commQtd;
+	private Integer commQtd;
 	
 	@XmlAttribute(name="maxCommands")
-	private int maxCommands;
+	private Integer maxCommands;
 	
 	@XmlAttribute(name="maxCommandsReward")
-	private int maxCommandsReward;
+	private Integer maxCommandsReward;
 	
 	@XmlAttribute(name="varQtd")
-	private int varQtd;
+	private Integer varQtd;
 	
 	@XmlAttribute(name="bonusTime")
 	private String bonusTime;
@@ -94,19 +94,19 @@ public class Objectives  implements Serializable {
 	public boolean isVariableWindow() {
 		return variableWindow;
 	}
-	public int getReward() {
+	public Integer getReward() {
 		return reward;
 	}
-	public int getCommQtd() {
+	public Integer getCommQtd() {
 		return commQtd;
 	}
-	public int getMaxCommands() {
+	public Integer getMaxCommands() {
 		return maxCommands;
 	}
-	public int getMaxCommandsReward() {
+	public Integer getMaxCommandsReward() {
 		return maxCommandsReward;
 	}
-	public int getVarQtd() {
+	public Integer getVarQtd() {
 		return varQtd;
 	}
 	public String getBonusTime() {
@@ -134,26 +134,26 @@ public class Objectives  implements Serializable {
 	public void setVariableWindow(boolean variableWindow) {
 		this.variableWindow = variableWindow;
 	}
-	public void setReward(int reward) {
+	public void setReward(Integer reward) {
 		this.reward = reward;
 	}
-	public void setCommQtd(int commQtd) {
+	public void setCommQtd(Integer commQtd) {
 		this.commQtd = commQtd;
 	}
-	public void setMaxCommands(int maxCommands) {
+	public void setMaxCommands(Integer maxCommands) {
 		this.maxCommands = maxCommands;
 	}
-	public void setMaxCommandsReward(int maxCommandsReward) {
+	public void setMaxCommandsReward(Integer maxCommandsReward) {
 		this.maxCommandsReward = maxCommandsReward;
 	}
-	public void setVarQtd(int varQtd) {
+	public void setVarQtd(Integer varQtd) {
 		this.varQtd = varQtd;
 	}
 	public void setBonusTime(String bonusTime) {
 		this.bonusTime = bonusTime;
 	}
 	public void setBonusTimeReward(String bonusTimeReward) {
-		this.bonusTimeReward = bonusTimeReward;
+		this.bonusTimeReward = bonusTimeReward.trim();
 	}
 	
 	public void addObjective() {

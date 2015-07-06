@@ -94,6 +94,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 		return result;
 	}
+	
 	public void editCondition() {
 		condition = getConditionById();
 
@@ -137,9 +138,9 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		Condition c = new Condition();
 
 		if (logicalOperator) { // add 'AND'
-			c.setLogicalOperator("and");
+			c.setLogicalOperator("&&");
 		} else { // add 'OR'
-			c.setLogicalOperator("or");
+			c.setLogicalOperator("||");
 		}
 
 		c.setId(idCounter++);
@@ -211,8 +212,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				String logOpB = conditionList.get(0).getConditionString();
 				String logOpE = conditionList.get(conditionList.size() - 1).getConditionString();
 				
-				if (logOpB.equals("and") || logOpB.equals("or") ||
-					logOpE.equals("and") || logOpE.equals("or")) {
+				if (logOpB.equals("&&") || logOpB.equals("||") ||
+					logOpE.equals("&&") || logOpE.equals("||")) {
 					text = messageBundle.getString("wrongCondition");
 					additionalMsg = messageBundle.getString("cannotStartEndWithAndOr");
 				}

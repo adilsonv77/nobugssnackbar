@@ -64,7 +64,7 @@ public class ImgTagConvertor {
 		return result;
 	}
 	
-	public static String getDiskPath(String relativePath){
+	private static String getDiskPath(String relativePath){
 		String path;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
@@ -110,7 +110,7 @@ public class ImgTagConvertor {
      * @return If < imghex> exist returns string like this < img src=images/[name].[imageType]> otherwise retuns original text
      * @throws Exception
      */
-    public static String getImgTagFromHex(String imghextag,String imageType) throws Exception {
+    private static String getImgTagFromHex(String imghextag,String imageType) throws Exception {
     	
     	String result = imghextag;
 		String relativeWebPath = "",absoluteDiskPath = "";				

@@ -24,6 +24,7 @@ import pt.uc.dei.nobugssnackbar.model.mission.Drink;
 import pt.uc.dei.nobugssnackbar.model.mission.Food;
 import pt.uc.dei.nobugssnackbar.model.mission.Foodstuff;
 import pt.uc.dei.nobugssnackbar.model.mission.Order;
+import pt.uc.dei.nobugssnackbar.model.mission.Orders;
 import pt.uc.dei.nobugssnackbar.model.mission.Skin;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.SkinConverter;
 
@@ -90,6 +91,16 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				}
 			}
 			
+			for (Customer c : customers) {
+				for (Order o : c.getOrders().getOrders()) {
+					int index = c.getOrders().getOrders().indexOf(o);
+					int id = Orders.getOrderIdCounter() + 1;
+					Orders.setOrderIdCounter(id);
+					o.setId(id);
+					c.getOrders().getOrders().set(index, o);
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,7 +142,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			int num = i + 1;
 			itemValue.append(msg.getString("counter") + " " + num);
 			sic[i] = new SelectItem("counter" + num, itemValue.toString());
-			
+
 			itemValue.delete(0, itemValue.length());
 			
 			for (int j = 1; j <= 2; j++, sitIndex++) {
@@ -139,13 +150,14 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				itemValue.append(num);
 				itemValue.append(" " + msg.getString("chair") + " ");
 				itemValue.append(j);
-				sit[sitIndex] = new SelectItem("table" + num + "chair" + j, itemValue.toString());
-				tablesChairsNormalList.add(itemValue.toString());
+				String value = "table" + num + "chair" + j;
+				sit[sitIndex] = new SelectItem(value, itemValue.toString());
+				tablesChairsNormalList.add(value);
 				itemValue.delete(0, itemValue.length());
 			}
 		}
 		for (int i = 0; i < sic.length; i++) {
-			tablesChairsNormalList.add(sic[i].getLabel());
+			tablesChairsNormalList.add(sic[i].getValue().toString());
 		}
 		
 		sigCounters.setSelectItems(sic);
@@ -174,8 +186,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				customer.getOrders().getOrders().set(index, order);
 				customer.getOrders().setOrder(new Order());
 				order = customer.getOrders().getOrder();
-				int id = customer.getOrders().getOrderIdCounter() + 1;
-				customer.getOrders().setOrderIdCounter(id);
+				int id = Orders.getOrderIdCounter() + 1;
+				Orders.setOrderIdCounter(id);
 				order.setId(id);
 				customer.getOrders().getOrders().add(order);
 			}
@@ -203,7 +215,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				}
 			}
 			else if (customer.getOrders().getOrders().size() == 1) {
-				customer.getOrders().setOrderIdCounter(0);
+				Orders.setOrderIdCounter(0);
 				customer.getOrders().getOrders().set(0, new Order());
 				customer.getOrders().getOrders().get(0).setId(0);
 				customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));				
