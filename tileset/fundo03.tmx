@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="9" height="11" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="newcooker" tilewidth="40" tileheight="40">
+  <image source="newcooker.png" width="40" height="80"/>
+ </tileset>
+ <tileset firstgid="3" name="floor" tilewidth="40" tileheight="40">
+  <image source="floor.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="4" name="floor_wall" tilewidth="40" tileheight="40">
+  <image source="floor_wall.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="5" name="wall" tilewidth="40" tileheight="40">
+  <image source="wall.png" width="40" height="80"/>
+ </tileset>
+ <tileset firstgid="7" name="door" tilewidth="40" tileheight="40">
+  <image source="door.png" width="120" height="120"/>
+ </tileset>
+ <tileset firstgid="16" name="balcao1" tilewidth="40" tileheight="40">
+  <image source="balcao1.png" width="80" height="120"/>
+ </tileset>
+ <tileset firstgid="22" name="balcaocanto1" tilewidth="40" tileheight="40">
+  <image source="balcaocanto1.png" width="200" height="40"/>
+ </tileset>
+ <tileset firstgid="28" name="blackboard" tilewidth="40" tileheight="40">
+  <image source="blackboard.png" width="120" height="80"/>
+ </tileset>
+ <tileset firstgid="34" name="banco1" tilewidth="40" tileheight="40">
+  <image source="banco1.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="35" name="cooler2" tilewidth="40" tileheight="40">
+  <image source="cooler2.png" width="320" height="80"/>
+ </tileset>
+ <tileset firstgid="51" name="display2" tilewidth="40" tileheight="40">
+  <image source="display2.png" width="160" height="40"/>
+ </tileset>
+ <tileset firstgid="55" name="kitchentools" tilewidth="40" tileheight="40">
+  <image source="kitchentools.png" width="40" height="80"/>
+ </tileset>
+ <layer name="chao" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjZmBgYB7FgwIDAOmUASo=
+  </data>
+ </layer>
+ <layer name="chao_parede" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAOYCECjwL8AAAs3AAl
+  </data>
+ </layer>
+ <layer name="parede" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjZWBgYCWA2YjAo4ByAACM6ABk
+  </data>
+ </layer>
+ <layer name="door" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2Bg4ABiTgbcgAuIuYGYB48aXiDmA2J+PGpGAX4AAIiYAGQ=
+  </data>
+ </layer>
+ <layer name="cooker" width="9" height="11" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFyICRCDVMNLIbAAK4AAQ=
+  </data>
+ </layer>
+ <layer name="balcao" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi6QAyIJZCwOBBLArEUkhohHHqFB0iNCA41okAMAMGUAWY=
+  </data>
+ </layer>
+ <layer name="quadro" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFMkAsC8RyDLiBPBArALEiHjWjgHQAAADTALg=
+  </data>
+ </layer>
+ <layer name="banco" width="9" height="11" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi+QGmImQMAKvwAZw==
+  </data>
+ </layer>
+ <layer name="cooler" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgewHigHYADaAOxChFq9IAYADesANw=
+  </data>
+ </layer>
+ <layer name="tools" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANzPHIwYAFEWpGAXEAAJk8AHA=
+  </data>
+ </layer>
+</map>

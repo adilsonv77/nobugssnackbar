@@ -331,7 +331,7 @@ CustomerManager.animation = function() {
 
 CustomerManager.draw = function(ctx) {
 	
-	var counters = [true, true, true, true];
+	var counters = [true, true, true];
 	
 	for (var i=0; i<customers.length; i++) {
 		var nId = customers[i].reallyCurrentNode.id;
@@ -355,7 +355,7 @@ CustomerManager.drawCounters = function(ctx, counters) {
 	for (var i= 0; i < counters.length; i++) {
 		if (counters[i]) {
 			var n = CustOpt.nodes[CustOpt.counter[i]];
-			ctx.drawImage(this.banco, n.x, n.y-32);
+			ctx.drawImage(this.banco, n.x, n.y-40);
 		}
 	}
 	

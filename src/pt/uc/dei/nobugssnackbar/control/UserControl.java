@@ -202,11 +202,11 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public long retrieveMoney() {
+	public Object[] retrieveReward() {
 		if (this.user == null)
-			return 0;
+			return new Object[]{0, 0};
 
-		return this.user.getMoney();
+		return new Object[]{this.user.getXp(), this.user.getMoney()};
 	}
 
 	@RemoteMethod

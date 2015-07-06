@@ -17,7 +17,7 @@ public class GenerateSnackManPath {
 		StringBuffer s = new StringBuffer("this.path = {");
 		StringBuffer n = new StringBuffer("this.nodes = {");
 		StringBuffer k = new StringBuffer("this.keynodes = [");
-		int x = 260, y = 390;
+		int x = 270, y = 356; //int x = 260, y = 390;
 		
 		// onde nasce o heroi
 		k.append("'n1', ");
@@ -25,7 +25,7 @@ public class GenerateSnackManPath {
 		
 		int contaN = 1;
 		
-		int xd = -9, yd = -10;
+		int xd = -4, yd = -12;
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			s.append("n" + (i+1) + ":{n"+(i)+":1, n"+(i+2)+":1}, ");
@@ -33,11 +33,11 @@ public class GenerateSnackManPath {
 		}
 		
 		contaN++;
-		// em frente ao display (170, 290)
+		// em frente ao display (230, 240) 
 		k.append("'n"+contaN+"', ");
 		int nDisplay = contaN;
 		
-		x = 170; y = 290; xd = -7; yd = 0;
+		x = 230; y = 240; xd = -12; yd = 1;
 		createNode(n, contaN, x, y);
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
@@ -46,12 +46,12 @@ public class GenerateSnackManPath {
 		}
 		contaN++;
 		
-		// em frente ao customer 1 (100, 290)
+		// em frente ao customer 1 (110, 256) 
 		int nC1 = contaN;
 		k.append("'n"+nC1+"', ");
 		
-		// de c1 a c2 (100,290) -> (100,330)
-		x = 100; y = 290; xd = 0; yd = +4;
+		// de c1 a c2  (110,256) -> (110, 336)  
+		x = 110; y = 256; xd = 0; yd = +8;
 		createNode(n, contaN, x, y);
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
@@ -60,13 +60,13 @@ public class GenerateSnackManPath {
 		}
 		contaN++;
 
-		// em frente ao customer 2 (100, 330)
+		// em frente ao customer 2 (110, 336) 
 		k.append("'n"+contaN+"', ");
 		int nC2 = contaN;
-		x = 100; y = 330; xd = +7; yd = -4; 
+		x = 110; y = 336; xd = +12; yd = -9; 
 		createNode(n, nC2, x, y);
 		
-		// do nC2 até display (100, 330)->(170, 290)
+		// do nC2 até display (110,336)->(230, 240) 
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 9) {
@@ -77,9 +77,9 @@ public class GenerateSnackManPath {
 		}
 		int nC2_Display = contaN;
 		
-        // 260, 390				
-		xd = 8; yd = +3;
-		// do nC2 até ponto de origem (100,330)->(260, 390)
+        // 270, 356				
+		xd = 8; yd = +1;
+		// do nC2 até ponto de origem (110,336) -> (270, 356) 
 		for (int i=1; i<20; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			// o custo ficou em 0.5 para dar uma chance a esse caminho
@@ -94,8 +94,8 @@ public class GenerateSnackManPath {
 		}
 		int nC2_Origem = contaN;
 
-		// em frente ao cooler (300, 430)
-		x = 260; y = 390; xd = +4; yd = +4;
+		// em frente ao cooler (284, 438) 
+		x = 270; y = 356; xd = +1; yd = +8;
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1)
@@ -106,11 +106,11 @@ public class GenerateSnackManPath {
 		}
 		contaN++;
 		int nCooler = contaN;
-		createNode(n, nCooler, 300, 430);
+		createNode(n, nCooler, 284, 438);
 		k.append("'n"+nCooler+"', ");
 		
-		// do c2 a c3 (100, 330) -> (100, 370)
-		xd = 0; yd = +4; x = 100; y = 330;
+		// do c2 a c3 (110, 336) -> (110, 416) 
+		xd = 0; yd = +8; x = 110; y = 336;
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1)
@@ -122,25 +122,14 @@ public class GenerateSnackManPath {
 		}
 		int nC3 = contaN+1;
 		k.append("'n"+nC3+"', ");
-		createNode(n, nC3, 100, 370);
+		createNode(n, nC3, 110, 416);
 		contaN++;
 		
-		// do c3 ao c4 (100, 370) -> (100, 410)
-		x = 100; y = 370;
-		for (int i=1; i<10; i++) {
-			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
-			s.append("n" + (contaN+1) + ":{n"+(contaN)+":0.5, n"+(contaN+2)+":0.5}, ");
-			contaN++;
-		}
-		int nC4 = contaN+1;
-		k.append("'n"+nC4+"', ");
-		createNode(n, nC4, 100, 410);
-		contaN++;
 		
-		// do c3 ao ponto origem (100, 370) -> (260, 390)
+		// do c3 ao ponto origem (110, 416) -> (270, 356)
 		int nC3_Origem = contaN+1;
-		x = 100; y= 370;
-		xd = 8; yd = 1;
+		x = 110; y= 416;
+		xd = 8; yd = -3;
 		for (int i=1; i<=20; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
@@ -154,32 +143,15 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		
-		// do c4 ao ponto origem (100, 410) -> (260, 390)
-		int nC4_Origem = contaN+1;
-		x = 100; y= 410;
-		xd = 8; yd = -1;
-		for (int i=1; i<=20; i++) {
-			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
-			if (i == 1) {
-				s.append("n" + (contaN+1) + ":{n"+(nC4)+":1, n"+(contaN+2)+":1}, ");
-			} else {
-				if (i == 20) {
-					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n1:1}, ");
-				} else
-					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
-			}
-			contaN++;
-		}
-		
-		// do c4 ao BoxOfFruits (100, 410) -> (160, 410)
-		int nC4_BoxOfFruits = contaN+1;
-		x = 100; y= 410;
-		xd = 10; yd = 0;
+		// do c3 ao BoxOfFruits (110, 416) -> (200, 416)
+		int nC3_BoxOfFruits = contaN+1;
+		x = 110; y= 416;
+		xd = 15; yd = 0;
 		
 		for (int i=1; i<=6; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
-				s.append("n" + (contaN+1) + ":{n"+(nC4)+":1, n"+(contaN+2)+":1}, ");
+				s.append("n" + (contaN+1) + ":{n"+(nC3)+":1, n"+(contaN+2)+":1}, ");
 			} else {
 				s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
 			}
@@ -187,13 +159,13 @@ public class GenerateSnackManPath {
 		}
 		int nBoxOfFruits = contaN+1;
 		k.append("'n"+nBoxOfFruits+"', ");
-		createNode(n, nBoxOfFruits, 160, 410);
+		createNode(n, nBoxOfFruits, 200, 416);
 		contaN++;
 		
-		// do boxoffruits ao ponto origem (160, 410) -> (260, 390)
+		// do boxoffruits ao ponto origem (200, 416) -> (270, 356)
 		int nBoxOfFruits_Origem = contaN+1;
-		x = 160; y= 410;
-		xd = 10; yd = -2;
+		x = 200; y= 416;
+		xd = 7; yd = -6;
 		for (int i=1; i<=10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
@@ -207,15 +179,35 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		
+		// do BoxOfFruits ao Cooler (200, 416) -> (284, 438)
+		int boxOfFruits_Cooler = contaN+1;
+		x = 200; y= 416;
+		xd = 8; yd = 2;
+		
+		for (int i=1; i<=10; i++) {
+			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
+			if (i == 1) {
+				s.append("n" + (contaN+1) + ":{n"+(nBoxOfFruits)+":1, n"+(contaN+2)+":1}, ");
+			} else {
+				if (i == 10) {
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(nCooler)+":1}, ");
+				} else
+					s.append("n" + (contaN+1) + ":{n"+(contaN)+":1, n"+(contaN+2)+":1}, ");
+			}
+			contaN++;
+		}
+
+		// juice machine
+		
 		int nJuiceMachine = contaN+1;
 		k.append("'n"+nJuiceMachine+"', ");
-		createNode(n, nJuiceMachine, 300, 290);
+		createNode(n, nJuiceMachine, 300, 240);
 		contaN++;
 
-		// da maquina de sumos ao ponto de origem   (300, 290) -> (260, 290)
+		// da maquina de sumos ao ponto de origem   (300, 240) -> (260, 356)
 		int nJuiceMachine_Origem = contaN+1;
-		x = 300; y= 290;
-		xd = -4; yd = 10;
+		x = 300; y = 240;
+		xd = -4; yd = 11;
 		for (int i=1; i<=10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
@@ -229,10 +221,10 @@ public class GenerateSnackManPath {
 			contaN++;
 		}		
 		
-		// da maquina de sumos ao display (300, 290) -> (170, 290)
+		// da maquina de sumos ao display (300, 240) -> (230, 240)
 		int nJuiceMachine_Display = contaN+1;
-		x = 300; y= 290;
-		xd = -13; yd = 0;
+		x = 300; y= 240;
+		xd = -7; yd = 0;
 		for (int i=1; i<=10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
@@ -247,6 +239,17 @@ public class GenerateSnackManPath {
 		}		
 		
 		// ligacoes entre os nós principais
+		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1, n"+(nC3_Origem+19)+":1,"
+				+ " n"+(nBoxOfFruits_Origem+9)+":1, n" + (nJuiceMachine_Origem+9) + ":1}, ");
+		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1, n"+(nJuiceMachine_Display+9) + ":1 }, ");
+		s.append("n" + (nC1) + ":{n"+(nC1-1)+":1, n"+(nC1+1)+":1}, ");
+		s.append("n" + (nC2) + ":{n"+(nC2-1)+":1, n"+(nC2+1)+":1, n"+(nC2_Display+1)+":1, n"+(nC3-9)+":1}, ");
+		s.append("n" + (nC3) + ":{n"+(nC3-1)+":1, n"+(nC3+1)+":1, n"+nC3_Origem+":1, n"+nC3_BoxOfFruits+":1}, ");
+		s.append("n" + (nBoxOfFruits) + ":{n"+(nBoxOfFruits-1)+":1, n"+(nBoxOfFruits+1) + ":1, n"+(boxOfFruits_Cooler)+":1}, ");
+		s.append("n" + (nJuiceMachine) + ":{n"+(nJuiceMachine_Origem)+":1, n"+(nJuiceMachine_Display) + ":1}, ");
+		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1, n"+(boxOfFruits_Cooler+9)+":1} ");
+
+		/*
 		s.append("n1:{n2:1, n"+nC2_Origem+":1, n"+(nC2_Origem+1)+":1, n"+(nC3_Origem+19)+":1, n"+(nC4_Origem+19)+":1,"
 				+ " n"+(nBoxOfFruits_Origem+9)+":1, n" + (nJuiceMachine_Origem+9) + ":1}, ");
 		s.append("n" + (nDisplay) + ":{n"+(nDisplay-1)+":1, n"+(nDisplay + 1)+":1, n"+(nC2_Display)+":1, n"+(nJuiceMachine_Display+9) + ":1 }, ");
@@ -257,13 +260,7 @@ public class GenerateSnackManPath {
 		s.append("n" + (nBoxOfFruits) + ":{n"+(nBoxOfFruits-1)+":1, n"+(nBoxOfFruits+1) + ":1}, ");
 		s.append("n" + (nJuiceMachine) + ":{n"+(nJuiceMachine_Origem)+":1, n"+(nJuiceMachine_Display) + ":1}, ");
 		s.append("n" + (nCooler) + ":{n"+(nCooler-1)+":1} ");
-		
-		/*node = new Node(110, 370);
-		snackManFinalPath[3] = node;
-		
-		node = new Node(170, 415);
-		snackManFinalPath[4] = node;
-*/
+		*/
 		
 		pw.println(s + "};");
 		pw.println(n + "};");

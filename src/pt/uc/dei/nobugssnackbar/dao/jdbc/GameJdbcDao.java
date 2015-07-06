@@ -37,7 +37,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint from users where usernick = ? and userpassw = ? and userenabled = 'T'");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint, userxp from users where usernick = ? and userpassw = ? and userenabled = 'T'");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
@@ -50,6 +50,7 @@ public class GameJdbcDao implements GameDao {
 			u.setId(rs.getLong(1));
 			u.setNick(nick);
 			u.setPassw(passw);
+			u.setXp(rs.getLong(9));
 			u.setMoney(rs.getLong(4));
 			u.setName(rs.getString(5));
 			u.setSex(rs.getString(6));
@@ -1289,9 +1290,9 @@ public class GameJdbcDao implements GameDao {
 			if (lret.size() == 0) {
 				
 				lret.add(new Object[]{"skin", "", "#F39C7A"});
-				lret.add(new Object[]{"eyes", "", "#000000"});
-				lret.add(new Object[]{"hat", "Hat-1", "#FFFFFF"});
-				lret.add(new Object[]{"clothes", "Clothes-1", "#FFFFFF", "#FF0000"});
+				lret.add(new Object[]{"eyes", "eyes", "#000000"});
+				lret.add(new Object[]{"hat", "Hat-2", "#FF0000"});
+				lret.add(new Object[]{"clothes", "Clothes-1", "#FF0000", "#FFFF00"});
 				
 			}
 			

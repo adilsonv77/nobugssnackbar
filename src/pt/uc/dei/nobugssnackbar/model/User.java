@@ -33,6 +33,8 @@ public class User {
 
 	private boolean enabled;
 
+	private long xp;
+
 	public long getId() {
 		return id;
 	}
@@ -63,6 +65,14 @@ public class User {
 
 	public void setMoney(long money) {
 		this.money = money;
+	}
+
+	public long getXp() {
+		return xp;
+	}
+	
+	public void setXp(long xp) {
+		this.xp = xp;
 	}
 
 	@Override

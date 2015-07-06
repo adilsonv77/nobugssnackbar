@@ -55,7 +55,7 @@ Game.varWindow = Game.RIGHT;
 
 Game.counterInstruction = null;
 
-PreloadImgs.put('fundo', 'images/fundo.png');
+PreloadImgs.put('fundo', 'images/fundo_new.png');
 PreloadImgs.put('doors', 'images/doors.png');
 
 
@@ -88,8 +88,11 @@ Game.generalInit = function() {
       
       // It's draw so early because it appears fast after load the mission 
       Game.ctxDisplay = document.getElementById('display').getContext('2d');
+      Game.tempDisplay = document.getElementById('displayTemp');
+      Game.tempCtxDisplay = Game.tempDisplay.getContext('2d');
+      
       Game.imgBackground = PreloadImgs.get("fundo");	
-      Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
+      Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
       
       Blockly.BlockSvg.Game = Game;
       
@@ -292,8 +295,9 @@ Game.finishIntro = function() {
 
 Game.logged = function() {
 	
-	UserControl.retrieveMoney(function(ret) {
-		  document.getElementById("yourCash").innerHTML = ret;
+	UserControl.retrieveReward(function(ret) {
+		  document.getElementById("yourXP").innerHTML = ret[0];
+		  document.getElementById("yourCash").innerHTML = ret[1];
 	});
 
 	$("#playerName").html(Game.loginData.userLogged.name);
@@ -428,10 +432,11 @@ Game.missionLoaded = function(ret){
 	  Game.timeSpent = ret[3];
 
   
-  UserControl.retrieveMoney(function(ret) {
-	  Game.globalMoney.amount = parseInt(ret);
+  UserControl.retrieveReward(function(ret) {
+	  //document.getElementById("yourXP").innerHTML = ret[0];
+	  Game.globalMoney.amount = parseInt(ret[1]);
   });
-
+  
   Game.slider.timesBefore = 0;
   
   var slider = mission.childNodes[0].getElementsByTagName("slider");
@@ -454,7 +459,7 @@ Game.missionLoaded = function(ret){
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
   
-  hero = new SnackMan(objectives, mission);
+  hero = new SnackMan(objectives, mission, Game.loginData.avatar);
   Game.mission = mission;
 
   $("#vars").ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
@@ -1114,14 +1119,14 @@ Game.killAll = function() {
  */
 Game.display = function() {
 
-//	CustomerManager.animation();
+	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
 
-	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0, 352, 448 );
-
+	/*
 	if (Game.openMission.open)
 		Game.missionMoney.draw(Game.ctxDisplay);
 	
 	Game.globalMoney.draw(Game.ctxDisplay);
+	*/
 	
 	hero.draw(Game.ctxDisplay);
 	CustomerManager.draw(Game.ctxDisplay);
