@@ -56,7 +56,7 @@ Game.varWindow = Game.RIGHT;
 Game.counterInstruction = null;
 
 PreloadImgs.put('fundo', 'images/fundo_new.png');
-PreloadImgs.put('doors', 'images/doors.png');
+PreloadImgs.put('doors', 'images/door_new.png');
 
 
 Game.generalInit = function() {

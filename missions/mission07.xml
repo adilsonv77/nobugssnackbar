@@ -96,8 +96,8 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>

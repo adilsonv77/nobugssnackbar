@@ -5,7 +5,7 @@
 		<![CDATA[
 		Estamos a come&#231;ar a fazer nome na pra&#231;a: clientes satisfeitos trazem mais clientes. 
 		Observa que estamos com o balc&#227;o cheio. Alguns t&#234;m fome e outros sede. Os clientes 
-		sentados no banco 1 e 2 t&#234;m fome e os outros dois t&#234;m sede.<br/>
+		sentados no banco 1 e 2 t&#234;m fome e o outro t&#234;m sede.<br/>
         <br/>
         Mas agora para tornar mais interessante a miss&#227;o, vou-te limitar o tempo que tens para
         resolver o problema. Quanto menos tempo gastares, maior ser&#225; a tua bonifica&#231;&#227;o. Se
@@ -96,26 +96,11 @@
 				</order>
 			</orders>	
 		</customer>
-		<customer>
-			<id>04</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
-			<orders>
-				<order>
-					<foods>						
-					</foods>
-					<drinks>
-						<drink qt="1" price="0">coke</drink>
-					</drinks>
-				</order>
-			</orders>	
-		</customer>
 	</customers>
 	<objectives ordered="false" reward="7" bonusTime="480" bonusTimeReward="90 80 70 60">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
-		<objective pos="4" place="counter">deliver</objective>
 	</objectives>
 	<xml>
 	</xml>

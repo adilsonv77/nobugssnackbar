@@ -37,7 +37,7 @@ public class GenerateSnackManPath {
 		k.append("'n"+contaN+"', ");
 		int nDisplay = contaN;
 		
-		x = 230; y = 240; xd = -12; yd = 1;
+		x = 230; y = 240; xd = -12; yd = 3;
 		createNode(n, contaN, x, y);
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
@@ -46,12 +46,12 @@ public class GenerateSnackManPath {
 		}
 		contaN++;
 		
-		// em frente ao customer 1 (110, 256) 
+		// em frente ao customer 1 (110, 276) 
 		int nC1 = contaN;
 		k.append("'n"+nC1+"', ");
 		
-		// de c1 a c2  (110,256) -> (110, 336)  
-		x = 110; y = 256; xd = 0; yd = +8;
+		// de c1 a c2  (110,276) -> (110, 356)  
+		x = 110; y = 276; xd = 0; yd = +8;
 		createNode(n, contaN, x, y);
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
@@ -60,13 +60,13 @@ public class GenerateSnackManPath {
 		}
 		contaN++;
 
-		// em frente ao customer 2 (110, 336) 
+		// em frente ao customer 2 (110, 356) 
 		k.append("'n"+contaN+"', ");
 		int nC2 = contaN;
-		x = 110; y = 336; xd = +12; yd = -9; 
+		x = 110; y = 356; xd = +12; yd = -11; 
 		createNode(n, nC2, x, y);
 		
-		// do nC2 até display (110,336)->(230, 240) 
+		// do nC2 até display (110,356)->(230, 240) 
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 9) {
@@ -78,8 +78,8 @@ public class GenerateSnackManPath {
 		int nC2_Display = contaN;
 		
         // 270, 356				
-		xd = 8; yd = +1;
-		// do nC2 até ponto de origem (110,336) -> (270, 356) 
+		xd = 8; yd = 0;
+		// do nC2 até ponto de origem (110,356) -> (270, 356) 
 		for (int i=1; i<20; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			// o custo ficou em 0.5 para dar uma chance a esse caminho
@@ -109,8 +109,8 @@ public class GenerateSnackManPath {
 		createNode(n, nCooler, 284, 438);
 		k.append("'n"+nCooler+"', ");
 		
-		// do c2 a c3 (110, 336) -> (110, 416) 
-		xd = 0; yd = +8; x = 110; y = 336;
+		// do c2 a c3 (110, 356) -> (110, 436) 
+		xd = 0; yd = +8; x = 110; y = 356;
 		for (int i=1; i<10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1)
@@ -122,14 +122,14 @@ public class GenerateSnackManPath {
 		}
 		int nC3 = contaN+1;
 		k.append("'n"+nC3+"', ");
-		createNode(n, nC3, 110, 416);
+		createNode(n, nC3, 110, 436);
 		contaN++;
 		
 		
-		// do c3 ao ponto origem (110, 416) -> (270, 356)
+		// do c3 ao ponto origem (110, 436) -> (270, 356)
 		int nC3_Origem = contaN+1;
-		x = 110; y= 416;
-		xd = 8; yd = -3;
+		x = 110; y= 436;
+		xd = 8; yd = -4;
 		for (int i=1; i<=20; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
@@ -143,10 +143,10 @@ public class GenerateSnackManPath {
 			contaN++;
 		}
 		
-		// do c3 ao BoxOfFruits (110, 416) -> (200, 416)
+		// do c3 ao BoxOfFruits (110, 436) -> (200, 416)
 		int nC3_BoxOfFruits = contaN+1;
-		x = 110; y= 416;
-		xd = 15; yd = 0;
+		x = 110; y= 436;
+		xd = 15; yd = -3;
 		
 		for (int i=1; i<=6; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));

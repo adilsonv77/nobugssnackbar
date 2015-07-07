@@ -13,7 +13,7 @@
 		
 		<page>
 		<![CDATA[
-		O &#250;ltimo desafio antes de se completar o n&#237;vel Aprendiz de Atendedor: os quatro clientes t&#234;m fome e sede.
+		O &#250;ltimo desafio antes de se completar o n&#237;vel Aprendiz de Atendedor: os tr&#234;s clientes t&#234;m fome e sede.
 		Atende todos os clientes com apenas duas vari&#225;veis. Ganhas $30 extra se resolves o problema em cinco minutos.
 		]]>
 		</page>
@@ -94,27 +94,11 @@
 				</order>
 			</orders>	
 		</customer>
-		<customer>
-			<id>04</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
-			<orders>
-				<order>
-					<foods>
-						<food qt="1" price="0">hotdog</food>
-					</foods>
-					<drinks>
-						<drink qt="1" price="0">coke</drink>
-					</drinks>
-				</order>
-			</orders>	
-		</customer>
 	</customers>
 	<objectives ordered="false" reward="7" bonusTime="300" bonusTimeReward="50 40 30" varQtd="2">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
-		<objective pos="4" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="10">
 	</xml>

@@ -57,15 +57,24 @@ public class GenerateCustomerPath {
 		StringBuffer n = new StringBuffer("CustOpt.nodes = {");
 		StringBuffer k = new StringBuffer("CustOpt.keynodes = [");
 
-		int x = 40, y = 100;
+		int x = 40, y = 105;
 		// where the customer borns
 		k.append("'n1', ");
 		createNode(n, 1, x, y);
 
 		contaN = 1;
+		int xd = -4;
+		// (40, 100) -> (0, 105)
+		for (int i = 1; i <= 10; i++) {
+			createNode(n, contaN + 1, x + (xd * i), y);
+			s.append("n" + (contaN + 1) + ":{n" + (contaN) + ":1, n"
+					+ (contaN + 2) + ":1}, ");
+			contaN++;
+		}
 
+		x = 0;
 		// in front of counter 1 (40, 276)
-		int[] r = runToCounter(6, 29, x, y, 276, 0, n, s, k);
+		int[] r = runToCounter(6, 28, x, y, 276, 0, n, s, k);
 		int c1 = r[0]; int nCounter1 = r[1];
 		
 		// in front of counter 2 (40, 356)

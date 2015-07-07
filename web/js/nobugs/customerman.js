@@ -122,7 +122,7 @@ CustomerManager.reset = function() {
 				var dRMin = _drinks.getAttribute("randomMin");
 				dRMin = parseInt(dRMin == null?"0":dRMin);
 				
-				if (foods.length > 0 || drinks.length > 0)
+			//	if (foods.length > 0 || drinks.length > 0)
 					custPattern.push({ hasRandom: (orders[i].getAttribute("randomType")!=null) || (fRMin > 0) || (dRMin > 0) ,
 										   foods: foods, drinks: drinks});
 			}

@@ -78,8 +78,8 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>
@@ -96,9 +96,9 @@
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>
 		
-		<objective pos="4" place="counter">askForFood</objective>
-		<objective pos="4" place="counter">pickUpFood</objective>
-		<objective pos="4" place="counter">deliver</objective>
+		<objective pos="3" place="counter">askForFood</objective>
+		<objective pos="3" place="counter">pickUpFood</objective>
+		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml>
 

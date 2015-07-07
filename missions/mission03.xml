@@ -65,8 +65,8 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>
@@ -80,7 +80,7 @@
 	</customers>
 	<objectives ordered="false" reward="5" buttonRun="false">
 		<objective pos="1" place="counter">askForFood</objective>
-		<objective pos="4" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>
 	<xml>
 		<block type="variables_set" inline="true" x = "300" y = "1" deletable = "false" >
@@ -101,7 +101,7 @@
 		<block type="move_goToBarCounter" x = "300" y = "100" deletable = "false" >
 			<value name="VALUE">
 				<block type="math_number" deletable = "false" >
-					<field name="NUM">4</field>
+					<field name="NUM">3</field>
 				</block>
 			</value>
 		</block>

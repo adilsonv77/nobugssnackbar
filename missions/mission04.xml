@@ -77,8 +77,8 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>
@@ -92,7 +92,7 @@
 	</customers>
 	<objectives ordered="false" reward="7" >
 		<objective pos="1" place="counter" distinct="true">askForFood</objective>
-		<objective pos="4" place="counter" distinct="true">askForFood</objective>
+		<objective pos="3" place="counter" distinct="true">askForFood</objective>
 	</objectives>
 	<xml>
 		<block type="variables_set" inline="true" x = "300" y = "1">

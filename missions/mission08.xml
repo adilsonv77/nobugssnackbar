@@ -12,7 +12,7 @@
 		<br/><br/>
 		Dicas: 
 		<br/>1) uma vez em frente ao mostrador podes pegar comida de mais de um pedido;
-		<br/>2) n&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.
+		<br/>2) n&#227;o &#233; obrigat&#243;riog executar os passos conforme a sequ&#234;ncia abaixo.
 		]]>  
 		</page>
 
@@ -77,8 +77,8 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>
@@ -95,9 +95,9 @@
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>
 		
-		<objective pos="4" place="counter">askForFood</objective>
-		<objective pos="4" place="counter">pickUpFood</objective>
-		<objective pos="4" place="counter">deliver</objective>
+		<objective pos="3" place="counter">askForFood</objective>
+		<objective pos="3" place="counter">pickUpFood</objective>
+		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="6">
 

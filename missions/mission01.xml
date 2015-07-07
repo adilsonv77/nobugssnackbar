@@ -27,7 +27,7 @@
 		
 		<page>
 		<![CDATA[
-		A tua primeira miss&#227;o &#233; encaminhares-te at&#233; aos clientes sentados na posi&#231;&#227;o 1 e 4 do balc&#227;o. 
+		A tua primeira miss&#227;o &#233; encaminhares-te at&#233; aos clientes sentados na posi&#231;&#227;o 1 e 3 do balc&#227;o. 
 		&#201; simples, n&#227;o ? &#201; s&#243; arrastar o comando at&#233; a &#225;rea de trabalho, ligar um ao outro, alterar os
 		par&#226;metros (o valor 1 &#233; o padr&#227;o) e clicar no bot&#227;o executar.
 		]]>
@@ -68,6 +68,35 @@
 	<customers>
 		<customer>
 			<id>01</id>
+			<init>door</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		 
+		<!--  
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		
+		<customer>
+			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
@@ -79,23 +108,11 @@
 				</order>
 			</orders>
 		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter4</init>
-			<dest>counter4</dest>
-			<orders>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
+		-->
 	</customers>
 	<objectives ordered="true" reward="5" buttonDebug="false">
 		<objective pos="1" place="counter">goesTo</objective>
-		<objective pos="4" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>
 	<xml>
 	</xml>
