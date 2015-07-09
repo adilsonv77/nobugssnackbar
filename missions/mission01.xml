@@ -80,9 +80,8 @@
 			</orders>
 		</customer>
 		 
-		<!--  
 		<customer>
-			<id>01</id>
+			<id>03</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<orders>
@@ -95,10 +94,11 @@
 			</orders>
 		</customer>
 		
+		 
 		<customer>
-			<id>01</id>
-			<init>counter1</init>
-			<dest>counter1</dest>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
 				<order>
 					<foods>
@@ -108,7 +108,7 @@
 				</order>
 			</orders>
 		</customer>
-		-->
+		
 	</customers>
 	<objectives ordered="true" reward="5" buttonDebug="false">
 		<objective pos="1" place="counter">goesTo</objective>
