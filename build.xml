@@ -173,6 +173,8 @@
 			<arg line="${js.home}/selectmission.js" />
 			<arg line="${js.home}/nobugsingrid.js" />
 			<arg line="${js.home}/avatar.js" />
+			<arg line="${js.home}/chardialog.js" />
+			<arg line="${js.home}/intro.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

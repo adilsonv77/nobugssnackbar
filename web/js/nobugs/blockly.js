@@ -5,7 +5,7 @@
 var MyBlocklyApps = {};
 
 MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, title, style,
-                                  disposeFunc, closeButtonFunc) {
+                                  disposeFunc, closeButtonFunc, showHeader) {
   if (BlocklyApps.isDialogVisible_) {
 	  MyBlocklyApps.hideDialog(false);
   }
@@ -28,31 +28,34 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
   if (modal) {
     shadow.style.visibility = 'visible';
     shadow.style.opacity = 0.3;
-    var header = document.createElement('div');
-    header.id = 'dialogHeader';
-    if (title != null)
-    	header.innerHTML = "<b style='position:absolute;left:5px'>" + title + "</b>";
-    
-    if (closeButtonFunc != undefined || closeButtonFunc != null) {
-    	header.style.textAlign = "right";
-    	var bClose = document.createElement('button');
-    	bClose.style.padding = "0px";
-    	bClose.style.margin = "0px";
-    	bClose.style.minWidth = "0px";
-    	bClose.style.backgroundColor = "transparent";
-    	bClose.innerHTML = "<img src='images/closedialog.png' style='width:16px;height:16px'/>";
-    	bClose.onclick = function() { 
-    		closeButtonFunc();
+    var header = null;
+    if (showHeader === undefined || showHeader === true) {
+    	
+        header = document.createElement('div');
+        header.id = 'dialogHeader';
+        if (title != null)
+        	header.innerHTML = "<b style='position:absolute;left:5px'>" + title + "</b>";
+        
+        if (closeButtonFunc != undefined || closeButtonFunc != null) {
+        	header.style.textAlign = "right";
+        	var bClose = document.createElement('button');
+        	bClose.style.padding = "0px";
+        	bClose.style.margin = "0px";
+        	bClose.style.minWidth = "0px";
+        	bClose.style.backgroundColor = "transparent";
+        	bClose.innerHTML = "<img src='images/closedialog.png' style='width:16px;height:16px'/>";
+        	bClose.onclick = function() { 
+        		closeButtonFunc();
 
-    		MyBlocklyApps.hideDialog('false'); 
-    	};
-    	header.appendChild(bClose);
+        		MyBlocklyApps.hideDialog('false'); 
+        	};
+        	header.appendChild(bClose);
+        }
+        dialog.appendChild(header);
+        BlocklyApps.dialogMouseDownWrapper_ =
+            Blockly.bindEvent_(header, 'mousedown', null,
+                               BlocklyApps.dialogMouseDown_);
     }
-    
-    dialog.appendChild(header);
-    BlocklyApps.dialogMouseDownWrapper_ =
-        Blockly.bindEvent_(header, 'mousedown', null,
-                           BlocklyApps.dialogMouseDown_);
   }
   
   dialog.appendChild(content);

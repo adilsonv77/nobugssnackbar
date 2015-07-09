@@ -1,73 +1,67 @@
 .dlgTalk {
-  height: 356;
+  height: 356px;
   position: absolute;
   display: none;
+  z-index: 100;
 }
 
 .dlgTalkCharacter {
-  height: 126;
-  background-image: url('teacher.png');
+  height: 126px;
   background-repeat: no-repeat;
 }
 
 .dlgTalkBaloon {
-    width: 800;
-    height: 230;
-    background-image: url('dialogbox.png');
+    width: 800px;
+    height: 230px;
+    background-image: url('../images/dialogbox.png');
     position: relative;
     top: -25px;
 }
 .dlgTalkText {
     padding: 17px;
     font-size: 18px;
+    position: relative;
+    left: 100px;
 }
 
 .dlgTalkButton {
    width: 74px;
    height: 44px;
    display: none;
+   padding: 0px;
 }
 
 .dlgTalkClose {
-   background-image: url('talkclose.png');
-   width:  32;
-   height:  32;
-   background-size:  190%;
-   background-position:  2;
-   position: absolute;
+   background-image: url('../images/closedialog.png');
+   width:  32px;
+   height:  32px;
+   background-size:  100%;
+   left: 773px;
+   top: -20px;
+   cursor: pointer;
+   outline: none;
+   background-color: transparent;
+   border: none;
+   position: relative;
 }
 
 .dlgTalkClose:hover {
-   background-position:  -28;
-   box-shadow: 3px 3px 3px ;
+    border: none;
+    box-shadow: none;
 }
 
-.dlgTalkClose, .dlgTalkButton {
-   background-color: #4d90fe;
-   background-repeat: no-repeat;
-   border: 1px solid #0A57D7;
-   border-radius: 6px;
+.dlgTalkButton {
    cursor: pointer;
    position: absolute;
 }
-
-.dlgTalkNext {
-   background-image: url('talknext.png');
-   background-position: -10% 30%;
+.dlgTalkNext:hover, .dlgTalkPrevious:hover, .dlgTalkNextClose:hover  {
+    box-shadow: 5px 5px 5px ;
 }
 
-.dlgTalkNext:hover {
-   background-position: -64px 30%;
-   box-shadow: 5px 5px 5px ;
+.dlgCharPhoto {
+	background-color: white;
+	border: 1px solid red;
+	border-radius: 10px;
+	z-index: 300;
+	position: absolute;
 }
-
-.dlgTalkPrevious {
-   background-image: url('talkprevious.png');
-   background-position: -64px 30%;
-}
-
-.dlgTalkPrevious:hover {
-   background-position: -10% 30%;
-   box-shadow: 5px 5px 5px ;
-}
-

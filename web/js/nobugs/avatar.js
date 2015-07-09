@@ -18,7 +18,7 @@
  */
 
 /**
- * Avatar editor e image maker
+ * Avatar editor and image maker
  * 
  * @fileoverview The avatar editor.
  * @author adilsonv77@gmail.com (Adilson Vahldick)

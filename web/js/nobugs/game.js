@@ -270,6 +270,9 @@ Game.finishQuestionnaire = function() {
 Game.continueLoginProcess = function() {
 	if (Game.loginData.userLogged.lastTime == null) {
 		
+		IntroGame.start();
+		
+		/*
 		var userName = document.getElementById("userCompleteName");
 		userName.innerHTML = Game.loginData.userLogged.name;
 		
@@ -282,6 +285,7 @@ Game.continueLoginProcess = function() {
 		
 		MyBlocklyApps.showDialog(document.getElementById('dialogIntro'), 
 				null, false, true, true, "Intro", {width: "540px"},null);
+		*/
 		
 	} else 
 		Game.logged();
