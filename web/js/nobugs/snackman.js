@@ -80,7 +80,11 @@ SnackMan = function(objectives, mission, avatar) {
  	
 	this.imgCooker = this.img.image;
 	
-	AvatarImgMaker.createMiniAnimationBodyPlatter(Game.tempCtxDisplay, avatar);
+	var runCanvas = document.createElement("canvas");
+	runCanvas.width = Game.tempDisplay.width; runCanvas.height = Game.tempDisplay.height;
+	var runCanvasCtx = runCanvas.getContext('2d');
+	
+	AvatarImgMaker.createMiniAnimationBodyPlatter(runCanvasCtx, avatar);
 	this.imgPlatter = new Sprite({
 		ticksPerFrame: 0,
 		numberOfFrames: 3,
@@ -90,7 +94,7 @@ SnackMan = function(objectives, mission, avatar) {
 		width: 120,
 		height: this.heightCooker,
 		sourceY: 0,
-		img : Game.tempDisplay
+		img : runCanvas
 	});
 	
 	this.imgCookerPlatter = this.imgPlatter.image;
@@ -203,7 +207,6 @@ SnackMan = function(objectives, mission, avatar) {
 
 };
 
-
 SnackMan.prototype.createAditionalObjective = function(objectives, key) {
 	var m = objectives.getAttribute(key);
 	if (m != null) {
@@ -215,6 +218,7 @@ SnackMan.prototype.createAditionalObjective = function(objectives, key) {
 	}
 	return false;
 };
+
 // extracts some important information and creates the graph
 SnackMan.prototype.createGraph = function() {
 
@@ -223,7 +227,6 @@ SnackMan.prototype.createGraph = function() {
 	
 	this.graph = new Graph(this.path);
 };
-
 
 SnackMan.prototype.reset = function() {
 	this.currentNode = this.initialPosition;
