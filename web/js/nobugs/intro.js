@@ -32,6 +32,8 @@ var IntroGame = {};
 
 IntroGame.start = function () {
 	
+	IntroGame.track = new PlayAudio(["sound/DailyBeetle.mp3"], false);
+	
 	$("<div>").attr("id", "introback").append(
 		   $("<img>").css("width", "700px").attr("src", "images/family_dinner.png")
 		).appendTo("body");
@@ -48,13 +50,18 @@ IntroGame.start = function () {
 	
 	var dlg = new CharacterDialog(d.offsetLeft - 50 , (d.offsetTop + 340) , false, 
 			IntroGame.finish,
-			[{character: "dadTalk", msg: "Ent&#227;o Manuel... <br/><br/> J&#225; tens 20 anos e andas a fazer nada além de comer e dormir."}, 
-			 {character: "momTalk", msg: "Outro"}, 
-			 {character: "youTalk", msg: "terceira"},
-			 {character: "dadTalk", msg: "Outro"}]);
+			[{character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg1")}, 
+			 {character: "momTalk", msg: BlocklyApps.getMsg("Intro_Dlg2")}, 
+			 {character: "youTalk", msg: BlocklyApps.getMsg("Intro_Dlg3")},
+			 {character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg4")},
+			 {character: "grandmomTalk", msg: BlocklyApps.getMsg("Intro_Dlg5")},
+			 {character: "momTalk", msg: BlocklyApps.getMsg("Intro_Dlg6")}, 
+			 {character: "youTalk", msg: BlocklyApps.getMsg("Intro_Dlg7")},
+			 {character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg8")},
+			 {character: "youTalk", msg: BlocklyApps.getMsg("Intro_Dlg9")}]);
 	
+	IntroGame.track.play();
 	dlg.show();
-	
 	
 };
 
@@ -65,6 +72,8 @@ IntroGame.finish = function() {
 	$("#momTalk").remove();
 	$("#grandmomTalk").remove();
 	
-	MyBlocklyApps.hideDialog();
+	MyBlocklyApps.hideDialog(true);
 	Game.logged();
+	IntroGame.track.stop();
+	IntroGame.track.clear();
 };

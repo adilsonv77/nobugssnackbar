@@ -175,6 +175,7 @@
 			<arg line="${js.home}/avatar.js" />
 			<arg line="${js.home}/chardialog.js" />
 			<arg line="${js.home}/intro.js" />
+			<arg line="${js.home}/sounds.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

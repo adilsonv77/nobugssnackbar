@@ -103,7 +103,7 @@
 	"Error.variableHaventContentToDeliver" : "N&#227;o h&#225; nada a ser entregue.",
 	"Error.deliveredWrongRequest" : "A entrega n&#227;o corresponde ao que o cliente pediu.",
 	"Error.doesntMatchPosition" : "A entrega n&#227;o corresponde &#224; mesma posi&#231;&#227;o do cliente.",
-	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\n\n- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\n\n",
+	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\nn \nn- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\nn \nn",
 	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
 	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. \nn &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
 	"Error.incorrectID": "O ID do usu&#225;rio, que voc&#234; est&#225; tentando usar est&#225; incorreto.",
@@ -131,9 +131,6 @@
 	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) %0.",
 	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o %0.",
 	
-	
-	"NoBugs.intro1": "O ramo das esplanadas &#233; muito competitivo: como os lanches s&#227;o id&#234;nticos em todos os estabelecimentos os melhores s&#227;o aqueles em que o cliente &#233; melhor atendido e que possuem um clima agrad&#225;vel para se estar algumas horas. Por&#233;m, podes ter um ingrediente secreto nos lanches servidos e a tua esplanada se tornar aquela a que toda gente gostaria de ir pelo menos uma vez por semana. Come&#231;a como aprendiz na esplanada e evolui at&#233; teres condi&#231;&#245;es de adquirir o teu estabelecimento. Vou estar a acompanhar-te ao longo de v&#225;rias miss&#245;es at&#233; te tornares auto-suficiente.",
-	"NoBugs.intro2": "Desenvolve o teu ingrediente secreto e s&#234; a esplanada que atende mais r&#225;pido, atrai mais clientes e gera mais dinheiro. Torna-te %0 das Esplanadas.",
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	
 	"Hints.ChooseCategory" : "Selecione a categoria %0 para ver os blocos.",
@@ -196,6 +193,16 @@
 	"Avatar.Eyes" 			: "Olhos",
 	"Avatar.Skin" 			: "Pele",
 	"Avatar.Coat" 			: "Casaco",
-	"Avatar.Scarf"			: "Len&#231;o"
+	"Avatar.Scarf"			: "Len&#231;o",
+	
+	"Intro.Dlg1" 			: "Ent&#227;o Manuel... \nn \nn J&#225; tens 20 anos e andas a fazer nada al&#233;m de comer e dormir.",
+	"Intro.Dlg2" 			: "Deixa ele Jo&#227;o. \nn \nn Em casa ele est&#225; a me ajudar imenso na cozinha.",
+	"Intro.Dlg3" 			: "Cozinhar &#233; a segunda tarefa que mais gosto de fazer. A primeira &#233; comer.",
+	"Intro.Dlg4" 			: "Pois... mas j&#225; &#233; hora de te arranjares um trabalho.",
+	"Intro.Dlg5" 			: "Ent&#227;o meu neto. Que tal procurares um trabalho na &#225;rea de restaura&#231;&#227;o ?",
+	"Intro.Dlg6" 			: "Isso meu filho. J&#225; te ensinei tanto em casa. Podes sair para te aperfei&#231;oar.",
+	"Intro.Dlg7" 			: "Vou seguir vossa ideia. \nn \nn Amanh&#227; mesmo vou me inscrever num curso. \nn \nn Vejamos no que vai dar.",
+	"Intro.Dlg8" 			: "Filho, quando adquirires EXPERI&#202;NCIA e conhecimento suficientes, vamos iniciar um neg&#243;cio juntos. \nn \nn Tu vai ser meu gerente.",
+	"Intro.Dlg9" 			: "Aceito !!!"
 	
 }

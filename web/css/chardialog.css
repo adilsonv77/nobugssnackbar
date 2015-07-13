@@ -22,6 +22,8 @@
     font-size: 18px;
     position: relative;
     left: 100px;
+    width: 700px;
+    top: 30px;
 }
 
 .dlgTalkButton {

@@ -292,11 +292,6 @@ Game.continueLoginProcess = function() {
 	
 };
 
-Game.finishIntro = function() {
-	BlocklyApps.hideDialog(false);
-	Game.logged();
-};
-
 Game.logged = function() {
 	
 	UserControl.retrieveReward(function(ret) {
