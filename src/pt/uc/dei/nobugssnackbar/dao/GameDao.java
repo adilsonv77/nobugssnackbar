@@ -67,4 +67,6 @@ public interface GameDao {
 
 	List<Object[]> retrieveAvatarParts(long id) throws Exception;
 
+	void saveAvatarParts(long userid, String[][] avatarConfig) throws Exception;
+
 }

@@ -18,6 +18,7 @@
 	"Apps.close" : "Fechar",
 	"Apps.dialogSignUp" : "Registrar-se",
 	"Apps.save" : "Salvar",
+	"Apps.dialogCancel" : "Cancelar",
 	
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
@@ -194,6 +195,9 @@
 	"Avatar.Skin" 			: "Pele",
 	"Avatar.Coat" 			: "Casaco",
 	"Avatar.Scarf"			: "Len&#231;o",
+	
+	"Avatar.EditorTitle"	: "Editor de Avatar",
+	"Avatar.EnableByXp" 	: "Para habilitar, conquiste ",
 	
 	"Intro.Dlg1" 			: "Ent&#227;o Manuel... \nn \nn J&#225; tens 20 anos e andas a fazer nada al&#233;m de comer e dormir.",
 	"Intro.Dlg2" 			: "Deixa ele Jo&#227;o. \nn \nn Em casa ele est&#225; a me ajudar imenso na cozinha.",

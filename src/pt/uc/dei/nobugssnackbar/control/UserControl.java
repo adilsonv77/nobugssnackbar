@@ -359,4 +359,9 @@ public class UserControl {
 		WebContext ctx = WebContextFactory.get();
 		ctx.getSession().setAttribute("blocks", xml);
 	}
+	
+	@RemoteMethod
+	public void saveAvatar(String[][] avatarConfig) throws Exception {
+		gameDao.saveAvatarParts(user.getId(), avatarConfig);
+	}
 }

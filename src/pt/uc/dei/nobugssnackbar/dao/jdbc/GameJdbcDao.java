@@ -1278,8 +1278,8 @@ public class GameJdbcDao implements GameDao {
 				
 				String colors = rs.getString("avatarpartcolor");
 				if (colors.indexOf("-") > -1) {
-					l[2] = "#" + colors.substring(0, colors.indexOf("-") - 1);
-					l[3] = "#" + colors.substring(colors.indexOf("-"));
+					l[2] = "#" + colors.substring(0, colors.indexOf("-"));
+					l[3] = "#" + colors.substring(colors.indexOf("-")+1);
 				} else
 					l[2] = "#" + colors;
 					
@@ -1291,8 +1291,8 @@ public class GameJdbcDao implements GameDao {
 				
 				lret.add(new Object[]{"skin", "", "#F39C7A"});
 				lret.add(new Object[]{"eyes", "eyes", "#000000"});
-				lret.add(new Object[]{"hat", "Hat-2", "#FF0000"});
-				lret.add(new Object[]{"clothes", "Clothes-1", "#FF0000", "#FFFF00"});
+				lret.add(new Object[]{"hat", "", "#FFFFFF"});
+				lret.add(new Object[]{"clothes", "Clothes-1", "#FFFFFF", "#FF0000"});
 				
 			}
 			
@@ -1306,6 +1306,49 @@ public class GameJdbcDao implements GameDao {
 		}
 		
 		return lret;
+	}
+
+	@Override
+	public void saveAvatarParts(long userid, String[][] avatarConfig) throws Exception {
+		Connection bdCon = null;
+		
+		try {
+			bdCon = getConnection();
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select avatarparttype from usersavatar where userid = " + userid);
+			String saveQuery;
+			if (rs.next()) {
+				saveQuery = "update usersavatar set  avatarpartvalue=?, avatarpartcolor=? where avatarparttype=? and userid = ?"; 
+			} else {
+				saveQuery = "insert into usersavatar (avatarpartvalue, avatarpartcolor, avatarparttype, userid) values (?, ?, ?, ?)";
+			}
+			rs.close();st.close();
+			
+			PreparedStatement ps = bdCon.prepareStatement(saveQuery);
+			ps.setLong(4, userid);
+			
+			for (String[] l:avatarConfig) {
+				ps.setString(3, l[0]);
+				ps.setString(1, l[1]);
+				if (l.length == 4)
+					ps.setString(2, l[2].substring(1) + "-" + l[3].substring(1));
+				else
+					ps.setString(2, l[2].substring(1));
+				
+				ps.execute();
+			}
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+			
+		}
+		
 	}
 
 }

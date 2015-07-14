@@ -197,7 +197,7 @@ var CreateItems = {};
 
 CreateItems.hat = function (prefix, id, hatColor) {
 
-	return {id: id, img: PreloadImgs.get(prefix + id), x: 0, y: 0, width: ae_Width, height: 320,
+	return {id: id, img: (id === ""?id:PreloadImgs.get(prefix + id)), x: 0, y: 0, width: ae_Width, height: 320,
 		 baseColor: {r:255, g: 255, b: 255}, color: hatColor};
 
 };
@@ -271,25 +271,45 @@ AvatarImgMaker.init = function() {
 
 };
 
-AvatarImgMaker.createBody = function(canvasDest, config, w, h) {
+function cloneArray(configOrig) {
+
+	var ret = new Array();
+	configOrig.forEach(function(entry) {
+		ret.push(entry.slice());
+	});
+	return ret;
+	
+}	
+	
+AvatarImgMaker.createBody = function(canvasDest, configOrig, w, h) {
+
+	// it is neccessary because changes the original array
+	var config = cloneArray(configOrig);
 	
 	AvatarImgMaker.createItems(config, "");
 	AvatarImgMaker._draw(AvatarImgMaker.canvasCtx, 0, 0, ae_Width, ae_Height, 1, AvatarImgMaker.mouth, ae_TopHead, AvatarImgMaker.keys, AvatarImgMaker.items, w, h);
 	
+	canvasDest.clearRect(0, 0, w, h);
 	canvasDest.drawImage(AvatarImgMaker.canvas, 0, 0, w, h);
 
 };
 
-AvatarImgMaker.createMiniBody = function(canvasDest, config) {
+AvatarImgMaker.createMiniBody = function(canvasDest, configOrig) {
 	
+	// it is neccessary because changes the original array
+	var config = cloneArray(configOrig);
+
 	AvatarImgMaker.createItems(config, "mini-");
 	
 	AvatarImgMaker._draw(canvasDest, 0, 0, 50, 80, 6, AvatarImgMaker.miniMouth, 0, AvatarImgMaker.keys, AvatarImgMaker.items);
 	
 };
 
-AvatarImgMaker.createMiniAnimationBody = function(canvasDest, config) {
+AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 
+	// it is neccessary because changes the original array
+	var config = cloneArray(configOrig);
+	
 	AvatarImgMaker.createItems(config, "mini-");
 	
 	var keys = [];
@@ -446,6 +466,9 @@ AvatarImgMaker._draw = function(canvasDest, x, y, w, h, p, mouth, top, keys, ite
 	keys.forEach(function(key) {
 		var entry = items[key];
 		
+		if (entry.img === "")
+			return;
+		
 		var ew = (entry.width/p) + 1;
 		var eh = (entry.height/p) + 1;
 		
@@ -484,7 +507,13 @@ AvatarImgMaker._draw = function(canvasDest, x, y, w, h, p, mouth, top, keys, ite
 /**                                  Avatar Editor                                     **/             
 /****************************************************************************************/
 
+AvatarEditor.initialized = false;
+
 AvatarEditor.init = function() {
+	
+	if (AvatarEditor.initialized)
+		return;
+	
 	$('#avatar-tabs').easytabs({
 		animate: false, updateHash: false,
 		tabActiveClass: "selected-tab",
@@ -493,7 +522,8 @@ AvatarEditor.init = function() {
 	$("#avatar-tabs ul li a").addClass("nobugs_font_light");
 
 	AvatarEditor.itemColor = {r: 255, g: 255, b: 255};
-	AvatarEditor.items = [];	
+	AvatarEditor.items = [];
+	AvatarEditor.miniItems = [];	
 	AvatarEditor.keys = [];
 	
 	AvatarEditor.canvasTemp = document.getElementById('avatarTemp');
@@ -507,9 +537,13 @@ AvatarEditor.init = function() {
 
 	$('.avatar-item').click(AvatarEditor.selectItem);
 	
+	AvatarEditor.hatColor = {r: 255, g: 255, b: 255};
 	$('#cpHat').colorpicker({history: false, displayIndicator: false});
 	$('#cpHat').on("change.color", function(event, color){
-		AvatarEditor.changeColor(hexToRgb(color), '#tab-hats',{r: 255, g: 255, b: 255} );
+		AvatarEditor.hatColor = hexToRgb(color);
+		AvatarEditor.changeColor(AvatarEditor.hatColor, '#tab-hats',{r: 255, g: 255, b: 255} );
+		AvatarEditor.selectHat(AvatarEditor.hat);
+		AvatarEditor.draw();
 	});
 	AvatarEditor.removeColorLines('#cpHat');
 	$("#cpHat div:first-child").css("width", "0px");
@@ -542,6 +576,8 @@ AvatarEditor.init = function() {
 	$('#cpCoat').on("change.color", function(event, color){
 		AvatarEditor.coatColor = hexToRgb(color);
 		AvatarEditor.changeColor2Elements('#tab-clothes', AvatarEditor.coatColor, {r: 255, g: 255, b: 255}, AvatarEditor.scarfColor, {r: 255, g: 0, b: 0} );
+		AvatarEditor.selectClothes(AvatarEditor.clothes);
+		AvatarEditor.draw();
 	});
 	AvatarEditor.removeColorLines('#cpCoat');
 	
@@ -549,29 +585,121 @@ AvatarEditor.init = function() {
 	$('#cpScarf').on("change.color", function(event, color){
 		AvatarEditor.scarfColor = hexToRgb(color);
 		AvatarEditor.changeColor2Elements('#tab-clothes', AvatarEditor.coatColor, {r: 255, g: 255, b: 255}, AvatarEditor.scarfColor,  {r: 255, g: 0, b: 0} );
+		AvatarEditor.selectClothes(AvatarEditor.clothes);
+		AvatarEditor.draw();
 	});
 	AvatarEditor.removeColorLines('#cpScarf');
 	
 	AvatarEditor.drawTab("#tab-clothes");
 	
+	BlocklyApps.bindClick('avatarEditorOK', AvatarEditor.okClick);
+    BlocklyApps.bindClick('avatarEditorCancel', AvatarEditor.cancelClick);
+
 	/* cleaning the widget for my interests */
 	$('.evo-more').remove();
 	$('#cpHat .evo-palette tr').append($('<td>').css('background-color','#ffffff'));
 	$('#cpCoat .evo-palette tr').append($('<td>').css('background-color','#ffffff'));
 	
+	AvatarEditor.initialized = true;
+};
+
+AvatarEditor.cancelClick = function() {
+	if (document.getElementById("blockhats") != null)
+		$("#blockhats").remove();
+	
+	if (document.getElementById("blockclothes") != null)
+		$("#blockclothes").remove();
+	
+	MyBlocklyApps.hideDialog(true); 
+};
+
+AvatarEditor.okClick = function() {
+	
+	var avatar = Game.loginData.avatar;
+
+	avatar[0] = ["skin", "", rgbToHex(AvatarEditor.skinColor)];
+	avatar[1] = ["eyes", "eyes", rgbToHex(AvatarEditor.eyeColor)];
+	avatar[2] = ["hat", AvatarEditor.hat, rgbToHex(AvatarEditor.hatColor)];
+	avatar[3] = ["clothes", AvatarEditor.clothes, 
+	             				rgbToHex(AvatarEditor.coatColor), 
+	             				rgbToHex(AvatarEditor.scarfColor)];
+	
+	AvatarEditor.cancelClick();
+	
+	UserControl.saveAvatar(Game.loginData.avatar, Game.drawMiniAvatar);
+};
+
+AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor) {
+	
+	$('#avatar-tabs').easytabs('select', '#tab-body');
+	
+	AvatarEditor.hatColor = hexToRgb(hatColor); 
+	AvatarEditor.scarfColor = hexToRgb(scarfColor);
+	AvatarEditor.coatColor = hexToRgb(cloatColor);
+	
+	var pointsHat = "";
+	if (hat.startsWith("blocked")) {
+		pointsHat = hat.split(":")[1];
+		hat = "";
+	}
+	
+	var pointsClothes = "";	
+	if (clothes.startsWith("blocked")) {
+		pointsClothes = clothes.split(":")[1];
+		clothes = clothes.split(":")[2];
+	}
+
+	AvatarEditor.clothes = clothes;
+	AvatarEditor.hat = hat;
+	
 	/* initialize the main appearance of the cooker */
-	AvatarEditor.keys.push("body");
-	AvatarEditor.selectClothes("Clothes-1");
-	AvatarEditor.keys.push("head");
-	AvatarEditor.selectSkin("#F39C7A");
-	AvatarEditor.selectEye("#000000");
-	AvatarEditor.selectHat("Hat-1");
+	if (AvatarEditor.keys.indexOf("body") == -1)
+		AvatarEditor.keys.push("body");
+	
+	AvatarEditor.changeColor2Elements('#tab-clothes', AvatarEditor.coatColor, {r: 255, g: 255, b: 255}, AvatarEditor.scarfColor,  {r: 255, g: 0, b: 0} );
+	AvatarEditor.selectClothes(clothes);
+	
+	if (AvatarEditor.keys.indexOf("head") == -1)
+		AvatarEditor.keys.push("head");
+	
+	AvatarEditor.selectSkin(skin);
+	AvatarEditor.selectEye(eyes);
+	
+	AvatarEditor.changeColor(AvatarEditor.hatColor, '#tab-hats',{r: 255, g: 255, b: 255} );
+	AvatarEditor.selectHat(hat);
 	
 	/* after configure all the components, it is allowed to show the tabs and draw de cooker */
 	$("#avatar-tabs").css("display", "block");
 	
 	AvatarEditor.draw();
+	
+	MyBlocklyApps.showDialog(document.getElementById("profileditor"), 
+			null, false, true, true, BlocklyApps.getMsg("Avatar_EditorTitle"), {width: "auto"},null);
 
+	// here is better because all the components have their size (height and width)
+	if (pointsHat !== "")
+		AvatarEditor.blockTab(pointsHat, "hats");
+	
+	if (pointsClothes !== "")
+		AvatarEditor.blockTab(pointsClothes, "clothes");
+};
+
+AvatarEditor.blockTab = function(points, id) {
+	
+	$("<div id ='block"+id+"'>")
+			.css("height", "450px")
+			.css("width", "272px")
+			.css("margin-top", "-7px")
+			.css("position","fixed")
+			.css("backgroundColor","grey")
+			.css("opacity","0.9")
+		.prependTo("#tab-"+id);
+	
+	var table = $("<table width='100%' height='100%'>").append($("<tr>").append($("<td align='center' id='avatar_info_"+id+"'>")));
+	$("#block"+id).append(table);
+
+	$("#avatar_info_" + id).append($("<span>").html(BlocklyApps.getMsg("Avatar_EnableByXp") + points + "<img style='vertical-align: middle;' src='images/xp.png'/>")
+										.addClass("nobugs_font"));
 };
 
 AvatarEditor.removeColorLines = function(divId) {
@@ -591,8 +719,8 @@ AvatarEditor.choicesOfColor = function(divId, colors) {
 
 AvatarEditor.draw = function() {
 	
-	AvatarImgMaker._draw(AvatarImgMaker.canvasCtx, 0, 0, ae_Width, ae_Height, 1, AvatarImgMaker.mouth, ae_TopHead);
-	AvatarImgMaker._draw(AvatarImgMaker.canvasCtx, ae_Width-50, ae_Height-85, 50, 80, 6, AvatarImgMaker.miniMouth, ae_TopHead);
+	AvatarImgMaker._draw(AvatarImgMaker.canvasCtx, 0, 0, ae_Width, ae_Height, 1, AvatarImgMaker.mouth, ae_TopHead, AvatarEditor.keys, AvatarEditor.items);
+	AvatarImgMaker._draw(AvatarImgMaker.canvasCtx, ae_Width-50, ae_Height-85, 50, 80, 6, AvatarImgMaker.miniMouth, ae_TopHead, AvatarEditor.keys, AvatarEditor.miniItems);
 	
 };
 
@@ -605,9 +733,16 @@ AvatarEditor.selectItem = function(evt) {
 };
 
 AvatarEditor.selectHat = function(id) {
+	if (id === "")
+		return;
+	
 	if (AvatarEditor.keys.indexOf("hat") == -1)
 		AvatarEditor.keys.push("hat");
+	
+	AvatarEditor.hat = id;
+	
 	AvatarEditor.items["hat"] = CreateItems.hat("", id, AvatarEditor.itemColor);
+	AvatarEditor.miniItems["hat"] = CreateItems.hat("mini-", id, AvatarEditor.itemColor);
 	
 };
 
@@ -615,23 +750,33 @@ AvatarEditor.selectClothes = function(id) {
 	
 	if (AvatarEditor.keys.indexOf("clothes") == -1)
 		AvatarEditor.keys.push("clothes");
+
+	AvatarEditor.clothes = id;
+	
 	AvatarEditor.items["clothes"] = CreateItems.clothes("", id, AvatarEditor.coatColor, AvatarEditor.scarfColor);  
+	AvatarEditor.miniItems["clothes"] = CreateItems.clothes("mini-", id, AvatarEditor.coatColor, AvatarEditor.scarfColor);  
 	
 };
 
 AvatarEditor.selectEye = function(color) {
 	
+	AvatarEditor.eyeColor = hexToRgb(color);
 	if (AvatarEditor.keys.indexOf("eyes") == -1)
 		AvatarEditor.keys.push("eyes");
-	AvatarEditor.items["eyes"] = CreateItems.eyes("eyes", hexToRgb(color));
-		
+
+	AvatarEditor.items["eyes"] = CreateItems.eyes("eyes", AvatarEditor.eyeColor);
+	AvatarEditor.miniItems["eyes"] = CreateItems.eyes("mini-eyes", AvatarEditor.eyeColor);	
 };
 
 AvatarEditor.selectSkin = function(color) {
 
-	AvatarEditor.items["head"] = CreateItems.head("head", hexToRgb(color));
-
-	AvatarEditor.items["body"] = CreateItems.body("body", hexToRgb(color));
+	AvatarEditor.skinColor = hexToRgb(color);
+	
+	AvatarEditor.items["head"] = CreateItems.head("head", AvatarEditor.skinColor);
+	AvatarEditor.items["body"] = CreateItems.body("body", AvatarEditor.skinColor);
+	
+	AvatarEditor.miniItems["head"] = CreateItems.head("mini-head", AvatarEditor.skinColor);
+	AvatarEditor.miniItems["body"] = CreateItems.body("mini-body", AvatarEditor.skinColor);
 
 };
 

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-13 16:36:40.383000",
+		"lastupdated": "2015-07-14 13:45:32.452000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -164,6 +164,8 @@
 	"Intro.Dlg7": "OK... I will follow your ideas. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Tomorrow I'll apply in a course. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You'll see where it will go to.",
 	"Intro.Dlg8": "Son, when you achieve XPERIENCE and knowledge enough, you should run a business together &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You will be my manager.",
 	"Intro.Dlg9": "Accepted !!!",
+	"Avatar.EditorTitle": "Avatar Editor",
+	"Avatar.EnableByXp": "To enable this setting, reward ",
 	"Apps.save": "Save",
 	"Avatar.Body": "Body",
 	"Avatar.Hat": "Hat",

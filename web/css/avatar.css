@@ -2,7 +2,7 @@
 	height: 464px; 
 	border-top: none;
 	position: relative;
-	top: -7;
+	top: -7px;
 }
 
 #avatar-tabs ul { height: 464px; list-style: none; margin: 0; padding: 0; background: #FCDBA1; float: left; border-right: solid 1px; }

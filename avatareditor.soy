@@ -5,7 +5,7 @@
  */
 {template .body}
 <div id="profileditor">
-	<div id="playerid" class="nobugs_border nobugs_font nobugs_background"><span id="playername"></span></div>
+	<div id="playerid" class="nobugs_border nobugs_font nobugs_background"><span id="avatarEditor_playerName"></span></div>
 
 	<table>
 	<tr>
@@ -23,7 +23,7 @@
 			<table>
 			  <tr>
 				<td  class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
-					{msg meaning="Avatar.Eyes" desc="--"}Eyes{/msg}< <span id="cpEyes"></span>
+					{msg meaning="Avatar.Eyes" desc="--"}Eyes{/msg}<span id="cpEyes"></span>
 				</td>
 			  </tr>
 			  <tr>
@@ -34,9 +34,9 @@
 			</table>
 		  
 		  </div>
-		  <div id="tab-hats" class="colorPickerSquare">
+		  <div id="tab-hats">
 			<table>
-			  <tr><td><div id="cpHat" class="nobugs_center_horz"></div></td></tr>
+			  <tr><td class="colorPickerSquare" style="padding: 10px;"><div id="cpHat"></div></td></tr>
 			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-1" width="200px" height="100px"/></div></td></tr>
 			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-2" width="200px" height="100px"/></div></td></tr>
 			</table>
@@ -72,8 +72,8 @@
 	<canvas id="avatarTemp2" style="display:none"  width = "360" height = "580"></canvas>
 
 	<div class="nobugs_buttons">
-		<button class="nobugs_button">{msg meaning="Apps.dialogOk" desc="IBID"}OK{/msg}</button>
-		<button class="nobugs_button">{msg meaning="Apps.dialogCancel" desc="IBID"}Cancel{/msg}</button>
+		<button id="avatarEditorOK" class="nobugs_button">{msg meaning="Apps.dialogOk" desc="---"}OK{/msg}</button>
+		<button id="avatarEditorCancel" class="nobugs_button">{msg meaning="Apps.dialogCancel" desc="---"}Cancel{/msg}</button>
 	</div>
 </div>
 

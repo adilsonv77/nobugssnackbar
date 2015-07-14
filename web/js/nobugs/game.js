@@ -294,14 +294,17 @@ Game.continueLoginProcess = function() {
 
 Game.logged = function() {
 	
+	AvatarEditor.init(); 
+
 	UserControl.retrieveReward(function(ret) {
 		  document.getElementById("yourXP").innerHTML = ret[0];
 		  document.getElementById("yourCash").innerHTML = ret[1];
 	});
 
 	$("#playerName").html(Game.loginData.userLogged.name);
-	AvatarImgMaker.createBody(document.getElementById("avatarPlayer").getContext("2d"), Game.loginData.avatar, 72, 116);
+	$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
 	
+	Game.drawMiniAvatar();
 	UserControl.updateUserLastTime();
 	
 	if (Game.variableBox != null)
@@ -319,6 +322,8 @@ Game.logged = function() {
 
 	    Game.resizeMainWindow();
 	    
+	    BlocklyApps.bindClick('avatarEditorButton', Game.openAvatarEditor);
+	    
 	    CityMap.init({onclick: SelectMission.generateBoard});
 	    
 	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) 
@@ -330,6 +335,43 @@ Game.logged = function() {
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
+};
+
+Game.drawMiniAvatar = function() {
+	
+	AvatarImgMaker.createBody(
+			           document.getElementById("avatarPlayer").getContext("2d"), 
+			           Game.loginData.avatar, 
+			           72, 116);
+	
+};
+
+Game.openAvatarEditor = function() {
+	
+	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", hat = "", hatColor = "";
+	
+	Game.loginData.avatar.forEach(function(entry) {
+		
+		switch (entry[0]) {
+			case "clothes":
+				clothes = entry[1];
+				coatColor = entry[2];
+				scarfColor = entry[3];
+				break;
+			case "skin":
+				skin = entry[2];
+				break;
+			case "hat":
+				hat = entry[1];
+				hatColor = entry[2];
+				break;
+			default:
+				eyes = entry[2];
+		}
+	});
+	// "blocked:2000:"
+	// "blocked:1000:" 
+	AvatarEditor.show(clothes , coatColor, scarfColor, skin, eyes, hat, hatColor);
 };
 
 Game.moveBlocksToZero = function() {
