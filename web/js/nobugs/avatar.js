@@ -703,9 +703,9 @@ AvatarEditor.blockTab = function(points, id) {
 };
 
 AvatarEditor.removeColorLines = function(divId) {
-	var trs = $(divId + ' .evo-palette tr');
-	for(var i=0; i <9; i++)
-		trs[i].remove();
+	
+	$(divId + ' .evo-palette tr').remove();
+	
 };
 
 AvatarEditor.choicesOfColor = function(divId, colors) {

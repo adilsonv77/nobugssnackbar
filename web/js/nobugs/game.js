@@ -333,6 +333,9 @@ Game.logged = function() {
 	    	createsLeaderBoard();
 	    
 	    CityMap.startAnimation();
+
+	    IntroGame.focusAvatar();
+	    
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
@@ -504,15 +507,15 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(objectives, mission, Game.loginData.avatar);
   Game.mission = mission;
 
-  $("#vars").ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
+  $("#vars").ingrid({height: 250, paging: false, sorting: false,
 		  gridClass: 'varsgrid',
 		  headerClass: 'varsgrid-header',
-		  colWidths: [100, 100],
+		  colWidths: varColWidths,
 		  resizableCols: false,
 		  ingridIDPrefix: '_varsgrid',
 		  ingridBaseClass: 'basevarsgrid'});
   // a bug in ingrid
-  $("div[class=varsgrid-header]").css("display", "none");
+ // $("div[class=varsgrid-header]").css("display", "none");
 
   
   Game.installMachines(toolbox);

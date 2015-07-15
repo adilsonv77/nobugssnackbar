@@ -77,3 +77,29 @@ IntroGame.finish = function() {
 	IntroGame.track.stop();
 	IntroGame.track.clear();
 };
+
+IntroGame.focusAvatar = function() {
+	
+	var div = $("<div id ='focusAvatar'>")
+		.css("height", "100%")
+		.css("width", "100%")
+		.css("position","fixed")
+		.css("backgroundColor","grey")
+		.css("opacity","0.5")
+		.css("z-index", "1000")
+	.prependTo("body");
+	
+	var aeb = document.getElementById("avatarEditorButton");
+	var p = $("#avatarEditorButton").position();
+	
+	var focusButton = $("<button>").addClass("nobugs_button")
+										.css("font-size", "14px")
+										.css("width", "80px")
+										.css("position", "relative")
+										.css("top", p.top)
+										.css("left", "10px")
+										.html("Avatar");
+		
+	div.append(focusButton);
+
+};
