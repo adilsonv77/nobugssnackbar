@@ -161,7 +161,6 @@ function filterChangeColor(ctx, w, h, findColor, applyColor, ctxDest) {
 	}
 		
 	var destColor = applyColor;
-	var color1 = rgbToHex(destColor.r, destColor.g, destColor.b);
 	for (var i=0;i<imgData.data.length;i+=4)  {
 	
 		if (imgData.data[i+3] < 230) // skip transparent/semiTransparent pixels
@@ -174,14 +173,9 @@ function filterChangeColor(ctx, w, h, findColor, applyColor, ctxDest) {
 		var d = Math.sqrt((r - findColor.r)*(r - findColor.r) + (g - findColor.g)*(g - findColor.g) + (b - findColor.b)*(b - findColor.b));
 		if (d < 200){
 		
-		
-			var color2 = rgbToHex(r, g, b);
-			color2 = hexToRgb(shadeBlend(0.1, color1, color2));
-		
-			
-			imgDataDest.data[i] = color2.r;
-			imgDataDest.data[i+1] = color2.g;
-			imgDataDest.data[i+2]= color2.b;
+			imgDataDest.data[i] = destColor.r;
+			imgDataDest.data[i+1] = destColor.g;
+			imgDataDest.data[i+2]= destColor.b;
 		}
 	}
 	
@@ -599,6 +593,7 @@ AvatarEditor.init = function() {
 	$('.evo-more').remove();
 	$('#cpHat .evo-palette tr').append($('<td>').css('background-color','#ffffff'));
 	$('#cpCoat .evo-palette tr').append($('<td>').css('background-color','#ffffff'));
+	$('#cpScarf .evo-palette tr').append($('<td>').css('background-color','#ffffff'));
 	
 	AvatarEditor.initialized = true;
 };
@@ -611,6 +606,9 @@ AvatarEditor.cancelClick = function() {
 		$("#blockclothes").remove();
 	
 	MyBlocklyApps.hideDialog(true); 
+	
+	if (AvatarEditor.afterCloseFunc !== undefined && AvatarEditor.afterCloseFunc !== null)
+		AvatarEditor.afterCloseFunc();
 };
 
 AvatarEditor.okClick = function() {
@@ -629,7 +627,7 @@ AvatarEditor.okClick = function() {
 	UserControl.saveAvatar(Game.loginData.avatar, Game.drawMiniAvatar);
 };
 
-AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor) {
+AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor, afterCloseFunc) {
 	
 	$('#avatar-tabs').easytabs('select', '#tab-body');
 	
@@ -638,13 +636,13 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 	AvatarEditor.coatColor = hexToRgb(cloatColor);
 	
 	var pointsHat = "";
-	if (hat.startsWith("blocked")) {
+	if (hat.indexOf("blocked") == 0) {
 		pointsHat = hat.split(":")[1];
 		hat = "";
 	}
 	
 	var pointsClothes = "";	
-	if (clothes.startsWith("blocked")) {
+	if (clothes.indexOf("blocked") == 0) {
 		pointsClothes = clothes.split(":")[1];
 		clothes = clothes.split(":")[2];
 	}
@@ -671,6 +669,7 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 	/* after configure all the components, it is allowed to show the tabs and draw de cooker */
 	$("#avatar-tabs").css("display", "block");
 	
+	AvatarEditor.afterCloseFunc = afterCloseFunc;
 	AvatarEditor.draw();
 	
 	MyBlocklyApps.showDialog(document.getElementById("profileditor"), 
@@ -682,6 +681,7 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 	
 	if (pointsClothes !== "")
 		AvatarEditor.blockTab(pointsClothes, "clothes");
+	
 };
 
 AvatarEditor.blockTab = function(points, id) {
@@ -704,7 +704,9 @@ AvatarEditor.blockTab = function(points, id) {
 
 AvatarEditor.removeColorLines = function(divId) {
 	
-	$(divId + ' .evo-palette tr').remove();
+	var trs = $(divId + ' .evo-palette tr');
+	trs.splice(trs.length-1, 1);
+	trs.remove();
 	
 };
 

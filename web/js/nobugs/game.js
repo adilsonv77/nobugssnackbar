@@ -325,7 +325,7 @@ Game.logged = function() {
 	    
 	    BlocklyApps.bindClick('avatarEditorButton', Game.openAvatarEditor);
 	    
-	    CityMap.init({onclick: SelectMission.generateBoard});
+	    CityMap.init({onclick: Game.cityClick});
 	    
 	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) 
 	    	createNoLeaderBoardInfo();
@@ -334,12 +334,24 @@ Game.logged = function() {
 	    
 	    CityMap.startAnimation();
 
-	    IntroGame.focusAvatar();
-	    
+	    if (Game.loginData.userLogged.lastTime == null) {
+	    	
+		    IntroGame.presentTeacher(function() {
+		    	IntroGame.focusAvatar();
+		    });
+	    }
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
 };
+
+Game.cityClick = function() {
+	if (Game.loginData.userLogged.lastTime == null) {
+		IntroGame.closeBeforeCity();
+	}
+	SelectMission.generateBoard();	
+};
+
 
 Game.drawMiniAvatar = function() {
 	
@@ -350,7 +362,7 @@ Game.drawMiniAvatar = function() {
 	
 };
 
-Game.openAvatarEditor = function() {
+Game.openAvatarEditor = function(fAfterClose) {
 	
 	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", hat = "", hatColor = "";
 	
@@ -375,7 +387,7 @@ Game.openAvatarEditor = function() {
 	});
 	// "blocked:2000:"
 	// "blocked:1000:" 
-	AvatarEditor.show(clothes , coatColor, scarfColor, skin, eyes, hat, hatColor);
+	AvatarEditor.show(clothes , coatColor, scarfColor, skin, eyes, hat, hatColor, fAfterClose);
 };
 
 Game.moveBlocksToZero = function() {
@@ -510,12 +522,12 @@ Game.missionLoaded = function(ret){
   $("#vars").ingrid({height: 250, paging: false, sorting: false,
 		  gridClass: 'varsgrid',
 		  headerClass: 'varsgrid-header',
-		  colWidths: varColWidths,
+		  colWidths: [100, 100],
 		  resizableCols: false,
 		  ingridIDPrefix: '_varsgrid',
 		  ingridBaseClass: 'basevarsgrid'});
   // a bug in ingrid
- // $("div[class=varsgrid-header]").css("display", "none");
+  $("div[class=varsgrid-header]").css("display", "none");
 
   
   Game.installMachines(toolbox);
@@ -2062,7 +2074,7 @@ Game.showError = function(iderror) {
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');
 	var msg = iderror[0];
-	if (msg.startsWith("$")) {
+	if (msg.indexOf("$") == 0) {
 		UserControl.getMessage(msg.substring(1), BlocklyApps.LANG, {callback:function(msgret) {msg = msgret;}, async:false});
 		container.innerHTML = msg.replace(/\\nn/g, '<br/>');
 	} else

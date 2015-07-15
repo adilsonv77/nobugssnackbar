@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-15 09:52:55.570000",
+		"lastupdated": "2015-07-15 15:21:02.958000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -121,7 +121,6 @@
 	"NoBugs.achieved": "Achieved",
 	"NoBugs.of": "of",
 	"NoBugs.goalAchievedVictory": "You achieved this mission. \n You won a total of %0.",
-	"NoBugs.intro2": "TODO %0",
 	"NoBugs.slider": "Here you configure the cooker velocity.",
 	"NoBugs.requiredField": "Required field.",
 	"NoBugs.finishOpenMission": "The mission's time is over. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You earned &amp;#60;b&amp;#62;%0&amp;#60;/b&amp;#62; delivering the requests.",
@@ -164,6 +163,8 @@
 	"Intro.Dlg7": "OK... I will follow your ideas. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Tomorrow I'll apply in a course. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You'll see where it will go to.",
 	"Intro.Dlg8": "Son, when you achieve XPERIENCE and knowledge enough, you should run a business together &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You will be my manager.",
 	"Intro.Dlg9": "Accepted !!!",
+	"Intro.PresentTeacher": "Hello %0, I'm the Professor Burguer. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You're welcome in our school. While you are learning, in the school, I'll be together in every mission.&amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Let start to learn a bit the environment where you'll stay some hours having fun.",
+	"Intro.AvatarEditor": "I suggest you start to configure your character appearance.&amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Click in this button to perform this action.",
 	"Avatar.EditorTitle": "Avatar Editor",
 	"Avatar.EnableByXp": "To enable this setting, reward ",
 	"Apps.save": "Save",

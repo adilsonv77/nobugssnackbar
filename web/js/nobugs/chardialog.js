@@ -80,7 +80,20 @@ CharacterDialog =  function (left, top, showClose, evtClose, conversation) {
   	
   	if (this.conversation.length == 1) {
 
-	  	this.nextCloseButton.style.display = "inline";
+	  	var nextShape = conversation[0].nextButton;
+	  	if (nextShape === undefined)
+	  		nextShape = "close";
+	  	
+	  	if (nextShape === "close")
+	  		this.nextCloseButton.style.display = "inline";
+	  	else 
+	  		if (nextShape === "next") {
+	  			
+	  		  	this.nextButton.style.display = "inline";
+	  		  	this.nextButton.onclick = this.nextClose.bind(this);
+	  		} else {
+	  			// show no button
+	  		}
   		
   	} else {
 
@@ -94,7 +107,7 @@ CharacterDialog =  function (left, top, showClose, evtClose, conversation) {
 
 	this.closeButton = this.dlg.getElementsByClassName("dlgTalkClose")[0];
 	if (showClose)
-		this.closeButton.onclick = (function() { this.dlg.style.display = "none"; }).bind(this);
+		this.closeButton.onclick = this.nextClose.bind(this);
 	else
 		this.closeButton.style.display = "none";
 
@@ -147,7 +160,8 @@ CharacterDialog.prototype.updateText = function() {
 		this.previousChar.css("display", "none");
 	
 	var charType = this.conversation[this.idx].character;
-	this.previousChar = $("#" + charType).css("display", "inline").css("left", this.leftChar).css("top", this.topChar);
+	if (charType != null)
+		this.previousChar = $("#" + charType).css("display", "inline").css("left", this.leftChar).css("top", this.topChar);
 	
 
   	this.txt.innerHTML = this.conversation[this.idx].msg;

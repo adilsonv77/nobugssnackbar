@@ -207,6 +207,8 @@
 	"Intro.Dlg6" 			: "Isso meu filho. J&#225; te ensinei tanto em casa. Podes sair para te aperfei&#231;oar.",
 	"Intro.Dlg7" 			: "Vou seguir vossa ideia. \nn \nn Amanh&#227; mesmo vou me inscrever num curso. \nn \nn Vejamos no que vai dar.",
 	"Intro.Dlg8" 			: "Filho, quando adquirires EXPERI&#202;NCIA e conhecimento suficientes, vamos iniciar um neg&#243;cio juntos. \nn \nn Tu vai ser meu gerente.",
-	"Intro.Dlg9" 			: "Aceito !!!"
+	"Intro.Dlg9" 			: "Aceito !!!",
 	
+	"Intro.PresentTeacher"  : "Ol&#225; %0, eu sou o Professor Burguer.\nn \nn Seja bem vindo a nossa escola. Enquanto estiveres a aprender, na escola, vou te acompanhar em todas as miss&#245;es.\nn \nn Vamos come&#231;ar a aprender um pouco desse ambiente onde vais passar algumas horas a se divertir.", 
+	"Intro.AvatarEditor"    : "Sugiro que voc&#234; inicie pela configura&#231;&#227;o da apar&#234;ncia do seu personagem. \nn \nn Clique nesse bot&#227;o para configur&#225;-lo." 
 }

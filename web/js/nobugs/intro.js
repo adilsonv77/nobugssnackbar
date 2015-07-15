@@ -78,9 +78,9 @@ IntroGame.finish = function() {
 	IntroGame.track.clear();
 };
 
-IntroGame.focusAvatar = function() {
+IntroGame.createDiv = function(id) {
 	
-	var div = $("<div id ='focusAvatar'>")
+	var div = $("<div id ='"+id+"'>")
 		.css("height", "100%")
 		.css("width", "100%")
 		.css("position","fixed")
@@ -88,11 +88,43 @@ IntroGame.focusAvatar = function() {
 		.css("opacity","0.5")
 		.css("z-index", "1000")
 	.prependTo("body");
+
+	return div;
+};
+
+IntroGame.presentTeacher = function(fret) {
+	IntroGame.createDiv("presentTeacher");
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_attention_hand.png").css("width", "30%")
+						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
+	img.prependTo("body");
 	
-	var aeb = document.getElementById("avatarEditorButton");
+	var cdialog = new CharacterDialog(375, 200, false, IntroGame.closePresentTeacher, 
+								[{character: null, msg: BlocklyApps.getMsg("Intro_PresentTeacher").format($("#playerName").html()), nextButton:"next"}]);
+	
+	$("#talkDlg").css("z-index", "2000");
+	cdialog.show();
+	IntroGame.fRet = fret;
+	
+};
+
+IntroGame.closePresentTeacher = function() {
+	$("#presentTeacher").remove();
+	$("#imgTeacher").remove();
+	IntroGame.fRet();
+};
+
+IntroGame.focusAvatar = function() {
+	
+	var div = IntroGame.createDiv("focusAvatar"); 
+	
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_point_hand.png").css("width", "30%")
+						.css("position", "absolute").css("z-index", "2001").css("left", "100px").css("top", "50px");
+	img.prependTo("body");
+
 	var p = $("#avatarEditorButton").position();
 	
 	var focusButton = $("<button>").addClass("nobugs_button")
+										.attr("id", "focusButton")
 										.css("font-size", "14px")
 										.css("width", "80px")
 										.css("position", "relative")
@@ -100,6 +132,57 @@ IntroGame.focusAvatar = function() {
 										.css("left", "10px")
 										.html("Avatar");
 		
+	focusButton.click(IntroGame.closeFocusAvatar);
 	div.append(focusButton);
+	var cdialog = new CharacterDialog(375, 200, false, null, 
+			[{character: null, msg: BlocklyApps.getMsg("Intro_AvatarEditor"), nextButton:null}]);
 
+	$("#talkDlg").css("z-index", "2000");
+	cdialog.show();
+	IntroGame.cDialog = cdialog;
+};
+
+IntroGame.closeFocusAvatar = function() {
+	
+	IntroGame.cDialog.nextClose();
+	$("#focusButton").remove();
+	$("#focusAvatar").remove();
+	$("#imgTeacher").remove();
+	
+	Game.openAvatarEditor(IntroGame.closeAvatarEditor);
+};
+
+IntroGame.closeAvatarEditor = function() {
+	
+	IntroGame.createDiv("closeAvatarEditor1").css("left", "526px");
+	IntroGame.createDiv("closeAvatarEditor2").css("height", "100px").css("width", "518px");
+	IntroGame.createDiv("closeAvatarEditor3").css("width", "110px").css("height", "305px").css("top", "100px");
+	IntroGame.createDiv("closeAvatarEditor4").css("top", "405px").css("width", "518px");
+	
+	var img = $("<img>").attr("id", "imgTeacher-hand").attr("src", "images/cooking_teacher_attention_hand-hand.png").css("width", "105px%")
+						.css("position", "absolute").css("z-index", "2001").css("left", "291px").css("top", "347px").css("height", "135px");
+	
+	img.prependTo("body");
+	img = $("<img>").attr("id", "imgTeacher-body").attr("src", "images/cooking_teacher_attention_hand-body.png").css("width", "296px")
+			.css("position", "absolute").css("z-index", "2001").css("left", "396px").css("top", "250px");
+	img.prependTo("body");
+	
+	var cdialog = new CharacterDialog(400, 200, false, IntroGame.closePresentTeacher, 
+								[{character: null, msg: "Agora clique aqui para comecar a aprender", nextButton:null}]);
+	
+	$("#talkDlg").css("z-index", "2000");
+	cdialog.show();
+	
+};
+
+IntroGame.closeBeforeCity = function() {
+	IntroGame.cDialog.nextClose();
+	
+	$("#closeAvatarEditor1").remove();
+	$("#closeAvatarEditor2").remove();
+	$("#closeAvatarEditor3").remove();
+	$("#closeAvatarEditor4").remove();
+	$("#imgTeacher-hand").remove();
+	$("#imgTeacher-body").remove();
+	
 };
