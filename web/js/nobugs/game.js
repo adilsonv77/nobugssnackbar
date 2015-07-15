@@ -84,22 +84,23 @@ Game.generalInit = function() {
 	  
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 
-      PreloadImgs.loadImgs();
-      
-      // It's draw so early because it appears fast after load the mission 
-      Game.ctxDisplay = document.getElementById('display').getContext('2d');
-      Game.tempDisplay = document.getElementById('displayTemp');
-      Game.tempCtxDisplay = Game.tempDisplay.getContext('2d');
-      
-      Game.imgBackground = PreloadImgs.get("fundo");	
-      Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
-      
-      Blockly.BlockSvg.Game = Game;
-      
-      AvatarImgMaker.init();
-      
-      Game.init();
+      PreloadImgs.loadImgs(function() {
+    	  
+          // It's draw so early because it appears fast after load the mission 
+          Game.ctxDisplay = document.getElementById('display').getContext('2d');
+          Game.tempDisplay = document.getElementById('displayTemp');
+          Game.tempCtxDisplay = Game.tempDisplay.getContext('2d');
+          
+          Game.imgBackground = PreloadImgs.get("fundo");	
+          Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
+          
+          Blockly.BlockSvg.Game = Game;
+          
+          AvatarImgMaker.init();
+          
+          Game.init();
 
+      });
 	  
 };
 
