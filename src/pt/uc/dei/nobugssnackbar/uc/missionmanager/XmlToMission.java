@@ -60,23 +60,26 @@ public class XmlToMission {
 	public static List<Condition> stringConditionToObject(String conditionAsString) {
 		ArrayList<Condition> list = new ArrayList<>();
 		String parts[] = conditionAsString.split(" ");
-			
+		
 		if (parts != null) {
 			for (int i = 0; i < parts.length; i += 3) {
-				if (i % 3 == 0 && (parts[i].equalsIgnoreCase("&amp;&amp;") || parts[i].equalsIgnoreCase("||"))) {
+				if (parts[i].equalsIgnoreCase("&amp;&amp;") || 
+					parts[i].equals("&&") || 
+					parts[i].equals("||")) {
 					Condition cond = new Condition();
+					cond.setId(System.currentTimeMillis());
 					cond.setLogicalOperator(parts[i]);
 					list.add(cond);
 					i -= 2;
 				}
 				else {
 					Condition cond = new Condition();
+					cond.setId(System.currentTimeMillis());
 					Function func = new Function();
 					func.setName(parts[i].replace("()", ""));
 					cond.setFunction(func);
 					cond.setComparator(parts[i+1]);
 					cond.setValue(parts[i+2]);
-					cond.setLogicalOperator(null);
 					list.add(cond);
 				}
 			}

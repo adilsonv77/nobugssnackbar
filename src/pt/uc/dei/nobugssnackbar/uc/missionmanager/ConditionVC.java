@@ -13,7 +13,9 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
+import pt.uc.dei.nobugssnackbar.model.Function;
 import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
 
@@ -26,9 +28,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	@ManagedProperty(value = "#{hintView}")
 	private HintView hv;
 
-	private long idCounter;
 	private Condition condition;
-	private List<Condition> conditionList;
+	private List<Condition> conditions;
 	private ConditionConverter converter;
 
 	private boolean showDlgExt;
@@ -36,6 +37,17 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private List<String> comparators;
 	private List<String> boolValues;
 	private boolean boolFunction;
+
+	@ManagedProperty(value="#{factoryDao.functionProviderDao}")
+	private transient FunctionProviderDao functionProviderDao;
+	
+	public FunctionProviderDao getFunctionProviderDao() {
+		return functionProviderDao;
+	}
+
+	public void setFunctionProviderDao(FunctionProviderDao functionProviderDao) {
+		this.functionProviderDao = functionProviderDao;
+	}
 
 	public void showFuncProv() {
 		this.showDlgExt = true;
@@ -52,9 +64,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private boolean allowedFieldset;
 
 	public ConditionVC() {
-		idCounter = 1;
 		condition = new Condition();
-		conditionList = new ArrayList<>();
+		//conditions = new ArrayList<>();
 
 		converter = new ConditionConverter();
 		converter.setProvider(this);
@@ -74,11 +85,21 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		boolValues.add("false");
 	}
 
-	public void newOrEditCondList() {
+	public void newOrEditCondList() throws Exception {
 		if (hv.getHint().getConditions() != null && hv.getHint().getConditions().size() > 0) {
-			conditionList = hv.getHint().getConditions();
+			conditions = hv.getHint().getConditions();
+			for (Condition c : conditions) {
+				for (Function f : functionProviderDao.list()) {
+					if (f.getName().compareToIgnoreCase(c.getFunction().getName()) == 0) {
+						c.setFunction(f);
+						break;
+					}
+				}
+			}
+			hv.getHint().setConditions(conditions);
+			
 		} else {
-			conditionList = new ArrayList<>();
+			conditions = new ArrayList<>();
 		}
 	}
 
@@ -114,20 +135,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public Condition getConditionById() {
-		int editConditionID = Integer.parseInt(FacesContext
+		long editConditionID = Long.parseLong(FacesContext
 				.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("editConditionID"));
 
 		Condition result = new Condition();
 
-		for (int i = 0; i < conditionList.size(); i++) {
-			if (conditionList.get(i).getId() == editConditionID) {
-				result.setId(conditionList.get(i).getId());
-				result.setFunction(conditionList.get(i).getFunction());
-				result.setLogicalOperator(conditionList.get(i)
+		for (int i = 0; i < conditions.size(); i++) {
+			if (conditions.get(i).getId() == editConditionID) {
+				result.setId(conditions.get(i).getId());
+				result.setFunction(conditions.get(i).getFunction());
+				result.setLogicalOperator(conditions.get(i)
 						.getLogicalOperator());
-				result.setComparator(conditionList.get(i).getComparator());
-				result.setValue(conditionList.get(i).getValue());
+				result.setComparator(conditions.get(i).getComparator());
+				result.setValue(conditions.get(i).getValue());
 				break;
 			}
 		}
@@ -143,28 +164,28 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			c.setLogicalOperator("||");
 		}
 
-		c.setId(idCounter++);
-		conditionList.add(c);
+		c.setId(System.currentTimeMillis());
+		conditions.add(c);
 	}
 
 	public void addCondition() {
 		if (checkFields()) {
 			int index = -1;
-			for (int i = 0; i < conditionList.size(); i++) {
-				if (conditionList.get(i).getId() == condition.getId()) {
+			for (int i = 0; i < conditions.size(); i++) {
+				if (conditions.get(i).getId() == condition.getId()) {
 					index = i;
 					break;
 				}
 			}
 			if (index < 0) {
 				allowedFieldset = false;
-				condition.setId(idCounter++);
+				condition.setId(System.currentTimeMillis());
 				condition.setLogicalOperator(null);
-				conditionList.add(condition);
+				conditions.add(condition);
 			}
 			else {
-				if (conditionList.get(index).getLogicalOperator() != null && 
-					conditionList.get(index).getLogicalOperator().length() > 0) {
+				if (conditions.get(index).getLogicalOperator() != null && 
+					conditions.get(index).getLogicalOperator().length() > 0) {
 					
 					FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 							ApplicationMessages.getMessage().getString("cannotEditCond"), "");
@@ -172,7 +193,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				}
 				else {
-					conditionList.set(index, condition);
+					conditions.set(index, condition);
 				}
 			}
 			condition = new Condition();
@@ -183,17 +204,17 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public boolean checkCondition() {
 		boolean result = false;
 
-		if (conditionList.size() % 2 != 0) {
-			for (int i = 0; i < conditionList.size(); i++) {
+		if (conditions.size() % 2 != 0) {
+			for (int i = 0; i < conditions.size(); i++) {
 				if (i % 2 == 0) {
-					if (conditionList.get(i).getLogicalOperator() == null) {
+					if (conditions.get(i).getLogicalOperator() == null) {
 						result = true;
 					} else {
 						result = false;
 						break;
 					}
 				} else {
-					if (conditionList.get(i).getLogicalOperator() != null) {
+					if (conditions.get(i).getLogicalOperator() != null) {
 						result = true;
 					} else {
 						result = false;
@@ -208,9 +229,9 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			ResourceBundle messageBundle = ApplicationMessages.getMessage();
 			String additionalMsg, text;
 			
-			if (conditionList.size() > 0) {
-				String logOpB = conditionList.get(0).getConditionString();
-				String logOpE = conditionList.get(conditionList.size() - 1).getConditionString();
+			if (conditions.size() > 0) {
+				String logOpB = conditions.get(0).getConditionString();
+				String logOpE = conditions.get(conditions.size() - 1).getConditionString();
 				
 				if (logOpB.equals("&&") || logOpB.equals("||") ||
 					logOpE.equals("&&") || logOpE.equals("||")) {
@@ -231,7 +252,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			FacesContext.getCurrentInstance().validationFailed();
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
-			hv.getHint().setConditions(conditionList);
+			hv.getHint().setConditions(conditions);
 			RequestContext.getCurrentInstance().execute(
 					"PF('condBuilderDlg').hide()");
 			allowedFieldset = false;
@@ -312,11 +333,11 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public void deleteCondition() {
 		Condition c = getConditionById();
 		
-		int index = indexOfConditionById(c.getId(), conditionList);
-		int indexOfEditCond = indexOfConditionById(condition.getId(), conditionList);
+		int index = indexOfConditionById(c.getId(), conditions);
+		int indexOfEditCond = indexOfConditionById(condition.getId(), conditions);
 		if (index > -1) {
 			if (index != indexOfEditCond) {
-				conditionList.remove(index);
+				conditions.remove(index);
 			}
 			else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -334,15 +355,11 @@ public class ConditionVC implements IConditionProvider, Serializable {
 
 	@Override
 	public List<Condition> getConditions() {
-		return conditionList;
-	}
-
-	public void setConditionList(List<Condition> conditionList) {
-		this.conditionList = conditionList;
+		return conditions;
 	}
 
 	public void setConditions(List<Condition> conditions) {
-		this.conditionList = conditions;
+		this.conditions = conditions;
 	}
 
 	public ConditionConverter getConverter() {

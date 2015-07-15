@@ -32,8 +32,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	
 	private String filterNameStr;
 	
-	public FunctionVC() throws Exception {
-		
+	public FunctionVC() throws Exception {		
 		func = new Function();
 		this.fpc = new FunctionProviderConverter();
 		this.fpc.setProvider(this);
@@ -59,7 +58,7 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 	}
 	
 	public void getFunctionById() throws Exception{
-		int selectedFunctionID = Integer.parseInt(
+		long selectedFunctionID = Long.parseLong(
 				FacesContext.
 				getCurrentInstance().
 				getExternalContext().

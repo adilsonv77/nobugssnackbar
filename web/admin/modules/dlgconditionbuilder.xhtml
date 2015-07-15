@@ -45,11 +45,11 @@
 				<p:watermark for="condValue" value="#{msg['enterVal']}" />
 
 				<p:panelGrid columns="2" style="maring-top: 10px; float: right;">
-					<p:commandButton id="saveCondBtn" value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
+					<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
 						update=":formCondBuilder :growlMsgs" 
 						actionListener="#{condVC.addCondition}"
 						disabled="#{condVC.allowedFieldset == false}"/>
-					<p:commandButton id="cancelCondBtn" value="#{msg['cancel']}" icon="ui-icon-closethick" 
+					<p:commandButton value="#{msg['cancel']}" icon="ui-icon-closethick" 
 						update=":formCondBuilder :growlMsgs" 
 						actionListener="#{condVC.setAllowedFieldset(false)}"
 						disabled="#{condVC.allowedFieldset == false}"/>
