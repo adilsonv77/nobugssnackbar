@@ -51,13 +51,13 @@ public class MissionManager implements Serializable {
 				if (c.getParentId() == null) {
 					rootCommands.add(c);
 				} else {
-					for (Command r : rootCommands)
+					for (Command r : rootCommands) {
 						if (r.getId() == c.getParentId()) {
 							r.getChildren().add(c);
 							c.setParent(r);
 							break;
 						}
-
+					}
 				}
 			}
 			
@@ -202,7 +202,7 @@ public class MissionManager implements Serializable {
 				if (xml != null) {					
 					mission.setContent(xml);
 					MissionJdbcDao missionJdbcDao = new MissionJdbcDao();
-					missionJdbcDao.insert(mission);
+					missionJdbcDao.save(mission);
 					this.missionList = getMissionDao().list();
 					
 			        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 

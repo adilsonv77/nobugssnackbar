@@ -223,14 +223,14 @@ public class XmlToMission {
 			for (Hint h : missionContent.getHints().getErrorsHints()) {
 				if (h.getConditionsAsString() != null) {
 					String newCond = new String(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
-					System.out.println(newCond);
+					//System.out.println(newCond);
 					result = result.replace(h.getConditionsAsString(), newCond);
 				}
 			}
 			for (Hint h : missionContent.getHints().getTipsHints()) {
 				if (h.getConditionsAsString() != null) {
 					String newCond = new String(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
-					System.out.println(newCond);
+					//System.out.println(newCond);
 					result = result.replace(h.getConditionsAsString(), newCond);
 				}
 			}
