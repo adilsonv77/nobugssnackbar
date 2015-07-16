@@ -214,6 +214,18 @@ public class UserControl {
 	}
 
 	@RemoteMethod
+	public void exitMission(int timeSpend, long execution, int typeRunning, String answer) throws Exception {
+		
+		saveMission(0, timeSpend, execution, false, typeRunning, answer);
+		
+		this.classid = 0;
+		this.levelid = 0;
+		this.missionidx = 0;
+		this.mission = 0;
+		
+	}
+	
+	@RemoteMethod
 	public void saveQuestionnaire(String[][] answers)
 			throws NumberFormatException, Exception {
 		for (int i = 0; i < answers.length; i++) {

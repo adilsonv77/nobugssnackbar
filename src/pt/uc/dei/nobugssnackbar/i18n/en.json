@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-16 11:37:45.452000",
+		"lastupdated": "2015-07-16 16:58:17.682000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -187,6 +187,7 @@
 	"NoBugs.avatarTooltip": "Change your avatar.",
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
+	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.debugTooltip": "Makes the snack man do what the next block say.",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say.",
 	"NoBugs.resetTooltip": "Restarts the execution.",

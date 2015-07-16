@@ -313,7 +313,7 @@ table.tableVictory td  {
 	float:  left;
 } 
 
-#selectMissionLogoffButton:hover {
+#selectMissionLogoffButton:hover, #logoffButton:hover  {
 	border: 0px;
 	box-shadow: 0px 0px 0px 0px;
 }

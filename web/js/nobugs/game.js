@@ -300,9 +300,13 @@ Game.logged = function() {
 	UserControl.retrieveReward(function(ret) {
 		  document.getElementById("yourXP").innerHTML = ret[0];
 		  document.getElementById("yourCash").innerHTML = ret[1];
+		  
+		  document.getElementById("yourXPInMission").innerHTML = ret[0];
+		  document.getElementById("yourCashInMission").innerHTML = ret[1];
 	});
 
 	$("#playerName").html(Game.loginData.userLogged.name);
+	$("#playerNameInMission").html(Game.loginData.userLogged.name);
 	$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
 	
 	Game.drawMiniAvatar();
@@ -834,7 +838,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
 	  BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
-	  BlocklyApps.bindClick('logoffButton', Game.logoffButtonClick);
+	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
 	 // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
@@ -973,6 +977,7 @@ Game.showDialogVictory = function(out) {
 
 	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, style, 
 			function(){
+				Game.goBackToDashboard(null, false);		
 				Game.init();
 		});
 
@@ -1233,10 +1238,26 @@ Game.emptyLines = function() {
 	InGrid.emptyLines("#_varsgrid_vars_0 div:nth-child(2) table");
 };
 
-Game.logoffButtonClick = function() {
+Game.goBackToDashboard = function(evt, callInit) {
+	Blockly.hideChaff();
+    Blockly.WidgetDiv.hide();
+
+    var ret = Game.closeBlockEditorStuffs();
+    
+	if (callInit !== false) {
+		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, ret[1],
+							{callback:function() {}, async:false});
+
+		Game.init();
+	}
 	
-	Hints.stopHints();
-	Game.stopAlertGoalButton();
+};
+
+Game.closeBlockEditorStuffs = function() {
+
+    Hints.stopHints();
+
+    Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
 	window.removeEventListener('unload', Game.unload);
 	
@@ -1254,15 +1275,15 @@ Game.logoffButtonClick = function() {
     if (Game.currTime != 0) {
         answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
     	timeSpent = Math.floor((now - Game.currTime)/1000);
-    	
     }
 
     document.getElementById('blockly').innerHTML = ""; // clean the editor
-    
+    /* let this in commentary. this lines destroys the capacity to edit the fields in the blocks.
     $(".blocklyWidgetDiv").remove();
     $(".blocklyTooltipDiv").remove();
+    */
     $(".blocklyToolboxDiv").remove();
-    
+
     window.removeEventListener('scroll', Game.scrollEvent);  
     window.removeEventListener('resize',  Game.resizeWindow);
 
@@ -1271,7 +1292,13 @@ Game.logoffButtonClick = function() {
     $("#tabs-runs").empty();
     CityMap.stopAnimation();
     
-    UserControl.logoff(timeSpent, Game.howManyRuns, answer, function(){
+	return [timeSpent, answer];
+};
+
+Game.logoffButtonClick = function() {
+	
+	var res= Game.closeBlockEditorStuffs();
+    UserControl.logoff(res[0], Game.howManyRuns, res[1], function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
