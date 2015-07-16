@@ -149,7 +149,7 @@ IntroGame.closeFocusAvatar = function() {
 	$("#focusAvatar").remove();
 	$("#imgTeacher").remove();
 	
-	Game.openAvatarEditor(IntroGame.closeAvatarEditor);
+	Game.openAvatarEditor(null, IntroGame.closeAvatarEditor);
 };
 
 IntroGame.closeAvatarEditor = function() {

@@ -12,7 +12,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
@@ -414,24 +416,25 @@ public class GameJdbcDao implements GameDao {
 		return answer;
 	}
 
-	public Object[][] retrieveMissions(long idUser) throws SQLException {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Map<?,?> retrieveMissions(long idUser) throws SQLException {
 		Connection bdCon = null;
-		Object[][] ret = null;
+		Map res = null;
 		try {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select classid from classesusers where userid = ?");
+					.prepareStatement("select classid from classesusers where userid = ? and currently = 'T'");
 			ps.setLong(1, idUser);
 
 			List<Long> classes = new ArrayList<Long>();
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				classes.add(rs.getLong(1));
+				classes.add(rs.getLong(1)); // it is only one
 			}
 			ps.close();
 
-			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid from classeslevels cl join classes c on (cl.classid = c.classid) join ("
+			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
@@ -450,6 +453,9 @@ public class GameJdbcDao implements GameDao {
 
 			List<Object[]> l = new ArrayList<>();
 			rs = ps.executeQuery();
+			
+			int xpToHat = 0, xpToClothes = 0;
+			
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
 						rs.getLong(3), rs.getLong(4), rs.getLong(5),
@@ -458,6 +464,9 @@ public class GameJdbcDao implements GameDao {
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));
 
+				xpToHat = rs.getInt(7);
+				xpToClothes = rs.getInt(8);
+				
 				l.add(li);
 			}
 			ps.close();
@@ -470,7 +479,6 @@ public class GameJdbcDao implements GameDao {
 				ps.setInt(1, classesId.get(i));
 				ps.setInt(2, classesLevelId.get(i));
 
-				@SuppressWarnings("unchecked")
 				List<Integer[]> missions = (List<Integer[]>) l.get(i)[6];
 				long qtasResolvidas = (long) l.get(i)[3];
 
@@ -487,9 +495,14 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			ret = new Object[l.size()][];
+			Object[][] ret = new Object[l.size()][];
 			for (int i = 0; i < l.size(); i++)
 				ret[i] = l.get(i);
+			
+			res = new HashMap();
+			res.put("missions", ret);
+			res.put("xpToHat", xpToHat);
+			res.put("xpToClothes", xpToClothes);
 
 		} finally {
 			if (bdCon != null)
@@ -498,7 +511,7 @@ public class GameJdbcDao implements GameDao {
 				} catch (SQLException ignore) {
 				}
 		}
-		return ret;
+		return res;
 	}
 
 	public Questionnaire retrieveParticularQuestionnaire(User user, long questId)

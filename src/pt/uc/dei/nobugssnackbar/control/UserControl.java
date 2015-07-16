@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.directwebremoting.WebContext;
@@ -75,12 +76,30 @@ public class UserControl {
 	private boolean registeredUserLastTime;
 	private Object[][] missions;
 	private List<Object[]> avatar;
+	private int xpToHat;
+	private int xpToClothes;
 
+	@SuppressWarnings("rawtypes")
 	@RemoteMethod
 	public Object[] verifyLogged() throws Exception {
-		this.missions = (user == null ? null : retrieveMissions());
+		if (user == null) {
+			
+			this.missions = null;
+			this.xpToHat = 0;
+			this.xpToClothes = 0;
+			
+		}
+		else {
+			
+			Map m = retrieveMissions();
+
+			this.missions = (Object[][]) m.get("missions");
+			this.xpToHat = (int) m.get("xpToHat");
+			this.xpToClothes = (int) m.get("xpToClothes");
+			
+		}
 		return new Object[] { user != null, this.user, this.missions,
-				(user == null ? null : retrieveLeaderBoard()), this.avatar,
+				(user == null ? null : retrieveLeaderBoard()), this.avatar, this.xpToHat, this.xpToClothes,
 				this.classid, this.levelid, this.missionidx };
 	}
 
@@ -101,6 +120,7 @@ public class UserControl {
 		this.registeredUserLastTime = false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RemoteMethod
 	public Object[] login(String nick, String passw) {
 
@@ -108,11 +128,15 @@ public class UserControl {
 
 			this.user = gameDao.login(nick, encrypt(passw));
 
-			this.missions = retrieveMissions();
+			Map m = retrieveMissions();
+			this.missions = (Object[][]) m.get("missions");
+			this.xpToHat = (int) m.get("xpToHat");
+			this.xpToClothes = (int) m.get("xpToClothes");
+
 			this.avatar = retrieveAvatarParts();
 
 			return new Object[] { null, this.user, this.missions, 
-					retrieveLeaderBoard(), this.avatar }; // no errors
+					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes }; // no errors
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,8 +243,9 @@ public class UserControl {
 		return gameDao.loadAnswer(idMission, this.user.getId());
 	}
 
-	@RemoteMethod
-	public Object[][] retrieveMissions() throws Exception {
+	
+	@SuppressWarnings("rawtypes")
+	private Map retrieveMissions() throws Exception {
 		return gameDao.retrieveMissions(this.user.getId());
 	}
 

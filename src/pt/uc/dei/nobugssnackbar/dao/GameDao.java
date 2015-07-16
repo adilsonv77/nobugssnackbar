@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.User;
@@ -29,7 +30,7 @@ public interface GameDao {
 
 	String loadAnswer(int idMission, long id) throws Exception;
 
-	Object[][] retrieveMissions(long id) throws Exception;
+	Map<?,?> retrieveMissions(long id) throws Exception;
 
 	List<Questionnaire> retrieveQuestionnaire(User user, Object[][] missions)
 			throws Exception;

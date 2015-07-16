@@ -335,7 +335,8 @@ AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 			miniMouth = PreloadImgs.get(j+".mini-mouth");
 		else {
 			keys.splice(4, 1);
-			AvatarImgMaker.items.hat.img = PreloadImgs.get("mini-"+AvatarImgMaker.items.hat.id + "-back");
+			if (AvatarImgMaker.items.hat.id !== "")
+				AvatarImgMaker.items.hat.img = PreloadImgs.get("mini-"+AvatarImgMaker.items.hat.id + "-back");
 		}
 		
 		AvatarImgMaker.items.head.img = PreloadImgs.get(j+".mini-head"); 
@@ -389,7 +390,8 @@ AvatarImgMaker.createMiniAnimationBodyPlatter = function(canvasDest, config) {
 			miniMouth = PreloadImgs.get(j+".mini-mouth");
 		else {
 			keys.splice(5, 1);
-			AvatarImgMaker.items.hat.img = PreloadImgs.get("mini-"+AvatarImgMaker.items.hat.id + "-back");
+			if (AvatarImgMaker.items.hat.id !== "")
+				AvatarImgMaker.items.hat.img = PreloadImgs.get("mini-"+AvatarImgMaker.items.hat.id + "-back");
 		}
 		
 		AvatarImgMaker.items.head.img = PreloadImgs.get(j+".mini-head"); 

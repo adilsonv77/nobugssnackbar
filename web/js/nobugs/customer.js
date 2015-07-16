@@ -392,7 +392,7 @@ Customer.prototype.draw = function(ctx) {
 				ordersUnfulfilled.push(PreloadImgs.get("duvida"));
 			
 			if (ordersUnfulfilled.length > 0) {
-				Baloon.draw(ctx, this.img.x, this.img.y, ordersUnfulfilled, this.baloonLeft);
+				Baloon.draw(ctx, this.img.x, this.img.y+20, ordersUnfulfilled, this.baloonLeft);
 			}
 		}
 	}
