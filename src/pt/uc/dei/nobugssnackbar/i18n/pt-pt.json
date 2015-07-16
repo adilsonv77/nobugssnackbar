@@ -210,5 +210,6 @@
 	"Intro.Dlg9" 			: "Aceito !!!",
 	
 	"Intro.PresentTeacher"  : "Ol&#225; %0, eu sou o Professor Burguer.\nn \nn Seja bem vindo a nossa escola. Enquanto estiveres a aprender, na escola, vou te acompanhar em todas as miss&#245;es.\nn \nn Vamos come&#231;ar a aprender um pouco desse ambiente onde vais passar algumas horas a se divertir.", 
-	"Intro.AvatarEditor"    : "Sugiro que voc&#234; inicie pela configura&#231;&#227;o da apar&#234;ncia do seu personagem. \nn \nn Clique nesse bot&#227;o para configur&#225;-lo." 
+	"Intro.AvatarEditor"    : "Sugiro que voc&#234; inicie pela configura&#231;&#227;o da apar&#234;ncia do seu personagem. \nn \nn Clique nesse bot&#227;o para configur&#225;-lo.",
+	"Intro.ClickSchool"     : "Toda vez que pretendes jogar uma miss&#227;o deves clicar na escola.\nn \nn L&#225; te forne&#231;o as aulas e desafios para praticar."
 }

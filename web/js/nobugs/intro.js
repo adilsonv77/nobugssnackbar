@@ -94,7 +94,7 @@ IntroGame.createDiv = function(id) {
 
 IntroGame.presentTeacher = function(fret) {
 	IntroGame.createDiv("presentTeacher");
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_attention_hand.png").css("width", "30%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_talking.png").css("width", "30%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
 	img.prependTo("body");
 	
@@ -168,7 +168,7 @@ IntroGame.closeAvatarEditor = function() {
 	img.prependTo("body");
 	
 	var cdialog = new CharacterDialog(400, 200, false, IntroGame.closePresentTeacher, 
-								[{character: null, msg: "Agora clique aqui para comecar a aprender", nextButton:null}]);
+								[{character: null, msg: BlocklyApps.getMsg("Intro_ClickSchool"), nextButton:null}]);
 	
 	$("#talkDlg").css("z-index", "2000");
 	cdialog.show();

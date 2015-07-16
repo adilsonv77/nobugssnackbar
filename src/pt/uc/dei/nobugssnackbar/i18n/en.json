@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-15 15:21:02.958000",
+		"lastupdated": "2015-07-16 11:37:45.452000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -165,6 +165,7 @@
 	"Intro.Dlg9": "Accepted !!!",
 	"Intro.PresentTeacher": "Hello %0, I'm the Professor Burguer. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You're welcome in our school. While you are learning, in the school, I'll be together in every mission.&amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Let start to learn a bit the environment where you'll stay some hours having fun.",
 	"Intro.AvatarEditor": "I suggest you start to configure your character appearance.&amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; Click in this button to perform this action.",
+	"Intro.ClickSchool": "Click on the school building every time when you want to play a mission.&amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; There I'll give you lessons and challenges to practice.",
 	"Avatar.EditorTitle": "Avatar Editor",
 	"Avatar.EnableByXp": "To enable this setting, reward ",
 	"Apps.save": "Save",
