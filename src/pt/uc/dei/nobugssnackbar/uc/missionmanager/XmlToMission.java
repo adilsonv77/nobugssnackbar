@@ -67,14 +67,14 @@ public class XmlToMission {
 					parts[i].equals("&&") || 
 					parts[i].equals("||")) {
 					Condition cond = new Condition();
-					cond.setId(System.currentTimeMillis());
+					//cond.setId(System.currentTimeMillis());
 					cond.setLogicalOperator(parts[i]);
 					list.add(cond);
 					i -= 2;
 				}
 				else {
 					Condition cond = new Condition();
-					cond.setId(System.currentTimeMillis());
+					//cond.setId(System.currentTimeMillis());
 					Function func = new Function();
 					func.setName(parts[i].replace("()", ""));
 					cond.setFunction(func);

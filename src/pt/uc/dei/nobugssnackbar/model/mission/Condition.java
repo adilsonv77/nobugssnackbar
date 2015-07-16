@@ -7,7 +7,7 @@ public class Condition implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	private long id = -1;
 	private String comparator;
 	private String logicalOperator;
 	private Function function;
@@ -58,6 +58,10 @@ public class Condition implements java.io.Serializable {
 		}
 		
 		return conditionString;
+	}
+	
+	public void setConditionString(String conditionString) {
+		this.conditionString = conditionString;
 	}
 	
 }

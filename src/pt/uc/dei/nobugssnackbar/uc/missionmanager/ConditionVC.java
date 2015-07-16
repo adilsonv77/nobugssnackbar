@@ -28,6 +28,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	@ManagedProperty(value = "#{hintView}")
 	private HintView hv;
 
+	private static int conditionID;
 	private Condition condition;
 	private List<Condition> conditions;
 	private ConditionConverter converter;
@@ -88,11 +89,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public void newOrEditCondList() throws Exception {
 		if (hv.getHint().getConditions() != null && hv.getHint().getConditions().size() > 0) {
 			conditions = hv.getHint().getConditions();
+			List<Function> functionsDB = functionProviderDao.list();
+			
 			for (Condition c : conditions) {
-				for (Function f : functionProviderDao.list()) {
-					if (f.getName().compareToIgnoreCase(c.getFunction().getName()) == 0) {
-						c.setFunction(f);
-						break;
+				if (c.getId() < 0) {
+					c.setConditionString(null);
+					c.setId(conditionID++);
+					for (Function f : functionsDB) {
+						if (c.getFunction() == null) {
+							break;
+						}
+						if (f.getName().compareToIgnoreCase(c.getFunction().getName()) == 0) {
+							c.setFunction(f);
+							break;
+						}
 					}
 				}
 			}
@@ -164,7 +174,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			c.setLogicalOperator("||");
 		}
 
-		c.setId(System.currentTimeMillis());
+		c.setId(conditionID++);
 		conditions.add(c);
 	}
 
@@ -179,7 +189,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			}
 			if (index < 0) {
 				allowedFieldset = false;
-				condition.setId(System.currentTimeMillis());
+				condition.setId(conditionID++);
 				condition.setLogicalOperator(null);
 				conditions.add(condition);
 			}
