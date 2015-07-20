@@ -21,7 +21,7 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="Iddle" time="0" condition = "Hints.showedIddle &lt; 1 &amp;&amp; countInstructions > 25">
+			<hint category="Iddle" time="0" condition = "Hints.countShowedIddle() &lt; 1 &amp;&amp; Hints.countInstructions() > 25">
 			<![CDATA[
 			Se est&#225; complicado de organizar os blocos, tens mais uma alternativa: usar os recursos de zoom do navegador. Use a combina&#231;&#227;o
 			de teclas [Ctrl +] e [Ctrl -] para gerir o zoom do navegador.

@@ -23,7 +23,7 @@
 	
 	<hints>
 		<sequence>
-			<hint category="TestBlock" time="0" condition="Hints.activeBlock.type == 'ask_askForDrink' &amp;&amp; countInstructions == 1">
+			<hint category="TestBlock" time="0" condition="Hints.typeActiveBlock() == 'ask_askForDrink' &amp;&amp; Hints.countInstructions() == 1">
 			<![CDATA[
 			Temos aqui tr&#234;s novos comandos: [askForDrink] para perguntar ao cliente o que ele deseja beber, [pickUpDrink] para retirar um produto 
 			quando estiver em frente ao refrigerador e [goToCooler] para instruir o cozinheiro andar at&#233; o refrigerador. 

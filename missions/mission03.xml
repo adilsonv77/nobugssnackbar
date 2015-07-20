@@ -24,7 +24,7 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="TestBlock" time="0" condition="countTopInstructions == 3">
+			<hint category="TestBlock" time="0" condition="Hints.countTopInstructions() == 3">
 			Arraste e organize a sequ&#234;ncia desses blocos.
 			</hint>
 			

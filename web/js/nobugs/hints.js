@@ -632,6 +632,44 @@ function createInfoDlg(contentTxt, style, title) {
 /**                  Supported functions used in conditions                             */
 /****************************************************************************************/
 
+Hints.countInstructions = function() {
+	return countInstructions;
+};
+
+Hints.howManyRuns = function() {
+	return Game.howManyRuns;
+};
+
+Hints.countTopInstructions = function() {
+	return countTopInstructions;
+};
+
+Hints.typeActiveBlock = function() {
+	return Hints.activeBlock.type;
+};
+
+Hints.countShowedIddle = function() {
+	return Hints.showedIddle;
+};
+
+Hints.countChildrenActiveBlock = function() {
+	return Hints.countChildren(Hints.activeBlock);
+};
+
+Hints.blockTypeLastError = function() {
+	return Game.lastErrorData.block.type;	
+};
+
+Hints.containsBlockTypeLastError = function(block) {
+	return Game.lastErrorHas(block);
+};
+
+Hints.lastErrorId = function() {
+
+	return Game.lastErrorData.iderror;
+
+};
+
 Hints.fCountVariable = function(block) {
 	if (block.type === "variables_set")
 		Hints.totalVariable++;
@@ -650,6 +688,14 @@ Hints.isVariable = function() {
 
 Hints.variableName = function() {
 	return Hints.activeBlock.getVars()[0];
+};
+
+Hints.showedHint = function() {
+	return showedHint;
+};
+
+Hints.activeBlockHasElse = function() {
+	return Hints.activeBlock.elseCount_ > 0;
 };
 
 Hints.hasEmptyInputs  = function() {

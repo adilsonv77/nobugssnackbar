@@ -18,14 +18,14 @@
 		
 			<hint category="Slider"/>
 		
-			<hint category="LastError" condition="Game.lastErrorData.block.type == 'do_deliver'">
+			<hint category="LastError" condition="Hints.blockTypeLastError() == 'do_deliver'">
 			<![CDATA[
 			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
 			a partir de outra vari&#225;vel. Verifique se os blocos [pickUpHotDog] e [askForFood] est&#227;o referenciando corretamente suas vari&#225;veis.
 			]]>
 			</hint>
 		
-			<hint category="LastError" condition="Game.lastErrorData.block.type == 'variables_set' &amp;&amp; Game.lastErrorHas('prepare_pickUpHotDog')">
+			<hint category="LastError" condition="Hints.blockTypeLastError() == 'variables_set' &amp;&amp; Hints.containsBlockTypeLastError('prepare_pickUpHotDog')">
 			<![CDATA[
 			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou o pedido em uma vari&#225;vel e est&#225; a pegar o produto com 
 			base em outra vari&#225;vel. Verifique em que vari&#225;vel o bloco [askForFood] guardou o valor e use a mesma vari&#225;vel como 
@@ -33,7 +33,7 @@
 			]]>
 			</hint>
 			
-			<hint category="Iddle" condition = "Hints.showedIddle &lt; 2 &amp;&amp; countInstructions > 5">
+			<hint category="Iddle" condition = "Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countInstructions() > 5">
 			<![CDATA[
 			Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para duplicar o bloco. 
 			Se manter a tecla [Ctrl] pressionada, pode selecionar v&#225;rios blocos. 
