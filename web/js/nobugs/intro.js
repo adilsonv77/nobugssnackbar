@@ -94,7 +94,7 @@ IntroGame.createDiv = function(id) {
 
 IntroGame.presentTeacher = function(fret) {
 	IntroGame.createDiv("presentTeacher");
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_talking.png").css("width", "30%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_talking.png").css("width", "30%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
 	img.prependTo("body");
 	
@@ -117,7 +117,7 @@ IntroGame.focusAvatar = function() {
 	
 	var div = IntroGame.createDiv("focusAvatar"); 
 	
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/cooking_teacher_point_hand.png").css("width", "30%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_point_hand.png").css("width", "30%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "100px").css("top", "50px");
 	img.prependTo("body");
 
@@ -159,11 +159,11 @@ IntroGame.closeAvatarEditor = function() {
 	IntroGame.createDiv("closeAvatarEditor3").css("width", "110px").css("height", "305px").css("top", "100px");
 	IntroGame.createDiv("closeAvatarEditor4").css("top", "405px").css("width", "518px");
 	
-	var img = $("<img>").attr("id", "imgTeacher-hand").attr("src", "images/cooking_teacher_attention_hand-hand.png").css("width", "105px%")
+	var img = $("<img>").attr("id", "imgTeacher-hand").attr("src", "images/teacher_attention_hand-hand.png").css("width", "105px%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "291px").css("top", "347px").css("height", "135px");
 	
 	img.prependTo("body");
-	img = $("<img>").attr("id", "imgTeacher-body").attr("src", "images/cooking_teacher_attention_hand-body.png").css("width", "296px")
+	img = $("<img>").attr("id", "imgTeacher-body").attr("src", "images/teacher_attention_hand-body.png").css("width", "296px")
 			.css("position", "absolute").css("z-index", "2001").css("left", "396px").css("top", "250px");
 	img.prependTo("body");
 	

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-16 16:58:17.682000",
+		"lastupdated": "2015-07-21 15:10:29.849000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -120,7 +120,7 @@
 	"NoBugs.goalAchieved": "New Goal Achieved",
 	"NoBugs.achieved": "Achieved",
 	"NoBugs.of": "of",
-	"NoBugs.goalAchievedVictory": "You achieved this mission. \n You won a total of %0.",
+	"NoBugs.goalAchievedVictory": "You achieved this mission. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You won a total of %0.",
 	"NoBugs.slider": "Here you configure the cooker velocity.",
 	"NoBugs.requiredField": "Required field.",
 	"NoBugs.finishOpenMission": "The mission's time is over. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You earned &amp;#60;b&amp;#62;%0&amp;#60;/b&amp;#62; delivering the requests.",
@@ -151,7 +151,7 @@
 	"Single.Equipments": "Equipments",
 	"Single.AddNewEquipment": "Add new equipments in your snackbar.",
 	"Single.NotEnabledToSeeLeaderBoard": "We only can see these values after accomplish mission %0.",
-	"Tooltip.TabMoney": "Players ordered by their money earned.",
+	"Tooltip.TabMoney": "Players ordered by their won XP .",
 	"Tooltip.TabTime": "Players ordered by their level and time spent.",
 	"Tooltip.TabRun": "Players ordered by their level and amount of attempts.",
 	"Intro.Dlg1": "Manuel...  &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; you are 20 years old and are doing nothing, only eat and drink.",
@@ -197,8 +197,8 @@
 	"NoBugs.varname": "Name",
 	"NoBugs.varvalue": "Value",
 	"NoBugs.intro1": "TODO",
-	"NoBugs.noMoreMissions": "You're an expert !!! There aren't more missions for you.",
-	"NoBugs.goalAchievedFail": "You don't achieved this mission. You need to try again.",
+	"NoBugs.noMoreMissions": "You're an expert !!! At this moment, there aren't more missions for you.",
+	"NoBugs.goalAchievedFail": "You don't achieved this mission. <x id='BREAK'/><x id='BREAK'/> You need to try again.",
 	"Apps.dialogLogoff": "Logoff",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",

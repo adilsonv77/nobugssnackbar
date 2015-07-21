@@ -140,7 +140,7 @@
   	{call avatareditor.body /}
   </div>
 
-  <div id="mainBody" style="display: none">
+  <div id="mainBody" style="display: none; position: absolute; width: 100%">
 	  <table width="100%" class="nobugs_background">
 	    <tr>
 	      <td rowspan="2" style="width: 200px">
@@ -148,7 +148,8 @@
 	           <img src="images/logotipo.png" height="60px" width="185px"/>
 	          </span>
 	      </td>
-	      <td id="playerNameInMission" class="nobugs_font" style="width:80%"></td>
+	      <td id="playerNameInMission" class="nobugs_font" style="width:30%"></td>
+	      <td id="missionIdentification" class="nobugs_font"></td> 
 	      <td class="farSide" rowspan="2">
 	         <div>
 		         <span id="timerCountUp" style="position: absolute"></span>
@@ -160,15 +161,24 @@
 	    </tr>
 	    <tr>
 	    	<td>
-	      	<div class="playerReward">
-	      		<div class="playerRewardIcon" style="background-image: url('images/xp.png');"></div>
-  				<span id="yourXPInMission"></span>
-	      	</div>
-	      	<div class="playerReward">
-	      		<div class="playerRewardIcon" style="background-image: url('images/coin2.png');"></div>
-	      		<span id="yourCashInMission"></span>
-	      	</div>
+		      	<div class="playerReward">
+		      		<div class="playerRewardIcon" style="background-image: url('images/xp.png');"></div>
+	  				<span id="yourXPInMission"></span>
+		      	</div>
+		      	<div class="playerReward">
+		      		<div class="playerRewardIcon" style="background-image: url('images/coin2.png');"></div>
+		      		<span id="yourCashInMission"></span>
+		      	</div>
 	    	</td>
+	    	<td>
+	    		<div class="playerReward" style="width: auto;">
+	    			<div id="missionXP1" class="playerRewardIcon" style="background-image: url('images/xp.png');background-size: 100%;width: 24px;"></div>
+					<div id="missionXP2" class="playerRewardIcon" style="background-image: url('images/xp.png');background-size: 100%;width: 24px;"></div>
+					<div id="missionXP3" class="playerRewardIcon" style="background-image: url('images/xp.png');background-size: 100%;width: 24px;"></div>
+					<span id="xpPoints"></span>
+				</div>
+				<canvas id="stopWatch" width="32" height="32" style="position:relative;left:-10px"></canvas>
+			</td>
 	    </tr>
 	  </table>
   
@@ -195,7 +205,7 @@
 	      </td>
 
 	      <td style="width: 120px; text-align: center">
-	        <button id="buyButton" class="primary" style="margin:5px" 
+	        <button id="buyButton" class="primary" style="margin:5px; display:none" 
 	        	title="{msg meaning="NoBugs.buyTooltip" desc="--"}Buy some machines.{/msg}">
 	          <img src="media/1x1.gif" class="buy icon21">
 	        </button>
@@ -320,7 +330,7 @@
     <table>
 	    <tr>
 		    <td style="width: 20%" align="center">
-		      <img src="images/victory.png">
+		      <img src="images/teacher_victory.png">
 		    </td>
 		    <td id="victoyText"></td>
 	    </tr>
@@ -332,9 +342,9 @@
     <table>
 	    <tr>
 		    <td align="center">
-		      <img src="images/expert.png" style="margin: 10px"/>
+		      <img src="images/teacher_expert.png" style="margin: 10px"/>
 		    </td>
-		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! There aren't more missions for you.{/msg}</td>
+		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! At this moment, there aren't more missions for you.{/msg}</td>
 	    </tr>
     </table>
 	{call apps.ok /}
@@ -344,9 +354,9 @@
     <table>
 	    <tr>
 		    <td style="width: 20%" align="center">
-		      <img src="images/fail.png">
+		      <img src="images/teacher_fail.png">
 		    </td>
-		    <td><span id="dialogFailText">{msg meaning="NoBugs.goalAchievedFail" desc="--"}You don't achieved this mission. You need to try again.{/msg}</span></td>
+		    <td><span id="dialogFailText">{msg meaning="NoBugs.goalAchievedFail" desc="--"}You don't achieved this mission. <br/><br/> You need to try again.{/msg}</span></td>
 	    </tr>
     </table>
      {call apps.ok /}
@@ -536,7 +546,7 @@
  * Next button in information dialogs.
  */
 {template .nextButton private="true"}
-    <button class="secondary" onclick="Explanation.nextStatement()">
+    <button class="nobugs_button" onclick="Explanation.nextStatement()">
       {{msg meaning="Apps.dialogNext" desc="---"}}Next{{/msg}}
     </button>
 {/template}
@@ -545,7 +555,7 @@
  * Previous button in information dialogs.
  */
 {template .previousButton private="true"}
-    <button class="secondary" onclick="Explanation.previousStatement()">
+    <button class="nobugs_button" onclick="Explanation.previousStatement()">
       {{msg meaning="Apps.dialogPrevious" desc="---"}}Previous{{/msg}}
     </button>
 {/template}
@@ -554,7 +564,7 @@
  * Finish button in information dialogs.
  */
 {template .finishButton private="true"}
-    <button class="secondary" onclick="Explanation.finishStatement()">
+    <button class="nobugs_button" onclick="Explanation.finishStatement()">
       {{msg meaning="Apps.dialogOk" desc="---"}}OK{{/msg}}
     </button>
 {/template}
@@ -575,10 +585,10 @@
  */
 {template .buyButton private="true"}
 	<div class="farSide" >
-	    <button class="secondary" id="BuyMachine" onclick="Game.buyMachineButtonClick()" disabled="disabled">
+	    <button class="nobugs_button" id="BuyMachine" onclick="Game.buyMachineButtonClick()" disabled="disabled">
 	      {{msg meaning="NoBugs.buy" desc="---"}}Buy{{/msg}}
 	    </button>
-	    <button class="secondary" onclick="BlocklyApps.hideDialog(false)">
+	    <button class="nobugs_button" onclick="BlocklyApps.hideDialog(false)">
 	      {{msg meaning="Apps.close" desc="---"}}Close{{/msg}}
 	    </button>
 	</div>

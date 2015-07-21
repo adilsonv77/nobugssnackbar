@@ -257,7 +257,7 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	public void finishMission(User user, long idMission, long idClazz,
-			int money, int timeSpend, long execution, boolean achieved,
+			int xp, int timeSpend, long execution, boolean achieved,
 			int typeRunning,
 			String answer) throws SQLException {
 
@@ -274,18 +274,18 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
+								+ "(timespend, achieved, xp, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
 				localTimeSpend = timeSpend;
 			} else {
 				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, money = ?, answer = ?, executions = ? "
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ? "
 								+ "where missionid = ? and classid = ? and  userid = ?");
 				localTimeSpend += timeSpend;
 			}
 
 			ps.setLong(1, localTimeSpend);
 			ps.setString(2, (achieved ? "T" : "F"));
-			ps.setInt(3, money);
+			ps.setInt(3, xp);
 			ps.setString(4, answer);
 			ps.setLong(5, execution);
 			ps.setLong(6, idMission);
@@ -313,8 +313,8 @@ public class GameJdbcDao implements GameDao {
 
 			if (achieved) {
 				ps = bdCon
-						.prepareStatement("update users set usermoney = ? where userid = ?");
-				ps.setLong(1, user.getMoney());
+						.prepareStatement("update users set userxp = ? where userid = ?");
+				ps.setLong(1, user.getXp());
 				ps.setLong(2, user.getId());
 				ps.executeUpdate();
 				ps.close();
@@ -367,7 +367,7 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, missionid, classid, userid, executions) values (0, 'F', 0, ?, ?, ?, 1)");
+								+ "(timespend, achieved, money, xp, missionid, classid, userid, executions) values (0, 'F', 0, 0, ?, ?, ?, 1)");
 			} else {
 				ps = bdCon
 						.prepareStatement("update missionsaccomplished set executions = executions + 1 "
@@ -1130,7 +1130,7 @@ public class GameJdbcDao implements GameDao {
 
 				String clazzes = classesId + "";
 
-				String query = "select userid, username, sum(money), sum(timespend), sum(executions), max(missionorder), showleaderboardafter from missionsaccomplished "
+				String query = "select userid, username, sum(xp), sum(timespend), sum(executions), max(missionorder), showleaderboardafter from missionsaccomplished "
 						+ "join classesmissions using (missionid, classid) "
 						+ "join classes using (classid) "
 						+ "join users using (userid) "

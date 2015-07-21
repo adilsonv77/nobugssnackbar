@@ -68,7 +68,7 @@
 	<customers>
 		<customer>
 			<id>01</id>
-			<init>door</init>
+			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
 				<order>
@@ -79,21 +79,6 @@
 				</order>
 			</orders>
 		</customer>
-		 
-		<customer>
-			<id>03</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
-			<orders>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
-		
 		 
 		<customer>
 			<id>02</id>
@@ -110,7 +95,7 @@
 		</customer>
 		
 	</customers>
-	<objectives ordered="true" reward="5" buttonDebug="false">
+	<objectives ordered="true" buttonDebug="false" xpIndividual="10" xpFinal="5" xpTotalTime="180"> 
 		<objective pos="1" place="counter">goesTo</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>

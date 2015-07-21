@@ -42,8 +42,8 @@ Game.mission = null;
 Game.pidList = [];
 
 
-Game.globalMoney = {};
-Game.missionMoney = {};
+Game.globalMoney;
+Game.globalXP;
 
 Game.lastErrorData;
 Game.jsInterpreter;
@@ -110,7 +110,6 @@ Game.generalInit = function() {
 Game.init = function() {
 	
 	Game.currTime = 0;
-	
 
     // if there is some event added in before execution, than remove it
     window.removeEventListener('resize',  Game.resizeMainWindow);
@@ -297,13 +296,7 @@ Game.logged = function() {
 	
 	AvatarEditor.init(); 
 
-	UserControl.retrieveReward(function(ret) {
-		  document.getElementById("yourXP").innerHTML = ret[0];
-		  document.getElementById("yourCash").innerHTML = ret[1];
-		  
-		  document.getElementById("yourXPInMission").innerHTML = ret[0];
-		  document.getElementById("yourCashInMission").innerHTML = ret[1];
-	});
+	UserControl.retrieveReward(Game.updatesReward);
 
 	$("#playerName").html(Game.loginData.userLogged.name);
 	$("#playerNameInMission").html(Game.loginData.userLogged.name);
@@ -347,6 +340,17 @@ Game.logged = function() {
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
+};
+
+Game.updatesReward = function(ret) {
+	  document.getElementById("yourXP").innerHTML = ret[0];
+	  document.getElementById("yourCash").innerHTML = ret[1];
+	  
+	  document.getElementById("yourXPInMission").innerHTML = ret[0];
+	  document.getElementById("yourCashInMission").innerHTML = ret[1];
+	  
+	  Game.globalXP = parseInt(ret[0]);
+	  Game.globalMoney = parseInt(ret[1]);
 };
 
 Game.cityClick = function() {
@@ -435,6 +439,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
+  CountXP.init();
   
   Game.imgDoor = PreloadImgs.get("doors");
   
@@ -442,6 +447,10 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   Game.lastErrorData.iderror = 0;
   Game.lastErrorData.message = "";
   Game.lastErrorData.block = null;
+  
+  var mid = BlocklyApps.getMsg("_mission") + " " + levelId + "/" + missionIdx;
+  $("#missionIdentification").html(mid.charAt(0).toUpperCase() + mid.slice(1));
+
   
   try {
 	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
@@ -488,19 +497,16 @@ Game.missionLoaded = function(ret){
   Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
   Game.openMission.time = mission.childNodes[0].getAttribute("timeLimit");
   
-  Game.globalMoney = new ProgressMoney(false, 298, 8);
-  Game.missionMoney = new ProgressMoney(true, 200, 8);
+  Game.globalMoney = 0;
+  Game.globalXP = 0;
 
   if (Game.openMission.open)
 	  Game.timeSpent = 0;
   else
-	  Game.timeSpent = ret[3];
+	  Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
   
-  UserControl.retrieveReward(function(ret) {
-	  //document.getElementById("yourXP").innerHTML = ret[0];
-	  Game.globalMoney.amount = parseInt(ret[1]);
-  });
+  UserControl.retrieveReward(Game.updatesReward);
   
   Game.slider.timesBefore = 0;
   
@@ -525,6 +531,8 @@ Game.missionLoaded = function(ret){
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(objectives, mission, Game.loginData.avatar);
+  CountXP.config( hero.objective.xpTotalTime/3, Game.timeSpent, hero.objective.xpIndividual, hero.objective.xpFinal );
+  
   Game.mission = mission;
 
   $("#vars").ingrid({height: 250, paging: false, sorting: false,
@@ -682,7 +690,7 @@ Game.continueSelectMachine = function() {
 	};
 	
 	var f4 = function(i, j, m) {
-		return Game.globalMoney.amount >= Game.machines[m-1].cust;
+		return Game.globalMoney >= Game.machines[m-1].cust;
 	};
 	
 	var sel = new Selector(data, 1, 180, null, null, null, f1, f2, f3, f4);
@@ -827,7 +835,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  }
 	  
 	  
-	  Game.addCronometro(Game.bonusTime , timeSpent );
+	  Game.addCronometro( Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
 	  
@@ -836,7 +844,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 
 	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
-	  BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
+	 // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
@@ -856,7 +864,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  }
   };
   
-  window.setTimeout(function(){loginLoaded(mission);}, 1000); 
+  window.setTimeout(function(){loginLoaded(mission);}, 1); // i believe that this was necessary to load all the images 
 	  
 	  
 }; 
@@ -973,7 +981,7 @@ Game.showDialogVictory = function(out) {
 	vicText.innerHTML = out;
 	
 	var style = {};
-	style.width = "60%";
+	style.width = "600px";
 
 	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, style, 
 			function(){
@@ -984,11 +992,13 @@ Game.showDialogVictory = function(out) {
 };
 
 Game.finishOpenMission = function() {
-	
+	/*
 	if (!Game.openMission.open) return;
 	
 	var r = Game.beforeFinishMission();
 	Game.runningStatus = 0;
+	
+	Game.missionMoney << nao existe mais !!!
 	
 	UserControl.saveMission(Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, 0, r.answer, function(){
 	
@@ -999,7 +1009,7 @@ Game.finishOpenMission = function() {
 		Game.showDialogVictory(out);
 		
 	});
-	
+	*/
 };
 
 Game.addCronometro = function(bonusTime, timeSpent) {
@@ -1029,6 +1039,7 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 
 Game.initTime = function() {
 	
+	CountXP.start();
 	Game.currTime = new Date().getTime();
 	Game.initCronometro();
 	Game.startSaveUserProgress();
@@ -1162,7 +1173,6 @@ Game.reset = function() {
   Game.stopAlertGoalButton();
   hero.reset();
   CustomerManager.reset();
-  Game.missionMoney.amount = 0;
 
   Game.display();
 
@@ -1241,7 +1251,7 @@ Game.emptyLines = function() {
 Game.goBackToDashboard = function(evt, callInit) {
 	Blockly.hideChaff();
     Blockly.WidgetDiv.hide();
-
+    
     var ret = Game.closeBlockEditorStuffs();
     
 	if (callInit !== false) {
@@ -1263,6 +1273,7 @@ Game.closeBlockEditorStuffs = function() {
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
+    CountXP.stop();
 	
 	Game.emptyLines();
 	
@@ -1686,22 +1697,24 @@ Game.nextStep = function() {
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
 			    	
+			    	CountXP.stop();
+			    	
 			    	var r = Game.beforeFinishMission();
 			    	
 			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
-			    	Game.globalMoney.amount = parseInt(Game.globalMoney.amount) + reward.total;
-			    	Game.display(); // updates the GlobalMoney
+			    	
+			    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney]);
 
-			    	UserControl.saveMission(reward.total, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
+			    	UserControl.saveMission(reward.totalXP, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
-			    		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-			    		var out = msg.format(reward.total + coin2)+ "<br/>";
+			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+			    		var out = msg.format(reward.totalXP + xp2)+ "<br/>";
 			    		
 			    		if (reward.base != reward.total) {
 			    			
-				    		var out2 =  "<table class='tableVictory' ><tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_BaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.base + "</td></tr>";
+				    		var out2 =  "<table class='tableVictory' ><tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_BaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
 				    		out2 = out2 + "<tr style='font-weight:bold'><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
 				    		for (var i=0; i < reward.bonus.length; i++) {
 				    			var b = BlocklyApps.getMsg(reward.bonus[i].name);
@@ -1731,7 +1744,7 @@ Game.nextStep = function() {
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
 
 		    		var style = {};
-		    		style.width = "60%";
+		    		style.width = "600px";
 
 			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
 			    			function() {
@@ -2115,11 +2128,11 @@ Game.showError = function(iderror) {
 	
 	UserControl.missionError(Game.howManyRuns, iderror[0], Blockly.selected.id, container.textContent);
 	
-    var style = {top: '120px'}; // };//{width: '370px', 
+    var style = {top: '120px', width: 'auto'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';
 	var origin = Blockly.mainWorkspace.topBlocks_[Blockly.mainWorkspace.topBlocks_.length-1].getSvgRoot();
 	
-	BlocklyApps.showDialog(content, origin, true, true, style, 
+	MyBlocklyApps.showDialog(content, origin, true, true, false, "", style, 
 			function() { 
 				Hints.startHintsEx(); 
 			});

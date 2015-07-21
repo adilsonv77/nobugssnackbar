@@ -187,7 +187,7 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void saveMission(int money, int timeSpend, long execution,
+	public void saveMission(int xp, int timeSpend, long execution,
 			boolean achieved, int typeRunning, String answer) throws Exception {
 
 		if (this.user == null)
@@ -197,9 +197,9 @@ public class UserControl {
 			log.info("saveMission " + timeSpend + " " + this.user.getId() + " "
 					+ this.mission + " " + this.classid);
 
-		this.user.setMoney(this.user.getMoney() + money);
+		this.user.setXp(this.user.getXp() + xp);
 
-		gameDao.finishMission(this.user, this.mission, this.classid, money,
+		gameDao.finishMission(this.user, this.mission, this.classid, xp,
 				timeSpend, execution, achieved, typeRunning, answer);
 
 		if (achieved) {
@@ -341,8 +341,14 @@ public class UserControl {
 	}
 
 	private List<Object[]> retrieveLeaderBoard() throws Exception {
-		return gameDao.retrieveLeaderBoard(this.user.getId(),
+		List<Object[]> ret = gameDao.retrieveLeaderBoard(this.user.getId(),
 				this.user.getClassesId());
+		
+		if (ret.size() == 0) {
+			ret.add(new Object[] {this.user.getId(), this.user.getName(), 0, 0, 0, 0});
+		}
+		
+		return ret;
 	}
 
 	@RemoteMethod

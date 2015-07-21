@@ -160,26 +160,15 @@ SnackMan = function(objectives, mission, avatar) {
 	
 	this.installedMachines = [];
 	this.extendedCommands = [];
-	/*
-	this.frenchFries = new Sprite({
-		ticksPerFrame: 0,
-		numberOfFrames: 2,
-		horzSeq: false,
-		x: 320,
-		y: 288,
-		width: 32,
-		height: 64,
-		sourceX: 0,
-		sourceY: 0,
-		img : PreloadImgs.get("frenchfries")
-	});
-	
-	*/
+
 	this.objective = {};
 	
 	this.objective.objectives = [];
 	this.objective.ordered = objectives.getAttribute("ordered") === "true";
-	this.objective.reward = parseInt( objectives.getAttribute("reward") );
+
+	this.objective.xpIndividual = parseInt(objectives.getAttribute("xpIndividual")); 
+	this.objective.xpFinal = parseInt(objectives.getAttribute("xpFinal"));
+	this.objective.xpTotalTime = parseInt(objectives.getAttribute("xpTotalTime"));
 	
 	var m = objectives.getAttribute("maxCommands");
 	this.objective.maxCommands = parseInt( (m == null?"0":m) ); 
@@ -1131,13 +1120,18 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 
 SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward) {
 	
-	var ret = {total: 0, base: 0, bonus : []};
+	var ret = {totalXP: 0, baseXP: 0, bonus : []};
 	if (this.allObjectivesAchieved) {
 		
-		ret.total = this.objective.reward;
-		ret.base = ret.total;
+		var times = 3 - CountXP.times;
+		if (times == 0)
+			ret.totalXP = this.objective.xpFinal;
+		else
+			ret.totalXP = this.objective.xpIndividual*times;
+		
+		ret.baseXP = ret.totalXP;
 		if (count <= this.objective.maxCommands) {
-			ret.total += this.objective.maxCommandsReward;
+			ret.totalXP += this.objective.maxCommandsReward;
 			
 			ret.bonus.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
 		} 
@@ -1159,8 +1153,8 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 				var minutes = Math.floor((timeSpent/60));
 				var seconds = timeSpent - (minutes*60);
 				
-				ret.bonus.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
-				ret.total += timeBonus;
+				ret.bonusXP.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
+				ret.totalXP += timeBonus;
 			}
 		}
 		

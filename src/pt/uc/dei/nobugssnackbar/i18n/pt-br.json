@@ -46,8 +46,8 @@
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
-	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. Tente novamente.",
-	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. N&#227;o existem mais miss&#245;es para si.", 
+	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
+	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. Neste instante, n&#227;o existem mais miss&#245;es para si.", 
 	"NoBugs.rewardExplanation" : "Receba %0 se cumprir todos os objetivos acima.",
 	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de %0 se cumprir a miss&#227;o com %1 comandos ou menos.",
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
@@ -151,7 +151,7 @@
 	
 	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias.",
 	
-	"Tooltip.TabMoney"      : "Jogadores ordenados pelo dinheiro ganho.",
+	"Tooltip.TabMoney"      : "Jogadores ordenados pela experi&#234;ncia (XP) ganha.",
 	"Tooltip.TabTime"       : "Jogadores ordenados pelo seu n&#237;vel e tempo gasto.",
 	"Tooltip.TabRun"        : "Jogadores ordenados pelo seu n&#237;vel e quantidade de execu&#231;&#245;es.",
 	
