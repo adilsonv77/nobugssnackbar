@@ -24,6 +24,7 @@ import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
 import pt.uc.dei.nobugssnackbar.util.HexImage;
 import pt.uc.dei.nobugssnackbar.util.SendMail;
+import sun.misc.BASE64Decoder;
 
 @RemoteProxy(scope = ScriptScope.SESSION)
 public class UserControl {
@@ -404,7 +405,18 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void saveAvatar(String[][] avatarConfig) throws Exception {
-		gameDao.saveAvatarParts(user.getId(), avatarConfig);
+	public void saveAvatar(String photo, String[][] avatarConfig) throws Exception {
+		
+		photo = photo.substring(photo.indexOf(",")+1);
+		
+		this.avatar.clear();
+		for (int i=0;i<avatarConfig.length;i++)
+			if (avatarConfig[i].length == 3)
+				this.avatar.add(new Object[]{avatarConfig[i][0], avatarConfig[i][1], avatarConfig[i][2] });
+			else
+				this.avatar.add(new Object[]{avatarConfig[i][0], avatarConfig[i][1], avatarConfig[i][2], avatarConfig[i][3] });
+		
+		gameDao.saveAvatarParts(user.getId(), avatarConfig, new BASE64Decoder().decodeBuffer(photo));
 	}
+	
 }

@@ -324,10 +324,7 @@ Game.logged = function() {
 	    
 	    CityMap.init({onclick: Game.cityClick});
 	    
-	    if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) 
-	    	createNoLeaderBoardInfo();
-	    else
-	    	createsLeaderBoard();
+	    Game.createsLeaderboard();
 	    
 	    CityMap.startAnimation();
 
@@ -341,6 +338,16 @@ Game.logged = function() {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
 };
+
+Game.createsLeaderboard = function() {
+	
+	if (Game.loginData.leaderBoard.length > 0 && Game.loginData.leaderBoard[0][0] == null) 
+		createNoLeaderBoardInfo();
+	else
+		createsLeaderBoard();
+	
+};
+
 
 Game.updatesReward = function(ret) {
 	  document.getElementById("yourXP").innerHTML = ret[0];

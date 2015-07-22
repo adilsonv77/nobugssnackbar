@@ -1322,12 +1322,20 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	@Override
-	public void saveAvatarParts(long userid, String[][] avatarConfig) throws Exception {
+	public void saveAvatarParts(long userid, String[][] avatarConfig, byte[] photo) throws Exception {
 		Connection bdCon = null;
 		
 		try {
 			bdCon = getConnection();
+			
+			PreparedStatement ps0 = bdCon.prepareStatement("update users set useravatarphoto = ? where userid = ?");
+			ps0.setBytes(1, photo);
+			ps0.setLong(2, userid);
+			ps0.execute();
+			ps0.close();
+			
 			Statement st = bdCon.createStatement();
+			
 			ResultSet rs = st.executeQuery("select avatarparttype from usersavatar where userid = " + userid);
 			String saveQuery;
 			if (rs.next()) {
@@ -1362,6 +1370,31 @@ public class GameJdbcDao implements GameDao {
 			
 		}
 		
+	}
+
+	@Override
+	public byte[] getUserPhoto(long userid) throws Exception {
+		Connection bdCon = null;
+		byte[] ret = null;
+		try {
+			bdCon = getConnection();
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select useravatarphoto from users where userid = "+userid);
+			rs.next();
+			ret = rs.getBytes(1);
+			rs.close();
+			st.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+			
+		}
+		return ret;
 	}
 
 }

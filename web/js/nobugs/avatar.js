@@ -626,7 +626,9 @@ AvatarEditor.okClick = function() {
 	
 	AvatarEditor.cancelClick();
 	
-	UserControl.saveAvatar(Game.loginData.avatar, Game.drawMiniAvatar);
+	Game.drawMiniAvatar();
+	
+	UserControl.saveAvatar(document.getElementById("avatarPlayer").toDataURL(), Game.loginData.avatar, Game.createsLeaderboard);
 };
 
 AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor, afterCloseFunc) {

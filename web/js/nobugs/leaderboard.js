@@ -27,7 +27,13 @@
 
 'use strict';
 
+var leaderBoardCreated = false;
+var version  = 0;
+
 function addTooltip() {
+	
+	if (leaderBoardCreated)
+		return;
 	
 	new Tooltip({
 		  target: document.getElementById("leaderpoints"),
@@ -67,7 +73,8 @@ function populateLBTables(table, data) {
 		  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
 		  
 		  tr.append($("<td>").html(contaRow));
-		  tr.append($("<td>").html("<img src='images/profile_blank.png'/>"));
+		  // the version i use to force the server give another photo
+		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + entry.id + "&v=" + version + "'/>"));
 		  tr.append($("<td>").html(entry.name + "<br/>" + entry.value));
 		 
 		  tBody.append(tr);
@@ -94,12 +101,13 @@ function goToLine(tabName, idrow) {
 	 
 }
 
-
 function highlightCurrentUser(idrow) {
     $(idrow).addClass('leaderboard-row-me');
 }  
 
 function createsLeaderBoard() {
+	
+	version++;
 	addTooltip();
 	
 	var lbData = Game.loginData.leaderBoard;
@@ -144,6 +152,15 @@ function createsLeaderBoard() {
 			return r;
 	});
 	
+    if (leaderBoardCreated) {
+    	
+    	$("#tabs-points").empty();
+    	$("#tabs-time").empty();
+    	$("#tabs-runs").empty();
+    	
+    }
+	
+
 	$("#tabs-points").append(populateLBTables("table_points", lbMoneyData));
 	$("#tabs-time").append(populateLBTables("table_time", lbTimeData));
 	$("#tabs-runs").append(populateLBTables("table_runs", lbRunData));
@@ -174,15 +191,26 @@ function createsLeaderBoard() {
 		.mCustomScrollbar({ theme:"nobug" });
 	
 	goToLine("#tabs-points", rowId);
+	
+	leaderBoardCreated = true;
 
 };
 
 function createNoLeaderBoardInfo() {
+	version++;
 	addTooltip();
 	
 	var data = [{id: 0, name: BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]), value: ""}];
 	
-	$("#tabs-points").append(populateLBTables("table_points", data));
+    if (leaderBoardCreated) {
+    	
+    	$("#tabs-points").empty();
+    	$("#tabs-time").empty();
+    	$("#tabs-runs").empty();
+    	
+    }
+
+    $("#tabs-points").append(populateLBTables("table_points", data));
 	$("#tabs-time").append(populateLBTables("table_time", data));
 	$("#tabs-runs").append(populateLBTables("table_runs", data));
 	
@@ -195,5 +223,7 @@ function createNoLeaderBoardInfo() {
 
 	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 		.mCustomScrollbar({ theme:"nobug" });
+	
+	leaderBoardCreated = true;
 	
 };
