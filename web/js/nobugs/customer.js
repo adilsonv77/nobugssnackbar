@@ -75,6 +75,7 @@ var Customer = {};
 
 Customer = function(options) {
 	
+	this.randomType = options.randomType;
 	this.hasRandom = options.hasRandom;
 	this.drinks = options.drinks;
 	this.dUnfulfilled = 0;
@@ -152,7 +153,25 @@ Customer = function(options) {
 	this.openMission = options.openMission;
 	this.idxPattern = options.idxPattern;
 	this.baloonLeft = options.baloonLeft;
+	
+	if (this.randomType != null)
+		this.randomizeFoodAndDrink();
 
+};
+
+Customer.prototype.randomizeFoodAndDrink = function() {
+
+	// implementation for randomType = "atLeastOne"
+
+	var which = (Math.floor(Math.random() * 100) % 3); // 0 - food, 1 - drink, 2 - both
+	switch (which) {
+	
+		case 0 : this.drinks = []; break;
+		case 1 : this.foods = []; break;
+		// otherwise, both stays in the order 
+	}
+	
+	
 };
 
 Customer.prototype.update = function() {

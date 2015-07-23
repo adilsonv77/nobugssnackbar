@@ -96,8 +96,13 @@ no m&#225;ximo 20 comandos.
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15" commQtd="20" >
+	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="900" commQtd="20" >
+		<objective pos="1" place="counter">askHasThirsty</objective>
+		<objective pos="1" place="counter" notExists="true">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>
+		
+		<objective pos="2" place="counter">askHasThirsty</objective>
+		<objective pos="2" place="counter" notExists="true">askHasHunger</objective>
 		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="13">

@@ -3,11 +3,9 @@
 	<explanation>
 		<page>
 		<![CDATA[
-			Parab&#233;ns !!! Agora est&#225;s noutro patamar. J&#225; consegues
-			perguntar ao cliente o que deseja comer e		
-			beber. Mas temos que ser mais delicados ao falar com os clientes. A
-			partir de agora vais perguntar		
-			se tem sede, para depois perguntar o que deseja beber.
+			J&#225; consegues perguntar ao cliente o que deseja comer e	beber. 
+			Mas temos que ser mais delicados ao falar com os clientes. A partir 
+			de agora vais perguntar se tem sede, para depois perguntar o que deseja beber.
 			]]>
 		</page>
 		
@@ -92,11 +90,6 @@
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
-			<foods>
-			</foods>
-			<drinks>
-				<drink qt="1" price="0">coke</drink>
-			</drinks>
 			<orders>
 				<order>
 					<foods>			
@@ -136,9 +129,14 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15">
+	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="420">
+		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter">deliver</objective>
+
+		<objective pos="2" place="counter">askHasThirsty</objective>
 		<objective pos="2" place="counter">deliver</objective>
+		
+		<objective pos="3" place="counter">askHasThirsty</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml>

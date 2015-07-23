@@ -99,6 +99,10 @@ Explanation.evaluateObjectives = function(statement, container) {
 		obj.className = "goal" + (os[i].achieved?"ok":"cancel");
 		
 		obj.innerHTML = Objective.factory(text).createExplanationItem(os[i]);
+		if (os[i].notExists === "true") {
+			obj.innerHTML = "<span style='color:red'>"+BlocklyApps.getMsg("explanation_mustNot")+": </span>" +
+									obj.innerHTML;	
+		}
 		
 		ul.appendChild(obj);
 	}
@@ -117,7 +121,7 @@ Explanation.evaluateObjectives = function(statement, container) {
 	
 	var msg = BlocklyApps.getMsg("rewardExplanation");
 	var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
-	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, hero.objective.xpTotalTime)+ "<br/>";
+	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, hero.objective.xpTotalTime/60)+ "<br/>";
 	
 	if (hero.objective.maxCommandsReward > 0) {
 

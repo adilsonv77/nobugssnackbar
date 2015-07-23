@@ -27,18 +27,27 @@ var Objective = {
 };
 
 Objective.init = function(elem, trata) {
-	return {objective:elem.childNodes[0].nodeValue, achieved:false, trata:trata};
+	return {objective:elem.childNodes[0].nodeValue, notExists:elem.getAttribute("notExists"),  achieved:false, trata:trata};
 };
 
 Objective.verifyObjectives = function(key, options) {
 	if ((hero.allObjectivesAchieved || (hero.objective.debug && Game.runningStatus != 2)))
 		return false;
 	
+	if (key === "notExists") {
+		Objective.notExists();
+		return;
+	}
+		
+	
 	var dest = Objective.factory(key);
 
 	var ret = false;
 	if (hero.objective.ordered) {
 		if (!hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective === key)
+			return false;
+		
+		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].notExists === "true")
 			return false;
 		
 		if (dest.checkObjective(options, hero.objective.objectives[hero.lastObjectiveAchieved + 1])) {
@@ -52,7 +61,8 @@ Objective.verifyObjectives = function(key, options) {
 		for (var i = 0; i < hero.objective.objectives.length; i++) {
 			if (hero.objective.objectives[i].objective === key && !hero.objective.objectives[i].achieved) {
 				
-				if (dest.checkObjective(options, hero.objective.objectives[i])) {
+				if (hero.objective.objectives[i].notExists == null && 
+						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
 					if (key === "deliver" && options.allCustomers) {
@@ -67,6 +77,15 @@ Objective.verifyObjectives = function(key, options) {
 	}
 
 	return ret;
+};
+
+Objective.notExists = function() {
+	
+	for (var i = 0; i < hero.objective.objectives.length; i++) {
+		if (hero.objective.objectives[i].notExists === "true")
+			Objective.markAchieved(hero.objective.objectives[i]);
+			
+	}
 };
 
 Objective.markAchieved = function(objective) {
@@ -98,14 +117,22 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.PickUpFood();
 		break;
 
+	case "askHasHunger":
+		this.factories[key] = new Objective.AskSomething("explanation_askHasHunger");
+		break;
+		
 	case "askForDrink":
-		this.factories[key] = new Objective.AskForDrink();
+		this.factories[key] = new Objective.AskSomething("explanation_askForDrink");
 		break;
 
 	case "pickUpDrink": 
 		this.factories[key] = new Objective.PickUpDrink();
 		break;
 	
+	case "askHasThirsty":
+		this.factories[key] = new Objective.AskSomething("explanation_askHasThirsty");
+		break;
+
 	case "deliver": 
 		this.factories[key] = new Objective.Deliver();
 		break;
@@ -270,6 +297,21 @@ Objective.PickUpDrink.prototype.askSomething = function(cust) {
 };
 
 /******************************************************************************
+ *                                AskSomething
+ ******************************************************************************/
+
+Objective.AskSomething = function(keyExplanation) {
+	Objective.AskForFood.call(this);
+	this.keyExplanation = keyExplanation;
+};
+
+inherits(Objective.AskForFood, Objective.AskSomething);
+
+Objective.AskSomething.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos(this.keyExplanation, objective);
+};
+
+/******************************************************************************
  *                                AskForDrink
  ******************************************************************************/
 
@@ -282,6 +324,21 @@ inherits(Objective.AskForFood, Objective.AskForDrink);
 Objective.AskForDrink.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_askForDrink", objective);
 };
+
+/******************************************************************************
+ *                                AskHasThisty
+ ******************************************************************************/
+
+Objective.AskHasThirsty = function() {
+	Objective.AskForFood.call(this);
+};
+
+inherits(Objective.AskForFood, Objective.AskHasThirsty);
+
+Objective.AskHasThirsty.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_askHasThirsty", objective);
+};
+
 
 /******************************************************************************
  *                                 Deliver

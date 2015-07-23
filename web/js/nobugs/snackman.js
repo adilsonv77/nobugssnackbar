@@ -406,6 +406,7 @@ SnackMan.prototype.hasThirsty = function() {
 	}
 	
 	this.update('IM', 0);  // turn to front
+	this.verifyObjectives("askHasThirsty", found);
 
 	return found.hasThirsty();
 	
@@ -442,6 +443,7 @@ SnackMan.prototype.hasHunger = function() {
 	}
 	
 	this.update('IM', 0);  // turn to front
+	this.verifyObjectives("askHasHunger", found);
 	
 	return found.hasHunger();
 	

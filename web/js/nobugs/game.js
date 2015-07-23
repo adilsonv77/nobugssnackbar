@@ -11,7 +11,7 @@
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "ASnext IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -1451,7 +1451,7 @@ Game.execute = function(debug) {
 	  // Reset the graphic.
 	  Game.reset();
 
-	  Game.runningStatus = debug;
+	  Game.runningStatus = debug; // let here because the registration of the status in save mission
 	  
 	  try {
 		  
@@ -1509,6 +1509,8 @@ Game.execute = function(debug) {
 	  };
   }
 
+  Game.runningStatus = debug; // let here because we can change from debug to run
+  
   Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
 };
 
@@ -1700,6 +1702,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("deliver", {allCustomers:true});
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
+			    hero.verifyObjectives("notExists", null);
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
@@ -1771,7 +1774,7 @@ Game.nextStep = function() {
 					}
 					UserControl.missionFail(Game.howManyRuns, objs);
 
-				    
+					Game.doResizeWindow("none");				    
 			    	
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");

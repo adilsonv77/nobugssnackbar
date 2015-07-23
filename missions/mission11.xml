@@ -3,8 +3,6 @@
 	<explanation>
 		<page>
 		<![CDATA[
-		Est&#225;s prestes a vencer o primeiro n&#237;vel. Mais esta miss&#227;o e j&#225; te posso chamar Atendedor Aprendido ;) <br/>
-        <br/>
         As vari&#225;veis n&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido 
         podes depois colocar o produto que retirastes do mostrador ou do refrigerador. Essas vari&#225;veis podem ser 
         reaproveitadas. Mas lembra-te: quando se coloca um novo valor numa vari&#225;vel, perde-se o anterior. 
@@ -13,8 +11,9 @@
 		
 		<page>
 		<![CDATA[
-		O &#250;ltimo desafio antes de se completar o n&#237;vel Aprendiz de Atendedor: os tr&#234;s clientes t&#234;m fome e sede.
-		Atende todos os clientes com apenas duas vari&#225;veis. Ganhas $30 extra se resolves o problema em cinco minutos.
+		Neste desafio os tr&#234;s clientes t&#234;m fome e sede. Se resolveres dentro de 6 minutos, ganhas ainda no m&#237;nimo 30 <img style='vertical-align: middle;' src="images/coin2.png"/>.<br/>
+		<br/>
+		<span style="color:red">Atende todos os clientes com apenas duas vari&#225;veis.</span> 
 		]]>
 		</page>
 
@@ -95,7 +94,7 @@
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" bonusTime="300" bonusTimeReward="50 40 30" varQtd="2">
+	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="720" bonusTime="360" bonusTimeReward="90 60 30" varQtd="2">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

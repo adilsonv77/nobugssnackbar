@@ -111,10 +111,11 @@ CustomerManager.reset = function() {
 			
 			for (var i = 0; i < orders.length; i++) {
 
+				var randomType = orders[i].getAttribute("randomType");
 				var _foods = orders[i].getElementsByTagName("foods")[0];
 				var _drinks = orders[i].getElementsByTagName("drinks")[0];
 				var foods = CustomerManager.extractItems("food", _foods);
-				var drinks =  CustomerManager.extractItems("drink", _drinks, _drinks.getAttribute("randomType"), foods.length);
+				var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length);
 			
 				var fRMin = _foods.getAttribute("randomMin");
 				fRMin = parseInt(fRMin == null?"0":fRMin);
@@ -123,7 +124,8 @@ CustomerManager.reset = function() {
 				dRMin = parseInt(dRMin == null?"0":dRMin);
 				
 			//	if (foods.length > 0 || drinks.length > 0)
-					custPattern.push({ hasRandom: (orders[i].getAttribute("randomType")!=null) || (fRMin > 0) || (dRMin > 0) ,
+					custPattern.push({ hasRandom: randomType != null || (fRMin > 0) || (dRMin > 0) , 
+						                   randomType: randomType,
 										   foods: foods, drinks: drinks});
 			}
 			
@@ -149,12 +151,18 @@ CustomerManager.transformSN = function() {
 		var custSelected = null;
 		for (var j=0; j<this.randomization.length; j++) {
 			
+			var randomQtd;
+			if (this.randomization[j].qtd === "random") {
+				randomQtd = Math.floor((Math.random() * (customers.length+1)));
+			} else
+				randomQtd = this.randomization[j].qtd;
+			
 			switch (this.randomization[j].set) {
 				case "new":
-					custSelected = this.selectCustomers(customers.length - this.randomization[j].qtd, []);
+					custSelected = this.selectCustomers(customers.length - randomQtd, []);
 					break;
 				case "notTheSame":
-					custSelected = this.selectCustomers(customers.length - this.randomization[j].qtd, custSelected);
+					custSelected = this.selectCustomers(customers.length - randomQtd, custSelected);
 					break;
 					
 			}
@@ -214,7 +222,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							init: initPlace, 
 							place: this.patterns[i].place, 
 							id: this.patterns[i].id, 
-							hasRandom: this.patterns[i].hasRandom, 
+							hasRandom: custPattern.hasRandom, 
+							randomType: custPattern.randomType,
 							foods: foods, drinks: drinks,
 							openMission: this.openMission, idxPattern: i,
 							baloonLeft: customers.length % 2 == 0}));
@@ -244,7 +253,7 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 	
 };
 
-CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
+CustomerManager.extractItems = function(key, list, foodsLen) {
 	
 	var randomMin = list.getAttribute("randomMin");
 	randomMin = parseInt(randomMin == null?"0":randomMin);
@@ -264,7 +273,7 @@ CustomerManager.extractItems = function(key, list, randomType, foodsLen) {
 		
 		var howMany = Math.floor((Math.random() * ((randomMax-randomMin)+1))) + randomMin;
 		
-		if (foodsLen == 0 && howMany == 0 && randomType === "atLeastOne")
+		if (foodsLen == 0 && howMany == 0)
 			howMany = 1;
 		
 		if (differentFromPrevious) {

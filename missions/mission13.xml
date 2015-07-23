@@ -34,27 +34,27 @@
 	</commands>
 	<cooker>initial</cooker>
 	<customers>
-		<customer randomType="atLeastOne">
+		<customer>
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
-				<order>
-					<foods randomMin="0" randomMax="1">
+				<order randomType="atLeastOne">
+					<foods>
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
 					</drinks>
 				</order>
 			</orders>			
 		</customer>
-		<customer randomType="atLeastOne">
+		<customer>
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<orders>
-				<order>
+				<order randomType="atLeastOne">
 					<foods randomMin="0" randomMax="1">
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
@@ -65,8 +65,13 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15">
+	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="360" >
+		<objective pos="1" place="counter">askHasThirsty</objective>
+		<objective pos="1" place="counter">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>
+		
+		<objective pos="2" place="counter">askHasThirsty</objective>
+		<objective pos="2" place="counter">askHasHunger</objective>
 		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="12">
