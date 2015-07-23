@@ -68,7 +68,6 @@ public class UserPhoto extends HttpServlet {
 			out.write(photo);
 			out.close();
 			
-			System.out.println("userphoto?U="+user);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

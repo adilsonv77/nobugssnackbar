@@ -48,7 +48,7 @@
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
 	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. Neste instante, n&#227;o existem mais miss&#245;es para si.", 
-	"NoBugs.rewardExplanation" : "Receba %0 se cumprir todos os objetivos acima.",
+	"NoBugs.rewardExplanation" : "Receba %0 para cada %1 habilitada ao cumprir todos os objetivos acima. \nn Receba %2 caso n&#227;o resolver a miss&#227;o em at&#233; %3 segundos.",
 	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de %0 se cumprir a miss&#227;o com %1 comandos ou menos.",
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
 	
@@ -122,6 +122,7 @@
 	"Single.Equipments" : "Equipamentos",
 	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o %0.",
 	"Single.SelectMission" : "Clique num quadro para selecionar a miss&#227;o.",
+	"Single.Total" : "Total",
 	
 	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente %0 deseja comer.",
@@ -155,8 +156,9 @@
 	"Tooltip.TabTime"       : "Jogadores ordenados pelo seu n&#237;vel e tempo gasto.",
 	"Tooltip.TabRun"        : "Jogadores ordenados pelo seu n&#237;vel e quantidade de execu&#231;&#245;es.",
 	
-	
-	"Victory.BaseValue"     : "Valor base", 
+	"NoBugs.goalAchievedVictoryWithCoins" : "E tamb&#233;m ganhou %0.",
+	"Victory.XPBaseValue"   : "Valor base XP",
+	"Victory.CoinsBaseValue": "Valor base em moedas",  
 	"Victory.Bonus"         : "B&#244;nus", 
 	"Victory.MaxCommands"   : "Para o m&#225;ximo de comandos",
 	"Victory.TimeBonus"     : "Para o seu tempo de %0",

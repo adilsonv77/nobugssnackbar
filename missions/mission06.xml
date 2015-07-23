@@ -4,7 +4,7 @@
 	<explanation>
 		<page>
 		<![CDATA[
-		Agora j&#225; te expliquei todas as a&#231;&#245;es que podes fazer na esplanada, vou dar-te um
+		Agora j&#225; te expliquei todas as a&#231;&#245;es que podes fazer na cozinha, vou dar-te um
 		desafio para verificar se aprendesses tudo correctamente.<br/>
 	    <br/>
         Ter&#225;s dois clientes com fome e precisas de atender os dois. V&#225;... Despacha-te... Utiliza 
@@ -91,7 +91,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7">
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="300">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>

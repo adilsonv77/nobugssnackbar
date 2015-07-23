@@ -202,7 +202,7 @@ table.tableVictory  {
 }
 
 table.tableVictory td  {
- border: 1px solid rgb(182, 182, 182);
+ border: none;
  padding: 5px;	
 }
 

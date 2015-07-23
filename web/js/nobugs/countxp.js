@@ -23,6 +23,8 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal) {
 	
 	if (CountXP.times < 3)
 		$("#xpPoints").html("X " + pointsPerStar);
+	
+	CountXP.draw();
 };
 	
 CountXP.start = function() {
@@ -32,11 +34,27 @@ CountXP.start = function() {
 };
 
 CountXP.stop = function() {
+	
 	clearInterval(CountXP.handler);
+	
 };
 
 CountXP.tick = function() {
+	
+	CountXP.draw();
+	
+	CountXP.current++;
+	if (CountXP.current > CountXP.umaFracao) {
+		CountXP.times++;
+		CountXP.changeImgs();
 
+		CountXP.current = 0;
+	}
+	
+};
+
+CountXP.draw = function() {
+	
 	var ctx = CountXP.ctx;
 	
 	ctx.clearRect(0, 0, 32, 32);
@@ -55,15 +73,7 @@ CountXP.tick = function() {
 	ctx.lineWidth = 10;
 	ctx.strokeStyle = '#ad2323';	
 	ctx.stroke();
-	
-	CountXP.current++;
-	if (CountXP.current > CountXP.umaFracao) {
-		CountXP.times++;
-		CountXP.changeImgs();
 
-		CountXP.current = 0;
-	}
-	
 };
 
 CountXP.changeImgs = function() {

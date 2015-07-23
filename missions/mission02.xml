@@ -61,7 +61,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="true" reward="5" buttonRun="false" variableWindow="false">
+	<objectives ordered="true" buttonRun="false" variableWindow="false"  xpIndividual="10" xpFinal="5" xpTotalTime="60">
 		<objective pos="1" place="counter">goesTo</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>
@@ -76,7 +76,7 @@
 				<block type="move_goToBarCounter">
 					<value name="VALUE">
 						<block type="math_number">
-							<field name="NUM">4</field>
+							<field name="NUM">3</field>
 						</block>
 					</value>
 				</block>

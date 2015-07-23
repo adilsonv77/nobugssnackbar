@@ -79,10 +79,8 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	
 	Explanation.evaluateObjectives(nrPage, container);
 	
-	var style = [];
-
 	MyBlocklyApps.showDialog(content, null,
-							 false, true, true, Game.missionTitle, style, afterclosed);
+							 false, true, true, Game.missionTitle, {width: "800px"}, afterclosed);
 	
 };
 
@@ -118,8 +116,8 @@ Explanation.evaluateObjectives = function(statement, container) {
 	container.appendChild(table);
 	
 	var msg = BlocklyApps.getMsg("rewardExplanation");
-	var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-	var out = msg.format(hero.objective.reward + coin2)+ "<br/>";
+	var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, hero.objective.xpTotalTime)+ "<br/>";
 	
 	if (hero.objective.maxCommandsReward > 0) {
 
@@ -130,9 +128,10 @@ Explanation.evaluateObjectives = function(statement, container) {
 	
 	if (Game.bonusTime != null) {
 		
+		var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
 		msg = BlocklyApps.getMsg("timeBonusExplanation");
 		var a = Game.bonusTimeReward.split(" ");
-		out = out + msg.format(a[a.length-1]+coin2, Game.bonusTime/60);
+		out = out + msg.format(a[a.length-1]+coin3, Game.bonusTime/60);
 		
 	}
 	div.innerHTML = out;

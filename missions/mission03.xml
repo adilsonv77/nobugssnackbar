@@ -13,7 +13,7 @@
 		<page>
 		<![CDATA[
 		A tua miss&#227;o &#233; ir at&#233; ao cliente na posi&#231;&#227;o 1 e perguntar e anotar o
-		que ele deseja e depois ir ao cliente na posi&#231;&#227;o 4. Ainda vais usar o 
+		que ele deseja e depois ir ao cliente na posi&#231;&#227;o 3. Ainda vais usar o 
 		bot&#227;o de depurar e, agora, observa uma lista de vari&#225;veis que v&#227;o ser
 		disponibilizadas para observares o que est&#225; nelas armazenado. <br/>
 		 <br/>
@@ -78,7 +78,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="5" buttonRun="false">
+	<objectives ordered="false" buttonRun="false"  xpIndividual="10" xpFinal="5" xpTotalTime="120">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>

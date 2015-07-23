@@ -279,27 +279,6 @@
   {call apps.storageDialog /}
   {call hints.dialogs /}
   
-   <div id="dialogIntro" class="dialogHiddenContent">
-    <table>
-	    <tr>
-		    <td align="center">
-		      <img src="images/info.png" style="margin: 10px"/>
-		    </td>
-		    <td>
-		    <span id="userCompleteName"></span><br/><br/>
-		    {msg meaning="NoBugs.intro1" desc="--"}TODO{/msg}<br/>
-		    <br/>
-		    <span id="NoBugsIntro2"></span><br/>
-		    </td>
-	    </tr>
-    </table>
-    <div class="farSide" style="padding: 1ex 3ex 0">
-	    <button class="secondary" onclick="Game.finishIntro()">
-	      {{msg meaning="Apps.dialogOk" desc="IBID"}}OK{{/msg}}
-	    </button>
-	</div>
-  </div> 
-  
   <div id="dialogError" class="dialogHiddenContent">
     <table>
 	    <tr>
@@ -317,7 +296,7 @@
     <table>
 	    <tr>
 		    <td align="center">
-		      <img src="images/info.png" style="margin: 10px"/>
+		      <img src="images/teacher_info.png" style="margin: 10px; height: 257px"/>
 		    </td>
 		    <td id="dialogInfoText"></td>
 	    </tr>

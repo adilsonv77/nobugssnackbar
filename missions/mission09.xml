@@ -1,13 +1,6 @@
 <?xml version='1.0'?>
 <mission>
 	<explanation>
-		<page>
-		<![CDATA[
-		Uau... Poderemos fazer muito dinheiro com a tua efici&#234;ncia. A partir de agora 
-		receber&#225;s sempre mais dinheiro se conseguires resolver as miss&#245;es com um limite
-		de comandos de que te vou informar sempre.
-		]]>
-		</page>
 		
 		<page>
 		<![CDATA[
@@ -15,7 +8,9 @@
 		cliente o que ele deseja comer e beber. <br/>
 		<br/>
 		Essa &#233; a tua miss&#227;o atual: pergunta ao cliente o que ele deseja comer e beber, e serve-o. 
-		N&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.
+		N&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.<br/>
+		<br/>
+		Nessa miss&#227;o podes ganhar XP extras se resolver dentro de uma quantidade de comandos.
 		]]>
 		</page>
 
@@ -23,7 +18,9 @@
 	
 	<hints>
 		<sequence>
-			<hint category="TestBlock" time="0" condition="Hints.typeActiveBlock() == 'ask_askForDrink' &amp;&amp; Hints.countInstructions() == 1">
+		    <hint category="SliderEx" time="0" condition="Hints.showedHint() == false &amp;&amp; Hints.howManyRuns() == 0"/>
+		    
+			<hint category="TestBlock" time="1000" condition="Hints.typeActiveBlock() == 'ask_askForDrink' &amp;&amp; Hints.countInstructions() == 1">
 			<![CDATA[
 			Temos aqui tr&#234;s novos comandos: [askForDrink] para perguntar ao cliente o que ele deseja beber, [pickUpDrink] para retirar um produto 
 			quando estiver em frente ao refrigerador e [goToCooler] para instruir o cozinheiro andar at&#233; o refrigerador. 
@@ -59,8 +56,8 @@
 	<customers>
 		<customer>
 			<id>01</id>
-			<init>counter3</init>
-			<dest>counter3</dest>
+			<init>counter2</init>
+			<dest>counter2</dest>
 			<orders>
 				<order>
 					<foods>
@@ -73,14 +70,14 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" maxCommands="10" maxCommandsReward="15" >
-		<objective pos="3" place="counter">askForFood</objective>
-		<objective pos="3" place="counter">pickUpFood</objective>
-		<objective pos="3" place="counter">deliver</objective>
+	<objectives ordered="false" maxCommands="12" maxCommandsReward="15"  xpIndividual="10" xpFinal="5" xpTotalTime="300">
+		<objective pos="2" place="counter">askForFood</objective>
+		<objective pos="2" place="counter">pickUpFood</objective>
+		<objective pos="2" place="counter">deliver</objective>
 		
-		<objective pos="3" place="counter">askForDrink</objective>
-		<objective pos="3" place="counter">pickUpDrink</objective>
-		<objective pos="3" place="counter">deliver</objective>
+		<objective pos="2" place="counter">askForDrink</objective>
+		<objective pos="2" place="counter">pickUpDrink</objective>
+		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
 	<xml>
 		<block type="ask_askForDrink" x="300" y="1"></block>

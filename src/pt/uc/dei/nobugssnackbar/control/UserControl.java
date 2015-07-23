@@ -110,7 +110,7 @@ public class UserControl {
 
 		log.info("logoff " + timeSpend);
 		if (this.mission != 0)
-			gameDao.finishMission(this.user, this.mission, this.classid, 0,
+			gameDao.finishMission(this.user, this.mission, this.classid, 0, 0,
 					timeSpend, execution, false, -1, answer);
 
 		this.user = null;
@@ -188,7 +188,7 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void saveMission(int xp, int timeSpend, long execution,
+	public void saveMission(int xp, int money, int timeSpend, long execution,
 			boolean achieved, int typeRunning, String answer) throws Exception {
 
 		if (this.user == null)
@@ -199,8 +199,9 @@ public class UserControl {
 					+ this.mission + " " + this.classid);
 
 		this.user.setXp(this.user.getXp() + xp);
+		this.user.setMoney(this.user.getMoney() + money);
 
-		gameDao.finishMission(this.user, this.mission, this.classid, xp,
+		gameDao.finishMission(this.user, this.mission, this.classid, xp, money,
 				timeSpend, execution, achieved, typeRunning, answer);
 
 		if (achieved) {
@@ -217,7 +218,7 @@ public class UserControl {
 	@RemoteMethod
 	public void exitMission(int timeSpend, long execution, int typeRunning, String answer) throws Exception {
 		
-		saveMission(0, timeSpend, execution, false, typeRunning, answer);
+		saveMission(0, 0, timeSpend, execution, false, typeRunning, answer);
 		
 		this.classid = 0;
 		this.levelid = 0;

@@ -483,7 +483,7 @@ Game.saveMission = function() {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer,
+	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer,
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -1007,7 +1007,7 @@ Game.finishOpenMission = function() {
 	
 	Game.missionMoney << nao existe mais !!!
 	
-	UserControl.saveMission(Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, 0, r.answer, function(){
+	UserControl.saveMission(XP, Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, 0, r.answer, function(){
 	
 		var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
 		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
@@ -1711,25 +1711,51 @@ Game.nextStep = function() {
 			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 			    	
-			    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney]);
+			    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
 
-			    	UserControl.saveMission(reward.totalXP, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
+			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
 			    		var out = msg.format(reward.totalXP + xp2)+ "<br/>";
 			    		
-			    		if (reward.base != reward.total) {
+			    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
 			    			
-				    		var out2 =  "<table class='tableVictory' ><tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_BaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
-				    		out2 = out2 + "<tr style='font-weight:bold'><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
-				    		for (var i=0; i < reward.bonus.length; i++) {
-				    			var b = BlocklyApps.getMsg(reward.bonus[i].name);
-				    			var s = b.format(reward.bonus[i].extraInfo);
-				    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonus[i].value + "</td></tr>";   
-				    		}
-				    		out = out + out2 + "</table>";
+				    		var out2;
 				    		
+				    		if (reward.baseXP != reward.totalXP) {
+				    			
+				    			out2 = "<table border='2px'  class='tableVictory' >";
+					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_XPBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
+					    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+					    		for (var i=0; i < reward.bonusXP.length; i++) {
+					    			var b = BlocklyApps.getMsg(reward.bonusXP[i].name);
+					    			var s = b.format(reward.bonusXP[i].extraInfo);
+					    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusXP[i].value + "</td></tr>";   
+					    		}
+
+					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalXP + "</td></tr>";
+					    		out = out + out2 + "</table>";
+				    		}
+
+				    		if (reward.bonusCoins != reward.totalCoins) {
+
+				    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
+				    					                       "<img style='vertical-align: middle;' src='images/coin2.png'/>") + "<br/>";
+				    			
+				    			out2 = out2 + "<table border='2px' class='tableVictory' >";
+				    			
+					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_CoinsBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseCoins + "</td></tr>";
+					    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+					    		for (var i=0; i < reward.bonusCoins.length; i++) {
+					    			var b = BlocklyApps.getMsg(reward.bonusCoins[i].name);
+					    			var s = b.format(reward.bonusCoins[i].extraInfo);
+					    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusCoins[i].value + "</td></tr>";   
+					    		}
+					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalCoins + "</td></tr>";
+					    		out = out + out2 + "</table>";
+				    		}
+
 			    		}
 			    		
 			    		Game.showDialogVictory(out);
@@ -1808,7 +1834,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer);
+			UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer);
 
 			Game.currTime = now;
 		});
@@ -2141,7 +2167,8 @@ Game.showError = function(iderror) {
 	
 	MyBlocklyApps.showDialog(content, origin, true, true, false, "", style, 
 			function() { 
-				Hints.startHintsEx(); 
+				Hints.startHintsEx();
+				Hints.showErrorHint(); 
 			});
 
 };

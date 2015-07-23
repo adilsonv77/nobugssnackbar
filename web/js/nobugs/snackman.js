@@ -786,9 +786,10 @@ SnackMan.prototype.animate = function(command, values) {
 	  		
 	  	case 'IO' :
 	  		var value = values.shift();
+	  		/*
 	  		if (value != null)
 	  			Game.missionMoney.amount += value;
-	  		
+	  		*/
 	  		value = values.shift();
 	  		if (value == 0)
 	  			this.changeImageOriginal();
@@ -1120,7 +1121,7 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 
 SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward) {
 	
-	var ret = {totalXP: 0, baseXP: 0, bonus : []};
+	var ret = {totalXP: 0, baseXP: 0, totalCoins:0, baseCoins: 0, bonusXP : [], bonusCoins: []};
 	if (this.allObjectivesAchieved) {
 		
 		var times = 3 - CountXP.times;
@@ -1133,7 +1134,7 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 		if (count <= this.objective.maxCommands) {
 			ret.totalXP += this.objective.maxCommandsReward;
 			
-			ret.bonus.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
+			ret.bonusXP.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
 		} 
 		
 		if (timeLimit != null && timeSpent <= timeLimit) {
@@ -1153,8 +1154,8 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 				var minutes = Math.floor((timeSpent/60));
 				var seconds = timeSpent - (minutes*60);
 				
-				ret.bonusXP.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
-				ret.totalXP += timeBonus;
+				ret.bonusCoins.push({name: "Victory_TimeBonus", value: timeBonus, extraInfo: (minutes > 0 ? minutes + "'":"") + seconds + "\""});
+				ret.totalCoins += timeBonus;
 			}
 		}
 		

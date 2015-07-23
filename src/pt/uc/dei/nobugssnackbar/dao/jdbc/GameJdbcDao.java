@@ -257,7 +257,7 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	public void finishMission(User user, long idMission, long idClazz,
-			int xp, int timeSpend, long execution, boolean achieved,
+			int xp, int money, int timeSpend, long execution, boolean achieved,
 			int typeRunning,
 			String answer) throws SQLException {
 
@@ -274,11 +274,11 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, xp, answer, executions, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?)");
+								+ "(timespend, achieved, xp, answer, executions, money, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				localTimeSpend = timeSpend;
 			} else {
 				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ? "
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ?, money = ? "
 								+ "where missionid = ? and classid = ? and  userid = ?");
 				localTimeSpend += timeSpend;
 			}
@@ -288,9 +288,10 @@ public class GameJdbcDao implements GameDao {
 			ps.setInt(3, xp);
 			ps.setString(4, answer);
 			ps.setLong(5, execution);
-			ps.setLong(6, idMission);
-			ps.setLong(7, idClazz);
-			ps.setLong(8, user.getId());
+			ps.setInt(6, money);
+			ps.setLong(7, idMission);
+			ps.setLong(8, idClazz);
+			ps.setLong(9, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
@@ -313,9 +314,10 @@ public class GameJdbcDao implements GameDao {
 
 			if (achieved) {
 				ps = bdCon
-						.prepareStatement("update users set userxp = ? where userid = ?");
+						.prepareStatement("update users set userxp = ?, usermoney = ? where userid = ?");
 				ps.setLong(1, user.getXp());
-				ps.setLong(2, user.getId());
+				ps.setLong(2, user.getMoney());
+				ps.setLong(3, user.getId());
 				ps.executeUpdate();
 				ps.close();
 			}

@@ -226,7 +226,7 @@ Hints.traverseHints = function(hint, error) {
 
 Hints.showErrorHint = function() {
 	
-	var countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 	
 	Hints.dealError = true;
 	Hints.hintSelected = null;
@@ -1070,5 +1070,20 @@ Hints.Categories["Slider"] = {
 		naturalCondition:
 			"Game.howManyRuns >= Game.slider.timesBefore && Game.slider.svg.style.visibility == 'hidden'"
 			
+	};
+
+Hints.Categories["SliderEx"] = {
+		
+		show:
+				function (param) {
+					Game.slider.svg.style.visibility = "visible";
+
+					if (Hints.hintSelected.content == null)
+						Hints.hintSelected.content = document.getElementById("NoBugs_slider").innerHTML;
+					
+					var bbBox = BlocklyApps.getBBox_(document.getElementById("divslider"));
+					createDownDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
+				}
+
 	};
 

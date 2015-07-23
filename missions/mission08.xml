@@ -8,11 +8,11 @@
 		com mais efic&#225;cia, pois assim no futuro pr&#243;ximo poder&#225;s atender mais clientes em 
 		menos tempo ?<br/>
 		<br/>
-		Resolve o mesmo problema, agora usando no m&#225;ximo 11 comandos.
+		Resolve o mesmo problema, agora usando no <span style="color:red"> m&#225;ximo 11 comandos </span>.
 		<br/><br/>
 		Dicas: 
-		<br/>1) uma vez em frente ao mostrador podes pegar comida de mais de um pedido;
-		<br/>2) n&#227;o &#233; obrigat&#243;riog executar os passos conforme a sequ&#234;ncia abaixo.
+		<br/>1) uma vez em frente ao mostrador podes pegar comida de mais de um pedido, desde que anostastes em distintas vari&#225;veis;
+		<br/>2) n&#227;o &#233; obrigat&#243;rio executar os passos conforme a sequ&#234;ncia abaixo.
 		]]>  
 		</page>
 
@@ -90,7 +90,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="7" commQtd="11"  >
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="360" commQtd="11">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>
