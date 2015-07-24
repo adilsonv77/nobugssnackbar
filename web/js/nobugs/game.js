@@ -84,6 +84,14 @@ Game.generalInit = function() {
 	  
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 
+	  Game.tracks = [];
+	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"], false);
+	  Game.tracks[1] = new PlayAudio(["music/bensound-energy.mp3"], false);
+	  Game.tracks[2] = new PlayAudio(["music/di-evantile_savage-law.mp3"], false);
+	  
+	  Game.tracks[3] = new PlayAudio(["music/Carefree.mp3", "music/Wallpaper.mp3", "music/bensound-cute.mp3"], false);
+	  Game.tracks[3].shuffle();
+	  
       PreloadImgs.loadImgs(function() {
     	  
           // It's draw so early because it appears fast after load the mission 
@@ -538,7 +546,9 @@ Game.missionLoaded = function(ret){
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(objectives, mission, Game.loginData.avatar);
-  CountXP.config( hero.objective.xpTotalTime/3, Game.timeSpent, hero.objective.xpIndividual, hero.objective.xpFinal );
+  CountXP.config( hero.objective.xpTotalTime/3, Game.timeSpent,
+		  		    hero.objective.xpIndividual, hero.objective.xpFinal,
+		  		    Game.changeStars );
   
   Game.mission = mission;
 
@@ -554,6 +564,13 @@ Game.missionLoaded = function(ret){
 
   
   Game.installMachines(toolbox);
+};
+
+Game.changeStars = function(starNumber) {
+	 if (starNumber > 0)
+		 Game.tracks[starNumber-1].stop();
+	 
+	 Game.tracks[starNumber].play();
 };
 
 Game.afterInstallMachines = function() {
@@ -1256,6 +1273,8 @@ Game.emptyLines = function() {
 Game.goBackToDashboard = function(evt, callInit) {
 	Blockly.hideChaff();
     Blockly.WidgetDiv.hide();
+    
+    Game.tracks[CountXP.times].stop();
     
     var ret = Game.closeBlockEditorStuffs();
     

@@ -11,7 +11,9 @@ CountXP.init = function() {
 	
 };
 
-CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal) {
+CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars) {
+	CountXP.eventChangeStars = eventChangeStars;
+	
 	CountXP.umaFracao = umaFracao;
 	CountXP.current = current % umaFracao;
 	CountXP.times = Math.floor(current / umaFracao);
@@ -21,10 +23,10 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal) {
 	
 	CountXP.changeImgs();
 	
-	if (CountXP.times < 3)
+	if (CountXP.times < 3) {
 		$("#xpPoints").html("X " + pointsPerStar);
-	
-	CountXP.draw();
+		CountXP.draw();
+	}
 };
 	
 CountXP.start = function() {
@@ -34,6 +36,8 @@ CountXP.start = function() {
 };
 
 CountXP.stop = function() {
+	
+	CountXP.ctx.clearRect(0, 0, 32, 32);
 	
 	clearInterval(CountXP.handler);
 	
@@ -46,6 +50,7 @@ CountXP.tick = function() {
 	CountXP.current++;
 	if (CountXP.current > CountXP.umaFracao) {
 		CountXP.times++;
+		
 		CountXP.changeImgs();
 
 		CountXP.current = 0;
@@ -81,6 +86,9 @@ CountXP.changeImgs = function() {
 		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(CountXP.times >= (x+1)?"xp_disabled.png":"xp.png") + ")";
 	}
 	
+	if (CountXP.eventChangeStars)
+		CountXP.eventChangeStars(CountXP.times);
+
 	if (CountXP.times >= 3) {
 		
 		CountXP.ctx.clearRect(0, 0, 32, 32);

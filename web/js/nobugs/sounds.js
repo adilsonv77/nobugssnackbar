@@ -45,10 +45,29 @@
  */
 
 /**
- * "Your Call" Kevin MacLeod (incompetech.com) 
- * Licensed under Creative Commons: By Attribution 3.0
- * http://creativecommons.org/licenses/by/3.0/
+ * "bensound-buddy" Royalty Free Music from Bensound
+ * Licensed under Creative Commons License
+ * http://www.bensound.com
  */
+
+/**
+ * "bensound-cute" Royalty Free Music from Bensound
+ * Licensed under Creative Commons License
+ * http://www.bensound.com
+ */
+
+/**
+ * "bensound-energy" Royalty Free Music from Bensound
+ * Licensed under Creative Commons License
+ * http://www.bensound.com
+ */
+
+/**
+ * "savage-law" Music by Di Evantile
+ * Royalty free
+ * http://www.dievantile.com
+ */
+
 
 var noBugsAudio = document.createElement("audio");
 
@@ -61,8 +80,6 @@ var PlayAudio = function(filenames, autoplay) {
 	noBugsAudio.pause();
 	this.playing = autoplay;
 	
-	noBugsAudio.addEventListener('ended', this.playNext);
-
 };
 
 PlayAudio.prototype.playNext = function() {
@@ -71,15 +88,30 @@ PlayAudio.prototype.playNext = function() {
 
 	noBugsAudio.src = this.files[this.index];
 	this.index += 1;
+	noBugsAudio.play();
+};
+
+PlayAudio.prototype.shuffle = function() {
+	
+    for (var i = this.files.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = this.files[i];
+        this.files[i] = this.files[j];
+        this.files[j] = temp;
+    }
 };
 
 PlayAudio.prototype.play = function() {
-	if (!this.playing)
+	
+	noBugsAudio.addEventListener('ended', this.playNext.bind(this));
+
+	if (!this.playing) 
 	  this.playNext();
 	noBugsAudio.play();
 };
 
 PlayAudio.prototype.stop = function() {
+	this.clear();
 	noBugsAudio.pause();
 };
 
