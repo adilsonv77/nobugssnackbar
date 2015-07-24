@@ -90,7 +90,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="360" commQtd="11">
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600" commQtd="11">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>

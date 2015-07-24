@@ -70,7 +70,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" maxCommands="12" maxCommandsReward="15"  xpIndividual="10" xpFinal="5" xpTotalTime="300">
+	<objectives ordered="false" maxCommands="12" maxCommandsReward="15"  xpIndividual="10" xpFinal="5" xpTotalTime="600">
 		<objective pos="2" place="counter">askForFood</objective>
 		<objective pos="2" place="counter">pickUpFood</objective>
 		<objective pos="2" place="counter">deliver</objective>

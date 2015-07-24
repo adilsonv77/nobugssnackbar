@@ -61,7 +61,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="true" buttonRun="false" variableWindow="false"  xpIndividual="10" xpFinal="5" xpTotalTime="60">
+	<objectives ordered="true" buttonRun="false" variableWindow="false"  xpIndividual="10" xpFinal="5" xpTotalTime="90">
 		<objective pos="1" place="counter">goesTo</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>

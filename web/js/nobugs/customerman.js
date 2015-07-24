@@ -114,8 +114,8 @@ CustomerManager.reset = function() {
 				var randomType = orders[i].getAttribute("randomType");
 				var _foods = orders[i].getElementsByTagName("foods")[0];
 				var _drinks = orders[i].getElementsByTagName("drinks")[0];
-				var foods = CustomerManager.extractItems("food", _foods);
-				var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length);
+				var foods = CustomerManager.extractItems("food", _foods, null, randomType);
+				var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length, randomType);
 			
 				var fRMin = _foods.getAttribute("randomMin");
 				fRMin = parseInt(fRMin == null?"0":fRMin);
@@ -253,14 +253,17 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 	
 };
 
-CustomerManager.extractItems = function(key, list, foodsLen) {
+CustomerManager.extractItems = function(key, list, foodsLen, randomType) {
 	
+	var isDrinkList = foodsLen != null;
+
 	var randomMin = list.getAttribute("randomMin");
-	randomMin = parseInt(randomMin == null?"0":randomMin);
+	randomMin = parseInt(randomMin == null?"-1":randomMin);
+	if (isDrinkList && randomType === "atLeastOne" && foodsLen == 0)
+		randomMin = 1;
 	
 	var differentFromPrevious = list.getAttribute("differentFromPrevious") === "true";
 	
-	var isDrinkList = foodsLen != undefined;
 	var children = list.getElementsByTagName(key);
 	
 	var selected = [];
@@ -268,7 +271,7 @@ CustomerManager.extractItems = function(key, list, foodsLen) {
 		selected[j] = j;
 	}
 	
-	if (randomMin > 0) {
+	if (randomMin > -1) {
 		var randomMax = parseInt(list.getAttribute("randomMax"));
 		
 		var howMany = Math.floor((Math.random() * ((randomMax-randomMin)+1))) + randomMin;

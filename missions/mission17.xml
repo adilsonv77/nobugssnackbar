@@ -3,9 +3,8 @@
 	<explanation>
 		<page>
 		<![CDATA[
-Agora os nossos clientes podem ter sede E tamb&#233;m podem ter fome. E, se t&#234;m sede, podem pedir
-refrigerante ou sumo.<br/><br/>
-<b>Tens a limita&#231;&#227;o de 36 comandos</b> e a possibilidade de receber um b&#244;nus de $30 se resolver em 6 minutos.<br/><br/>
+Agora os nossos clientes podem ter sede E tamb&#233;m podem ter fome. E, se t&#234;m sede, podem pedir refrigerante ou sumo.<br/><br/>
+<b>Tens a limita&#231;&#227;o de 36 comandos</b> e a possibilidade de receber um b&#244;nus de no m&#237;nimo 30 <img style='vertical-align: middle;' src="images/coin2.png"/> se resolver em 5 minutos.<br/><br/>
 Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.
 ]]>
 		</page>
@@ -76,8 +75,13 @@ Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="30" commQtd="36" bonusTime="360" bonusTimeReward="45 30" >
+	<objectives ordered="false" commQtd="36" bonusTime="300" bonusTimeReward="90 45 30"  xpIndividual="50" xpFinal="30" xpTotalTime="600">
+		<objective pos="1" place="counter">askHasThirsty</objective>
+		<objective pos="1" place="counter">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>
+
+		<objective pos="3" place="counter">askHasThirsty</objective>
+		<objective pos="3" place="counter">askHasHunger</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="16">

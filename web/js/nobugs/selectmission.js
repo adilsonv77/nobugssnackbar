@@ -3,6 +3,22 @@ var SelectMission = {};
 SelectMission.generateBoard = function(evt) {
 	
 	$("#selectMissionBoard").empty();
+	
+	var thereAreMissions = false;
+	
+	Game.loginData.missionHist.forEach(function(mission) {
+		
+		thereAreMissions = thereAreMissions || mission[2] != mission[3]; // qty of mission == qty of solved mission
+		
+	});
+	
+	if (!thereAreMissions) {
+		
+		MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, null, {width: "600px"}, null);
+		
+		return;
+	}
+	
 	var idRoot = SelectMission.missionsRetrieved(Game.loginData.missionHist);
 	
     $("#selectMissionBoard").append($("#" + idRoot));

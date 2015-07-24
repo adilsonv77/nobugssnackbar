@@ -153,10 +153,10 @@ Customer = function(options) {
 	this.openMission = options.openMission;
 	this.idxPattern = options.idxPattern;
 	this.baloonLeft = options.baloonLeft;
-	
-	if (this.randomType != null)
+	/*
+	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();
-
+	 */
 };
 
 Customer.prototype.randomizeFoodAndDrink = function() {

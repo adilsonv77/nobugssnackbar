@@ -566,6 +566,7 @@ Game.afterInstallMachines = function() {
       var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
+			  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission 
 			  Game.nextPartOfMissionLoaded(true, ret, mission, 0);
 		  });
 	  }
@@ -987,10 +988,7 @@ Game.showDialogVictory = function(out) {
 	var vicText = document.getElementById("victoyText");
 	vicText.innerHTML = out;
 	
-	var style = {};
-	style.width = "600px";
-
-	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, style, 
+	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, {width: "600px"}, 
 			function(){
 				Game.goBackToDashboard(null, false);		
 				Game.init();

@@ -78,7 +78,7 @@
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" buttonRun="false"  xpIndividual="10" xpFinal="5" xpTotalTime="120">
+	<objectives ordered="false" buttonRun="false"  xpIndividual="10" xpFinal="5" xpTotalTime="240">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>

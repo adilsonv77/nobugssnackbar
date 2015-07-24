@@ -3,12 +3,10 @@
 	<explanation>
 		<page>
 		<![CDATA[
-Ufaaaa... Est&#225; a dar trabalho, n&#227;o ? Mas est&#225;s a ficar cada vez melhor a atender
-clientes. Tanto que sinto que tens condi&#231;&#245;es de n&#227;o s&#243; anotar e entregar, mas 
+Ufaaaa... Est&#225; a dar trabalho, n&#227;o ? Mas est&#225;s a ficar cada vez melhor a atender clientes. Tanto que sinto que tens condi&#231;&#245;es de n&#227;o s&#243; anotar e entregar, mas 
 tamb&#233;m de come&#231;ar a preparar algumas coisas.<br/>
 <br/>
-Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja.
-Vou-te ensinar os truques de atender e preparar os sumos.
+Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja. Vou-te ensinar os truques de atender e preparar os sumos.
 ]]>
 		</page>
 		
@@ -16,15 +14,12 @@ Vou-te ensinar os truques de atender e preparar os sumos.
 		<![CDATA[
 O cliente ter&#225; sempre sede. Logo, nesta miss&#227;o nem precisas de perguntar. 
 Come&#231;a por perguntar o que deseja beber. Em seguida, se o pedido foi um 
-refrigerante (softDrink) vai at&#233; ao refrigerador e desempenha a tarefa como sempre
-fizeste. Sen&#227;o, vais &#224; caixa de laranjas, retira as laranjas, de acordo com o pedido,
+refrigerante (softDrink) vai at&#233; ao refrigerador e desempenha a tarefa como sempre fizeste. Sen&#227;o, vais &#224; caixa de laranjas, retira as laranjas, de acordo com o pedido,
 e leva-as at&#233; &#224; m&#225;quina. Prepara o sumo e tr&#225;-lo de volta ao cliente.<br/>
 <br/>
-Chegaram dois clientes. Vai l&#225; praticar esta tarefa. Resolve primeiro um cliente,
-outro simplesmente reaproveitas. Essa &#233; mais uma miss&#227;o em que ganhas b&#244;nus
-por tempo: 3 minutos para ganhar $30.<br/>
+Chegaram dois clientes. Vai l&#225; praticar esta tarefa. Resolve primeiro um cliente, outro simplesmente reaproveitas. Essa &#233; mais uma miss&#227;o em que ganhas b&#244;nus por tempo: 4 minutos para ganhar no m&#237;nimo 30 <img style='vertical-align: middle;' src="images/coin2.png"/>.<br/>
 <br/>
-Deixei parte do que te ensinei pronto na &#225;rea de trabalho. 
+Deixei parte do que te ensinei pronto na &#225;rea de trabalho para atender o primeiro cliente. N&#227;o conseguir&#225;s nem excluir e nem copiar esses blocos.
 ]]>
 		</page>
 
@@ -92,92 +87,92 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho.
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="15" bonusTime="180" bonusTimeReward="45 30">
+	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="480" bonusTime="240" bonusTimeReward="90 45 30">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
 	<xml xmlns="http://www.w3.org/1999/xhtml">
-		<block type="variables_set" id="3" inline="true" x="300" y="1">
+		<block type="variables_set" id="3" inline="true" x="300" y="1" deletable = "false">
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
-				<block type="ask_askForDrink" id="4"></block>
+				<block type="ask_askForDrink" id="4" deletable = "false"></block>
 			</value>
 		</block>
-		<block type="variables_set" id="14" inline="true" x="300" y="50">
+		<block type="variables_set" id="14" inline="true" x="300" y="50" deletable = "false">
 			<field name="VAR">frutas</field>
 			<value name="VALUE">
-				<block type="prepare_pickUpFruits" id="15" inline="false">
+				<block type="prepare_pickUpFruits" id="15" inline="false" deletable = "false">
 					<value name="VALUE">
-						<block type="variables_get" id="16">
+						<block type="variables_get" id="16" deletable = "false">
 							<field name="VAR">pedido</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
-		<block type="variables_set" id="18" inline="true" x="300" y="100">
+		<block type="variables_set" id="18" inline="true" x="300" y="100" deletable = "false">
 			<field name="VAR">bebida</field>
 			<value name="VALUE">
-				<block type="prepare_prepareAndPickUpJuice" id="19" inline="false">
+				<block type="prepare_prepareAndPickUpJuice" id="19" inline="false" deletable = "false">
 					<value name="VALUE">
-						<block type="variables_get" id="20">
+						<block type="variables_get" id="20" deletable = "false">
 							<field name="VAR">frutas</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
-		<block type="variables_set" id="10" inline="true" x="300" y="150">
+		<block type="variables_set" id="10" inline="true" x="300" y="150" deletable = "false">
 			<field name="VAR">bebida</field>
 			<value name="VALUE">
-				<block type="prepare_pickUpDrink" id="11" inline="false">
+				<block type="prepare_pickUpDrink" id="11" inline="false" deletable = "false">
 					<value name="VALUE">
-						<block type="variables_get" id="12">
+						<block type="variables_get" id="12" deletable = "false">
 							<field name="VAR">pedido</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
-		<block type="do_deliver" id="23" inline="false" x="300" y="200">
+		<block type="do_deliver" id="23" inline="false" x="300" y="200" deletable = "false">
 			<value name="VALUE">
-				<block type="variables_get" id="24">
+				<block type="variables_get" id="24" deletable = "false">
 					<field name="VAR">bebida</field>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToCooler" id="9" x="300" y="250">
+		<block type="move_goToCooler" id="9" x="300" y="250" deletable = "false">
 		</block>
-		<block type="move_goToBoxOfFruits" id="13" x="300" y="300">
+		<block type="move_goToBoxOfFruits" id="13" x="300" y="300" deletable = "false">
 		</block>
-		<block type="move_goToJuiceMachine" id="17" x="300" y="350">
+		<block type="move_goToJuiceMachine" id="17" x="300" y="350" deletable = "false">
 		</block>
-		<block type="move_goToBarCounter" id="1" x="300" inline="false" y="400">
+		<block type="move_goToBarCounter" id="1" x="300" inline="false" y="400" deletable = "false">
 			<value name="VALUE">
-				<block type="math_number" id="2">
+				<block type="math_number" id="2" deletable = "false">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToBarCounter" id="21" x="300" inline="false" y="450">
+		<block type="move_goToBarCounter" id="21" x="300" inline="false" y="450" deletable = "false">
 			<value name="VALUE">
-				<block type="math_number" id="22">
+				<block type="math_number" id="22" deletable = "false">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>
-		<block type="controls_if" id="5" inline="false" x="300" y="500">
+		<block type="controls_if" id="5" inline="false" x="300" y="500" deletable = "false">
 			<mutation else="1"></mutation>
 			<value name="IF0">
-				<block type="logic_compare" id="6" inline="true">
+				<block type="logic_compare" id="6" inline="true" deletable = "false">
 					<field name="OP">EQ</field>
 					<value name="A">
-						<block type="variables_get" id="7">
+						<block type="variables_get" id="7" deletable = "false">
 							<field name="VAR">pedido</field>
 						</block>
 					</value>
 					<value name="B">
-						<block type="const_softDrink" id="8"></block>
+						<block type="const_softDrink" id="8" deletable = "false"></block>
 					</value>
 				</block>
 			</value>

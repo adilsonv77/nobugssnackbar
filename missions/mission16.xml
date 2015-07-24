@@ -76,7 +76,7 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" reward="20" maxCommands="30" maxCommandsReward="20">
+	<objectives ordered="false" maxCommands="30" maxCommandsReward="20" xpIndividual="50" xpFinal="30" xpTotalTime="720">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>

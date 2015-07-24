@@ -40,10 +40,10 @@
 			<dest>counter1</dest>
 			<orders>
 				<order randomType="atLeastOne">
-					<foods>
+					<foods randomMin="0" randomMax="1">
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
-					<drinks>
+					<drinks randomMin="0" randomMax="1">
 						<drink qt="1" price="0">coke</drink>
 					</drinks>
 				</order>
@@ -65,7 +65,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="360" >
+	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="480" >
 		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>
