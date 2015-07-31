@@ -11,7 +11,7 @@ Questionnaire.createForm = function (questionnaire) {
 	var form = document.createElement("form");
 	var div = document.createElement("div");
 
-	div.style["width"] = "800px";
+//	div.style["width"] = "800px";
 	div.style["height"] = "480px";
 	div.style["overflow"] = "scroll";
 	div.id = "questions";

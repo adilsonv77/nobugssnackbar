@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
+import pt.uc.dei.nobugssnackbar.model.Test;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 public interface GameDao {
@@ -71,5 +72,7 @@ public interface GameDao {
 	void saveAvatarParts(long userid, String[][] avatarConfig, byte[] photo) throws Exception;
 
 	byte[] getUserPhoto(long userid) throws Exception;
+
+	Test loadTests(User user, Object[][] missions) throws Exception;
 
 }

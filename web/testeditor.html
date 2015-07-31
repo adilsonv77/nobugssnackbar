@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <meta HTTP-EQUIV="Expires" CONTENT="-1">
+  <title>NoBug's Snack Bar</title>
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/fav-icon.ico">
+  
+  <script src="js/_soy/soyutils.js"></script>
+  <script src="js/commons/common.js"></script>
+  <script src="js/nobugs.js"></script>
+</head>
+		<body>
+			<script type="text/javascript">
+	    		document.write(editor.start({}, null,
+	        		{lang: BlocklyApps.LANG,
+	         		langSrc: BlocklyApps.languagePack()}));
+	    		
+	    		var script = document.createElement('script');
+	    		script.src = "js/tests/robomazelanguage.js"; // URL do seu script aqui
+	    		document.body.appendChild(script);
+	    		
+	    		script.onload = function() {
+	    			
+		    		 var toolbox = nobugspage.toolbox(null, null, 
+		    				  {enabled: {
+		 				  		 "loop": true, 
+						  		   "for": true,
+						  		   "whileUntil": true,
+						  		   
+						  		 "logic": true, "math": true, "vars": true, "function": true, 
+								 "robomaze_andar": true}}); 
+		    		  
+		    			var s = '<category name="robo"> <block type="cons_preto"/> <block type="cons_amarelo"/> <block type="robomaze_andar"/>  <block type="robomaze_retornar"/> <block type="robomaze_qtdadeitens"/> <block type="robomaze_corcelula"/> <block type="robomaze_largaritem"/> <block type="robomaze_viraresquerda"/> <block type="robomaze_virardireita"/>';
+		    			s = s + '</category></xml>';
+		    			
+		    		toolbox = toolbox.replace('</xml>', s);
+
+		    		Blockly.myToolBox = toolbox;
+		    		
+		    		 /*
+		    		  EditorNoBug.blockly = document.getElementById('blockly');
+		    		  
+		    		  Blockly.inject(EditorNoBug.blockly,
+		    				     { media: "media/",
+		    				       rtl: false,
+		    				       toolbox: toolbox,
+		    				       trashcan: true,
+		    				       comments: false,
+		    				       scrollbars: true});
+*/
+	    		};
+	    		
+	  		</script>
+  		</body>
+</html>

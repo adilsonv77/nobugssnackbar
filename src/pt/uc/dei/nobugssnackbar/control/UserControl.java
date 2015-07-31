@@ -20,6 +20,7 @@ import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.model.Language;
 import pt.uc.dei.nobugssnackbar.model.Message;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
+import pt.uc.dei.nobugssnackbar.model.Test;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.servlets.HintImage;
 import pt.uc.dei.nobugssnackbar.util.HexImage;
@@ -418,6 +419,16 @@ public class UserControl {
 				this.avatar.add(new Object[]{avatarConfig[i][0], avatarConfig[i][1], avatarConfig[i][2], avatarConfig[i][3] });
 		
 		gameDao.saveAvatarParts(user.getId(), avatarConfig, new BASE64Decoder().decodeBuffer(photo));
+	}
+
+	@RemoteMethod
+	public Test loadTests() throws Exception {
+		return gameDao.loadTests(this.user, this.missions);
+	}
+	
+	@RemoteMethod
+	public void saveTestQuestion(int questionId, String answer) throws Exception {
+		
 	}
 	
 }
