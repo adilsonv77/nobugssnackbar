@@ -80,9 +80,12 @@ function convertImgHex(imgHex, fConvert) {
 
 	  var imgsHexId = [];
 	  var imgsHexH = [];
+	  var imgsHexStyle = [];
+	  
 	  for (var i=0; i<imgHex.length; i++) {
 		  imgsHexId.push(imgHex[i].getAttribute("id"));
 		  imgsHexH.push(imgHex[i].textContent);
+		  imgsHexStyle.push(imgHex[i].getAttribute("style"));
 	  }
 
 	  UserControl.existsImageKey(imgsHexId, {async:false, callback:function(b){
@@ -90,10 +93,12 @@ function convertImgHex(imgHex, fConvert) {
 		  for (var i=0; i<b.length; i++) {
 			  if (!b[i]) {
 
-				  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i]);
+				  UserControl.convertHexToImage(imgsHexId[i], imgsHexH[i], {async:false, callback:function(){}});
 			  }
-			  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\"/>";
-			  fConvert(imgsHexId[i], imgsHexH[i], imgOrig);
+			  var style = imgsHexStyle[i];
+			  style = (style!=null?' style="' + style + '"':"");
+			  var imgOrig = " <img src=\"hintimg?i=" + imgsHexId[i] + "\" "+style+"/>";
+			  fConvert(imgsHexId[i], imgsHexH[i], imgOrig, style);
 		  }
 
 	  }});
@@ -130,8 +135,8 @@ function changeImgHex(containerText) {
 	
 	containerText = copyText;
 		
-	convertImgHex(imgHexArr, function(hexId, hexHex, img) {
-		containerText = containerText.replace("<imghex id=\"" + hexId + "\">"+ hexHex +"</imghex>", img);
+	convertImgHex(imgHexArr, function(hexId, hexHex, img, compl) {
+		containerText = containerText.replace("<imghex id=\"" + hexId + "\"" + compl + ">"+ hexHex +"</imghex>", img);
 	});
 		
 	return containerText;

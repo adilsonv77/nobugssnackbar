@@ -2,17 +2,18 @@
 
 var CountXP = {};
 
-CountXP.init = function() {
+CountXP.init = function(canvasId) {
 	
 	if (CountXP.ctx != null)
 		CountXP.stop();
 	else
-		CountXP.ctx = document.getElementById("stopWatch").getContext("2d");
+		CountXP.ctx = document.getElementById(canvasId).getContext("2d");
 	
 };
 
-CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars) {
+CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars, showPoints) {
 	CountXP.eventChangeStars = eventChangeStars;
+	CountXP.showPoints = showPoints;
 	
 	CountXP.umaFracao = umaFracao;
 	CountXP.current = current % umaFracao;
@@ -23,7 +24,7 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventC
 	
 	CountXP.changeImgs();
 	
-	if (CountXP.times < 3) {
+	if ((CountXP.times < 3) && (CountXP.showPoints)) {
 		$("#xpPoints").html("X " + pointsPerStar);
 		CountXP.draw();
 	}
@@ -31,14 +32,19 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventC
 	
 CountXP.start = function() {
 	
-	if (CountXP.times < 3) 
+	if (CountXP.times < 3) {
+		CountXP.tick();
 		CountXP.handler = setInterval(CountXP.tick, 1000);
+	}
 };
 
 CountXP.stop = function() {
 	
-	CountXP.ctx.clearRect(0, 0, 32, 32);
-	
+	if (CountXP.ctx != null) {
+		
+		CountXP.ctx.clearRect(0, 0, 32, 32);
+		
+	}
 	clearInterval(CountXP.handler);
 	
 };
@@ -82,6 +88,11 @@ CountXP.draw = function() {
 };
 
 CountXP.changeImgs = function() {
+	if (!CountXP.showPoints) {
+		return;
+	}
+		
+	
 	for (var x = 0; x < 3; x++) {
 		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(CountXP.times >= (x+1)?"xp_disabled.png":"xp.png") + ")";
 	}

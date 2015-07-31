@@ -46,6 +46,8 @@
 			pt.uc.dei.nobugssnackbar.model.Questionnaire,
 			pt.uc.dei.nobugssnackbar.model.Question,
 			pt.uc.dei.nobugssnackbar.model.QuestionOption,
+			pt.uc.dei.nobugssnackbar.model.Test,
+			pt.uc.dei.nobugssnackbar.model.TestQuestion,
 			pt.uc.dei.nobugssnackbar.control.BartleType,
 			pt.uc.dei.nobugssnackbar.control.Image64,
 			pt.uc.dei.nobugssnackbar.control.QuestionnaireControl

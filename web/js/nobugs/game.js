@@ -276,6 +276,42 @@ Game.finishQuestionnaire = function() {
 };
 
 Game.continueLoginProcess = function() {
+	try {
+		UserControl.loadTests(function(t) {
+			if (t != null) {
+				
+				if (!Game.showTests(t))
+					Game.continueLoginProcessEx();
+				
+			} else {
+				Game.continueLoginProcessEx();
+			}
+			
+		});
+	} catch (ex) {
+		Game.init();
+	};
+	
+};
+
+Game.showTests = function(tests) {
+	
+	var formTest = Tests.createForm(tests);
+	if (formTest != null) {
+		
+		$("#contentTest").html("");
+		$("#contentTest").append(formTest);
+		
+		MyBlocklyApps.showDialog(document.getElementById("dialogTest"), null, false, true, true, 
+				"Teste", null, null);
+		
+	} 
+	
+	return formTest != null;
+	
+};
+
+Game.continueLoginProcessEx = function() {
 	if (Game.loginData.userLogged.lastTime == null) {
 		
 		IntroGame.start();
@@ -454,7 +490,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
-  CountXP.init();
+  CountXP.init("stopWatch");
   
   Game.imgDoor = PreloadImgs.get("doors");
   
@@ -548,7 +584,7 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(objectives, mission, Game.loginData.avatar);
   CountXP.config( hero.objective.xpTotalTime/3, Game.timeSpent,
 		  		    hero.objective.xpIndividual, hero.objective.xpFinal,
-		  		    Game.changeStars );
+		  		    Game.changeStars, true );
   
   Game.mission = mission;
 

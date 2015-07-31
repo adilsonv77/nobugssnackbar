@@ -21,6 +21,9 @@ import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.model.Question;
 import pt.uc.dei.nobugssnackbar.model.QuestionOption;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
+import pt.uc.dei.nobugssnackbar.model.Test;
+import pt.uc.dei.nobugssnackbar.model.TestQuestion;
+import pt.uc.dei.nobugssnackbar.model.TestQuestionAnswer;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 public class GameJdbcDao implements GameDao {
@@ -1396,6 +1399,103 @@ public class GameJdbcDao implements GameDao {
 				}
 			
 		}
+		return ret;
+	}
+
+	@Override
+	public Test loadTests(User user, Object[][] missions)
+			throws Exception {
+		Connection bdCon = null;
+		Test ret = null;
+		try {
+			bdCon = getConnection();
+			
+			String clazzes = user.getClassesId() + "";
+
+			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
+								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
+								"qt.testxpdiscountreward, qt.testxpdiscounttime, testfromfirstmission, testfromlastmission, testmissionid, testanswer, "+
+								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
+								"from questionsandtests qat join tests t using(testid)  "+
+									"join questionstest qt using (testquestionid) "+
+									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
+								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") "+
+								"order by testid, testquestionid, questionorder, testclassid, testmissionid ";
+			
+			PreparedStatement ps = bdCon.prepareStatement(query);
+			ps.setLong(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			long lastTestQuestionId = 0;
+			long lastTestId = 0;
+			Test t = null;
+			TestQuestion qt = null;
+			while (rs.next()) {
+				boolean addQuestion = true;
+				
+				if (lastTestId != rs.getLong(1)) {
+					
+					lastTestId = rs.getLong(1);
+					t = new Test();
+					t.setId(lastTestId);
+					t.setDescription(rs.getString(2));
+					t.setTimeRewardXP(rs.getInt(20));
+					t.setTimeXP(rs.getInt(21));
+					
+					ret = t;
+				} else {
+					if (lastTestQuestionId == rs.getLong(3)) {
+						// one is before and another after
+						addQuestion = false;
+
+					}
+				}
+				
+				if (addQuestion) {
+					lastTestQuestionId = rs.getLong(3);
+					
+					qt = new TestQuestion();
+					qt.setId(lastTestQuestionId);
+					qt.setDescription(rs.getString(4));
+					qt.setBlocks(rs.getString(5));
+					qt.setUpdateBlocks(rs.getBoolean(6));
+					qt.setQuestion(rs.getString(7));
+					qt.setTimeLimit(rs.getInt(8));
+					qt.setXpReward(rs.getInt(9));
+					qt.setXpRewardBlank(rs.getInt(10));
+					qt.setXpDiscountReward(rs.getInt(11));
+					qt.setXpDiscountTime(rs.getInt(12));
+					
+					qt.setAnswerType(rs.getString(19));
+					
+					qt.setLanguage(rs.getString(17));
+					qt.setToolbox(rs.getString(18));
+					
+					t.getQuestions().add(qt);
+					
+				}
+				
+				Long l = rs.getLong(15);
+				if (l != null) {
+					
+					TestQuestionAnswer tqa = new TestQuestionAnswer();
+					tqa.setMissionId(l);
+					tqa.setAnswer(rs.getString(16));
+					
+					qt.getAnswers().add(tqa);
+					
+				}
+				
+			}
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
 		return ret;
 	}
 

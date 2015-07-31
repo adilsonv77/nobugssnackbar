@@ -177,6 +177,7 @@
 			<arg line="${js.home}/intro.js" />
 			<arg line="${js.home}/sounds.js" />
 			<arg line="${js.home}/countxp.js" />
+			<arg line="${js.home}/tests.js" />
 			
 			<classpath>
 				<path refid="lib.base" />
@@ -224,6 +225,7 @@
 	    		<include name="index.html" />
 	    		<include name="error.html" />
 	    		<include name="quest.html" />
+	    		<include name="editor.html" />
 
 	    		<include name="jsp/**/*.*" />
 	        </fileset>

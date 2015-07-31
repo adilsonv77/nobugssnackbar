@@ -77,7 +77,10 @@ var PlayAudio = function(filenames, autoplay) {
 	this.index = 0;
 
 	noBugsAudio.autoplay = autoplay;
-	noBugsAudio.pause();
+	try {
+		noBugsAudio.pause();	
+	} catch (ex) {}
+	
 	this.playing = autoplay;
 	
 };
