@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.model.mission;
 
 import pt.uc.dei.nobugssnackbar.model.Function;
+import pt.uc.dei.nobugssnackbar.model.FunctionValue;
 
 
 public class Condition implements java.io.Serializable {
@@ -13,6 +14,7 @@ public class Condition implements java.io.Serializable {
 	private Function function;
 	private String value;
 	private String conditionString;
+	private FunctionValue parameter;
 	
 	
 	public Function getFunction() {
@@ -46,6 +48,13 @@ public class Condition implements java.io.Serializable {
 		this.logicalOperator = logicalOperator;
 	}
 	
+	public FunctionValue getParameter() {
+		return parameter;
+	}
+	public void setParameter(FunctionValue parameter) {
+		this.parameter = parameter;
+	}
+	
 	public String getConditionString() {
 	
 		if (logicalOperator != null && 
@@ -54,7 +63,26 @@ public class Condition implements java.io.Serializable {
 			conditionString = logicalOperator;
 		}
 		else {
-			conditionString = function.getName() + "() " + comparator + " " + value;
+			conditionString = "Hints." + function.getName() + "(";
+			if (parameter != null && parameter.isParam() != null && parameter.isParam()) {
+				conditionString += ("'" + parameter.getName() + "'");
+			}
+			conditionString += (") " + comparator);
+			
+			if (function != null && function.getReturnType() != null && 
+				(function.getReturnType().equalsIgnoreCase("string") ||
+				function.getReturnType().equalsIgnoreCase("blocktype") ||
+				function.getReturnType().equalsIgnoreCase("errorid"))) {
+				if (function.getReturnType().equalsIgnoreCase("errorid")) {
+					conditionString += (" 'Error." + value + "'");
+				}
+				else {
+					conditionString += (" '" + value + "'");
+				}
+			}
+			else {
+				conditionString += (" " + value);
+			}
 		}
 		
 		return conditionString;

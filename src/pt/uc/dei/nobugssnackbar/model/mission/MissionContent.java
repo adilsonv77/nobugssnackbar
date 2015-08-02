@@ -29,46 +29,45 @@ public class MissionContent implements Serializable {
 	/*private List<Hint> tipsHints = new ArrayList<>();
 	private List<Hint> errorsHints = new ArrayList<>();*/
 	
-	@XmlElement(name="hints",type=Hints.class)
-	private Hints hints = new Hints();
-
-	private List<Command> commands;
+    @XmlAttribute(name="timeLimit")
+    private Long timeLimit;
+    
+	@XmlAttribute(name="open")
+	private boolean repeatable;
 	
-	@XmlElementWrapper(name="commands")
-	@XmlElement(name="category",type=Command.class)
-	private List<Command> selectedCommands;
+	@XmlElement(name="slider",type=Slider.class)
+	private Slider slider = new Slider();
 	
 	@XmlElementWrapper(name="explanation")
 	@XmlElement(name="page",type=Page.class)
     private List<Page> pages = new ArrayList<>();
+	
+	@XmlElement(name="hints",type=Hints.class)
+	private Hints hints = new Hints();
+
+	private List<Command> commands;	
+	@XmlElementWrapper(name="commands")
+	@XmlElement(name="category",type=Command.class)
+	private List<Command> selectedCommands;
+	    
+    @XmlElement(name="cooker",type=Cook.class)
+	private Cook cook = new Cook();
     
 	@XmlElementWrapper(name="customersSN")
 	@XmlElement(name="randomization",type=Randomization.class)
     private List<Randomization> randList = new ArrayList<>();
-    
+	
 	@XmlElementWrapper(name="customers")
 	@XmlElement(name="customer",type=Customer.class)
     private List<Customer> customers = new ArrayList<>();
     
     @XmlElement(name="objectives")
     private Objectives objectives = new Objectives();
-
-    @XmlAttribute(name="timeLimit")
-    private Long timeLimit;
-    
-    @XmlElement(name="cooker",type=Cook.class)
-	private Cook cook = new Cook();
     
     @XmlElement(name="xml",type=XmlTag.class)
 	private XmlTag xmltag = new XmlTag();
 	
-	@XmlElement(name="slider",type=Slider.class)
-	private Slider slider = new Slider();
-	
 	private boolean selectedLoadBlocks = false;
-	
-	@XmlAttribute(name="open")
-	private boolean repeatable;
 
 	public MissionContent() {
 	}

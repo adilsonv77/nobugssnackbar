@@ -14,14 +14,17 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
+import pt.uc.dei.nobugssnackbar.dao.FunctionProviderValueDao;
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Function;
+import pt.uc.dei.nobugssnackbar.model.FunctionValue;
 import pt.uc.dei.nobugssnackbar.model.mission.Condition;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.ConditionConverter;
+import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderValueConverter;
 
 @ManagedBean(name = "condVC")
 @ViewScoped
-public class ConditionVC implements IConditionProvider, Serializable {
+public class ConditionVC implements IConditionProvider, IFunctionProviderValue, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,13 +35,20 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	private Condition condition;
 	private List<Condition> conditions;
 	private ConditionConverter converter;
-
+	private FunctionProviderValueConverter functionProviderValueConverter;
+	
 	private boolean showDlgExt;
 	
 	private List<String> comparators;
 	private List<String> boolValues;
-	private boolean boolFunction;
+	private boolean boolOrObjFunction;
+	private List<FunctionValue> allFunctionValues;
+	private List<FunctionValue> functionParams;
+	private List<FunctionValue> functionValues;
 
+	@ManagedProperty(value="#{factoryDao.functionProviderValueDao}")
+	private transient FunctionProviderValueDao functionProviderValueDao;
+	
 	@ManagedProperty(value="#{factoryDao.functionProviderDao}")
 	private transient FunctionProviderDao functionProviderDao;
 	
@@ -71,6 +81,9 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		converter = new ConditionConverter();
 		converter.setProvider(this);
 
+		functionProviderValueConverter = new FunctionProviderValueConverter();
+		functionProviderValueConverter.setProvider(this);
+		
 		hv = new HintView();
 		
 		comparators = new ArrayList<>();
@@ -87,6 +100,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	}
 
 	public void newOrEditCondList() throws Exception {
+		allFunctionValues = functionProviderValueDao.list(); /// NEW
+		
 		if (hv.getHint().getConditions() != null && hv.getHint().getConditions().size() > 0) {
 			conditions = hv.getHint().getConditions();
 			List<Function> functionsDB = functionProviderDao.list();
@@ -141,6 +156,35 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		}
 		else {
 			allowedFieldset = true;
+			List<FunctionValue> funcValues = new ArrayList<>();
+			List<FunctionValue> funcParams = new ArrayList<>();
+			
+			for (FunctionValue fv : getAllFunctionValues()) {
+				if (fv.getFuncProvId() == condition.getFunction().getId()) {
+					if (fv.isParam()) {
+						funcParams.add(fv);
+					}
+					else {
+						funcValues.add(fv);
+					}
+				}
+			}
+			if (funcParams.size() > 0) {
+				setFunctionParams(funcParams);
+			}
+			else {
+				setFunctionParams(null);
+			}
+			if (funcValues.size() > 0) {
+				setFunctionValues(funcValues);
+			}
+			else {
+				setFunctionValues(null);
+			}
+			boolean val = (condition.getFunction().getReturnType().toLowerCase().compareTo("boolean") == 0 || 
+					funcValues.size() > 0 || 
+					funcParams.size() > 0);
+			setBoolOrObjFunction(val);
 		}
 	}
 
@@ -155,6 +199,7 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			if (conditions.get(i).getId() == editConditionID) {
 				result.setId(conditions.get(i).getId());
 				result.setFunction(conditions.get(i).getFunction());
+				result.setParameter(conditions.get(i).getParameter());
 				result.setLogicalOperator(conditions.get(i)
 						.getLogicalOperator());
 				result.setComparator(conditions.get(i).getComparator());
@@ -208,6 +253,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 			}
 			condition = new Condition();
 			allowedFieldset = false;
+			functionParams = null;
+			functionValues = null;
 		}
 	}
 
@@ -279,7 +326,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				&& condition.getComparator() != null
 				&& !condition.getComparator().isEmpty()
 				&& condition.getValue() != null
-				&& !condition.getValue().isEmpty()) {
+				&& !condition.getValue().isEmpty()
+				&& ((functionParams != null && condition.getParameter() != null) || (functionParams == null))) {
 
 			switch (condition.getFunction().getReturnType()) {
 			case "int":
@@ -327,6 +375,8 @@ public class ConditionVC implements IConditionProvider, Serializable {
 				}
 				break;
 			case "String":
+			case "BlockType":
+			case "ErrorId":
 				return true;
 			}
 		} else {
@@ -395,10 +445,12 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public void setAllowedFieldset(boolean allowedFieldset) {
 		condition = new Condition();
 		this.allowedFieldset = allowedFieldset;
+		functionParams = null;
+		functionValues = null;
 	}
 
 	public List<String> getComparators() {
-		if (boolFunction == true) {
+		if (boolOrObjFunction == true) {
 			return comparators.subList(0, 2);
 		}
 		return comparators;
@@ -408,19 +460,29 @@ public class ConditionVC implements IConditionProvider, Serializable {
 		this.comparators = comparators;
 	}
 
-	public boolean isBoolFunction() {
-		return boolFunction;
+	public boolean isBoolOrObjFunction() {
+		return boolOrObjFunction;
 	}
 
-	public void setBoolFunction(boolean boolFunction) {
-		this.boolFunction = boolFunction;
+	public void setBoolOrObjFunction(boolean boolOrObjFunction) {
+		this.boolOrObjFunction = boolOrObjFunction;
 	}
 
-	public List<String> getBoolValues(String q) {
+	public List<String> getOriginalValues(String q) {
 		List<String> filtered = new ArrayList<>();
-		for (int i = 0; i < boolValues.size(); i++) {
-			if (boolValues.get(i).toLowerCase().startsWith(q.toLowerCase())) {
-				filtered.add(boolValues.get(i));
+		
+		if (functionValues != null) {
+			for (int i = 0; i < functionValues.size(); i++) {
+				if (functionValues.get(i).getName().toLowerCase().startsWith(q.toLowerCase())) {
+					filtered.add(functionValues.get(i).getName());
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < boolValues.size(); i++) {
+				if (boolValues.get(i).toLowerCase().startsWith(q.toLowerCase())) {
+					filtered.add(boolValues.get(i));
+				}
 			}
 		}
 		
@@ -430,4 +492,47 @@ public class ConditionVC implements IConditionProvider, Serializable {
 	public void setBoolValues(List<String> boolValues) {
 		this.boolValues = boolValues;
 	}
+	
+	public List<FunctionValue> getAllFunctionValues() {
+		return allFunctionValues;
+	}
+
+	public void setAllFunctionValues(List<FunctionValue> allFunctionValues) {
+		this.allFunctionValues = allFunctionValues;
+	}
+
+	public FunctionProviderValueDao getFunctionProviderValueDao() {
+		return functionProviderValueDao;
+	}
+
+	public void setFunctionProviderValueDao(
+			FunctionProviderValueDao functionProviderValueDao) {
+		this.functionProviderValueDao = functionProviderValueDao;
+	}
+
+	public List<FunctionValue> getFunctionParams() {
+		return functionParams;
+	}
+
+	public void setFunctionParams(List<FunctionValue> functionParams) {
+		this.functionParams = functionParams;
+	}
+
+	public FunctionProviderValueConverter getFunctionProviderValueConverter() {
+		return functionProviderValueConverter;
+	}
+
+	public void setFunctionProviderValueConverter(
+			FunctionProviderValueConverter functionProviderValueConverter) {
+		this.functionProviderValueConverter = functionProviderValueConverter;
+	}
+
+	public List<FunctionValue> getFunctionValues() {
+		return functionValues;
+	}
+
+	public void setFunctionValues(List<FunctionValue> functionValues) {
+		this.functionValues = functionValues;
+	}
+	
 }

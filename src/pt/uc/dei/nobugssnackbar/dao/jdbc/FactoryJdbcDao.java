@@ -4,6 +4,7 @@ import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
+import pt.uc.dei.nobugssnackbar.dao.FunctionProviderValueDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.dao.HintDao;
@@ -100,4 +101,13 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		return hintDao;
 	}
 	
+	private FunctionProviderValueDao functionProviderValueDao;
+
+	@Override
+	public FunctionProviderValueDao getFunctionProviderValueDao() {
+		if (functionProviderValueDao == null)
+			functionProviderValueDao = new FunctionProviderValueJdbcDao();
+		
+		return functionProviderValueDao;	
+	}
 }

@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
 import pt.uc.dei.nobugssnackbar.model.Function;
+import pt.uc.dei.nobugssnackbar.model.FunctionValue;
 import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.FunctionProviderConverter;
 
 @ManagedBean(name="funcVC")
@@ -78,10 +79,35 @@ public class FunctionVC implements IFunctionProvider, Serializable {
 			}
 		}
 		
+		List<FunctionValue> funcValues = new ArrayList<>();
+		List<FunctionValue> funcParams = new ArrayList<>();
+		
+		for (FunctionValue fv : cvc.getAllFunctionValues()) {
+			if (fv.getFuncProvId() == func.getId()) {
+				if (fv.isParam()) {
+					funcParams.add(fv);
+				}
+				else {
+					funcValues.add(fv);
+				}
+			}
+		}
+		if (funcParams.size() > 0) {
+			cvc.setFunctionParams(funcParams);
+		}
+		else {
+			cvc.setFunctionParams(null);
+		}
+		if (funcValues.size() > 0) {
+			cvc.setFunctionValues(funcValues);
+		}
+		else {
+			cvc.setFunctionValues(null);
+		}
 		cvc.getCondition().setFunction(func);
 		filterNameStr = "";
-		boolean val = func.getReturnType().toLowerCase().compareTo("boolean") == 0;
-		cvc.setBoolFunction(val);
+		boolean val = (func.getReturnType().toLowerCase().compareTo("boolean") == 0 || funcValues.size() > 0 || funcParams.size() > 0);
+		cvc.setBoolOrObjFunction(val);
 		cvc.hideFuncProv();
 		handleKeyUpEvent();
 	}

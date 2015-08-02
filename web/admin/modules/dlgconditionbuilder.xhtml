@@ -33,24 +33,30 @@
 						<h:outputText rendered="#{condVC.condition.function != null}" value="#{condVC.condition.function.name}()"/>
 					</p:panelGrid>
 					
+					<p:outputLabel for="paramsMenu" value="#{msg['parameter']}: "/>
+					<p:selectOneMenu id="paramsMenu" value="#{condVC.condition.parameter}" disabled="#{condVC.functionParams == null}" 
+						converter="#{condVC.functionProviderValueConverter}">
+						<f:selectItems value="#{condVC.functionParams}" var="funcParam" itemLabel="#{funcParam.name}" itemValue="#{funcParam}" />
+					</p:selectOneMenu>
+
 					<p:outputLabel for="comparatorMenu" value="#{msg['comparator']}: " />
 					<p:selectOneMenu id="comparatorMenu" value="#{condVC.condition.comparator}" disabled="#{condVC.allowedFieldset == false}">
 						<f:selectItems value="#{condVC.comparators}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="condValue" value="#{msg['value']}: " />
-					<p:autoComplete id="condValue" value="#{condVC.condition.value}" completeMethod="#{condVC.getBoolValues}" disabled="#{condVC.allowedFieldset == false}"/>
+					<p:autoComplete id="condValue" value="#{condVC.condition.value}" completeMethod="#{condVC.getOriginalValues}" disabled="#{condVC.allowedFieldset == false}"/>
 				</p:panelGrid>
 
 				<p:watermark for="condValue" value="#{msg['enterVal']}" />
-
+				
 				<p:panelGrid columns="2" style="maring-top: 10px; float: right;">
 					<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s" 
-						update=":formCondBuilder :growlMsgs" 
+						update=":formCondBuilder, :growlMsgs" 
 						actionListener="#{condVC.addCondition}"
 						disabled="#{condVC.allowedFieldset == false}"/>
 					<p:commandButton value="#{msg['cancel']}" icon="ui-icon-closethick" 
-						update=":formCondBuilder :growlMsgs" 
+						update=":formCondBuilder, :growlMsgs" 
 						actionListener="#{condVC.setAllowedFieldset(false)}"
 						disabled="#{condVC.allowedFieldset == false}"/>
 					</p:panelGrid>
@@ -62,7 +68,7 @@
 				<p:commandButton value="#{msg['add']} [OR]" update=":formCondBuilder" actionListener="#{condVC.addCondition(false)}" />
 			</p:panelGrid>
 			
-			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right">      		
+			<p:orderList id="coList" value="#{condVC.conditions}" var="c" itemValue="#{c}" converter="#{condVC.converter}" controlsLocation="right" styleClass="orderListFullWidth">      		
 				<p:column>
 					<h:outputText value="#{c.conditionString}" />
 					

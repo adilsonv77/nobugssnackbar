@@ -32,7 +32,13 @@ body {
 .ui-tabs-nav {
 	border-width: 0 !important;
 }
-  	
+
+.ui-orderlist .ui-widget-content {
+	display: inline-block !important;
+	width: 100% !important;
+}
+
+
 /*******************Start Explanation page css******************/
 .disable-scroll .ui-layout-unit-content {
  	overflow: hidden !important;
