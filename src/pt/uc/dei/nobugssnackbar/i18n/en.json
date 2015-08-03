@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-07-30 17:25:44.881000",
+		"lastupdated": "2015-08-03 13:13:13.959000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -208,6 +208,7 @@
 	"NoBugs.goalAchievedFail": "You don't achieved this mission. <x id='BREAK'/><x id='BREAK'/> You need to try again.",
 	"Apps.dialogLogoff": "Logoff",
 	"Tests.start": "Start",
+	"Tests.play": "Play",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",
 	"SnackMan.constSnackMan": "Constants",

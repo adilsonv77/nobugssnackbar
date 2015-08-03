@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.annotations.Filter;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
@@ -28,6 +29,7 @@ import pt.uc.dei.nobugssnackbar.util.SendMail;
 import sun.misc.BASE64Decoder;
 
 @RemoteProxy(scope = ScriptScope.SESSION)
+@Filter(type = UserControlVerifyUser.class)
 public class UserControl {
 
 	private GameDao gameDao;
@@ -81,6 +83,10 @@ public class UserControl {
 	private int xpToHat;
 	private int xpToClothes;
 
+	public User getUser() {
+		return user;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@RemoteMethod
 	public Object[] verifyLogged() throws Exception {
@@ -423,12 +429,29 @@ public class UserControl {
 
 	@RemoteMethod
 	public Test loadTests() throws Exception {
-		return gameDao.loadTests(this.user, this.missions);
+		Test t = gameDao.loadTests(this.user, this.missions);
+		return (t.getQuestions().size() == 0?null:t); 
 	}
 	
 	@RemoteMethod
-	public void saveTestQuestion(int questionId, String answer) throws Exception {
+	public void saveTestQuestionAnswer(int testId, int questionId, int missionId, int timeSpent, String answer) throws Exception {
+		gameDao.saveTestQuestionAnswer(testId, questionId, missionId, user.getId(), timeSpent, answer);
+	}
+
+	@RemoteMethod
+	public int[] retrieveTestRewards(int testId, int missionId) throws Exception {
 		
+		return gameDao.calculateTestRewards(testId, missionId, user.getId());
+		
+	}
+	
+	@RemoteMethod
+	public void addRewardsToCurrentUser(int xp, int money) throws Exception {
+		
+		this.user.setXp(this.user.getXp() + xp);
+		this.user.setMoney(this.user.getMoney() + money);
+		
+		gameDao.saveUserRewards(this.user);
 	}
 	
 }

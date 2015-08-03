@@ -94,7 +94,7 @@ IntroGame.createDiv = function(id) {
 
 IntroGame.presentTeacher = function(fret) {
 	IntroGame.createDiv("presentTeacher");
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_talking.png").css("width", "30%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_info.png").css("width", "30%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
 	img.prependTo("body");
 	

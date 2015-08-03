@@ -75,4 +75,11 @@ public interface GameDao {
 
 	Test loadTests(User user, Object[][] missions) throws Exception;
 
+	void saveTestQuestionAnswer(int testId, int questionId, int missionId, long userId,
+			int timeSpent, String answer) throws Exception;
+
+	int[] calculateTestRewards(int testId, int missionId, long userId) throws Exception;
+
+	void saveUserRewards(User user) throws Exception;
+
 }

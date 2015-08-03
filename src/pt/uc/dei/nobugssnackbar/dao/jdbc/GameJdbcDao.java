@@ -23,7 +23,6 @@ import pt.uc.dei.nobugssnackbar.model.QuestionOption;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.Test;
 import pt.uc.dei.nobugssnackbar.model.TestQuestion;
-import pt.uc.dei.nobugssnackbar.model.TestQuestionAnswer;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 public class GameJdbcDao implements GameDao {
@@ -1410,20 +1409,28 @@ public class GameJdbcDao implements GameDao {
 		try {
 			bdCon = getConnection();
 			
+			int currentMissionIdx = 0;
+			for (int i = 0; i < missions.length; i++)
+				currentMissionIdx += Integer.parseInt(missions[i][3].toString());
+				
+			
 			String clazzes = user.getClassesId() + "";
 
 			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
 								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
-								"qt.testxpdiscountreward, qt.testxpdiscounttime, testfromfirstmission, testfromlastmission, testmissionid, testanswer, "+
+								"qt.testxpdiscountreward, qt.testxpdiscounttime, testfromfirstmission, testfromlastmission, testmissionid, qta.testanswer, "+
 								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
 								"from questionsandtests qat join tests t using(testid)  "+
 									"join questionstest qt using (testquestionid) "+
 									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
-								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") "+
+								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testfromfirstmission-1=? or testfromlastmission-1=?)"+
 								"order by testid, testquestionid, questionorder, testclassid, testmissionid ";
 			
 			PreparedStatement ps = bdCon.prepareStatement(query);
 			ps.setLong(1, user.getId());
+			ps.setLong(2, currentMissionIdx);
+			ps.setLong(3, currentMissionIdx);
+			
 			ResultSet rs = ps.executeQuery();
 			long lastTestQuestionId = 0;
 			long lastTestId = 0;
@@ -1450,39 +1457,21 @@ public class GameJdbcDao implements GameDao {
 					}
 				}
 				
-				if (addQuestion) {
+				Long l = rs.getLong(15);
+				if (addQuestion && l == 0) {
 					lastTestQuestionId = rs.getLong(3);
 					
-					qt = new TestQuestion();
-					qt.setId(lastTestQuestionId);
-					qt.setDescription(rs.getString(4));
-					qt.setBlocks(rs.getString(5));
-					qt.setUpdateBlocks(rs.getBoolean(6));
-					qt.setQuestion(rs.getString(7));
-					qt.setTimeLimit(rs.getInt(8));
-					qt.setXpReward(rs.getInt(9));
-					qt.setXpRewardBlank(rs.getInt(10));
-					qt.setXpDiscountReward(rs.getInt(11));
-					qt.setXpDiscountTime(rs.getInt(12));
-					
-					qt.setAnswerType(rs.getString(19));
-					
-					qt.setLanguage(rs.getString(17));
-					qt.setToolbox(rs.getString(18));
-					
-					t.getQuestions().add(qt);
-					
-				}
-				
-				Long l = rs.getLong(15);
-				if (l != null) {
-					
-					TestQuestionAnswer tqa = new TestQuestionAnswer();
-					tqa.setMissionId(l);
-					tqa.setAnswer(rs.getString(16));
-					
-					qt.getAnswers().add(tqa);
-					
+					if (currentMissionIdx == rs.getInt(13) -1) {
+						
+						qt = createTestQuestion(lastTestQuestionId, rs.getInt(13), rs);
+						t.getQuestions().add(qt);
+
+					} else {
+						
+						qt = createTestQuestion(lastTestQuestionId, rs.getInt(14), rs);
+						t.getQuestions().add(qt);
+						
+					}
 				}
 				
 			}
@@ -1499,4 +1488,144 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
+	private TestQuestion createTestQuestion(long testQuestionId, int missionId, ResultSet rs) throws SQLException {
+		TestQuestion qt = new TestQuestion();
+		qt.setId(testQuestionId);
+		qt.setDescription(rs.getString(4));
+		qt.setBlocks(rs.getString(5));
+		qt.setUpdateBlocks(rs.getBoolean(6));
+		qt.setQuestion(rs.getString(7));
+		qt.setTimeLimit(rs.getInt(8));
+		qt.setXpReward(rs.getInt(9));
+		qt.setXpRewardBlank(rs.getInt(10));
+		qt.setXpDiscountReward(rs.getInt(11));
+		qt.setXpDiscountTime(rs.getInt(12));
+		
+		qt.setAnswerType(rs.getString(19));
+		
+		qt.setLanguage(rs.getString(17));
+		qt.setToolbox(rs.getString(18));
+		
+		qt.setMissionId(missionId);
+		return qt;
+	}
+
+	@Override
+	public void saveTestQuestionAnswer(int testId, int questionId, int missionId, long userId,
+			int timeSpent, String answer) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("insert into questiontestanswers (testid, testquestionid, testmissionid, userid, testtimespend, testanswer) "
+															+ "	values(?, ?, ?, ?, ?, ?)");
+			ps.setLong(1, testId);
+			ps.setLong(2, questionId);
+			ps.setLong(3, missionId);
+			ps.setLong(4, userId);
+			ps.setLong(5, timeSpent);
+			ps.setString(6, answer);
+			
+			ps.execute();
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+	}
+
+	@Override
+	public int[] calculateTestRewards(int testId, int missionId, long userId)
+			throws Exception {
+		Connection bdCon = null;
+		int[] ret = new int[2];
+		
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("select qt.testanswertype, qta.testanswer, qt.testanswer, qta.testtimespend, qt.testtimelimit, "+ 
+									   "qt.testxpreward, qt.testxpblank, qt.testxpdiscountreward, qt.testxpdiscounttime  "+ 
+									"from questiontestanswers qta join questionstest qt using (testquestionid) "+
+										"where testid = ? and testmissionid = ? and userid = ?");
+			
+			ps.setLong(1, testId);
+			ps.setLong(2, missionId);
+			ps.setLong(3, userId);
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int[] eval = null; 
+				if (rs.getString(1).equals("N")) {
+					eval = evaluateNumber(rs);
+				}
+				
+				ret[0] += eval[0];
+				ret[1] += eval[1];
+				
+			}
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return ret;
+	}
+
+	private int[] evaluateNumber(ResultSet rs) throws Exception {
+		int[] ret = new int[2];
+		
+		int studentAnswer = Integer.parseInt(rs.getString(2));
+		int correctAnswer = Integer.parseInt(rs.getString(3));
+		
+		if (studentAnswer == -1) {
+			ret[0] = rs.getInt(7);
+		} else
+			if (correctAnswer == studentAnswer) {
+				ret[0] = rs.getInt(6);
+				
+				int timeSpend = rs.getInt(4);
+				int timeProvided = rs.getInt(5);
+				int timeFraction = rs.getInt(9); 
+				
+				int timeBonus = (int) Math.floor((timeProvided - timeSpend) / timeFraction); 
+				
+				ret[0] += timeBonus * rs.getInt(8);
+			}
+		
+		return ret;
+	}
+
+	@Override
+	public void saveUserRewards(User user) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("update users set userxp = ?, usermoney = ? where userid = ?");
+			ps.setLong(1, user.getXp());
+			ps.setLong(2, user.getMoney());
+			ps.setLong(3, user.getId());
+			ps.executeUpdate();
+			ps.close();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+	}
+	
 }

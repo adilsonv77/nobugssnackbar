@@ -1,8 +1,5 @@
 package pt.uc.dei.nobugssnackbar.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
@@ -42,12 +39,14 @@ public class TestQuestion {
 	@RemoteProperty
 	private int xpDiscountTime;
 
-	private List<TestQuestionAnswer> answers;
-
 	@RemoteProperty
 	private String language;
-
+	
+	@RemoteProperty
 	private String toolbox;
+	
+	@RemoteProperty
+	private int missionId;
 	
 	public long getId() {
 		return id;
@@ -137,16 +136,6 @@ public class TestQuestion {
 		this.xpDiscountTime = xpDiscountTime;
 	}
 	
-	public List<TestQuestionAnswer> getAnswers() {
-		if (answers == null)
-			answers = new ArrayList<>();
-		return answers;
-	}
-	
-	public void setAnswers(List<TestQuestionAnswer> answers) {
-		this.answers = answers;
-	}
-
 	public String getLanguage() {
 		return language;
 	}
@@ -161,6 +150,15 @@ public class TestQuestion {
 
 	public void setToolbox(String toolbox) {
 		this.toolbox = toolbox;
+	}
+
+	public int getMissionId() {
+		return missionId;
+	}
+	
+	public void setMissionId(int missionId) {
+		this.missionId = missionId;
+		
 	}
 	
 }

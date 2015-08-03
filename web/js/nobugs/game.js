@@ -303,7 +303,7 @@ Game.showTests = function(tests) {
 		$("#contentTest").append(formTest);
 		
 		MyBlocklyApps.showDialog(document.getElementById("dialogTest"), null, false, true, true, 
-				"Teste", null, null);
+				"Ganhe b&ocirc;nus", null, null);
 		
 	} 
 	
