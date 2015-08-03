@@ -6,8 +6,8 @@ CountXP.init = function(canvasId) {
 	
 	if (CountXP.ctx != null)
 		CountXP.stop();
-	else
-		CountXP.ctx = document.getElementById(canvasId).getContext("2d");
+	
+	CountXP.ctx = document.getElementById(canvasId).getContext("2d");
 	
 };
 

@@ -1418,12 +1418,12 @@ public class GameJdbcDao implements GameDao {
 
 			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
 								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
-								"qt.testxpdiscountreward, qt.testxpdiscounttime, testfromfirstmission, testfromlastmission, testmissionid, qta.testanswer, "+
+								"qt.testxpdiscountreward, qt.testxpdiscounttime, testbeforemission_pretest, testbeforemission_postest, testmissionid, qta.testanswer, "+
 								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
 								"from questionsandtests qat join tests t using(testid)  "+
 									"join questionstest qt using (testquestionid) "+
 									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
-								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testfromfirstmission-1=? or testfromlastmission-1=?)"+
+								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testbeforemission_pretest-1=? or testbeforemission_postest-1=?)"+
 								"order by testid, testquestionid, questionorder, testclassid, testmissionid ";
 			
 			PreparedStatement ps = bdCon.prepareStatement(query);
@@ -1448,28 +1448,29 @@ public class GameJdbcDao implements GameDao {
 					t.setTimeRewardXP(rs.getInt(20));
 					t.setTimeXP(rs.getInt(21));
 					
+					addQuestion = true;
+					
 					ret = t;
 				} else {
-					if (lastTestQuestionId == rs.getLong(3)) {
-						// one is before and another after
-						addQuestion = false;
-
-					}
+					addQuestion = false;
+					t.getQuestions().remove(qt);
 				}
 				
-				Long l = rs.getLong(15);
-				if (addQuestion && l == 0) {
+				if (addQuestion) {
 					lastTestQuestionId = rs.getLong(3);
 					
-					if (currentMissionIdx == rs.getInt(13) -1) {
+					Long missionEvaluated = rs.getLong(15);
+					if (missionEvaluated == 0) {
 						
 						qt = createTestQuestion(lastTestQuestionId, rs.getInt(13), rs);
 						t.getQuestions().add(qt);
 
 					} else {
 						
-						qt = createTestQuestion(lastTestQuestionId, rs.getInt(14), rs);
-						t.getQuestions().add(qt);
+						if (currentMissionIdx == rs.getInt(14)-1) {
+							qt = createTestQuestion(lastTestQuestionId, rs.getInt(14), rs);
+							t.getQuestions().add(qt);
+						}
 						
 					}
 				}

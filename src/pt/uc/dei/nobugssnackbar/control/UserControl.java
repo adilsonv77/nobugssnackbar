@@ -430,7 +430,7 @@ public class UserControl {
 	@RemoteMethod
 	public Test loadTests() throws Exception {
 		Test t = gameDao.loadTests(this.user, this.missions);
-		return (t.getQuestions().size() == 0?null:t); 
+		return (t == null || t.getQuestions().size() == 0?null:t); 
 	}
 	
 	@RemoteMethod
