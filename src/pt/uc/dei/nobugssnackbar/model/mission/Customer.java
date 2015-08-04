@@ -11,12 +11,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Customer implements java.io.Serializable  {
 	private static final long serialVersionUID = 1L;
 	
+	@XmlElement(name="id",type=Long.class)
 	private long id;
+	
+	@XmlElement(name="init",type=String.class)
 	private String init;
+	
+	@XmlElement(name="dest",type=String.class)
 	private String dest;
+	
 	// watch out with the value 'none', when you generate XML
+	@XmlAttribute(name="randomType")
 	private String randomType;
+	
 	private Skin skin;
+	
+	@XmlElement(name="orders",type=Orders.class)
 	private Orders orders;
 	
 	public Customer() {
@@ -35,36 +45,36 @@ public class Customer implements java.io.Serializable  {
 	public long getId() {
 		return id;
 	}
-	@XmlElement(name="id",type=Long.class)
+	
 	public void setId(long l) {
 		this.id = l;
+		this.skin.setId(l);
 	}
 	public String getInit() {
 		return init;
 	}
-	@XmlElement(name="init",type=String.class)
+	
 	public void setInit(String init) {
 		this.init = init;
 	}
 	public String getDest() {
 		return dest;
 	}
-	@XmlElement(name="dest",type=String.class)
+	
 	public void setDest(String dest) {
 		this.dest = dest;
 	}
 	public Orders getOrders() {
 		return orders;
 	}
-	
-	@XmlElement(name="orders",type=Orders.class)
+		
 	public void setOrders(Orders orders) {
 		this.orders = orders;
 	}
 	public String getRandomType() {
 		return randomType;
 	}
-	@XmlAttribute(name="randomType")
+	
 	public void setRandomType(String randomType) {
 		this.randomType = randomType;
 	}
@@ -73,5 +83,6 @@ public class Customer implements java.io.Serializable  {
 	}
 	public void setSkin(Skin skin) {
 		this.skin = skin;
+		this.id = skin.getId();
 	}
 }

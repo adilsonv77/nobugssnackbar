@@ -81,17 +81,17 @@
 						<div id="foodsContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText value="#{custVC.customer.orders.order.randomMinFoods}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.foods.randomMin}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText value="#{custVC.customer.orders.order.randomMaxFoods}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.foods.randomMax}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.differentFromPrevFoods}"/>
+								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.foods.differentFromPrevious}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
 							<p:dataTable id="foodsDT" var="food"
-								value="#{custVC.customer.orders.order.foods}" draggableRows="true">
+								value="#{custVC.customer.orders.order.foods.foods}" draggableRows="true">
 								<p:ajax event="rowReorder" update=":customerForm:foodsDT"/>
 
 								<f:facet name="header">
@@ -135,17 +135,17 @@
 						<div id="drinksContainer">
 							<p:panelGrid columns="6">
 								<h:outputText value="#{msg['rndmMin']}:"/>
-								<p:inputText value="#{custVC.customer.orders.order.randomMinDrinks}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.drinks.randomMin}" style="width:100px;"/>
 								
 								<h:outputText value="#{msg['rndmMax']}:"/>
-								<p:inputText value="#{custVC.customer.orders.order.randomMaxDrinks}" style="width:100px;"/>
+								<p:inputText value="#{custVC.customer.orders.order.drinks.randomMax}" style="width:100px;"/>
 								
-								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.differentFromPrevDrinks}"/>
+								<p:selectBooleanCheckbox value="#{custVC.customer.orders.order.drinks.differentFromPrevious}"/>
 								<h:outputText value="#{msg['diffFromPrev']}"/>
 							</p:panelGrid>
 							
 							<p:dataTable id="drinksDT" var="drink" 
-								value="#{custVC.customer.orders.order.drinks}" draggableRows="true">
+								value="#{custVC.customer.orders.order.drinks.drinks}" draggableRows="true">
 								<p:ajax event="rowReorder" update=":customerForm:drinksDT"/>
 
 								<f:facet name="header">

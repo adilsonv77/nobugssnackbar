@@ -95,9 +95,10 @@ public class HintDBView implements Serializable{
 	}
 	
 	public void addHint(){
-		
+
 		hintView.setAdd(true);
 		Hint clone = SerializationUtils.clone(this.hint);
+		clone.setConditions(XmlToMission.stringConditionToObject(clone.getConditionsAsString()));		
 		hintView.setHint(clone);
 		hintView.addEditHint();
 		hintView.setAdd(false);
