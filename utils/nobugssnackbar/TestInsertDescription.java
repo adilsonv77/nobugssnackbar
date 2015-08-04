@@ -15,9 +15,9 @@ public class TestInsertDescription {
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		Connection con = NoBugsConnection.getConnection().getDataSource().getConnection();
-		PreparedStatement ps = con.prepareStatement("update questionstest set testquestiondescription = ? where testquestionid = 1");
+		PreparedStatement ps = con.prepareStatement("update questionstest set testquestiondescription = ? where testquestionid = 2");
 		
-		byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\adilsonv77\\Downloads\\questiondescription.txt"));
+		byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\adilsonv77\\Downloads\\questiondescription2.txt"));
 		String description = new String(encoded, StandardCharsets.ISO_8859_1);
 		
 		ps.setString(1, description);

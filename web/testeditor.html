@@ -13,6 +13,8 @@
   
   <script src="js/_soy/soyutils.js"></script>
   <script src="js/commons/common.js"></script>
+  <script src="js/nobugs/variablenamesvalidate.js"></script>
+   
   <script src="js/nobugs.js"></script>
 </head>
 		<body>
@@ -22,7 +24,7 @@
 	         		langSrc: BlocklyApps.languagePack()}));
 	    		
 	    		var script = document.createElement('script');
-	    		script.src = "js/tests/robomazelanguage.js"; // URL do seu script aqui
+	    		script.src = "js/tests/pacmanlanguage.js"; // URL do seu script aqui
 	    		document.body.appendChild(script);
 	    		
 	    		script.onload = function() {
@@ -33,29 +35,41 @@
 						  		   "for": true,
 						  		   "whileUntil": true,
 						  		   
-						  		 "logic": true, "math": true, "vars": true, "function": true, 
-								 "robomaze_andar": true}}); 
+						  		 "logic": true, "math": true, "vars": true, "function": true}}); 
 		    		  
-		    			var s = '<category name="robo"> <block type="cons_preto"/> <block type="cons_amarelo"/> <block type="robomaze_andar"/>  <block type="robomaze_retornar"/> <block type="robomaze_qtdadeitens"/> <block type="robomaze_corcelula"/> <block type="robomaze_largaritem"/> <block type="robomaze_viraresquerda"/> <block type="robomaze_virardireita"/>';
+		    			var s = '<category name="pacman"> <block type="pacman_escolheDirecaoAleatoria"/> <block type="pacman_enxerga"/> <block type="pacman_calcdistheroi"/> <block type="pacman_acelerar"/>  <block type="pacman_heroiVitaminado"/> <block type="pacman_disparar"/> <block type="pacman_andarProxDirecao"/> <block type="cons_esq"/> <block type="cons_dir"/> <block type="cons_acima"/> <block type="cons_abaixo"/>';
 		    			s = s + '</category></xml>';
 		    			
 		    		toolbox = toolbox.replace('</xml>', s);
 
 		    		Blockly.myToolBox = toolbox;
 		    		
-		    		 /*
-		    		  EditorNoBug.blockly = document.getElementById('blockly');
-		    		  
-		    		  Blockly.inject(EditorNoBug.blockly,
-		    				     { media: "media/",
-		    				       rtl: false,
-		    				       toolbox: toolbox,
-		    				       trashcan: true,
-		    				       comments: false,
-		    				       scrollbars: true});
-*/
 	    		};
 	    		
-	  		</script>
+	    		document.body.onload = function() {
+	    			
+		            EditorNoBug.fAlternative = function() {
+		            	
+			            document.getElementById('genJS').style.display = "inline";
+		            	return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="controls_if" id="1" inline="false" deletable="false" movable="false" editable="false" x="65" y="37"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="2" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="3" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_esq" id="4" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="logic_operation" id="5" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="6" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_dir" id="7" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="logic_operation" id="8" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="9" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_acima" id="10" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="pacman_enxerga" id="11" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_abaixo" id="12" deletable="false" movable="false"></block></value></block></value></block></value></block></value></block></value><statement name="DO0"><block type="controls_if" id="13" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="14" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_esq" id="15" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="16" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_esq" id="17" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="controls_if" id="18" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="19" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_dir" id="20" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="21" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_dir" id="22" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="controls_if" id="23" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="24" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_acima" id="25" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="26" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_acima" id="27" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="variables_set" id="28" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_abaixo" id="29" deletable="false" movable="false"></block></value></block></statement></block></statement></block></statement><next><block type="variables_set" id="30" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field><value name="VALUE"><block type="pacman_calcdistheroi" id="31" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="variables_get" id="32" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field></block></value></block></value><next><block type="controls_if" id="33" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="34" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="35" deletable="false" movable="false"><field name="OP">EQ</field><value name="A"><block type="variables_get" id="36" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="37" deletable="false" movable="false"><field name="NUM">10</field></block></value></block></value><value name="B"><block type="logic_compare" id="38" deletable="false" movable="false"><field name="OP">EQ</field><value name="A"><block type="pacman_heroiVitaminado" id="39" deletable="false" movable="false"></block></value><value name="B"><block type="logic_boolean" id="40" deletable="false" movable="false"><field name="BOOL">TRUE</field></block></value></block></value></block></value><statement name="DO0"><block type="pacman_acelerar" id="41" deletable="false" movable="false"></block></statement><statement name="ELSE"><block type="controls_if" id="42" inline="false" deletable="false" movable="false" editable="false"><value name="IF0"><block type="logic_operation" id="43" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="44" deletable="false" movable="false"><field name="OP">GTE</field><value name="A"><block type="variables_get" id="45" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="46" deletable="false" movable="false"><field name="NUM">4</field></block></value></block></value><value name="B"><block type="logic_compare" id="47" deletable="false" movable="false"><field name="OP">LTE</field><value name="A"><block type="variables_get" id="48" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="49" deletable="false" movable="false"><field name="NUM">6</field></block></value></block></value></block></value><statement name="DO0"><block type="pacman_disparar" id="50" deletable="false" movable="false"></block></statement></block></statement></block></next></block></next></block></statement><statement name="ELSE"><block type="variables_set" id="51" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="pacman_escolheDirecaoAleatoria" id="52" deletable="false" movable="false"></block></value></block></statement><next><block type="pacman_andarProxDirecao" id="53" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="variables_get" id="54" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field></block></value></block></next></block></xml>';		            
+	            	} 
+  		            	    
+  		            	 
+  		           	EditorNoBug.afterGenJS = function(code) {
+  		           		var dirAr = ['\"\\\"$$$esquerda\\\"\"', '\"\\\"$$$direita\\\"\"', '\"\\\"$$$acima\\\"\"', '\"\\\"$$$abaixo\\\"\"'];
+  		           		for (var dist = 1; dist <= 11; dist++) {
+  		           			for (var dir=0; dir < 4; dir++) {
+  		           				for (var vitam=0; vitam <=1; vitam++) {
+  		           					var res = PacMan.initTest(dir, dirAr[dist], vitam == 0, 1, 5);
+  		           					eval(code);
+  		           					PacMan.evalOutput(res);
+  		           				}
+  		           			}
+		  		           	
+  		           		}
+  		           		alert(code);
+  		           	};
+	    		};
+		  		</script>
   		</body>
 </html>

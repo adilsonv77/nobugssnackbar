@@ -29,6 +29,11 @@ var EditorNoBug = {};
 
 EditorNoBug.init = function() {
 	
+      if (EditorNoBug.initialized)
+		return;
+
+	  EditorNoBug.initialized = true;
+	  
 	  BlocklyApps.init();
 		
 	  NoBugsJavaScript.redefine();
@@ -90,7 +95,7 @@ EditorNoBug.init = function() {
     window.addEventListener('keyup',  EditorNoBug.keyUp);
     
     if (EditorNoBug.fAlternative) {
-    	var xml = Blockly.Xml.textToDom(EditorNoBug.fAlternative);
+    	var xml = Blockly.Xml.textToDom(EditorNoBug.fAlternative());
         Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
     	
     } else {
@@ -126,8 +131,8 @@ EditorNoBug.genJS = function() {
 	var js = Blockly.JavaScript;
 	var code = "var NoBugsJavaScript = {};\n" +  
 	 				js.workspaceToCode(Blockly.mainWorkspace);
-	//var jsInterpreter = new NoBugsInterpreter(code);
-	alert(code);
+	
+	EditorNoBug.afterGenJS(code);
 	
 };
 
