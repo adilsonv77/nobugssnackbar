@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-08-03 13:13:13.959000",
+		"lastupdated": "2015-08-04 12:15:21.920000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -177,6 +177,7 @@
 	"Tests.done": "Done",
 	"Tests.letBlank": "I can not answer or do not have confidence in the response",
 	"Apps.save": "Save",
+	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",
 	"Avatar.Hat": "Hat",
 	"Avatar.Clothes": "Clothes",

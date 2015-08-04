@@ -91,7 +91,12 @@ Tests.nextQuestion = function(blankValue) {
 
 			return;
 		} else {
-			var timeSpent = (CountXP.times*CountXP.umaFracao) + CountXP.current;
+			
+			var timeSpent = 0;
+			if (valueAnswer == -1)
+				timeSpent = CountXP.umaFracao; // blank option always consider using the total time
+			else
+				timeSpent = (CountXP.times*CountXP.umaFracao) + CountXP.current;
 			
 			UserControl.saveTestQuestionAnswer(
 					parseInt(answer.testId),
@@ -100,7 +105,7 @@ Tests.nextQuestion = function(blankValue) {
 					timeSpent, valueAnswer, 
 					{async:false, callback:function(){}});
 			
-			Tests.bonusOrDiscount = CountXP.umaFracao - timeSpent;
+			Tests.bonusOrDiscount += CountXP.umaFracao - timeSpent;
 			
 		}
 	

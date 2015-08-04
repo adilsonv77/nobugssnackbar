@@ -85,8 +85,9 @@ Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
 	
 Blockly.Blocks['do_wait'] = {
 		init : function() {
+			this.jsonInit({});
 		    this.setColour(160);
-		    this.interpolateMsg(
+		    this.interpolate_(
 		    	'wait %1 s',
 		    	['VALUE', null, Blockly.ALIGN_RIGHT],
 		        Blockly.ALIGN_RIGHT);
@@ -346,12 +347,29 @@ Blockly.JavaScript['const_softDrink'] = function(block) {
 
 Blockly.Blocks['variables_set'].init = function() {
     this.setHelpUrl(Blockly.Msg.VARIABLES_SET_HELPURL);
-    this.setColour(330);
-    this.interpolateMsg(
+    
+    this.jsonInit({
+    	"message0": BlocklyApps.getMsg('Blockly_variableSet'),
+    	 "args0": [
+     	           {
+    	             "type": "input_value",
+    	             "name": "VALUE"
+    	           },
+       	           {
+      	             "type": "field_variable",
+      	             "name": "VAR",
+      	             "variable": Blockly.Msg.VARIABLES_DEFAULT_NAME
+      	           }
+    	         ],
+    	 "colour": Blockly.Blocks.variables.HUE
+    });
+    /*
+    this.interpolate_(
     	BlocklyApps.getMsg('Blockly_variableSet'),
     	['VALUE', null, Blockly.ALIGN_RIGHT],
         ['VAR', new Blockly.FieldVariable(Blockly.Msg.VARIABLES_SET_ITEM)],
         Blockly.ALIGN_RIGHT);
+        */
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
@@ -359,3 +377,32 @@ Blockly.Blocks['variables_set'].init = function() {
     this.contextMenuType_ = 'variables_get';
   };
 
+
+  Blockly.Connection.prototype.checkType_ = function(otherConnection) {
+	  // Don't split a connection where both sides are immovable.
+  var thisTargetBlock = this.targetBlock();
+  if (thisTargetBlock && !thisTargetBlock.isMovable() &&
+      !this.sourceBlock_.isMovable()) {
+    return true;
+  }
+  var otherTargetBlock = otherConnection.targetBlock();
+  if (otherTargetBlock && !otherTargetBlock.isMovable() &&
+      !otherConnection.sourceBlock_.isMovable()) {
+    return true;
+  }
+  if (!this.check_ || !otherConnection.check_) {
+    // One or both sides are promiscuous enough that anything will fit.
+    return true;
+  }
+  // Find any intersection in the check lists.
+  for (var x = 0; x < this.check_.length; x++) {
+    if (otherConnection.check_.indexOf(this.check_[x]) != -1) {
+      return true;
+    }
+  }
+  // No intersection.
+  return false;
+};
+
+		  
+  

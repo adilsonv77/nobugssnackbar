@@ -13,7 +13,7 @@ public class UserControlVerifyUser implements AjaxFilter {
 			AjaxFilterChain chain) throws Exception {
 		
 		String name = method.getName();
-		if (!(name.equals("verifyLogged") || name.equals("login"))) {
+		if (!(name.equals("verifyLogged") || name.equals("login") || name.equals("loadBlocksToEditor"))) {
 		
 			if (((UserControl)obj).getUser() == null)
 				throw new Exception("User not connected");

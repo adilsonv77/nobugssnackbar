@@ -38,3 +38,5 @@ web/js/generated/en.js
 *.xlf
 core/
 blocks/
+/newblocks/
+/newcore/
