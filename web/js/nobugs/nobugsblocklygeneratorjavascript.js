@@ -59,15 +59,16 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 };
 
 function nobugsComparison(arg0, arg1, operator) {
+	operator = NoBugsJavaScript.OPERATORS[(operator.data == null?operator:operator.data)];
+	
 	if (!isNaN(parseInt(arg0)))
-		return; // the arguments are numbers. we dont deal with this type of values
+		return eval(arg0 + ' ' + operator + ' ' + arg1); // the arguments are numbers. we dont deal with this type of values
 			
 	if (arg0 === true || arg0 === false || arg0 === "true" || arg0 === "false")
-		return; // the arguments are booleans. we dont deal with this type of values
+		return eval(arg0 + ' ' + operator + ' ' + arg1); // the arguments are booleans. we dont deal with this type of values
 	
 	arg0 = arg0.data;
 	arg1 = arg1.data;
-	operator = NoBugsJavaScript.OPERATORS[operator.data];
 	
 	if (arg0 == undefined || arg1 == undefined) {
 		BlocklyApps.log.push(["fail", "Error_variableDoesntInitialized"]);

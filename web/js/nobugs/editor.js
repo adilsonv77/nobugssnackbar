@@ -56,7 +56,7 @@ EditorNoBug.init = function() {
 				  		   "prepareAndPickUpJuice": true,
 				  		   "pickUpDrink": true,
 				  		   "deliver": true,
-				  		   "wait": true,
+				  		  // "wait": true,
 
 				  		 "loop": true, 
 				  		   "for": true,
@@ -88,8 +88,14 @@ EditorNoBug.init = function() {
 
     window.addEventListener('keydown',  EditorNoBug.keyDown);
     window.addEventListener('keyup',  EditorNoBug.keyUp);
-    
-    if (fAlternative) {
+   
+    var mx=null;
+    try{
+    	mx=fAlternative;
+    }catch(ex){
+    	
+    }
+    if (mx) {
     	var xml = Blockly.Xml.textToDom(fAlternative());
         Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
     	
