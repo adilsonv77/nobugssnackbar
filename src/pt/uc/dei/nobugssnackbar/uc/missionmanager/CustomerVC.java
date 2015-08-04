@@ -70,25 +70,25 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			
 			if (customers.size() == 0) {
 				customers = new ArrayList<>(12);
-				for (int i = 0; i < 12; i++) {
-					Customer c = new Customer(System.currentTimeMillis());
-					c.setInit(tablesChairsNormalList.get(i));
-					c.setDest(tablesChairsNormalList.get(i));
-					customers.add(c);
-					customerIcons.add(CUSTOMER_ICON_DEFF);
-				}
 			}
 			else if (customers.size() <= 12) { // if you have some problem look here
 				for (int i = 0; i < customers.size(); i++) {
 					customerIcons.add(CUSTOMER_ICON);
+					for (Skin skin : customerSkins) {
+						if (skin.getId() == customers.get(i).getId()) {
+							customers.get(i).setSkin(skin);
+							break;
+						}
+					}
 				}
-				for (int i = customers.size(); i < 12; i++) {
-					Customer c = new Customer(System.currentTimeMillis());
-					c.setInit(tablesChairsNormalList.get(i));
-					c.setDest(tablesChairsNormalList.get(i));
-					customers.add(c);
-					customerIcons.add(CUSTOMER_ICON_DEFF);
-				}
+			}
+			
+			for (int i = customers.size(); i < 12; i++) {
+				Customer c = new Customer(System.currentTimeMillis());
+				c.setInit(tablesChairsNormalList.get(i));
+				c.setDest(tablesChairsNormalList.get(i));
+				customers.add(c);
+				customerIcons.add(CUSTOMER_ICON_DEFF);
 			}
 			
 			for (Customer c : customers) {
@@ -230,7 +230,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	
 	public void deleteFood() {
 		if (food != null) {
-			customer.getOrders().getOrder().getFoods().remove(this.food);
+			customer.getOrders().getOrder().getFoods().getFoods().remove(this.food);
 			resetFood();
 		}
 	}
@@ -241,7 +241,7 @@ public class CustomerVC implements ISkinProvider, Serializable {
 
 	public void deleteDrink() {
 		if (drink != null) {
-			customer.getOrders().getOrder().getDrinks().remove(this.drink);
+			customer.getOrders().getOrder().getDrinks().getDrinks().remove(this.drink);
 			resetDrink();
 		}
 	}
@@ -265,10 +265,10 @@ public class CustomerVC implements ISkinProvider, Serializable {
 	}
 	
 	private boolean checkFields(Order order) {
-		int maxDrinks = order.getRandomMaxDrinks();
-		int minDrinks = order.getRandomMinDrinks();
-		int maxFoods = order.getRandomMaxFoods();
-		int minFoods = order.getRandomMinFoods();
+		int maxDrinks = order.getDrinks().getRandomMax();
+		int minDrinks = order.getDrinks().getRandomMin();
+		int maxFoods = order.getFoods().getRandomMax();
+		int minFoods = order.getFoods().getRandomMin();
                 
 		if (minFoods > maxFoods || minDrinks > maxDrinks) {
 			ResourceBundle msg = ApplicationMessages.getMessage();
@@ -307,9 +307,9 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			customers.set(customersPlaceId, customer);
 			Order order = customer.getOrders().getOrder();
 			if ((order.getDrinks() != null &&
-				order.getDrinks().size() > 0) ||
+				order.getDrinks().getDrinks().size() > 0) ||
 				(order.getFoods() != null &&
-				order.getFoods().size() > 0)) {
+				order.getFoods().getFoods().size() > 0)) {
 				customerIcons.set(customersPlaceId, CUSTOMER_ICON);
 			}
 
@@ -317,8 +317,8 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				List<Customer> res = new ArrayList<>();
 				for (Customer c : customers) {
 					for (Order o : c.getOrders().getOrders()) {
-						if ((o.getDrinks() != null && o.getDrinks().size() > 0) ||
-							(o.getFoods() != null && o.getFoods().size() > 0)) {
+						if ((o.getDrinks() != null && o.getDrinks().getDrinks().size() > 0) ||
+							(o.getFoods() != null && o.getFoods().getFoods().size() > 0)) {
 							res.add(c);
 							break;
 						}
@@ -364,11 +364,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				ffood.setPrice(foodstuff.getPrice());
 				ffood.setQtd(foodstuff.getQtd());
 				if (food != null) {
-					int index = customer.getOrders().getOrder().getFoods().indexOf(food);
-					customer.getOrders().getOrder().getFoods().set(index, ffood);
+					int index = customer.getOrders().getOrder().getFoods().getFoods().indexOf(food);
+					customer.getOrders().getOrder().getFoods().getFoods().set(index, ffood);
 				}
 				else {
-					customer.getOrders().getOrder().getFoods().add(ffood);
+					customer.getOrders().getOrder().getFoods().getFoods().add(ffood);
 				}
 			}
 			else {
@@ -379,11 +379,11 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				ddrink.setQtd(foodstuff.getQtd());
 				
 				if (drink != null) {
-					int index = customer.getOrders().getOrder().getDrinks().indexOf(drink);
-					customer.getOrders().getOrder().getDrinks().set(index, ddrink);
+					int index = customer.getOrders().getOrder().getDrinks().getDrinks().indexOf(drink);
+					customer.getOrders().getOrder().getDrinks().getDrinks().set(index, ddrink);
 				}
 				else {
-					customer.getOrders().getOrder().getDrinks().add(ddrink);
+					customer.getOrders().getOrder().getDrinks().getDrinks().add(ddrink);
 				}
 			}
 			reset();

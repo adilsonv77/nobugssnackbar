@@ -16,34 +16,49 @@ public class Foods implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@XmlAttribute(name="randomMin")
-    public int randomMin;
+    private int randomMin;
 
     @XmlAttribute(name="randomMax")
-    public long randomMax;
+    private int randomMax;
 
+    @XmlAttribute(name="differentFromPrevious")
+	private boolean differentFromPrevious;
+    
+    @XmlElement(name="food",type=Food.class)
     private List<Food> foods;
     
 	public Foods() {
 		foods = new ArrayList<>();
 	}
     
-    public int getRandomMin() {
+	public int getRandomMin() {
 		return randomMin;
 	}
-    public void setRandomMin(int randomMin) {
+
+	public void setRandomMin(int randomMin) {
 		this.randomMin = randomMin;
 	}
-    public long getRandomMax() {
+
+	public int getRandomMax() {
 		return randomMax;
 	}
-    public void setRandomMax(long randomMax) {
+
+	public void setRandomMax(int randomMax) {
 		this.randomMax = randomMax;
 	}
-    
+	
+    public boolean isDifferentFromPrevious() {
+		return differentFromPrevious;
+	}
+
+	public void setDifferentFromPrevious(boolean differentFromPrevious) {
+		this.differentFromPrevious = differentFromPrevious;
+	}
+	
 	public List<Food> getFoods() {
 		return foods;
 	}
-	@XmlElement(name="food",type=Food.class)
+	
 	public void setFoods(List<Food> foods) {
 		this.foods = foods;
 	}
