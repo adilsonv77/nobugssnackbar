@@ -59,6 +59,12 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 };
 
 function nobugsComparison(arg0, arg1, operator) {
+	if (!isNaN(parseInt(arg0)))
+		return; // the arguments are numbers. we dont deal with this type of values
+			
+	if (arg0 === true || arg0 === false || arg0 === "true" || arg0 === "false")
+		return; // the arguments are booleans. we dont deal with this type of values
+	
 	arg0 = arg0.data;
 	arg1 = arg1.data;
 	operator = NoBugsJavaScript.OPERATORS[operator.data];
