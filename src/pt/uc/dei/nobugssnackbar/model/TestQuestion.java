@@ -47,6 +47,9 @@ public class TestQuestion {
 	
 	@RemoteProperty
 	private int missionId;
+
+	@RemoteProperty
+	private String answer;
 	
 	public long getId() {
 		return id;
@@ -159,6 +162,14 @@ public class TestQuestion {
 	public void setMissionId(int missionId) {
 		this.missionId = missionId;
 		
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+	
+	public void setAnswer(String answer) {
+		this.answer = answer; 
 	}
 	
 }

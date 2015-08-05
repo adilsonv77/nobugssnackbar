@@ -1,6 +1,7 @@
 'use strict';
 
 var Tests = {};
+var TestRT = {}; // used in specific question language
 
 Tests.createForm = function (test) {
 	
@@ -8,9 +9,8 @@ Tests.createForm = function (test) {
 	Tests.idx = 0;
 	
 	var div = document.createElement("div");
-	
-	div.style["height"] = "480px";
 	div.id = "testquestions";
+	div.style.height = "100%";
 
 	var table = document.createElement("table");
 	
@@ -53,6 +53,8 @@ Tests.createForm = function (test) {
 	$("#testsLetBlank").css("display", "none");
 	$("#testsPlay").css("display", "none");
 	
+	window.addEventListener('resize',  Tests.resizeWindow);
+	
 	return div;
 };
 
@@ -75,9 +77,10 @@ Tests.nextQuestion = function(blankValue) {
 	Tests.closeDrop();
 	
 	var answer = document.getElementById("answerQuestion");
+	var valueAnswer = null;
 	if (answer.type === "number") {
 		
-		var valueAnswer = (blankValue != null?blankValue:answer.value.trim());
+		valueAnswer = (blankValue != null?blankValue:answer.value.trim());
 		if (valueAnswer === "") {
 			Tests.drop = new Drop({
 				target: answer,
@@ -90,27 +93,45 @@ Tests.nextQuestion = function(blankValue) {
 			Tests.drop.open();
 
 			return;
+		}
+	} else {
+		if (blankValue != null) {
+			valueAnswer = blankValue;
 		} else {
 			
-			var timeSpent = 0;
-			if (valueAnswer == -1)
-				timeSpent = CountXP.umaFracao; // blank option always consider using the total time
-			else
-				timeSpent = (CountXP.times*CountXP.umaFracao) + CountXP.current;
+			valueAnswer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 			
-			UserControl.saveTestQuestionAnswer(
-					parseInt(answer.testId),
-					parseInt(answer.questionId), 
-					parseInt(answer.missionId), 
-					timeSpent, valueAnswer, 
-					{async:false, callback:function(){}});
+			BlocklyApps.log = [];
+			var js = Blockly.JavaScript;
+
+			// the variable code is referenced in question.answer
+			var code = "function highlightBlock(c){};var NoBugsJavaScript = {};" +  
+			 				js.workspaceToCode(Blockly.mainWorkspace);
 			
-			Tests.bonusOrDiscount += CountXP.umaFracao - timeSpent;
+			var question = Tests.test.questions[Tests.idx];
+			var result = (eval(question.answer)?"T":"F");
+			
+			valueAnswer = result + valueAnswer;
 			
 		}
+			
+	}
+			
+	var timeSpent = 0;
+	if (valueAnswer == -1)
+		timeSpent = CountXP.umaFracao; // blank option always consider using the total time
+	else
+		timeSpent = (CountXP.times*CountXP.umaFracao) + CountXP.current;
 	
-	} 
-   
+	UserControl.saveTestQuestionAnswer(
+			parseInt(answer.testId),
+			parseInt(answer.questionId), 
+			parseInt(answer.missionId), 
+			timeSpent, valueAnswer, 
+			{async:false, callback:function(){}});
+	
+	Tests.bonusOrDiscount += CountXP.umaFracao - timeSpent;
+			
 	Tests.idx++;
 	
 	if (Tests.idx == Tests.test.questions.length)
@@ -211,8 +232,8 @@ Tests.drawQuestion = function() {
 	$("#testquestions").empty();
 	
 	var stopWatch = document.createElement("div");
-	stopWatch.style.position = "absolute";
-	stopWatch.style.left = "1050px";
+	stopWatch.style.position = "fixed";
+	stopWatch.style.right = "0px";
 	
 	var canvas = document.createElement("canvas");
 	canvas.id = "stopWatchTests";
@@ -228,67 +249,134 @@ Tests.drawQuestion = function() {
 	CountXP.start();
 	
 	var table = document.createElement("table");
+	table.id = "testTableContent";
+	table.width = "100%";
+	table.style.borderCollapse = "collapse";
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
+	td.id = "tdContent";
 	td.innerHTML = changeImgHex(question.description);
 	
 	table.appendChild(tr); tr.appendChild(td);
 	
 	$("#testquestions").append(table);
 	
-	if (question.testBlock != null) {
-		
-		var blockly = document.createElement("div");
-		blockly.id = "blocklyquestion";
-		$("#testquestions").append(blockly);
-		
-		eval(question.language);
-		
-		var workspace = Blockly.inject('blocklyquestion',
-			      {toolbox: question.toolbox, scrollbars: true, readOnly: true});
-		
-		var xml = Blockly.Xml.textToDom(question.blocks);
-		Blockly.Xml.domToWorkspace(workspace, xml);
-		
-	}
-	
-	tr = document.createElement("tr");
-	td = document.createElement("td");
-	table.appendChild(tr); tr.appendChild(td);
+	var mainDiv = document.createElement("div");
+	mainDiv.id = "testAnswerId";
+	mainDiv.style.borderTop = "1px solid black";
+	$("#testquestions").append(mainDiv);
 	
 	var div = document.createElement("div");
-	td.style.borderTop = "1px solid red";
-	td.style.paddingTop = "10px";
-	td.appendChild(div);
+	mainDiv.appendChild(div);
 
 	div.style.float = "left";
-	div.style.paddingRight = "10px";
+	div.style.padding = "10px";
+	div.style.fontSize = "14px";
 	div.innerHTML = question.question;
 	
-	if (question.answerType !== "B") {
-		var input = null;
-		switch (question.answerType) {
-		case "N": 
-			input = document.createElement("input");
-			
-			input.id = "answerQuestion";
-			input.type = "number";
-			input.testId = Tests.test.id;
-			input.questionId = question.id;
-			input.missionId = question.missionId;
-			input.value = "";
-			input.style.borderColor = "red";
-			input.addEventListener("change", Tests.closeDrop, false);		
-			input.onkeypress = function(event) {
-				return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0);
-			};
-		}
+	var input = null;
+	switch (question.answerType) {
+	  case "N": 
+		input = document.createElement("input");
 		
-		td.appendChild(input);
+		input.id = "answerQuestion";
+		input.type = "number";
+		input.value = "";
+		input.style.borderColor = "red";
+		input.style.margin = "10px";
+		input.addEventListener("change", Tests.closeDrop, false);		
+		input.onkeypress = function(event) {
+			return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0);
+		};
+		mainDiv.appendChild(input);
+		break;
+		
+	  case "C":
+		var movePanel = document.createElement("div");
+		movePanel.className = "move-panel";
+		movePanel.style.right = "10px";
+		movePanel.style.position = "fixed";
+		movePanel.style.top = "auto";
+		movePanel.style.backgroundColor = "white";
+		
+		var b = document.createElement("a");
+		b.id = "testExpandWorkspace";
+		b.className = "move-up";
+		b.onclick = Tests.hideElements;
+		movePanel.appendChild(b);
+		
+		var tdButton = document.createElement("td");
+		tdButton.style.borderBottom = "1px solid red";
+		tdButton.style.verticalAlign = "bottom";
+		tdButton.appendChild(movePanel);
+		mainDiv.appendChild(tdButton);
+		
+		input = document.createElement("div");
+		input.id = "answerQuestion";
+		input.type = "blockly";
+     	input.style.width = "98%";
+		
+		mainDiv.appendChild(input); // must here before the inject
+		
+		TestRT={}; // used into question.language
+		eval(question.language);
+		
+		Blockly.inject(input,
+			     { media: "media/",
+			       rtl: false,
+			       toolbox: question.toolbox,
+			       trashcan: false,
+			       comments: false,
+			       scrollbars: true});
+		
+		;
+        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(question.blocks));
 	}
+	
+	input.testId = Tests.test.id;
+	input.questionId = question.id;
+	input.missionId = question.missionId;
+	
 	
 	$("#testsNextQuestion").html(BlocklyApps.getMsg("Tests_Done") + " [" + question.xpReward + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
 	$("#testsLetBlank").html(BlocklyApps.getMsg("Tests_LetBlank") + " [" + question.xpRewardBlank + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
+};
+
+Tests.resizeWindow = function(e) {
+	
+	var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
+	$("#answerQuestion").css("height", sizeBlockly + "px");
+	
+};
+
+Tests.hideElements = function() {
+	var td = document.getElementById("tdContent");
+	var child = td.firstElementChild;
+	while (child != null) {
+		
+		child.style.display = "none";
+		child = child.nextElementSibling;
+	}
+	var a = document.getElementById("testExpandWorkspace");
+	a.className = "move-down";
+	a.onclick = Tests.showElements;
+	
+	Blockly.fireUiEvent(window, 'resize');
+};
+
+Tests.showElements = function() {
+	var td = document.getElementById("tdContent");
+	var child = td.firstElementChild;
+	while (child != null) {
+		
+		child.style.display = "inline";
+		child = child.nextElementSibling;
+	}
+	var a = document.getElementById("testExpandWorkspace");
+	a.className = "move-up";
+	a.onclick = Tests.hideElements;
+
+	Blockly.fireUiEvent(window, 'resize');
 };
 
 Tests.closeDrop = function() {
@@ -302,14 +390,13 @@ Tests.closeDrop = function() {
 
 Tests.letBlank = function() {
 
-	var answer = document.getElementById("answerQuestion");
-	if (answer.type === "number") {
-		Tests.nextQuestion("-1");
-	}
+	Tests.nextQuestion("-1");
 	
 };
 
 Tests.play = function() {
+	window.removeEventListener('resize',  Tests.resizeWindow);
+	
 	$("#testsPlay").css("display", "none");
 	$("#testquestions").remove();
 	

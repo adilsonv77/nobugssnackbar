@@ -1418,7 +1418,7 @@ public class GameJdbcDao implements GameDao {
 
 			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
 								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
-								"qt.testxpdiscountreward, qt.testxpdiscounttime, testbeforemission_pretest, testbeforemission_postest, testmissionid, qta.testanswer, "+
+								"qt.testxpdiscountreward, qt.testxpdiscounttime, testbeforemission_pretest, testbeforemission_postest, testmissionid, qt.testanswer, "+
 								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
 								"from questionsandtests qat join tests t using(testid)  "+
 									"join questionstest qt using (testquestionid) "+
@@ -1452,8 +1452,10 @@ public class GameJdbcDao implements GameDao {
 					
 					ret = t;
 				} else {
-					addQuestion = false;
-					t.getQuestions().remove(qt);
+					if (lastTestQuestionId == rs.getLong(3)) {
+						addQuestion = false;
+						t.getQuestions().remove(qt);
+					}
 				}
 				
 				if (addQuestion) {
@@ -1508,6 +1510,9 @@ public class GameJdbcDao implements GameDao {
 		qt.setToolbox(rs.getString(18));
 		
 		qt.setMissionId(missionId);
+		
+		if (qt.getAnswerType().equals("C"))
+			qt.setAnswer(rs.getString(16));
 		return qt;
 	}
 
@@ -1564,6 +1569,10 @@ public class GameJdbcDao implements GameDao {
 				int[] eval = null; 
 				if (rs.getString(1).equals("N")) {
 					eval = evaluateNumber(rs);
+				} else {
+					if (rs.getString(1).equals("C")) {
+						eval = evaluateCode(rs);
+					}
 				}
 				
 				ret[0] += eval[0];
@@ -1583,6 +1592,21 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
+	private int[] evaluateCode(ResultSet rs) throws Exception {
+		int[] ret = new int[2];
+		
+		String answer = rs.getString(2).substring(0, 1);
+		if (answer.equals("-")) // blank
+			ret[0] = rs.getInt(7);
+		else
+			if (answer.equals("T")) {
+				
+				ret[0] = calculateXP(rs);
+			}
+		
+		return ret;
+	}
+
 	private int[] evaluateNumber(ResultSet rs) throws Exception {
 		int[] ret = new int[2];
 		
@@ -1593,18 +1617,24 @@ public class GameJdbcDao implements GameDao {
 			ret[0] = rs.getInt(7);
 		} else
 			if (correctAnswer == studentAnswer) {
-				ret[0] = rs.getInt(6);
 				
-				int timeSpend = rs.getInt(4);
-				int timeProvided = rs.getInt(5);
-				int timeFraction = rs.getInt(9); 
-				
-				int timeBonus = (int) Math.floor((timeProvided - timeSpend) / timeFraction); 
-				
-				ret[0] += timeBonus * rs.getInt(8);
+				ret[0] = calculateXP(rs);
 			}
 		
 		return ret;
+	}
+
+	private int calculateXP(ResultSet rs) throws SQLException {
+		int ret = rs.getInt(6);
+		
+		int timeSpend = rs.getInt(4);
+		int timeProvided = rs.getInt(5);
+		int timeFraction = rs.getInt(9); 
+		
+		int timeBonus = (int) Math.floor((timeProvided - timeSpend) / timeFraction); 
+		
+		return ret + (timeBonus * rs.getInt(8));
+
 	}
 
 	@Override

@@ -355,31 +355,33 @@
 	</div>
   </div> 
   
-  <div id="dialogTest" class="dialogHiddenContent">
-  	<div id="contentTest">
+  <div id="dialogTest" class="dialogHiddenContent" style="height: 100%">
+  	<div id="contentTest" style="height: 85%">
   		
   	</div>
-    <div id="buttonsTest" class="farSide" style="padding: 1ex 3ex 0">
-	    <button id="testsLogoff" class="nobugs_button" style="font-size: 14px" onclick="Game.logoffButtonClick()">
-	      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
-	    </button>
-	    
-	    <button id="testsStart" class="nobugs_button" style="font-size: 14px" onclick="Tests.start()">
-	      {{msg meaning="Tests.start" desc="---"}}Start{{/msg}}
-	    </button>
-	    
-	    <button id="testsNextQuestion" class="nobugs_button" style="display:none; font-size: 14px" onclick="Tests.nextQuestion()">
-	      {{msg meaning="Tests.done" desc="---"}}Done{{/msg}}
-	    </button>
-	    
-	    <button id="testsLetBlank" class="nobugs_button" style="display:none; font-size: 14px" onclick="Tests.letBlank()">
-	      {{msg meaning="Tests.letBlank" desc="---"}}I can not answer or do not have confidence in the response{{/msg}}
-	    </button>
-	    
-	    <button id="testsPlay" class="nobugs_button" style="font-size: 14px" onclick="Tests.play()">
-	      {{msg meaning="Tests.play" desc="---"}}Play{{/msg}}
-	    </button>
-	    
+  	<div style="height: 10%">
+	    <div id="buttonsTest" class="farSide" style="padding: 1ex 3ex 0; position: fixed; bottom: 0px; right: 0px">
+		    <button id="testsLogoff" class="nobugs_button" style="font-size: 14px" onclick="Game.logoffButtonClick()">
+		      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
+		    </button>
+		    
+		    <button id="testsStart" class="nobugs_button" style="font-size: 14px" onclick="Tests.start()">
+		      {{msg meaning="Tests.start" desc="---"}}Start{{/msg}}
+		    </button>
+		    
+		    <button id="testsNextQuestion" class="nobugs_button" style="display:none; font-size: 14px" onclick="Tests.nextQuestion()">
+		      {{msg meaning="Tests.done" desc="---"}}Done{{/msg}}
+		    </button>
+		    
+		    <button id="testsLetBlank" class="nobugs_button" style="display:none; font-size: 14px" onclick="Tests.letBlank()">
+		      {{msg meaning="Tests.letBlank" desc="---"}}I can not answer or do not have confidence in the response{{/msg}}
+		    </button>
+		    
+		    <button id="testsPlay" class="nobugs_button" style="font-size: 14px" onclick="Tests.play()">
+		      {{msg meaning="Tests.play" desc="---"}}Play{{/msg}}
+		    </button>
+		    
+		</div>
 	</div>
   </div> 
   

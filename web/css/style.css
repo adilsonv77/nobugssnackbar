@@ -1,3 +1,7 @@
+body {
+	overflow: hidden; /* hide the scrollbars */ 
+	min-height: 100%;
+}
 #containerCode {
   direction: ltr;
   font-size: large;
@@ -124,6 +128,7 @@ button.secondary:disabled {
 }
 
 .move-panel {
+	cursor: pointer;
 	right: 5px;
 	width: auto;
 	position: absolute;
@@ -149,6 +154,9 @@ button.secondary:disabled {
     -moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	border-radius: 3px 3px 3px 3px;
+}
+.move-up {
+	background: url('../images/panel_tools.png') no-repeat scroll -32px -0px transparent;
 }
 .move-down {
 	background: url('../images/panel_tools.png') no-repeat scroll -32px -16px transparent;
