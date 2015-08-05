@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.uc.missionmanager;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,6 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
-
 
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
@@ -96,13 +94,10 @@ public class MissionManager implements Serializable {
 	public void setCommandDao(CommandDao commandDao) {
 		this.commandDao = commandDao;
 	}
-	// #region private variables
+
 	private Mission mission = new Mission();
 	private List<Mission> missionList;
 
-	// #end
-
-	// #region getters and setters
 	public Mission getMission() {
 		return mission;
 	}
@@ -132,9 +127,7 @@ public class MissionManager implements Serializable {
 
 	public MissionContent getMissionContent() throws Exception {
 		if (missionContent.getCommands() == null) {
-
 			missionContent.setCommands(this.rootCommands);
-
 		}
 
 		return missionContent;
@@ -142,28 +135,6 @@ public class MissionManager implements Serializable {
 
 	public void setMissionContent(MissionContent missionContent) {
 		this.missionContent = missionContent;
-	}
-
-	// #end
-
-	// #region user defined methods
-
-	public void onSelect(SelectEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item Selected", event.getObject().toString()));
-	}
-
-	public void onUnselect(UnselectEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item Unselected", event.getObject().toString()));
-	}
-
-	public void onReorder() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"List Reordered", null));
 	}
 
 	public void addMission() {
@@ -179,13 +150,9 @@ public class MissionManager implements Serializable {
 
 		setMissionContent(processMissionContent(mission.getContent()));
 		
-		// TODO delete this two lines in future
 		this.missionContent = new MissionContent();
 		this.missionContent.setCommands(this.rootCommands);
-
 	}
-
-	// #end
 
 	private MissionContent processMissionContent(String content) {
 		return new MissionContent();
@@ -197,6 +164,14 @@ public class MissionManager implements Serializable {
 		
 		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
 			if (verification(missionContent)) {
+				if (errorMessage != null && 
+						missionContent.getObjectives() != null && 
+						missionContent.getObjectives().getObjectiveList() != null && 
+						missionContent.getObjectives().getObjectiveList().size() > 0) {
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+			        		messageBundle.getString("warningMsg"), errorMessage));
+				}
+				
 				String xml = XmlToMission.missionToXML(missionContent);
 				
 				if (xml != null) {					
@@ -234,7 +209,7 @@ public class MissionManager implements Serializable {
 
 		MissionContent mc = XmlToMission.load(mission.getContent());		
 		
-		if(mc == null){
+		if (mc == null){
 	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", 
 	        		messageBundle.getString("cantLoadMission")));	 
 		}
@@ -248,9 +223,41 @@ public class MissionManager implements Serializable {
 		reloadPage();
 	}
 	
+	public void checkIfSelected() {
+		if (mission == null || mission.getId() == null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ResourceBundle messageBundle = ApplicationMessages.getMessage();
+			
+			context.validationFailed();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", 
+	        		messageBundle.getString("selectMission")));			
+		}
+		else {
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('confDeleteMissionDlg').show();");
+		}
+	}
+	
+	public void deleteMission() throws Exception {
+		/*FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle messageBundle = ApplicationMessages.getMessage();*/
+		
+		if (mission != null && mission.getId() != null) {
+			missionList.remove(mission);
+			addMission();
+			
+			RequestContext rcontext = RequestContext.getCurrentInstance();
+			rcontext.execute("window.location.reload();");
+			
+	        /*context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
+	        		messageBundle.getString("missionDeleted")));*/
+			// TODO: delete it from DB
+		}
+	}
+	
 	private static String errorMessage;
 	
-	public static boolean verification(MissionContent missionContent) {
+	public boolean verification(MissionContent missionContent) {
 		errorMessage = "";
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();
 		
@@ -262,9 +269,9 @@ public class MissionManager implements Serializable {
 				 missionContent.getCustomers().size() == 0) {
 			errorMessage = messageBundle.getString("missingCustomerError");
 		}
-		else if (missionContent.getObjectives() == null ||
+		else if (!mission.isRepeatable() && (missionContent.getObjectives() == null ||
 				missionContent.getObjectives().getObjectiveList() == null ||
-				missionContent.getObjectives().getObjectiveList().size() == 0) {
+				missionContent.getObjectives().getObjectiveList().size() == 0)) {
 			errorMessage = messageBundle.getString("missingObjectiveError");
 		}
 		else if ((missionContent.getSelectedCommands() == null ||
@@ -273,13 +280,17 @@ public class MissionManager implements Serializable {
 			errorMessage = messageBundle.getString("notSelectedCommandOrBlockError");
 		}
 		else {
+			if (mission.isRepeatable()) {
+				errorMessage = messageBundle.getString("loseObjectives");
+			}
+			
 			return true;
 		}
 		
 		return false;
 	}
 	
-	private static void reloadPage() {
+	static void reloadPage() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String viewId = context.getViewRoot().getViewId(); 
 		ViewHandler handler = context.getApplication().getViewHandler(); 

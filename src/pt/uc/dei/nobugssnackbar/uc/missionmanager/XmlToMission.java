@@ -44,13 +44,19 @@ public class XmlToMission {
 			
 			mc = adjustVariablesAfterUnmarshaling(mc,xml);
 			for (Hint h : mc.getHints().getErrorsHints()) {
-				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0)
+				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0) {
 					h.setConditions(stringConditionToObject(h.getConditionsAsString()));
+					h.setConditionsAsString(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
+				}
+				
 			}
 			for (Hint h : mc.getHints().getTipsHints()) {
-				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0)
+				if (h.getConditionsAsString() != null && h.getConditionsAsString().length() > 0) {
 					h.setConditions(stringConditionToObject(h.getConditionsAsString()));
+					h.setConditionsAsString(h.getConditionsAsString().replace("<", "&lt;").replace(">", "&gt;"));
+				}
 			}
+			
 			return mc;
 			
 		}
@@ -165,7 +171,7 @@ public class XmlToMission {
 			if (!missionContent.isRepeatable()) {		
 				missionContent.setSlider(null);
 				missionContent.setTimeLimit(null);
-				// missionContent.getObjectives().setObjectiveList(null); !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ?
+				missionContent.getObjectives().setObjectiveList(null);
 			}
 			
 			if (!missionContent.isSelectedLoadBlocks()) {

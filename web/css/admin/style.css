@@ -15,7 +15,7 @@ body {
 	border: none; 
 	border-right: 1px solid #ddd;
 }
-#addMissionBtn, #footerBtnPnl {
+#missionBtns, #footerBtnPnl {
 	float: right;
 }
 .ui-panelgrid .ui-widget-content, .ui-panelgrid .ui-panelgrid-cell {
@@ -34,8 +34,9 @@ body {
 }
 
 .ui-orderlist .ui-widget-content {
-	display: inline-block !important;
-	width: 100% !important;
+	display: inline-block;
+	width: 100%;
+	min-width: 200px;
 }
 
 

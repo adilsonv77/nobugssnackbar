@@ -80,21 +80,24 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 			if (this.xmltag.getXmlns() == null) {
 				this.xmltag.setXmlns("<xml></xml>");
 			}
+			
 			FacesContext ctx = FacesContext.getCurrentInstance();			
 			ctx.getExternalContext().getSessionMap().put("blocks", this.xmltag.getXmlns());
+			
 			String XML_TAG_ALL = "(<\\s*xml[\\s\\w=\\\"\\/:.]*>)([\\w<\\s=\\\">\\/.,]*)(<\\s*\\/\\s*xml\\s*>)";
 			Pattern p = Pattern.compile(XML_TAG_ALL);
 			Matcher m = p.matcher(xmltag.getXmlns());
 			String xstr = xmltag.getXmlns();
+			
 			if (m.find()) {
 				xstr = m.group(2).replace(" ", "");
 			}
 
 			if (xmltag.getXmlns() != null && !xmltag.getXmlns().isEmpty() && !xstr.isEmpty()) {
-				selectedLoadBlocks = true;
+				setSelectedLoadBlocks(true);
 			}
 			else {
-				selectedLoadBlocks = false;
+				setSelectedLoadBlocks(false);
 			}
 			missionManager.getMissionContent().setXmltag(xmltag);
 			mc = new MissionConverter();
@@ -107,10 +110,6 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 
 	public MissionSettingsVC() {
 		mission = new Mission();
-		
-		//ResourceBundle msg = ApplicationMessages.getMessage();	
-		
-		//selectedXmlOption = msg.getString("nothing");
 	}
 	
 	public List<SelectItem> getCookStartsFromList() {
@@ -146,31 +145,6 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		this.xmltag = xmltag;
 		missionManager.getMissionContent().setXmltag(xmltag);
 	}
-/*
-	public String getSelectedXmlOption() {
-		return selectedXmlOption;
-	}
-
-	public void setSelectedXmlOption(String selectedXmlOption) throws Exception {		
-		ResourceBundle msg = ApplicationMessages.getMessage();
-		xmltag.setAlwaysNew(false);
-		choseMission = false;
-		choseLoadBlocks = false;
-		
-		if (selectedXmlOption.equals(msg.getString("alwaysNew"))) {
-			xmltag.setAlwaysNew(true);
-		}
-		else if (selectedXmlOption.equals(msg.getString("loadPrevMission"))) {
-			choseMission = true;
-		}
-		else if (selectedXmlOption.equals(msg.getString("loadBlocks"))) {
-			choseLoadBlocks = true;
-		}
-		
-		missionManager.getMissionContent().setSelectedLoadBlocks(choseLoadBlocks);
-		this.selectedXmlOption = selectedXmlOption;
-	}
-	*/
 	
 	public boolean isAlwaysNew(){
 		if(xmltag.isAlwaysNew() == null)
@@ -261,6 +235,7 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 	public void setRepeatable(boolean repeatable) throws Exception {
 		this.repeatable = repeatable;
 		missionManager.getMissionContent().setRepeatable(repeatable);
+		missionManager.getMission().setRepeatable(repeatable);
 	}
 
 	public boolean isPreload() {

@@ -175,6 +175,25 @@
 				style="float:right;" oncomplete="PF('addHintFromDB').hide()"/>	
 		</h:form>
 	
-	</p:dialog>	
+	</p:dialog>
+	
+	<p:dialog widgetVar="confDeleteMissionDlg" header="#{msg['confirmation']}" 
+		closable="false" modal="true" 
+		resizable="false" dynamic="true"
+		onShow="PF('confDeleteMissionDlg').initPosition()">
+
+		<h:form>
+			<p:panelGrid columns="3" style="margin: 0 auto; width: 100%;">
+				<h:outputText value="#{msg['ruSureDelMission']}" />
+				<p:commandButton value="#{msg['yes']}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					update=":customerForm,:growlMsgs" actionListener="#{mm.deleteMission}"
+					oncomplete="PF('confDeleteMissionDlg').hide()"/>
+				<p:commandButton value="#{msg['no']}"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-closethick"
+					oncomplete="PF('confDeleteMissionDlg').hide()" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
 	
 </ui:composition>

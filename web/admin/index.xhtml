@@ -37,15 +37,18 @@
 	        <f:facet name="header">
 	        	<div class="clear">
         			<h:outputText value="#{msg['missions']}" />
-        			<p:commandButton id="addMissionBtn" icon="ui-icon-circle-plus" />
+        			<div id="missionBtns">
+        				<p:commandButton id="addMissionBtn" icon="ui-icon-circle-plus" actionListener="#{mm.addMission()}" oncomplete="window.location.reload()" />
+        				<p:commandButton id="deleteMissionBtn" icon="ui-icon-trash" actionListener="#{mm.checkIfSelected}" update=":missionDT,:growlMsgs" />
+        			</div>
         		</div>
     		</f:facet>
     		
-   			<p:dataTable id="missionDT" styleClass="hide-column-names" selectionMode="single"
-				selection="#{missionVC.mission}"
+   			<p:dataTable id="missionDT" styleClass="hide-column-names" selection="#{missionVC.mission}" selectionMode="single"
 				var="m" rowKey="#{m.id}" emptyMessage="#{msg['nomissions']}"
 				value="#{missionVC.missionList}">
-    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionNameLangForm:missionNameCont,growlMsgs" />
+    			<p:ajax event="rowSelect" listener="#{missionVC.handleMissionSelect}" update=":missionDT,:missionNameLangForm:missionNameCont,growlMsgs" />
+    				
     			<p:column>
     				<h:outputText value="#{m.name}"/>
     			</p:column>
