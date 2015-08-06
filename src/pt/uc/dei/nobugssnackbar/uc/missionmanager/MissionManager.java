@@ -243,6 +243,8 @@ public class MissionManager implements Serializable {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();*/
 		
 		if (mission != null && mission.getId() != null) {
+			missionDao.delete(mission.getId()); // delete the mission from DB
+			
 			missionList.remove(mission);
 			addMission();
 			
@@ -251,7 +253,7 @@ public class MissionManager implements Serializable {
 			
 	        /*context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", 
 	        		messageBundle.getString("missionDeleted")));*/
-			// TODO: delete it from DB
+			
 		}
 	}
 	
