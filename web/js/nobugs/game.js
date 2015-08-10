@@ -139,7 +139,7 @@ Game.init = function() {
 			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9]);
 			
 		} else {
-			window.removeEventListener('unload', Game.unload);
+			window.removeEventListener('beforeunload', Game.unload);
 
   		    document.getElementById("mainBody").style.display = "none";
   		    document.getElementById("selectMission").style.display = "none";
@@ -356,7 +356,7 @@ Game.logged = function() {
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
 		// this is necessary when unloads
-		window.removeEventListener('unload', Game.unload);
+		window.removeEventListener('beforeunload', Game.unload);
 
 		document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "none";
@@ -479,7 +479,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
 
-  window.addEventListener('unload', Game.unload);
+  window.addEventListener('beforeunload', Game.unload);
  
   Game.slider = {};
   Game.slider.svg = document.getElementById('slider');
@@ -1329,7 +1329,7 @@ Game.closeBlockEditorStuffs = function() {
 
     Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
-	window.removeEventListener('unload', Game.unload);
+	window.removeEventListener('beforeunload', Game.unload);
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
@@ -1367,12 +1367,19 @@ Game.closeBlockEditorStuffs = function() {
 };
 
 Game.logoffButtonClick = function() {
-	
+	/*
 	var res= Game.closeBlockEditorStuffs();
     UserControl.logoff(res[0], Game.howManyRuns, res[1], function(){
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 		
+	});
+	*/
+	BlocklyApps.hideDialog(false);
+	
+	UserControl.logoff(function(){
+		// because is synchronous, we need wait to finish the last request 
+		Game.init();
 	});
 };
 
@@ -1903,14 +1910,14 @@ Game.removeChangeListeners = function() {
 	  
 	  window.removeEventListener("scroll", Game.scrollEvent);
 	  //window.removeEventListener("resize", Game.resizeWindow); // not enable this line
-	  window.removeEventListener('unload', Game.unload);
+	  window.removeEventListener('beforeunload', Game.unload);
 	  
 	  MyBlocklyApps.unbindClick('runButton', Game.runButtonClick);
 	  MyBlocklyApps.unbindClick('resetButton', Game.resetButtonClick);
 	  MyBlocklyApps.unbindClick('debugButton', Game.debugButtonClick);
 
 	  MyBlocklyApps.unbindClick('goalButton', Game.goalButtonClick);
-	  MyBlocklyApps.unbindClick('logoffButton', Game.logoffButtonClick);
+	  MyBlocklyApps.unbindClick('logoffButton', Game.goBackToDashboard);
 	  
   }
   

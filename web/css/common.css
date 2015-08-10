@@ -107,7 +107,7 @@ button.notext {
   left: 0;
   z-index: -1;
 }
-#dialogHeader {
+#dialogHeader, .dialogheader {
   height: 25px;
   margin: -10px -10px 15px;
   border-top-left-radius: 8px;

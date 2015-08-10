@@ -6,7 +6,7 @@ var TestRT = {}; // used in specific question language
 Tests.createForm = function (test) {
 	
 	Tests.test = test;
-	Tests.idx = 0;
+	Tests.idx = -1;
 	
 	var div = document.createElement("div");
 	div.id = "testquestions";
@@ -52,8 +52,10 @@ Tests.createForm = function (test) {
 	$("#testsNextQuestion").css("display", "none");
 	$("#testsLetBlank").css("display", "none");
 	$("#testsPlay").css("display", "none");
+	$("#continueTestAnotherDay").css("display", "none");
 	
 	window.addEventListener('resize',  Tests.resizeWindow);
+	window.addEventListener('beforeunload', Tests.stopNow);
 	
 	return div;
 };
@@ -67,32 +69,48 @@ Tests.start = function() {
 	$("#testsLetBlank").css("display", "inline");
 	$("#testsPlay").css("display", "none");
 	
-	Tests.bonusOrDiscount = 0;
+	Tests.idx = 0;
 	
 	Tests.drawQuestion();
 	
 };
 
-Tests.nextQuestion = function(blankValue) {
+Tests.nextQuestion = function() {
+
+	confirm("Deseja realmente executar essa a&#231;&#227;o ?", function () {
+		Tests.performQuestion(null, null);
+	});
+	
+};
+		
+Tests.performQuestion = function(blankValue, finished) {
 	Tests.closeDrop();
+	Blockly.WidgetDiv.hide(); // hide the fields of blockly that are in edit mode
+	
+	var finishTest = (finished == true || finished == null);
 	
 	var answer = document.getElementById("answerQuestion");
 	var valueAnswer = null;
 	if (answer.type === "number") {
 		
-		valueAnswer = (blankValue != null?blankValue:answer.value.trim());
-		if (valueAnswer === "") {
-			Tests.drop = new Drop({
-				target: answer,
-				content: BlocklyApps.getMsg("NoBugs_requiredField"),
-				position: "left middle",
-				classes: "drop-theme-arrows",
-				constrainToScrollParent: false,
-				openOn: ""
-			});
-			Tests.drop.open();
+		if (finishTest) {
+			
+			valueAnswer = (blankValue != null?blankValue:answer.value.trim());
+			if (valueAnswer === "") {
+				Tests.drop = new Drop({
+					target: answer,
+					content: BlocklyApps.getMsg("NoBugs_requiredField"),
+					position: "left middle",
+					classes: "drop-theme-arrows",
+					constrainToScrollParent: false,
+					openOn: ""
+				});
+				Tests.drop.open();
 
-			return;
+				return;
+			}
+		} else {
+			valueAnswer = "?";
 		}
 	} else {
 		if (blankValue != null) {
@@ -101,15 +119,28 @@ Tests.nextQuestion = function(blankValue) {
 			
 			valueAnswer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
 			
-			BlocklyApps.log = [];
-			var js = Blockly.JavaScript;
+			if (finishTest) {
+				
+				BlocklyApps.log = [];
+				var js = Blockly.JavaScript;
 
-			// the variable code is referenced in question.answer
-			var code = "function highlightBlock(c){};var NoBugsJavaScript = {};" +  
-			 				js.workspaceToCode(Blockly.mainWorkspace);
-			
-			var question = Tests.test.questions[Tests.idx];
-			var result = (eval(question.answer)?"T":"F");
+				var newLogicCompare = Blockly.JavaScript['logic_compare']; 
+				
+				Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.oldLogicCompare; // it mustn't use the new version of comparison because here we dont use javascript interpreter classes
+
+				// the variable code is referenced in question.answer
+				var code = "function highlightBlock(c){};var NoBugsJavaScript = {};" +  
+				 				js.workspaceToCode(Blockly.mainWorkspace);
+				
+				var question = Tests.test.questions[Tests.idx];
+				var result = "F";
+				try {
+					result = (eval(question.answer)?"T":"F");
+				} catch (ex) {}
+				
+				Blockly.JavaScript['logic_compare'] = newLogicCompare;
+			} else
+				result = "?";
 			
 			valueAnswer = result + valueAnswer;
 			
@@ -127,17 +158,18 @@ Tests.nextQuestion = function(blankValue) {
 			parseInt(answer.testId),
 			parseInt(answer.questionId), 
 			parseInt(answer.missionId), 
-			timeSpent, valueAnswer, 
+			timeSpent, 
+			valueAnswer, 
 			{async:false, callback:function(){}});
 	
-	Tests.bonusOrDiscount += CountXP.umaFracao - timeSpent;
-			
-	Tests.idx++;
-	
-	if (Tests.idx == Tests.test.questions.length)
-		UserControl.retrieveTestRewards(answer.testId, answer.missionId, Tests.drawFinal);
-	else
-		Tests.drawQuestion();
+	if (finishTest) {
+		Tests.idx++;
+		
+		if (Tests.idx == Tests.test.questions.length)
+			UserControl.retrieveTestRewards(answer.testId, answer.missionId, Tests.drawFinal);
+		else
+			Tests.drawQuestion();
+	}
 };
 
 Tests.drawFinal = function(ret) {
@@ -224,6 +256,7 @@ Tests.drawFinal = function(ret) {
 	$("#testsLetBlank").css("display", "none");
 	
 	$("#testsPlay").css("display", "inline");
+	$("#continueTestAnotherDay").css("display", "none");
 };
 
 Tests.drawQuestion = function() {
@@ -245,7 +278,13 @@ Tests.drawQuestion = function() {
 	$("#testquestions").append(stopWatch);
 	
 	CountXP.init("stopWatchTests");
-	CountXP.config(question.timeLimit, 0, 0, 0, null, false);
+	
+	var current = 0;
+	if (question.previousAnswer != null) {
+		current = question.previousAnswer.timeSpend;
+	}
+	
+	CountXP.config(question.timeLimit, current, 0, 0, null, false);
 	CountXP.start();
 	
 	var table = document.createElement("table");
@@ -289,6 +328,7 @@ Tests.drawQuestion = function() {
 			return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0);
 		};
 		mainDiv.appendChild(input);
+		$("#continueTestAnotherDay").css("display", "none");
 		break;
 		
 	  case "C":
@@ -330,7 +370,22 @@ Tests.drawQuestion = function() {
 			       scrollbars: true});
 		
 		;
-        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(question.blocks));
+		
+		// there is a bug (i dont know if is my or from blockly, but the toolbox doesnt add into the blockly element
+		var toolBox = $(".blocklyToolboxDiv");
+		if (toolBox.length > 0) {
+			$("body").detach(".blocklyToolboxDiv");
+			$("#answerQuestion").append(toolBox);
+		}
+		
+		var answerBlocks = null;
+		if (question.previousAnswer == null)
+			answerBlocks = question.blocks;
+		else
+			answerBlocks = question.previousAnswer.answer; 
+		
+        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(answerBlocks));
+        break;
 	}
 	
 	input.testId = Tests.test.id;
@@ -340,9 +395,14 @@ Tests.drawQuestion = function() {
 	
 	$("#testsNextQuestion").html(BlocklyApps.getMsg("Tests_Done") + " [" + question.xpReward + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
 	$("#testsLetBlank").html(BlocklyApps.getMsg("Tests_LetBlank") + " [" + question.xpRewardBlank + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
+    
+	$("#continueTestAnotherDay").css("display", "inline");
 };
 
 Tests.resizeWindow = function(e) {
+	
+	if (document.getElementById("answerQuestion").type !== "blockly")
+		return;
 	
 	var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
 	$("#answerQuestion").css("height", sizeBlockly + "px");
@@ -390,12 +450,25 @@ Tests.closeDrop = function() {
 
 Tests.letBlank = function() {
 
-	Tests.nextQuestion("-1");
+	confirm("Deseja realmente executar essa a&#231;&#227;o ?", function () {
+		Tests.performQuestion("-1", true);
+	});
 	
+	
+};
+
+Tests.stopNow = function() {
+	window.removeEventListener('resize',  Tests.resizeWindow);
+	window.removeEventListener('beforeunload', Tests.stopNow);
+
+	if (Tests.idx >= 0)
+		Tests.performQuestion(null, false);
+	Game.logoffButtonClick();
 };
 
 Tests.play = function() {
 	window.removeEventListener('resize',  Tests.resizeWindow);
+	window.removeEventListener('beforeunload', Tests.stopNow);
 	
 	$("#testsPlay").css("display", "none");
 	$("#testquestions").remove();

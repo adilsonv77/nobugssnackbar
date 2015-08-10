@@ -23,6 +23,7 @@ import pt.uc.dei.nobugssnackbar.model.QuestionOption;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
 import pt.uc.dei.nobugssnackbar.model.Test;
 import pt.uc.dei.nobugssnackbar.model.TestQuestion;
+import pt.uc.dei.nobugssnackbar.model.TestQuestionAnswer;
 import pt.uc.dei.nobugssnackbar.model.User;
 
 public class GameJdbcDao implements GameDao {
@@ -1418,13 +1419,13 @@ public class GameJdbcDao implements GameDao {
 
 			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
 								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
-								"qt.testxpdiscountreward, qt.testxpdiscounttime, testbeforemission_pretest, testbeforemission_postest, testmissionid, qt.testanswer, "+
+								"qta.testanswer, qta.testtimespend, testbeforemission_pretest, testbeforemission_postest, testmissionid, qt.testanswer, "+
 								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
 								"from questionsandtests qat join tests t using(testid)  "+
 									"join questionstest qt using (testquestionid) "+
 									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
 								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testbeforemission_pretest-1=? or testbeforemission_postest-1=?)"+
-								"order by testid, testquestionid, questionorder, testclassid, testmissionid ";
+								"order by testid, testquestionid, questionorder, questiontestanswerfinish, testclassid, testmissionid ";
 			
 			PreparedStatement ps = bdCon.prepareStatement(query);
 			ps.setLong(1, user.getId());
@@ -1436,6 +1437,7 @@ public class GameJdbcDao implements GameDao {
 			long lastTestId = 0;
 			Test t = null;
 			TestQuestion qt = null;
+			boolean incompleteQuestion = false;
 			while (rs.next()) {
 				boolean addQuestion = true;
 				
@@ -1453,27 +1455,39 @@ public class GameJdbcDao implements GameDao {
 					ret = t;
 				} else {
 					if (lastTestQuestionId == rs.getLong(3)) {
-						addQuestion = false;
-						t.getQuestions().remove(qt);
+						addQuestion = false; // if there are two answers then not add again  
+						if (!incompleteQuestion) // if the same question with the answer not completed
+							t.getQuestions().remove(qt);
 					}
 				}
 				
 				if (addQuestion) {
 					lastTestQuestionId = rs.getLong(3);
 					
-					Long missionEvaluated = rs.getLong(15);
-					if (missionEvaluated == 0) {
+					Long missionEvaluated = rs.getLong(15); // testmissionid
+					incompleteQuestion = rs.getString(11) != null && rs.getString(11).startsWith("?");
+					if (missionEvaluated == 0 || (missionEvaluated == rs.getInt(13) && incompleteQuestion)) {
 						
 						qt = createTestQuestion(lastTestQuestionId, rs.getInt(13), rs);
 						t.getQuestions().add(qt);
 
 					} else {
 						
-						if (currentMissionIdx == rs.getInt(14)-1) {
+						if (incompleteQuestion || (!(incompleteQuestion) && currentMissionIdx != missionEvaluated-1 )) {
+						
 							qt = createTestQuestion(lastTestQuestionId, rs.getInt(14), rs);
 							t.getQuestions().add(qt);
+							
 						}
 						
+					}
+					
+					if (incompleteQuestion) {
+						TestQuestionAnswer answer = new TestQuestionAnswer();
+						answer.setAnswer(rs.getString(11).substring(1));
+						answer.setTimeSpend(rs.getInt(12));
+						
+						qt.setPreviousAnswer(answer);
 					}
 				}
 				
@@ -1501,8 +1515,6 @@ public class GameJdbcDao implements GameDao {
 		qt.setTimeLimit(rs.getInt(8));
 		qt.setXpReward(rs.getInt(9));
 		qt.setXpRewardBlank(rs.getInt(10));
-		qt.setXpDiscountReward(rs.getInt(11));
-		qt.setXpDiscountTime(rs.getInt(12));
 		
 		qt.setAnswerType(rs.getString(19));
 		
@@ -1523,14 +1535,32 @@ public class GameJdbcDao implements GameDao {
 		try {
 			bdCon = getConnection();
 			
-			PreparedStatement ps = bdCon.prepareStatement("insert into questiontestanswers (testid, testquestionid, testmissionid, userid, testtimespend, testanswer) "
-															+ "	values(?, ?, ?, ?, ?, ?)");
-			ps.setLong(1, testId);
-			ps.setLong(2, questionId);
-			ps.setLong(3, missionId);
-			ps.setLong(4, userId);
-			ps.setLong(5, timeSpent);
-			ps.setString(6, answer);
+			PreparedStatement ps0 = bdCon.prepareStatement("select testid from questiontestanswers where testid = ? and testquestionid = ? and testmissionid = ? and userid = ?");
+			ps0.setLong(1, testId);
+			ps0.setLong(2, questionId);
+			ps0.setLong(3, missionId);
+			ps0.setLong(4, userId);
+			
+			ResultSet rs = ps0.executeQuery();
+			PreparedStatement ps = null;
+				
+			if (rs.next()) {
+				ps = bdCon.prepareStatement("update questiontestanswers set testtimespend=?, testanswer=?, questiontestanswerfinish=?, whenanswered = now() where testid = ? and testquestionid = ? and testmissionid = ? and userid = ?");
+			} else {
+				
+				ps = bdCon.prepareStatement("insert into questiontestanswers (testtimespend, testanswer, questiontestanswerfinish, whenanswered, testid, testquestionid, testmissionid, userid) "			
+														+ "	values(?, ?, ?, now(), ?, ?, ?, ?)");
+			}	
+			
+			ps0.close();
+				
+			ps.setLong(1, timeSpent);
+			ps.setString(2, answer);
+			ps.setString(3, (answer.startsWith("?")?"F":"T"));
+			ps.setLong(4, testId);
+			ps.setLong(5, questionId);
+			ps.setLong(6, missionId);
+			ps.setLong(7, userId);
 			
 			ps.execute();
 			
@@ -1556,8 +1586,9 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 			
 			PreparedStatement ps = bdCon.prepareStatement("select qt.testanswertype, qta.testanswer, qt.testanswer, qta.testtimespend, qt.testtimelimit, "+ 
-									   "qt.testxpreward, qt.testxpblank, qt.testxpdiscountreward, qt.testxpdiscounttime  "+ 
+									   "qt.testxpreward, qt.testxpblank, t.testxpdiscountreward, t.testxpdiscounttime  "+ 
 									"from questiontestanswers qta join questionstest qt using (testquestionid) "+
+									    "join tests t using (testid) " + 
 										"where testid = ? and testmissionid = ? and userid = ?");
 			
 			ps.setLong(1, testId);

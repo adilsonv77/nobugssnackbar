@@ -377,6 +377,10 @@
 		      {{msg meaning="Tests.letBlank" desc="---"}}I can not answer or do not have confidence in the response{{/msg}}
 		    </button>
 		    
+		    <button id="continueTestAnotherDay" class="nobugs_button" style="font-size: 14px" onclick="Tests.stopNow()">
+		      {{msg meaning="Tests.continueAnotherDay" desc="---"}}Stop now and continue at other moment{{/msg}}
+		    </button>
+
 		    <button id="testsPlay" class="nobugs_button" style="font-size: 14px" onclick="Tests.play()">
 		      {{msg meaning="Tests.play" desc="---"}}Play{{/msg}}
 		    </button>
@@ -402,6 +406,16 @@
   	
   </div>  
   
+	<div id='confirm' style="display:none">
+	
+		<div class='header'><span>{msg meaning="SnackMan.confirm" desc="--"}Confirm{/msg}</span></div>
+		<div class='message'></div>
+		<div class='buttons'>
+			<button class='yes nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.yes" desc="--"}Yes{/msg}</button>
+			<button class='no simplemodal-close nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.no" desc="--"}No{/msg}</button>
+		</div>
+	</div>
+
 {/template}
 
 /**

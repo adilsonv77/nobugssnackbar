@@ -33,6 +33,8 @@ EditorNoBug.init = function() {
 		
 	  NoBugsJavaScript.redefine();
 	  
+	  Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.oldLogicCompare; // it mustn't use the new version of comparison because here we dont use javascript interpreter classes 
+	  
 	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');
 	  
 	  var toolbox = null; 
@@ -134,8 +136,8 @@ EditorNoBug.genJS = function() {
 	var code = "var NoBugsJavaScript = {};\n" +  
 	 				js.workspaceToCode(Blockly.mainWorkspace);
 	
-	afterGenJS(code);
-	
+	alert( afterGenJS(code) );
+	 
 };
 
 window.addEventListener('load', EditorNoBug.init);

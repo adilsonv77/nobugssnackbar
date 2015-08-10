@@ -34,12 +34,6 @@ public class TestQuestion {
 	private int xpRewardBlank;
 	
 	@RemoteProperty
-	private int xpDiscountReward;
-	
-	@RemoteProperty
-	private int xpDiscountTime;
-
-	@RemoteProperty
 	private String language;
 	
 	@RemoteProperty
@@ -50,6 +44,9 @@ public class TestQuestion {
 
 	@RemoteProperty
 	private String answer;
+
+	@RemoteProperty
+	private TestQuestionAnswer previousAnswer;
 	
 	public long getId() {
 		return id;
@@ -123,22 +120,6 @@ public class TestQuestion {
 		this.xpRewardBlank = xpRewardBlank;
 	}
 
-	public int getXpDiscountReward() {
-		return xpDiscountReward;
-	}
-
-	public void setXpDiscountReward(int xpDiscountReward) {
-		this.xpDiscountReward = xpDiscountReward;
-	}
-
-	public int getXpDiscountTime() {
-		return xpDiscountTime;
-	}
-
-	public void setXpDiscountTime(int xpDiscountTime) {
-		this.xpDiscountTime = xpDiscountTime;
-	}
-	
 	public String getLanguage() {
 		return language;
 	}
@@ -170,6 +151,16 @@ public class TestQuestion {
 	
 	public void setAnswer(String answer) {
 		this.answer = answer; 
+	}
+
+	public TestQuestionAnswer getPreviousAnswer() {
+		return previousAnswer;
+	}
+	
+	public void setPreviousAnswer(TestQuestionAnswer answer) {
+
+		this.previousAnswer = answer;
+		
 	}
 	
 }

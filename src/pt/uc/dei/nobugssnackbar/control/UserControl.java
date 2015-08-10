@@ -90,6 +90,8 @@ public class UserControl {
 	@SuppressWarnings("rawtypes")
 	@RemoteMethod
 	public Object[] verifyLogged() throws Exception {
+		log.info("verifiedLogged");
+		
 		if (user == null) {
 			
 			this.missions = null;
@@ -112,14 +114,14 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void logoff(int timeSpend, long execution, String answer)
-			throws Exception {
+	public void logoff() throws Exception { // int timeSpend, long execution, String answer)
 
-		log.info("logoff " + timeSpend);
+		log.info("logoff");
+		/* the new version doesnt need this save method
 		if (this.mission != 0)
 			gameDao.finishMission(this.user, this.mission, this.classid, 0, 0,
 					timeSpend, execution, false, -1, answer);
-
+		 */
 		this.user = null;
 		this.classid = 0;
 		this.levelid = 0;
@@ -435,6 +437,7 @@ public class UserControl {
 	
 	@RemoteMethod
 	public void saveTestQuestionAnswer(int testId, int questionId, int missionId, int timeSpent, String answer) throws Exception {
+		log.info("saveTestQuestionAnswer");
 		gameDao.saveTestQuestionAnswer(testId, questionId, missionId, user.getId(), timeSpent, answer);
 	}
 
