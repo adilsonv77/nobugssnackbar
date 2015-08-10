@@ -7,6 +7,9 @@ Tests.createForm = function (test) {
 	
 	Tests.test = test;
 	Tests.idx = -1;
+	Tests.dropShowed = false;
+	
+	Tests.dropExpand = null;
 	
 	var div = document.createElement("div");
 	div.id = "testquestions";
@@ -85,6 +88,9 @@ Tests.nextQuestion = function() {
 		
 Tests.performQuestion = function(blankValue, finished) {
 	Tests.closeDrop();
+	if (Tests.dropExpand != null)
+		Tests.dropExpand.close();
+
 	Blockly.WidgetDiv.hide(); // hide the fields of blockly that are in edit mode
 	
 	var finishTest = (finished == true || finished == null);
@@ -313,6 +319,7 @@ Tests.drawQuestion = function() {
 	div.style.fontSize = "14px";
 	div.innerHTML = question.question;
 	
+	Tests.dropExpand = null;
 	var input = null;
 	switch (question.answerType) {
 	  case "N": 
@@ -350,6 +357,21 @@ Tests.drawQuestion = function() {
 		tdButton.style.verticalAlign = "bottom";
 		tdButton.appendChild(movePanel);
 		mainDiv.appendChild(tdButton);
+		
+		if (!Tests.dropShowed) {
+			
+			Tests.dropExpand = new Drop({
+				target: movePanel,
+				content: "Clique aqui para expandir",
+				position: "left bottom",
+				classes: "drop-theme-arrows",
+				constrainToScrollParent: false,
+				tetherOptions: {offset: '0 25'},
+				remove: true,
+				openOn: ""
+			});
+			Tests.dropShowed = true;
+		}
 		
 		input = document.createElement("div");
 		input.id = "answerQuestion";
@@ -397,6 +419,11 @@ Tests.drawQuestion = function() {
 	$("#testsLetBlank").html(BlocklyApps.getMsg("Tests_LetBlank") + " [" + question.xpRewardBlank + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
     
 	$("#continueTestAnotherDay").css("display", "inline");
+
+	if (Tests.dropExpand  != null) {
+		Tests.dropExpand.open();
+	}
+		
 };
 
 Tests.resizeWindow = function(e) {
@@ -410,6 +437,9 @@ Tests.resizeWindow = function(e) {
 };
 
 Tests.hideElements = function() {
+	if (Tests.dropExpand != null)
+		Tests.dropExpand.close();
+	
 	var td = document.getElementById("tdContent");
 	var child = td.firstElementChild;
 	while (child != null) {
@@ -460,6 +490,9 @@ Tests.letBlank = function() {
 Tests.stopNow = function() {
 	window.removeEventListener('resize',  Tests.resizeWindow);
 	window.removeEventListener('beforeunload', Tests.stopNow);
+
+	if (Tests.dropExpand != null)
+		Tests.dropExpand.close();
 
 	if (Tests.idx >= 0)
 		Tests.performQuestion(null, false);
