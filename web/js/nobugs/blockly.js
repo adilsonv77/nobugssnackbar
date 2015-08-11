@@ -188,6 +188,48 @@ Blockly.onMouseDown_ = function(e) {
 	myIsTargetSvg = false;
 };
 
+MyBlocklyApps.onKeyDown_ = function(e) {
+	  if (Blockly.isTargetInput_(e)) {
+	    // When focused on an HTML text input widget, don't trap any keys.
+	    return;
+	  }
+	  if (e.keyCode == 27) {
+	    // Pressing esc closes the context menu.
+	    Blockly.hideChaff();
+	  } else if (e.keyCode == 8 || e.keyCode == 46) {
+	    // Delete or backspace.
+	    try {
+	      if (Blockly.selected && Blockly.selected.isDeletable()) {
+	        Blockly.hideChaff();
+	        Blockly.selected.dispose(true, true);
+	      }
+	    } finally {
+	      // Stop the browser from going back to the previous page.
+	      // Use a finally so that any error in delete code above doesn't disappear
+	      // from the console when the page rolls back.
+	      e.preventDefault();
+	    }
+	  } else if (e.altKey || e.ctrlKey || e.metaKey) {
+	    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
+	      Blockly.hideChaff();
+	      if (e.keyCode == 67) {
+	        // 'c' for copy.
+	        Blockly.copy_(Blockly.selected);
+	      } else if (e.keyCode == 88) {
+	        // 'x' for cut.
+	        Blockly.copy_(Blockly.selected);
+	        Blockly.selected.dispose(true, true);
+	      }
+	    }
+	    if (e.keyCode == 86) {
+	      // 'v' for paste.
+	      if (Blockly.clipboardXml_) {
+	        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
+	      }
+	    }
+	  }
+	};
+
 Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 	var Game = Blockly.BlockSvg.Game;
 	
@@ -227,6 +269,8 @@ Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 };
 
 Blockly.BlockSvg.prototype.select = function() {
+	
+	Hints.hideHints();
 	
 	var Game = Blockly.BlockSvg.Game;
 	
@@ -304,28 +348,6 @@ Blockly.BlockSvg.prototype.select = function() {
 	    		
 	    	}
 
-	  		/*
-	  		var found = false;
-	    	for (var i = 0; i < Game.blocksSelected.length; i++) {
-	    		var block = Game.blocksSelected[i];
-	    		if (block.nextConnection != null) {
-	        		var targetBlock = block.nextConnection.targetConnection;
-	        		if (targetBlock != null && targetBlock.sourceBlock_.id === this.id) {
-	        			Game.blocksSelected.splice(i+1, 0, this);
-	        			found = true;
-	        			break;
-	        		} else {
-	        			targetBlock = this.nextConnection.targetConnection;
-	        			if (targetBlock != null && targetBlock.sourceBlock_.id === block.id) {
-	            			Game.blocksSelected.splice(i, 0, this);
-	            			found = true;
-	            			break;
-	       				
-	        			}
-	        		}
-	    		}
-	    	}
-	    	*/
 	    	if (!found)
 	    		Game.blocksSelected.splice(0,0,this);
 	    }
@@ -391,6 +413,8 @@ Blockly.copy_ = function(block) {
 Blockly.littleCopy_ = function(block) {
 	
 	var xmlBlock = Blockly.Xml.blockToDom_(block);
+	xmlBlock.removeAttribute("deletable");
+	
 	Blockly.Xml.deleteNext(xmlBlock);
 	// Encode start position in XML.
 	var xy = block.getRelativeToSurfaceXY();

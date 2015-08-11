@@ -678,6 +678,9 @@ Game.installMachines = function(toolbox) {
 		       comments: false,
 		       scrollbars: true});
 	    
+	    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
+	    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
+		
 	    Game.afterInstallMachines();
 
 	});	
@@ -850,6 +853,9 @@ Game.buyMachineButtonClick = function() {
 					       trashcan: true,
 					       comments: false,
 					       scrollbars: true});
+				
+			    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
+			    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
 				
 				Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
 				

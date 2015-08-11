@@ -358,21 +358,6 @@ Tests.drawQuestion = function() {
 		tdButton.appendChild(movePanel);
 		mainDiv.appendChild(tdButton);
 		
-		if (!Tests.dropShowed) {
-			
-			Tests.dropExpand = new Drop({
-				target: movePanel,
-				content: "Clique aqui para expandir",
-				position: "left bottom",
-				classes: "drop-theme-arrows",
-				constrainToScrollParent: false,
-				tetherOptions: {offset: '0 25'},
-				remove: true,
-				openOn: ""
-			});
-			Tests.dropShowed = true;
-		}
-		
 		input = document.createElement("div");
 		input.id = "answerQuestion";
 		input.type = "blockly";
@@ -393,11 +378,29 @@ Tests.drawQuestion = function() {
 		
 		;
 		
+		var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
+		$("#answerQuestion").css("height", sizeBlockly + "px");
+
 		// there is a bug (i dont know if is my or from blockly, but the toolbox doesnt add into the blockly element
 		var toolBox = $(".blocklyToolboxDiv");
 		if (toolBox.length > 0) {
 			$("body").detach(".blocklyToolboxDiv");
 			$("#answerQuestion").append(toolBox);
+		}
+
+		if (!Tests.dropShowed) {
+			
+			Tests.dropExpand = new Drop({
+				target: movePanel,
+				content: "Clique aqui para expandir",
+				position: "left bottom",
+				classes: "drop-theme-arrows",
+				constrainToScrollParent: false,
+				tetherOptions: {offset: '0 25'},
+				remove: true,
+				openOn: ""
+			});
+			
 		}
 		
 		var answerBlocks = null;
@@ -420,10 +423,6 @@ Tests.drawQuestion = function() {
     
 	$("#continueTestAnotherDay").css("display", "inline");
 
-	if (Tests.dropExpand  != null) {
-		Tests.dropExpand.open();
-	}
-		
 };
 
 Tests.resizeWindow = function(e) {
@@ -434,6 +433,11 @@ Tests.resizeWindow = function(e) {
 	var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
 	$("#answerQuestion").css("height", sizeBlockly + "px");
 	
+	if (Tests.dropExpand  != null && !Tests.dropShowed) {
+		Tests.dropExpand.open();
+		Tests.dropShowed = true;
+	}
+		
 };
 
 Tests.hideElements = function() {
