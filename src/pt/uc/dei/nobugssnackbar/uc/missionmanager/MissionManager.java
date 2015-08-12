@@ -171,7 +171,7 @@ public class MissionManager implements Serializable {
 		
 		if (mission != null && mission.getName() != null && !mission.getName().isEmpty()) {
 			if (verification(missionContent)) {
-				if (errorMessage != null && 
+				if (errorMessage != null && errorMessage != "" && 
 						missionContent.getObjectives() != null && 
 						missionContent.getObjectives().getObjectiveList() != null && 
 						missionContent.getObjectives().getObjectiveList().size() > 0) {

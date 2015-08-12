@@ -32,7 +32,7 @@
 		
 		<p:panelGrid columns="2">
 			<h:outputText value="#{msg['timesBeforeShowSlider']}:" />
-			<p:inputText value="#{msVC.slider.timesBefore}" disabled="#{!msVC.repeatable}">
+			<p:inputText value="#{msVC.slider.timesBefore}"> <!-- disabled="#{!msVC.repeatable}" -->
 				<p:ajax process="@this"/>
 				<pe:keyFilter regEx="/[0-9]/"/>
 			</p:inputText>

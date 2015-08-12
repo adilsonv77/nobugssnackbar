@@ -32,6 +32,7 @@ import pt.uc.dei.nobugssnackbar.uc.missionmanager.converter.SkinConverter;
 @ViewScoped
 public class CustomerVC implements ISkinProvider, Serializable {
 	private static final long serialVersionUID = 1L;
+	private static final int MAX_NUM_CUSTOMERS = 12;
 	private String CUSTOMER_ICON_DEFF = "ui-icon-circle-plus";
 	private String CUSTOMER_ICON = "ui-icon-person";
 	
@@ -68,28 +69,37 @@ public class CustomerVC implements ISkinProvider, Serializable {
 			customerIcons = new ArrayList<>();
 			this.customers = new ArrayList<>(missionManager.getMissionContent().getCustomers());
 			
-			if (customers.size() == 0) {
-				customers = new ArrayList<>(12);
+			List<Customer> orderedCustomers = new ArrayList<>();
+			for (int i = 0; i < MAX_NUM_CUSTOMERS; i++) {
+				Customer c = new Customer(System.currentTimeMillis());
+				c.setInit(tablesChairsNormalList.get(i));
+				c.setDest(tablesChairsNormalList.get(i));
+				orderedCustomers.add(c);
+				customerIcons.add(CUSTOMER_ICON_DEFF);
 			}
-			else if (customers.size() <= 12) { // if you have some problem look here
+			
+			if (customers.size() == 0) {
+				customers = new ArrayList<>(MAX_NUM_CUSTOMERS);
+			}
+			else if (customers.size() <= MAX_NUM_CUSTOMERS) { // if you have some problem look here
 				for (int i = 0; i < customers.size(); i++) {
-					customerIcons.add(CUSTOMER_ICON);
 					for (Skin skin : customerSkins) {
 						if (skin.getId() == customers.get(i).getId()) {
 							customers.get(i).setSkin(skin);
 							break;
 						}
 					}
+					for (int j = 0; j < orderedCustomers.size(); j++) {
+						if (orderedCustomers.get(j).getInit().equalsIgnoreCase(customers.get(i).getInit())) {
+							customerIcons.set(j, CUSTOMER_ICON);
+							orderedCustomers.set(j, customers.get(i));
+							break;
+						}
+					}
 				}
 			}
-			
-			for (int i = customers.size(); i < 12; i++) {
-				Customer c = new Customer(System.currentTimeMillis());
-				c.setInit(tablesChairsNormalList.get(i));
-				c.setDest(tablesChairsNormalList.get(i));
-				customers.add(c);
-				customerIcons.add(CUSTOMER_ICON_DEFF);
-			}
+			customers = orderedCustomers;
+			missionManager.getMissionContent().setCustomers(customers);
 			
 			for (Customer c : customers) {
 				for (Order o : c.getOrders().getOrders()) {
