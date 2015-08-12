@@ -91,6 +91,9 @@ public class ObjectivesView implements Serializable {
 		types.put("askForDrink","askForDrink");
 		types.put("pickUpDrink","pickUpDrink");
 		types.put("goesTo","goesTo");
+		types.put("talk", "talk");
+		types.put("askHasThirsty", "askHasThirsty");
+		types.put("askHasHunger", "askHasHunger");
 	}
 	
 	public Objectives getObjectives() {
