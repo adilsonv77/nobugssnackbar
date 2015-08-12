@@ -154,6 +154,13 @@ public class MissionManager implements Serializable {
 		this.missionContent.setCommands(this.rootCommands);
 	}
 
+	public boolean isMissionSelected() {
+		if (mission != null && mission.getId() != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	private MissionContent processMissionContent(String content) {
 		return new MissionContent();
 	}
@@ -242,7 +249,7 @@ public class MissionManager implements Serializable {
 		/*FacesContext context = FacesContext.getCurrentInstance();
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();*/
 		
-		if (mission != null && mission.getId() != null) {
+		if (isMissionSelected()) {
 			missionDao.delete(mission.getId()); // delete the mission from DB
 			
 			missionList.remove(mission);
