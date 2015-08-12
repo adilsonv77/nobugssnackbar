@@ -2033,28 +2033,43 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'goToCooler',
       interpreter.createNativeFunction(wrapper));
     
+	// see commands
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.isThereACustomer());
 	    };
 	    
-	// see commands
     interpreter.setProperty(scope, 'isThereACustomer',
       interpreter.createNativeFunction(wrapper));
     
+    // ask the customer commands
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.hasHunger());
 	    };
 		  
-  // ask the customer commands
-  interpreter.setProperty(scope, 'hasHunger',
+    interpreter.setProperty(scope, 'hasHunger',
 	      interpreter.createNativeFunction(wrapper));
   
-  wrapper = function() {
-      return interpreter.createPrimitive(hero.askForFood());
+    wrapper = function() {
+        return interpreter.createPrimitive(hero.askForFood());
     };
     
-   interpreter.setProperty(scope, 'askForFood',
-     interpreter.createNativeFunction(wrapper));
+    interpreter.setProperty(scope, 'askForFood',
+         interpreter.createNativeFunction(wrapper));
+
+    
+    wrapper = function() {
+        return interpreter.createPrimitive(hero.askWantHowManyDrinks());
+    };
+    
+    interpreter.setProperty(scope, 'askWantHowManyDrinks',
+            interpreter.createNativeFunction(wrapper));
+
+   wrapper = function() {
+        return interpreter.createPrimitive(hero.askWantHowManyFoods());
+    };
+    
+    interpreter.setProperty(scope, 'askWantHowManyFoods',
+         interpreter.createNativeFunction(wrapper));
 
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.hasThirsty());

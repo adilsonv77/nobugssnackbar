@@ -118,7 +118,7 @@ Selector.prototype.createGridView = function (group, level, missionPanel, number
 			.css("height", this.tamCell)
 			.css("width", this.tamCell)
 			.css("left", (35*yOff) + 10 + (yOff * this.tamCell))
-			.css("top", (35*xOff) + 50 + (xOff * this.tamCell))
+			.css("top", (35*xOff) + 60 + (xOff * this.tamCell))
   			.html(this.genContent(i));
 
 			if (this.fMissionEnabled(group, level, i)) { 

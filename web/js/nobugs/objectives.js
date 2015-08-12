@@ -124,6 +124,14 @@ Objective.factory = function(key) {
 	case "askForDrink":
 		this.factories[key] = new Objective.AskSomething("explanation_askForDrink");
 		break;
+		
+	case "askWantHowManyFoods":
+		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyFoods");
+		break;
+		
+	case "askWantHowManyDrinks":
+		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyDrinks");
+		break;
 
 	case "pickUpDrink": 
 		this.factories[key] = new Objective.PickUpDrink();

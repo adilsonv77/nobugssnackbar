@@ -435,7 +435,8 @@
 	      </block>
 	      {/if}
 	      {if $ij.enabled['isThereACustomer']}<block type="ask_isThereACustomer"> </block>{/if}
-	
+		  
+		  {if $ij.enabled['askWantHowManyFoods']}<block type="ask_askWantHowManyFoods"> </block>{/if}
 	      {if $ij.enabled['askHasHunger']}<block type="ask_askHasHunger"> </block>{/if}
 	      {if $ij.enabled['askForFood']}<block type="ask_askForFood"> </block>{/if}
 	      {if $ij.enabled['goToDisplay']}<block type="move_goToDisplay"> </block>{/if}
@@ -449,6 +450,7 @@
 	      </block>
 	      {/if}
 	
+		  {if $ij.enabled['askWantHowManyDrinks']}<block type="ask_askWantHowManyDrinks"> </block>{/if}
 	      {if $ij.enabled['askHasThirsty']}<block type="ask_askHasThirsty"> </block>{/if}
 	      {if $ij.enabled['askForDrink']}<block type="ask_askForDrink"> </block>{/if}
 		  {if $ij.enabled['isTypeOfDrink']}<block type="compare_isTypeOfDrink"> </block>{/if}

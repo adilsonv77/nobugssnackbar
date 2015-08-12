@@ -32,7 +32,7 @@ SelectMission.generateBoard = function(evt) {
 	};
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogSelectMission"), null, false, true, true, 
-					BlocklyApps.getMsg("Text_SelectMission"), {width: "480px", height: "350px"}, null, fClose);
+					BlocklyApps.getMsg("Text_SelectMission"), {width: "480px", height: "470px"}, null, fClose);
 	SelectMission.stopAnimation = false;
 	
 	window.setTimeout(SelectMission.blinkTarget, 50);

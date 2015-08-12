@@ -1,0 +1,164 @@
+<?xml version='1.0'?>
+<mission>
+	<slider timesBefore="2"/>
+	<explanation>
+		<page>
+		<![CDATA[
+Como um futuro gerente de uma esplanada, precisas aprender a controlar a quantidade de lanches a serem produzidos. <br/>
+<br/>
+Nessa miss&#227;o, os clientes podem pedir vir com muita fome e pedir mais de um cachorro. 
+Voc&#234; vai perguntar para cada cliente quantos lanches ele deseja, e somar essa quantidade em uma vari&#225;vel. 
+Ao final vais dizer quantos lanches precisam ser feitos. <br/>
+<br/>
+Os novos comandos para essa tarefa j&#225; foram inseridos no programa.		
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		
+			<hint category="Slider"/>
+		
+			<hint category="LastError" condition="Hints.blockTypeLastError() == 'do_deliver'">
+			<![CDATA[
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
+			a partir de outra vari&#225;vel. Verifique se os blocos [pickUpHotDog] e [askForFood] est&#227;o referenciando corretamente suas vari&#225;veis.
+			]]>
+			</hint>
+		
+			<hint category="LastError" condition="Hints.blockTypeLastError() == 'variables_set' &amp;&amp; Hints.containsBlockTypeLastError('prepare_pickUpHotDog')">
+			<![CDATA[
+			Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou o pedido em uma vari&#225;vel e est&#225; a pegar o produto com 
+			base em outra vari&#225;vel. Verifique em que vari&#225;vel o bloco [askForFood] guardou o valor e use a mesma vari&#225;vel como 
+			par&#226;metro deste [pickUpHotDog].
+			]]>
+			</hint>
+			
+			<hint category="Iddle" condition = "Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countInstructions() > 5">
+			<![CDATA[
+			Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para duplicar o bloco. 
+			Se manter a tecla [Ctrl] pressionada, pode selecionar v&#225;rios blocos. 
+			Resolve primeiro para um cliente e depois utiliza esse recurso para reaproveitar o c&#243;digo para outro cliente.
+			]]>
+			</hint>
+			
+		</sequence>
+		<errors>
+
+			
+		</errors>
+	</hints>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		
+		<category name="askWantHowManyFoods" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="3">
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="3">
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="3">
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600">
+		
+		<objective pos="1" place="counter">askWantHowManyFoods</objective>
+		
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+
+		<objective pos="3" place="counter">askWantHowManyFoods</objective>
+		
+		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		
+	</objectives>
+	<xml>
+	
+		<block type="variables_set" deletable="false" x = "300" y = "1" >
+			<field name="VAR">contador</field>
+			<value name="VALUE">
+				<block type="math_number" deletable="false">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+		</block>
+		
+		<block type="variables_set" deletable="false" x = "300" y = "50" >
+			<field name="VAR">contador</field>
+			<value name="VALUE">
+				<block type="math_arithmetic" deletable="false">
+					<field name="OP">ADD</field>
+					<value name="A">
+						<block type="variables_get" deletable="false">
+							<field name="VAR">contador</field>
+						</block>
+					</value>
+					<value name="B">
+						<block type="ask_askWantHowManyFoods" deletable="false"> </block>
+					</value>
+				</block>
+			</value>
+		</block>
+		
+		<block type="do_talk" deletable="false" x = "300" y = "110" >
+			<value name="VALUE">
+				<block type="variables_get" deletable="false">
+					<field name="VAR">contador</field>
+				</block>
+			</value>
+		</block>
+		
+	</xml>
+</mission>

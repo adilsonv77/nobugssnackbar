@@ -117,14 +117,24 @@ CustomerManager.reset = function() {
 				var foods = CustomerManager.extractItems("food", _foods, null, randomType);
 				var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length, randomType);
 			
+				if (randomType === "random") {
+					var res = CustomerManager.randomOrder(
+							parseInt(orders[i].getAttribute("randomMin")),
+							parseInt(orders[i].getAttribute("randomMax")),
+							foods, drinks
+					);
+					
+					foods = res[0]; drinks = res[1];
+				}
+				
 				var fRMin = _foods.getAttribute("randomMin");
-				fRMin = parseInt(fRMin == null?"0":fRMin);
+//				fRMin = parseInt(fRMin == null?"0":origFRMin);
 				
 				var dRMin = _drinks.getAttribute("randomMin");
-				dRMin = parseInt(dRMin == null?"0":dRMin);
+//				dRMin = parseInt(dRMin == null?"0":dRMin);
 				
 			//	if (foods.length > 0 || drinks.length > 0)
-					custPattern.push({ hasRandom: randomType != null || (fRMin > 0) || (dRMin > 0) , 
+					custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
 						                   randomType: randomType,
 										   foods: foods, drinks: drinks});
 			}
@@ -251,6 +261,24 @@ CustomerManager.selectCustomers = function(howMany, previous) {
 	
 	return ret;
 	
+};
+
+CustomerManager.randomOrder = function(randomMin, randomMax, foods, drinks) {
+
+	var howMany = Math.floor((Math.random() * ((randomMax-randomMin)+1))) + randomMin;
+	var t = foods.length+drinks.length;
+	while (t > howMany) {
+		
+		var idx = Math.floor((Math.random() * (t)));
+		if (idx < foods.length) {
+			foods.splice(idx, 1);
+		} else
+			drinks.splice(idx - foods.length, 1);
+			
+		t--;
+	}
+	
+	return [foods, drinks];
 };
 
 CustomerManager.extractItems = function(key, list, foodsLen, randomType) {
@@ -397,7 +425,7 @@ CustomerManager.getCustomerPosition = function(id) {
 CustomerManager.totalOfFood = function() {
 	var ret = 0;
 	for (var i = 0; i < customers.length; i++)
-		ret += customers[i].wishesFoods.length;
+		ret += customers[i].askWantHowManyFoods();
 	
 	return ret;
 };
@@ -405,7 +433,21 @@ CustomerManager.totalOfFood = function() {
 CustomerManager.totalOfDrinks = function() {
 	var ret = 0;
 	for (var i = 0; i < customers.length; i++)
-		ret += customers[i].wishesDrinks.length;
+		ret += customers[i].askWantHowManyDrinks();
 	
 	return ret;
+};
+
+CustomerManager.totalOfMoneyIfSell = function() {
+	
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++) {
+		
+		ret += customers[i].askHowMuchInFoodsIfSell();
+		ret += customers[i].askHowMuchInDrinksIfSell();
+		
+	}
+	
+	return ret;
+	
 };

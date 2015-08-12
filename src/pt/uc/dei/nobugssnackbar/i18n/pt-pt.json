@@ -8,8 +8,8 @@
 	"Apps.catLoops": "La&#231;os",
 	"Apps.catVariables": "Vari&#225;veis",
 	"Apps.catMath": "Matem&#225;tica",
-	"Apps.catYourMachines" : "Seus equipamentos",
 	"Apps.catText": "Texto",
+	"Apps.catYourMachines" : "Seus equipamentos",
 	"SnackMan.catSnackMan": "SnackMan",
 	"SnackMan.constSnackMan": "Constantes",
 	
@@ -87,6 +87,8 @@
 	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja",
 	"SnackMan.constSoftDrinkTooltip" : "Refrigerante",
 	"SnackMan.talkTooltip" : "Mostra um bal&#227;o de conversa.",
+	"SnackMan.askWantHowManyFoodsTooltip" : "Pergunto ao cliente quantos lanches ele deseja comer.",
+	"SnackMan.askWantHowManyDrinksTooltip" : "Pergunto ao cliente quantas bebidas ele deseja.",
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
@@ -144,6 +146,8 @@
 	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) %0.",
 	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o %0.",
 	"Explane.Talk": "Falar %0.",
+	"Explane.AskWantHowManyFoods":"Pergunta ao cliente %0 quantos lanches ele deseja comer.",
+	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
 	
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	

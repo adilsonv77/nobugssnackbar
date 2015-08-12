@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-08-12 10:29:09.741000",
+		"lastupdated": "2015-08-12 17:22:51.380000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -79,6 +79,8 @@
 	"SnackMan.askForFoodTooltip": "Asks the customer about what he wants to eat.",
 	"SnackMan.catchFoodTooltip": "Catches the food from the display and put it on a platter ready will deliver to the customer.",
 	"SnackMan.askHasHungerTooltip": "Asks the customer if he wants to eat something.",
+	"SnackMan.askWantHowManyFoodsTooltip": "Asks the customer how many snacks he wants to eat.",
+	"SnackMan.askWantHowManyDrinksTooltip": "Asks the customer how many drinks he wants.",
 	"SnackMan.goToCoolerTooltip": "Moves the snack man to the cooler.",
 	"SnackMan.askForDrinkTooltip": "Asks the customer about what he wants to drink.",
 	"SnackMan.catchDrinkTooltip": "Catches the drink from the cooler and put it on a platter ready will deliver to the customer.",
@@ -140,6 +142,8 @@
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
 	"Explane.Talk": "Talk %0.",
+	"Explane.AskWantHowManyFoods": "Ask the customer %0 how many foods he wants to eat.",
+	"Explane.AskWantHowManyDrinks": "Ask the customer %0 how many drinks he wants.",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",

@@ -464,7 +464,7 @@ SnackMan.prototype.pickUpDrink = function(order) {
 	
 };
 
-SnackMan.prototype.hasThirsty = function() {
+SnackMan.prototype.askWantHowManyDrinks = function() {
 	var found = this.getCustomer();
 	
 	if (!found) {
@@ -472,6 +472,21 @@ SnackMan.prototype.hasThirsty = function() {
 		throw false;
 	}
 	
+	var qtd = found.askWantHowManyDrinks();
+	
+	this.verifyObjectives("askWantHowManyDrinks", found);
+	
+	return qtd;
+	
+};
+
+SnackMan.prototype.hasThirsty = function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
 	
 	this.update('XX'); // reset any speech bubble
 	
@@ -497,7 +512,6 @@ SnackMan.prototype.askForFood = function() {
 		throw false;
 	}
 	
-	
 	this.update('XX'); // reset any speech bubble
 	
 	this.update('IM', 0);  // turn to front
@@ -507,7 +521,7 @@ SnackMan.prototype.askForFood = function() {
 	return food;
 };
 
-SnackMan.prototype.hasHunger = function() {
+SnackMan.prototype.askWantHowManyFoods = function() {
 	var found = this.getCustomer();
 	
 	if (!found) {
@@ -515,6 +529,21 @@ SnackMan.prototype.hasHunger = function() {
 		throw false;
 	}
 	
+	var qtd = found.askWantHowManyFoods();
+	
+	this.verifyObjectives("askWantHowManyFoods", found);
+	
+	return qtd;
+	
+};
+
+SnackMan.prototype.hasHunger = function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
 	
 	this.update('XX'); // reset any speech bubble
 	

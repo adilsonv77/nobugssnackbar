@@ -430,6 +430,30 @@ Customer.prototype.draw = function(ctx) {
 		
 };
 
+Customer.prototype.askWantHowManyFoods = function() {
+	return this.wishesFoods.length;
+};
+
+Customer.prototype.askHowMuchInFoodsIfSell = function() {
+	var ret = 0;
+	for (var i = 0; i < this.wishesFoods.length; i++)
+		ret += this.wishesFoods[i].price;
+	
+	return ret;
+};
+
+Customer.prototype.askWantHowManyDrinks = function() {
+	return this.wishesDrinks.length;
+};
+
+Customer.prototype.askHowMuchInDrinksIfSell = function() {
+	var ret = 0;
+	for (var i = 0; i < this.wishesDrinks.length; i++)
+		ret += this.wishesDrinks[i].price;
+	
+	return ret;
+};
+
 Customer.prototype.askForDrink = function() {
 	if (this.dUnfulfilled >= this.drinks.length)
 		return null;

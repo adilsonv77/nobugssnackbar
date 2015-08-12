@@ -188,7 +188,35 @@ Blockly.JavaScript['prepare_pickUpHotDog'] = function(block) {
 	return ['pickUpHotDog( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['ask_askWantHowManyFoods'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askWantHowManyFoods');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyFoodsTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askWantHowManyFoods'] = function(block) {
+	  return ['askWantHowManyFoods()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
 	
+
+Blockly.Blocks['ask_askWantHowManyDrinks'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askWantHowManyDrinks');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyDrinksTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askWantHowManyDrinks'] = function(block) {
+	  return ['askWantHowManyDrinks()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+		
 /******************************************************************************
  *                          Snackman Drinks
  ******************************************************************************/	
