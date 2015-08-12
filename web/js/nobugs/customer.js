@@ -79,9 +79,13 @@ Customer = function(options) {
 	this.hasRandom = options.hasRandom;
 	this.drinks = options.drinks;
 	this.dUnfulfilled = 0;
+	this.wishesDrinks = [];
+	this.wishesDrinks = this.wishesDrinks.concat(options.drinks);
 	
 	this.foods = options.foods;
 	this.fUnfulfilled = 0;
+	this.wishesFoods = [];
+	this.wishesFoods = this.wishesFoods.concat(options.foods);
 	
 	this.currentNode = CustOpt.nodes[options.init];
 	this.reallyCurrentNode = this.currentNode;

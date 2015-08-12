@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-08-10 17:52:59.929000",
+		"lastupdated": "2015-08-12 10:29:09.741000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -74,6 +74,7 @@
 	"SnackMan.isThereACustomerTooltip": "Verify if there is a customer in the currently position.",
 	"SnackMan.deliverTooltip": "Delivers the food or drink to the customer near the cooker.",
 	"SnackMan.waittip": "Wait some seconds before the next command.",
+	"SnackMan.talkTooltip": "Show a speech bubble in the snackbar.",
 	"SnackMan.goToDisplayTooltip": "Moves the snack man to the display.",
 	"SnackMan.askForFoodTooltip": "Asks the customer about what he wants to eat.",
 	"SnackMan.catchFoodTooltip": "Catches the food from the display and put it on a platter ready will deliver to the customer.",
@@ -114,6 +115,7 @@
 	"Error.variableName": "Variable name is wrong:\n\n- Don't use repeated variable names.\n- Use only alphabetic characters and numbers.\n\n",
 	"Error.variableDoesntInitialized": "There is at least one variable that didn't receive a value before.",
 	"Error.showPrompt": "You checked before the box &quot;Prevent this page from creating additional dialogs&quot;. So you disabled new windows to ask you information. Press [F5] and try again to give a new variable name.",
+	"Error.variableNotInitialized": "Before the use of the variable %0, it must be initialized for instance with the value 0 (zero). ",
 	"Error.navigatorNotSupported": "This game is not supported by this browser. <x id='BREAK'/>It is recommended to be downloaded and the installation of any of the browsers below:",
 	"Error.incorrectID": "The user's ID, that you are trying to use is incorrect!",
 	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
@@ -137,6 +139,7 @@
 	"Explane.Deliver": "Deliver what the customer %0 ordered.",
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
+	"Explane.Talk": "Talk %0.",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",

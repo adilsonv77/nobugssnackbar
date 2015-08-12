@@ -270,7 +270,12 @@ Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 
 Blockly.BlockSvg.prototype.select = function() {
 	
-	Hints.hideHints();
+	try {
+		// depends where the editor is used, there are no hints
+		Hints.hideHints();
+	} catch (ex) {
+		
+	}
 	
 	var Game = Blockly.BlockSvg.Game;
 	

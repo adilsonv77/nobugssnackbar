@@ -196,7 +196,8 @@ SnackMan = function(objectives, mission, avatar) {
 	
 	this.catched = 0;
 	this.delivered = 0;
-
+	
+	this.talkText = null;
 };
 
 SnackMan.prototype.createAditionalObjective = function(objectives, key) {
@@ -246,9 +247,66 @@ SnackMan.prototype.reset = function() {
 
 };
 
+/**
+ * Draw a speech bubble on an HTML5-Canvas.
+ * Adapted by me (Adilson Vahldick)
+ *
+ * @author Alexander Thiemann <mail@agrafix.net>
+ * @license CC BY-SA 2.0
+ * 
+ * @param ctx Canvas 2d context
+ * @param text Text for the speech bubble
+ * @param x bottom left x-coordinate of speech bubble
+ * @param y bottom left y-coordinate of speech bubble
+ *
+ */
+SnackMan.prototype.speechBubble = function(ctx, text, x, y) {
+	
+	var messure = ctx.measureText(text);
+	
+	var w = messure.width;
+	if (w < 25)
+	  w = 25;
+	var h = 20;
+	
+	ctx.beginPath();
+	ctx.strokeStyle="black";
+	ctx.lineWidth="1";
+	ctx.fillStyle="rgba(255, 255, 255, 0.8)";
+	
+	// corner of balloon
+	ctx.moveTo(x, y);
+	ctx.lineTo(x + 4, y);
+	ctx.lineTo(x + 9, y+10);
+	ctx.lineTo(x + 9, y);
+	ctx.lineTo(x + w, y);
+	
+	ctx.quadraticCurveTo(x + 5 + w, y, x + 5 + w, y-(h*0.2)); // corner: right-bottom
+	
+	ctx.lineTo(x + 5 + w, y-(h*0.8)); // right
+	
+	ctx.quadraticCurveTo(x + 5 + w, y-h, x + w, y-h); // corner: right-top
+	
+	ctx.lineTo(x, y-h); // top
+	
+	ctx.quadraticCurveTo(x-5, y-h, x-5, y-(h*0.8)); // corner: left-top
+	
+	ctx.lineTo(x-5, y-(h*0.2)); // left
+	
+	ctx.quadraticCurveTo(x-5, y, x, y); // corner: left-bottom
+	
+	ctx.fill();
+	ctx.stroke();
+	ctx.closePath();
+	
+	ctx.textAlign = 'left';
+	ctx.fillStyle = '#000';
+	ctx.fillText(text, x, y-6);
+	
+};
+
 SnackMan.prototype.draw = function(ctx) {
 	
-		
 	this.drawInstalledMachines(ctx);
 	this.display.draw(ctx);
 	if (this.showJuice) 
@@ -260,6 +318,11 @@ SnackMan.prototype.draw = function(ctx) {
 		this.boxOfFruits.draw(ctx);
 	}
 	
+	if (this.talkText != null) {
+		
+		this.speechBubble(ctx, this.talkText, this.img.x, this.img.y);
+		
+	}
 };
 
 /**********************************************************************/
@@ -321,6 +384,8 @@ SnackMan.prototype.isThereACustomer = function() {
 	
 	var found = this.getCustomer();
 	
+	this.update('XX'); // reset any speech bubble
+	
 	this.update('IM', 0);  // turn to front
 	this.update('IM', 40); // turn to left to find a customer in the counter
 	this.update('IM', 0);  // turn to front
@@ -342,6 +407,8 @@ SnackMan.prototype.askForDrink = function() {
 		BlocklyApps.log.push(["fail", "Error_isntThirsty"]);
 		throw false;
 	}
+	
+	this.update('XX'); // reset any speech bubble
 	
 	this.update('IM', 0);  // turn to front
 	
@@ -405,6 +472,9 @@ SnackMan.prototype.hasThirsty = function() {
 		throw false;
 	}
 	
+	
+	this.update('XX'); // reset any speech bubble
+	
 	this.update('IM', 0);  // turn to front
 	this.verifyObjectives("askHasThirsty", found);
 
@@ -427,6 +497,9 @@ SnackMan.prototype.askForFood = function() {
 		throw false;
 	}
 	
+	
+	this.update('XX'); // reset any speech bubble
+	
 	this.update('IM', 0);  // turn to front
 
 	this.verifyObjectives("askForFood", found);
@@ -441,6 +514,9 @@ SnackMan.prototype.hasHunger = function() {
 		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
 		throw false;
 	}
+	
+	
+	this.update('XX'); // reset any speech bubble
 	
 	this.update('IM', 0);  // turn to front
 	this.verifyObjectives("askHasHunger", found);
@@ -640,7 +716,12 @@ SnackMan.prototype.deliver = function(item) {
 	
 };
 
-
+SnackMan.prototype.talk = function(text) {
+	
+	this.update('TA', text);
+	this.verifyObjectives("talk", text);
+	
+};
 
 SnackMan.prototype.goToBoxOfFruits = function() {
 	
@@ -750,6 +831,9 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 /**********************************************************/
 
 SnackMan.prototype.animate = function(command, values) {
+	if (command !== "IM") // the sequence of talk is TA and IM. So, if come any other command, can reset the text
+		this.talkText = null;
+	
 	  switch (command) {
 	    case 'AL' :
 	    	this.alertRun(values);
@@ -833,6 +917,10 @@ SnackMan.prototype.animate = function(command, values) {
 	 		break;
 	 		
 	 	case 'KM':
+	 		break;
+	 	
+	 	case 'TA':
+	 		this.talkText = values.shift();
 	 		break;
 	 	
 	  }

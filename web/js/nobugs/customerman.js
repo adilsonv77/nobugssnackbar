@@ -394,3 +394,18 @@ CustomerManager.getCustomerPosition = function(id) {
 	return "0";
 };
 
+CustomerManager.totalOfFood = function() {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++)
+		ret += customers[i].wishesFoods.length;
+	
+	return ret;
+};
+
+CustomerManager.totalOfDrinks = function() {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++)
+		ret += customers[i].wishesDrinks.length;
+	
+	return ret;
+};

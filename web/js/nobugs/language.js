@@ -48,6 +48,23 @@ Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  return 'goToBarCounter(' + value + ');\n';
 	};
 
+Blockly.Blocks['do_talk'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.appendValueInput('VALUE')
+		        .appendField('talk');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_talkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['do_talk'] = function(block) {
+	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+	  return 'talk(' + value + ');\n';
+	};
+
 Blockly.Blocks['do_deliver'] = {
 		  init: function() {
 		    this.setColour(160);

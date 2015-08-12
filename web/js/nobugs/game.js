@@ -1696,6 +1696,20 @@ Game.unlockBlockly = function() {
 	
 };
 
+Game.verifyMathArithVariable = function() {
+	
+	var varValue = findVariable(); // in objectives.js
+	if (varValue === undefined) {
+		
+		var varName = Game.jsInterpreter.variables[0].scope.properties["NoBugsJavaScript"].properties["varName"];
+		BlocklyApps.log = [];
+		BlocklyApps.log.push(["fail", "Error_variableNotInitialized", varName]);
+		throw false;
+		
+	}
+	return true;
+};
+
 Game.updateVariables = function() {
 	
 	var rows = [];
@@ -1708,7 +1722,7 @@ Game.updateVariables = function() {
 						"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
 						"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>" +  
 						"</div>";
-			}
+			} 
 				
 			rows.push({"name":entry.name, "value": data});
 		}
@@ -1862,7 +1876,8 @@ Game.nextStep = function() {
 			}
 		} catch (ex) {
 			  console.log(ex);
-			// when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
+
+			  // when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
 			  Game.animate();
 			  
 			  Game.unlockBlockly();
@@ -1983,10 +1998,18 @@ Game.initApi = function(interpreter, scope) {
     wrapper = function(f, t) {
         return interpreter.createPrimitive(Game.setTimeout(f.data, t.data));
       };
-    
+      
     interpreter.setProperty(scope, 'mySetTimeout',
           interpreter.createNativeFunction(wrapper));
     
+    
+    wrapper = function() {
+        return interpreter.createPrimitive(Game.verifyMathArithVariable());
+      };
+    
+    interpreter.setProperty(scope, 'verifyMathArithVariable',
+          interpreter.createNativeFunction(wrapper));
+
     
     // Move commands
 	wrapper = function(n) {
@@ -2098,6 +2121,13 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'deliver',
       interpreter.createNativeFunction(wrapper));
     
+	wrapper = function(t) {
+	      return interpreter.createPrimitive(hero.talk(t));
+	    };
+	    
+	interpreter.setProperty(scope, 'talk',
+		interpreter.createNativeFunction(wrapper));
+	
     // extended commands
     for (var i=0; i<hero.extendedCommands.length; i++) {
     	wrapper = function(o) {
@@ -2222,9 +2252,15 @@ Game.showError = function(iderror) {
 	var msg = iderror[0];
 	if (msg.indexOf("$") == 0) {
 		UserControl.getMessage(msg.substring(1), BlocklyApps.LANG, {callback:function(msgret) {msg = msgret;}, async:false});
-		container.innerHTML = msg.replace(/\\nn/g, '<br/>');
+		msg = msg.replace(/\\nn/g, '<br/>');
 	} else
-		container.innerHTML = BlocklyApps.getMsg(msg);
+		msg = BlocklyApps.getMsg(msg);
+	
+	if (iderror.length > 0)
+		msg = msg.format(iderror[1]);
+	
+	container.innerHTML = msg;
+	
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	

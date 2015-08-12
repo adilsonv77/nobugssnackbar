@@ -4,6 +4,9 @@ var NoBugsJavaScript = {};
 NoBugsJavaScript.oldVarSet = null;
 NoBugsJavaScript.oldLogicCompare = null;
 NoBugsJavaScript.varName= null;
+
+NoBugsJavaScript.oldMathArith = null;
+
 NoBugsJavaScript.typeComparison = "function nobugsComparison(arg0, arg1, operator) {if (arg0.type != undefined ) {arg0 = arg0.descr; } else if (arg1.type != undefined) {arg1 = arg1.descr;}var OPERATORS={'EQ': '==','NEQ': '!=','LT': '<','LTE': '<=','GT': '>','GTE': '>='};return eval(arg0 + ' ' + OPERATORS[operator] + ' ' + arg1);};";
 
 NoBugsJavaScript.redefine = function() {
@@ -15,6 +18,8 @@ NoBugsJavaScript.redefine = function() {
     	NoBugsJavaScript.oldVarSet = Blockly.JavaScript['variables_set'];
         Blockly.JavaScript['variables_set'] = NoBugsJavaScript.newVarSet;
         
+        NoBugsJavaScript.oldMathArith = Blockly.JavaScript['math_arithmetic'];
+        Blockly.JavaScript['math_arithmetic'] = NoBugsJavaScript.newMathArith;
     }
     
     if (NoBugsJavaScript.oldLogicCompare == null) {
@@ -32,6 +37,14 @@ NoBugsJavaScript.newVarSet = function(block) {
 	
 	return  'NoBugsJavaScript.varName="'+block.getFieldValue('VAR')+'";\n' + s +
 				'\nNoBugsJavaScript.varName=null;\n';
+};
+
+NoBugsJavaScript.newMathArith = function(block) {
+	
+	var s = NoBugsJavaScript.oldMathArith(block);
+	
+	return ["(verifyMathArithVariable()?" + s[0] + ":null)", s[1]]; 
+	
 };
 
 NoBugsJavaScript.OPERATORS = {

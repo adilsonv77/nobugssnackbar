@@ -154,7 +154,8 @@ public class JdbcDao<T> {
 			boolean insert = false;
 
 			for (Field f : pks) {
-				if (f.get(obj) == null) {
+				if (f.get(obj) == null || (f.getType() == Integer.class && ((Integer)f.get(obj)) == 0)
+									   || (f.getType() == Long.class && ((Long)f.get(obj)) == 0)) {
 					insert = true;
 					break;
 				}

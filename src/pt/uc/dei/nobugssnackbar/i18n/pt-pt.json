@@ -9,6 +9,7 @@
 	"Apps.catVariables": "Vari&#225;veis",
 	"Apps.catMath": "Matem&#225;tica",
 	"Apps.catYourMachines" : "Seus equipamentos",
+	"Apps.catText": "Texto",
 	"SnackMan.catSnackMan": "SnackMan",
 	"SnackMan.constSnackMan": "Constantes",
 	
@@ -85,6 +86,7 @@
 	"SnackMan.prepareAndCatchJuiceTooltip" : "Usa a fruta p&#234;ga e prepara o sumo.",
 	"SnackMan.constjuiceOfOrangeTooltip" : "Sumo de laranja",
 	"SnackMan.constSoftDrinkTooltip" : "Refrigerante",
+	"SnackMan.talkTooltip" : "Mostra um bal&#227;o de conversa.",
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
@@ -114,6 +116,7 @@
 	"Error.navigatorNotSupported": "Este jogo n&#227;o &#233; suportado por este navegador. \nn &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
 	"Error.incorrectID": "O ID do usu&#225;rio, que voc&#234; est&#225; tentando usar est&#225; incorreto.",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
+	"Error.variableNotInitialized" : "Antes de usar a vari&#225;vel %0, ela precisa ser inicializada com um valor 0 (zero).",  
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
@@ -140,6 +143,7 @@
 	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente %0.",
 	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) %0.",
 	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos s&#227;o %0.",
+	"Explane.Talk": "Falar %0.",
 	
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	

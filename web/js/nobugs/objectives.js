@@ -144,6 +144,10 @@ Objective.factory = function(key) {
 	case "commQtd": 
 		this.factories[key] = new Objective.CommsQtd();
 		break;
+		
+	case "talk":
+		this.factories[key] = new Objective.Talk();
+		break;
 	}
 	
 	return this.factories[key];
@@ -430,4 +434,29 @@ Objective.CommsQtd.prototype.createExplanationItem = function(objective) {
 	
 };
 
+
+/******************************************************************************
+ *                                Talk
+ ******************************************************************************/
+
+Objective.Talk = function() {};
+Objective.Talk.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	p.text = elem.getAttribute("text");
+	p.value = elem.getAttribute("value");
+	return p;
+};
+
+Objective.Talk.prototype.checkObjective = function(options, objective)  {
+
+	var value = eval(objective.value);
+	
+	return value === options.data;
+
+};
+
+Objective.Talk.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_talk");
+	return text.format(objective.text);
+};
 

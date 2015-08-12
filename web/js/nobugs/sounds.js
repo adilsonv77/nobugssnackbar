@@ -105,12 +105,13 @@ PlayAudio.prototype.shuffle = function() {
 };
 
 PlayAudio.prototype.play = function() {
-	
+	/*
 	noBugsAudio.addEventListener('ended', this.playNext.bind(this));
 
 	if (!this.playing) 
 	  this.playNext();
 	noBugsAudio.play();
+	*/
 };
 
 PlayAudio.prototype.stop = function() {

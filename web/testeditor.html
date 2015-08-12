@@ -40,12 +40,10 @@
 						  		 "logic": true, "math": true, "vars": true, "function": true}}); 
 		    		  
 		    			var s = '<category name="Fliper"> <block type="fliper_pegarbola"/> <block type="fliper_dirporta"><value name="PORTA"><block type="cons_porta_p"></block></value></block> <block type="fliper_coloqueBola"><value name="BOLA"><block type="variables_get" id="103"><field name="VAR">bola</field></block></value><value name="SAIDA"><block type="cons_saida_a"></block></value></block> <block type="cons_porta_p"/><block type="cons_porta_r"/><block type="cons_posicao_0"/><block type="cons_posicao_1"/><block type="cons_saida_a"/><block type="cons_saida_b"/><block type="cons_saida_c"/></category>';
-		    			s = s + '</xml>';
+		    			s = s + '<category name="Text"><block type="do_talk"></block><block type="text"></block><block type="text_join"><mutation items="2"></mutation><value name="ADD0"><block type="text"><field name="TEXT">Hello</field></block></value><value name="ADD1"><block type="text"><field name="TEXT">World</field></block></value></block></category></xml>';
 		    			
 		    		toolbox = toolbox.replace('</xml>', s);
 
-		    		toolbox = '<xml><category name="Variáveis" custom="VARIABLE"></category><category name="Condicionais"><block type="controls_if"></block><block type="logic_compare"></block><block type="logic_operation"></block><block type="logic_negate"></block><block type="logic_boolean"></block></category><category name="Matemática"><block type="math_number"></block><block type="math_arithmetic"></block></category><category name="Fliper"> <block type="fliper_pegarbola"/> <block type="fliper_dirporta"><value name="PORTA"><block type="cons_porta_p"></block></value></block> <block type="fliper_coloqueBola"><value name="BOLA"><block type="variables_get" id="103"><field name="VAR">bola</field></block></value><value name="SAIDA"><block type="cons_saida_a"></block></value></block> <block type="cons_porta_p"/><block type="cons_porta_r"/><block type="cons_posicao_0"/><block type="cons_posicao_1"/><block type="cons_saida_a"/><block type="cons_saida_b"/><block type="cons_saida_c"/></category></xml>';
-		    		
 		    		Blockly.myToolBox = toolbox;
 		    		
 	    		};
