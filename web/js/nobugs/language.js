@@ -102,12 +102,26 @@ Blockly.JavaScript['ask_isThereACustomer'] = function(block) {
 	
 Blockly.Blocks['do_wait'] = {
 		init : function() {
+			
+		    this.jsonInit({
+		    	"message0": 'wait %1 s',
+		    	 "args0": [
+		     	           {
+		    	             "type": "input_value",
+		    	             "name": "VALUE"
+		    	           }
+		    	         ],
+		    	 "colour": Blockly.Blocks.variables.HUE
+		    });
+			
 			this.jsonInit({});
 		    this.setColour(160);
+		    /*
 		    this.interpolate_(
 		    	'wait %1 s',
 		    	['VALUE', null, Blockly.ALIGN_RIGHT],
 		        Blockly.ALIGN_RIGHT);
+		        */
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
 		    this.setTooltip('SnackMan_waitTooltip');
