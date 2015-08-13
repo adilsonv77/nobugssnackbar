@@ -250,7 +250,7 @@ public class MissionManager implements Serializable {
 		ResourceBundle messageBundle = ApplicationMessages.getMessage();*/
 		
 		if (isMissionSelected()) {
-			missionDao.delete(mission.getId()); // delete the mission from DB
+			missionDao.deleteMission(mission.getId()); // delete the mission from DB
 			
 			missionList.remove(mission);
 			addMission();
