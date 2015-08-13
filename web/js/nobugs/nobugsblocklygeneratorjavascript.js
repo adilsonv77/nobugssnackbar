@@ -39,12 +39,84 @@ NoBugsJavaScript.newVarSet = function(block) {
 				'\nNoBugsJavaScript.varName=null;\n';
 };
 
+//Basic arithmetic operators, and power.
+NoBugsJavaScript.ARITH_OPERATORS = {
+  'ADD': [' + ', Blockly.JavaScript.ORDER_ADDITION],
+  'MINUS': [' - ', Blockly.JavaScript.ORDER_SUBTRACTION],
+  'MULTIPLY': [' * ', Blockly.JavaScript.ORDER_MULTIPLICATION],
+  'DIVIDE': [' / ', Blockly.JavaScript.ORDER_DIVISION],
+  'POWER': [null, Blockly.JavaScript.ORDER_COMMA]  // Handle power separately.
+};
+
+
 NoBugsJavaScript.newMathArith = function(block) {
 	
-	var s = NoBugsJavaScript.oldMathArith(block);
+	var vars = "";
+	if (block.inputList[0].connection.targetConnection != null && block.inputList[0].connection.targetConnection.sourceBlock_.type === "variables_get") {
+		vars = "\"" + block.inputList[0].connection.targetConnection.sourceBlock_.inputList[0].fieldRow[0].text_ + "\"" ;
+	}
+
+	if (block.inputList[1].connection.targetConnection != null && block.inputList[1].connection.targetConnection.sourceBlock_.type === "variables_get") {
+		vars = vars + (vars === ""?"":",") + "\"" + block.inputList[1].connection.targetConnection.sourceBlock_.inputList[0].fieldRow[0].text_+ "\"";
+	}
 	
-	return ["(verifyMathArithVariable()?" + s[0] + ":null)", s[1]]; 
+	// based from the original JavaScript
+	  var operator = block.getFieldValue('OP');
+	  var order = NoBugsJavaScript.ARITH_OPERATORS[operator][1];
+	  var argument0 = Blockly.JavaScript.valueToCode(block, 'A', order) || '0';
+	  var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
+
+	  var code = 'nobugsMathArith(%0, %1, "%2")'.format(argument0, argument1, operator);
 	
+	return ["(verifyMathArithVariable([" + vars + "])?" + code + ":null)", 
+	        		Blockly.JavaScript.ORDER_FUNCTION_CALL]; 
+	
+};
+
+function nobugsMathArith(arg0, arg1, operator) {
+	
+	operator = NoBugsJavaScript.ARITH_OPERATORS[(operator.data == null?operator:operator.data)][0];
+	
+	if (isNaN(parseInt(arg0))) {
+		arg0 = arg0.data;
+		
+		if (arg0 == undefined) {
+			BlocklyApps.log.push(["fail", "Error_variableDoesntInitialized"]);
+			throw false;
+		}
+		
+		if (arg0.type != undefined) 
+			arg0 = arg0.value;
+		
+	}
+
+	if (isNaN(parseInt(arg1))) {
+		arg1 = arg1.data;
+		
+		if (arg1 == undefined) {
+			BlocklyApps.log.push(["fail", "Error_variableDoesntInitialized"]);
+			throw false;
+		}
+		
+		if (arg1.type != undefined) 
+			arg1 = arg1.value;
+		
+	}
+	
+	if (arg0 == undefined || arg1 == undefined) {
+		BlocklyApps.log.push(["fail", "Um das variaveis nao eh um numero"]);
+		throw false;
+	}
+	
+	if (!operator) {
+	    var code = 'Math.pow(' + arg0 + ', ' + arg1 + ')';
+	    return eval(code);
+	} else 
+		if (operator === NoBugsJavaScript.ARITH_OPERATORS['DIVIDE'][0]) {
+			return eval ('Math.floor(' +arg0 + ' / ' + arg1+')');
+		}
+	
+	return  eval(arg0 + ' ' + operator + ' ' + arg1);
 };
 
 NoBugsJavaScript.OPERATORS = {

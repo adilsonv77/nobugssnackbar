@@ -1696,16 +1696,30 @@ Game.unlockBlockly = function() {
 	
 };
 
-Game.verifyMathArithVariable = function() {
+Game.verifyMathArithVariable = function(verifyVars) {
 	
-	var varValue = findVariable(); // in objectives.js
-	if (varValue === undefined) {
-		
-		var varName = Game.jsInterpreter.variables[0].scope.properties["NoBugsJavaScript"].properties["varName"];
-		BlocklyApps.log = [];
-		BlocklyApps.log.push(["fail", "Error_variableNotInitialized", varName]);
-		throw false;
-		
+	var vars = Game.jsInterpreter.variables;
+
+	var len = verifyVars.length;
+	verifyVars = verifyVars.properties;
+	for (var i = 0; i < len; i++) {
+	
+		var entry = verifyVars[i].data;
+		for (var i = 0; i < vars.length; i++) {
+			if (vars[i].name === entry) {
+				
+				if (vars[i].scope.properties[entry].data === undefined) {
+					
+					BlocklyApps.log = [];
+					BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
+					throw false;
+					
+				}
+				
+				return true;
+			}
+		}
+	
 	}
 	return true;
 };
@@ -1995,6 +2009,13 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'nobugsComparison',
           interpreter.createNativeFunction(wrapper));
 
+	wrapper = function(a0, a1, op) {
+        return interpreter.createPrimitive(nobugsMathArith(a0, a1, op));
+      };
+    
+    interpreter.setProperty(scope, 'nobugsMathArith',
+          interpreter.createNativeFunction(wrapper));
+
     wrapper = function(f, t) {
         return interpreter.createPrimitive(Game.setTimeout(f.data, t.data));
       };
@@ -2003,8 +2024,8 @@ Game.initApi = function(interpreter, scope) {
           interpreter.createNativeFunction(wrapper));
     
     
-    wrapper = function() {
-        return interpreter.createPrimitive(Game.verifyMathArithVariable());
+    wrapper = function(v) {
+        return interpreter.createPrimitive(Game.verifyMathArithVariable(v));
       };
     
     interpreter.setProperty(scope, 'verifyMathArithVariable',
@@ -2142,6 +2163,22 @@ Game.initApi = function(interpreter, scope) {
 	    
 	interpreter.setProperty(scope, 'talk',
 		interpreter.createNativeFunction(wrapper));
+
+	// Money
+	wrapper = function(v) {
+	      return interpreter.createPrimitive(hero.cashIn(v));
+	    };
+	    
+	interpreter.setProperty(scope, 'cashIn',
+		interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(v, m) {
+	      return interpreter.createPrimitive(hero.giveChange(v, m));
+	    };
+	    
+	interpreter.setProperty(scope, 'giveChange',
+		interpreter.createNativeFunction(wrapper));
+
 	
     // extended commands
     for (var i=0; i<hero.extendedCommands.length; i++) {

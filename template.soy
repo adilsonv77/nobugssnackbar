@@ -509,6 +509,36 @@
 	      
 	    </category>
     {/if}
+    
+    {if $ij.enabled['money']}
+	    <category name="{msg meaning="SnackMan.catMoney" desc="--"}Money{/msg}">
+	    	<block type="money_cashIn"> 
+		    	<value name="VALUE">
+					<block type="variables_get">
+						<field name="VAR">{{msg meaning="NoBugs.amountCharged" desc="---"}}amountCharged{{/msg}}</field>
+					</block>
+		    	</value>
+	    	</block>
+	    	
+	    	<block type="money_giveChange"> 
+		    	<value name="VALUE">
+					<block type="variables_get">
+						<field name="VAR">{{msg meaning="NoBugs.numberBankNotes" desc="---"}}numberOfBankNotes{{/msg}}</field>
+					</block>
+		    	</value>
+		    	<value name="COINSBANKNOTES">
+		    		<block type="const_money5"></block>
+		    	</value>
+	    	</block>
+	    	
+	    	<block type="const_money1"></block>
+	    	<block type="const_money2"></block>
+	    	<block type="const_money5"></block>
+	    	<block type="const_money10"></block>
+	    	<block type="const_money20"></block>
+	    </category>
+	{/if}
+	
     {if $ij.enabled['vars']}
     <category name="{msg meaning="Apps.catVariables" desc="--"}Variables{/msg}" custom="VARIABLE"></category>
     {/if}

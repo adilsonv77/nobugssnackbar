@@ -1,6 +1,5 @@
 <?xml version='1.0'?>
 <mission>
-	<slider timesBefore="2"/>
 	<explanation>
 		<page>
 		<![CDATA[
@@ -13,7 +12,7 @@ Pergunte a cada cliente quanto ele quer comer e beber, e depois multiplique essa
 pre&#231;o do produto. Para a multiplica&#231;&#227;o, no menu [Matem&#225;tica] utilize o bloco de soma e troque 
 para a opera&#231;&#227;o que lhe interessa. No final fale o valor total das vendas.<br/>
 <br/>
-Para te ajudar a avan&#231;ar, te trouxe o c&#243;digo do &#250;ltimo programa em que utilizastes blocos matem&#225;ticos.  
+  
 		]]>
 		</page>
 
@@ -140,7 +139,7 @@ Para te ajudar a avan&#231;ar, te trouxe o c&#243;digo do &#250;ltimo programa e
 		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 		
 	</objectives>
-	<xml preload="19">
+	<xml preload="21">
 		
 	</xml>
 </mission>

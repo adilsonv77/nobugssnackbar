@@ -5,7 +5,7 @@ var regex = /^(?!(?:do|if|in|for|let|new|try|var|case|else|enum|eval|null|this|t
 
 VariableNames.validate = function(name) {
 	var variables = [];
-	var js = Blockly.JavaScript.workspaceToCode();
+	var js = Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace);
 	
 	loadVarNames();
 	return regex.test(name) && variables.indexOf(name) == -1;

@@ -157,6 +157,8 @@ Customer = function(options) {
 	this.openMission = options.openMission;
 	this.idxPattern = options.idxPattern;
 	this.baloonLeft = options.baloonLeft;
+	
+	this.amountPaid = 0;
 	/*
 	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();
@@ -547,4 +549,35 @@ Customer.prototype.deliver = function(item) {
 		} 
 	
 	return {money: money, happy: happy, reason: reason};
+};
+
+Customer.typesOfMoney = [10, 20, 50];
+
+Customer.prototype.cashIn = function(value) {
+	
+	var amountPayable = this.askHowMuchInDrinksIfSell() + this.askHowMuchInFoodsIfSell();
+	
+	// the customer has already paid
+	if (this.amountPaid != 0) {
+		BlocklyApps.log.push(["fail", "Error_alreadyPaid"]);
+		throw false;
+	}
+	
+	// Both values are not the same
+	if (amountPayable != value) {
+		BlocklyApps.log.push(["fail", "Error_incorrectAccount"]);
+		throw false;
+	}
+	
+	var selectMoney = [].concat(Customer.typesOfMoney);
+	if (amountPayable > 10)
+		selectMoney.splice(0, 1);
+	
+	if (amountPayable > 20)
+		selectMoney.splice(0, 1);
+	
+	var idx = Math.floor(Math.random() * selectMoney.length);
+	this.amountPaid = selectMoney[idx];
+	
+	return {type: "money", descr:"$$banknote" + selectMoney[idx], value:selectMoney[idx], source: this.currentNode.id, sourceType: this.placeType};
 };

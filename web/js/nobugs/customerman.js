@@ -430,7 +430,7 @@ CustomerManager.totalOfFood = function() {
 	return ret;
 };
 
-CustomerManager.totalOfDrinks = function() {
+CustomerManager.totalOfDrink = function() {
 	var ret = 0;
 	for (var i = 0; i < customers.length; i++)
 		ret += customers[i].askWantHowManyDrinks();

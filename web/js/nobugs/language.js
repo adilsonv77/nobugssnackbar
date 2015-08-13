@@ -114,8 +114,7 @@ Blockly.Blocks['do_wait'] = {
 		    	 "colour": Blockly.Blocks.variables.HUE
 		    });
 			
-			this.jsonInit({});
-		    this.setColour(160);
+//		    this.setColour(160);
 		    /*
 		    this.interpolate_(
 		    	'wait %1 s',
@@ -135,7 +134,134 @@ Blockly.JavaScript['do_wait'] = function(block) {
 	  return 'WAIT_NOBUGS[' + (parseInt(value)*1000) + ']';
 	};
 
-	
+
+/******************************************************************************
+ *                          Snackman Money
+ ******************************************************************************/	
+
+Blockly.Blocks['money_cashIn'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendValueInput("VALUE")
+		        .appendField('cashIn');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_cashInTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['money_cashIn'] = function(block) {
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null';
+	return ['cashIn( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['money_giveChange'] = {
+		  init: function() {
+			  
+		    this.jsonInit({
+		    	"message0": 'giveChange %1 '+BlocklyApps.getMsg('_with')+' %2 '+BlocklyApps.getMsg('_coins')+'/'+ BlocklyApps.getMsg('_banknotes'),
+		    	 "args0": [
+		     	           {
+		    	             "type": "input_value",
+		    	             "name": "VALUE"
+		    	           },
+		     	           {
+		    	             "type": "input_value",
+		    	             "name": "COINSBANKNOTES"
+		    	           }
+		    	           
+		    	         ],
+		    	 "colour": Blockly.Blocks.variables.HUE
+		    });
+				
+
+		    this.setOutput(true);
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_giveChangeTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['money_giveChange'] = function(block) {
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null';
+	var coinsBankNotes = Blockly.JavaScript.valueToCode(block, 'COINSBANKNOTES', Blockly.JavaScript.ORDER_NONE) || 'null';
+	return ['giveChange( ' + value + ',' + coinsBankNotes +' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money1'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_coin') + ' 1');
+		  }
+		};
+
+Blockly.JavaScript['const_money1'] = function(block) {
+	return ['\"\\\"$$$money1\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money2'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_banknote') + ' 2');
+		  }
+		};
+
+Blockly.JavaScript['const_money2'] = function(block) {
+	return ['\"\\\"$$$money2\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money5'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_banknote') + ' 5');
+		  }
+		};
+
+Blockly.JavaScript['const_money5'] = function(block) {
+	return ['\"\\\"$$$money5\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money10'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_banknote') + ' 10');
+		  }
+		};
+
+Blockly.JavaScript['const_money10'] = function(block) {
+	return ['\"\\\"$$$money10\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money20'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_banknote') + ' 20');
+		  }
+		};
+
+Blockly.JavaScript['const_money20'] = function(block) {
+	return ['\"\\\"$$$money20\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_money50'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField(BlocklyApps.getMsg('_banknote') + ' 50');
+		  }
+		};
+
+Blockly.JavaScript['const_money50'] = function(block) {
+	return ['\"\\\"$$$money50\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
 /******************************************************************************
  *                          Snackman Food
  ******************************************************************************/	

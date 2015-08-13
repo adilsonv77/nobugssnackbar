@@ -227,6 +227,8 @@ SnackMan.prototype.reset = function() {
 	this.catched = 0;
 	this.delivered = 0;
 	
+	this.talkText = null;
+	
 	this.img.image = this.imgCooker;
 	
 	this.img.x = this.currentNode.x;
@@ -853,6 +855,40 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 	}
 	this.update('CO', 0);
 
+};
+
+/**********************************************************/
+/**                    money methods                      */
+/**********************************************************/
+
+SnackMan.prototype.cashIn = function(value) {
+	
+	if (value == undefined) {
+		BlocklyApps.log.push(["fail", "Error_variableNotInitialized", varName]);
+		throw false;
+	}
+	
+	if (isNaN(value)) {
+		BlocklyApps.log.push(["fail", "Error_paramIsNotANumber"]);
+		throw false;
+	}
+	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var ret = found.cashIn(value);
+	
+	// TODO: o cozinheiro tem um balao com moedas e o cliente um balao com cedulas
+	
+	return ret;
+};
+
+SnackMan.prototype.giveChange = function(value, typeOfMoney) {
+	
 };
 
 /**********************************************************/
