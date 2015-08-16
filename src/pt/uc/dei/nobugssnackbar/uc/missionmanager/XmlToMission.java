@@ -194,14 +194,34 @@ public class XmlToMission {
 				missionContent.getXmltag().setXmlns(xmlText);
 			}
 			
+			String r;
+			
 			for (Page pp : missionContent.getPages()) {
-				pp.setMsg("<![CDATA[" + ImgTagConvertor.convertImgTagToHexImgTag(pp.getMsg(), false) + "]]>");
+				r = ImgTagConvertor.convertImgTagToHexImgTag(pp.getMsg(), false);
+				if (r != null) {
+					pp.setMsg("<![CDATA[" + r + "]]>");
+				}
+				else {
+					pp.setMsg("<![CDATA[" + pp.getMsg() + "]]>");
+				}
 			}
 			for (Hint h : missionContent.getHints().getErrorsHints()) {
-				h.setText("<![CDATA[" + ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false) + "]]>");
+				r = ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false);
+				if (r != null) {
+					h.setText("<![CDATA[" + r + "]]>");
+				}
+				else {
+					h.setText("<![CDATA[" + h.getText() + "]]>");
+				}
 			}
 			for (Hint h : missionContent.getHints().getTipsHints()) {
-				h.setText("<![CDATA[" + ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false) + "]]>");
+				r = ImgTagConvertor.convertImgTagToHexImgTag(h.getText(), false);
+				if (r != null) {
+					h.setText("<![CDATA[" + r + "]]>");
+				}
+				else {
+					h.setText("<![CDATA[" + h.getText() + "]]>");
+				}
 			}
 			for (Customer c:missionContent.getCustomers()) {
 				if (c.getRandomType().equalsIgnoreCase("none")) {

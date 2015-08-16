@@ -6,8 +6,7 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	>
 	
-		<h:outputScript>
-		
+		<h:outputScript>		
 			function resizeCkEditorExpl() {
 				if (PF('ckEditorExplPage').instance != null)
 					PF('ckEditorExplPage').instance.resize('100%', document.getElementById('formExplPage:centerExplPage').clientHeight-10);
@@ -18,11 +17,8 @@
         			PF('ckEditorExplPage').destroy();
         			explPageUpdateComponents();
         		}
-        }
-
-
-		</h:outputScript>
-		
+        	}
+		</h:outputScript>		
 	
 		<p:dialog id="explPageDlg" showEffect="fade" hideEffect="fade"
 			widgetVar="pageDialog" header="#{msg['pages']}" minHeight="545"
@@ -45,7 +41,7 @@
 					<p:layoutUnit position="south" style="border: none;" size="50">
 						<p:panelGrid columns="2" style="float: right;">
 						
-							<p:commandButton value="#{msg['ok']}" icon="ui-icon-check"
+							<p:commandButton value="#{msg['save']}" icon="ui-icon-circle-arrow-s"
 								actionListener="#{explVC.addPage}"
 								oncomplete="handleRequestExplPage(xhr, status, args)"
 								/>

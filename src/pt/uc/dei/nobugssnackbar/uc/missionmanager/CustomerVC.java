@@ -272,6 +272,13 @@ public class CustomerVC implements ISkinProvider, Serializable {
 				customer.getOrders().setOrder(customer.getOrders().getOrders().get(0));
 			}
 		}
+		else {
+			ResourceBundle msg = ApplicationMessages.getMessage();
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.validationFailed();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					msg.getString("notValidCustomersPlaceID"), ""));
+		}
 	}
 	
 	private boolean checkFields(Order order) {

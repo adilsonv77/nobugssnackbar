@@ -52,7 +52,7 @@ public class ImgTagConvertor {
 					}
 				}
 				else {
-					// result = null; It's better to return the same string if you don't have any image tags in the string
+					result = null;// It's better to return the same string if you don't have any image tags in the string
 					break;
 				}
 				
