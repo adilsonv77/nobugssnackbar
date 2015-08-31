@@ -47,8 +47,8 @@
 			</hint>
 			<hint category="Iddle" condition = "Hints.countShowedIddle() &gt;= 2 &amp;&amp; Hints.countShowedIddle() &lt; 3 &amp;&amp; Hints.countInstructions() > 14">
 			<![CDATA[
-			Se est&#225; complicado de organizar os blocos, tens mais uma alternativa: usar os recursos de zoom do navegador. Use a combina&#231;&#227;o
-			de teclas [Ctrl +] e [Ctrl -] para gerir o zoom do navegador.
+			Se est&#225; complicado de organizar os blocos, tens mais uma alternativa: usar os recursos de zoom da ferramenta. Observe os bot&#245;es acima da lixeira 
+			que permitem gerir o zoom da &#225;rea de trabalho.
 			]]>
 			</hint>
 			<hint category="Iddle" condition = "Hints.countShowedIddle() &gt;= 3 &amp;&amp; Hints.countShowedIddle() &lt; 4 &amp;&amp; Hints.countInstructions() > 14">

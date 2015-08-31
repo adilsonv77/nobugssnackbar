@@ -70,8 +70,8 @@
 	"NoBugs.user": "Usu&#225;rio",
 	"NoBugs.password" : "Senha",
 	
-	"NoBugs.amountCharged" : "valorCobrado",
-	"NoBugs.numberBankNotes" : "qtasNotas",
+	"NoBugs.amountCharged" : "valorPedido",
+	"NoBugs.numberBankNotes" : "quantas",
 
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja comer.",
@@ -94,7 +94,7 @@
 	"SnackMan.askWantHowManyFoodsTooltip" : "Pergunto ao cliente quantos lanches ele deseja comer.",
 	"SnackMan.askWantHowManyDrinksTooltip" : "Pergunto ao cliente quantas bebidas ele deseja.",
 	"SnackMan.cashInTooltip" : "Informa ao cliente o pre&#231;o da conta. O cliente entrega um valor maior ou igual ao valor cobrado.",
-	"SnackMan.giveChangeTooltip" : "Devolve parte do troco: a quantidade de um tipo de moeda ou c&#233;dula.",
+	"SnackMan.giveChangeTooltip" : "Devolve parte do troco: a quantidade de um tipo de moeda ou nota.",
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
@@ -125,9 +125,13 @@
 	"Error.incorrectID": "O ID do usu&#225;rio, que voc&#234; est&#225; tentando usar est&#225; incorreto.",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
 	"Error.variableNotInitialized" : "Antes de usar a vari&#225;vel %0, ela precisa ser inicializada com um valor 0 (zero).",  
+	"Error.onceVariableIsNotANumber" : "Uma das vari&#225;veis n&#227;o &#233; um n&#250;mero",
 	"Error.paramIsNotANumber" : "O par&#226;metro n&#227;o &#233; um n&#250;mero.",
 	"Error.alreadyPaid" : "O cliente j&#225; pagou a refei&#231;&#227;o.",
 	"Error.incorrectAccount" : "A conta est&#225; incorreta. N&#227;o corresponde com o meu pedido.",
+	"Error.qtyOfMoneyInvalid" : "O primeiro par&#226;metro precisa ser um n&#250;mero.",
+	"Error.typeOfMoneyInvalid" : "O segundo par&#226;metro precisa ser uma moeda ou nota. ",
+	"Error.changeExceeded" : "Voc&#234; est&#225; tentando dar ao cliente mais troco do que o necess&#225;rio.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
@@ -142,9 +146,9 @@
 	"Single.SelectMission" : "Clique num quadro para selecionar a miss&#227;o.",
 	"Single.Total" : "Total",
 	"Single.Coins" : "moedas",
-	"Single.BankNotes" : "c&#233;dulas",
+	"Single.BankNotes" : "notas",
 	"Single.Coin" : "moeda",
-	"Single.BankNote" : "c&#233;dulas",
+	"Single.BankNote" : "nota",
 	
 	"Explane.MustNot":"N&#227;o deve",
 	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
@@ -161,6 +165,7 @@
 	"Explane.Talk": "Falar %0.",
 	"Explane.AskWantHowManyFoods":"Pergunta ao cliente %0 quantos lanches ele deseja comer.",
 	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
+	"Explane.GiveTheWholeChange":"Devolva o troco integral ao cliente %0.",
 	
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	

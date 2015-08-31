@@ -676,7 +676,15 @@ Game.installMachines = function(toolbox) {
 		       toolbox: toolbox,
 		       trashcan: true,
 		       comments: false,
-		       scrollbars: true});
+		       scrollbars: true,
+		       zoom:
+	             {enabled: true,
+	              controls: true,
+	              wheel: true,
+	              maxScale: 2,
+	              minScale: .1,
+	              scaleSpeed: 1.1
+	             }});
 	    
 	    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
 	    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
@@ -852,7 +860,15 @@ Game.buyMachineButtonClick = function() {
 					       toolbox: tb,
 					       trashcan: true,
 					       comments: false,
-					       scrollbars: true});
+					       scrollbars: true,
+					       zoom:
+				             {enabled: true,
+				              controls: true,
+				              wheel: true,
+				              maxScale: 2,
+				              minScale: .1,
+				              scaleSpeed: 1.1
+				             }});
 				
 			    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
 			    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
@@ -1797,6 +1813,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
 			    hero.verifyObjectives("notExists", null);
+			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {

@@ -78,6 +78,7 @@ Customer = function(options) {
 	this.randomType = options.randomType;
 	this.hasRandom = options.hasRandom;
 	this.drinks = options.drinks;
+	this.pay = options.pay;
 	this.dUnfulfilled = 0;
 	this.wishesDrinks = [];
 	this.wishesDrinks = this.wishesDrinks.concat(options.drinks);
@@ -159,6 +160,8 @@ Customer = function(options) {
 	this.baloonLeft = options.baloonLeft;
 	
 	this.amountPaid = 0;
+	this.amountChangeReceived = 0;
+	this.amountChangeExpected = 0;
 	/*
 	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();
@@ -551,7 +554,7 @@ Customer.prototype.deliver = function(item) {
 	return {money: money, happy: happy, reason: reason};
 };
 
-Customer.typesOfMoney = [10, 20, 50];
+Customer.typesOfMoney = [10, 20];
 
 Customer.prototype.cashIn = function(value) {
 	
@@ -569,15 +572,64 @@ Customer.prototype.cashIn = function(value) {
 		throw false;
 	}
 	
-	var selectMoney = [].concat(Customer.typesOfMoney);
-	if (amountPayable > 10)
-		selectMoney.splice(0, 1);
+	if (this.pay == null) {
+		
+		var selectMoney = [].concat(Customer.typesOfMoney);
+		if (amountPayable > 10)
+			selectMoney.splice(0, 1);
+		
+		var idx = Math.floor(Math.random() * selectMoney.length);
+		this.amountPaid = selectMoney[idx];
+	} else
+		this.amountPaid = parseInt(this.pay);
 	
-	if (amountPayable > 20)
-		selectMoney.splice(0, 1);
+	this.amountChangeExpected = this.amountPaid - amountPayable;
 	
-	var idx = Math.floor(Math.random() * selectMoney.length);
-	this.amountPaid = selectMoney[idx];
+	return {type: "money", descr:"$$banknote" + this.amountPaid, value:this.amountPaid, source: this.currentNode.id, sourceType: this.placeType};
+};
+
+Customer.prototype.isPaid = function() {
+	return this.amoundPaid > 0;
+};
+
+Customer.prototype.isChangeReceived = function() {
+	return this.amountChangeExpected == this.amountChangeReceived;
+};
+
+Customer.prototype.giveChange = function(value, typeOfMoney) {
 	
-	return {type: "money", descr:"$$banknote" + selectMoney[idx], value:selectMoney[idx], source: this.currentNode.id, sourceType: this.placeType};
+	if (value === undefined || value.data === undefined || isNaN(value.data)) {
+		BlocklyApps.log.push(["fail", "Error_qtyOfMoneyInvalid"]); // primeiro parametro deveria ser um numero
+		throw false;
+	}
+	
+	value = parseInt(value.data);
+	
+	var tm = 0;
+	
+	if (typeOfMoney != undefined && typeOfMoney.data != undefined) {
+		switch (typeOfMoney.data) {
+			case "\"$$$money20\"": tm = 20; break;
+			case "\"$$$money10\"": tm = 10; break;
+			case "\"$$$money5\"": tm = 5; break;
+			case "\"$$$money2\"": tm = 2; break;
+			case "\"$$$money1\"": tm = 1; break;
+		}
+	}
+	
+	if (tm == 0) {
+		BlocklyApps.log.push(["fail", "Error_typeOfMoneyInvalid"]); // segundo parametro deveria ser do tipo nota ou moeda
+		throw false;
+	}
+	
+	var totalChange = tm * value;
+	
+	if (this.amountChangeReceived + totalChange > this.amountChangeExpected) {
+		BlocklyApps.log.push(["fail", "Error_changeExceeded"]); 
+		throw false;
+	}
+	
+	this.amountChangeReceived += totalChange;
+	
+	return this.amountChangeExpected == this.amountChangeReceived;
 };

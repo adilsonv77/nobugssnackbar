@@ -156,6 +156,10 @@ Objective.factory = function(key) {
 	case "talk":
 		this.factories[key] = new Objective.Talk();
 		break;
+		
+	case "giveTheWholeChange":
+		this.factories[key] = new Objective.GiveTheWholeChange();
+		break;
 	}
 	
 	return this.factories[key];
@@ -387,6 +391,43 @@ Objective.Deliver.prototype.checkObjective = function(options, objective)  {
 
 Objective.Deliver.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_deliver", objective);
+};
+
+/******************************************************************************
+ *                                 GiveTheWholeChange
+ ******************************************************************************/
+
+Objective.GiveTheWholeChange = function() {};
+
+Objective.GiveTheWholeChange.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	
+	return p;
+};
+
+Objective.GiveTheWholeChange.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
+	}
+	if (cust == null)
+		return false;
+	
+	return (cust.isPaid() && cust.isChangeReceived());
+};
+
+Objective.GiveTheWholeChange.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_givethewholechange", objective);
 };
 
 /******************************************************************************

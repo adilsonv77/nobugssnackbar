@@ -85,64 +85,43 @@ CustomerManager.reset = function() {
 			}
 		}
 		
+		var pay = customer.getElementsByTagName("pay")[0].textContent.toString();
+		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
 		var orders = customer.getElementsByTagName("orders")[0].getElementsByTagName("order");
-		/*
-		var pattern = customer.getElementsByTagName("orders")[0];
-		if (pattern == null) {
-			
-			var _foods = customer.getElementsByTagName("foods")[0];
-			var _drinks = customer.getElementsByTagName("drinks")[0];
-			var foods = CustomerManager.extractItems("food", _foods);
-			var drinks =  CustomerManager.extractItems("drink", _drinks , customer.getAttribute("randomType"), foods.length);
-			
-			var hasRandom = (customer.getAttribute("randomType") != null) || (_foods.getAttribute("randomMin") != null) || (_drinks.getAttribute("randomMin") != null);
-			
-			customers.push(new Customer({init: init, place: dest, id: id, hasRandom: hasRandom, foods: foods, drinks: drinks, openMission: this.openMission,
-										 baloonLeft: customers.length % 2 == 0}));
-			
-		} else {
-			
-			// this means the customers go away and will come new customers at same place
-			var orders = pattern.getElementsByTagName("order");
-			*/
-			var custPattern = [];
-			
-			for (var i = 0; i < orders.length; i++) {
+		var custPattern = [];
+		
+		for (var i = 0; i < orders.length; i++) {
 
-				var randomType = orders[i].getAttribute("randomType");
-				var _foods = orders[i].getElementsByTagName("foods")[0];
-				var _drinks = orders[i].getElementsByTagName("drinks")[0];
-				var foods = CustomerManager.extractItems("food", _foods, null, randomType);
-				var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length, randomType);
-			
-				if (randomType === "random") {
-					var res = CustomerManager.randomOrder(
-							parseInt(orders[i].getAttribute("randomMin")),
-							parseInt(orders[i].getAttribute("randomMax")),
-							foods, drinks
-					);
-					
-					foods = res[0]; drinks = res[1];
-				}
+			var randomType = orders[i].getAttribute("randomType");
+			var _foods = orders[i].getElementsByTagName("foods")[0];
+			var _drinks = orders[i].getElementsByTagName("drinks")[0];
+			var foods = CustomerManager.extractItems("food", _foods, null, randomType);
+			var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length, randomType);
+		
+			if (randomType === "random") {
+				var res = CustomerManager.randomOrder(
+						parseInt(orders[i].getAttribute("randomMin")),
+						parseInt(orders[i].getAttribute("randomMax")),
+						foods, drinks
+				);
 				
-				var fRMin = _foods.getAttribute("randomMin");
-//				fRMin = parseInt(fRMin == null?"0":origFRMin);
-				
-				var dRMin = _drinks.getAttribute("randomMin");
-//				dRMin = parseInt(dRMin == null?"0":dRMin);
-				
-			//	if (foods.length > 0 || drinks.length > 0)
-					custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
-						                   randomType: randomType,
-										   foods: foods, drinks: drinks});
+				foods = res[0]; drinks = res[1];
 			}
 			
-			if (custPattern.length > 0)
-				this.patterns.push({init: init, place: dest, id: id, pattern: custPattern, idxCustPattern: 0});
+			var fRMin = _foods.getAttribute("randomMin");
 			
-	/*	}*/
+			var dRMin = _drinks.getAttribute("randomMin");
+			
+			custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
+				                   randomType: randomType,
+								   foods: foods, drinks: drinks});
+		}
+		
+		if (custPattern.length > 0)
+			this.patterns.push({init: init, place: dest, id: id, pay: pay, pattern: custPattern, idxCustPattern: 0});
+		
 		
 		customer = customer.nextElementSibling;
 	}
@@ -236,7 +215,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							randomType: custPattern.randomType,
 							foods: foods, drinks: drinks,
 							openMission: this.openMission, idxPattern: i,
-							baloonLeft: customers.length % 2 == 0}));
+							baloonLeft: customers.length % 2 == 0,
+							pay: this.patterns[i].pay}));
 	
 	// TODO thinking this method using the transformSN method
 	

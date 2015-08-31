@@ -104,7 +104,7 @@ function nobugsMathArith(arg0, arg1, operator) {
 	}
 	
 	if (arg0 == undefined || arg1 == undefined) {
-		BlocklyApps.log.push(["fail", "Um das variaveis nao eh um numero"]);
+		BlocklyApps.log.push(["fail", "Error_onceVariableIsNotANumber"]);
 		throw false;
 	}
 	

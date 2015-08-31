@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-08-13 17:17:42.553000",
+		"lastupdated": "2015-08-31 19:09:24.726000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -120,11 +120,15 @@
 	"Error.variableDoesntInitialized": "There is at least one variable that didn't receive a value before.",
 	"Error.showPrompt": "You checked before the box &quot;Prevent this page from creating additional dialogs&quot;. So you disabled new windows to ask you information. Press [F5] and try again to give a new variable name.",
 	"Error.variableNotInitialized": "Before the use of the variable %0, it must be initialized for instance with the value 0 (zero). ",
+	"Error.onceVariableIsNotANumber": "Once of the variables is not a number.",
 	"Error.paramIsNotANumber": "Parameter is not a number.",
 	"Error.alreadyPaid": "The customer has already paid the meal.",
 	"Error.incorrectAccount": "There is a problem in the account. It does not correspond to my request",
 	"Error.navigatorNotSupported": "This game is not supported by this browser. <x id='BREAK'/>It is recommended to be downloaded and the installation of any of the browsers below:",
 	"Error.incorrectID": "The user's ID, that you are trying to use is incorrect!",
+	"Error.qtyOfMoneyInvalid": "The first parameter must be a number.",
+	"Error.typeOfMoneyInvalid": "The second parameter must be a bank note or a coin.",
+	"Error.changeExceeded": "You are trying to give the customer more change than necessary.",
 	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
 	"NoBugs.goalAchieved": "New Goal Achieved",
 	"NoBugs.achieved": "Achieved",
@@ -144,6 +148,7 @@
 	"Explane.AskHasThirsty": "Ask the customer %0 if he wants something to drink.",
 	"Explane.CatchDrink": "Catch the drink that the customer %0 ordered.",
 	"Explane.Deliver": "Deliver what the customer %0 ordered.",
+	"Explane.GiveTheWholeChange": "Give the whole change to the customer %0.",
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
 	"Explane.Talk": "Talk %0.",

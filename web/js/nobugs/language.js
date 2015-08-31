@@ -158,7 +158,7 @@ Blockly.Blocks['money_giveChange'] = {
 		  init: function() {
 			  
 		    this.jsonInit({
-		    	"message0": 'giveChange %1 '+BlocklyApps.getMsg('_with')+' %2 '+BlocklyApps.getMsg('_coins')+'/'+ BlocklyApps.getMsg('_banknotes'),
+		    	"message0": 'giveChange %1 '+BlocklyApps.getMsg('_with')+' %2 ',
 		    	 "args0": [
 		     	           {
 		    	             "type": "input_value",
@@ -170,11 +170,13 @@ Blockly.Blocks['money_giveChange'] = {
 		    	           }
 		    	           
 		    	         ],
-		    	 "colour": Blockly.Blocks.variables.HUE
+		    	 "colour": 160
 		    });
 				
+		    this.setInputsInline(true);
 
-		    this.setOutput(true);
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
 		    this.setTooltip(BlocklyApps.getMsg('SnackMan_giveChangeTooltip'));
 		  }
 		};
@@ -182,7 +184,7 @@ Blockly.Blocks['money_giveChange'] = {
 Blockly.JavaScript['money_giveChange'] = function(block) {
 	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null';
 	var coinsBankNotes = Blockly.JavaScript.valueToCode(block, 'COINSBANKNOTES', Blockly.JavaScript.ORDER_NONE) || 'null';
-	return ['giveChange( ' + value + ',' + coinsBankNotes +' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return 'giveChange( ' + value + ',' + coinsBankNotes +' );\n';
 };
 
 Blockly.Blocks['const_money1'] = {
@@ -250,18 +252,6 @@ Blockly.JavaScript['const_money20'] = function(block) {
 	return ['\"\\\"$$$money20\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.Blocks['const_money50'] = {
-		  init: function() {
-		    this.setColour(50);
-		    this.setOutput(true);
-		    this.appendDummyInput()
-		        .appendField(BlocklyApps.getMsg('_banknote') + ' 50');
-		  }
-		};
-
-Blockly.JavaScript['const_money50'] = function(block) {
-	return ['\"\\\"$$$money50\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
 /******************************************************************************
  *                          Snackman Food
  ******************************************************************************/	

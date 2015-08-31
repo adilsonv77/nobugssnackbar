@@ -889,6 +889,15 @@ SnackMan.prototype.cashIn = function(value) {
 
 SnackMan.prototype.giveChange = function(value, typeOfMoney) {
 	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	if (found.giveChange(value, typeOfMoney))
+      this.verifyObjectives("giveTheWholeChange", {allCustomers:false, customer:found});
 };
 
 /**********************************************************/
