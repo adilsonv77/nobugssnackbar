@@ -80,13 +80,9 @@ Customer = function(options) {
 	this.drinks = options.drinks;
 	this.pay = options.pay;
 	this.dUnfulfilled = 0;
-	this.wishesDrinks = [];
-	this.wishesDrinks = this.wishesDrinks.concat(options.drinks);
 	
 	this.foods = options.foods;
 	this.fUnfulfilled = 0;
-	this.wishesFoods = [];
-	this.wishesFoods = this.wishesFoods.concat(options.foods);
 	
 	this.currentNode = CustOpt.nodes[options.init];
 	this.reallyCurrentNode = this.currentNode;
@@ -162,10 +158,21 @@ Customer = function(options) {
 	this.amountPaid = 0;
 	this.amountChangeReceived = 0;
 	this.amountChangeExpected = 0;
+	this.changeReceived = [];
 	/*
 	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();
 	 */
+};
+
+Customer.prototype.afterConstruct = function() {
+	
+	this.wishesDrinks = [];
+	this.wishesDrinks = this.wishesDrinks.concat(this.drinks);
+	
+	this.wishesFoods = [];
+	this.wishesFoods = this.wishesFoods.concat(this.foods);
+	
 };
 
 Customer.prototype.randomizeFoodAndDrink = function() {
@@ -554,6 +561,14 @@ Customer.prototype.deliver = function(item) {
 	return {money: money, happy: happy, reason: reason};
 };
 
+Customer.prototype.totalOfFoodDelivered = function() {
+	return this.fUnfulfilled;
+};
+
+Customer.prototype.totalOfDrinksDelivered = function() {
+	return this.dUnfulfilled;
+};
+
 Customer.typesOfMoney = [10, 20];
 
 Customer.prototype.cashIn = function(value) {
@@ -589,11 +604,37 @@ Customer.prototype.cashIn = function(value) {
 };
 
 Customer.prototype.isPaid = function() {
-	return this.amoundPaid > 0;
+	return this.amountPaid > 0;
 };
 
 Customer.prototype.isChangeReceived = function() {
 	return this.amountChangeExpected == this.amountChangeReceived;
+};
+
+Customer.prototype.isTheBestChange = function() {
+	
+	var v = this.amountChangeExpected;
+	var keys = [20, 10, 5, 2, 1];
+	for (var k = 0; k < keys.length; k++) {
+		
+		var keyType = keys[k];
+		var n = Math.floor(v / keyType);
+		
+		var foundType = null;
+		
+		var f = function(entry) {
+			if (entry.type == keyType)
+				foundType = entry.qtd;
+		};
+		
+		this.changeReceived.forEach(f);
+		var mistake = !(n == 0 || (foundType != null && foundType == n));
+		if (mistake) return false;
+		v -= (n * keyType);
+	}
+		
+	return true;
+	
 };
 
 Customer.prototype.giveChange = function(value, typeOfMoney) {
@@ -630,6 +671,7 @@ Customer.prototype.giveChange = function(value, typeOfMoney) {
 	}
 	
 	this.amountChangeReceived += totalChange;
+	this.changeReceived.push({qtd:value, type: tm});
 	
 	return this.amountChangeExpected == this.amountChangeReceived;
 };

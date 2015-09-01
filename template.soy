@@ -252,12 +252,12 @@
 	  <div id="variableBox" style="display:none">
 	  	<div class="move-header">
 		  	<div class="move-title">{msg meaning="NoBugs.variables" desc="--"}Variables{/msg}</div>
-	<!--
+	
 		  	<div class="move-panel">
-		  		<a id="moveDown" class="move-down" href="javascript:void(0)"></a>
+		  <!--		<a id="moveDown" class="move-down" href="javascript:void(0)"></a> -->
 		  		<a id="moveRight" class="move-right" style="display:none" href="javascript:void(0)"></a>
 		  	</div>
-		  	-->
+
 	  	</div>
 	  	<div class="var-content">
 	  	<table id="vars">
@@ -512,6 +512,7 @@
     
     {if $ij.enabled['money']}
 	    <category name="{msg meaning="SnackMan.catMoney" desc="--"}Money{/msg}">
+	    	{if $ij.enabled['cashIn']}
 	    	<block type="money_cashIn"> 
 		    	<value name="VALUE">
 					<block type="variables_get">
@@ -519,7 +520,9 @@
 					</block>
 		    	</value>
 	    	</block>
+	    	{/if}
 	    	
+	    	{if $ij.enabled['giveChange']}
 	    	<block type="money_giveChange"> 
 		    	<value name="VALUE">
 					<block type="variables_get">
@@ -536,6 +539,8 @@
 	    	<block type="const_money5"></block>
 	    	<block type="const_money10"></block>
 	    	<block type="const_money20"></block>
+	    	
+	    	{/if}
 	    </category>
 	{/if}
 	

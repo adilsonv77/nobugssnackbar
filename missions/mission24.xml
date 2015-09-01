@@ -3,8 +3,9 @@
 	<explanation>
 		<page>
 		<![CDATA[
-Agora os nossos clientes podem ter sede OU fome. E, se t&#234;m sede, podem pedir refrigerante ou sumo.<br/><br/>
-Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de outro.
+Os nossos clientes podem ter fome OU sede (e pedirem refrigerante ou sumo).<br/><br/>
+Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando que o cachorro &#233; 2 <img style='vertical-align: middle;' src="images/coin2.png"/>, 
+ e o pre&#231;o das bebidas &#233; 3 <img style='vertical-align: middle;' src="images/coin2.png"/>. 
 ]]>
 		</page>
 
@@ -35,6 +36,9 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 		<category name="const.softDrink" show="true" />
 		<category name="const.orange" show="true" />
 		<category name="logic" show="true" />
+		
+		<category name="math" show="true" />
+		<category name="text" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
@@ -50,11 +54,11 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<orders>
 				<order>
 					<foods>		
-						<food qt="1" price="0">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
 					</foods>
 					<drinks randomMin="1" randomMax="1">
-						<drink qt="1" price="0">coke</drink>
-						<drink qt="1" price="0">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 			</orders>						
@@ -66,21 +70,22 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 			<orders>
 				<order>
 					<foods>		
-						<food qt="1" price="0">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
 					</foods>
 					<drinks randomMin="1" randomMax="1">
-						<drink qt="1" price="0">coke</drink>
-						<drink qt="1" price="0">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" maxCommands="30" maxCommandsRewardCoins="20" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+	<objectives ordered="false" maxCommands="35" maxCommandsRewardCoins="60" xpIndividual="50" xpFinal="30" xpTotalTime="720">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
+		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 	</objectives>
-	<xml preload="15">
+	<xml preload="16">
 	</xml>
 
 </mission>

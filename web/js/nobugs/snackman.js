@@ -176,6 +176,9 @@ SnackMan = function(objectives, mission, avatar) {
 	m = objectives.getAttribute("maxCommandsReward");
 	this.objective.maxCommandsReward = parseInt( (m == null?"0":m)  ); 
 	
+	m = objectives.getAttribute("maxCommandsRewardCoins");
+	this.objective.maxCommandsRewardCoins = parseInt( (m == null?"0":m)  ); 
+	
 	this.objective.debug = objectives.getAttribute("debug") === "true"; 
 	
 	var children = objectives.getElementsByTagName("objective");
@@ -881,6 +884,7 @@ SnackMan.prototype.cashIn = function(value) {
 	}
 	
 	var ret = found.cashIn(value);
+	this.verifyObjectives("cashIn", {allCustomers:false, customer:found});
 	
 	// TODO: o cozinheiro tem um balao com moedas e o cliente um balao com cedulas
 	
@@ -1296,9 +1300,18 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 		
 		ret.baseXP = ret.totalXP;
 		if (count <= this.objective.maxCommands) {
-			ret.totalXP += this.objective.maxCommandsReward;
 			
-			ret.bonusXP.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
+			if (this.objective.maxCommandsReward > 0) {
+				
+				ret.totalXP += this.objective.maxCommandsReward;
+				
+				ret.bonusXP.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsReward, extraInfo: null});
+			} else {
+				
+				ret.totalCoins += this.objective.maxCommandsRewardCoins;				
+				ret.bonusCoins.push({name: "Victory_MaxCommands", value: this.objective.maxCommandsRewardCoins, extraInfo: null});
+			}
+				
 		} 
 		
 		if (timeLimit != null && timeSpent <= timeLimit) {

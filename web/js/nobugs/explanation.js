@@ -121,6 +121,7 @@ Explanation.evaluateObjectives = function(statement, container) {
 	
 	var msg = BlocklyApps.getMsg("rewardExplanation");
 	var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+	var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
 	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, hero.objective.xpTotalTime/60)+ "<br/>";
 	
 	if (hero.objective.maxCommandsReward > 0) {
@@ -128,11 +129,15 @@ Explanation.evaluateObjectives = function(statement, container) {
 		msg = BlocklyApps.getMsg("commandBonusExplanation");
 		out = out + msg.format(hero.objective.maxCommandsReward+coin2, hero.objective.maxCommands);
 		
-	}
+	} else 
+		if (hero.objective.maxCommandsRewardCoins > 0) {
+		
+			msg = BlocklyApps.getMsg("commandBonusExplanation");
+			out = out + msg.format(hero.objective.maxCommandsRewardCoins+coin3, hero.objective.maxCommands);
+		}
 	
 	if (Game.bonusTime != null) {
 		
-		var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
 		msg = BlocklyApps.getMsg("timeBonusExplanation");
 		var a = Game.bonusTimeReward.split(" ");
 		out = out + msg.format(a[a.length-1]+coin3, Game.bonusTime/60);

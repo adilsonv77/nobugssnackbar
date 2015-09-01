@@ -85,7 +85,9 @@ CustomerManager.reset = function() {
 			}
 		}
 		
-		var pay = customer.getElementsByTagName("pay")[0].textContent.toString();
+		var pay = customer.getElementsByTagName("pay")[0];
+		if (pay != null)
+			pay = pay.textContent.toString();
 		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
@@ -128,6 +130,10 @@ CustomerManager.reset = function() {
 	
 	this.createCustomersBasedOnPattern();
 	this.transformSN();
+	
+	customers.forEach(function(cust) {
+		cust.afterConstruct();
+	});
 };
 
 /**
@@ -426,6 +432,41 @@ CustomerManager.totalOfMoneyIfSell = function() {
 		ret += customers[i].askHowMuchInFoodsIfSell();
 		ret += customers[i].askHowMuchInDrinksIfSell();
 		
+	}
+	
+	return ret;
+	
+};
+
+CustomerManager.totalOfMoneyGave = function() {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++) {
+		
+		if (customers[i].isPaid()) 
+			ret += customers[i].amountPaid;
+		else
+			ret -= 100; // avoid cheating
+		
+	}
+	
+	return ret;
+	
+};
+
+CustomerManager.totalOfFoodDelivered = function() {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++) {
+		ret += customers[i].totalOfFoodDelivered();
+	}
+	
+	return ret;
+	
+};
+
+CustomerManager.totalOfDrinksDelivered = function() {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++) {
+		ret += customers[i].totalOfDrinksDelivered();
 	}
 	
 	return ret;

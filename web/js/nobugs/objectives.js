@@ -65,7 +65,7 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if (key === "deliver" && options.allCustomers) {
+					if ((key === "deliver" || key === "giveTheWholeChange") && options.allCustomers) {
 						ret = true;
 					} else
 						return true;
@@ -155,6 +155,10 @@ Objective.factory = function(key) {
 		
 	case "talk":
 		this.factories[key] = new Objective.Talk();
+		break;
+		
+	case "cashIn":
+		this.factories[key] = new Objective.CashIn();
 		break;
 		
 	case "giveTheWholeChange":
@@ -394,6 +398,43 @@ Objective.Deliver.prototype.createExplanationItem = function(objective) {
 };
 
 /******************************************************************************
+ *                                 CashIn
+ ******************************************************************************/
+
+Objective.CashIn = function() {};
+
+Objective.CashIn.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	
+	return p;
+};
+
+Objective.CashIn.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
+	}
+	if (cust == null)
+		return false;
+	
+	return (cust.isPaid());
+};
+
+Objective.CashIn.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_cashin", objective);
+};
+
+/******************************************************************************
  *                                 GiveTheWholeChange
  ******************************************************************************/
 
@@ -423,7 +464,7 @@ Objective.GiveTheWholeChange.prototype.checkObjective = function(options, object
 	if (cust == null)
 		return false;
 	
-	return (cust.isPaid() && cust.isChangeReceived());
+	return (cust.isPaid() && cust.isChangeReceived() && cust.isTheBestChange());
 };
 
 Objective.GiveTheWholeChange.prototype.createExplanationItem = function(objective) {

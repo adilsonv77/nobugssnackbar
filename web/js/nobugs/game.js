@@ -933,7 +933,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
 	 // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
-	 // BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+	 BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
@@ -1176,6 +1176,9 @@ Game.resizeWindow = function(e) {
         w -= 400;
     	
     } else {
+    	
+    	document.getElementById("moveRight").style.display = 'none';
+    	
     	Game.blockly.style.height = Game.optResize.blocklyDivH;
         w -= Game.optResize.blocklyDivW;
     	
@@ -1228,10 +1231,9 @@ Game.moveDownButtonClick = function() {
 
 Game.moveRightButtonClick = function() {
 	  Hints.hideHintWithTimer();
-
 	  Game.varWindow = Game.RIGHT;
-      document.getElementById("moveRight").style.display = 'none';
-	  document.getElementById("moveDown").style.display = 'inline-block';
+    //  document.getElementById("moveRight").style.display = 'none';
+	//  document.getElementById("moveDown").style.display = 'inline-block';
 	
 	  Game.optResize = {
 				blocklyDivW: 600,
@@ -1240,7 +1242,7 @@ Game.moveRightButtonClick = function() {
 				varBoxH: "90%"
 			  };
 			  
-	  Game.doResizeWindow();
+	  Game.doResizeWindow("none");
 };
 	
 /**
@@ -1804,6 +1806,8 @@ Game.nextStep = function() {
 					return;
 				}
 				
+				var debugging = Game.runningStatus == 2;
+
 				// if there isn't more lines to evaluate
 				Game.resetButtons();
 				
@@ -1813,6 +1817,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("varQtd", null);
 			    hero.verifyObjectives("commQtd", null);
 			    hero.verifyObjectives("notExists", null);
+			    hero.verifyObjectives("cashIn", {allCustomers:true});
 			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
@@ -1885,7 +1890,10 @@ Game.nextStep = function() {
 					}
 					UserControl.missionFail(Game.howManyRuns, objs);
 
-					Game.doResizeWindow("none");				    
+					//Game.doResizeWindow("none");	
+				    if (debugging) {
+					  document.getElementById("moveRight").style.display = 'inline-block';
+				    }
 			    	
 		    	    Game.lastErrorData.iderror = "missionFail";
 		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
@@ -1908,6 +1916,9 @@ Game.nextStep = function() {
 		} catch (ex) {
 			  console.log(ex);
 
+			  if (Game.runningStatus == 2) {
+				  document.getElementById("moveRight").style.display = 'inline-block';
+			  }
 			  // when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
 			  Game.animate();
 			  
@@ -1915,6 +1926,7 @@ Game.nextStep = function() {
 			  Game.stopAlertGoalButton();
 			  Hints.startHints();
 
+			  
 		      return;
 			
 		}

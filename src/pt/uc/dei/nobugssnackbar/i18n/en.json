@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-08-31 19:09:24.726000",
+		"lastupdated": "2015-09-01 13:35:25.041000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -148,7 +148,8 @@
 	"Explane.AskHasThirsty": "Ask the customer %0 if he wants something to drink.",
 	"Explane.CatchDrink": "Catch the drink that the customer %0 ordered.",
 	"Explane.Deliver": "Deliver what the customer %0 ordered.",
-	"Explane.GiveTheWholeChange": "Give the whole change to the customer %0.",
+	"Explane.CashIn": "Charge customer %0 value.",
+	"Explane.GiveTheWholeChange": "Give the best and whole change to the customer %0.",
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
 	"Explane.Talk": "Talk %0.",
