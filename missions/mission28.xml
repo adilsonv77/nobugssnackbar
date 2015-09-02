@@ -1,0 +1,107 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page>
+		<![CDATA[
+		- adicionar recursos para maquina de gelado.
+		- uso obrigatorio do operador de comparacao
+(isso pode ser um hint)		A ordem em que utilizas as condi&#231;&#245;es dentro de um operador &#233; muito importante para o desempenho e evitar comportamentos estranhos
+ nos seus programas. Por exemplo, numa condi&#231;&#227;o A E B, se A for <i>falso</i>, o programa j&#225; n&#227;o executa mais B, pois certamente 
+ <i>falso</i> E <i>qualquer valor</i> resultar&#225; em <i>falso</i>.  <br/><br/>
+		]]>
+		</page>
+		<page>
+		<![CDATA[
+Como j&#225; te ensinei algumas ideias para divulga&#231;&#227;o de um novo produto no estabelecimento, podemos parar a promo&#231;&#227;o. Se o cliente 
+ desejar gelados, agora ele pode ped&#237;-los. Entretanto, se ele pedir pelo menos dois cachorros e mais um gelado de chocolate, n&#243;s oferecemos 
+ gratuitamente mais um gelado de chocolate.<br/><br/>
+Voc&#234; j&#225; manipulou vari&#225;veis de tipos num&#233;ricos e objetos (pedidos anotados e atendidos). Existe um tipo de vari&#225;vel chamado <i>booleano</i>, dispon&#237;vel no menu [Condicionais]: 
+<imghex id="m28_1">89504E470D0A1A0A0000000D4948445200000073000000200802000000AE3BD0E8000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA86400000474494441546843ED98DF6B135914C7EFBF50122845641F0A8540A14F154A09BE94806BD887F8324596BCC4AE94A2A586822458B39A26D69442A3C50831D8262A8E42139189B071FC41B2B224E843600B65F77F58B4745D1FBAE7CE9D994C4E6692A9661EA4F7F00DDCB973EE3D399FB9BF66C80137678C9375CA3859A78C9375CABA914D6C56520F5E71F554F8D6331599C1BA91853667AF16B8ECE8D4CC75959A669C6C7FC4C93A254ED62971B24EC99CECDEFEE773C9C7A0AD721DCAEC06143AC9FEB2F224F7FC8FED37CD4A7DF7080A1287F40102C2023227BB29D5C3E967CC2378EDC1DB0F7F43E5EBF77F21B2D0A3F4FB9F28589F24860809E5506517F5F43F6C87871040E8846B4EF6C6D6CBD9D453A3DFF915D178C9048F0BC5E89FFA4ED659010A04C79CECF2662578ED2172ED94630316F49D91856501C131277BB320233F53A1DE330B1E329D97F41A79C347BC8B2528D75617029E214288FBF84430FA842DCAC0626A3E1E1E7311E29A4953FFE262C03B085E43DE402A29E8A44AD990FFC471702364E007AF7FA9A886B0F2B70CC71C3AE21AFD7DE104FDC35F2304C784ECBFFF7D81D500F9990A755D294486899090D54B313E454EAE89F54622E0F604B3629556167391F1A1D3B1329469AAE464B200CE7243AACB8B13C433972FC265558EFADC709382A88AA111B73F55536836C5F5E030F1CC16A06CE1DF359C46D61897FA0FF89239FAB79B859430EC62FEEDAA48F386C4E7EF35B0831DB2FF7CDA8F6624E4672AD435CBD6976251B57229394682AB4A9E4CE939F7F04291653819AFA9F5F0545C616504292AAF4DB6C6A051A23A36ADFCBB86D3C9B6E2D28653D116CA46CC4FC69664EDB2A5ED7B8FD5C4D3AFD12D261D0B535FC76C7DB7B0E425FE0D3A8E4AC9711288C9BB52260843041B5D34F454A9B401AE7765BCDB140BD9E8E5C8EC74606CF418B4867A2B7F1BE1DAE2567261420C4F88A67082CC89FAA5418DDB3720EBED3CAE5785E0F4739DA5A26B2B1D02F4FF296B6E715D2023910C72A3B24996CEF4C1094158DA58CD95C56A9ED55BF9DB08D7832CDD2DCCC9D235E157B3758009C13127BB7CFF373B6703D4B5223A9B26E3D9D911B79051B60EBAF8B27D0CA93D43EA6698C5F409297769E66C9F514427BB526FE5DF3B5C7B5CDBAB414F2138E6643BCFB342F4BEF1920975CD44E7A3CB3DE09AD1D2AEC57C748BC8283B9B54CE0AA36EFF3A3CF9F60C1537BAF340B92AC70200502735B558A20F492AE74313FA4E65E1DF3B1C8A6B6F07B32104C79CACF11D6CFACAD64F17D6C0EFE7C85DBD1913EA5A55352FB8C840DB84921373EC5843064703A15459D9E85186D0B01C9DD64E51EB6BDA29AA998B07C7D52394309F13616354C794B93FA87BB88EB8AD53D7318FDFC95317FCF6F63FC36A004CCF84377E3CBF7CE6E2CDDAFB1DA8BC942E191B4BEF7650EF4756C5B7F6DE14C03EEEED0350D09D472FA0CC2AD1770327DF6EBF33D97DBBB532932F327CD8C26AFE6EC7EE17192BB3FA8A087301053B2282C421FD4EACA06F25CB65254ED6291D8E2C3A1B7075D1E1C88241032E9B529169D6832CB7AF364ED6193B38F81F4C61549033F664600000000049454E44AE426082</imghex>. 
+<br/><br/>
+O cliente pede no m&#225;ximo um gelado, e pode pedir cachorros (0 a 2). Entregue o gelado pedido pelo cliente, e o gelado extra de chocolate quando for o caso.  
+]]>
+		</page>
+
+	</explanation>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askHasHunger" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="const" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<customersSN>
+	</customersSN>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="1">		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks randomMin="0" randomMax="1">
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="1">		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks randomMin="0" randomMax="1">
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>	
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods randomMin="0" randomMax="1">		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks randomMin="0" randomMax="1">
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>	
+		</customer>
+	</customers>
+	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+

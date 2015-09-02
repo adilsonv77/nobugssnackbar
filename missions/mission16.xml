@@ -33,7 +33,7 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
 		<category name="const.softDrink" show="true" />
-		<category name="const.orange" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
 		<category name="logic" show="true" />
 
 	</commands>

@@ -194,7 +194,24 @@
 	        </button>
 	      </td>
 	       
-	      <td style="width: 120px; text-align: center">
+	      <td style="text-align: center">
+	      	<div id="tests" style="display: none;">
+  				<span id="tests_finished" style="display:none; position:absolute; background-color:red; color:white;font-size: 10px;padding: 2px;z-index: 110;">
+  				</span>
+				<span id="tests_qtd" style="
+				    position: relative;
+				    left: 22px;
+				    font-weight: bold;
+				    z-index: 100;
+				    top: -3px;
+				">
+				</span>
+				<img src="images/tests.jpg" style="
+				    width: 30px;
+        			padding: 2px;
+    				top: 10px;
+    				position: relative;">
+    		</div>
 	        <button id="runButton" class="primary" style="margin:5px" title="{msg meaning="NoBugs.runTooltip" desc="--"}Makes the snack man do what the blocks say.{/msg}">
 	          <img src="media/1x1.gif" class="run icon21">
 	        </button>
@@ -577,9 +594,15 @@
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
       <block type="logic_compare"></block>
-      <block type="logic_operation"></block>
-      <block type="logic_negate"></block>
-      <block type="logic_boolean"></block>
+      
+      {if $ij.enabled['logic_operation']}
+      	<block type="logic_operation"></block>
+      {/if}
+      
+      {if $ij.enabled['logic_trueFalse']}
+	      <block type="logic_negate"></block>
+	      <block type="logic_boolean"></block>
+      {/if}
     </category>
     {/if}
 

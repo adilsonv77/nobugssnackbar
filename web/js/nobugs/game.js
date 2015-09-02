@@ -899,7 +899,23 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
   Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
-      CustomerManager.init(Game.openMission.open,
+	  
+	  Game.tests = data.childNodes[0].getElementsByTagName("tests");
+	  if (Game.tests.length == 0) {
+		  
+		  Game.tests = 0;
+	  	  $("#tests").css("display", "none");
+	  }
+	  else {
+		  Game.tests = parseInt(Game.tests[0].textContent);
+		  $("#tests").css("display", "inline");
+		  $("#tests_qtd").html(Game.tests);
+		  var bb = BlocklyApps.getBBox_(document.getElementById("tests_qtd"));
+		  $("#tests_finished").css("top", (bb.y + 10) + "px").css("left", (bb.x + 3) + "px");
+	  }
+	  
+	  
+      CustomerManager.init(Game.openMission.open, Game.tests,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
     		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
       
@@ -927,13 +943,13 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
 
 	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
-	 // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
+	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
-	 // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
-	 BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+	  // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
+	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
@@ -1116,6 +1132,33 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 	}
 	
 };
+
+Game.verifyTestsInMission = function(finishFunction) {
+	
+	if (Game.tests == 0) {
+		
+		finishFunction();
+		return;
+		
+	}
+	
+	var talk = Game.loginData.userLogged.flags.TALK_RUNTESTS;
+	if (talk === undefined || talk === "false") {
+		var bbBox = BlocklyApps.getBBox_(document.getElementById("tests_qtd"));
+		
+		$("<img>").attr("id", "teachTalk").attr("src", "images/teacher.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
+		new CharacterDialog(bbBox.x+30, bbBox.y-120, false, function(){finishFunction();$("#teachTalk").remove();},
+				[{character: "teachTalk", msg: 
+				 "A partir de agora aparecer&#227;o algumas miss&#245;es em que ser&#225; exibido ao lado do bot&#227;o " + "<img src='images/run.png' width='30'/>"
+				 + "o s&#237;mbolo " + "<img src='images/tests.jpg' width='30'/>" + " com um n&#250;mero interior."},
+				{character: "teachTalk", msg:"Sempre que aparecer esse s&#237;mbolo indica que o seu programa ser&#225; executado pelo jogo seguidamente essa quantidade de vezes."},
+				{character: "teachTalk", msg:"A cada vez que o seu programa for executado os desejos dos clientes modificam. Para ter sucesso na miss&#227;o, seu programa deve finalizar sem erros " +
+					" todas as vezes em que ser&#225; executado."},
+				{character: "teachTalk", msg:"Ap&#243;s finalizar a execu&#231;&#227;o, vais reparar um pequeno n&#250;mero " + "<img src='images/tests_finished.png'/>" + " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso."} 
+					]);
+	} else
+		finishFunction();
+}; 
 
 Game.initTime = function() {
 	
@@ -1427,6 +1470,8 @@ Game.runButtonClick = function() {
  * Click the reset button.  Reset the Game.
  */
 Game.resetButtonClick = function() {
+	
+   $("#tests_finished").css("display", "none");
 
    Game.lastErrorData.iderror = 0;
    Game.lastErrorData.message = "";
@@ -1567,6 +1612,7 @@ Game.execute = function(debug) {
   	   // code = "var xp = function() { " + code + "}; xp(); ";
   	    
       //  alert(code);
+  	    Game.code = code;
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
@@ -1808,9 +1854,6 @@ Game.nextStep = function() {
 				
 				var debugging = Game.runningStatus == 2;
 
-				// if there isn't more lines to evaluate
-				Game.resetButtons();
-				
 			    Blockly.mainWorkspace.highlightBlock(null);
 			    
 			    hero.verifyObjectives("deliver", {allCustomers:true});
@@ -1823,6 +1866,25 @@ Game.nextStep = function() {
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
 			    	
+			    	if (Game.tests > 0) {
+			    		$("#tests_finished").css("display", "inline").html(CustomerManager.currentTest+1);
+		    			
+			    		if (CustomerManager.nextTest()) {
+			    			
+			    			hero.reset();
+			    			
+			    			// there is no start or restart method
+			    			Game.jsInterpreter = new NoBugsInterpreter(Game.code, Game.initApi);
+			    			
+			    			Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
+			    			return;
+			    		}
+		    			
+			    	}
+			    	
+					// if there isn't more lines to evaluate
+					Game.resetButtons();
+					
 			    	CountXP.stop();
 			    	
 			    	var r = Game.beforeFinishMission();
@@ -1882,6 +1944,9 @@ Game.nextStep = function() {
 			    	
 			    } else {
 			    	
+					// if there isn't more lines to evaluate
+					Game.resetButtons();
+					
 			    	var objs = [];
 					var os = hero.objective.objectives;
 					for (var i=0; i<os.length; i++) {

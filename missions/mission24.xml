@@ -34,7 +34,7 @@ Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
 		<category name="const.softDrink" show="true" />
-		<category name="const.orange" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
 		<category name="logic" show="true" />
 		
 		<category name="math" show="true" />

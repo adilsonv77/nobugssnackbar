@@ -20,7 +20,7 @@
 		
 		<page>
 		<![CDATA[
-			Atende os tr&#234;s clientes perguntando se t&#234;m sede e traz as
+			Atende os dois clientes perguntando se t&#234;m sede e traz as
 			suas bebidas.
 			<br />
 			<br />
@@ -82,15 +82,37 @@
 
 	</commands>
 	<cooker>initial</cooker>
+	<!-- 
 	<customersSN>
 		<randomization qtd="2">thirsty</randomization>
 	</customersSN>
+	-->
+	<tests>4</tests>
 	<customers>
 		<customer>
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
 				<order>
 					<foods>			
 					</foods>
@@ -102,9 +124,28 @@
 		</customer>
 		<customer>
 			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
+			<init>counter3</init>
+			<dest>counter3</dest>
 			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
 				<order>
 					<foods>			
 					</foods>
@@ -114,28 +155,11 @@
 				</order>
 			</orders>			
 		</customer>
-		<customer>
-			<id>03</id>
-			<init>counter3</init>
-			<dest>counter3</dest>
-			<orders>
-				<order>
-					<foods>			
-					</foods>
-					<drinks>
-						<drink qt="1" price="0">coke</drink>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
 	</customers>
 	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="840">
 		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter">deliver</objective>
 
-		<objective pos="2" place="counter">askHasThirsty</objective>
-		<objective pos="2" place="counter">deliver</objective>
-		
 		<objective pos="3" place="counter">askHasThirsty</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>

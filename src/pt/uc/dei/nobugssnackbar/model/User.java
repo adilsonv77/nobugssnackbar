@@ -2,7 +2,9 @@ package pt.uc.dei.nobugssnackbar.model;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
@@ -34,7 +36,16 @@ public class User {
 	private boolean enabled;
 
 	private long xp;
+	
+	@RemoteProperty
+	private Map<String, String> flags;
 
+	public Map<String, String> getFlags() {
+		if (flags == null)
+			flags = new HashMap<String, String>();
+		return flags;
+	}
+	
 	public long getId() {
 		return id;
 	}

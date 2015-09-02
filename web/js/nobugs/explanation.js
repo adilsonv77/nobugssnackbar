@@ -155,11 +155,14 @@ Explanation.finishStatement = function() {
 		Hints.startHints();
 		return;
 	}
-
 	
-	Hints.init(Game.mission.getElementsByTagName("hints")[0]);
+	Game.verifyTestsInMission( function() {
+		
+		Hints.init(Game.mission.getElementsByTagName("hints")[0]);
 
-	Game.initTime();
+		Game.initTime();
+	});
+	
 };
 
 Explanation.parseUserLogged = function(explanations) {

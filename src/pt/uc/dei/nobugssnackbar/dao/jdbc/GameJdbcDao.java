@@ -74,6 +74,15 @@ public class GameJdbcDao implements GameDao {
 			}
 
 			ps.close();
+			
+			ps = bdCon.prepareStatement("select flagid, value from usersflags where userid = ?");
+			ps.setLong(1, u.getId());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				u.getFlags().put(rs.getString(1), rs.getString(2));
+			}
+			
+			ps.close();
 
 		} finally {
 			if (bdCon != null)

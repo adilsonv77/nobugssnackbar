@@ -28,17 +28,30 @@ var customers = [];
 
 PreloadImgs.put('banco', 'images/banco.png');
 
-CustomerManager.init = function(openMission, customers, sn) {
+CustomerManager.init = function(openMission, tests, customers, sn) {
 	
     this.banco = PreloadImgs.get("banco");
 
     this.openMission = openMission;
+    this.tests = tests;
+    this.currentTest = 0;
 	this.optCustomers = customers;
 	
 	this.randomization = [];
 
 	if (sn != undefined)
 		this.parseSN(sn);
+};
+
+CustomerManager.nextTest = function() {
+	this.currentTest++;
+	if (this.currentTest == this.tests)
+		return false;
+	
+	customers = [];
+	CustomerManager.createCustomers();
+	
+	return true;
 };
 
 CustomerManager.parseSN = function(sn) {
@@ -127,13 +140,18 @@ CustomerManager.reset = function() {
 		
 		customer = customer.nextElementSibling;
 	}
-	
+	CustomerManager.createCustomers();
+};
+
+CustomerManager.createCustomers = function() {
+
 	this.createCustomersBasedOnPattern();
 	this.transformSN();
-	
+
 	customers.forEach(function(cust) {
 		cust.afterConstruct();
 	});
+
 };
 
 /**
