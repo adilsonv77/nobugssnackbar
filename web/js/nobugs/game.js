@@ -1805,7 +1805,18 @@ Game.updateVariables = function() {
 						"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
 						(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
 						"</div>";
-			} 
+			} else {
+				
+				try {
+					
+					if (data.indexOf("\"$$$") == 0) {
+						data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
+						
+					}
+				} catch (ex) {
+					// this happens when data is a number or other type different of string or array
+				}
+			}
 				
 			rows.push({"name":entry.name, "value": data});
 		}
@@ -2115,7 +2126,14 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'nobugsMathArith',
           interpreter.createNativeFunction(wrapper));
 
-    wrapper = function(f, t) {
+	wrapper = function() {
+        return interpreter.createPrimitive(NoBugsJavaScript.verifyLogicOperation());
+      };
+    
+    interpreter.setProperty(scope, 'verifyLogicOperation',
+          interpreter.createNativeFunction(wrapper));
+
+   wrapper = function(f, t) {
         return interpreter.createPrimitive(Game.setTimeout(f.data, t.data));
       };
       
@@ -2490,5 +2508,18 @@ Game.stopAlertGoalButton = function() {
 	
 	var gb = document.getElementById("goalButton");
 	gb.style.backgroundColor = "#DD4B39";
+	
+};
+
+Game.readVariableTest = function(variableName) {
+	// it is supposed that there are the variables
+	var tests = Game.mission.childNodes[0].getElementsByTagName("testsvars")[0].getElementsByTagName("test");
+	
+	var vars = tests[CustomerManager.currentTest].getElementsByTagName("var");
+	for (var i = 0; i < vars.length; i++)
+		if (vars[i].getAttribute("name") === variableName)
+			return vars[i].textContent; 
+	
+	return null;
 	
 };

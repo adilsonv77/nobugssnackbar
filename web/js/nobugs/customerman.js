@@ -491,3 +491,11 @@ CustomerManager.totalOfDrinksDelivered = function() {
 	return ret;
 	
 };
+
+CustomerManager.qtdDeliveredOf = function(type) {
+	var ret = 0;
+	for (var i = 0; i < customers.length; i++) {
+		ret += customers[i].qtdDeliveredOf(type);
+	}
+	return ret;
+};

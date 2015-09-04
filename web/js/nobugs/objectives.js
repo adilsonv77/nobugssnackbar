@@ -164,6 +164,10 @@ Objective.factory = function(key) {
 	case "giveTheWholeChange":
 		this.factories[key] = new Objective.GiveTheWholeChange();
 		break;
+
+	case "useBlock":
+		this.factories[key] = new Objective.UseBlock();
+		break;
 	}
 	
 	return this.factories[key];
@@ -524,7 +528,6 @@ Objective.CommsQtd.prototype.createExplanationItem = function(objective) {
 	
 };
 
-
 /******************************************************************************
  *                                Talk
  ******************************************************************************/
@@ -550,3 +553,24 @@ Objective.Talk.prototype.createExplanationItem = function(objective) {
 	return text.format(objective.text);
 };
 
+/******************************************************************************
+ *                                Talk
+ ******************************************************************************/
+
+Objective.UseBlock = function() {};
+
+Objective.UseBlock.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	p.type = elem.getAttribute("type");
+	return p;
+};
+
+Objective.UseBlock.prototype.checkObjective = function(options, objective)  {
+	return (objective.type === options);
+};
+
+Objective.UseBlock.prototype.createExplanationItem = function(objective)  {
+	var text = BlocklyApps.getMsg("explanation_useblock");
+	return text.format(BlocklyApps.getMsg("descr_" + objective.type));
+
+};

@@ -3,14 +3,8 @@
 	<explanation>
 		<page>
 		<![CDATA[
-		- adicionar recursos para maquina de gelado.
-		- uso obrigatorio do operador de comparacao
-		]]>
-		</page>
-		<page>
-		<![CDATA[
 Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de chocolate.
- Para divulgar esse novo produto, estamos com uma nova promo&#231;&#227;o: na compra de dois cachorros e duas bebidas, o cliente
+ Para divulgar esse novo produto, estamos com uma nova promo&#231;&#227;o: na compra de dois cachorros e uma bebida, o cliente
  recebe um gelado de chocolate. <br/><br/>
  Basta perguntar quantos lanches e quantas bebidas o cliente deseja, e se atender a condi&#231;&#227;o, prepare o gelado
  e entregue o gelado ao cliente. <br/><br/>
@@ -46,8 +40,24 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-	</customersSN>
+	<tests>5</tests>
+	<testsvars>
+		<test>
+			<var name="qtdIceCream">0</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">2</var>
+		</test>
+	</testsvars>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -55,31 +65,49 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 			<dest>counter1</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
 						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>						
-		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
-			<orders>
-				<order>
-					<foods randomMin="0" randomMax="1">		
-						<food qt="1" price="2">hotdog</food>	
-					</foods>
-					<drinks randomMin="0" randomMax="1">
-						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-			</orders>	
 		</customer>
 		<customer>
 			<id>03</id>
@@ -87,11 +115,45 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 			<dest>counter3</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
@@ -100,22 +162,21 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 	</customers>
 	
 	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
-		<!-- 
-		<objective pos="1" place="counter">deliver</objective>
-		<objective pos="2" place="counter">deliver</objective>
-		<objective pos="3" place="counter">deliver</objective>
-		<objective text="a quantidade de gelados entregues" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
-		 -->
-		 <objective pos="3" place="counter">goesTo</objective>
+
+		<objective type="logic_operation">useBlock</objective>
+		<objective text="a quantidade de gelados entregues" value="parseInt(Game.readVariableTest('qtdIceCream'))">talk</objective>
+
 	</objectives>
 	
 	<xml>
+	
 		<block type="prepare_pickUpIceCream">
 	      <value name="VALUE">
 			<block type="const_chocolate">
 			</block>
 	      </value>
 		</block>
+		
 	</xml>
 
 </mission>

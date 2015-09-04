@@ -29,6 +29,12 @@ NoBugsJavaScript.redefine = function() {
         
     }
     
+    if (NoBugsJavaScript.oldLogicOperation == null) {
+    	
+    	NoBugsJavaScript.oldLogicOperation = Blockly.JavaScript['logic_operation'];
+    	Blockly.JavaScript['logic_operation'] = NoBugsJavaScript.newLogicOperation;
+    }
+    
 };
   
 NoBugsJavaScript.newVarSet = function(block) {
@@ -144,6 +150,9 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 };
 
 function nobugsComparison(arg0, arg1, operator) {
+	
+	hero.verifyObjectives("useBlock", "logic_compare");
+	
 	operator = NoBugsJavaScript.OPERATORS[(operator.data == null?operator:operator.data)];
 	
 	if (!isNaN(parseInt(arg0)))
@@ -167,4 +176,17 @@ function nobugsComparison(arg0, arg1, operator) {
 	}
 	var ret = eval(arg0 + ' ' + operator + ' ' + arg1);
 	return ret;
+};
+
+NoBugsJavaScript.verifyLogicOperation = function () {
+	hero.verifyObjectives("useBlock", "logic_operation");
+	return true;
+};
+
+NoBugsJavaScript.newLogicOperation = function(block) {
+	
+	var r = NoBugsJavaScript.oldLogicOperation(block);
+	r[0] = 'verifyLogicOperation()' + " && " + r[0];
+	return r;
+	
 };

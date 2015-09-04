@@ -171,6 +171,8 @@ Customer = function(options) {
 	this.amountChangeReceived = 0;
 	this.amountChangeExpected = 0;
 	this.changeReceived = [];
+	
+	this.deliveredItems = [];
 	/*
 	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();
@@ -609,6 +611,8 @@ Customer.prototype.deliver = function(item) {
 		
 	}
 	
+	if (happy != Customer.DELIVERED_BAD)
+		this.deliveredItems.push(item.descr);
 	
 	return {money: money, happy: happy, reason: reason};
 };
@@ -619,6 +623,15 @@ Customer.prototype.totalOfFoodDelivered = function() {
 
 Customer.prototype.totalOfDrinksDelivered = function() {
 	return this.dUnfulfilled;
+};
+
+Customer.prototype.qtdDeliveredOf = function(key) {
+	var t = 0;
+	this.deliveredItems.forEach(function(descr) {
+		if (descr.indexOf(key) == 0)
+			t++;
+	});
+	return t;
 };
 
 Customer.typesOfMoney = [10, 20];

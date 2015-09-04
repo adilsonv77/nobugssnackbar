@@ -266,6 +266,8 @@ SnackMan.prototype.reset = function() {
 	this.cooler.sourceX = 0;
 	this.cooler.frameIndex = 0;
 	
+	this.iceCreamMachine.frameIndex = 0;
+	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
 	for (var i=0; i<this.objective.objectives.length; i++)
@@ -949,26 +951,29 @@ SnackMan.prototype.pickUpIceCream = function(order) {
 		throw false;
 	}
 	
-	if (order.data === "\"$$$chocolate\"" || order.data === "\"$$$strawberry\"" || order.date === "\"$$$vanilla\"") {
+	var order_data = order.data;
+	if (order_data === "\"$$$chocolate\"" || 
+			order_data === "\"$$$strawberry\"" || order_data === "\"$$$vanilla\"") {
 		// prepare a ice cream even there is no customer order
+		// we create another variable, because changing order.data reflects outside 
 		
-		order.data = {type: "order", descr: "$$icecreamof" + order.data.substring(4, order.data.length - 1), source: null, sourceType: null};
+		order_data = {type: "order", descr: "$$icecreamof" + order_data.substring(4, order_data.length - 1), source: null, sourceType: null};
 	}
 	
 	// does he have any order ? 
-	if (order.data == null || order.data === undefined || (order.data.type != "order")) {
+	if (order_data == null || order_data === undefined || (order_data.type != "order")) {
 		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
 		throw false;
 	}
 
 	// does the order have the food of this place ?
-	if (!((order.data.type === "order" && order.data.descr.indexOf("$$icecreamof") == 0))) {
+	if (!((order_data.type === "order" && order_data.descr.indexOf("$$icecreamof") == 0))) {
 		BlocklyApps.log.push(["fail", "Error_onlyIceCream"]);
 		throw false;
 	}
 	
 	var flavor = null;
-	switch (order.data.descr) {
+	switch (order_data.descr) {
 		case "$$icecreamofchocolate" : 
 			flavor = 0;
 			break;
@@ -993,7 +998,7 @@ SnackMan.prototype.pickUpIceCream = function(order) {
 	
 	this.update('IP'); 
 
-	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food", source: order.data.source, sourceType: order.data.sourceType};
+	var item = {type: "item", descr:order_data.descr, drinkOrFood: "food", source: order_data.source, sourceType: order_data.sourceType};
 	this.verifyObjectives("catchFruits", item);
 	this.catched++;
 	

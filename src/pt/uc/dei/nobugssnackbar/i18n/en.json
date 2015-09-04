@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-04 12:20:16.808000",
+		"lastupdated": "2015-09-04 17:48:23.492000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -157,6 +157,8 @@
 	"Explane.Talk": "Talk %0.",
 	"Explane.AskWantHowManyFoods": "Ask the customer %0 how many foods he wants to eat.",
 	"Explane.AskWantHowManyDrinks": "Ask the customer %0 how many drinks he wants.",
+	"Explane.UseBlock": "Use the block %0 in the program.",
+	"Descr.LogicOperation": "Logic operator",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",
@@ -170,6 +172,8 @@
 	"Single.BankNotes": "bank notes",
 	"Single.Coin": "coin",
 	"Single.BankNote": "bank note",
+	"Single.Strawberry": "Strawberry",
+	"Single.Vanilla": "Vanilla",
 	"Victory.XPBaseValue": "XP Base value",
 	"Victory.CoinsBaseValue": "Coins Base value",
 	"Victory.Bonus": "Bonus",

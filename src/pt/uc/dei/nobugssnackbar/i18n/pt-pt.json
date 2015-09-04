@@ -151,6 +151,9 @@
 	"Single.Coin" : "moeda",
 	"Single.BankNote" : "nota",
 	
+	"Single.Strawberry" : "Morango",
+	"Single.Vanilla" : "Baunilha",
+
 	"Explane.MustNot":"N&#227;o deve",
 	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente %0 deseja comer.",
@@ -168,6 +171,10 @@
 	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
 	"Explane.CashIn":"Cobrar o valor do cliente %0.",
 	"Explane.GiveTheWholeChange":"Devolva ao cliente %0 o troco integral e com o m&#237;nimo de notas e moedas.",
+	
+	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
+	
+	"Descr.LogicOperation":"Operador L&#243;gico",
 	
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	
