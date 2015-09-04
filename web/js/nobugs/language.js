@@ -517,6 +517,52 @@ Blockly.JavaScript['const_softDrink'] = function(block) {
 };
 
 /******************************************************************************
+ *                              Ice Cream
+ ******************************************************************************/	
+
+Blockly.Blocks['move_goToIceCreamMachine'] = {
+		 init: function() {
+			this.setColour(160);
+			this.appendDummyInput().appendField('goToIceCreamMachine');
+			this.setPreviousStatement(true);
+			this.setNextStatement(true);
+			this.setTooltip(BlocklyApps.getMsg('SnackMan_goToIceCreamMachineTooltip'));
+		 }
+};
+
+Blockly.JavaScript['move_goToIceCreamMachine'] = function(block) {
+	return "goToIceCreamMachine(); \n";
+};
+
+Blockly.Blocks['prepare_pickUpIceCream'] = {
+		 init: function() {
+		   this.setColour(160); 
+		   this.setOutput(true, "Foods");
+		   this.appendValueInput("VALUE").setCheck("FoodOrder").appendField('preparePickUpIceCream');
+		   this.setTooltip(BlocklyApps.getMsg('SnackMan_pickUpIceCreamTooltip'));
+		 }
+};
+
+Blockly.JavaScript['prepare_pickUpIceCream'] = function(block) {
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null'; 
+	return ['pickUpIceCream( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['const_chocolate'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('Chocolate');
+		  }
+		};
+
+Blockly.JavaScript['const_chocolate'] = function(block) {
+	return ['\"\\\"$$$chocolate\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+
+/******************************************************************************
  *                          Modification of default language 
  ******************************************************************************/	
 

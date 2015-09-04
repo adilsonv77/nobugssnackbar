@@ -3,8 +3,6 @@
 	<explanation>
 		<page>
 		<![CDATA[
-		-como adicionar a regra dos valores para automatizar a missao ?
-		-como fazer a conferencia se usou realmente um operador de comparacao ?
 		]]>
 		</page>
 		<page>
@@ -41,8 +39,7 @@ Dicas:<br/>
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-	</customersSN>
+	<tests>9</tests>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -50,31 +47,72 @@ Dicas:<br/>
 			<dest>counter1</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
-						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
 					</drinks>
 				</order>
 			</orders>						
-		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
-			<orders>
-				<order>
-					<foods randomMin="0" randomMax="1">		
-						<food qt="1" price="2">hotdog</food>	
-					</foods>
-					<drinks randomMin="0" randomMax="1">
-						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-			</orders>	
 		</customer>
 		<customer>
 			<id>03</id>
@@ -82,28 +120,82 @@ Dicas:<br/>
 			<dest>counter3</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
 					</drinks>
 				</order>
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+	<objectives ordered="false" commQtd="16" xpIndividual="50" xpFinal="30" xpTotalTime="720">
 		<objective pos="1" place="counter">askHasHunger</objective>
 		<objective pos="1" place="counter">askHasThirsty</objective>
-
-		<objective pos="2" place="counter">askHasHunger</objective>
-		<objective pos="2" place="counter">askHasThirsty</objective>
 
 		<objective pos="3" place="counter">askHasHunger</objective>
 		<objective pos="3" place="counter">askHasThirsty</objective>
 		
-	<!--	TODO <objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective> -->
+		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 	</objectives>
 	<xml>
 	</xml>

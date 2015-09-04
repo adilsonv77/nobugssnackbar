@@ -53,8 +53,7 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho para atender o pr
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-	</customersSN>
+	<tests>4</tests>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -64,8 +63,28 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho para atender o pr
 				<order>
 					<foods>			
 					</foods>
-					<drinks randomMin="1" randomMax="1">
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
 						<drink qt="1" price="0">juiceoforange</drink>
 					</drinks>
 				</order>
@@ -79,8 +98,28 @@ Deixei parte do que te ensinei pronto na &#225;rea de trabalho para atender o pr
 				<order>
 					<foods>			
 					</foods>
-					<drinks randomMin="1" randomMax="1" differentFromPrevious="true">
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
 						<drink qt="1" price="0">juiceoforange</drink>
 					</drinks>
 				</order>

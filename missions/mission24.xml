@@ -42,10 +42,7 @@ Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-		<randomization qtd="1">thirsty</randomization>
-		<randomization qtd="1" set="notTheSame">hungry</randomization>
-	</customersSN>
+	<tests>6</tests>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -54,11 +51,44 @@ Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando
 			<orders>
 				<order>
 					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="1" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>						
@@ -70,10 +100,43 @@ Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando
 			<orders>
 				<order>
 					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="1" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>

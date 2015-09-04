@@ -30,16 +30,21 @@ PreloadImgs.put('cooler', 'images/cooler_new.png');
 PreloadImgs.put('display', 'images/display_new.png');
 PreloadImgs.put('boxoffruits', 'images/boxoffruits.png');
 PreloadImgs.put('juicemachine', 'images/juicemachine.png');
+PreloadImgs.put('icecreammachine', 'images/icecreammachine.png');
 
 SnackMan = function(objectives, mission, avatar) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
 	
-	this.path = {n2:{n1:1, n3:1}, n3:{n2:1, n4:1}, n4:{n3:1, n5:1}, n5:{n4:1, n6:1}, n6:{n5:1, n7:1}, n7:{n6:1, n8:1}, n8:{n7:1, n9:1}, n9:{n8:1, n10:1}, n10:{n9:1, n11:1}, n12:{n11:1, n13:1}, n13:{n12:1, n14:1}, n14:{n13:1, n15:1}, n15:{n14:1, n16:1}, n16:{n15:1, n17:1}, n17:{n16:1, n18:1}, n18:{n17:1, n19:1}, n19:{n18:1, n20:1}, n20:{n19:1, n21:1}, n22:{n21:0.5, n23:0.5}, n23:{n22:0.5, n24:0.5}, n24:{n23:0.5, n25:0.5}, n25:{n24:0.5, n26:0.5}, n26:{n25:0.5, n27:0.5}, n27:{n26:0.5, n28:0.5}, n28:{n27:0.5, n29:0.5}, n29:{n28:0.5, n30:0.5}, n30:{n29:0.5, n31:0.5}, n32:{n31:1, n33:1}, n33:{n32:1, n34:1}, n34:{n33:1, n35:1}, n35:{n34:1, n36:1}, n36:{n35:1, n37:1}, n37:{n36:1, n38:1}, n38:{n37:1, n39:1}, n39:{n38:1, n40:1}, n40:{n39:1, n11:1}, n41:{n31:0.5, n42:0.5}, n42:{n41:0.5, n43:0.5}, n43:{n42:0.5, n44:0.5}, n44:{n43:0.5, n45:0.5}, n45:{n44:0.5, n46:0.5}, n46:{n45:0.5, n47:0.5}, n47:{n46:0.5, n48:0.5}, n48:{n47:0.5, n49:0.5}, n49:{n48:0.5, n50:0.5},
+	this.path = {n2:{n1:1, n3:1}, n3:{n2:1, n4:1}, n4:{n3:1, n5:1}, n5:{n4:1, n6:1}, n6:{n5:1, n7:1}, n7:{n6:1, n8:1}, n8:{n7:1, n9:1}, n9:{n8:1, n10:1}, n10:{n9:1, n11:1}, n12:{n11:1, n13:1, nIceCream:1}, n13:{n12:1, n14:1}, n14:{n13:1, n15:1, nIceCream:1}, n15:{n14:1, n16:1}, n16:{n15:1, n17:1}, n17:{n16:1, n18:1}, n18:{n17:1, n19:1}, n19:{n18:1, n20:1}, n20:{n19:1, n21:1}, n22:{n21:0.5, n23:0.5}, n23:{n22:0.5, n24:0.5}, n24:{n23:0.5, n25:0.5}, n25:{n24:0.5, n26:0.5}, n26:{n25:0.5, n27:0.5}, n27:{n26:0.5, n28:0.5}, n28:{n27:0.5, n29:0.5}, n29:{n28:0.5, n30:0.5}, n30:{n29:0.5, n31:0.5}, n32:{n31:1, n33:1}, n33:{n32:1, n34:1}, n34:{n33:1, n35:1}, n35:{n34:1, n36:1}, n36:{n35:1, n37:1}, n37:{n36:1, n38:1}, n38:{n37:1, n39:1}, n39:{n38:1, n40:1}, n40:{n39:1, n11:1}, n41:{n31:0.5, n42:0.5}, n42:{n41:0.5, n43:0.5}, n43:{n42:0.5, n44:0.5}, n44:{n43:0.5, n45:0.5}, n45:{n44:0.5, n46:0.5}, n46:{n45:0.5, n47:0.5}, n47:{n46:0.5, n48:0.5}, n48:{n47:0.5, n49:0.5}, n49:{n48:0.5, n50:0.5},
 	             n50:{n49:0.5, n51:0.5}, n51:{n50:0.5, n52:0.5}, n52:{n51:0.5, n53:0.5}, n53:{n52:0.5, n54:0.5}, n54:{n53:0.5, n55:0.5}, n55:{n54:0.5, n56:0.5}, n56:{n55:0.5, n57:0.5}, n57:{n56:0.5, n58:0.5}, n58:{n57:0.5, n59:0.5}, n59:{n58:0.5, n1:0.5}, n60:{n1:1, n61:1}, n61:{n60:1, n62:1}, n62:{n61:1, n63:1}, n63:{n62:1, n64:1}, n64:{n63:1, n65:1}, n65:{n64:1, n66:1}, n66:{n65:1, n67:1}, n67:{n66:1, n68:1}, n68:{n67:1, n69:1}, n70:{n31:0.5, n71:0.5}, n71:{n70:0.5, n72:0.5}, n72:{n71:0.5, n73:0.5}, n73:{n72:0.5, n74:0.5}, n74:{n73:0.5, n75:0.5}, n75:{n74:0.5, n76:0.5}, n76:{n75:0.5, n77:0.5}, n77:{n76:0.5, n78:0.5}, n78:{n77:0.5, n79:0.5}, n80:{n79:0.5, n81:0.5}, n81:{n80:0.5, n82:0.5}, n82:{n81:0.5, n83:0.5}, n83:{n82:0.5, n84:0.5}, n84:{n83:0.5, n85:0.5}, n85:{n84:0.5, n86:0.5}, n86:{n85:0.5, n87:0.5}, n87:{n86:0.5, n88:0.5}, n88:{n87:0.5, n89:0.5}, n89:{n88:0.5, n90:0.5}, n90:{n89:0.5, n91:0.5}, n91:{n90:0.5, n92:0.5}, n92:{n91:0.5, n93:0.5}, 
 	             n93:{n92:0.5, n94:0.5}, n94:{n93:0.5, n95:0.5}, n95:{n94:0.5, n96:0.5}, n96:{n95:0.5, n97:0.5}, n97:{n96:0.5, n98:0.5}, n98:{n97:0.5, n99:0.5}, n99:{n98:0.5, n1:0.5}, n100:{n79:1, n101:1}, n101:{n100:1, n102:1}, n102:{n101:1, n103:1}, n103:{n102:1, n104:1}, n104:{n103:1, n105:1}, n105:{n104:1, n106:1}, n107:{n106:1, n108:1}, n108:{n107:1, n109:1}, n109:{n108:1, n110:1}, n110:{n109:1, n111:1}, n111:{n110:1, n112:1}, n112:{n111:1, n113:1}, n113:{n112:1, n114:1}, n114:{n113:1, n115:1}, n115:{n114:1, n116:1}, n116:{n115:1, n1:1}, n117:{n106:1, n118:1}, n118:{n117:1, n119:1}, n119:{n118:1, n120:1}, n120:{n119:1, n121:1}, n121:{n120:1, n122:1}, n122:{n121:1, n123:1}, n123:{n122:1, n124:1}, n124:{n123:1, n125:1}, n125:{n124:1, n126:1}, n126:{n125:1, n69:1}, n128:{n127:1, n129:1}, n129:{n128:1, n130:1}, n130:{n129:1, n131:1}, n131:{n130:1, n132:1}, n132:{n131:1, n133:1}, n133:{n132:1, n134:1}, n134:{n133:1, n135:1}, n135:{n134:1, n136:1}, 
-	             n136:{n135:1, n137:1}, n137:{n136:1, n1:1}, n138:{n127:1, n139:1}, n139:{n138:1, n140:1}, n140:{n139:1, n141:1}, n141:{n140:1, n142:1}, n142:{n141:1, n143:1}, n143:{n142:1, n144:1}, n144:{n143:1, n145:1}, n145:{n144:1, n146:1}, n146:{n145:1, n147:1}, n147:{n146:1, n11:1}, n1:{n2:1, n59:1, n60:1, n99:1, n116:1, n137:1}, n11:{n10:1, n12:1, n40:1, n147:1 }, n21:{n20:1, n22:1}, n31:{n30:1, n32:1, n41:1, n70:1}, n79:{n78:1, n80:1, n100:1}, n106:{n105:1, n107:1, n117:1}, n127:{n128:1, n138:1}, n69:{n68:1, n126:1} };
-	this.nodes = {n1:{id: 'n1', x:270, y: 356}, n2:{id: 'n2', x:266, y: 344}, n3:{id: 'n3', x:262, y: 332}, n4:{id: 'n4', x:258, y: 320}, n5:{id: 'n5', x:254, y: 308}, n6:{id: 'n6', x:250, y: 296}, n7:{id: 'n7', x:246, y: 284}, n8:{id: 'n8', x:242, y: 272}, n9:{id: 'n9', x:238, y: 260}, n10:{id: 'n10', x:234, y: 248}, n11:{id: 'n11', x:230, y: 240}, n12:{id: 'n12', x:218, y: 243}, n13:{id: 'n13', x:206, y: 246}, n14:{id: 'n14', x:194, y: 249}, n15:{id: 'n15', x:182, y: 252}, n16:{id: 'n16', x:170, y: 255}, n17:{id: 'n17', x:158, y: 258}, n18:{id: 'n18', x:146, y: 261}, n19:{id: 'n19', x:134, y: 264}, n20:{id: 'n20', x:122, y: 267}, n21:{id: 'n21', x:110, y: 276}, n22:{id: 'n22', x:110, y: 284}, n23:{id: 'n23', x:110, y: 292}, n24:{id: 'n24', x:110, y: 300}, n25:{id: 'n25', x:110, y: 308}, n26:{id: 'n26', x:110, y: 316}, n27:{id: 'n27', x:110, y: 324}, n28:{id: 'n28', x:110, y: 332}, n29:{id: 'n29', x:110, y: 340}, n30:{id: 'n30', x:110, y: 348}, n31:{id: 'n31', x:110, y: 356}, n32:{id: 'n32', x:122, y: 345}, n33:{id: 'n33', x:134, y: 334}, n34:{id: 'n34', x:146, y: 323}, n35:{id: 'n35', x:158, y: 312}, n36:{id: 'n36', x:170, y: 301}, n37:{id: 'n37', x:182, y: 290}, n38:{id: 'n38', x:194, y: 279}, n39:{id: 'n39', x:206, y: 268}, n40:{id: 'n40', x:218, y: 257}, n41:{id: 'n41', x:118, y: 356}, n42:{id: 'n42', x:126, y: 356}, n43:{id: 'n43', x:134, y: 356}, n44:{id: 'n44', x:142, y: 356}, n45:{id: 'n45', x:150, y: 356}, n46:{id: 'n46', x:158, y: 356}, n47:{id: 'n47', x:166, y: 356}, n48:{id: 'n48', x:174, y: 356}, n49:{id: 'n49', x:182, y: 356}, n50:{id: 'n50', x:190, y: 356}, n51:{id: 'n51', x:198, y: 356}, n52:{id: 'n52', x:206, y: 356}, n53:{id: 'n53', x:214, y: 356}, n54:{id: 'n54', x:222, y: 356}, n55:{id: 'n55', x:230, y: 356}, n56:{id: 'n56', x:238, y: 356}, n57:{id: 'n57', x:246, y: 356}, n58:{id: 'n58', x:254, y: 356}, n59:{id: 'n59', x:262, y: 356}, n60:{id: 'n60', x:271, y: 364}, n61:{id: 'n61', x:272, y: 372}, n62:{id: 'n62', x:273, y: 380}, n63:{id: 'n63', x:274, y: 388}, n64:{id: 'n64', x:275, y: 396}, n65:{id: 'n65', x:276, y: 404}, n66:{id: 'n66', x:277, y: 412}, n67:{id: 'n67', x:278, y: 420}, n68:{id: 'n68', x:279, y: 428}, n69:{id: 'n69', x:284, y: 438}, n70:{id: 'n70', x:110, y: 364}, n71:{id: 'n71', x:110, y: 372}, n72:{id: 'n72', x:110, y: 380}, n73:{id: 'n73', x:110, y: 388}, n74:{id: 'n74', x:110, y: 396}, n75:{id: 'n75', x:110, y: 404}, n76:{id: 'n76', x:110, y: 412}, n77:{id: 'n77', x:110, y: 420}, n78:{id: 'n78', x:110, y: 428}, n79:{id: 'n79', x:110, y: 436}, n80:{id: 'n80', x:118, y: 432}, n81:{id: 'n81', x:126, y: 428}, n82:{id: 'n82', x:134, y: 424}, n83:{id: 'n83', x:142, y: 420}, n84:{id: 'n84', x:150, y: 416}, n85:{id: 'n85', x:158, y: 412}, n86:{id: 'n86', x:166, y: 408}, n87:{id: 'n87', x:174, y: 404}, n88:{id: 'n88', x:182, y: 400}, n89:{id: 'n89', x:190, y: 396}, n90:{id: 'n90', x:198, y: 392}, n91:{id: 'n91', x:206, y: 388}, n92:{id: 'n92', x:214, y: 384}, n93:{id: 'n93', x:222, y: 380}, n94:{id: 'n94', x:230, y: 376}, n95:{id: 'n95', x:238, y: 372}, n96:{id: 'n96', x:246, y: 368}, n97:{id: 'n97', x:254, y: 364}, n98:{id: 'n98', x:262, y: 360}, n99:{id: 'n99', x:270, y: 356}, n100:{id: 'n100', x:125, y: 433}, n101:{id: 'n101', x:140, y: 430}, n102:{id: 'n102', x:155, y: 427}, n103:{id: 'n103', x:170, y: 424}, n104:{id: 'n104', x:185, y: 421}, n105:{id: 'n105', x:200, y: 418}, n106:{id: 'n106', x:200, y: 416}, n107:{id: 'n107', x:207, y: 410}, n108:{id: 'n108', x:214, y: 404}, n109:{id: 'n109', x:221, y: 398}, n110:{id: 'n110', x:228, y: 392}, n111:{id: 'n111', x:235, y: 386}, n112:{id: 'n112', x:242, y: 380}, n113:{id: 'n113', x:249, y: 374}, n114:{id: 'n114', x:256, y: 368}, n115:{id: 'n115', x:263, y: 362}, n116:{id: 'n116', x:270, y: 356}, n117:{id: 'n117', x:208, y: 418}, n118:{id: 'n118', x:216, y: 420}, n119:{id: 'n119', x:224, y: 422}, n120:{id: 'n120', x:232, y: 424}, n121:{id: 'n121', x:240, y: 426}, n122:{id: 'n122', x:248, y: 428}, n123:{id: 'n123', x:256, y: 430}, n124:{id: 'n124', x:264, y: 432}, n125:{id: 'n125', x:272, y: 434}, n126:{id: 'n126', x:280, y: 436}, n127:{id: 'n127', x:300, y: 240}, n128:{id: 'n128', x:296, y: 251}, n129:{id: 'n129', x:292, y: 262}, n130:{id: 'n130', x:288, y: 273}, n131:{id: 'n131', x:284, y: 284}, n132:{id: 'n132', x:280, y: 295}, n133:{id: 'n133', x:276, y: 306}, n134:{id: 'n134', x:272, y: 317}, n135:{id: 'n135', x:268, y: 328}, n136:{id: 'n136', x:264, y: 339}, n137:{id: 'n137', x:260, y: 350}, n138:{id: 'n138', x:293, y: 240}, n139:{id: 'n139', x:286, y: 240}, n140:{id: 'n140', x:279, y: 240}, n141:{id: 'n141', x:272, y: 240}, n142:{id: 'n142', x:265, y: 240}, n143:{id: 'n143', x:258, y: 240}, n144:{id: 'n144', x:251, y: 240}, n145:{id: 'n145', x:244, y: 240}, n146:{id: 'n146', x:237, y: 240}, n147:{id: 'n147', x:230, y: 240} };
-	this.keynodes = ['n1', 'n11', 'n21', 'n31', 'n69', 'n79', 'n106', 'n127' ];
+	             n136:{n135:1, n137:1}, n137:{n136:1, n1:1}, n138:{n127:1, n139:1}, n139:{n138:1, n140:1}, n140:{n139:1, n141:1}, n141:{n140:1, n142:1}, n142:{n141:1, n143:1}, n143:{n142:1, n144:1}, n144:{n143:1, n145:1}, n145:{n144:1, n146:1}, n146:{n145:1, n147:1}, n147:{n146:1, n11:1}, n1:{n2:1, n59:1, n60:1, n99:1, n116:1, n137:1}, n11:{n10:1, n12:1, n40:1, n147:1, nIceCream3: 1}, n21:{n20:1, n22:1}, n31:{n30:1, n32:1, n41:1, n70:1}, n79:{n78:1, n80:1, n100:1}, n106:{n105:1, n107:1, n117:1}, n127:{n128:1, n138:1}, n69:{n68:1, n126:1} 
+	             ,nIceCream3:{n11: 1, nIceCream2:1}, nIceCream2:{n11: 1, nIceCream1:1}, nIceCream1:{nIceCream2:1, nIceCream:1}, nIceCream:{nIceCream1:1, n14:1, n12:1}             
+	};
+	this.nodes = {n1:{id: 'n1', x:270, y: 356}, n2:{id: 'n2', x:266, y: 344}, n3:{id: 'n3', x:262, y: 332}, n4:{id: 'n4', x:258, y: 320}, n5:{id: 'n5', x:254, y: 308}, n6:{id: 'n6', x:250, y: 296}, n7:{id: 'n7', x:246, y: 284}, n8:{id: 'n8', x:242, y: 272}, n9:{id: 'n9', x:238, y: 260}, n10:{id: 'n10', x:234, y: 248}, n11:{id: 'n11', x:230, y: 240}, n12:{id: 'n12', x:218, y: 243}, n13:{id: 'n13', x:206, y: 246}, n14:{id: 'n14', x:194, y: 249}, n15:{id: 'n15', x:182, y: 252}, n16:{id: 'n16', x:170, y: 255}, n17:{id: 'n17', x:158, y: 258}, n18:{id: 'n18', x:146, y: 261}, n19:{id: 'n19', x:134, y: 264}, n20:{id: 'n20', x:122, y: 267}, n21:{id: 'n21', x:110, y: 276}, n22:{id: 'n22', x:110, y: 284}, n23:{id: 'n23', x:110, y: 292}, n24:{id: 'n24', x:110, y: 300}, n25:{id: 'n25', x:110, y: 308}, n26:{id: 'n26', x:110, y: 316}, n27:{id: 'n27', x:110, y: 324}, n28:{id: 'n28', x:110, y: 332}, n29:{id: 'n29', x:110, y: 340}, n30:{id: 'n30', x:110, y: 348}, n31:{id: 'n31', x:110, y: 356}, n32:{id: 'n32', x:122, y: 345}, n33:{id: 'n33', x:134, y: 334}, n34:{id: 'n34', x:146, y: 323}, n35:{id: 'n35', x:158, y: 312}, n36:{id: 'n36', x:170, y: 301}, n37:{id: 'n37', x:182, y: 290}, n38:{id: 'n38', x:194, y: 279}, n39:{id: 'n39', x:206, y: 268}, n40:{id: 'n40', x:218, y: 257}, n41:{id: 'n41', x:118, y: 356}, n42:{id: 'n42', x:126, y: 356}, n43:{id: 'n43', x:134, y: 356}, n44:{id: 'n44', x:142, y: 356}, n45:{id: 'n45', x:150, y: 356}, n46:{id: 'n46', x:158, y: 356}, n47:{id: 'n47', x:166, y: 356}, n48:{id: 'n48', x:174, y: 356}, n49:{id: 'n49', x:182, y: 356}, n50:{id: 'n50', x:190, y: 356}, n51:{id: 'n51', x:198, y: 356}, n52:{id: 'n52', x:206, y: 356}, n53:{id: 'n53', x:214, y: 356}, n54:{id: 'n54', x:222, y: 356}, n55:{id: 'n55', x:230, y: 356}, n56:{id: 'n56', x:238, y: 356}, n57:{id: 'n57', x:246, y: 356}, n58:{id: 'n58', x:254, y: 356}, n59:{id: 'n59', x:262, y: 356}, n60:{id: 'n60', x:271, y: 364}, n61:{id: 'n61', x:272, y: 372}, n62:{id: 'n62', x:273, y: 380}, n63:{id: 'n63', x:274, y: 388}, n64:{id: 'n64', x:275, y: 396}, n65:{id: 'n65', x:276, y: 404}, n66:{id: 'n66', x:277, y: 412}, n67:{id: 'n67', x:278, y: 420}, n68:{id: 'n68', x:279, y: 428}, n69:{id: 'n69', x:284, y: 438}, n70:{id: 'n70', x:110, y: 364}, n71:{id: 'n71', x:110, y: 372}, n72:{id: 'n72', x:110, y: 380}, n73:{id: 'n73', x:110, y: 388}, n74:{id: 'n74', x:110, y: 396}, n75:{id: 'n75', x:110, y: 404}, n76:{id: 'n76', x:110, y: 412}, n77:{id: 'n77', x:110, y: 420}, n78:{id: 'n78', x:110, y: 428}, n79:{id: 'n79', x:110, y: 436}, n80:{id: 'n80', x:118, y: 432}, n81:{id: 'n81', x:126, y: 428}, n82:{id: 'n82', x:134, y: 424}, n83:{id: 'n83', x:142, y: 420}, n84:{id: 'n84', x:150, y: 416}, n85:{id: 'n85', x:158, y: 412}, n86:{id: 'n86', x:166, y: 408}, n87:{id: 'n87', x:174, y: 404}, n88:{id: 'n88', x:182, y: 400}, n89:{id: 'n89', x:190, y: 396}, n90:{id: 'n90', x:198, y: 392}, n91:{id: 'n91', x:206, y: 388}, n92:{id: 'n92', x:214, y: 384}, n93:{id: 'n93', x:222, y: 380}, n94:{id: 'n94', x:230, y: 376}, n95:{id: 'n95', x:238, y: 372}, n96:{id: 'n96', x:246, y: 368}, n97:{id: 'n97', x:254, y: 364}, n98:{id: 'n98', x:262, y: 360}, n99:{id: 'n99', x:270, y: 356}, n100:{id: 'n100', x:125, y: 433}, n101:{id: 'n101', x:140, y: 430}, n102:{id: 'n102', x:155, y: 427}, n103:{id: 'n103', x:170, y: 424}, n104:{id: 'n104', x:185, y: 421}, n105:{id: 'n105', x:200, y: 418}, n106:{id: 'n106', x:200, y: 416}, n107:{id: 'n107', x:207, y: 410}, n108:{id: 'n108', x:214, y: 404}, n109:{id: 'n109', x:221, y: 398}, n110:{id: 'n110', x:228, y: 392}, n111:{id: 'n111', x:235, y: 386}, n112:{id: 'n112', x:242, y: 380}, n113:{id: 'n113', x:249, y: 374}, n114:{id: 'n114', x:256, y: 368}, n115:{id: 'n115', x:263, y: 362}, n116:{id: 'n116', x:270, y: 356}, n117:{id: 'n117', x:208, y: 418}, n118:{id: 'n118', x:216, y: 420}, n119:{id: 'n119', x:224, y: 422}, n120:{id: 'n120', x:232, y: 424}, n121:{id: 'n121', x:240, y: 426}, n122:{id: 'n122', x:248, y: 428}, n123:{id: 'n123', x:256, y: 430}, n124:{id: 'n124', x:264, y: 432}, n125:{id: 'n125', x:272, y: 434}, n126:{id: 'n126', x:280, y: 436}, n127:{id: 'n127', x:300, y: 240}, n128:{id: 'n128', x:296, y: 251}, n129:{id: 'n129', x:292, y: 262}, n130:{id: 'n130', x:288, y: 273}, n131:{id: 'n131', x:284, y: 284}, n132:{id: 'n132', x:280, y: 295}, n133:{id: 'n133', x:276, y: 306}, n134:{id: 'n134', x:272, y: 317}, n135:{id: 'n135', x:268, y: 328}, n136:{id: 'n136', x:264, y: 339}, n137:{id: 'n137', x:260, y: 350}, n138:{id: 'n138', x:293, y: 240}, n139:{id: 'n139', x:286, y: 240}, n140:{id: 'n140', x:279, y: 240}, n141:{id: 'n141', x:272, y: 240}, n142:{id: 'n142', x:265, y: 240}, n143:{id: 'n143', x:258, y: 240}, n144:{id: 'n144', x:251, y: 240}, n145:{id: 'n145', x:244, y: 240}, n146:{id: 'n146', x:237, y: 240}, n147:{id: 'n147', x:230, y: 240}
+				,nIceCream:{id: "nIceCream", x:200, y:240}, nIceCream1:{id:"nIceCream1", x:208,y:240}, nIceCream2:{id:"nIceCream2",x:215,y:240}, nIceCream3:{id:"nIceCream3",x:223,y:240}		
+	};
+	this.keynodes = ['n1', 'n11', 'n21', 'n31', 'n69', 'n79', 'n106', 'n127', 'nIceCream' ];
 
 	this.snackManFinalPath = new Array();
 	this.mapGraph = {};
@@ -53,6 +58,7 @@ SnackMan = function(objectives, mission, avatar) {
 
 	this.boxOfFruitsNode = this.snackManFinalPath[6];
 	this.juiceMachineNode = this.snackManFinalPath[7];
+	this.iceCreamMachineNode = this.snackManFinalPath[8];
 	
 	this.heightCooker = 76;
 	
@@ -157,6 +163,24 @@ SnackMan = function(objectives, mission, avatar) {
 			img : PreloadImgs.get("juicemachine")
 		});
 	}
+	
+	var icecream = mission.evaluate("count(//mission/commands/category[@name='icecream'])", mission, null,  XPathResult.ANY_TYPE, null);
+	this.showIceCream = icecream.numberValue > 0; 
+	if (this.showIceCream) {
+		this.iceCreamMachine = new Sprite({
+			ticksPerFrame: 0,
+			numberOfFrames: 9,
+			horzSeq: false,
+			x: 160,
+			y: 160,
+			width: 40,
+			height: 720,
+			sourceX: 0,
+			sourceY: 0,
+			img : PreloadImgs.get("icecreammachine")
+		});
+		
+	}	
 	
 	this.installedMachines = [];
 	this.extendedCommands = [];
@@ -314,8 +338,13 @@ SnackMan.prototype.draw = function(ctx) {
 	
 	this.drawInstalledMachines(ctx);
 	this.display.draw(ctx);
+	
 	if (this.showJuice) 
 		this.juiceMachine.draw(ctx);
+	
+	if (this.showIceCream) 
+		this.iceCreamMachine.draw(ctx);
+	
 	this.img.draw(ctx);
 	this.cooler.draw(ctx);
 
@@ -905,6 +934,73 @@ SnackMan.prototype.giveChange = function(value, typeOfMoney) {
 };
 
 /**********************************************************/
+/**                  ice cream methods                    */
+/**********************************************************/
+
+SnackMan.prototype.goToIceCreamMachine = function() {
+	this.animateSnackMan(this.iceCreamMachineNode);
+};
+
+SnackMan.prototype.pickUpIceCream = function(order) {
+
+	// is he in front of the ice cream machine ?
+	if (this.currentNode.id != this.iceCreamMachineNode.id) {
+		BlocklyApps.log.push(["fail", "Error_isntFrontIceCreamMachine"]);
+		throw false;
+	}
+	
+	if (order.data === "\"$$$chocolate\"" || order.data === "\"$$$strawberry\"" || order.date === "\"$$$vanilla\"") {
+		// prepare a ice cream even there is no customer order
+		
+		order.data = {type: "order", descr: "$$icecreamof" + order.data.substring(4, order.data.length - 1), source: null, sourceType: null};
+	}
+	
+	// does he have any order ? 
+	if (order.data == null || order.data === undefined || (order.data.type != "order")) {
+		BlocklyApps.log.push(["fail", "Error_doesntHaveOrder"]);
+		throw false;
+	}
+
+	// does the order have the food of this place ?
+	if (!((order.data.type === "order" && order.data.descr.indexOf("$$icecreamof") == 0))) {
+		BlocklyApps.log.push(["fail", "Error_onlyIceCream"]);
+		throw false;
+	}
+	
+	var flavor = null;
+	switch (order.data.descr) {
+		case "$$icecreamofchocolate" : 
+			flavor = 0;
+			break;
+					
+		case "$$icecreamofvanilla" :
+			flavor = 3;
+			break;
+
+		case "$$icecreamofstrawberry" :
+			flavor = 6;
+			break;
+
+	}
+	
+	this.update("DI", flavor);
+	this.update("DI", flavor+1);
+	this.update("DI", flavor+2);
+	
+	this.update("UI", flavor+2);
+	this.update("UI", flavor+1);
+	this.update("UI", flavor);
+	
+	this.update('IP'); 
+
+	var item = {type: "item", descr:order.data.descr, drinkOrFood: "food", source: order.data.source, sourceType: order.data.sourceType};
+	this.verifyObjectives("catchFruits", item);
+	this.catched++;
+	
+	return item; 
+};
+
+/**********************************************************/
 /**                    draw methods                       */
 /**********************************************************/
 
@@ -1001,6 +1097,11 @@ SnackMan.prototype.animate = function(command, values) {
 	 		this.talkText = values.shift();
 	 		break;
 	 	
+	 	case 'DI': ;
+	 	case 'UI':
+	 		this.showIceCreamMachine(values.shift());
+	 		break;
+
 	  }
 	  
 };
@@ -1123,6 +1224,10 @@ SnackMan.prototype.changeImagePlatter = function() {
 
 SnackMan.prototype.changeImageOriginal = function() {
 	this.img.image = this.imgCooker;
+};
+
+SnackMan.prototype.showIceCreamMachine = function(flavor) {
+	this.iceCreamMachine.frameIndex = flavor;
 };
 
 /**********************************************************/

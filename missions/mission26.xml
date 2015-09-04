@@ -27,7 +27,12 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 		<category name="askWantHowManyDrinks" show="true" />
 
 		<category name="askWantHowManyFoods" show="true" />
+		
+		<category name="deliver" show="true" />
 
+		<category name="icecream" show="true" />
+		<category name="const.chocolate" show="true" />
+		
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
 		<category name="const.softDrink" show="true" />
@@ -93,6 +98,7 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 			</orders>	
 		</customer>
 	</customers>
+	
 	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
 		<!-- 
 		<objective pos="1" place="counter">deliver</objective>
@@ -100,9 +106,16 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 		<objective pos="3" place="counter">deliver</objective>
 		<objective text="a quantidade de gelados entregues" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 		 -->
-		 <objective pos="1" place="counter">goesTo</objective>
+		 <objective pos="3" place="counter">goesTo</objective>
 	</objectives>
+	
 	<xml>
+		<block type="prepare_pickUpIceCream">
+	      <value name="VALUE">
+			<block type="const_chocolate">
+			</block>
+	      </value>
+		</block>
 	</xml>
 
 </mission>

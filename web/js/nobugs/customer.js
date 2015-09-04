@@ -44,6 +44,7 @@ PreloadImgs.put('$customer03_anger', 'images/$customer03_anger.png');
 PreloadImgs.put('coin', 'images/coin.png');
 PreloadImgs.put('anger', 'images/anger.png');
 PreloadImgs.put('duvida', 'images/duvida.png');
+PreloadImgs.put('heart', 'images/heart.png');
 
 //Candidate Orders
 PreloadImgs.put('$coke', 'images/$$coke.png');
@@ -150,6 +151,17 @@ Customer = function(options) {
 		img : PreloadImgs.get("anger")
 	});
 	this.showFire = false;
+	
+	this.heart = new Sprite({
+		ticksPerFrame: 0,
+		numberOfFrames: 5,
+		horzSeq: true,
+		width: 200,
+		height: 40,
+		sourceY: 0,
+		img : PreloadImgs.get("heart")
+	});
+	this.showLove = false;
 	
 	this.openMission = options.openMission;
 	this.idxPattern = options.idxPattern;
@@ -310,9 +322,24 @@ Customer.prototype.update = function() {
 				CustomerManager.createCustomerByPattern(this.idxPattern, CustOpt.door);
 			
 		}
-		return; // think about the next state
-	}
+		break;
 
+	case 39: ;
+	case 41: ;
+	case 42: ;
+	case 43: ;
+	case 44: ;
+		this.log.push(['UH', true]); // update heart
+		break;	
+	
+	case 45:
+		this.log.push(['UH', false]); // hide heart
+		break;	
+		
+	case 46:
+		// think about the next state
+		return;
+	}
 	this.state++;
 };
 
@@ -372,6 +399,12 @@ Customer.prototype.animate = function() {
 				this.showFire = tuple.shift();
 				this.fire.update();
 				break;
+				
+			case 'UH' :
+				this.showLove = tuple.shift();
+				this.heart.update();
+				break;
+			
 		}
 		
 	}
@@ -437,6 +470,9 @@ Customer.prototype.draw = function(ctx) {
 	} else {
 		if (this.showFire) {
 			this.fire.draw(ctx);
+		} else {
+			if (this.showLove)
+				this.heart.draw(ctx);
 		}
 	}
 		
@@ -494,6 +530,8 @@ Customer.DELIVERED_BAD = 0;
 Customer.DELIVERED_PARTIAL = 1;
 Customer.DELIVERED_TOTAL = 2; 
 
+Customer.DELIVERED_THANK_YOU = 4;
+
 Customer.prototype.deliver = function(item) {
 	
 	// item is the "delivered item"
@@ -502,61 +540,75 @@ Customer.prototype.deliver = function(item) {
 	var happy = Customer.DELIVERED_BAD;
 	var reason = null;
 	
-	if  ((item.type === "item") &&
-	    ((item.drinkOrFood === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
-			(item.drinkOrFood === "food" && (this.fUnfulfilled < this.foods.length)))) {
+	if (item.source == null) { // it is a gift
 		
-		if (item.source === this.currentNode.id) {
-
-			var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
-			// d is the "ordered item"
-			
-			
-			if (item.descr === "$$" + d.item) {
-				
-				if (item.drinkOrFood === "drink")
-					this.dUnfulfilled++;
-				else
-					this.fUnfulfilled++;
-				
-				happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
-			} else {
-				reason = "Error_deliveredWrongRequest"; 	
-			}
-			
-		} else {
-			reason = "Error_doesntMatchPosition";
-		}
+		happy = Customer.DELIVERED_THANK_YOU;
+		this.showLove = true;
+		this.heart.x = this.img.x+5;
+		this.heart.y = this.img.y-20;
+		
+		this.state = 39;
 		
 	} else {
-		reason = "Error_deliveredWrongRequest";
+		
+		if  ((item.type === "item") &&
+			    ((item.drinkOrFood === "drink" && (this.dUnfulfilled < this.drinks.length)) ||
+					(item.drinkOrFood === "food" && (this.fUnfulfilled < this.foods.length)))) {
+				
+				if (item.source === this.currentNode.id) {
+
+					var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
+					// d is the "ordered item"
+					
+					
+					if (item.descr === "$$" + d.item) {
+						
+						if (item.drinkOrFood === "drink")
+							this.dUnfulfilled++;
+						else
+							this.fUnfulfilled++;
+						
+						happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
+					} else {
+						reason = "Error_deliveredWrongRequest"; 	
+					}
+					
+				} else {
+					reason = "Error_doesntMatchPosition";
+				}
+				
+			} else {
+				reason = "Error_deliveredWrongRequest";
+			}
+			
+		if (happy ===  Customer.DELIVERED_TOTAL) {
+			
+			var fConta = function(entry) {
+				
+				money += entry.price;
+
+			};
+			
+			this.foods.forEach(fConta);
+			this.drinks.forEach(fConta);
+			
+			this.showCoin = true;
+			this.coin.x = this.img.x+5;
+			this.coin.y = this.img.y-20;
+			this.state = 9;
+			
+		} else 
+			if (happy == Customer.DELIVERED_BAD){
+				
+				this.showFire = true;
+				this.fire.x = this.img.x+8;
+				this.fire.y = this.img.y-32;
+				this.state = 21;
+				
+			} 
+		
 	}
 	
-	if (happy ===  Customer.DELIVERED_TOTAL) {
-		
-		var fConta = function(entry) {
-			
-			money += entry.price;
-
-		};
-		
-		this.foods.forEach(fConta);
-		this.drinks.forEach(fConta);
-		
-		this.showCoin = true;
-		this.coin.x = this.img.x+5;
-		this.coin.y = this.img.y-20;
-		this.state = 9;
-		
-	} else 
-		if (happy == Customer.DELIVERED_BAD){
-			
-			this.showFire = true;
-			this.fire.x = this.img.x+8;
-			this.fire.y = this.img.y-32;
-			this.state = 21;
-			
-		} 
 	
 	return {money: money, happy: happy, reason: reason};
 };

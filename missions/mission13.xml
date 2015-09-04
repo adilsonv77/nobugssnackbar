@@ -4,8 +4,7 @@
 		<page>
 		<![CDATA[
 			J&#225; est&#225;s a come&#231;ar a ter o poder da decis&#227;o. Mas agora os nossos clientes v&#234;m com fome, com sede
-			ou com fome e sede. Ent&#227;o vais perguntar e atender uma op&#231;&#227;o primeiro, e depois a outra, de cada
-			um dos clientes.<br/>
+			ou com fome e sede. Ent&#227;o vais perguntar e atender uma op&#231;&#227;o primeiro, e depois a outra, do cliente.<br/>
             <br/>
 			Para facilitar trouxe-te a tua solu&#231;&#227;o da &#250;ltima miss&#227;o.
 		]]>
@@ -33,43 +32,45 @@
 
 	</commands>
 	<cooker>initial</cooker>
+	<tests>4</tests>
 	<customers>
 		<customer>
 			<id>01</id>
-			<init>counter1</init>
-			<dest>counter1</dest>
+			<init>counter2</init>
+			<dest>counter2</dest>
 			<orders>
-				<order randomType="atLeastOne">
-					<foods randomMin="0" randomMax="1">
+				<order>
+					<foods>
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
 					</drinks>
 				</order>
 			</orders>			
 		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
-			<orders>
-				<order randomType="atLeastOne">
-					<foods randomMin="0" randomMax="1">
-						<food qt="1" price="0">hotdog</food>
-					</foods>					
-					<drinks randomMin="0" randomMax="1">
-						<drink qt="1" price="0">coke</drink>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
 	</customers>
 	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="480" >
-		<objective pos="1" place="counter">askHasThirsty</objective>
-		<objective pos="1" place="counter">askHasHunger</objective>
-		<objective pos="1" place="counter">deliver</objective>
-		
 		<objective pos="2" place="counter">askHasThirsty</objective>
 		<objective pos="2" place="counter">askHasHunger</objective>
 		<objective pos="2" place="counter">deliver</objective>

@@ -60,10 +60,13 @@ no m&#225;ximo 20 comandos.
 
 	</commands>
 	<cooker>initial</cooker>
+	<!-- 
 	<customersSN>
 		<randomization qtd="1">thirsty</randomization>
 		<randomization qtd="1" set="notTheSame">hungry</randomization>
 	</customersSN>
+	 -->
+	<tests>4</tests>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -73,6 +76,26 @@ no m&#225;ximo 20 comandos.
 				<order>
 					<foods>		
 						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
 					</foods>
 					<drinks>
 						<drink qt="1" price="0">coke</drink>
@@ -87,10 +110,30 @@ no m&#225;ximo 20 comandos.
 			<orders>
 				<order>
 					<foods>		
-						<food qt="1" price="0">hotdog</food>	
 					</foods>
 					<drinks>
 						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>

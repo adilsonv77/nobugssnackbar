@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-02 19:00:23.135000",
+		"lastupdated": "2015-09-04 12:20:16.808000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -93,6 +93,8 @@
 	"SnackMan.constSoftDrinkTooltip": "Soft drink.",
 	"SnackMan.cashInTooltip": "Asks the customer to pay the order. The customer gives an amount of money greater or equal the amount charged.",
 	"SnackMan.giveChangeTooltip": "Returns part of the change: the quantity of some kind of coin or bank note.",
+	"SnackMan.goToIceCreamMachineTooltip": "Moves the snack man to the ice cream machine.",
+	"SnackMan.pickUpIceCreamTooltip": "Pick up the ice cream from the machine.",
 	"Error.error": "Error",
 	"Error.login": "User not found.",
 	"Error.infinityLoopDetected": "Infinity loop detected by system.",
@@ -199,6 +201,13 @@
 	"Avatar.EnableByXp": "To enable this setting, reward ",
 	"Tests.done": "Done",
 	"Tests.letBlank": "I can not answer or do not have confidence in the response",
+	"Intro.RepeatTest1": "From now it appears some missions will be displayed next to the button",
+	"Intro.RepeatTest2": "the icon",
+	"Intro.RepeatTest3": "with a number inside",
+	"Intro.RepeatTest4": "Wherever you see this icon, it indicates that your program will run the game these number of times.",
+	"Intro.RepeatTest5": "Each time your program runs customer desires change. To succeed in the mission, your program must end without error every time it runs.",
+	"Intro.RepeatTest6": "After finishing the run, you will notice a small number",
+	"Intro.RepeatTest7": "below the icon. This indicates how many executions have succeeded.",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",

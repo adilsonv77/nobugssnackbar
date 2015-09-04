@@ -95,6 +95,8 @@
 	"SnackMan.askWantHowManyDrinksTooltip" : "Pergunto ao cliente quantas bebidas ele deseja.",
 	"SnackMan.cashInTooltip" : "Informa ao cliente o pre&#231;o da conta. O cliente entrega um valor maior ou igual ao valor cobrado.",
 	"SnackMan.giveChangeTooltip" : "Devolve parte do troco: a quantidade de um tipo de moeda ou nota.",
+	"SnackMan.goToIceCreamMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de gelados.",
+	"SnackMan.pickUpIceCreamTooltip" : "Pega o gelado da m&#225;quina.",
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
@@ -253,5 +255,13 @@
 	"Tests.start"			: "Iniciar",
 	"Tests.letBlank"		: "N&#227;o consigo responder ou n&#227;o tenho confian&#231;a na resposta",
 	"Tests.play"			: "Jogar",
-	"Tests.continueAnotherDay": "Interromper agora, e continuar o teste em outro momento"
+	"Tests.continueAnotherDay": "Interromper agora, e continuar o teste em outro momento",
+	
+	"Intro.RepeatTest1"     : "A partir de agora aparecer&#227;o algumas miss&#245;es em que ser&#225; exibido ao lado do bot&#227;o ",
+	"Intro.RepeatTest2"     : "o s&#237;mbolo ",
+	"Intro.RepeatTest3"     : " com um n&#250;mero interior.",
+	"Intro.RepeatTest4"     : "Sempre que aparecer esse s&#237;mbolo indica que o seu programa ser&#225; executado pelo jogo seguidamente essa quantidade de vezes.",
+	"Intro.RepeatTest5"     : "A cada vez que o seu programa for executado os desejos dos clientes modificam. Para ter sucesso na miss&#227;o, seu programa deve finalizar sem erros todas as vezes em que ser&#225; executado.",
+	"Intro.RepeatTest6"     : "Ap&#243;s finalizar a execu&#231;&#227;o, vais reparar um pequeno n&#250;mero ", 
+	"Intro.RepeatTest7"     : " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso."
 }

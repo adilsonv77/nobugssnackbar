@@ -34,17 +34,53 @@ Conte em duas vari&#225;veis separadas os cachorros e refrigerantes entregues. A
 
 	</commands>
 	<cooker>initial</cooker>
+	<tests>6</tests>
 	<customers>
 		<customer>
 			<id>01</id>
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
-				<order randomType="atLeastOne">
-					<foods randomMin="0" randomMax="1">
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
 					</drinks>
 				</order>
@@ -55,12 +91,47 @@ Conte em duas vari&#225;veis separadas os cachorros e refrigerantes entregues. A
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<orders>
-				<order randomType="atLeastOne">
-					<foods randomMin="0" randomMax="1">
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
 						<food qt="1" price="0">hotdog</food>
 					</foods>					
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
 						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>					
+					<drinks>
 					</drinks>
 				</order>
 			</orders>

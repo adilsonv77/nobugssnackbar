@@ -77,7 +77,8 @@ CustomerManager.reset = function() {
 	this.patterns = [];
 	
 	customers = [];
-
+	this.currentTest = 0;
+	
 	var customer = this.optCustomers.firstElementChild;
 	while (customer != null) {
 		var init = customer.getElementsByTagName("init")[0].textContent.toString();

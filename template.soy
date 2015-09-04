@@ -98,7 +98,7 @@
       	Avatar
       	</button>
       	
-      	<button class="nobugs_button" style="font-size: 14px; width: 80px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
+      	<button class="nobugs_button" style="display: none; font-size: 14px; width: 80px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
       	{{msg meaning="NoBugs.Profile" desc="---"}}Profile{{/msg}}
       	</button>
       	
@@ -513,7 +513,20 @@
 					<field name="VAR">{{msg meaning="NoBugs.order" desc="---"}}order{{/msg}}</field>
 				</block>
 			</value>
-	      </block>{/if}
+	      </block>
+	      {/if}
+
+		  {if $ij.enabled['icecream']}
+		   <block type="move_goToIceCreamMachine"> </block>
+		   
+		   <block type="prepare_pickUpIceCream">
+		      <value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.order" desc="---"}}order{{/msg}}</field>
+				</block>
+		      </value>
+		   </block>
+		  {/if}
 
 	      {if $ij.enabled['wait']}
 	      <block type="do_wait"> 
@@ -610,6 +623,7 @@
     	<category name="{msg meaning="SnackMan.constSnackMan" desc="--"}Constants{/msg}">
     	 {if $ij.enabled['const.juiceOfOrange']}<block type="const_juiceOfOrange"> </block>{/if}
     	 {if $ij.enabled['const.softDrink']}<block type="const_softDrink"> </block>{/if}
+    	 {if $ij.enabled['const.chocolate']}<block type="const_chocolate"> </block>{/if}
         </category>
     {/if}
     	

@@ -3,7 +3,7 @@
 	<explanation>
 		<page>
 		<![CDATA[
-Agora os nossos clientes podem ter sede OU fome. E, se t&#234;m sede, podem pedir refrigerante ou sumo.<br/><br/>
+Agora o cliente pode ter sede OU fome. E, se t&#234;m sede, pode pedir refrigerante ou sumo.<br/><br/>
 Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de outro.
 ]]>
 		</page>
@@ -38,47 +38,39 @@ Para resolver essa miss&#227;o precisas usar um bloco de condicional dentro de o
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-		<randomization qtd="1">thirsty</randomization>
-		<randomization qtd="1" set="notTheSame">hungry</randomization>
-	</customersSN>
+	<tests>3</tests>
 	<customers>
 		<customer>
-			<id>01</id>
-			<init>counter1</init>
-			<dest>counter1</dest>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
 			<orders>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
 				<order>
 					<foods>		
 						<food qt="1" price="0">hotdog</food>	
 					</foods>
-					<drinks randomMin="1" randomMax="1">
-						<drink qt="1" price="0">coke</drink>
-						<drink qt="1" price="0">juiceoforange</drink>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>						
 		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter3</init>
-			<dest>counter3</dest>
-			<orders>
-				<order>
-					<foods>		
-						<food qt="1" price="0">hotdog</food>	
-					</foods>
-					<drinks randomMin="1" randomMax="1">
-						<drink qt="1" price="0">coke</drink>
-						<drink qt="1" price="0">juiceoforange</drink>
-					</drinks>
-				</order>
-			</orders>	
-		</customer>
 	</customers>
-	<objectives ordered="false" maxCommands="30" maxCommandsRewardCoins="20" xpIndividual="50" xpFinal="30" xpTotalTime="720">
-		<objective pos="1" place="counter">deliver</objective>
-		<objective pos="3" place="counter">deliver</objective>
+	<objectives ordered="false" maxCommands="15" maxCommandsRewardCoins="20" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="15">
 	</xml>

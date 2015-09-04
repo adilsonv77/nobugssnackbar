@@ -914,6 +914,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 		  $("#tests_finished").css("top", (bb.y + 10) + "px").css("left", (bb.x + 3) + "px");
 	  }
 	  
+	  $("#tests_finished").css("display", "none");
+
 	  
       CustomerManager.init(Game.openMission.open, Game.tests,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
@@ -1149,12 +1151,11 @@ Game.verifyTestsInMission = function(finishFunction) {
 		$("<img>").attr("id", "teachTalk").attr("src", "images/teacher.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
 		new CharacterDialog(bbBox.x+30, bbBox.y-120, false, function(){finishFunction();$("#teachTalk").remove();},
 				[{character: "teachTalk", msg: 
-				 "A partir de agora aparecer&#227;o algumas miss&#245;es em que ser&#225; exibido ao lado do bot&#227;o " + "<img src='images/run.png' width='30'/>"
-				 + "o s&#237;mbolo " + "<img src='images/tests.jpg' width='30'/>" + " com um n&#250;mero interior."},
-				{character: "teachTalk", msg:"Sempre que aparecer esse s&#237;mbolo indica que o seu programa ser&#225; executado pelo jogo seguidamente essa quantidade de vezes."},
-				{character: "teachTalk", msg:"A cada vez que o seu programa for executado os desejos dos clientes modificam. Para ter sucesso na miss&#227;o, seu programa deve finalizar sem erros " +
-					" todas as vezes em que ser&#225; executado."},
-				{character: "teachTalk", msg:"Ap&#243;s finalizar a execu&#231;&#227;o, vais reparar um pequeno n&#250;mero " + "<img src='images/tests_finished.png'/>" + " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso."} 
+					BlocklyApps.getMsg("Intro_RepeatTest1") + " <img src='images/run.png' width='30'/> "
+				 + BlocklyApps.getMsg("Intro_RepeatTest2") + " <img src='images/tests.jpg' width='30'/> " + BlocklyApps.getMsg("Intro_RepeatTest3")},
+				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest4")},
+				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest5")},
+				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest6") + "<img src='images/tests_finished.png'/>"  + BlocklyApps.getMsg("Intro_RepeatTest7")} 
 					]);
 	} else
 		finishFunction();
@@ -1292,12 +1293,14 @@ Game.moveRightButtonClick = function() {
  * Reset the game to the start position, clear the display, and kill any
  * pending tasks.
  */
-Game.reset = function() {
+Game.reset = function(flag) {
   
   Game.victory = false;
   Game.stopAlertGoalButton();
   hero.reset();
-  CustomerManager.reset();
+  
+  if (flag === undefined)
+	  CustomerManager.reset();
 
   Game.display();
 
@@ -1480,7 +1483,7 @@ Game.resetButtonClick = function() {
    Hints.stopHints();
 	
   Game.resetButtons();
-  Game.reset();
+  Game.reset(1); // dont reset the CustomerManager
   
   Game.doResizeWindow("none");
   
@@ -1565,6 +1568,8 @@ Game.resetButtons = function(hideVars) {
 Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
+	  
+	  $("#tests_finished").css("display", "none");
 	  
 	  Game.highlightPause = false;
 	  
@@ -1798,7 +1803,7 @@ Game.updateVariables = function() {
 			if (data.type != undefined) {
 				data = "<div>" + 
 						"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
-						"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>" +  
+						(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
 						"</div>";
 			} 
 				
@@ -2229,6 +2234,21 @@ Game.initApi = function(interpreter, scope) {
 	interpreter.setProperty(scope, 'prepareAndPickUpJuice',
 		  interpreter.createNativeFunction(wrapper));
 	
+	// about ice cream
+    wrapper = function() {
+        return interpreter.createPrimitive(hero.goToIceCreamMachine());
+      };
+    
+    interpreter.setProperty(scope, 'goToIceCreamMachine',
+          interpreter.createNativeFunction(wrapper));
+
+    wrapper = function(o) {
+        return interpreter.createPrimitive(hero.pickUpIceCream(o));
+      };
+    
+    interpreter.setProperty(scope, 'pickUpIceCream',
+          interpreter.createNativeFunction(wrapper));
+
 	// other commands
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.pickUpHotDog(o));
