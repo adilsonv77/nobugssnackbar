@@ -612,7 +612,7 @@ Customer.prototype.deliver = function(item) {
 	}
 	
 	if (happy != Customer.DELIVERED_BAD)
-		this.deliveredItems.push(item.descr);
+		this.deliveredItems.push((item.descr == undefined?item:item.descr));
 	
 	return {money: money, happy: happy, reason: reason};
 };
@@ -632,6 +632,15 @@ Customer.prototype.qtdDeliveredOf = function(key) {
 			t++;
 	});
 	return t;
+};
+
+Customer.prototype.hasReceivedGift = function(gift) {
+	
+	for (var i = 0; i < this.deliveredItems.length; i++)
+		if (this.deliveredItems[i] === gift)
+			return true;
+	
+	return false;
 };
 
 Customer.typesOfMoney = [10, 20];

@@ -1387,8 +1387,12 @@ SnackMan.prototype.checkObjectives = function() {
 };
 
 SnackMan.prototype.verifyObjectives = function(key, options) {
-	if (!Objective.verifyObjectives(key, options))
+	if (key === "deliver")
+		this.verifyObjectives("deliverGifts", options);
+
+	if (!Objective.verifyObjectives(key, options)) {
 		return;
+	}
 	
 	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
 		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 

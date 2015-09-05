@@ -144,7 +144,11 @@ Objective.factory = function(key) {
 	case "deliver": 
 		this.factories[key] = new Objective.Deliver();
 		break;
-
+		
+	case "deliverGifts": 
+		this.factories[key] = new Objective.DeliverGifts();
+		break;
+		
 	case "varQtd": 
 		this.factories[key] = new Objective.VarQtd();
 		break;
@@ -173,10 +177,10 @@ Objective.factory = function(key) {
 	return this.factories[key];
 };
 
-Objective.createExplanationItemPlacePos = function(msgKey, objective) {
+Objective.createExplanationItemPlacePos = function(msgKey, objective, args) {
 	var key = BlocklyApps.getMsg("_"+objective.place);
 	var text = BlocklyApps.getMsg(msgKey);
-	return text.format(key  + " " + objective.pos);
+	return text.format(key  + " " + objective.pos, args);
 };
 
 /******************************************************************************
@@ -400,6 +404,49 @@ Objective.Deliver.prototype.checkObjective = function(options, objective)  {
 Objective.Deliver.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_deliver", objective);
 };
+
+/******************************************************************************
+ *                                 DeliverGifts
+ ******************************************************************************/
+
+Objective.DeliverGifts = function() {};
+
+Objective.DeliverGifts.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	p.value = elem.getAttribute("value");
+	p.gift = elem.getAttribute("gift");
+	
+	return p;
+};
+
+Objective.DeliverGifts.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
+	}
+	if (cust == null)
+		return false;
+	
+	var typeOfGift = eval(objective.value);
+	
+	return (cust.hasReceivedGift(typeOfGift));
+};
+
+Objective.DeliverGifts.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_delivergifts", objective, objective.gift);
+};
+
+
 
 /******************************************************************************
  *                                 CashIn

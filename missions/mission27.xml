@@ -11,7 +11,7 @@
 		<![CDATA[
 Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de gelado. Agora temos morango, baunilha e chocolate.
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu 3 lanches ou 3 bebidas, ele recebe um gelado de morango. 
- Porém, se ele pediu pelo menos um lanche e uma bebida então ele recebe um gelado de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
+ Por&#233;m, se ele pediu pelo menos um lanche e uma bebida ent&#227;o ele recebe um gelado de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
  recebe de baunilha.  <br/><br/>   
 
 Basta perguntar quantos lanches e quantas bebidas o cliente deseja, de acordo a condi&#231;&#227;o selecione o sabor, prepare o gelado
@@ -38,8 +38,6 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 
 		<category name="vars" show="true" />
 		<category name="const" show="true" />
-		<category name="const.softDrink" show="true" />
-		<category name="const.juiceOfOrange" show="true" />
 		
 		<category name="logic" show="true" />
 		<category name="logic_operation" show="true" />
@@ -49,8 +47,73 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 
 	</commands>
 	<cooker>initial</cooker>
-	<customersSN>
-	</customersSN>
+	<tests>9</tests>
+	<testsvars>
+		<test>
+			<var name="qtdIceCreamMorango">2</var>
+			<var name="qtdIceCreamChocolate">0</var>
+			<var name="qtdIceCreamBaunilha">0</var>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+			<var name="iceCreamCust3">$$icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">1</var>
+			<var name="qtdIceCreamChocolate">1</var>
+			<var name="qtdIceCreamBaunilha">0</var>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+			<var name="iceCreamCust3">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">1</var>
+			<var name="qtdIceCreamChocolate">0</var>
+			<var name="qtdIceCreamBaunilha">1</var>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+			<var name="iceCreamCust3">$$icecreamofvanilla</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">1</var>
+			<var name="qtdIceCreamChocolate">1</var>
+			<var name="qtdIceCreamBaunilha">0</var>
+			<var name="iceCreamCust3">$$icecreamofstrawberry</var>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">0</var>
+			<var name="qtdIceCreamChocolate">2</var>
+			<var name="qtdIceCreamBaunilha">0</var>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+			<var name="iceCreamCust3">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">0</var>
+			<var name="qtdIceCreamChocolate">1</var>
+			<var name="qtdIceCreamBaunilha">1</var>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+			<var name="iceCreamCust3">$$icecreamofvanilla</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">1</var>
+			<var name="qtdIceCreamChocolate">0</var>
+			<var name="qtdIceCreamBaunilha">1</var>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+			<var name="iceCreamCust3">$$icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">0</var>
+			<var name="qtdIceCreamChocolate">1</var>
+			<var name="qtdIceCreamBaunilha">1</var>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+			<var name="iceCreamCust3">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCreamMorango">0</var>
+			<var name="qtdIceCreamChocolate">0</var>
+			<var name="qtdIceCreamBaunilha">2</var>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+			<var name="iceCreamCust3">$$icecreamofvanilla</var>
+		</test>
+		
+	</testsvars>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -58,31 +121,81 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 			<dest>counter1</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
 						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>						
-		</customer>
-		<customer>
-			<id>02</id>
-			<init>counter2</init>
-			<dest>counter2</dest>
-			<orders>
-				<order>
-					<foods randomMin="0" randomMax="1">		
-						<food qt="1" price="2">hotdog</food>	
-					</foods>
-					<drinks randomMin="0" randomMax="1">
-						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-			</orders>	
 		</customer>
 		<customer>
 			<id>03</id>
@@ -90,30 +203,92 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 			<dest>counter3</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="1">		
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
 						<food qt="1" price="2">hotdog</food>	
 					</foods>
-					<drinks randomMin="0" randomMax="1">
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
 						<drink qt="1" price="3">coke</drink>
 						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>	
 		</customer>
 	</customers>
 	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
-		<!-- 
-		<objective pos="1" place="counter">deliver</objective>
-		<objective pos="2" place="counter">deliver</objective>
-		<objective pos="3" place="counter">deliver</objective>
-		<objective text="a quantidade de gelados entregues de morango" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
-		<objective text="a quantidade de gelados entregues de chocolate" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
-		<objective text="a quantidade de gelados entregues de baunilha" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
-		 --> 
-		 
-		 <objective pos="1" place="counter">goesTo</objective>
-		 <objective pos="2" place="counter">goesTo</objective>
-		 <objective pos="3" place="counter">goesTo</objective>
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="gelado">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceCreamCust3')" gift="gelado">deliverGifts</objective>
+		
+		<objective type="logic_operation">useBlock</objective>
+		
+		<objective text="a quantidade de gelados entregues de morango" value="parseInt(Game.readVariableTest('qtdIceCreamMorango'))">talk</objective>
+		<objective text="a quantidade de gelados entregues de chocolate" value="parseInt(Game.readVariableTest('qtdIceCreamChocolate'))">talk</objective>
+		<objective text="a quantidade de gelados entregues de baunilha" value="parseInt(Game.readVariableTest('qtdIceCreamBaunilha'))">talk</objective>
 	</objectives>
 	<xml>
 	</xml>

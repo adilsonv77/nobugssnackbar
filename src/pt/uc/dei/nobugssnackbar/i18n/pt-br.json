@@ -163,6 +163,7 @@
 	"Explane.AskHasHunger":"Pergunta se o cliente %0 deseja comer algo.",
 	"Explane.CatchFood":"Pegue a comida solicitada pelo cliente %0.",
 	"Explane.Deliver":"Entregue o pedido do cliente %0.",
+	"Explane.DeliverGifts":"Entregue um presente (%1) ao cliente %0.",
 	"Explane.AskForDrink":"Pergunta pelo que o cliente %0 deseja beber.",
 	"Explane.AskHasThirsty":"Pergunta se o cliente %0 deseja beber algo.",
 	"Explane.CatchDrink":"Pegue a bebida solicitada pelo cliente %0.",
