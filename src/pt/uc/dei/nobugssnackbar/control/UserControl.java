@@ -184,7 +184,7 @@ public class UserControl {
 		this.levelid = levelId;
 		this.missionidx = missionIdx;
 
-		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5] };
+		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5], r[0][6] };
 	}
 
 	@RemoteMethod
@@ -198,7 +198,7 @@ public class UserControl {
 
 	@RemoteMethod
 	public void saveMission(int xp, int money, int timeSpend, long execution,
-			boolean achieved, int typeRunning, String answer) throws Exception {
+			boolean achieved, int typeRunning, float zoomLevel, String answer) throws Exception {
 
 		if (this.user == null)
 			return;
@@ -211,7 +211,7 @@ public class UserControl {
 		this.user.setMoney(this.user.getMoney() + money);
 
 		gameDao.finishMission(this.user, this.mission, this.classid, xp, money,
-				timeSpend, execution, achieved, typeRunning, answer);
+				timeSpend, execution, achieved, typeRunning, zoomLevel, answer);
 
 		if (achieved) {
 			// when saveMission is called with achieved = true, this means that
@@ -225,9 +225,9 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void exitMission(int timeSpend, long execution, int typeRunning, String answer) throws Exception {
+	public void exitMission(int timeSpend, long execution, int typeRunning, float zoomLevel, String answer) throws Exception {
 		
-		saveMission(0, 0, timeSpend, execution, false, typeRunning, answer);
+		saveMission(0, 0, timeSpend, execution, false, typeRunning, zoomLevel, answer);
 		
 		this.classid = 0;
 		this.levelid = 0;

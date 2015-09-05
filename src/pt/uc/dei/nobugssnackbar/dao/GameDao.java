@@ -10,7 +10,8 @@ import pt.uc.dei.nobugssnackbar.model.User;
 public interface GameDao {
 
 	void finishMission(User user, long mission, long classid, int xp, int money,
-			int timeSpend, long execution, boolean b, int typeRunning, String answer)
+			int timeSpend, long execution, boolean b, int typeRunning, float zoomLevel, 
+			String answer)
 			throws Exception;
 
 	User login(String nick, String encrypt) throws Exception;

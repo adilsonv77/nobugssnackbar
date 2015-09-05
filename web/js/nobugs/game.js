@@ -527,7 +527,7 @@ Game.saveMission = function() {
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
 	
-	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer,
+	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer,
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -538,6 +538,7 @@ Game.missionLoaded = function(ret){
 	
   Game.howManyRuns = parseInt(ret[4]);
   Game.previousCode = ret[2];
+  Game.zoomLevel = parseFloat(ret[5]);
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -685,6 +686,16 @@ Game.installMachines = function(toolbox) {
 	              minScale: .1,
 	              scaleSpeed: 1.1
 	             }});
+	    
+	    if (Game.zoomLevel > 1) {
+	    	while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
+	    		Blockly.getMainWorkspace().zoomCenter(1);
+	    } else 
+	    	if (Game.zoomLevel < 1) {
+		    	while (Blockly.getMainWorkspace().scale > Game.zoomLevel) 
+		    		Blockly.getMainWorkspace().zoomCenter(-1);
+	    	}
+
 	    
 	    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
 	    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
@@ -1385,7 +1396,7 @@ Game.goBackToDashboard = function(evt, callInit) {
     var ret = Game.closeBlockEditorStuffs();
     
 	if (callInit !== false) {
-		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, ret[1],
+		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, Blockly.getMainWorkspace().scale, ret[1],
 							{callback:function() {}, async:false});
 
 		Game.init();
@@ -1910,7 +1921,7 @@ Game.nextStep = function() {
 			    	
 			    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
 
-			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, r.answer, function(){
+			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
@@ -2042,7 +2053,7 @@ Game.startSaveUserProgress = function() {
 			
 
 			
-			UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, answer);
+			UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer);
 
 			Game.currTime = now;
 		});

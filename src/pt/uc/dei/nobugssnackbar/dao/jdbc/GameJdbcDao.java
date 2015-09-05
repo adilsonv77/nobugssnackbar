@@ -199,7 +199,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select timespend, answer, executions from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+					.prepareStatement("select timespend, answer, executions, zoomlevel from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
 
 			ps.setLong(1, missionId);
 			ps.setLong(2, clazzId);
@@ -209,23 +209,26 @@ public class GameJdbcDao implements GameDao {
 			String answer = null;
 			String timeSpent = null;
 			String executions = "0";
+			String zoomLevel = "1";
 			if (rs.next()) {
 
 				timeSpent = rs.getString(1);
 				answer = rs.getString(2);
 				executions = rs.getString(3);
+				zoomLevel = rs.getString(4);
 
 			}
 
 			ps.close();
 
-			ret = new String[1][6];
+			ret = new String[1][7];
 			ret[0][0] = missionId + "";
 			ret[0][1] = missionIdx + "";
 			ret[0][2] = xml;
 			ret[0][3] = answer;
 			ret[0][4] = timeSpent;
 			ret[0][5] = executions;
+			ret[0][6] = zoomLevel;
 
 		} finally {
 			if (bdCon != null)
@@ -270,8 +273,7 @@ public class GameJdbcDao implements GameDao {
 
 	public void finishMission(User user, long idMission, long idClazz,
 			int xp, int money, int timeSpend, long execution, boolean achieved,
-			int typeRunning,
-			String answer) throws SQLException {
+			int typeRunning, float zoomLevel, String answer) throws SQLException {
 
 		int localTimeSpend = loadMissionAccomplished(idMission, user.getId(),
 				idClazz);
@@ -286,11 +288,11 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, xp, answer, executions, money, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+								+ "(timespend, achieved, xp, answer, executions, money, zoomlevel, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				localTimeSpend = timeSpend;
 			} else {
 				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ?, money = ? "
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ?, money = ?, zoomlevel = ? "
 								+ "where missionid = ? and classid = ? and  userid = ?");
 				localTimeSpend += timeSpend;
 			}
@@ -301,9 +303,10 @@ public class GameJdbcDao implements GameDao {
 			ps.setString(4, answer);
 			ps.setLong(5, execution);
 			ps.setInt(6, money);
-			ps.setLong(7, idMission);
-			ps.setLong(8, idClazz);
-			ps.setLong(9, user.getId());
+			ps.setFloat(7, zoomLevel);
+			ps.setLong(8, idMission);
+			ps.setLong(9, idClazz);
+			ps.setLong(10, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
