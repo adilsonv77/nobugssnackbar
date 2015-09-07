@@ -174,19 +174,12 @@ MyBlocklyApps.newShowModalDialog = function(content) {
  * I modified some methods.
  */ 
 
-var afterMyMouseDown = Blockly.onMouseDown_;
 var afterMyPaste = Blockly.WorkspaceSvg.prototype.paste;
 var beforeMyKeyDown = Blockly.onKeyDown_;
 var afterMyMouseMove = Blockly.onMouseMove_;
 
 var myIsTargetSvg = false;
 
-Blockly.onMouseDown_ = function(e) {
-	myIsTargetSvg = e.target && e.target.nodeName &&
-    					e.target.nodeName.toLowerCase() == 'svg';
-	afterMyMouseDown(e);
-	myIsTargetSvg = false;
-};
 
 MyBlocklyApps.onKeyDown_ = function(e) {
 	  if (Blockly.isTargetInput_(e)) {
@@ -217,8 +210,17 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	        Blockly.copy_(Blockly.selected);
 	      } else if (e.keyCode == 88) {
 	        // 'x' for cut.
+	    	
+	    	Blockly.copy_(Blockly.selected); 
+	  		Game.blocksSelected.forEach(function(block) {
+				if (block.isDeletable() && block.isMovable())
+					block.dispose(true, true);
+			});
+	  		Game.blocksSelected = [];
+/*
 	        Blockly.copy_(Blockly.selected);
 	        Blockly.selected.dispose(true, true);
+	        */
 	      }
 	    }
 	    if (e.keyCode == 86) {
@@ -399,7 +401,8 @@ Blockly.copy_ = function(block) {
 			var xmlCopy = Blockly.littleCopy_(_block);
 			var previousBlock = null;
 			if (beforeBlock != null) {
-				if (beforeBlock.nextConnection.targetConnection != null && 
+				if (beforeBlock.nextConnection != null &&
+						beforeBlock.nextConnection.targetConnection != null && 
 						beforeBlock.nextConnection.targetConnection.sourceBlock_.id === _block.id) {
 					previousBlock = beforeCopyBlock;
 				}
@@ -456,6 +459,35 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	Game.blocksSelected.forEach( function(block) { block.addSelect(); } );
 };
 
+function unselectAll() {
+	var Game = Blockly.BlockSvg.Game;
+	
+	Game.blocksSelected.forEach(function(block) {
+
+		if (block != Blockly.selected)
+			block.removeSelect(); 
+	});
+	Game.blocksSelected = [];
+
+};
+
+Blockly.onMouseMove_ = function(e) {
+	
+	unselectAll();
+	
+	afterMyMouseMove(e);
+	
+};
+
+//mouse down on drawing surface
+MyBlocklyApps.onMouseDown_= function(e) {
+	if (Blockly.selected)
+		Blockly.selected.unselect();
+	
+	unselectAll();
+};
+
+/// o metodo abaixo nao sei quando eh usado... quando descobrir tenho q anotar
 Blockly.onKeyDown_ = function (e) {
    if (Blockly.isTargetInput_(e)) {
 	    // When focused on an HTML text input widget, don't trap any keys.
@@ -496,17 +528,3 @@ Blockly.onKeyDown_ = function (e) {
 	}
 };
 
-Blockly.onMouseMove_ = function(e) {
-	
-	var Game = Blockly.BlockSvg.Game;
-	
-	Game.blocksSelected.forEach(function(block) {
-
-		if (block != Blockly.selected)
-			block.removeSelect(); 
-	});
-	Game.blocksSelected = [];
-	
-	afterMyMouseMove(e);
-	
-};

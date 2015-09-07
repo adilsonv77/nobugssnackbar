@@ -701,7 +701,7 @@ Game.installMachines = function(toolbox) {
 	    
 	    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
 	    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
-		
+	    
 	    Game.afterInstallMachines();
 
 	});	
@@ -928,6 +928,9 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  }
 	  
 	  $("#tests_finished").css("display", "none");
+
+	    document.removeEventListener('mousedown', MyBlocklyApps.onMouseDown_, false);
+	    Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', this, MyBlocklyApps.onMouseDown_);
 
 	  
       CustomerManager.init(Game.openMission.open, Game.tests,
