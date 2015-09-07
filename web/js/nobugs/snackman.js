@@ -180,7 +180,8 @@ SnackMan = function(objectives, mission, avatar) {
 			img : PreloadImgs.get("icecreammachine")
 		});
 		
-	}	
+	} else
+		this.iceCreamMachine = null;
 	
 	this.installedMachines = [];
 	this.extendedCommands = [];
@@ -266,7 +267,8 @@ SnackMan.prototype.reset = function() {
 	this.cooler.sourceX = 0;
 	this.cooler.frameIndex = 0;
 	
-	this.iceCreamMachine.frameIndex = 0;
+	if (this.iceCreamMachine != null)
+		this.iceCreamMachine.frameIndex = 0;
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
@@ -1005,6 +1007,47 @@ SnackMan.prototype.pickUpIceCream = function(order) {
 	return item; 
 };
 
+SnackMan.prototype.askWantHowManyIceCream = function() {
+	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var qtd = found.askWantHowManyIceCream();
+	
+	this.verifyObjectives("askWantHowManyIceCream", found);
+	
+	return qtd;
+	
+};
+
+SnackMan.prototype.askForIceCream = function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var iceCream = found.askForIceCream();
+	if (iceCream == null) {
+		BlocklyApps.log.push(["fail", "Error_isntHungerForIceCream"]);
+		throw false;
+	}
+	
+	this.update('XX'); // reset any speech bubble
+	
+	this.update('IM', 0);  // turn to front
+
+	this.verifyObjectives("askForIceCream", found);
+	
+	return iceCream;
+	
+};
+
 /**********************************************************/
 /**                    draw methods                       */
 /**********************************************************/
@@ -1387,8 +1430,10 @@ SnackMan.prototype.checkObjectives = function() {
 };
 
 SnackMan.prototype.verifyObjectives = function(key, options) {
-	if (key === "deliver")
+	if (key === "deliver") {
 		this.verifyObjectives("deliverGifts", options);
+		this.verifyObjectives("customDeliver", options);
+	}
 
 	if (!Objective.verifyObjectives(key, options)) {
 		return;

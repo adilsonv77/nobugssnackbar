@@ -7,14 +7,16 @@
 		<script src="js/nobugs.js"></script>
   		<script src="js/_soy/soyutils.js"></script>
 		<script type="text/javascript">
+		
 			window.onload = function() {
 				var main = document.getElementById("main").innerHTML;
-				document.getElementById("main").innerHTML = nobugspage.messages(
+				document.getElementById("main").innerHTML = messages.messages(
 							{}, null, {lang: BlocklyApps.LANG, langSrc: BlocklyApps.languagePack()}
 						) + main;
 				document.getElementById("msgError").appendChild(document.getElementById("Error_navigatorNotSupported"));
-				document.title = document.getElementById("Error_error").innerHTML; 
+				document.title = document.getElementById("Error_error").innerHTML;
 			}
+		
 		</script>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="icon" href="images/fav-icon.ico">
@@ -72,15 +74,6 @@
 						<img alt="Mozilla Firefox" 
 							src="images/icon-ff.png" />
 							<p>Mozilla Firefox</p>
-					</a>
-				</li>
-				<li>
-					<a target="_blank" 
-						href="http://www.apple.com/pt/safari/"
-						title="Safari">
-						<img alt="Safari" 
-							src="images/icon-safari.png" />
-							<p>Safari</p>
 					</a>
 				</li>
 			</ul>

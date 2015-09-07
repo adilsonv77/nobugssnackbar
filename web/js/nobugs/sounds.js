@@ -86,6 +86,10 @@ var PlayAudio = function(filenames, autoplay) {
 };
 
 PlayAudio.prototype.playNext = function() {
+	if (!window['Audio']) // browser don't support audio
+		return; 
+	
+	
 	if(this.index == this.files.length)
 		this.index = 0;
 
@@ -105,18 +109,24 @@ PlayAudio.prototype.shuffle = function() {
 };
 
 PlayAudio.prototype.play = function() {
-	/*
+	if (!window['Audio']) // browser don't support audio
+		return; 
+
 	noBugsAudio.addEventListener('ended', this.playNext.bind(this));
 
 	if (!this.playing) 
 	  this.playNext();
 	noBugsAudio.play();
-	*/
 };
 
 PlayAudio.prototype.stop = function() {
 	this.clear();
-	noBugsAudio.pause();
+	try {
+		noBugsAudio.pause();
+	} catch (ex) {
+		
+	}
+	
 };
 
 PlayAudio.prototype.clear = function() {

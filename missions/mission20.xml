@@ -4,7 +4,7 @@
 		<page>
 		<![CDATA[
 Al&#233;m de nos preocuparmos com a quantidade de comida e bebida a ser entregue, 
-tamb&#233;m precisamos aprender quanto ser&#225; o faturamento das nossas vendas. 
+tamb&#233;m precisamos aprender quanto ser&#225; o faturamento da esplanada (total das vendas). 
 O pre&#231;o unit&#225;rio do cachorro &#233; 2 <img style='vertical-align: middle;' src="images/coin2.png"/>. 
 J&#225; o refrigerante &#233; 3 <img style='vertical-align: middle;' src="images/coin2.png"/>. <br/>
 <br/>
@@ -91,7 +91,7 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600">
+	<objectives ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="300">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective pos="1" place="counter">askWantHowManyDrinks</objective>

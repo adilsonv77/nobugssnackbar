@@ -36,6 +36,8 @@ Game.howManyRuns = 0; // in this session
 var hero;
 Game.mission = null;
 
+Game.hideHints = true;
+
 /**
  * PID of animation task currently executing.
  */
@@ -1980,7 +1982,7 @@ Game.nextStep = function() {
 						
 						objs[i] = [Objective.factory(os[i].objective).createExplanationItem(os[i]), os[i].achieved];
 					}
-					UserControl.missionFail(Game.howManyRuns, objs);
+					UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
 
 					//Game.doResizeWindow("none");	
 				    if (debugging) {
@@ -2278,6 +2280,20 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'pickUpIceCream',
           interpreter.createNativeFunction(wrapper));
 
+    wrapper = function() {
+        return interpreter.createPrimitive(hero.askWantHowManyIceCream());
+      };
+    
+    interpreter.setProperty(scope, 'askWantHowManyIceCream',
+          interpreter.createNativeFunction(wrapper));
+
+    wrapper = function() {
+        return interpreter.createPrimitive(hero.askForIceCream());
+      };
+    
+    interpreter.setProperty(scope, 'askForIceCream',
+          interpreter.createNativeFunction(wrapper));
+
 	// other commands
     wrapper = function(o) {
 	      return interpreter.createPrimitive(hero.pickUpHotDog(o));
@@ -2459,7 +2475,7 @@ Game.showError = function(iderror) {
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	
-	UserControl.missionError(Game.howManyRuns, iderror[0], Blockly.selected.id, container.textContent);
+	UserControl.missionError(Game.howManyRuns, CustomerManager.currentTest+1, iderror[0], Blockly.selected.id, container.textContent);
 	
     var style = {top: '120px', width: 'auto'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';

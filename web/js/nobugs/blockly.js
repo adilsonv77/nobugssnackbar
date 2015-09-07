@@ -270,14 +270,15 @@ Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
 
 Blockly.BlockSvg.prototype.select = function() {
 	
+	var Game = Blockly.BlockSvg.Game;
+	
 	try {
 		// depends where the editor is used, there are no hints
-		Hints.hideHints();
+		if (Game.hideHints)
+			Hints.hideHints();
 	} catch (ex) {
 		
 	}
-	
-	var Game = Blockly.BlockSvg.Game;
 	
 	myIsTargetSvg = false;
     // Unselect any previously selected block.

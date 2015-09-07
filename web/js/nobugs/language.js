@@ -333,20 +333,6 @@ Blockly.JavaScript['ask_askWantHowManyFoods'] = function(block) {
 	};
 	
 
-Blockly.Blocks['ask_askWantHowManyDrinks'] = {
-		  init: function() {
-		    this.setColour(160);
-		    this.setOutput(true);
-		    this.appendDummyInput()
-		        .appendField('askWantHowManyDrinks');
-		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyDrinksTooltip'));
-		  }
-		};
-
-Blockly.JavaScript['ask_askWantHowManyDrinks'] = function(block) {
-	  return ['askWantHowManyDrinks()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
-	};
-		
 /******************************************************************************
  *                          Snackman Drinks
  ******************************************************************************/	
@@ -484,6 +470,20 @@ Blockly.JavaScript['prepare_pickUpDrink'] = function(block) {
 	return ['pickUpDrink( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['ask_askWantHowManyDrinks'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askWantHowManyDrinks');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyDrinksTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askWantHowManyDrinks'] = function(block) {
+	  return ['askWantHowManyDrinks()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+		
 /******************************************************************************
  *                          Snackman Constants
  ******************************************************************************/	
@@ -585,6 +585,34 @@ Blockly.Blocks['const_vanilla'] = {
 
 Blockly.JavaScript['const_vanilla'] = function(block) {
 	return ['\"\\\"$$$vanilla\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Blocks['ask_askWantHowManyIceCream'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askWantHowManyIceCream');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyIceCreamTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askWantHowManyIceCream'] = function(block) {
+	  return ['askWantHowManyIceCream()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+		
+Blockly.Blocks['ask_askForIceCream'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askForIceCream');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askForIceCreamTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askForIceCream'] = function(block) {
+	return ['askForIceCream( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 

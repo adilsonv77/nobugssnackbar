@@ -288,7 +288,7 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, xp, answer, executions, money, zoomlevel, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+								+ "(timespend, achieved, xp, answer, executions, money, zoomlevel, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				localTimeSpend = timeSpend;
 			} else {
 				ps = bdCon
@@ -858,7 +858,7 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
-	public void storeMissionFail(long execution, long user, long mission,
+	public void storeMissionFail(long execution, long testCount, long user, long mission,
 			long classid, String[][] goals) throws Exception {
 
 		Connection bdCon = null;
@@ -867,18 +867,19 @@ public class GameJdbcDao implements GameDao {
 			bdCon.setAutoCommit(false);
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into missionsfails (missionid, userid, classid, execution, goalcount, goaldescription, goalachieved) "
-							+ "values (?, ?, ?, ?, ?, ?, ?)");
+					.prepareStatement("insert into missionsfails (missionid, userid, classid, execution, testcount, goalcount, goaldescription, goalachieved) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setLong(1, mission);
 			ps.setLong(2, user);
 			ps.setLong(3, classid);
 			ps.setLong(4, execution);
+			ps.setLong(5, testCount);
 
 			for (int i = 0; i < goals.length; i++) {
 
-				ps.setLong(5, i + 1);
-				ps.setString(6, goals[i][0]);
-				ps.setString(7, goals[i][1].substring(0, 1).toUpperCase());
+				ps.setLong(6, i + 1);
+				ps.setString(7, goals[i][0]);
+				ps.setString(8, goals[i][1].substring(0, 1).toUpperCase());
 
 				ps.executeUpdate();
 			}
@@ -898,7 +899,7 @@ public class GameJdbcDao implements GameDao {
 
 	}
 
-	public void storeMissionError(int execution, long user, long mission,
+	public void storeMissionError(int execution, long testCount, long user, long mission,
 			long classid, String idError, String blockId, String errorMessage)
 			throws SQLException {
 		Connection bdCon = null;
@@ -906,16 +907,17 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into missionserrors (missionid, userid, classid, execution, errorid, blockid, errormessage) "
-							+ "values (?, ?, ?, ?, ?, ?, ?)");
+					.prepareStatement("insert into missionserrors (missionid, userid, classid, execution, testcount, errorid, blockid, errormessage) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setLong(1, mission);
 			ps.setLong(2, user);
 			ps.setLong(3, classid);
 			ps.setLong(4, execution);
+			ps.setLong(5, testCount);
 
-			ps.setString(5, idError);
-			ps.setString(6, blockId);
-			ps.setString(7, errorMessage);
+			ps.setString(6, idError);
+			ps.setString(7, blockId);
+			ps.setString(8, errorMessage);
 
 			ps.executeUpdate();
 
@@ -1437,7 +1439,7 @@ public class GameJdbcDao implements GameDao {
 									"join questionstest qt using (testquestionid) "+
 									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
 								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testbeforemission_pretest-1=? or testbeforemission_postest-1=?)"+
-								"order by testid, testquestionid, questionorder, questiontestanswerfinish, testclassid, testmissionid ";
+								"order by testid, questionorder, questiontestanswerfinish, testclassid, testmissionid ";
 			
 			PreparedStatement ps = bdCon.prepareStatement(query);
 			ps.setLong(1, user.getId());

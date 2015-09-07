@@ -133,6 +133,14 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyDrinks");
 		break;
 
+	case "askForIceCream":
+		this.factories[key] = new Objective.AskSomething("explanation_askForIceCream");
+		break;
+		
+	case "askWantHowManyIceCream":
+		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyIceCream");
+		break;
+		
 	case "pickUpDrink": 
 		this.factories[key] = new Objective.PickUpDrink();
 		break;
@@ -147,6 +155,10 @@ Objective.factory = function(key) {
 		
 	case "deliverGifts": 
 		this.factories[key] = new Objective.DeliverGifts();
+		break;
+		
+	case "customDeliver":
+		this.factories[key] = new Objective.CustomDeliver();
 		break;
 		
 	case "varQtd": 
@@ -446,7 +458,55 @@ Objective.DeliverGifts.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_delivergifts", objective, objective.gift);
 };
 
+/******************************************************************************
+ *                                 CustomDeliver
+ ******************************************************************************/
 
+Objective.CustomDeliver = function() {};
+
+Objective.CustomDeliver.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	p.value = elem.getAttribute("value");
+	p.text = elem.getAttribute("text");
+	
+	return p;
+};
+
+Objective.CustomDeliver.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
+	}
+	if (cust == null)
+		return false;
+	
+	var typeOfItem = eval(objective.value);
+	
+	var foodOrDrink = null;
+	var itemId = typeOfItem;
+	
+	if (typeOfItem.indexOf("#") > 0) {
+		var ti = typeOfItem.split("#");
+		foodOrDrink = ti[0];
+		itemId = ti[1];
+	}
+	
+	return (cust.hasReceivedItem(foodOrDrink, itemId));
+};
+
+Objective.CustomDeliver.prototype.createExplanationItem = function(objective) {
+	return Objective.createExplanationItemPlacePos("explanation_customdeliver", objective, objective.text);
+};
 
 /******************************************************************************
  *                                 CashIn

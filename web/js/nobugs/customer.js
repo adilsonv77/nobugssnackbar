@@ -528,6 +528,30 @@ Customer.prototype.hasHunger = function() {
 	return (this.fUnfulfilled < this.foods.length);
 };
 
+Customer.prototype.askForIceCream = function() {
+	if (this.fUnfulfilled >= this.foods.length)
+		return null;
+	
+	
+	for (var i = this.fUnfulfilled; i < this.foods.length; i++) {
+		var d = this.foods[i];
+		if (d.descr.indexOf("icecreamof") == 0) {
+			
+			return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
+		}
+	}
+	
+	return null;
+};
+
+Customer.prototype.askWantHowManyIceCream = function() {
+	var c = 0;
+	for (var i=0; i<this.wishesFoods.length; i++)
+		if (this.wishesFoods[i].item.indexOf("icecreamof") === 0)
+			c++;
+	return c;
+};
+
 Customer.DELIVERED_BAD = 0;
 Customer.DELIVERED_PARTIAL = 1;
 Customer.DELIVERED_TOTAL = 2; 
@@ -639,6 +663,22 @@ Customer.prototype.hasReceivedGift = function(gift) {
 	for (var i = 0; i < this.deliveredItems.length; i++)
 		if (this.deliveredItems[i] === gift)
 			return true;
+	
+	return false;
+};
+
+Customer.prototype.hasReceivedItem = function(foodOrDrink, itemId) {
+	if (foodOrDrink == null || foodOrDrink === "food") {
+		for (var i = 0; i < this.fUnfulfilled; i++)
+			if (this.foods[i].descr == itemId)
+				return true;
+	}
+	
+	if (foodOrDrink == null || foodOrDrink === "drink") {
+		for (var i = 0; i < this.dUnfulfilled; i++)
+			if (this.drinks[i].descr == itemId)
+				return true;
+	}
 	
 	return false;
 };

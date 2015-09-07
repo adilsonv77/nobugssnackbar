@@ -2,9 +2,16 @@
 var nav = {};
 
 nav.onload = function(e) {
+	
+	if (validateChrome() || validateFirefox()) {
+		return;
+	}
+	window.location.href = "error.html";
+	/*
 	if ((validateIE() || validateOpera()) && (!validateChrome() || !validateFirefox() || !validateSafari())) {
 		window.location.href = "error.html";
 	}
+	*/
 	
 	function validateIE() {
 		return navigator.appVersion.indexOf("MSIE") > -1 || navigator.userAgent.indexOf("Trident") > -1;

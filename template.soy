@@ -528,6 +528,9 @@
 		   </block>
 		  {/if}
 
+		  {if $ij.enabled['askForIceCream']}<block type="ask_askForIceCream"> </block>{/if}
+		  {if $ij.enabled['askWantHowManyIceCream']}<block type="ask_askWantHowManyIceCream"> </block>{/if}
+		  
 	      {if $ij.enabled['wait']}
 	      <block type="do_wait"> 
 	      <value name="VALUE">

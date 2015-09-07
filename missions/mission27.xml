@@ -3,12 +3,6 @@
 	<explanation>
 		<page>
 		<![CDATA[
-		- adicionar recursos para maquina de gelado.
-		- uso obrigatorio do operador de comparacao
-		]]>
-		</page>
-		<page>
-		<![CDATA[
 Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de gelado. Agora temos morango, baunilha e chocolate.
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu 3 lanches ou 3 bebidas, ele recebe um gelado de morango. 
  Por&#233;m, se ele pediu pelo menos um lanche e uma bebida ent&#227;o ele recebe um gelado de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
@@ -32,12 +26,13 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 		<category name="deliver" show="true" />
 
 		<category name="icecream" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="const" show="true" />
 		<category name="const.chocolate" show="true" />
 		<category name="const.strawberry" show="true" />
 		<category name="const.vanilla" show="true" />
-
-		<category name="vars" show="true" />
-		<category name="const" show="true" />
 		
 		<category name="logic" show="true" />
 		<category name="logic_operation" show="true" />
@@ -281,8 +276,8 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 		</customer>
 	</customers>
 	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
-		<objective pos="1" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="gelado">deliverGifts</objective>
-		<objective pos="3" place="counter" value="Game.readVariableTest('iceCreamCust3')" gift="gelado">deliverGifts</objective>
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="o gelado">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceCreamCust3')" gift="o gelado">deliverGifts</objective>
 		
 		<objective type="logic_operation">useBlock</objective>
 		

@@ -32,7 +32,7 @@ var IntroGame = {};
 
 IntroGame.start = function () {
 	
-	IntroGame.track = new PlayAudio(["sound/DailyBeetle.mp3"], false);
+	IntroGame.track = new PlayAudio(["music/DailyBeetle.mp3"], false);
 	
 	$("<div>").attr("id", "introback").append(
 		   $("<img>").css("width", "700px").attr("src", "images/family_dinner.png")
@@ -94,7 +94,7 @@ IntroGame.createDiv = function(id) {
 
 IntroGame.presentTeacher = function(fret) {
 	IntroGame.createDiv("presentTeacher");
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_info.png").css("width", "30%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_info.png").css("width", "25%")
 						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
 	img.prependTo("body");
 	

@@ -301,18 +301,18 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void missionFail(int execution, String[][] goals) throws Exception {
+	public void missionFail(int execution, int testCount, String[][] goals) throws Exception {
 
-		gameDao.storeMissionFail(execution, this.user.getId(), this.mission,
+		gameDao.storeMissionFail(execution, testCount, this.user.getId(), this.mission,
 				this.classid, goals);
 
 	}
 
 	@RemoteMethod
-	public void missionError(int execution, String idError, String blockId,
+	public void missionError(int execution, int testCount, String idError, String blockId,
 			String errorMessage) throws Exception {
 
-		gameDao.storeMissionError(execution, this.user.getId(), this.mission,
+		gameDao.storeMissionError(execution, testCount, this.user.getId(), this.mission,
 				this.classid, idError, blockId, errorMessage);
 
 	}

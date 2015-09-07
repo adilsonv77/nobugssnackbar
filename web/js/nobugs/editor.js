@@ -33,7 +33,14 @@ EditorNoBug.init = function() {
 		
 	  NoBugsJavaScript.redefine();
 	  
-	  Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.oldLogicCompare; // it mustn't use the new version of comparison because here we dont use javascript interpreter classes 
+	  Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.oldLogicCompare; // it mustn't use the new version of comparison because here we dont use javascript interpreter classes
+	  Blockly.JavaScript['logic_operation'] = function(block) {// it mustn't use the new version of comparison because here we dont use javascript interpreter classes
+		  var r = NoBugsJavaScript.oldLogicOperation(block);
+		  r[0] = "(" + r[0] + ")";
+		  
+		  return r;
+	  };
+		   
 	  
 	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');
 	  

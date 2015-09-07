@@ -145,13 +145,13 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 	  var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
 
 	  var code = 'nobugsComparison(%0, %1, "%2")'.format(argument0, argument1, blockOperator); 
-	  //code = 'nobugsComparison(order, "\\"$$coke\\"", "EQ")';
       return [code, order];
 };
 
 function nobugsComparison(arg0, arg1, operator) {
 	
-	hero.verifyObjectives("useBlock", "logic_compare");
+	if (hero !== null && hero !== undefined)
+		hero.verifyObjectives("useBlock", "logic_compare");
 	
 	operator = NoBugsJavaScript.OPERATORS[(operator.data == null?operator:operator.data)];
 	
@@ -179,14 +179,16 @@ function nobugsComparison(arg0, arg1, operator) {
 };
 
 NoBugsJavaScript.verifyLogicOperation = function () {
-	hero.verifyObjectives("useBlock", "logic_operation");
+	if (hero !== null && hero !== undefined)
+		hero.verifyObjectives("useBlock", "logic_operation");
+	
 	return true;
 };
 
 NoBugsJavaScript.newLogicOperation = function(block) {
 	
 	var r = NoBugsJavaScript.oldLogicOperation(block);
-	r[0] = 'verifyLogicOperation()' + " && " + r[0];
+	r[0] = '(verifyLogicOperation()' + " && " + r[0] + ')';
 	return r;
 	
 };

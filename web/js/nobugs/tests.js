@@ -130,9 +130,17 @@ Tests.performQuestion = function(blankValue, finished) {
 				BlocklyApps.log = [];
 				var js = Blockly.JavaScript;
 
-				var newLogicCompare = Blockly.JavaScript['logic_compare']; 
+				var newLogicCompare = Blockly.JavaScript['logic_compare'];
+				var newLogicOperation = Blockly.JavaScript['logic_operation']; 
 				
 				Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.oldLogicCompare; // it mustn't use the new version of comparison because here we dont use javascript interpreter classes
+  			    
+				Blockly.JavaScript['logic_operation'] = function(block) {// it mustn't use the new version of comparison because here we dont use javascript interpreter classes
+				  var r = NoBugsJavaScript.oldLogicOperation(block);
+				  r[0] = "(" + r[0] + ")";
+				  
+				  return r;
+			    };
 
 				// the variable code is referenced in question.answer
 				var code = "function highlightBlock(c){};var NoBugsJavaScript = {};" +  
@@ -145,6 +153,8 @@ Tests.performQuestion = function(blankValue, finished) {
 				} catch (ex) {}
 				
 				Blockly.JavaScript['logic_compare'] = newLogicCompare;
+				Blockly.JavaScript['logic_operation'] = newLogicOperation;
+				
 			} else
 				result = "?";
 			
@@ -263,6 +273,9 @@ Tests.drawFinal = function(ret) {
 	
 	$("#testsPlay").css("display", "inline");
 	$("#continueTestAnotherDay").css("display", "none");
+	
+	Game.hideHints = true; // restore the state. Without this control, the game will be down in Blockly.BlockSvg.select
+
 };
 
 Tests.drawQuestion = function() {
@@ -314,11 +327,11 @@ Tests.drawQuestion = function() {
 	var div = document.createElement("div");
 	mainDiv.appendChild(div);
 
-	div.style.float = "left";
+	div.style["float"] = "left"; // when compile, it believes that float is a type 
 	div.style.padding = "10px";
 	div.style.fontSize = "14px";
 	div.innerHTML = question.question;
-	
+
 	Tests.dropExpand = null;
 	var input = null;
 	switch (question.answerType) {
@@ -368,19 +381,29 @@ Tests.drawQuestion = function() {
 		TestRT={}; // used into question.language
 		eval(question.language);
 		
+		var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
+		$("#answerQuestion").css("height", sizeBlockly + "px");
+
 		Blockly.inject(input,
 			     { media: "media/",
 			       rtl: false,
 			       toolbox: question.toolbox,
-			       trashcan: false,
+			       trashcan: true,
 			       comments: false,
-			       scrollbars: true});
+			       scrollbars: true,
+			       zoom:
+		             {enabled: true,
+		              controls: true,
+		              wheel: true,
+		              maxScale: 2,
+		              minScale: .1,
+		              scaleSpeed: 1.1
+		             }});
 		
 		;
 		
-		var sizeBlockly = $("#testquestions").height() - $("#testTableContent").height() - 35;
-		$("#answerQuestion").css("height", sizeBlockly + "px");
-
+		Game.hideHints = false; // without this control, the game will be down in Blockly.BlockSvg.select
+		
 		// there is a bug (i dont know if is my or from blockly, but the toolbox doesnt add into the blockly element
 		var toolBox = $(".blocklyToolboxDiv");
 		if (toolBox.length > 0) {

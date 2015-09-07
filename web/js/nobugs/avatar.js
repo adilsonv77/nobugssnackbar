@@ -470,6 +470,9 @@ AvatarImgMaker._draw = function(canvasDest, x, y, w, h, p, mouth, top, keys, ite
 		
 		var eimg = entry.img;
 		
+		if (eimg.currentSrc === "")
+			return;
+		
 		AvatarImgMaker.canvasTemp.width = ew;
 		AvatarImgMaker.canvasTemp.height = eh;
 		

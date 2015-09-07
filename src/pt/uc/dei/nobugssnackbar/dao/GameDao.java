@@ -39,10 +39,10 @@ public interface GameDao {
 
 	Long getUserId(String userName) throws Exception;
 
-	void storeMissionFail(long execution, long id, long mission, long classid,
+	void storeMissionFail(long execution, long testCount, long id, long mission, long classid,
 			String[][] goals) throws Exception;
 
-	void storeMissionError(int execution, long id, long mission, long classid,
+	void storeMissionError(int execution, long testCount, long id, long mission, long classid,
 			String idError, String blockId, String errorMessage)
 			throws Exception;
 
