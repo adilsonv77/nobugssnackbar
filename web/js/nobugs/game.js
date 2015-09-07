@@ -606,10 +606,14 @@ Game.missionLoaded = function(ret){
 };
 
 Game.changeStars = function(starNumber) {
-	 if (starNumber > 0)
-		 Game.tracks[starNumber-1].stop();
-	 
-	 Game.tracks[starNumber].play();
+	
+	if (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true")
+		return;
+
+ 	if (starNumber > 0)
+ 		Game.tracks[starNumber-1].stop();
+ 
+ 	Game.tracks[starNumber].play();
 };
 
 Game.afterInstallMachines = function() {
@@ -929,8 +933,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  
 	  $("#tests_finished").css("display", "none");
 
-	    document.removeEventListener('mousedown', MyBlocklyApps.onMouseDown_, false);
-	    Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', this, MyBlocklyApps.onMouseDown_);
+	  document.removeEventListener('mousedown', MyBlocklyApps.onMouseDown_, false);
+	  Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', this, MyBlocklyApps.onMouseDown_);
 
 	  
       CustomerManager.init(Game.openMission.open, Game.tests,
@@ -955,6 +959,10 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  Game.addCronometro( Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
+	  
+      Game.changeMusicControlButton( !(Game.loginData.userLogged.flags.MUSIC_DISABLED === "true") );
+		  
+	  BlocklyApps.bindClick('musicControl', Game.musicControlClick);
 	  
 	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
 	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
@@ -1557,6 +1565,37 @@ Game.debugButtonClick = function() {
 	Game.execute(2);
 };
 
+Game.musicControlClick = function() {
+	
+	var musicDisabled = (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true");
+	
+	Game.changeMusicControlButton(musicDisabled);
+
+	Game.loginData.userLogged.flags.MUSIC_DISABLED = (musicDisabled?"false":"true");
+	UserControl.saveFlag("MUSIC_DISABLED", Game.loginData.userLogged.flags.MUSIC_DISABLED);
+
+};
+
+Game.changeMusicControlButton = function(musicDisabled) {
+	
+	if (!musicDisabled) {
+
+		$("#musicOff").css("display", "none");
+		$("#musicOn").css("display", "inline");
+		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_enableMusic") );
+		Game.tracks[CountXP.times].stop();
+		
+	} else {
+	
+		$("#musicOn").css("display", "none");
+		$("#musicOff").css("display", "inline");
+		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_disableMusic") );
+		Game.tracks[CountXP.times].play();
+		
+	}
+	
+};
+
 Game.resetButtons = function(hideVars) {
 	
 	Game.disableButton('resetButton');
@@ -2073,6 +2112,8 @@ Game.removeChangeListeners = function() {
 	  //window.removeEventListener("resize", Game.resizeWindow); // not enable this line
 	  window.removeEventListener('beforeunload', Game.unload);
 	  
+	  MyBlocklyApps.unbindClick('musicControl', Game.musicControlClick);
+
 	  MyBlocklyApps.unbindClick('runButton', Game.runButtonClick);
 	  MyBlocklyApps.unbindClick('resetButton', Game.resetButtonClick);
 	  MyBlocklyApps.unbindClick('debugButton', Game.debugButtonClick);

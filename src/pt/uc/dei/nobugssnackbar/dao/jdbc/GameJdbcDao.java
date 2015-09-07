@@ -1703,5 +1703,44 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 	}
+
+	@Override
+	public void saveFlag(long userid, String name, String value)
+			throws Exception {
+		
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps = bdCon
+					.prepareStatement("select * from usersflags where userid = ? and flagid = ?");
+			ps.setLong(1, userid);
+			ps.setString(2, name);
+			ResultSet rs = ps.executeQuery();
+			boolean update = (rs.next());
+			ps.close();
+			
+			String sql;
+			if (update) {
+				sql = "update usersflags set value = ? where userid = ? and flagid = ?";
+			} else
+				sql = "insert into usersflags (value, userid, flagid) values (?, ?, ?)";
+			
+			ps = bdCon.prepareStatement(sql);
+			ps.setString(1, value);
+			ps.setLong(2, userid);
+			ps.setString(3, name);
+			
+			ps.executeUpdate();
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+	}
 	
 }

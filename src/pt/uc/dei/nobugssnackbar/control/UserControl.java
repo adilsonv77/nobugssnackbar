@@ -174,6 +174,13 @@ public class UserControl {
 	}
 
 	@RemoteMethod
+	public void saveFlag(String name, String value) throws Exception {
+		this.user.getFlags().put(name, value);
+		
+		gameDao.saveFlag(this.user.getId(), name, value);
+	}
+	
+	@RemoteMethod
 	public String[] loadMission(int clazzId, int levelId, int missionIdx)
 			throws Exception {
 		String[][] r = gameDao.loadMission(this.user, clazzId, levelId,

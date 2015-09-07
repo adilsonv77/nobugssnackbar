@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-07 16:25:28.756000",
+		"lastupdated": "2015-09-07 19:04:17.303000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -139,6 +139,8 @@
 	"NoBugs.goalAchievedVictoryWithCoins": "And also won a total of %0.",
 	"NoBugs.slider": "Here you configure the cooker velocity.",
 	"NoBugs.requiredField": "Required field.",
+	"NoBugs.EnableMusic": "Enable music.",
+	"NoBugs.DisableMusic": "Disable music.",
 	"NoBugs.finishOpenMission": "The mission's time is over. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You earned &amp;#60;b&amp;#62;%0&amp;#60;/b&amp;#62; delivering the requests.",
 	"Explane.MustNot": "Must not",
 	"Explane.Counter": "Go to counter %0.",

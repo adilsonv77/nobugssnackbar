@@ -50,6 +50,8 @@
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
 	"NoBugs.buyTooltip":"Comprar equipamentos.",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
+	"NoBugs.EnableMusic": "Habilitar m&#250;sica.",
+	"NoBugs.DisableMusic": "Desabilitar m&#250;sica.",
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
