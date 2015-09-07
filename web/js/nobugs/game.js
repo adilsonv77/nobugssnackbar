@@ -1181,6 +1181,8 @@ Game.verifyTestsInMission = function(finishFunction) {
 				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest5")},
 				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest6") + "<img src='images/tests_finished.png'/>"  + BlocklyApps.getMsg("Intro_RepeatTest7")} 
 					]);
+		
+		Game.changeFlag("TALK_RUNTESTS", "true");
 	} else
 		finishFunction();
 }; 
@@ -1571,9 +1573,13 @@ Game.musicControlClick = function() {
 	
 	Game.changeMusicControlButton(musicDisabled);
 
-	Game.loginData.userLogged.flags.MUSIC_DISABLED = (musicDisabled?"false":"true");
-	UserControl.saveFlag("MUSIC_DISABLED", Game.loginData.userLogged.flags.MUSIC_DISABLED);
+	Game.changeFlag("MUSIC_DISABLED", (musicDisabled?"false":"true"));
 
+};
+
+Game.changeFlag = function(name, value) {
+	Game.loginData.userLogged.flags[name] = value;
+	UserControl.saveFlag(name, value);
 };
 
 Game.changeMusicControlButton = function(musicDisabled) {

@@ -220,6 +220,7 @@
 		    	-->
 	    		<!-- -->
 	    		
+	    		<include name="WEB-INF/**/*.*" />
 	    		<include name="*.js" />
 	    		<include name="*.css" />
 	    		<include name="index.html" />
