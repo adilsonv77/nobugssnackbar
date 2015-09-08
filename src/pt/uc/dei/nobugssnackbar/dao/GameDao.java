@@ -85,4 +85,6 @@ public interface GameDao {
 
 	void saveFlag(long userid, String name, String value) throws Exception;
 
+	void saveClicks(long userid, String[][] clicks) throws Exception;
+
 }

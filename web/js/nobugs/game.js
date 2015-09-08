@@ -1473,7 +1473,11 @@ Game.logoffButtonClick = function() {
 	*/
 	BlocklyApps.hideDialog(false);
 	
+	LogClick.save(); // store the cache
+	
 	UserControl.logoff(function(){
+		Game.loginData = null;
+		
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
 	});
@@ -2600,3 +2604,32 @@ Game.readVariableTest = function(variableName) {
 	return null;
 	
 };
+
+$(document).on('click', function(e) {
+	if (e.target.id !== "ButtonLogin" && (Game.loginData == null || Game.loginData == undefined)) 
+		return;
+	
+	
+	var t = e.target;
+	if (t.nodeName === "svg") {
+		return;
+	}
+	
+	while (t != null && t.id === "") {
+		t = t.parentNode;
+	}
+	
+	if (t == null)
+		return;
+	
+	if (t.id === "blockly") {
+		if (e.target.nodeName === "image") {
+			LogClick.store(e.target.getAttribute("clip-path").substring(5));
+			return;
+		}
+		
+		return;
+	}
+	
+	LogClick.store(t.id);
+});

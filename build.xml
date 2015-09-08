@@ -177,6 +177,7 @@
 			<arg line="${js.home}/sounds.js" />
 			<arg line="${js.home}/countxp.js" />
 			<arg line="${js.home}/tests.js" />
+			<arg line="${js.home}/logclick.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -158,9 +159,9 @@ public class GameJdbcDao implements GameDao {
 			}
 
 			bdCon.commit();
-			bdCon.setAutoCommit(true);
 
 		} finally {
+			bdCon.setAutoCommit(true);
 			if (bdCon != null)
 				try {
 					bdCon.close();
@@ -1741,6 +1742,40 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 		
+	}
+
+	@Override
+	public void saveClicks(long userid, String[][] clicks) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss.S");
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			bdCon.setAutoCommit(false);
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("insert into logclicks (userid, clickid, clickmoment) values (?, ?, ?)");
+			ps.setLong(1, userid);
+			
+			for (String[] click: clicks) {
+				
+				Date d = sdf.parse(click[1]);
+				
+				ps.setString(2, click[0]);
+				ps.setTimestamp(3, new java.sql.Timestamp(d.getTime()));
+				ps.executeUpdate();
+			}
+			
+			bdCon.commit();
+			ps.close();
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
 	}
 	
 }

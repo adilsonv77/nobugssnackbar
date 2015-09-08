@@ -464,4 +464,19 @@ public class UserControl {
 		gameDao.saveUserRewards(this.user);
 	}
 	
+	@RemoteMethod
+	public void saveClicks(String[][] clicks) throws Exception {
+		if (this.user == null)
+			return;
+		
+		for (String[] click:clicks) {
+			String s = click[1];
+			s = s.substring(0, 10) + " " + s.substring(11);
+			s = s.substring(0, s.length() - 1);
+			click[1] = s;
+
+		}
+		gameDao.saveClicks(this.user.getId(), clicks);
+	}
+	
 }

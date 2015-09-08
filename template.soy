@@ -679,7 +679,7 @@
  * Next button in information dialogs.
  */
 {template .nextButton private="true"}
-    <button class="nobugs_button" onclick="Explanation.nextStatement()">
+    <button id="nextexplanation" class="nobugs_button" onclick="Explanation.nextStatement()">
       {{msg meaning="Apps.dialogNext" desc="---"}}Next{{/msg}}
     </button>
 {/template}
@@ -688,7 +688,7 @@
  * Previous button in information dialogs.
  */
 {template .previousButton private="true"}
-    <button class="nobugs_button" onclick="Explanation.previousStatement()">
+    <button id="previousexplanation" class="nobugs_button" onclick="Explanation.previousStatement()">
       {{msg meaning="Apps.dialogPrevious" desc="---"}}Previous{{/msg}}
     </button>
 {/template}
@@ -697,7 +697,7 @@
  * Finish button in information dialogs.
  */
 {template .finishButton private="true"}
-    <button class="nobugs_button" onclick="Explanation.finishStatement()">
+    <button id="finishexplanation" class="nobugs_button" onclick="Explanation.finishStatement()">
       {{msg meaning="Apps.dialogOk" desc="---"}}OK{{/msg}}
     </button>
 {/template}
@@ -707,7 +707,7 @@
  */
 {template .logoffDlgButton private="true"}
 	<div class="farSide" >
-	    <button class="secondary" onclick="Game.logoffButtonClick()">
+	    <button id="logoffgame" class="secondary" onclick="Game.logoffButtonClick()">
 	      {{msg meaning="Apps.dialogLogoff" desc="---"}}Logoff{{/msg}}
 	    </button>
 	</div>
