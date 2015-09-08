@@ -31,18 +31,18 @@ CharacterDialog =  function (left, top, showClose, evtClose, conversation) {
 	var div = $("<div>").attr("id", "talkDlg").addClass("dlgTalk").appendTo("body");
 	
 	var divBaloon = $("<div>").addClass("dlgTalkBaloon");
-	divBaloon.append($("<button>").addClass("dlgTalkClose"));
+	divBaloon.append($("<button id='dlgClose'>").addClass("dlgTalkClose"));
 	divBaloon.append($("<div>").addClass("dlgTalkText"));
 	
-	var prevB = $("<button>").addClass("dlgTalkButton").addClass("nobugs_button")
+	var prevB = $("<button id='dlgPrevious'>").addClass("dlgTalkButton").addClass("nobugs_button")
 		.append($("<img>").attr("src","images/talkprevious.png"));
 	divBaloon.append(prevB);
 	
-	var nextB = $("<button>").addClass("dlgTalkButton").addClass("nobugs_button")
+	var nextB = $("<button id='dlgNext'>").addClass("dlgTalkButton").addClass("nobugs_button")
 		.append($("<img>").attr("src","images/talknext.png"));
 	divBaloon.append(nextB);
 	
-	var nextC = $("<button>").addClass("dlgTalkButton").addClass("nobugs_button")
+	var nextC = $("<button id='dlgCloseOK'>").addClass("dlgTalkButton").addClass("nobugs_button")
 		.append($("<img>").attr("src","images/talknextclose.png"));
 	divBaloon.append(nextC);
 	
