@@ -48,6 +48,7 @@
 	"NoBugs.logoffTooltip": "Sair do jogo",
 	"NoBugs.returnDashboardTooltip" : "Retornar ao painel principal",
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
+	"NoBugs.instructionTooltip":"Consultar conte&#250;do de aprendizagem relacionado &#224; miss&#227;o",
 	"NoBugs.buyTooltip":"Comprar equipamentos.",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	"NoBugs.EnableMusic": "Habilitar m&#250;sica.",

@@ -547,6 +547,14 @@ Game.missionLoaded = function(ret){
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	
+  if (!Game.loginData.userLogged.showInstruction ||
+		  mission.getElementsByTagName("explanation")[0].getAttribute("hasInstruction") === "false") {
+	  $("#instructionButton").css("display", "none");
+  } else
+	  $("#instructionButton").css("display", "inline");
+  
+
+  
   Game.openMission = {};
   Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
   Game.openMission.time = mission.childNodes[0].getAttribute("timeLimit");
@@ -616,23 +624,23 @@ Game.changeStars = function(starNumber) {
  	Game.tracks[starNumber].play();
 };
 
-Game.afterInstallMachines = function() {
+Game.afterInstallMachines = function(toolbox) {
 
   var mission = Game.mission;
   var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (Game.previousCode != null) // the user try this mission before, than load the previous code
-	  Game.nextPartOfMissionLoaded(false, Game.previousCode, mission, Game.timeSpent);
+	  Game.nextPartOfMissionLoaded(false, toolbox, Game.previousCode, mission, Game.timeSpent);
   else {
       var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
 			  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission 
-			  Game.nextPartOfMissionLoaded(true, ret, mission, 0);
+			  Game.nextPartOfMissionLoaded(true, toolbox, ret, mission, 0);
 		  });
 	  }
 	  else {
 		  var outerHTML = sourceXML.outerHTML || (new XMLSerializer()).serializeToString(sourceXML);
-		  Game.nextPartOfMissionLoaded(true, outerHTML, mission, 0);
+		  Game.nextPartOfMissionLoaded(true, toolbox, outerHTML, mission, 0);
 	  }
   }
   
@@ -676,37 +684,7 @@ Game.installMachines = function(toolbox) {
 			
 		}
 			
-		document.getElementById('blockly').innerHTML = ""; // clean the editor
-	    Blockly.inject(document.getElementById('blockly'),
-		     { media: "media/",
-		       rtl: Game.rtl,
-		       toolbox: toolbox,
-		       trashcan: true,
-		       comments: false,
-		       scrollbars: true,
-		       zoom:
-	             {enabled: true,
-	              controls: true,
-	              wheel: true,
-	              maxScale: 2,
-	              minScale: .1,
-	              scaleSpeed: 1.1
-	             }});
-	    
-	    if (Game.zoomLevel > 1) {
-	    	while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
-	    		Blockly.getMainWorkspace().zoomCenter(1);
-	    } else 
-	    	if (Game.zoomLevel < 1) {
-		    	while (Blockly.getMainWorkspace().scale > Game.zoomLevel) 
-		    		Blockly.getMainWorkspace().zoomCenter(-1);
-	    	}
-
-	    
-	    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
-	    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
-	    
-	    Game.afterInstallMachines();
+	    Game.afterInstallMachines(toolbox);
 
 	});	
 };
@@ -904,18 +882,50 @@ Game.buyMachineButtonClick = function() {
 	});
 };
 
-Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
+Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
+  Game.resizeWindow(); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
+  
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
-		
-  var xml = Blockly.Xml.textToDom(answer);
-  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-  Game.moveBlocks();
-  
+    
+  document.getElementById('blockly').innerHTML = ""; // clean the editor
+  Blockly.inject(document.getElementById('blockly'),
+	     { media: "media/",
+	       rtl: Game.rtl,
+	       toolbox: toolbox,
+	       trashcan: true,
+	       comments: false,
+	       scrollbars: true,
+	       zoom:
+	         {enabled: true,
+	          controls: true,
+	          wheel: true,
+	          maxScale: 2,
+	          minScale: .1,
+	          scaleSpeed: 1.1
+	         }});
+	
+  if (Game.zoomLevel > 1) {
+	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
+		Blockly.getMainWorkspace().zoomCenter(1);
+  } else 
+	  if (Game.zoomLevel < 1) {
+		  while (Blockly.getMainWorkspace().scale > Game.zoomLevel) 
+			  Blockly.getMainWorkspace().zoomCenter(-1);
+	  }
+
+
+  document.removeEventListener('keydown', Blockly.onKeyDown_, false);
+  Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
+	
   Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
+	  
+	  var xml = Blockly.Xml.textToDom(answer);
+	  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+	  Game.moveBlocks();
 	  
 	  Game.tests = data.childNodes[0].getElementsByTagName("tests");
 	  if (Game.tests.length == 0) {
@@ -971,6 +981,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, answer, mission, timeSpent) {
 	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
 	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
+	  BlocklyApps.bindClick('instructionButton', Game.instructionButtonClick);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
@@ -1394,7 +1405,17 @@ Game.goalButtonClick = function() {
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	
-	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false);
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false, null, false);
+	
+};
+
+Game.instructionButtonClick = function() {
+	
+	Hints.stopHints();
+	Blockly.WidgetDiv.hide();
+	Game.stopAlertGoalButton();
+	
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false, null, true);
 	
 };
 

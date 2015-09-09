@@ -32,6 +32,9 @@ public class User {
 
 	@RemoteProperty
 	private boolean showHint;
+	
+	@RemoteProperty
+	private boolean showInstruction;
 
 	private boolean enabled;
 
@@ -135,4 +138,12 @@ public class User {
 		return enabled;
 	}
 
+	public boolean isShowInstruction() {
+		return showInstruction;
+	}
+	
+	public void setShowInstruction(boolean showInstruction) {
+		this.showInstruction = showInstruction;
+	}
+	
 }

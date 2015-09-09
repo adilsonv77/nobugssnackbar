@@ -43,7 +43,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint, userxp from users where usernick = ? and userpassw = ? and userenabled = 'T'");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint, userxp, showinstructionallearn from users where usernick = ? and userpassw = ? and userenabled = 'T'");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
@@ -62,6 +62,7 @@ public class GameJdbcDao implements GameDao {
 			u.setSex(rs.getString(6));
 			u.setLastTime(rs.getTime(7));
 			u.setShowHint(rs.getString(8).equals("T"));
+			u.setShowInstruction(rs.getString(10).equals("T"));
 
 			ps.close();
 

@@ -16,12 +16,29 @@ Explanation.selectCommands = function(commands) {
 	return ret;
 };
 
-Explanation.showInfo = function(explanation, withHint, afterclosed) {
+Explanation.showInfo = function(explanation, withHint, afterclosed, instruction) {
 	
-	explanation = Explanation.parseUserLogged(explanation);
+	explanation = Explanation.parseUserLogged(explanation); // deal with all pages transformation to HTML
+
+	instruction = (instruction === undefined?false:instruction);
+	
+	Explanation.instruction = instruction;
+	
+	var showType = (instruction?"instruction":"goal");
+	
+	var children = explanation.getElementsByTagName("page");
+	Explanation.children = [];
+	for (var i = 0; i < children.length; i++) {
+		var child = children[i];
+		var type = child.getAttribute("type");
+		if (type === showType)
+			Explanation.children.push(child);
+		
+	}
+	
 	
 	Explanation.firstStatement = 0;
-	Explanation.lastStatement = explanation.childElementCount - 1;
+	Explanation.lastStatement = Explanation.children.length - 1;
 
 	Explanation.explanation = explanation;
 
@@ -61,7 +78,7 @@ Explanation.previousStatement = function() {
 Explanation.createDialog = function(nrPage, afterclosed) {
     var content = document.getElementById('dialogInfo');
 	var container = document.getElementById('dialogInfoText');
-	var children = Explanation.explanation.getElementsByTagName("page");
+	var children = Explanation.children;//Explanation.explanation.getElementsByTagName("page");
 
 	var containerText = children[nrPage].innerHTML || children[nrPage].textContent;
 	
@@ -76,8 +93,8 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 			(nrPage == Explanation.firstStatement?nobugspage.nextButton(null, null, null)
 					:nobugspage.previousButton(null, null, null) + (nrPage == Explanation.lastStatement?nobugspage.finishButton(null, null, null):nobugspage.nextButton(null, null, null))));
 		 
-	
-	Explanation.evaluateObjectives(nrPage, container);
+	if (!Explanation.instruction)
+		Explanation.evaluateObjectives(nrPage, container);
 	
 	MyBlocklyApps.showDialog(content, null,
 							 false, true, true, Game.missionTitle, {width: "800px"}, afterclosed);

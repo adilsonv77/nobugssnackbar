@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-07 23:59:35.354000",
+		"lastupdated": "2015-09-09 14:07:05.328000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -244,6 +244,7 @@
 	"NoBugs.resetTooltip": "Restarts the execution.",
 	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
+	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.variables": "Variables",
 	"NoBugs.varname": "Name",
 	"NoBugs.varvalue": "Value",
