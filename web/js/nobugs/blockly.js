@@ -277,7 +277,7 @@ Blockly.BlockSvg.prototype.select = function() {
 	try {
 		// depends where the editor is used, there are no hints
 		if (Game.hideHints)
-			Hints.hideHints();
+			Hints.hideHintWithTimer();
 	} catch (ex) {
 		
 	}

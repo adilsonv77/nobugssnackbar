@@ -561,7 +561,7 @@ function createStylePosition(menu, submenu, dialog) {
 	
 	var e = Blockly.mainWorkspace.toolbox_.tree_.children_[menu].element_;
 	
-	e = Blockly.mainWorkspace.toolbox_.flyout_.workspace_.getTopBlocks(true)[submenu];
+	e = Blockly.mainWorkspace.toolbox_.flyout_.workspace_.getTopBlocks(false)[submenu];
 	if (e == undefined)
 		return [];
 		
@@ -788,10 +788,11 @@ Hints.Categories["SelectCommand"] = {
 			if (res.length > 0) {
 				BlocklyApps.showDialog(dialog, null, false, false, res[0], null);
 				Hints.chooseCategoryCalled = true;
+				
 			} else {
 				Hints.Categories["SelectCommand"].bindEvent();
 			}
-			            
+			
 		},
 		
 	condition:
@@ -799,14 +800,14 @@ Hints.Categories["SelectCommand"] = {
 		
 	naturalCondition:
 		"(Hints.chooseCategoryCalled == true || (Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(Hints.hintSelected.args[0])].element_ == menuSelected))" ,
-			
+
 	bindEvent:
 		function() {
 			Hints.chooseCategoryCalled = false;
 			Hints.hideHintWithTimer();
 		},
-	
-	hideOnMenu : false
+
+		hideOnMenu : false
 		
 };
 

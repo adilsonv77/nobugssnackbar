@@ -915,7 +915,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 			  Blockly.getMainWorkspace().zoomCenter(-1);
 	  }
 
-
   document.removeEventListener('keydown', Blockly.onKeyDown_, false);
   Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
 	
