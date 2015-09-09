@@ -338,3 +338,9 @@ table.tableVictory td  {
 .ExplainContentInternal {
 	margin: 5px;	
 }
+
+.ExplainCode {
+	font-family: monospace; 
+	text-align: center;
+	width: 100%
+}

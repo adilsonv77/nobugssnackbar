@@ -1537,6 +1537,8 @@ Game.resetButtonClick = function() {
   
   Game.doResizeWindow("none");
   
+  Game.hideHints = true;
+  
   Hints.startHints();
   Game.unlockBlockly();
   Game.stopAlertGoalButton();
@@ -1661,6 +1663,8 @@ Game.execute = function(debug) {
 	  Blockly.hideChaff();
 	  Hints.stopHints();
 	  Blockly.WidgetDiv.hide();
+	  
+	  Game.hideHints = false;
 	  
 	  BlocklyApps.log = [];
 	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
@@ -2069,6 +2073,7 @@ Game.nextStep = function() {
 
 			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
 			    			function() {
+			    				Game.hideHints = true;
 				    			Hints.showErrorHint();
 			    			}
 			    	);

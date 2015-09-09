@@ -42,7 +42,7 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction)
 
 	Explanation.explanation = explanation;
 
-	if (withHint) {
+	if (withHint || instruction) {
 		Explanation.pageNumber = Explanation.firstStatement;
 		Explanation.createDialog(Explanation.firstStatement, afterclosed);
 	}
