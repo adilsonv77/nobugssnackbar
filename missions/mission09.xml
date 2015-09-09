@@ -1,8 +1,8 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
+	<explanation hasInstruction="false">
 		
-		<page>
+		<page type="goal">
 		<![CDATA[
 		Tenho boas not&#237;cias. Comprei um stock de refrigerantes. Agora podemos perguntar ao
 		cliente o que ele deseja comer e beber. <br/>
@@ -18,13 +18,14 @@
 	
 	<hints>
 		<sequence>
-		    <hint category="SliderEx" time="0" condition="Hints.showedHint() == false &amp;&amp; Hints.howManyRuns() == 0"/>
-		    
 			<hint category="TestBlock" time="1000" condition="Hints.typeActiveBlock() == 'ask_askForDrink' &amp;&amp; Hints.countInstructions() == 1">
 			<![CDATA[
 			Temos aqui tr&#234;s novos comandos: [askForDrink] para perguntar ao cliente o que ele deseja beber, [pickUpDrink] para retirar um produto 
 			quando estiver em frente ao refrigerador e [goToCooler] para instruir o cozinheiro andar at&#233; o refrigerador. 
 			]]>
+			</hint>
+			<hint category="TestBlock" condition="Hints.isVariable() == true &amp;&amp; Hints.countVariableName() &lt; 2">
+			<![CDATA[Preste aten&#231;&#227;o no nome das vari&#225;veis. Se usar o mesmo nome implica que est&#225;s referenciando a mesma vari&#225;vel. Verifiques se &#233; isso mesmo que desejas fazer. Sen&#227;o, clique na caixa de op&#231;&#245;es e crie uma <b>nova vari&#225;vel</b>.]]>
 			</hint>
 		
 		</sequence>

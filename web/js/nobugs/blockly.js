@@ -194,11 +194,17 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	    // Delete or backspace.
 	    try {
 	        Blockly.hideChaff();
-	  		Game.blocksSelected.forEach(function(block) {
-				if (block.isDeletable())
-					block.dispose(true, true);
-			});
-	  		Game.blocksSelected = [];
+	        
+	        if (Game.blocksSelected.length == 0)
+	        	Blockly.selected.dispose(true, true);
+	        else {
+	        	
+		  		Game.blocksSelected.forEach(function(block) {
+					if (block.isDeletable())
+						block.dispose(true, true);
+				});
+		  		Game.blocksSelected = [];
+	        }
 
 	    } finally {
 	      // Stop the browser from going back to the previous page.
@@ -215,12 +221,16 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	      } else if (e.keyCode == 88) {
 	        // 'x' for cut.
 	    	
-	    	Blockly.copy_(Blockly.selected); 
-	  		Game.blocksSelected.forEach(function(block) {
-				if (block.isDeletable() && block.isMovable())
-					block.dispose(true, true);
-			});
-	  		Game.blocksSelected = [];
+	    	Blockly.copy_(Blockly.selected);
+	    	if (Game.blocksSelected.length == 0) {
+	    		Blockly.selected.dispose(true, true);
+	    	} else {
+		  		Game.blocksSelected.forEach(function(block) {
+					if (block.isDeletable() && block.isMovable())
+						block.dispose(true, true);
+				});
+		  		Game.blocksSelected = [];
+	    	}
 /*
 	        Blockly.copy_(Blockly.selected);
 	        Blockly.selected.dispose(true, true);

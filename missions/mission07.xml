@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission open="true" timeLimit="600">
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
 		Chegamos a um tipo diferente de miss&#227;o. Neste tipo de miss&#227;o voc&#234; pode rejogar v&#225;rias
 		vezes, atrav&#233;s de um custo de moedas. <br/>
@@ -15,7 +15,7 @@
 		]]>
 		</page>
 
-		<page>
+		<page type="goal">
 		<![CDATA[
 		Voc&#234; tem um tempo limite para fazer dinheiro. Os clientes v&#227;o entrar e sair do seu estabelecimento.
 		Tome cuidado para respeitar o tempo de entrada e sa&#237;da dos clientes. Lembre-se: se perguntar a um espa&#231;o 
@@ -27,7 +27,7 @@
 		]]>
 		</page>
 		
-		<page> 
+		<page type="goal"> 
 		<![CDATA[
 		Essas miss&#245;es poder&#227;o lhe dar b&#244;nus quanto <b>menos vezes</b> voc&#234; clicar em executar ou menos 
 		c&#243;digo tiver para atender os pedidos. <br/><br/>

@@ -1,21 +1,21 @@
 <?xml version='1.0'?>
 <mission>
 	<slider timesBefore="100000"/>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
 		Agora &#233; hora de atender o pedido. No card&#225;pio temos cachorro-quente. No balc&#227;o 
 		superior encontra-se um mostrador aquecido (display) onde podes ir buscar os 
 		cachorros-quentes para servir.
 		]]>
 		</page>
-		<page>
+		<page type="goal">
 		<![CDATA[
 		Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas lig&#225;-los 
 		logicamente para cumprir essa miss&#227;o.  <br/>
 		<br/>
-		Dica: clica no comando e deixa o rato parado sobre o bloco, que aparece uma explica&#231;&#227;o 
-		sobre o que ele faz.
+		<b>Dica: clica no comando e deixa o rato parado sobre o bloco, que aparece uma explica&#231;&#227;o 
+		sobre o que ele faz.</b>
 		]]>
 		</page>
 	</explanation>

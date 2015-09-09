@@ -1,8 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<slider timesBefore="2"/>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
 		Vejo que te est&#225; saindo bem como aprendiz de atendedor. E que tal fazer o trabalho
 		com mais efic&#225;cia, pois assim no futuro pr&#243;ximo poder&#225;s atender mais clientes em 
@@ -41,8 +40,6 @@
 		</sequence>
 		<!-- <errors> only happens after running a program, and some goals aren't achieved  --> 
 		<errors>
-
-			<hint category="Slider"/>
 			
 		</errors>
 	</hints>

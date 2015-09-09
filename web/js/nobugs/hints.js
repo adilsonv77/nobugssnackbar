@@ -205,6 +205,12 @@ Hints.traverseHints = function(hint, error) {
 	  if (h.running == null || h.running == undefined)
 		  h.running = false;
 	  
+	  h.modal = hint.getAttribute("modal");
+	  if (h.modal == null || h.modal == undefined)
+		  h.modal = false;
+	  else
+		  h.modal = h.modal === "true";
+	  
 	  hint = hint.nextElementSibling;
 
 	  if (h.category === "BlockDeleted" && Hints.hintBlockDeleted == null) {
@@ -284,7 +290,8 @@ Hints.timeIsUp = function() {
 		Hints.launchTimer(Hints.TIMEINTERVAL);
 		return;
 	}
-	
+	var beforeHH = Game.hideHints;
+	Game.hideHints = false;
 	var blocks = Blockly.mainWorkspace.getTopBlocks();
 	
 	 // variables used into conditions
@@ -302,11 +309,14 @@ Hints.timeIsUp = function() {
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
 		
-		if (Hints.runHint(hints[i]))
+		if (Hints.runHint(hints[i])) {
+			Game.hideHints = beforeHH;
 			return;
+		}
 		
 	}
 	
+	Game.hideHints = beforeHH;
 	Hints.launchTimer(Hints.TIMEINTERVAL);
 
 };
@@ -600,7 +610,9 @@ function createDownDlgByButton(itemId, txt) {
 	
 }
 
-function createRightDlg(x, y, text) {
+function createRightDlg(x, y, text, modal) {
+	
+//	modal = (modal === undefined || modal === "false"?false:true);
 
 	var dialog = document.getElementById("RightHint");
 	
@@ -612,18 +624,20 @@ function createRightDlg(x, y, text) {
 	style.top = y + "px";
 	style.left = (x - 325) + "px";
 	
-	BlocklyApps.showDialog(dialog, null, false, false, style, null);
+	//BlocklyApps.showDialog(dialog, null, false, modal, style, null);
+	MyBlocklyApps.showDialog(dialog, null, false, modal, false, Game.missionTitle, style, null, function(){}, modal);
 
 };
 
 
-function createInfoDlg(contentTxt, style, title) {
+function createInfoDlg(contentTxt, style, title, modal) {
 	
+//	modal = (modal === undefined || modal === "false"?false:true);
 	var content = document.getElementById('dialogHint');
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = contentTxt;
 
-	MyBlocklyApps.showDialog(content, null, true, false, false, title, style, null);
+	MyBlocklyApps.showDialog(content, null, true, modal, false, title, style, null, function(){}, modal);
 
 }
 
@@ -981,7 +995,7 @@ Hints.Categories["TestBlock"] = {
 				Blockly.mainWorkspace.highlightBlock(Hints.activeBlock.id);
 				
 				var bbBox = BlocklyApps.getBBox_(Hints.activeBlock.getSvgRoot());
-				createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content);
+				createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content, Hints.hintSelected.modal);
 			},
 		
 		
@@ -998,7 +1012,7 @@ Hints.Categories["Iddle"] = {
 		    		style[Blockly.RTL ? 'right' : 'left'] = (bbBox.x - 500) +  'px';
 		    		style.width = "440px";
 		    		
-					createInfoDlg(Hints.hintSelected.content, style, Game.missionTitle);
+					createInfoDlg(Hints.hintSelected.content, style, Game.missionTitle, Hints.hintSelected.modal);
 					
 					Hints.showedIddle++;
 				},

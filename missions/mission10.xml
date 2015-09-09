@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
 		Observa que estamos com o balc&#227;o cheio. Alguns t&#234;m fome e outros sede. Os clientes 
 		sentados no banco 1 e 2 t&#234;m fome e o outro t&#234;m sede.<br/>
@@ -16,7 +16,7 @@
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="Iddle" condition = "Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countInstructions() == 2">
+			<hint category="Iddle" modal="true" condition = "Hints.showedHint() == false &amp;&amp; Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countInstructions() == 2">
 			<![CDATA[
 			Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para duplicar o bloco. 
 			Se manter a tecla [Ctrl] pressionada, pode selecionar v&#225;rios blocos. 
@@ -24,7 +24,7 @@
 	       	]]>
     		</hint>
 		
-			<hint time="3000" category="Iddle" condition = "Hints.countInstructions() > 10 &amp;&amp; Hints.countTopInstructions() == 1">
+			<hint time="3000" category="Iddle"  modal="true" condition = "Hints.showedHint() == false &amp;&amp; Hints.countInstructions() > 10 &amp;&amp; Hints.countTopInstructions() == 1">
 			<![CDATA[
 			Para facilitar a visualiza&#231;&#227;o podes organizar os blocos em <b>duas ou mais colunas</b>. Mas aten&#231;&#227;o:
 			as colunas sempre precisam estar localizadas um pouco mais abaixo do que as anteriores, como nesse exemplo: <br/> 
