@@ -1,24 +1,44 @@
 <?xml version='1.0'?>
 <mission>
 	<slider timesBefore="100000"/>
-	<explanation>
-		<page>
+	<explanation  hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 		Agora j&#225; sabes o essencial para executar um programa. Por&#233;m, por vezes,
-		&#233; preciso que se execute um programa um comando de cada vez, pois podes 
+		&#233; preciso que se execute um comando de cada vez no programa, pois podes 
 		cometer algum erro com a tua personagem e &#233; mais f&#225;cil descobrir esse 
-		erro se executares um de cada vez.
+		erro se executares um de cada vez.<br/><br/>
+		Podes fazer isso clicando no bot&#227;o Depurar (<imghex id="m2_1">89504E470D0A1A0A0000000D4948445200000024000000270802000000E8F67D61000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864000001E8494441545847ED97CD2F03411887FD5928112412FDA04A22B820E24A481C484322518D9BAF93108E24C285BA9483E0A04223B4D1AD2D52DB2AAAECB6DA6DEBADB7B232ED3662A71B076F9ECBCEFC3A4F676677B3539256B1245922147C98B5B21D3A4657468BEBB67A18134646455606D7DED63A224A0B50A22F2B033F91A04B70665292819CE8A60BEC8E2423FA8AC19F91B9B5A544CB0F91FB6121D9AF71E7B4207F53A62FF7E83564A30C8A645E53B570E1145CE737BDAD9C65C4D7692CFC9C2892F9BA9AC4C80B6422BB3B622CCA1F1F86B7D69F56971943FEB9BAB4640B0223FC60190D1511BB2DF112E6A64639ABF9B6AFEB7E7CE875DFFEBCB6C298AAC9B0F23DF31AABFCE67E98533C18888782FC99035E3F81690BFC0F22092896B5D4F2CE134C62A544F171699E88218A65CD356F077BA96412C358E1ED0D22862895016CBB36B438270A02E6A132CB98130328C832183461DB26E66119D96E1319F884924C57763F3688F977CECF345612BD88B25BFF1B77033D9817CE4FF3DE8A00FD99F14E47D165A18569CCC758866928AACCA0E11D47988F3F04E46474F60C1EED98C785F9E8D5659197515F0E6F7DD000DCC430D9FB05B53DCB0013929913A2EA67811CFF322A4832553FBF553D58A87A6482826BF0533F0CC298688292642AD4BF8C42A5D31FD9EDCE27E93589FD0000000049454E44AE426082</imghex>).
+		Toda vez que clicas nesse bot&#227;o, &#233; executado um comando por vez. Clique v&#225;rias vezes at&#233; o programa encerrar.
 		]]>
 		</page>
-		<page>
+		<page type="goal">
 		<![CDATA[
 		O comportamento da tua personagem &#233; o mesmo da miss&#227;o anterior, e por isso
-		j&#225; est&#225; pronto na &#225;rea de trabalho. Agora clica no bot&#227;o com um p&#233; (tamb&#233;m
-		chamado <b>bot&#227;o para Depurar</b>) para veres o teu programa ser executado um comando
-		de cada vez. Faz isso at&#233; o programa encerrar.
+		j&#225; est&#225; pronto na &#225;rea de trabalho. Utilize o bot&#227;o para depurar at&#233; o programa encerrar. 
 		]]>
 		</page>
 
+		<page type="instruction">
+			<![CDATA[
+<div class="ExplainContent">
+<div class="ExplainContentInternal">
+Programas podem apresentar erros. A maior parte dos erros &#233; por culpa do programador. Entretanto, na atividade de programa&#231;&#227;o
+ devemos tratar com normalidade o fato que os nossos programas podem conter erros. Faz parte de nossa evolu&#231;&#227;o como programador, 
+ e mesmo no ciclo de vida do programa. Contudo, esses erros precisam resolvidos. Uma das maneiras de tentarmos resolver os erros 
+ &#233; atrav&#233;s da <b>depura&#231;&#227;o</b>. <br/><br/>
+Depura&#231;&#227;o &#233; o processo para encontrar e corrigir erros (bugs) no software. Todos os ambientes de programa&#231;&#227;o possuem um ferramental
+ para depura&#231;&#227;o. Todos eles permitem voc&#234; executar passo-a-passo seu programa e assim ao detectar o ponto do erro no c&#243;digo-fonte, 
+ a sua tarefa &#233; corrig&#237;-lo.  
+</div>
+</div>			
+<div class="ExplainGameInstance">
+Ao usar o recurso de depura&#231;&#227;o no jogo, vais notar que o pr&#243;ximo bloco a ser executado est&#225; real&#231;ado. Ainda, quando clica no bot&#227;o 
+  a execu&#231;&#227;o do bloco &#233; refletido com as a&#231;&#245;es da sua personagem, dos clientes ou dos equipamentos. 
+</div>
+			]]>    
+		</page>
+		
 	</explanation>
 	<hints>
 		<sequence>

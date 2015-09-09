@@ -1758,12 +1758,15 @@ public class GameJdbcDao implements GameDao {
 			ps.setLong(1, userid);
 			
 			for (String[] click: clicks) {
-				
-				Date d = sdf.parse(click[1]);
-				
-				ps.setString(2, click[0]);
-				ps.setTimestamp(3, new java.sql.Timestamp(d.getTime()));
-				ps.executeUpdate();
+
+				if (click[0] != null) {
+					// i dont know why this happens....
+					Date d = sdf.parse(click[1]);
+					
+					ps.setString(2, click[0]);
+					ps.setTimestamp(3, new java.sql.Timestamp(d.getTime()));
+					ps.executeUpdate();
+				}
 			}
 			
 			bdCon.commit();

@@ -39,6 +39,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
         if (closeButtonFunc != undefined || closeButtonFunc != null) {
         	header.style.textAlign = "right";
         	var bClose = document.createElement('button');
+        	bClose.id = "closeDialog";
         	bClose.style.padding = "0px";
         	bClose.style.margin = "0px";
         	bClose.style.minWidth = "0px";
@@ -192,10 +193,13 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	  } else if (e.keyCode == 8 || e.keyCode == 46) {
 	    // Delete or backspace.
 	    try {
-	      if (Blockly.selected && Blockly.selected.isDeletable()) {
 	        Blockly.hideChaff();
-	        Blockly.selected.dispose(true, true);
-	      }
+	  		Game.blocksSelected.forEach(function(block) {
+				if (block.isDeletable())
+					block.dispose(true, true);
+			});
+	  		Game.blocksSelected = [];
+
 	    } finally {
 	      // Stop the browser from going back to the previous page.
 	      // Use a finally so that any error in delete code above doesn't disappear

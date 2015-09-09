@@ -325,3 +325,16 @@ table.tableVictory td  {
 	border: 0px;
 	box-shadow: 0px 0px 0px 0px;
 }
+
+.ExplainGameInstance {
+	color: blue;
+	padding-top: 10px;
+}
+
+.ExplainContent {
+	border: 1px solid gray;	
+}
+
+.ExplainContentInternal {
+	margin: 5px;	
+}
