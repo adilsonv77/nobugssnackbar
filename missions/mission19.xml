@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 Como um futuro gerente de uma esplanada, precisas aprender a controlar a quantidade de lanches a serem produzidos. <br/>
 <br/>

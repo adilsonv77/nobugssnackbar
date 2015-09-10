@@ -459,6 +459,7 @@ public class GameJdbcDao implements GameDao {
 					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
 					+ "   where ma.userid = ? and ma.achieved = 'T' and missions.missionrepeatable = 0 group by classid, classlevelid) maz "
 					+ "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
+					+ " where liberacaodt <= now() "
 					+ " order by c.classname, classlevelid";
 
 			ps = bdCon.prepareStatement(s);

@@ -135,7 +135,7 @@ Game.init = function() {
 
 	// if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
-		
+    	
 		if (ret[0]) {
 			
 			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9]);
@@ -515,6 +515,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
 Game.unload = function(e) {
 
+  	LogClick.save();
+
 	Game.saveMission();
 	
     return null;
@@ -613,7 +615,26 @@ Game.missionLoaded = function(ret){
   Game.installMachines(toolbox);
 };
 
+Game.blinkPlayerReward = function() {
+	
+	if (Game.blinkPlayerRewardTimes % 2 === 0)
+		$("#playerRewardMission").css("box-shadow", "inset 0 0 100px 100px rgba(255, 255, 255, 0.4)");
+	else
+		$("#playerRewardMission").css("box-shadow","");
+	
+	Game.blinkPlayerRewardTimes++;
+	if (Game.blinkPlayerRewardTimes < 10)
+		window.setTimeout(Game.blinkPlayerReward, 500);
+};
+
 Game.changeStars = function(starNumber) {
+	
+	if (!CountXP.starting) {
+		
+		var f = Game.blinkPlayerReward;
+		Game.blinkPlayerRewardTimes = 0;
+		window.setTimeout(f, 500);
+	}
 	
 	if (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true")
 		return;

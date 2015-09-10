@@ -110,6 +110,7 @@ Selector.prototype.createGridView = function (group, level, missionPanel, number
 		var xOff = Math.floor((i-1)/l);
 		var yOff = (i-1)%l;
     	var div = $('<div />')
+    	    .attr("id", "mission_l"+levelId+"_m"+i)
     	    .attr("idgroup", groupId)
     		.attr("iditem", i)
     	    .attr("idlevel", levelId)

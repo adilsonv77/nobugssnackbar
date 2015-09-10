@@ -21,13 +21,14 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventC
 	CountXP.times = (CountXP.times > 3?3:CountXP.times);
 	
 	CountXP.pointsFinal = pointsFinal;
-	
+	CountXP.starting = true;
 	CountXP.changeImgs();
 	
 	if ((CountXP.times < 3) && (CountXP.showPoints)) {
 		$("#xpPoints").html("X " + pointsPerStar);
 		CountXP.draw();
 	}
+	CountXP.starting = false;
 };
 	
 CountXP.start = function() {

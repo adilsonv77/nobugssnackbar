@@ -1,15 +1,15 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
-        As vari&#225;veis n&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido 
+        As vari&#225;veis nFa&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido 
         podes depois colocar o produto que retirastes do mostrador ou do refrigerador. Essas vari&#225;veis podem ser 
         reaproveitadas. Mas lembra-te: quando se coloca um novo valor numa vari&#225;vel, perde-se o anterior. 
 		]]>
 		</page>
 		
-		<page>
+		<page type="goal">
 		<![CDATA[
 		Neste desafio os tr&#234;s clientes t&#234;m fome e sede. Se resolveres dentro de 6 minutos, ganhas ainda no m&#237;nimo 30 <img style='vertical-align: middle;' src="images/coin2.png"/>.<br/>
 		<br/>
@@ -17,10 +17,25 @@
 		]]>
 		</page>
 
+<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Vari&#225;veis</b><br/>
+		Chamamos aten&#231;&#227;o v&#225;rias vezes sobre o cuidado de perder o valor anterior da vari&#225;vel. Se deseja guardar mais de um valor, a solu&#231;&#227;o &#233; ter duas vari&#225;veis. 
+		<br/><br/>
+		Entretanto, se o valor da vari&#225;vel n&#227;o ser&#225; mais usado, ent&#227;o pode-se aproveitar a mesma vari&#225;vel para colar novos valores.
+		Contudo, &#233; uma boa pr&#225;tica termos cuidados com os nomes das vari&#225;veis. Se voc&#234; batizou a vari&#225;vel de <i>pedidoComida</i>, &#233; porque querias guardar os pedidos
+		de comida dos clientes. N&#227;o seria uma boa decis&#227;o se voc&#234; reutilizar essa vari&#225;vel para guardar bebidas, pois comprometer&#225; a leitura do programa deixando a confusa. 
+		Por exemplo, voc&#234; adicionar um bloco para buscar uma bebida no refrigerador onde o nome da vari&#225;vel &#233; <i>pedidoComida</i>.  
+		</div></div>
+		]]>
+		</page>
+
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="Iddle" time="0" condition = "Hints.countShowedIddle() &lt; 1 &amp;&amp; Hints.countInstructions() > 25">
+			<hint category="Iddle" modal="true"  time="0" condition = "Hints.showedHint() == false &amp;&amp; Hints.countShowedIddle() &lt; 1 &amp;&amp; Hints.countInstructions() > 25">
 			<![CDATA[
 			Se est&#225; complicado de organizar os blocos, tens mais uma alternativa: usar os recursos de zoom da ferramenta. Observe os bot&#245;es acima da lixeira 
 			que permitem gerir o zoom da &#225;rea de trabalho.
