@@ -745,6 +745,10 @@ Hints.countVariableName  = function() {
 	return Hints.variablesNames.length;
 };
 
+Hints.instructionEnabled = function() {
+	return $("#instructionButton").css("display").indexOf("inline") == 0;
+}
+
 /****************************************************************************************/
 /**                              Categories                                             */
 /****************************************************************************************/

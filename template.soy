@@ -595,11 +595,13 @@
     <category name="{msg meaning="Apps.catText" desc="--"}Text{/msg}">
         <block type="do_talk"> 
 	         <value name="VALUE">
-            	<block type="text"><field name="TEXT">Hello</field></block>
+            	<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.order" desc="---"}}order{{/msg}}</field>
+				</block>
           	 </value>
         </block>
- 
-    	<block type="text"><field name="TEXT">Hello</field></block>
+  		
+  		{if $ij.enabled['textjoin']}
     	<block type="text_join">
     		<mutation items="2"></mutation>
     		<value name="ADD0">
@@ -613,6 +615,7 @@
     			</block>
     		</value>
     	</block>
+    	{/if}
     </category>
     {/if}
 
