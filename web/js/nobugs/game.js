@@ -601,19 +601,25 @@ Game.missionLoaded = function(ret){
   
   Game.mission = mission;
 
-  $("#vars").ingrid({height: 250, paging: false, sorting: false,
-		  gridClass: 'varsgrid',
-		  headerClass: 'varsgrid-header',
-		  colWidths: [100, 100],
-		  resizableCols: false,
-		  ingridIDPrefix: '_varsgrid',
-		  ingridBaseClass: 'basevarsgrid'});
-  // a bug in ingrid
-  $("div[class=varsgrid-header]").css("display", "none");
-
+  Game.assignIngrid();
   
   Game.installMachines(toolbox);
 };
+
+Game.assignIngrid = function() {
+	  
+	  $("#vars").ingrid({height: 250, paging: false, sorting: false,
+			  gridClass: 'varsgrid',
+			  headerClass: 'varsgrid-header',
+			  colClasses:['varsgrid-col0', ''],
+			  //colWidths: [100, 100],
+			  resizableCols: false,
+			  ingridIDPrefix: '_varsgrid',
+			  ingridBaseClass: 'basevarsgrid'});
+	  // a bug in ingrid
+	  $("div[class=varsgrid-header]").css("display", "none");
+
+};  
 
 Game.blinkPlayerReward = function() {
 	
@@ -1932,7 +1938,10 @@ Game.updateVariables = function() {
 		}
 	});
 	
-	InGrid.loadLines('#_varsgrid_vars_0 div:nth-child(2) table', rows);
+	//InGrid.loadLines('#_varsgrid_vars_0 div:nth-child(2) table', rows);
+
+	InGrid.createNewTable(rows);
+	Game.assignIngrid();
 };
 
 Game.nextStep = function() {
