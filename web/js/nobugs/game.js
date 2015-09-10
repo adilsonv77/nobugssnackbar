@@ -1059,6 +1059,12 @@ Game.moveBlocks = function() {
 Game.verifyButtons = function(objectives) {
 	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";
 	Game.enabledRun = objectives.getAttribute("buttonRun") !== "false";
+	Game.qtAttempts = (objectives.getAttribute("buttonRunQtdAttempts"));
+	if (Game.qtAttempts != null) {
+		Game.qtAttempts = parseInt(Game.qtAttempts);
+		Game.enabledRun = Game.enabledRun && Game.howManyRuns <= Game.qtAttempts;
+	}
+	
 	Game.enabledVarWindow = objectives.getAttribute("variableWindow") !== "false";
 	Game.enabledBuy = objectives.getAttribute("buttonBuy") === "true";
 	
@@ -1574,7 +1580,8 @@ Game.resetButtonClick = function() {
 Game.enableButton = function(buttonName) {
 
 	if ((buttonName === "debugButton" && !Game.enabledDebug) ||
-		(buttonName === "runButton" && !Game.enabledRun) ||
+		(buttonName === "runButton" && (!Game.enabledRun || 
+				(Game.qtAttempts != null && Game.howManyRuns > Game.qtAttempts))) ||
 		(buttonName == "buyButton" && !Game.enabledBuy))
 		return;
 	

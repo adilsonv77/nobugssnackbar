@@ -103,7 +103,7 @@ Para te ajudar a avan&#231;ar, te trouxe o c&#243;digo do &#250;ltimo programa e
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="300">
+	<objectives buttonRunQtdAttempts="5" ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="300">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective pos="1" place="counter">askWantHowManyDrinks</objective>
