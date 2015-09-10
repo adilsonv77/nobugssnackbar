@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-10 14:46:53.368000",
+		"lastupdated": "2015-09-10 16:56:13.540000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -220,6 +220,7 @@
 	"Intro.RepeatTest7": "below the icon. This indicates how many executions have succeeded.",
 	"NoBugs.varname": "Name",
 	"NoBugs.varvalue": "Value",
+	"NoBugs.RunButtonDisabled": "Because you tried sometimes unsuccessfully, I disabled the run button only in this mission. I believe the debug button will be most useful to you.",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",

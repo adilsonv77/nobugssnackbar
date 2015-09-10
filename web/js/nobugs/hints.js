@@ -747,7 +747,12 @@ Hints.countVariableName  = function() {
 
 Hints.instructionEnabled = function() {
 	return $("#instructionButton").css("display").indexOf("inline") == 0;
-}
+};
+
+Hints.isGoalNotAchieved = function(idxGoal) {
+	var os = hero.objective.objectives;
+	return (!os[idxGoal-1].achieved);
+};
 
 /****************************************************************************************/
 /**                              Categories                                             */

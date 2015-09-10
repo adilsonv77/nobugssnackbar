@@ -540,6 +540,8 @@ Game.saveMission = function() {
 
 Game.missionLoaded = function(ret){
 	
+  Game.showedWindowRunDisabled = false;
+	  
   Game.howManyRuns = parseInt(ret[4]);
   Game.previousCode = ret[2];
   Game.zoomLevel = parseFloat(ret[5]);
@@ -554,8 +556,6 @@ Game.missionLoaded = function(ret){
 	  $("#instructionButton").css("display", "none");
   } else
 	  $("#instructionButton").css("display", "inline");
-  
-
   
   Game.openMission = {};
   Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
@@ -1582,8 +1582,29 @@ Game.enableButton = function(buttonName) {
 	if ((buttonName === "debugButton" && !Game.enabledDebug) ||
 		(buttonName === "runButton" && (!Game.enabledRun || 
 				(Game.qtAttempts != null && Game.howManyRuns > Game.qtAttempts))) ||
-		(buttonName == "buyButton" && !Game.enabledBuy))
-		return;
+		(buttonName == "buyButton" && !Game.enabledBuy)) {
+		
+		var exit = true;
+		
+		if (buttonName === "runButton" && Game.qtAttempts != null && Game.showedWindowRunDisabled == false) {
+			
+			exit = false;
+			if (Game.qtAttempts < Game.howManyRuns && !BlocklyApps.isDialogVisible_) {
+
+				exit = true; // only apply this configuration when is possible to comunicate the user 
+				
+				Game.showedWindowRunDisabled = true;
+				
+				var content = $("<div/>")
+					.append(BlocklyApps.getMsg("NoBugs_RunButtonDisabled"));
+				Game.disableButton("runButton");
+				MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, function(){}, true);
+			}
+		} 
+			
+		if (exit) return;
+	}
+		
 	
    var button = document.getElementById(buttonName);
    button.disabled = "";

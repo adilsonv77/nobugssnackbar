@@ -53,6 +53,7 @@
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	"NoBugs.EnableMusic": "Habilitar m&#250;sica.",
 	"NoBugs.DisableMusic": "Desabilitar m&#250;sica.",
+	"NoBugs.RunButtonDisabled":"Porque voc&#234; tentou algumas vezes sem sucesso, eu desabilitei o bot&#227;o de executar somente para esta miss&#227;o. Eu acredito que o bot&#227;o para depurar ser&#225; mais &#250;til para si.",
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
