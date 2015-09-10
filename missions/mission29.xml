@@ -1,13 +1,23 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
-Supondo que tenhas um estoque de 10 cachorros. Pergunte aos clientes quantos cachorros eles desejam e no final fale quantos cachorros sobraram no estoque. 		
+Supondo que tenhas um estoque de 10 cachorros. Pergunte aos clientes quantos cachorros eles desejam e no final fale quantos cachorros sobraram no estoque.<br/><br/> 
+Dica: utilize a opera&#231;&#227;o de subtra&#231;&#227;o, diminuindo a quantidade de cachorros do valor do estoque (10). 	
 		]]>
 		</page>
 
 	</explanation>
+	<hints>
+		<sequence>
+			<hint category="Iddle" time="5000" modal="true" condition="Hints.showedHint() == false">
+			Leia com aten&#231;&#227;o a p&#225;gina dos objetivos. Depure e observe a lista de vari&#225;veis.<br/><br/>
+			N&#227;o tenha medo de experimentar. &#201; preciso tentar e testar para evoluir.
+			</hint>
+		
+		</sequence>
+	</hints>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
@@ -120,7 +130,7 @@ Supondo que tenhas um estoque de 10 cachorros. Pergunte aos clientes quantos cac
 
 		<objective pos="3" place="counter">askWantHowManyFoods</objective>
 		
-		<objective text="a quantidade de comida em estoque se for atender esses clientes" value="10-CustomerManager.totalOfFood()">talk</objective>
+		<objective text="a quantidade de comida que sobrar&#225; em estoque se for atender esses clientes" value="10-CustomerManager.totalOfFood()">talk</objective>
 		
 	</objectives>
 	<xml>

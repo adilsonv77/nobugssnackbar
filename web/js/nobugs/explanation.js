@@ -175,7 +175,7 @@ Explanation.finishStatement = function() {
 	
 	Game.verifyTestsInMission( function() {
 		
-		Hints.init(Game.mission.getElementsByTagName("hints")[0]);
+		Hints.init(Game.mission.getElementsByTagName("hints")[0], true);
 
 		Game.initTime();
 	});

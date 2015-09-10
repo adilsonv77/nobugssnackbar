@@ -1021,7 +1021,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  if (Game.firstTime) {
 		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
 	  } else {
-		  Hints.init(Game.mission.getElementsByTagName("hints")[0]);
+		  // if Game.showedWindowRunDisabled == true is because the window is opened
+		  Hints.init(Game.mission.getElementsByTagName("hints")[0], !Game.showedWindowRunDisabled);
 		  Game.initTime();
 	  }
   };
@@ -1598,7 +1599,11 @@ Game.enableButton = function(buttonName) {
 				var content = $("<div/>")
 					.append(BlocklyApps.getMsg("NoBugs_RunButtonDisabled"));
 				Game.disableButton("runButton");
-				MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, function(){}, true);
+				Hints.stopHints();
+				
+				MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, function(){
+					Hints.startHints();
+				}, true);
 			}
 		} 
 			

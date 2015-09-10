@@ -30,7 +30,7 @@ Hints.dealError = false;
 
 var countInstructions, countTopInstructions, menuSelected, showedHint; 
 
-Hints.init = function(hints) {
+Hints.init = function(hints, launch) {
 
 	if (!Game.loginData.userLogged.showHint)
 		return;
@@ -78,7 +78,7 @@ Hints.init = function(hints) {
 
     Hints.addDefaultErrorHints();
 
-    if (Hints.hints.sequence.length > 0) 
+    if (launch && Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
     
     if (Blockly.mainWorkspace.toolbox_ != undefined)
