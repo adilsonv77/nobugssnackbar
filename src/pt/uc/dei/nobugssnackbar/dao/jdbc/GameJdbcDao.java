@@ -1466,7 +1466,7 @@ public class GameJdbcDao implements GameDao {
 			
 			ret = new Test[2];
 			boolean testWithIncompleteQuestion = false;
-			int lastTest = -1;
+			int lastTest = 0;
 			while (rs.next()) {
 				
 				if (lastTestId != rs.getLong(1)) {
@@ -1507,10 +1507,8 @@ public class GameJdbcDao implements GameDao {
 					answer.setTimeSpend(rs.getInt(12));
 					
 					qt.setPreviousAnswer(answer);
-				} else
+				} else 
 					testWithIncompleteQuestion = testWithIncompleteQuestion || rs.getString(11) == null;
-				
-			
 				
 			}
 			

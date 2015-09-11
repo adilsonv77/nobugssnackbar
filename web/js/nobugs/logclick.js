@@ -1,4 +1,5 @@
-LogClick = {};
+'use strict';
+var LogClick = {};
 
 LogClick.clicks = [];
 
