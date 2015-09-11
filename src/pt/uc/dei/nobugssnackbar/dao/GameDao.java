@@ -54,7 +54,7 @@ public interface GameDao {
 
 	List<Object[]> loadMachineData(Integer[] machineid, String destFolder) throws Exception;
 
-	List<Object[]> retrieveLeaderBoard(long id, List<Long> classesId)
+	List<Object[]> retrieveLeaderBoard(long id, Long classId)
 			throws Exception;
 
 	boolean isUserAllowed(String usernick) throws Exception;
@@ -74,12 +74,12 @@ public interface GameDao {
 
 	byte[] getUserPhoto(long userid) throws Exception;
 
-	Test loadTests(User user, Object[][] missions) throws Exception;
+	Test[] loadTests(User user, Object[][] missions) throws Exception;
 
-	void saveTestQuestionAnswer(int testId, int questionId, int missionId, long userId,
+	void saveTestQuestionAnswer(int testId, int questionId, long userId,
 			int timeSpent, String answer) throws Exception;
 
-	int[] calculateTestRewards(int testId, int missionId, long userId) throws Exception;
+	int[] calculateTestRewards(int testId, long userId) throws Exception;
 
 	void saveUserRewards(User user) throws Exception;
 

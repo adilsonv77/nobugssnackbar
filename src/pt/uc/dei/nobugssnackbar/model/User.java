@@ -1,9 +1,7 @@
 package pt.uc.dei.nobugssnackbar.model;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.directwebremoting.annotations.DataTransferObject;
@@ -19,7 +17,7 @@ public class User {
 	private String passw;
 	private long money;
 
-	private List<Long> classesId = new ArrayList<>();
+	private long classId;
 
 	@RemoteProperty
 	private String sex;
@@ -126,8 +124,12 @@ public class User {
 		this.showHint = showHint;
 	}
 
-	public List<Long> getClassesId() {
-		return classesId;
+	public Long getClassId() {
+		return classId;
+	}
+
+	public void setClassId(long classId) {
+		this.classId = classId;
 	}
 
 	public void setEnabled(boolean enabled) {

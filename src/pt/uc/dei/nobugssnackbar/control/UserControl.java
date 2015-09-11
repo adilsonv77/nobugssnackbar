@@ -360,7 +360,7 @@ public class UserControl {
 
 	private List<Object[]> retrieveLeaderBoard() throws Exception {
 		List<Object[]> ret = gameDao.retrieveLeaderBoard(this.user.getId(),
-				this.user.getClassesId());
+				this.user.getClassId());
 		
 		if (ret.size() == 0) {
 			ret.add(new Object[] {this.user.getId(), this.user.getName(), 0, 0, 0, 0});
@@ -437,21 +437,21 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public Test loadTests() throws Exception {
-		Test t = gameDao.loadTests(this.user, this.missions);
-		return (t == null || t.getQuestions().size() == 0?null:t); 
+	public Test[] loadTests() throws Exception {
+		Test[] t = gameDao.loadTests(this.user, this.missions);
+		return (t == null || t[0] == null ? null : t); 
 	}
 	
 	@RemoteMethod
-	public void saveTestQuestionAnswer(int testId, int questionId, int missionId, int timeSpent, String answer) throws Exception {
+	public void saveTestQuestionAnswer(int testId, int questionId, int timeSpent, String answer) throws Exception {
 		log.info("saveTestQuestionAnswer");
-		gameDao.saveTestQuestionAnswer(testId, questionId, missionId, user.getId(), timeSpent, answer);
+		gameDao.saveTestQuestionAnswer(testId, questionId, user.getId(), timeSpent, answer);
 	}
 
 	@RemoteMethod
-	public int[] retrieveTestRewards(int testId, int missionId) throws Exception {
+	public int[] retrieveTestRewards(int testId) throws Exception {
 		
-		return gameDao.calculateTestRewards(testId, missionId, user.getId());
+		return gameDao.calculateTestRewards(testId, user.getId());
 		
 	}
 	

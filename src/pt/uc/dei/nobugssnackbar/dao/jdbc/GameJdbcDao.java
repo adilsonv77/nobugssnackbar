@@ -67,13 +67,12 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select classid from classesusers where userid = ?");
+					.prepareStatement("select classid from classesusers where userid = ? and currently = 'T'");
 			ps.setLong(1, u.getId());
 
 			rs = ps.executeQuery();
-			while (rs.next()) {
-				u.getClassesId().add(rs.getLong(1));
-			}
+			rs.next();
+			u.setClassId(rs.getLong(1));
 
 			ps.close();
 			
@@ -542,7 +541,6 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			bdCon.prepareStatement("select * from questionnaire");
-			String clazzes = user.getClassesId() + "";
 
 			String questionnaire = "select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, "
 					+ " optiondescription, optionvalue, questionnaireshowrules, q1.classid, 0 "
@@ -551,15 +549,15 @@ public class GameJdbcDao implements GameDao {
 					+ " join questionsquestionnaire using (questionnaireid) "
 					+ " join questions q using (questionid) "
 					+ " left outer join questionoptions qo on (q.questionid = qo.questionid) "
-					+ " where questionnaireid = ? and classid in ("
-					+ clazzes.substring(1, clazzes.length() - 1)
+					+ " where questionnaireid = ? and classid = ? "
 					+ ") and (questionnairedinit is null or questionnairedinit <= now()) and questionnairedfinish > now() "
 					+ " and questionnaireclassid not in (select distinct questionnaireclassid from questionnaireanswer where userid = ?) "
 					+ " order by questionorder, optionorder";
 
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
 			ps.setLong(1, questId);
-			ps.setLong(2, user.getId());
+			ps.setLong(2, user.getClassId());
+			ps.setLong(3, user.getId());
 			ResultSet rs = ps.executeQuery();
 
 			List<Questionnaire> retL = new ArrayList<>();
@@ -589,8 +587,6 @@ public class GameJdbcDao implements GameDao {
 		try {
 			bdCon = getConnection();
 
-			String clazzes = user.getClassesId() + "";
-
 			String questionnaire = "select questionnaireclassid, questionnairedescription, q.questionid, questiondescription, questiontype, questionrequired, "
 					+ " optiondescription, optionvalue, questionnaireshowrules, q1.classid, questionnairefrommission from questionnaire q0"
 					+ " join questionsquestionnaire using (questionnaireid)"
@@ -598,14 +594,13 @@ public class GameJdbcDao implements GameDao {
 					+ " join questions q using (questionid)"
 					+ " left outer join questionoptions qo on (q.questionid = qo.questionid) "
 					+ " where questionnaireclassid not in (select distinct questionnaireclassid from questionnaireanswer where userid = ?) and"
-					+ " questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid in ("
-					+ clazzes.substring(1, clazzes.length() - 1)
-					+ ")"
+					+ " questionnairedfinish > now() and (questionnairedinit is null or questionnairedinit < now()) and classid = ?"
 					+ " order by questionnaireclassid, questionorder, optionorder";
 
 			;
 			PreparedStatement ps = bdCon.prepareStatement(questionnaire);
 			ps.setLong(1, user.getId());
+			ps.setLong(2, user.getClassId());
 			ResultSet rs = ps.executeQuery();
 			addQuestionnaires(ret, rs, missions);
 			rs.close();
@@ -1116,7 +1111,7 @@ public class GameJdbcDao implements GameDao {
 	    fos.close();
 	}
 
-	public List<Object[]> retrieveLeaderBoard(long userid, List<Long> classesId)
+	public List<Object[]> retrieveLeaderBoard(long userid, Long classId)
 			throws SQLException {
 		Connection bdCon = null;
 		List<Object[]> ret = new ArrayList<Object[]>();
@@ -1126,42 +1121,36 @@ public class GameJdbcDao implements GameDao {
 
 			boolean showLB = true;
 			int showAfterMission = 0;
-			// TODO: think how we can do the same idea when the user belongs
-			// more than one class
-			if (classesId.size() == 1) {
-				Statement st = bdCon.createStatement();
-				ResultSet rs = st
-						.executeQuery(" select classid, showleaderboardafter, maxmission from "
-								+ " classes left outer join "
-								+ " (select max(missionorder) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where userid = "
-								+ userid
-								+ " group by userid, classid) mu "
-								+ "  using (classid) where classid = "
-								+ classesId.get(0));
-				rs.next();
-				int maxmission = 0;
-				if (rs.getString(3) != null)
-					maxmission = rs.getInt(3);
-				showLB = rs.getInt(2) <= maxmission;
-				showAfterMission = rs.getInt(2);
 
-				st.close();
-			}
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st
+					.executeQuery(" select classid, showleaderboardafter, maxmission from "
+							+ " classes left outer join "
+							+ " (select max(missionorder) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where userid = "
+							+ userid
+							+ " group by userid, classid) mu "
+							+ "  using (classid) where classid = "
+							+ classId);
+			rs.next();
+			int maxmission = 0;
+			if (rs.getString(3) != null)
+				maxmission = rs.getInt(3);
+			showLB = rs.getInt(2) <= maxmission;
+			showAfterMission = rs.getInt(2);
+
+			st.close();
 
 			if (showLB) {
-
-				String clazzes = classesId + "";
 
 				String query = "select userid, username, sum(xp), sum(timespend), sum(executions), max(missionorder), showleaderboardafter from missionsaccomplished "
 						+ "join classesmissions using (missionid, classid) "
 						+ "join classes using (classid) "
 						+ "join users using (userid) "
-						+ "where achieved = 'T' and classid in ("
-						+ clazzes.substring(1, clazzes.length() - 1)
-						+ ") group by userid";
+						+ "where achieved = 'T' and classid = " + classId
+						+ " group by userid";
 
-				Statement st = bdCon.createStatement();
-				ResultSet rs = st.executeQuery(query);
+				st = bdCon.createStatement();
+				rs = st.executeQuery(query);
 				while (rs.next()) {
 					ret.add(new Object[] { rs.getLong(1), rs.getString(2),
 							rs.getLong(3), rs.getLong(4), rs.getLong(5),
@@ -1420,43 +1409,65 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	@Override
-	public Test loadTests(User user, Object[][] missions)
+	public Test[] loadTests(User user, Object[][] missions)
 			throws Exception {
+
+		// Test[0] can return a pre or pos-test from level x
+		// Test[1] if Test[0] returns a pos-test, Test[1] can return a pre-test from level x+1
+		
+		int currentLevel = -1;
+		for (int i = 0; i < missions.length; i++)
+			if (Integer.parseInt(missions[i][3].toString()) < Integer.parseInt(missions[i][2].toString())) {
+				currentLevel = i;
+				break;
+			}
+		
+		boolean isFirstMission = false;
+		if (currentLevel == -1) {
+			currentLevel = missions.length;
+			isFirstMission = true;
+		}
+		else
+			isFirstMission = Integer.parseInt(missions[currentLevel][3].toString()) == 0;
+		
+		if (!isFirstMission) {
+			return null; // Tests only happens when before playing the first mission of the current level. 
+		}
+		// Thus, now we need to test if there uis a post-test before the current level, or a pre-test of the current level  
+		
+		currentLevel++;
 		Connection bdCon = null;
-		Test ret = null;
+		Test[] ret = null;
 		try {
 			bdCon = getConnection();
 			
-			int currentMissionIdx = 0;
-			for (int i = 0; i < missions.length; i++)
-				currentMissionIdx += Integer.parseInt(missions[i][3].toString());
-				
-			
-			String clazzes = user.getClassesId() + "";
-
 			String query = "select testid, testdescription, testquestionid, testquestiondescription, "+
 								"testblocks, testupdateblocks, testquestion, testtimelimit, testxpreward, testxpblank, "+
-								"qta.testanswer, qta.testtimespend, testbeforemission_pretest, testbeforemission_postest, testmissionid, qt.testanswer, "+
+								"qta.testanswer, qta.testtimespend, qt.testanswer, "+
 								"testlanguage, testtoolbox, testanswertype, t.testxpdiscountreward, t.testxpdiscounttime "+
-								"from questionsandtests qat join tests t using(testid)  "+
-									"join questionstest qt using (testquestionid) "+
-									"left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
-								"where testclassid in (" +clazzes.substring(1, clazzes.length() - 1)+ ") and (testbeforemission_pretest-1=? or testbeforemission_postest-1=?)"+
-								"order by testid, questionorder, questiontestanswerfinish, testclassid, testmissionid ";
-			
+							  "from (select * from questionsandtests qat join tests t using (testid) "+
+                                 " join classeslevels cl on cl.classid = t.testclassid and cl.classlevelorder = t.testlevel "+
+								 " where testclassid = ? and ((testlevel = ? and testpre = 'F') or (testlevel = ? and testpre = 'T')) and cl.liberacaodt <= now()) t "+
+								 " join questionstest qt using (testquestionid) "+
+								 " left outer join (select * from questiontestanswers where userid = ?) qta using (testid, testquestionid) "+
+								 "  order by testlevel, questionorder";
+
 			PreparedStatement ps = bdCon.prepareStatement(query);
-			ps.setLong(1, user.getId());
-			ps.setLong(2, currentMissionIdx);
-			ps.setLong(3, currentMissionIdx);
+			ps.setLong(1, user.getClassId());
+			ps.setLong(2, currentLevel-1);
+			ps.setLong(3, currentLevel);
+			ps.setLong(4, user.getId());
 			
 			ResultSet rs = ps.executeQuery();
-			long lastTestQuestionId = 0;
+			
 			long lastTestId = 0;
 			Test t = null;
 			TestQuestion qt = null;
-			boolean incompleteQuestion = false;
+			
+			ret = new Test[2];
+			boolean testWithIncompleteQuestion = false;
+			int lastTest = -1;
 			while (rs.next()) {
-				boolean addQuestion = true;
 				
 				if (lastTestId != rs.getLong(1)) {
 					
@@ -1464,51 +1475,48 @@ public class GameJdbcDao implements GameDao {
 					t = new Test();
 					t.setId(lastTestId);
 					t.setDescription(rs.getString(2));
-					t.setTimeRewardXP(rs.getInt(20));
-					t.setTimeXP(rs.getInt(21));
+					t.setTimeRewardXP(rs.getInt(17));
+					t.setTimeXP(rs.getInt(18));
 					
-					addQuestion = true;
+					lastTest = 0;
 					
-					ret = t;
-				} else {
-					if (lastTestQuestionId == rs.getLong(3)) {
-						addQuestion = false; // if there are two answers then not add again  
-						if (!incompleteQuestion) // if the same question with the answer not completed
-							t.getQuestions().remove(qt);
-					}
-				}
-				
-				if (addQuestion) {
-					lastTestQuestionId = rs.getLong(3);
-					
-					Long missionEvaluated = rs.getLong(15); // testmissionid
-					incompleteQuestion = rs.getString(11) != null && rs.getString(11).startsWith("?");
-					if (missionEvaluated == 0 || (missionEvaluated == rs.getInt(13) && incompleteQuestion)) {
-						
-						qt = createTestQuestion(lastTestQuestionId, rs.getInt(13), rs);
-						t.getQuestions().add(qt);
-
-					} else {
-						
-						if (incompleteQuestion || (!(incompleteQuestion) && currentMissionIdx != missionEvaluated-1 )) {
-						
-							qt = createTestQuestion(lastTestQuestionId, rs.getInt(14), rs);
-							t.getQuestions().add(qt);
-							
+					if (ret[0] == null)
+						ret[0] = t;
+					else
+						if (testWithIncompleteQuestion) {
+							lastTest = 1;
+							ret[1] = t;
 						}
-						
-					}
+						else
+							ret[0] = t;
 					
-					if (incompleteQuestion) {
-						TestQuestionAnswer answer = new TestQuestionAnswer();
-						answer.setAnswer(rs.getString(11).substring(1));
-						answer.setTimeSpend(rs.getInt(12));
-						
-						qt.setPreviousAnswer(answer);
-					}
-				}
+					testWithIncompleteQuestion = false;
+					
+				} 
+				
+				qt = createTestQuestion(rs.getLong(3), rs);
+				t.getQuestions().add(qt);
+				
+				boolean incompleteQuestion = rs.getString(11) != null && rs.getString(11).startsWith("?");
+				
+				if (incompleteQuestion) {
+					testWithIncompleteQuestion = true;
+					
+					TestQuestionAnswer answer = new TestQuestionAnswer();
+					answer.setAnswer(rs.getString(11).substring(1));
+					answer.setTimeSpend(rs.getInt(12));
+					
+					qt.setPreviousAnswer(answer);
+				} else
+					testWithIncompleteQuestion = testWithIncompleteQuestion || rs.getString(11) == null;
+				
+			
 				
 			}
+			
+			if (!testWithIncompleteQuestion)
+				ret[lastTest] = null;
+			
 			ps.close();
 			
 		} finally {
@@ -1522,7 +1530,7 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
-	private TestQuestion createTestQuestion(long testQuestionId, int missionId, ResultSet rs) throws SQLException {
+	private TestQuestion createTestQuestion(long testQuestionId, ResultSet rs) throws SQLException {
 		TestQuestion qt = new TestQuestion();
 		qt.setId(testQuestionId);
 		qt.setDescription(rs.getString(4));
@@ -1533,40 +1541,37 @@ public class GameJdbcDao implements GameDao {
 		qt.setXpReward(rs.getInt(9));
 		qt.setXpRewardBlank(rs.getInt(10));
 		
-		qt.setAnswerType(rs.getString(19));
-		
-		qt.setLanguage(rs.getString(17));
-		qt.setToolbox(rs.getString(18));
-		
-		qt.setMissionId(missionId);
+		qt.setLanguage(rs.getString(14));
+		qt.setToolbox(rs.getString(15));
+		qt.setAnswerType(rs.getString(16));
 		
 		if (qt.getAnswerType().equals("C"))
-			qt.setAnswer(rs.getString(16));
+			qt.setAnswer(rs.getString(13));
+		
 		return qt;
 	}
 
 	@Override
-	public void saveTestQuestionAnswer(int testId, int questionId, int missionId, long userId,
+	public void saveTestQuestionAnswer(int testId, int questionId, long userId,
 			int timeSpent, String answer) throws Exception {
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
 			
-			PreparedStatement ps0 = bdCon.prepareStatement("select testid from questiontestanswers where testid = ? and testquestionid = ? and testmissionid = ? and userid = ?");
+			PreparedStatement ps0 = bdCon.prepareStatement("select testid from questiontestanswers where testid = ? and testquestionid = ? and userid = ?");
 			ps0.setLong(1, testId);
 			ps0.setLong(2, questionId);
-			ps0.setLong(3, missionId);
-			ps0.setLong(4, userId);
+			ps0.setLong(3, userId);
 			
 			ResultSet rs = ps0.executeQuery();
 			PreparedStatement ps = null;
 				
 			if (rs.next()) {
-				ps = bdCon.prepareStatement("update questiontestanswers set testtimespend=?, testanswer=?, questiontestanswerfinish=?, whenanswered = now() where testid = ? and testquestionid = ? and testmissionid = ? and userid = ?");
+				ps = bdCon.prepareStatement("update questiontestanswers set testtimespend=?, testanswer=?, questiontestanswerfinish=?, whenanswered = now() where testid = ? and testquestionid = ? and userid = ?");
 			} else {
 				
-				ps = bdCon.prepareStatement("insert into questiontestanswers (testtimespend, testanswer, questiontestanswerfinish, whenanswered, testid, testquestionid, testmissionid, userid) "			
-														+ "	values(?, ?, ?, now(), ?, ?, ?, ?)");
+				ps = bdCon.prepareStatement("insert into questiontestanswers (testtimespend, testanswer, questiontestanswerfinish, whenanswered, testid, testquestionid, userid) "			
+														+ "	values(?, ?, ?, now(), ?, ?, ?)");
 			}	
 			
 			ps0.close();
@@ -1576,8 +1581,7 @@ public class GameJdbcDao implements GameDao {
 			ps.setString(3, (answer.startsWith("?")?"F":"T"));
 			ps.setLong(4, testId);
 			ps.setLong(5, questionId);
-			ps.setLong(6, missionId);
-			ps.setLong(7, userId);
+			ps.setLong(6, userId);
 			
 			ps.execute();
 			
@@ -1594,7 +1598,7 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	@Override
-	public int[] calculateTestRewards(int testId, int missionId, long userId)
+	public int[] calculateTestRewards(int testId, long userId)
 			throws Exception {
 		Connection bdCon = null;
 		int[] ret = new int[2];
@@ -1606,11 +1610,10 @@ public class GameJdbcDao implements GameDao {
 									   "qt.testxpreward, qt.testxpblank, t.testxpdiscountreward, t.testxpdiscounttime  "+ 
 									"from questiontestanswers qta join questionstest qt using (testquestionid) "+
 									    "join tests t using (testid) " + 
-										"where testid = ? and testmissionid = ? and userid = ?");
+										"where testid = ? and userid = ?");
 			
 			ps.setLong(1, testId);
-			ps.setLong(2, missionId);
-			ps.setLong(3, userId);
+			ps.setLong(2, userId);
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

@@ -173,7 +173,6 @@ Tests.performQuestion = function(blankValue, finished) {
 	UserControl.saveTestQuestionAnswer(
 			parseInt(answer.testId),
 			parseInt(answer.questionId), 
-			parseInt(answer.missionId), 
 			timeSpent, 
 			valueAnswer, 
 			{async:false, callback:function(){}});
@@ -182,7 +181,7 @@ Tests.performQuestion = function(blankValue, finished) {
 		Tests.idx++;
 		
 		if (Tests.idx == Tests.test.questions.length)
-			UserControl.retrieveTestRewards(answer.testId, answer.missionId, Tests.drawFinal);
+			UserControl.retrieveTestRewards(answer.testId, Tests.drawFinal);
 		else
 			Tests.drawQuestion();
 	}
@@ -438,8 +437,6 @@ Tests.drawQuestion = function() {
 	
 	input.testId = Tests.test.id;
 	input.questionId = question.id;
-	input.missionId = question.missionId;
-	
 	
 	$("#testsNextQuestion").html(BlocklyApps.getMsg("Tests_Done") + " [" + question.xpReward + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
 	$("#testsLetBlank").html(BlocklyApps.getMsg("Tests_LetBlank") + " [" + question.xpRewardBlank + " <img src='images/xp.png' style='vertical-align:middle;width:20px'/>]");
@@ -534,5 +531,7 @@ Tests.play = function() {
 	$("#testquestions").remove();
 	
 	MyBlocklyApps.hideDialog(false);
-	Game.continueLoginProcessEx();
+	
+	// because there is a dispose function chain, and the last line of hideDialog destroy the chain, I need this line below   
+	BlocklyApps.dialogDispose_ = Game.afterTestDialog.f;
 };

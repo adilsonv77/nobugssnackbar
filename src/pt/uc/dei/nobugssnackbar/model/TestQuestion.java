@@ -40,9 +40,6 @@ public class TestQuestion {
 	private String toolbox;
 	
 	@RemoteProperty
-	private int missionId;
-
-	@RemoteProperty
 	private String answer;
 
 	@RemoteProperty
@@ -134,15 +131,6 @@ public class TestQuestion {
 
 	public void setToolbox(String toolbox) {
 		this.toolbox = toolbox;
-	}
-
-	public int getMissionId() {
-		return missionId;
-	}
-	
-	public void setMissionId(int missionId) {
-		this.missionId = missionId;
-		
 	}
 
 	public String getAnswer() {

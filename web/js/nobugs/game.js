@@ -225,7 +225,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 *   ----
 	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
-	Game.loginData = {userLogged: u, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
+	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes) };
 	
 	try {
@@ -282,7 +282,7 @@ Game.continueLoginProcess = function() {
 		UserControl.loadTests(function(t) {
 			if (t != null) {
 				
-				if (!Game.showTests(t))
+				if (!Game.showTests(t[0], t[1]))
 					Game.continueLoginProcessEx();
 				
 			} else {
@@ -296,16 +296,33 @@ Game.continueLoginProcess = function() {
 	
 };
 
-Game.showTests = function(tests) {
+Game.showTests = function(currentTest, nextTest) {
 	
-	var formTest = Tests.createForm(tests);
+	var formTest = Tests.createForm(currentTest);
+
+	Game.afterTestDialog = {};
+	Game.afterTestDialog.nextTest = nextTest;
+	Game.afterTestDialog.f = null;
+	
 	if (formTest != null) {
 		
 		$("#contentTest").html("");
 		$("#contentTest").append(formTest);
 		
+		
+		Game.afterTestDialog.f = function() {
+			
+			if (!Game.loginData.doingLogoff)
+				if (Game.afterTestDialog.nextTest != null) {
+					if (!Game.showTests(Game.afterTestDialog.nextTest, null)) {
+						Game.continueLoginProcessEx();
+					}
+				} else
+					Game.continueLoginProcessEx();
+		};
+		
 		MyBlocklyApps.showDialog(document.getElementById("dialogTest"), null, false, true, true, 
-				"Ganhe b&ocirc;nus", {width: "100%", height: "100%"}, null);
+				"Ganhe b&ocirc;nus", {width: "100%", height: "100%"}, Game.afterTestDialog.f);
 		
 	} 
 	
@@ -317,21 +334,6 @@ Game.continueLoginProcessEx = function() {
 	if (Game.loginData.userLogged.lastTime == null) {
 		
 		IntroGame.start();
-		
-		/*
-		var userName = document.getElementById("userCompleteName");
-		userName.innerHTML = Game.loginData.userLogged.name;
-		
-		var intro2 = BlocklyApps.getMsg("NoBugs_intro2");
-		intro2 = intro2.format((Game.loginData.userLogged.sex==="M"?BlocklyApps.getMsg("King"):BlocklyApps.getMsg("Queen")));
-		
-		
-		var intro2Span = document.getElementById("NoBugsIntro2");
-		intro2Span.innerHTML = intro2;
-		
-		MyBlocklyApps.showDialog(document.getElementById('dialogIntro'), 
-				null, false, true, true, "Intro", {width: "540px"},null);
-		*/
 		
 	} else 
 		Game.logged();
@@ -1517,6 +1519,7 @@ Game.closeBlockEditorStuffs = function() {
 };
 
 Game.logoffButtonClick = function() {
+	Game.loginData.doingLogoff = true;
 	/*
 	var res= Game.closeBlockEditorStuffs();
     UserControl.logoff(res[0], Game.howManyRuns, res[1], function(){
