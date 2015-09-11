@@ -468,7 +468,7 @@ public class UserControl {
 	public void saveClicks(String[][] clicks) throws Exception {
 		if (this.user == null)
 			return;
-		
+		/*
 		for (String[] click:clicks) {
 			String s = click[1];
 			s = s.substring(0, 10) + " " + s.substring(11);
@@ -476,6 +476,7 @@ public class UserControl {
 			click[1] = s;
 
 		}
+		*/
 		gameDao.saveClicks(this.user.getId(), clicks);
 	}
 	

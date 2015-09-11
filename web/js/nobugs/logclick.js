@@ -4,7 +4,7 @@ LogClick.clicks = [];
 
 LogClick.store = function(name) {
 	
-	var dateTime = new Date().toJSON();
+	var dateTime = Date.now();
 
 	LogClick.clicks.push([name, dateTime]);
 	if (LogClick.clicks.length > 10) {
