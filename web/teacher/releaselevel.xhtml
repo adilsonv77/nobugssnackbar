@@ -2,10 +2,91 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="template.xhtml">
                 
 	<ui:define name="body">
-		<h:outputText value="Mostrar os niveis de cada turma, e permitir alterar a data de liberação "></h:outputText>
+		
+		<h:form id = "formReleaseDate">
+	
+			<p:layout>
+				<p:layoutUnit position="west" size="170">
+					<p:selectOneListbox value="#{releaselevel.clazz}">
+						<f:selectItems value="#{releaselevel.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+						<p:ajax event="change" update="formReleaseDate" listener="#{releaselevel.updateLevels}"/>
+						<f:attribute name="dataProvider" value="releaselevel.classes"/>
+					</p:selectOneListbox>
+				</p:layoutUnit>
+	
+				<p:layoutUnit position="center">
+					<p:dataTable id="levels" value="#{releaselevel.levels}" var="level" 
+								 editable="true" editMode="cell"
+								 rowKey="#{level.order}">
+					
+						<p:ajax event="cellEdit"
+							 listener="#{releaselevel.editDate}"
+							 update="formReleaseDate:saveRelease"/>
+					
+				        <p:column headerText="#{msg.order}">
+				            <h:outputText value="#{level.order}"/>
+				        </p:column>
+					
+				        <p:column headerText="#{msg.name}">
+				            <h:outputText value="#{level.name}"/>
+				        </p:column>
+				        
+				        <p:column headerText="#{msg.releaseDate}">
+				        	<p:cellEditor>
+				        		<f:facet name="output">
+				        			<h:outputText value="#{level.release}">
+				        				<f:convertDateTime pattern="dd/MM/yyyy" />
+				        			</h:outputText>
+				        		</f:facet>
+				        		
+				        		<f:facet name="input">
+						           	<p:calendar value="#{level.release}"
+		                                pattern="dd/MM/yyyy" mask="true">
+		                           		
+		                           	</p:calendar>
+	                           	</f:facet>
+                           	</p:cellEditor>
+				        </p:column>
+				        
+					</p:dataTable>
+					
+					<p:panelGrid styleClass="ui-noborder" style="width:100%" rendered="#{releaselevel.clazz != null}">
+						<p:row>
+							<p:column>
+								<table>
+									<tr>
+										<td rowspan="2"><span class="my-lightbulb"></span></td>
+										<td><h:outputText value="#{msg.clickInDateToEdit}"
+									style="padding: 10px"/></td>
+									</tr>
+									<tr>
+										<td><h:outputText value="#{msg.wontSaveInvalidCells}"
+									style="padding: 10px"/></td>
+									</tr>
+								</table>
+								
+								
+								
+							</p:column>
+							<p:column style="text-align:right">
+					        	<p:commandButton id="saveRelease" value="#{msg.save}"
+					        		disabled="#{!releaselevel.enableSave}" 
+					        		action="#{releaselevel.releaseLevels}"
+					        		update="formReleaseDate"
+					        	/>
+							</p:column>
+						</p:row>
+		        	</p:panelGrid>
+					
+	
+				</p:layoutUnit>
+			</p:layout>
+			
+		</h:form>
 	</ui:define>
 
 </ui:composition>

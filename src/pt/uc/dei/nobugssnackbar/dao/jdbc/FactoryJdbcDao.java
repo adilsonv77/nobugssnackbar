@@ -9,6 +9,7 @@ import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
 import pt.uc.dei.nobugssnackbar.dao.HintDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
+import pt.uc.dei.nobugssnackbar.dao.LevelDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
@@ -119,5 +120,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (userDao == null)
 			userDao = new UserJdbcDao();
 		return userDao;
+	}
+
+	private LevelDao levelDao;
+	
+	@Override
+	public LevelDao getLevelDao() {
+		if (levelDao == null)
+			levelDao = new LevelJdbcDao();
+		return levelDao;
 	}
 }
