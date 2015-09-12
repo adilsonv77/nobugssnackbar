@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view encoding="UTF-8"
+            contentType="text/html">
+        <h:head>
+            <meta content="text/html; charset=UTF-8" 
+                  http-equiv="Content-Type"/>
+            <title><h:outputText value="NoBug's Snackbar"/></title>
+            <h:outputScript name="pt_locale.js"/>
+            <link rel="shortcut icon"  href="#{request.contextPath}/images/fav-icon.PNG" />
+            <link rel="stylesheet" type="text/css" href="../css/teacher.css" />
+        </h:head>
+
+         <style type="text/css">
+            .ui-grow {
+                left: 43%;
+            }
+        </style>
+
+        <h:body id="body">
+                    <p:growl id="messages" 
+                             showDetail="true"
+                             showSummary="false"
+                             sticky="false"
+                             life="3500"/>
+
+
+            <div id="static">
+                <ui:include  src="header.xhtml"/>
+                <ui:include  src="menu.xhtml"/>
+                <ui:include  src="footer.xhtml"/>
+            </div>
+
+            <ui:insert name="body"/>
+
+		</h:body>
+    </f:view>
+</html>

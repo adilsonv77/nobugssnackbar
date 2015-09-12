@@ -9,14 +9,16 @@ LogClick.store = function(name) {
 
 	LogClick.clicks.push([name, dateTime]);
 	if (LogClick.clicks.length > 10) {
-		LogClick.save();
+		LogClick.save(true);
 	}
 	
 };
 
-LogClick.save = function() {
+LogClick.save = function(async) {
 	
-	UserControl.saveClicks(LogClick.clicks);
+	var c = {callback:function() {}, async:async};
+	
+	UserControl.saveClicks(LogClick.clicks, c);
 	LogClick.clicks = [];
 	
 };

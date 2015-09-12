@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:panel style="width: 100%; height: 70px; border: 0px; padding: 0px; margin: 0px;">
+        <div style='height: 90px;'>
+        <div id="areaLogo" style="float: left;">
+            
+        </div>
+        <div id="areaTitle"  style="float: left; margin-left: 20%; alignment-baseline: central">
+            <h:panelGrid columns="1" >
+                
+            </h:panelGrid>
+        </div>
+        <div id="areaUser" style="float: right;">
+            <h:form id="FormUsuarioLogado" style="text-align: center;">
+                <h:panelGrid columns="2"
+                             rendered="#{login.userLogged != null}">
+                    <h:outputText value="#{login.userLogged.name}" 
+                                  style="font-size: larger; font-weight: bold"/>
+                    <p:commandLink actionListener="#{login.logout()}"
+                                   ajax="false"
+                                   title="#{msg.exit}">
+                        <span class="logoffButton"/>
+                    </p:commandLink>  
+                 </h:panelGrid>
+            </h:form>
+        </div>
+        </div>
+    </p:panel>
+</ui:composition>

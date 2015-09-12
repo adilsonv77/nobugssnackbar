@@ -189,6 +189,7 @@
 		<war destfile="${war.home}/${app.name}.war" webxml="${web.home}/WEB-INF/web.xml">
 	    	<fileset dir="${web.home}" >
 
+	    		<exclude name="admin/**/**/*.*" />
 	    		<include name="js/**/**/*.*" />
 	    		<exclude name="js/jsinterpreter/acorn.js"/>
 	    		<exclude name="js/jsinterpreter/interpreter.js"/>

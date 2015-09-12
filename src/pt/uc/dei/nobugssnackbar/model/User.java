@@ -7,14 +7,25 @@ import java.util.Map;
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcField;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcPk;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
+
 @DataTransferObject()
+@JdbcTable(name="users")
 public class User {
 
 	@RemoteProperty
+	@JdbcField(name="userid")
+	@JdbcPk
 	private long id;
 	
+	@JdbcField(name="usernick")
 	private String nick;
+	
+	@JdbcField(name="userpassw")
 	private String passw;
+
 	private long money;
 
 	private long classId;
@@ -22,6 +33,7 @@ public class User {
 	@RemoteProperty
 	private String sex;
 
+	@JdbcField(name="username")
 	@RemoteProperty
 	private String name;
 

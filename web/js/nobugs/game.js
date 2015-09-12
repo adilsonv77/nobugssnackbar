@@ -517,7 +517,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
 Game.unload = function(e) {
 
-  	LogClick.save();
+  	LogClick.save(false); // after performs the method, it is allowed to continue
 
 	Game.saveMission();
 	
@@ -1519,6 +1519,8 @@ Game.closeBlockEditorStuffs = function() {
 };
 
 Game.logoffButtonClick = function() {
+	LogClick.store("logoffgame");
+	
 	Game.loginData.doingLogoff = true;
 	/*
 	var res= Game.closeBlockEditorStuffs();
@@ -1530,7 +1532,8 @@ Game.logoffButtonClick = function() {
 	*/
 	BlocklyApps.hideDialog(false);
 	
-	LogClick.save(); // store the cache
+	LogClick.save(false); // store the cache 
+	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff
 	
 	UserControl.logoff(function(){
 		Game.loginData = null;

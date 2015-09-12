@@ -11,6 +11,7 @@ import pt.uc.dei.nobugssnackbar.dao.HintDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
+import pt.uc.dei.nobugssnackbar.dao.UserDao;
 
 public class FactoryJdbcDao implements AbstractFactoryDao {
 
@@ -109,5 +110,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 			functionProviderValueDao = new FunctionProviderValueJdbcDao();
 		
 		return functionProviderValueDao;	
+	}
+
+	private UserDao userDao;
+	
+	@Override
+	public UserDao getUserDao() {
+		if (userDao == null)
+			userDao = new UserJdbcDao();
+		return userDao;
 	}
 }

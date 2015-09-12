@@ -1,0 +1,8 @@
+.logoffButton {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background: transparent url('../images/logoff.png') no-repeat local center;
+	background-size: 36px 36px;
+	
+}

@@ -75,8 +75,15 @@ public class JdbcDao<T> {
 		this.jdbcTable = persistentClass.getAnnotation(JdbcTable.class);
 	}
 	
-	private PreparedStatement getQuerySelect(Connection con) throws SQLException {
+	private PreparedStatement getQuerySelect(Connection con, String[][] params) throws SQLException {
 		String query = "select " + columns + " from " + jdbcTable.name();
+		if (params != null) {
+			query = query + " where ";
+			for (String[] param:params) {
+				query = query + param[0] + " " + param[1] + " ?" + " and ";
+			}
+			query = query.substring(0, query.length() - 4);
+		}
 		return con.prepareStatement(query);
 	}
 
@@ -109,14 +116,20 @@ public class JdbcDao<T> {
 		return NoBugsConnection.getConnection().getDataSource().getConnection();
 	}
 
-	public final List<T> list() throws Exception {
-
+	private List<T> internalList(String[][] params, Object[] values) throws Exception {
+		
 		List<T> l = new ArrayList<>();
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
 
-			PreparedStatement q = getQuerySelect(bdCon);
+			PreparedStatement q = getQuerySelect(bdCon, params);
+			if (params != null) {
+				int i = 1;
+				for (Object value:values) {
+					q.setObject(i, value);
+				}
+			}
 			ResultSet rs = q.executeQuery();
 
 			while (rs.next()) {
@@ -135,9 +148,20 @@ public class JdbcDao<T> {
 				}
 		}
 		return l;
+	
+	}
+	
+	public final List<T> list() throws Exception {
+
+		return internalList(null, null);
 
 	}
 
+	public final List<T> customList(String[][] params, Object[] values) throws Exception {
+
+		return internalList(params, values);
+
+	}
 	/**
 	 * Stores the obj in the database. If one key is null, then inserts it in the table. Otherwise, it updates it.
 	 * TODO If the table does not have autoincrement fiels then the comparison rule == null is not valid.
@@ -235,7 +259,7 @@ public class JdbcDao<T> {
 		return obj;
 	}
 
-	private T transformResultSetToObject(ResultSet rs) throws Exception {
+	protected T transformResultSetToObject(ResultSet rs) throws Exception {
 		
 		T obj = persistentClass.newInstance();
 

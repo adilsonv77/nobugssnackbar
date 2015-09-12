@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+	
+	    <p:panel rendered="#{login.userLogged == null}">
+		    <h:form id="frmLogin">
+		        <h:panelGrid columns="2" id="panelLoginUser">
+		            <h:outputText value="#{msg.user_nick}: "/>
+		            <p:inputText id="nick" 
+		                         required="true"
+		                         requiredMessage="#{msg.error_userNameRequired}"
+		                         value="#{login.nick}" 
+		                         size="30" 
+		                         maxlength="30"/>
+		
+		            <h:outputText value="#{msg.user_password}: "/>
+		            <p:password id="password" 
+		                        required="true"
+		                        requiredMessage="#{msg.error_userPasswordRequired}"
+		                        value="#{login.password}" 
+		                        size="30" 
+		                        maxlength="20"
+		                        feedback="false"/>
+		        </h:panelGrid>
+		        <h:panelGrid id="panelLoginActions" style="float: right">
+		                <p:commandButton value="#{msg.login}"
+		                                 icon="ui-icon-key"
+		                                 styleClass="ui-pti-common-button"
+		                                 actionListener="#{login.loginTeacher()}" 
+		                                 update=":frmLogin :messages"
+		                                 global="false"/>
+		        </h:panelGrid>
+		    </h:form>
+		</p:panel>
+	</ui:define>
+	
+</ui:composition>
