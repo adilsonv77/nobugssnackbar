@@ -751,6 +751,32 @@ Customer.prototype.isTheBestChange = function() {
 	
 };
 
+Customer.prototype.receivedChange = function(type, qtd) {
+	var sum = 0;
+	type = this.convertMoney(type);
+	
+	this.changeReceived.forEach(function(item){
+		if (item.type === type)
+			sum += item.qtd;
+	});
+	
+	return (qtd == sum);
+};
+
+Customer.prototype.convertMoney = function(type) {
+
+	var tm = "";
+	switch (type) {
+		case "\"$$$money20\"": tm = 20; break;
+		case "\"$$$money10\"": tm = 10; break;
+		case "\"$$$money5\"": tm = 5; break;
+		case "\"$$$money2\"": tm = 2; break;
+		case "\"$$$money1\"": tm = 1; break;
+	}
+	
+	return tm;
+};
+
 Customer.prototype.giveChange = function(value, typeOfMoney) {
 	
 	if (value === undefined || value.data === undefined || isNaN(value.data)) {
@@ -763,13 +789,7 @@ Customer.prototype.giveChange = function(value, typeOfMoney) {
 	var tm = 0;
 	
 	if (typeOfMoney != undefined && typeOfMoney.data != undefined) {
-		switch (typeOfMoney.data) {
-			case "\"$$$money20\"": tm = 20; break;
-			case "\"$$$money10\"": tm = 10; break;
-			case "\"$$$money5\"": tm = 5; break;
-			case "\"$$$money2\"": tm = 2; break;
-			case "\"$$$money1\"": tm = 1; break;
-		}
+		tm = this.convertMoney(typeOfMoney.data);
 	}
 	
 	if (tm == 0) {

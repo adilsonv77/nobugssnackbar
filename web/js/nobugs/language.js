@@ -205,7 +205,7 @@ Blockly.Blocks['const_money2'] = {
 		    this.setColour(50);
 		    this.setOutput(true);
 		    this.appendDummyInput()
-		        .appendField(BlocklyApps.getMsg('_banknote') + ' 2');
+		        .appendField(BlocklyApps.getMsg('_coin') + ' 2');
 		  }
 		};
 

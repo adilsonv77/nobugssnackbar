@@ -87,11 +87,11 @@ Game.generalInit = function() {
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 
 	  Game.tracks = [];
-	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"], false);
-	  Game.tracks[1] = new PlayAudio(["music/bensound-energy.mp3"], false);
-	  Game.tracks[2] = new PlayAudio(["music/di-evantile_savage-law.mp3"], false);
+	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"]);
+	  Game.tracks[1] = new PlayAudio(["music/bensound-energy.mp3"]);
+	  Game.tracks[2] = new PlayAudio(["music/di-evantile_savage-law.mp3"]);
 	  
-	  Game.tracks[3] = new PlayAudio(["music/Carefree.mp3", "music/Wallpaper.mp3", "music/bensound-cute.mp3"], false);
+	  Game.tracks[3] = new PlayAudio(["music/Carefree.mp3", "music/Wallpaper.mp3", "music/bensound-cute.mp3"]);
 	  Game.tracks[3].shuffle();
 	  
       PreloadImgs.loadImgs(function() {
@@ -2036,6 +2036,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("notExists", null);
 			    hero.verifyObjectives("cashIn", {allCustomers:true});
 			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
+			    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {

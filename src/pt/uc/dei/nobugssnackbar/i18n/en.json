@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-12 08:40:56.068000",
+		"lastupdated": "2015-09-14 14:31:27.712000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -156,6 +156,7 @@
 	"Explane.CustomDeliver": "Deliver only %1 if the customer %0 asked it.",
 	"Explane.CashIn": "Charge customer %0 value.",
 	"Explane.GiveTheWholeChange": "Give the best and whole change to the customer %0.",
+	"Explane.GiveSomeChange": "Give change at %2 %1 to the customer %0.",
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
 	"Explane.Talk": "Talk %0.",

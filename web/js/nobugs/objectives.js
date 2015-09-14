@@ -65,7 +65,7 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if ((key === "deliver" || key === "giveTheWholeChange") && options.allCustomers) {
+					if ((key === "deliver" || key === "giveTheWholeChange" ||  key === "giveSomeChange" ) && options.allCustomers) {
 						ret = true;
 					} else
 						return true;
@@ -180,7 +180,11 @@ Objective.factory = function(key) {
 	case "giveTheWholeChange":
 		this.factories[key] = new Objective.GiveTheWholeChange();
 		break;
-
+		
+	case "giveSomeChange":
+		this.factories[key] = new Objective.GiveSomeChange();
+		break;
+		
 	case "useBlock":
 		this.factories[key] = new Objective.UseBlock();
 		break;
@@ -189,10 +193,11 @@ Objective.factory = function(key) {
 	return this.factories[key];
 };
 
-Objective.createExplanationItemPlacePos = function(msgKey, objective, args) {
+Objective.createExplanationItemPlacePos = function(msgKey, objective, arg0, arg1) {
 	var key = BlocklyApps.getMsg("_"+objective.place);
 	var text = BlocklyApps.getMsg(msgKey);
-	return text.format(key  + " " + objective.pos, args);
+	
+	return text.format(key  + " " + objective.pos, arg0, arg1);
 };
 
 /******************************************************************************
@@ -580,6 +585,65 @@ Objective.GiveTheWholeChange.prototype.checkObjective = function(options, object
 
 Objective.GiveTheWholeChange.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_givethewholechange", objective);
+};
+
+/******************************************************************************
+ *                                 GiveSomeChange
+ ******************************************************************************/
+
+Objective.GiveSomeChange = function() {};
+
+Objective.GiveSomeChange.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	
+	p.type = elem.getAttribute("type");
+	p.qtd  = elem.getAttribute("qtd");
+	
+	return p;
+};
+
+Objective.GiveSomeChange.prototype.checkObjective = function(options, objective)  {
+	var cust = null;
+	if (objective.place === "counter") {
+		
+		if (options.allCustomers)
+			cust = CustomerManager.getCustomerCounter(objective.pos);
+		else {
+			
+			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
+				cust = options.customer;
+		}
+	}
+	if (cust == null)
+		return false;
+	
+	var q = eval(objective.qtd);
+	
+	return (cust.isPaid() && cust.receivedChange('"'+objective.type+'"', q));
+};
+
+Objective.GiveSomeChange.prototype.createExplanationItem = function(objective) {
+	var tm1="", tm2="";
+	if (objective.type === "$$$money20") {
+		tm1 = "_banknotes"; tm2 = 20;
+	} else
+		if (objective.type === "$$$money10") {
+			tm1 = "_banknotes"; tm2 = 10;
+		} else
+			if (objective.type === "$$$money5") {
+				tm1 = "_banknotes"; tm2 = 5;
+			} else
+				if (objective.type === "$$$money2") {
+					 tm1 = "_coins"; tm2 = 2;
+				} else {
+					 tm1 = "_coins"; tm2 = 1;
+				}
+
+	return Objective.createExplanationItemPlacePos("explanation_givesomechange", 
+					objective,	BlocklyApps.getMsg(tm1), tm2);
 };
 
 /******************************************************************************

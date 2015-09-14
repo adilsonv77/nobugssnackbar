@@ -127,7 +127,7 @@ Hints.addDefaultErrorHints = function() {
 	
 	hint.category = "TestBlock";
 	hint.content =  document.getElementById("Hints_EmptyInputError").innerHTML;
-	hint.time = 7000;
+	hint.time = 10000;
 	hint.running = false;
 	hint.condition = "Hints.hasEmptyInputs()";
 	

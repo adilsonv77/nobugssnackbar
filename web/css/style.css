@@ -263,6 +263,18 @@ table.tableVictory td  {
 	 background-image: -o-linear-gradient(top, #AD3B2D, #F75440);
 	 background-image: linear-gradient(to bottom, #AD3B2D, #F75440);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#AD3B2D, endColorstr=#F75440);
 }
+
+.nobugs_button:disabled {
+  border: 1px solid #707070;
+  background-color: #707070;
+  color: #fff;
+  background-image: -webkit-linear-gradient(top, #DEDEDE, #848484);
+  background-image: -moz-linear-gradient(top, #DEDEDE, #848484);
+  background-image: -ms-linear-gradient(top, #DEDEDE, #848484);
+  background-image: -o-linear-gradient(top, #DEDEDE, #848484);
+  background-image: linear-gradient(to bottom, #DEDEDE, #848484);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#DEDEDE, endColorstr=#848484);
+}
+
 .nobugs_font_light, .nobugs_font, .nobugs_button {
 	font-size:20px;font-family:arial, helvetica, sans-serif; text-decoration:none;  color: #FFFFFF;
 }

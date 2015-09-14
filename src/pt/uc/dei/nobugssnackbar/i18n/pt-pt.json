@@ -177,6 +177,7 @@
 	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
 	"Explane.CashIn":"Cobrar o valor do cliente %0.",
 	"Explane.GiveTheWholeChange":"Devolva ao cliente %0 o troco integral e com o m&#237;nimo de notas e moedas.",
+	"Explane.GiveSomeChange" :"Devolva ao cliente %0 o troco em %1 de %2.",
 	"Explane.AskForIceCream":"Pergunta pelo que sabor do gelado que cliente %0 deseja comer.",
 	"Explane.AskWantHowManyIceCream":"Pergunta ao cliente %0 quantos gelados ele deseja.",
 	

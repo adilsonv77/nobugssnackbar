@@ -933,8 +933,12 @@ SnackMan.prototype.giveChange = function(value, typeOfMoney) {
 		throw false;
 	}
 	
-	if (found.giveChange(value, typeOfMoney))
-      this.verifyObjectives("giveTheWholeChange", {allCustomers:false, customer:found});
+	if (found.giveChange(value, typeOfMoney)) {
+		
+	      this.verifyObjectives("giveTheWholeChange", {allCustomers:false, customer:found});
+		  this.verifyObjectives("giveSomeChange", {allCustomers:false, customer:found});
+		  
+	}
 };
 
 /**********************************************************/

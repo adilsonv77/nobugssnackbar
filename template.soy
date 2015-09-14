@@ -94,10 +94,14 @@
   	  <div id="playerInfo" class="inverse_nobugs_background" style="text-align: center" title="{msg meaning="NoBugs.avatarTooltip" desc="--"}Change your avatar.{/msg}">
   	  
       	<canvas id="avatarPlayer" width="72" height="116"></canvas>
-      	<button id="avatarEditorButton" class="nobugs_button" style="font-size: 14px; width: 80px">
+      	<button id="avatarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px">
       	Avatar
       	</button>
       	
+      	<button id="snackBarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px" disabled="disabled">
+      	Snack Bar
+      	</button>
+
       	<button class="nobugs_button" style="display: none; font-size: 14px; width: 80px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
       	{{msg meaning="NoBugs.Profile" desc="---"}}Profile{{/msg}}
       	</button>
@@ -582,8 +586,23 @@
 	    	<block type="const_money5"></block>
 	    	<block type="const_money10"></block>
 	    	<block type="const_money20"></block>
-	    	
 	    	{/if}
+
+	    	{if $ij.enabled['money2']}
+	    	<block type="money_giveChange"> 
+		    	<value name="VALUE">
+					<block type="variables_get">
+						<field name="VAR">{{msg meaning="NoBugs.numberBankNotes" desc="---"}}numberOfBankNotes{{/msg}}</field>
+					</block>
+		    	</value>
+		    	<value name="COINSBANKNOTES">
+		    		<block type="const_money2"></block>
+		    	</value>
+	    	</block>
+	    	
+	    	<block type="const_money2"></block>
+	    	{/if}
+	    	
 	    </category>
 	{/if}
 	

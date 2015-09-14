@@ -32,7 +32,7 @@ var IntroGame = {};
 
 IntroGame.start = function () {
 	
-	IntroGame.track = new PlayAudio(["music/DailyBeetle.mp3"], false);
+	IntroGame.track = new PlayAudio(["music/DailyBeetle.mp3"]);
 	
 	$("<div>").attr("id", "introback").append(
 		   $("<img>").css("width", "700px").attr("src", "images/family_dinner.png")

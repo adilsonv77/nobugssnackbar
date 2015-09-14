@@ -71,24 +71,22 @@
 
 var noBugsAudio = document.createElement("audio");
 
-var PlayAudio = function(filenames, autoplay) {
+var PlayAudio = function(filenames) {
 	
 	this.files = filenames;
 	this.index = 0;
 
-	noBugsAudio.autoplay = autoplay;
 	try {
 		noBugsAudio.pause();	
 	} catch (ex) {}
 	
-	this.playing = autoplay;
+	this.playing = false;
 	
 };
 
 PlayAudio.prototype.playNext = function() {
 	if (!window['Audio']) // browser don't support audio
 		return; 
-	
 	
 	if(this.index == this.files.length)
 		this.index = 0;
@@ -109,17 +107,19 @@ PlayAudio.prototype.shuffle = function() {
 };
 
 PlayAudio.prototype.play = function() {
-	if (!window['Audio']) // browser don't support audio
+	if (this.playing || !window['Audio']) // browser don't support audio
 		return; 
 
 	noBugsAudio.addEventListener('ended', this.playNext.bind(this));
 
-	if (!this.playing) 
-	  this.playNext();
-	noBugsAudio.play();
+	this.playNext();
+	this.playing = true;
+
 };
 
 PlayAudio.prototype.stop = function() {
+	this.playing = false;
+	
 	this.clear();
 	try {
 		noBugsAudio.pause();

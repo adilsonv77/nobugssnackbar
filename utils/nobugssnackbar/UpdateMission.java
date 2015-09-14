@@ -17,7 +17,7 @@ public class UpdateMission {
 		MissionJdbcDao mDao = new MissionJdbcDao();
 
 		int j = 0;
-		for (int i = 1; i <= 29; i++) {
+		for (int i = 1; i <= 31; i++) {
 			StringBuffer xml = new StringBuffer();
 			BufferedReader arq = null;
 			try {

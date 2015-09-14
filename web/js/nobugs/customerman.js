@@ -457,6 +457,11 @@ CustomerManager.totalOfMoneyIfSell = function() {
 	
 };
 
+CustomerManager.customerMoneyIfSell = function(customeridx) {
+	return customers[customeridx].askHowMuchInFoodsIfSell() + 
+				customers[customeridx].askHowMuchInDrinksIfSell();
+} ;
+
 CustomerManager.totalOfMoneyGave = function() {
 	var ret = 0;
 	for (var i = 0; i < customers.length; i++) {
@@ -471,6 +476,14 @@ CustomerManager.totalOfMoneyGave = function() {
 	return ret;
 	
 };
+
+CustomerManager.customerMoneyGave = function(customeridx) {
+	if (customers[customeridx].isPaid()) 
+		return customers[customeridx].amountPaid;
+	else
+		return -100; // avoid cheating
+	
+} ;
 
 CustomerManager.totalOfFoodDelivered = function() {
 	var ret = 0;

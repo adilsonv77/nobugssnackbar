@@ -4,14 +4,14 @@
 		<page type="goal">
 		<![CDATA[
 Supondo que tenhas um estoque de 10 cachorros. Pergunte aos clientes quantos cachorros eles desejam e no final fale quantos cachorros sobraram no estoque.<br/><br/> 
-Dica: utilize a opera&#231;&#227;o de subtra&#231;&#227;o, diminuindo a quantidade de cachorros do valor do estoque (10). 	
+Dica: utilize a opera&#231;&#227;o de subtra&#231;&#227;o, diminuindo a quantidade total de cachorros do valor do estoque (10). 	
 		]]>
 		</page>
 
 	</explanation>
 	<hints>
 		<sequence>
-			<hint category="Iddle" time="5000" modal="true" condition="Hints.showedHint() == false">
+			<hint category="Iddle" time="10000" modal="true" condition="Hints.showedHint() == false">
 			Leia com aten&#231;&#227;o a p&#225;gina dos objetivos. Depure e observe a lista de vari&#225;veis.<br/><br/>
 			N&#227;o tenha medo de experimentar. &#201; preciso tentar e testar para evoluir.
 			</hint>
