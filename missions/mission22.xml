@@ -1,12 +1,13 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
-Vais proceder como na miss&#227;o anterior: vais ao cliente, pergunta o que ele quer, e cobra o valor. O cliente vai te pagar o valor acima do pedido da mesma forma. Mas agora n&#227;o se trata mais de gorgeta: vais ter de devolver o troco ao cliente
- considerando que tens dispon&#237;vel moedas de 1, e notas de 2 e 5. Logo, vais praticar agora a opera&#231;&#227;o de divis&#227;o e subtra&#231;&#227;o. O operador de divis&#227;o sempre retornar&#225; a parte inteira do resultado. Teu objetivo &#233; dar o troco com o m&#237;nimo de 
-moedas e notas poss&#237;veis.<br/>
-<br/>
+Vais proceder como na miss&#227;o anterior: vais ao cliente, pergunta o que ele quer comer e beber, e cobra o valor. O cliente vai continuar a te pagar o valor acima do pedido.
+ Na miss&#227;o anterior devolvias em troco em moedas de 2, e se sobrasse ficava contigo como gorjeta.<br/><br/>
+Esque&#231;a as gorjetas nessa miss&#227;o: vais devolver o troco na &#237;ntegra ao cliente, e na menor quantidade poss&#237;vel. 
+  Para devolver o troco, vais ter a sua disposi&#231;&#227;o notas de $5, moedas de $2 e $1. <br/><br/> 
+Por exemplo, se tinhas que dar $12 de troco, vais entregar 2 notas de $5, 1 moeda de $2 e nenhuma moeda de $1.   
 		]]>
 		</page>
 
@@ -30,18 +31,17 @@ moedas e notas poss&#237;veis.<br/>
 		
 	</commands>
 	<cooker>initial</cooker>
+	<tests>5</tests>
 	<customers>
 		<customer>
 			<id>02</id>
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<pay>10</pay>
+			<limitedChanges>5, 2, 1</limitedChanges>
 			<orders>
-				<order randomType="random" randomMin="1" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -49,10 +49,43 @@ moedas e notas poss&#237;veis.<br/>
 						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="50" xpFinal="10" xpTotalTime="600">
+	<objectives ordered="false" xpIndividual="70" xpFinal="20" xpTotalTime="600">
 		
 		<objective pos="2" place="counter">askWantHowManyFoods</objective>
 		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
@@ -61,7 +94,7 @@ moedas e notas poss&#237;veis.<br/>
 	</objectives>
 	<xml>
 	
-		<block type="variables_set" inline="true" x = "300" y = "1">
+		<block type="variables_set" inline="true" x = "100" y = "1">
 			<field name="VAR">valorRecebido</field>
 			<value name="VALUE">
 				<block type="money_cashIn">
@@ -74,10 +107,10 @@ moedas e notas poss&#237;veis.<br/>
 			</value>
 		</block>
 		
-		<block type="money_giveChange" deletable="false" x = "300" y = "50" >
+		<block type="money_giveChange" deletable="false" x = "100" y = "50" >
 			<value name="VALUE">
 				<block type="variables_get" deletable="false">
-					<field name="VAR">n5</field>
+					<field name="VAR">quantasNotas5</field>
 				</block>
 			</value>
 			<value name="COINSBANKNOTES">
@@ -88,10 +121,10 @@ moedas e notas poss&#237;veis.<br/>
 		</block>
 		
 		
-		<block type="money_giveChange" deletable="false" x = "300" y = "100" >
+		<block type="money_giveChange" deletable="false" x = "100" y = "100" >
 			<value name="VALUE">
 				<block type="variables_get" deletable="false">
-					<field name="VAR">n2</field>
+					<field name="VAR">quantasMoedas2</field>
 				</block>
 			</value>
 			<value name="COINSBANKNOTES">
@@ -101,10 +134,10 @@ moedas e notas poss&#237;veis.<br/>
 			
 		</block>
 		
-		<block type="money_giveChange" deletable="false" x = "300" y = "150" >
+		<block type="money_giveChange" deletable="false" x = "100" y = "150" >
 			<value name="VALUE">
 				<block type="variables_get" deletable="false">
-					<field name="VAR">n1</field>
+					<field name="VAR">quantasMoedas1</field>
 				</block>
 			</value>
 			<value name="COINSBANKNOTES">

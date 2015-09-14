@@ -76,10 +76,14 @@ var Customer = {};
 
 Customer = function(options) {
 	
+	this.pay = options.pay;
+	this.limitedChanges = options.limitedChanges.split(",");
+	for (var i=0; i<this.limitedChanges.length; i++)
+		this.limitedChanges[i] = parseInt(this.limitedChanges[i]);
+		
 	this.randomType = options.randomType;
 	this.hasRandom = options.hasRandom;
 	this.drinks = options.drinks;
-	this.pay = options.pay;
 	this.dUnfulfilled = 0;
 	
 	this.foods = options.foods;
@@ -728,7 +732,7 @@ Customer.prototype.isChangeReceived = function() {
 Customer.prototype.isTheBestChange = function() {
 	
 	var v = this.amountChangeExpected;
-	var keys = [20, 10, 5, 2, 1];
+	var keys = this.limitedChanges;
 	for (var k = 0; k < keys.length; k++) {
 		
 		var keyType = keys[k];

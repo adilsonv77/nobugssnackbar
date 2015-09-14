@@ -91,14 +91,14 @@
 	    </tr>
 	  </table>
   
-  	  <div id="playerInfo" class="inverse_nobugs_background" style="text-align: center" title="{msg meaning="NoBugs.avatarTooltip" desc="--"}Change your avatar.{/msg}">
+  	  <div id="playerInfo" class="inverse_nobugs_background" style="text-align: center">
   	  
       	<canvas id="avatarPlayer" width="72" height="116"></canvas>
-      	<button id="avatarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px">
+      	<button id="avatarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px"  title="{msg meaning="NoBugs.avatarTooltip" desc="--"}Change your avatar.{/msg}">
       	Avatar
       	</button>
       	
-      	<button id="snackBarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px" disabled="disabled">
+      	<button id="snackBarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px" disabled="disabled" title="{msg meaning="NoBugs.yourSnackBarTooltip" desc="--"}Change the snack bar that you are the owner.{/msg}">
       	Snack Bar
       	</button>
 
@@ -354,7 +354,7 @@
 		    <td align="center">
 		      <img src="images/teacher_expert.png" style="margin: 10px"/>
 		    </td>
-		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! At this moment, there aren't more missions for you.{/msg}</td>
+		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions.{/msg}</td>
 	    </tr>
     </table>
 	{call apps.ok /}

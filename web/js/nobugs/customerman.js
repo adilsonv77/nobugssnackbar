@@ -103,6 +103,12 @@ CustomerManager.reset = function() {
 		if (pay != null)
 			pay = pay.textContent.toString();
 		
+		var limitedChanges = customer.getElementsByTagName("limitedChanges")[0];
+		if (limitedChanges == null)
+			limitedChanges = "20, 10, 5, 2, 1";
+		else
+			limitedChanges = limitedChanges.textContent.toString();
+		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
 		var orders = customer.getElementsByTagName("orders")[0].getElementsByTagName("order");
@@ -136,7 +142,9 @@ CustomerManager.reset = function() {
 		}
 		
 		if (custPattern.length > 0)
-			this.patterns.push({init: init, place: dest, id: id, pay: pay, pattern: custPattern, idxCustPattern: 0});
+			this.patterns.push({init: init, place: dest, id: id, 
+					pay: pay, limitedChanges: limitedChanges, 
+					pattern: custPattern, idxCustPattern: 0});
 		
 		
 		customer = customer.nextElementSibling;
@@ -241,7 +249,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							foods: foods, drinks: drinks,
 							openMission: this.openMission, idxPattern: i,
 							baloonLeft: customers.length % 2 == 0,
-							pay: this.patterns[i].pay}));
+							pay: this.patterns[i].pay,
+							limitedChanges: this.patterns[i].limitedChanges}));
 	
 	// TODO thinking this method using the transformSN method
 	

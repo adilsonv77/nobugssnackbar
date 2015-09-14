@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-14 14:31:27.712000",
+		"lastupdated": "2015-09-14 17:02:08.544000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -240,6 +240,7 @@
 	"NoBugs.developedBy": "Developed by",
 	"NoBugs.logoffTooltip": "Logoff the game.",
 	"NoBugs.avatarTooltip": "Change your avatar.",
+	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
@@ -250,7 +251,7 @@
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
 	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.variables": "Variables",
-	"NoBugs.noMoreMissions": "You're an expert !!! At this moment, there aren't more missions for you.",
+	"NoBugs.noMoreMissions": "You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions.",
 	"NoBugs.goalAchievedFail": "You don't achieved this mission. <x id='BREAK'/><x id='BREAK'/> You need to try again.",
 	"Apps.dialogLogoff": "Logoff",
 	"Tests.start": "Start",

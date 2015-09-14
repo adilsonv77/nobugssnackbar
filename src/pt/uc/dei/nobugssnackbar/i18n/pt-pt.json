@@ -57,7 +57,7 @@
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
-	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. Neste instante, n&#227;o existem mais miss&#245;es para si.", 
+	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. Neste instante, n&#227;o existem mais miss&#245;es para si. Entraremos em contacto quando forem liberadas novas miss&#245;es.", 
 	"NoBugs.rewardExplanation" : "Receba %0 para cada %1 habilitada ao cumprir todos os objetivos acima. \nn Receba %2 caso n&#227;o resolver a miss&#227;o em at&#233; %3 minutos.",
 	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de %0 se cumprir a miss&#227;o com %1 comandos ou menos.",
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
@@ -69,6 +69,7 @@
 
 	"NoBugs.avatarTooltip"  : "Alterar o seu avatar.",
 	"NoBugs.profileTooltip" : "Alterar o seu perfil.",
+	"NoBugs.yourSnackBarTooltip" : "Alterar o snack bar que voc&#234; &#233; dono.",
 	
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
