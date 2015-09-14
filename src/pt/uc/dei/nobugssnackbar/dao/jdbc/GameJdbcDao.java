@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -1749,7 +1748,6 @@ public class GameJdbcDao implements GameDao {
 
 	@Override
 	public void saveClicks(long userid, String[][] clicks) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:mm:ss.S");
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
@@ -1762,9 +1760,6 @@ public class GameJdbcDao implements GameDao {
 			for (String[] click: clicks) {
 
 				if (click[0] != null) {
-					// i dont know why this happens....
-//					Date d = sdf.parse(click[1]);
-					
 					ps.setString(2, click[0]);
 					ps.setTimestamp(3, new java.sql.Timestamp(Long.parseLong(click[1])));
 					ps.executeUpdate();

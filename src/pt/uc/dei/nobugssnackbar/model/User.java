@@ -50,6 +50,9 @@ public class User {
 
 	private long xp;
 	
+	@JdbcField(name="usermail")
+	private String mail;
+	
 	@RemoteProperty
 	private Map<String, String> flags;
 
@@ -160,4 +163,11 @@ public class User {
 		this.showInstruction = showInstruction;
 	}
 	
+	public String getMail() {
+		return mail;
+	}
+	
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 }

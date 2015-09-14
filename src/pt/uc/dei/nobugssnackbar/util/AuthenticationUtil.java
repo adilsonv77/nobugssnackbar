@@ -1,4 +1,4 @@
-package pt.uc.dei.nobugssnackbar.uc.util;
+package pt.uc.dei.nobugssnackbar.util;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;

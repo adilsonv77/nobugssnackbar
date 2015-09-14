@@ -15,7 +15,6 @@ import org.primefaces.event.CellEditEvent;
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.Level;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReleaseLevel;
-import pt.uc.dei.nobugssnackbar.uc.util.AuthenticationUtil;
 
 @ManagedBean(name="releaselevel")
 @ViewScoped
@@ -26,8 +25,6 @@ public class BeanReleaseLevel implements Serializable{
 	@ManagedProperty(value="#{ucreleaselevel}")
     private UCReleaseLevel ucReleaseLevel;
 	
-	private List<Clazz> clazzes;
-	
 	private Clazz clazz;
 
 	private List<Level> levels;
@@ -35,16 +32,6 @@ public class BeanReleaseLevel implements Serializable{
 	private boolean enableSave;
 
 	private Map<Integer, Level> saveLevels = new HashMap<>();  
-	
-	public List<Clazz> getClasses() throws Exception {
-		
-		if (clazzes == null) {
-			
-			clazzes = ucReleaseLevel.list(AuthenticationUtil.getUserFromSession());
-		}
-			
-		return clazzes;
-	}
 	
 	public void updateLevels() throws Exception {
 		this.levels = ucReleaseLevel.listLevels(this.clazz);

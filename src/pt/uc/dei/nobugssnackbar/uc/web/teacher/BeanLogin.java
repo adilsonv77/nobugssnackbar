@@ -2,6 +2,7 @@ package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -12,9 +13,11 @@ import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.control.UserControl;
 import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
+import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCLogin;
-import pt.uc.dei.nobugssnackbar.uc.util.AuthenticationUtil;
+import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReleaseLevel;
+import pt.uc.dei.nobugssnackbar.util.AuthenticationUtil;
 
 @ManagedBean(name="login")
 @ViewScoped
@@ -25,8 +28,13 @@ public class BeanLogin implements Serializable {
 	private String nick;
     private String password;  
 
+	private List<Clazz> clazzes;
+	
 	@ManagedProperty(value="#{uclogin}")
     private UCLogin ucLogin;
+	
+	@ManagedProperty(value="#{ucreleaselevel}")
+    private UCReleaseLevel ucReleaseLevel;
 	
     public void loginTeacher() throws Exception {
 
@@ -54,6 +62,16 @@ public class BeanLogin implements Serializable {
     	return AuthenticationUtil.getUserFromSession();
     }
     
+	public List<Clazz> getClasses() throws Exception {
+		
+		if (clazzes == null) {
+			
+			clazzes = ucReleaseLevel.list(AuthenticationUtil.getUserFromSession());
+		}
+			
+		return clazzes;
+	}
+	
     public String getNick() {
         return nick;
     }
@@ -77,5 +95,14 @@ public class BeanLogin implements Serializable {
 	public void setUcLogin(UCLogin ucLogin) {
 		this.ucLogin = ucLogin;
 	}
+	
+	public UCReleaseLevel getUcReleaseLevel() {
+		return ucReleaseLevel;
+	}
+	
+	public void setUcReleaseLevel(UCReleaseLevel ucReleaseLevel) {
+		this.ucReleaseLevel = ucReleaseLevel;
+	}
+
 
 }

@@ -12,9 +12,9 @@
 			<p:layout>
 				<p:layoutUnit position="west" size="170">
 					<p:selectOneListbox value="#{releaselevel.clazz}">
-						<f:selectItems value="#{releaselevel.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+						<f:selectItems value="#{login.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 						<p:ajax event="change" update="formReleaseDate" listener="#{releaselevel.updateLevels}"/>
-						<f:attribute name="dataProvider" value="releaselevel.classes"/>
+						<f:attribute name="dataProvider" value="login.classes"/>
 					</p:selectOneListbox>
 				</p:layoutUnit>
 	

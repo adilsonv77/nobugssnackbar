@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
@@ -51,6 +52,34 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 			return null;
 		else
 			return l.get(0);
+	}
+
+	@Override
+	public List<User> listByClass(Integer classId) throws Exception {
+		String query = "select * from users join classesusers using (userid) where classid = ?";
+
+		List<User> ret = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(query);
+			ps.setInt(1, classId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ret.add( transformResultSetToObject(rs) );
+			}
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
 	}
 
 

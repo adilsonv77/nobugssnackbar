@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="template.xhtml">
+
+	<ui:define name="body">
+		<h:form id="formSendMail">
+			<p:layout fullPage="false" style="width:100%; height:400px">
+				<p:layoutUnit position="west" size="170">
+
+					<p:selectOneListbox value="#{sendmail.clazz}">
+						<f:selectItems value="#{login.classes}" var="c"
+							itemLabel="#{c.name}" itemValue="#{c}" />
+							
+						<p:ajax event="change" update="formSendMail:students"
+							listener="#{sendmail.updateStudents}" />
+							
+						<f:attribute name="dataProvider" value="login.classes" />
+					</p:selectOneListbox>
+				</p:layoutUnit>
+
+				<p:layoutUnit position="center">
+					<p:panel id="mailDetails" style="border: 0px; padding: 0px; margin: 0px;">
+						<pe:ckEditor id="editMsg" widgetVar="ckEditMsg" value="#{sendmail.msg}" width="99%"
+							toolbar="[['Cut', 'Copy', 'Paste', 'PasteText'], [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'], ['Font', 'FontSize', 'TextColor', 'BGColor'], ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], ['Undo', 'Redo'],['Image']]">
+						</pe:ckEditor>
+	
+						<p:commandButton id="sendMail" value="#{msg.send}"
+							action="#{sendmail.send}" 
+							update=":messages formSendMail:mailDetails"
+							onsuccess="PF('ckEditMsg').destroy()"/>
+	
+						<p:dataTable id="students" value="#{sendmail.students}"
+							var="student" selection="#{sendmail.selectedStudents}" rowKey="#{student.id}">
+							
+							<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	
+							<p:column headerText="#{msg.name}">
+								<h:outputText value="#{student.name}" />
+							</p:column>
+	
+							<p:column headerText="#{msg.mail}">
+								<h:outputText value="#{student.mail}" />
+							</p:column>
+	
+						</p:dataTable>
+					</p:panel>
+				</p:layoutUnit>
+			</p:layout>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

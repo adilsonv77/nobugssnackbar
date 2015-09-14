@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -40,6 +41,27 @@ public class SendMail {
 		} catch (Exception ex) {
 
 		}
+	}
+	
+	public void send(List<String> dest, String subject, String content) throws Exception {
+		
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
+		
+		String dests = dest.toString();
+		dests = dests.substring(1,dests.length()-1);
+		
+		Message msg = new MimeMessage(session);
+		msg.setSubject(subject);
+		msg.setContent(content, "text/html");
+		msg.setFrom(new InternetAddress("nobugssnackbar@gmail.com"));
+		msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(dests));
+		
+		Transport.send(msg);
 	}
 
 	public void sendWelcomeMail(String dest, String locale) throws Exception {
