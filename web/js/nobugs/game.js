@@ -544,6 +544,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
   document.getElementById("initialBackground").style.display = "none";
   document.getElementById("selectMission").style.display = "none";
 
+  CityMap.stopAnimation();
+
   document.getElementById("mainBody").style.display = "inline";
   
   if (Game.counterInstruction != null) {
@@ -1586,7 +1588,6 @@ Game.closeBlockEditorStuffs = function() {
     $("#tabs-points").empty();
     $("#tabs-time").empty();
     $("#tabs-runs").empty();
-    CityMap.stopAnimation();
     
 	return [timeSpent, answer];
 };
@@ -1604,6 +1605,7 @@ Game.logoffButtonClick = function() {
 	});
 	*/
 	BlocklyApps.hideDialog(false);
+	CityMap.stopAnimation();
 	
 	LogClick.save(false); // store the cache 
 	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff

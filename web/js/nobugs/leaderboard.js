@@ -200,7 +200,8 @@ function createNoLeaderBoardInfo() {
 	version++;
 	addTooltip();
 	
-	var data = [{id: 0, name: BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]), value: ""}];
+	var data = [{id: Game.loginData.userLogged.id, 
+		         name: BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]), value: ""}];
 	
     if (leaderBoardCreated) {
     	
