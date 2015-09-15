@@ -21,6 +21,7 @@ public class User {
 	private long id;
 	
 	@JdbcField(name="usernick")
+	@RemoteProperty
 	private String nick;
 	
 	@JdbcField(name="userpassw")
@@ -51,6 +52,7 @@ public class User {
 	private long xp;
 	
 	@JdbcField(name="usermail")
+	@RemoteProperty
 	private String mail;
 	
 	@RemoteProperty

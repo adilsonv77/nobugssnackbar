@@ -175,7 +175,7 @@ button.secondary:disabled {
   background: url('../images/logotipo.png') center center no-repeat;
 }
 
-#initialBackground input[type="text"], input[type="password"] {
+.nobugs_inputs {
 	font-size: large;
 	margin: 5px;
 	padding: 10px;

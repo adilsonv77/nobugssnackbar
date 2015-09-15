@@ -117,11 +117,7 @@ public class UserControl {
 	public void logoff() throws Exception { // int timeSpend, long execution, String answer)
 
 		log.info("logoff");
-		/* the new version doesnt need this save method
-		if (this.mission != 0)
-			gameDao.finishMission(this.user, this.mission, this.classid, 0, 0,
-					timeSpend, execution, false, -1, answer);
-		 */
+
 		this.user = null;
 		this.classid = 0;
 		this.levelid = 0;
@@ -171,6 +167,17 @@ public class UserControl {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@RemoteMethod
+	public void changeUser(String mail, String password) throws Exception {
+		
+		this.user.setMail(mail);
+		if (password != null)
+			this.user.setPassw(encrypt(password));
+		
+		gameDao.changeUser(this.user);
+		
 	}
 
 	@RemoteMethod

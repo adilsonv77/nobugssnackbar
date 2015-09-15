@@ -42,7 +42,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon = getConnection();
 
 			PreparedStatement ps = bdCon
-					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint, userxp, showinstructionallearn from users where usernick = ? and userpassw = ? and userenabled = 'T'");
+					.prepareStatement("select userid, usernick, userpassw, usermoney, username, usersex, userlasttime, showhint, userxp, showinstructionallearn, usermail from users where usernick = ? and userpassw = ? and userenabled = 'T'");
 			ps.setString(1, nick);
 			ps.setString(2, passw);
 
@@ -62,6 +62,7 @@ public class GameJdbcDao implements GameDao {
 			u.setLastTime(rs.getTime(7));
 			u.setShowHint(rs.getString(8).equals("T"));
 			u.setShowInstruction(rs.getString(10).equals("T"));
+			u.setMail(rs.getString(11));
 
 			ps.close();
 
@@ -170,6 +171,31 @@ public class GameJdbcDao implements GameDao {
 
 	}
 
+	@Override
+	public void changeUser(User user) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+
+			PreparedStatement ps = bdCon
+					.prepareStatement("update users set userpassw = ?, usermail = ? where userid = ?");
+			ps.setString(1, user.getPassw());
+			ps.setString(2, user.getMail());
+			ps.setLong(3, user.getId());
+			
+			ps.executeUpdate();
+			ps.close();
+		
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+	}
+	
 	public String[][] loadMission(User user, int clazzId, int levelId,
 			int missionIdx) throws SQLException {
 		String[][] ret = null;
@@ -1778,5 +1804,5 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 	}
-	
+
 }

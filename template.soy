@@ -17,13 +17,14 @@
   	<div>
   		<form class="farSide" onsubmit="return false">
 	  		<fieldset style="border: 0px none">
-	  		<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
-	  		<a href="#"onclick="changeLanguageToEn()" style="position: absolute; left: 40px"><img src="images/en.png" alt="Portuguese Language" height="30" width="30"></a>
+	  			<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
+	  			<a href="#"onclick="changeLanguageToEn()" style="position: absolute; left: 40px"><img src="images/en.png" alt="Portuguese Language" height="30" width="30"></a>
+	  			
 	  			<label class="user">
-	  				<input type="text" id="loginuser" placeHolder="{msg meaning="NoBugs.user" desc="--"}User{/msg}"/>
+	  				<input type="text" class="nobugs_inputs" id="loginuser" placeHolder="{msg meaning="NoBugs.user" desc="--"}User{/msg}"/>
 	  			</label>
 	  			<label class="password">
-	  			    <input type="password" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"/>
+	  			    <input type="password" class="nobugs_inputs" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"/>
 	  			</label>
 	  			<button id="ButtonLogin" class="nobugs_button" onclick="Game.login()">
 	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
@@ -38,7 +39,7 @@
   		</div>
   		<div id="suporte" style="position: relative">
   			<span id="suportespan">
-  			{{msg meaning="NoBugs.support" desc="---"}}In case of technical problems, please contact {{/msg}}<a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a>
+  			{{msg meaning="NoBugs.support" desc="---"}}In case of technical problems, or reset password, please contact {{/msg}}<a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a>
   			</span>
   		</div>
   	</div>
@@ -102,7 +103,7 @@
       	Snack Bar
       	</button>
 
-      	<button class="nobugs_button" style="display: none; font-size: 14px; width: 80px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
+      	<button id="profileEditorButton"  class="nobugs_button" style="font-size: 14px; width: 100px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
       	{{msg meaning="NoBugs.Profile" desc="---"}}Profile{{/msg}}
       	</button>
       	
@@ -446,6 +447,41 @@
 			<button class='no simplemodal-close nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.no" desc="--"}No{/msg}</button>
 		</div>
 	</div>
+
+  <div id="dialogEditProfile" class="dialogHiddenContent">
+    <table>
+    	<tr>
+    		<td colspan="3"><div style="border: 1px solid gray; padding: 10px"><span id="profile_user_nick"></span> (<span id="profile_user_name"></span>)</div></td>
+    	</tr>
+    	<tr>
+    		<td>{msg meaning="Profile.mail" desc="--"}E-mail{/msg}:</td>
+    		<td colspan="2"><input name="profile_user_mail" type="text" class="nobugs_inputs" value="" style="width:550px"/></td>
+    	</tr>
+    	
+    	<tr>
+    		<td colspan="3" style="text-align:left">
+    			<input name="profile_user_resetpassword" id="profile_user_checkbox" type="checkbox" onclick="Game.enablePasswordFields()"/><label for="profile_user_checkbox">{msg meaning="Profile.resetPassword" desc="--"}Reset the password{/msg}</label>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>{msg meaning="Profile.password" desc="--"}Password{/msg}:</td>
+    		<td><input name="profile_user_password" type="password" class="nobugs_inputs" disabled="disabled" maxlength="10" onkeyup="Game.verifyRetypePassword()"/></td>
+    		<td></td>
+    	</tr>
+    	<tr>
+    		<td>{msg meaning="Profile.retypePassword" desc="--"}Retype Password{/msg}:</td>
+    		<td><input name="profile_user_retypepassword" type="password" class="nobugs_inputs" disabled="disabled" maxlength="10" onkeyup="Game.verifyRetypePassword()"/></td>
+    		<td style="height: 40px; width: 350px"><span id="profileErrorRetypePassw" style="color: red;"></span></td>
+    	</tr>
+    	
+    	<tr>
+    		<td colspan="3" style="text-align: right">
+    			<button id="profile_user_save" class="nobugs_button" onclick="Game.saveProfile()">{msg meaning="Profile.save" desc="--"}Save{/msg}</button>
+    			<button class="nobugs_button" onclick="BlocklyApps.hideDialog(false)">{msg meaning="Profile.cancel" desc="--"}Cancel{/msg}</button>
+    		</td>
+    	</tr>
+    </table>
+  </div>
 
 {/template}
 

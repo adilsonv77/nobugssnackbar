@@ -369,6 +369,7 @@ Game.logged = function() {
 	    Game.resizeMainWindow();
 	    
 	    BlocklyApps.bindClick('avatarEditorButton', Game.openAvatarEditor);
+	    BlocklyApps.bindClick('profileEditorButton', Game.openProfileEditor);
 	    
 	    CityMap.init({onclick: Game.cityClick});
 	    
@@ -455,6 +456,78 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
 
 	AvatarEditor.show(sClothes , coatColor, scarfColor, skin, eyes, sHat, hatColor, fAfterClose);
+};
+
+Game.openProfileEditor = function() {
+	
+	var u = Game.loginData.userLogged;
+	
+	$("#profile_user_nick").html(u.nick);
+	$("#profile_user_name").html(u.name);
+	$("input[name=profile_user_mail]").val(u.mail);
+
+	$("input[name=profile_user_password]").val("");
+	$("input[name=profile_user_retypepassword]").val("");
+	$('#profile_user_checkbox').attr('checked', false);
+
+	$("input[name=profile_user_password]").attr("disabled", "disabled");
+	$("input[name=profile_user_retypepassword]").attr("disabled",  "disabled");
+	$("#profile_user_save").removeAttr("disabled");
+	$("#profileErrorRetypePassw").html("");
+	
+	MyBlocklyApps.showDialog(document.getElementById("dialogEditProfile"), null, false, true, true, 
+			$("#profileEditorButton").html(), {width:"700px"}, null);
+	
+};
+
+Game.enablePasswordFields = function() {
+	
+	if ($("#profile_user_checkbox").is(':checked')) {
+	
+		$("input[name=profile_user_password]").removeAttr("disabled");
+		$("input[name=profile_user_retypepassword]").removeAttr("disabled");
+		
+		
+		Game.verifyRetypePassword();
+	}
+	else {
+		
+		$("input[name=profile_user_password]").attr("disabled", "disabled");
+		$("input[name=profile_user_retypepassword]").attr("disabled",  "disabled");
+		$("#profile_user_save").removeAttr("disabled");
+		$("#profileErrorRetypePassw").html("");
+	}
+	
+};
+
+Game.verifyRetypePassword = function() {
+	if ($("input[name=profile_user_password]").val().trim() !== "" && 
+			$("input[name=profile_user_password]").val() === $("input[name=profile_user_retypepassword]").val()) {
+	
+		$("#profileErrorRetypePassw").html("");
+		$("#profile_user_save").removeAttr("disabled");
+	
+	} else {
+		
+		$("#profileErrorRetypePassw").html(BlocklyApps.getMsg("Profile_WrongPassword"));
+		$("#profile_user_save").attr("disabled", "disabled");
+		
+	}
+};
+
+Game.saveProfile = function() {
+	
+	var u = Game.loginData.userLogged;
+	var newPassw = null;
+	
+	u.mail = $("input[name=profile_user_mail]").val();
+	if ($("#profile_user_checkbox").is(':checked'))
+		newPassw = $("input[name=profile_user_password]").val().trim();
+	
+	UserControl.changeUser(u.mail, newPassw);
+	
+	MyBlocklyApps.hideDialog(false);
+	
 };
 
 Game.moveBlocksToZero = function() {

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-14 17:02:08.544000",
+		"lastupdated": "2015-09-15 16:09:07.340000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -222,6 +222,7 @@
 	"NoBugs.varname": "Name",
 	"NoBugs.varvalue": "Value",
 	"NoBugs.RunButtonDisabled": "Because you tried sometimes unsuccessfully, I disabled the run button only in this mission. I believe the debug button will be most useful to you.",
+	"Profile.WrongPassword": "The password is empty or both fields does not have the same values",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",
@@ -235,7 +236,7 @@
 	"NoBugs.password": "Password",
 	"Apps.dialogLogin": "Login",
 	"Apps.dialogSignUp": "Sign Up",
-	"NoBugs.support": "In case of technical problems, please contact ",
+	"NoBugs.support": "In case of technical problems, or reset password, please contact ",
 	"NoBugs.sponsoredBy": "Sponsored by",
 	"NoBugs.developedBy": "Developed by",
 	"NoBugs.logoffTooltip": "Logoff the game.",
@@ -260,6 +261,12 @@
 	"SnackMan.confirm": "Confirm",
 	"SnackMan.yes": "Yes",
 	"SnackMan.no": "No",
+	"Profile.mail": "E-mail",
+	"Profile.resetPassword": "Reset the password",
+	"Profile.password": "Password",
+	"Profile.retypePassword": "Retype Password",
+	"Profile.save": "Save",
+	"Profile.cancel": "Cancel",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",
 	"SnackMan.catMoney": "Money",

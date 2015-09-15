@@ -33,7 +33,7 @@
 	"NoBugs.runTooltip" : "Executar o programa.",
 	"NoBugs.debugTooltip" : "Executar somente um passo.",
 	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o.",
-	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, entre em contacto com ",
+	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, ou solicitar nova senha, entre em contacto com ",
 	"NoBugs.buy": "Comprar",
 	"NoBugs.sponsoredBy": "Patrocinado por",
 	"NoBugs.developedBy": "Desenvolvido por",
@@ -280,5 +280,13 @@
 	"Intro.RepeatTest4"     : "Sempre que aparecer esse s&#237;mbolo indica que o seu programa ser&#225; executado pelo jogo seguidamente essa quantidade de vezes.",
 	"Intro.RepeatTest5"     : "A cada vez que o seu programa for executado os desejos dos clientes modificam. Para ter sucesso na miss&#227;o, seu programa deve finalizar sem erros todas as vezes em que ser&#225; executado.",
 	"Intro.RepeatTest6"     : "Ap&#243;s finalizar a execu&#231;&#227;o, vais reparar um pequeno n&#250;mero ", 
-	"Intro.RepeatTest7"     : " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso."
+	"Intro.RepeatTest7"     : " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso.",
+
+	"Profile.mail" 			: "E-mail",
+	"Profile.resetPassword" : "Refazer a senha",
+	"Profile.password" 		: "Senha",
+	"Profile.retypePassword" : "Redigite a senha",
+	"Profile.save" 			: "Salvar",
+	"Profile.cancel" 		: "Cancelar",
+	"Profile.WrongPassword":"A senha est&#225; em branco ou os dois campos de senha n&#227;o possuem os mesmos valores."
 }

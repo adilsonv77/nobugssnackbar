@@ -87,4 +87,6 @@ public interface GameDao {
 
 	void saveClicks(long userid, String[][] clicks) throws Exception;
 
+	void changeUser(User user) throws Exception;
+
 }
