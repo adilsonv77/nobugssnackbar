@@ -17,7 +17,7 @@ import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCLogin;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReleaseLevel;
-import pt.uc.dei.nobugssnackbar.util.AuthenticationUtil;
+import pt.uc.dei.nobugssnackbar.uc.web.util.AuthenticationUtil;
 
 @ManagedBean(name="login")
 @ViewScoped

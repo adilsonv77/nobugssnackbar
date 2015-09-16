@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="body">
+  		<script type="text/javascript" src="/nobugssnackbar/dwr/engine.js"></script>
+  		<script type="text/javascript" src="/nobugssnackbar/dwr/interface/TeacherControl.js"></script>
+		
+		 <h:outputScript name="missionsstatus.js"/>
+		
+		<div id="myDiagramDiv">
+			<canvas id="diagramCanvas" width="500" height="300"></canvas>
+		</div>
+    	 	
+	
+	</ui:define>
+
+</ui:composition>
+

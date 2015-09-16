@@ -51,7 +51,10 @@
 			pt.uc.dei.nobugssnackbar.model.TestQuestionAnswer,
 			pt.uc.dei.nobugssnackbar.control.BartleType,
 			pt.uc.dei.nobugssnackbar.control.Image64,
-			pt.uc.dei.nobugssnackbar.control.QuestionnaireControl
+			pt.uc.dei.nobugssnackbar.control.QuestionnaireControl,
+			
+			pt.uc.dei.nobugssnackbar.control.TeacherControl,
+			pt.uc.dei.nobugssnackbar.model.MissionStatus
 			</param-value>
     </init-param>
     <init-param>
