@@ -314,11 +314,11 @@ public class GameJdbcDao implements GameDao {
 			if (localTimeSpend == -1) {
 				ps = bdCon
 						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, xp, answer, executions, money, zoomlevel, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+								+ "(timespend, achieved, xp, answer, executions, money, zoomlevel, finishdate, missionid, classid, userid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				localTimeSpend = timeSpend;
 			} else {
 				ps = bdCon
-						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ?, money = ?, zoomlevel = ? "
+						.prepareStatement("update missionsaccomplished set timespend = ?, achieved = ?, xp = ?, answer = ?, executions = ?, money = ?, zoomlevel = ?, finishdate = ? "
 								+ "where missionid = ? and classid = ? and  userid = ?");
 				localTimeSpend += timeSpend;
 			}
@@ -330,9 +330,14 @@ public class GameJdbcDao implements GameDao {
 			ps.setLong(5, execution);
 			ps.setInt(6, money);
 			ps.setFloat(7, zoomLevel);
-			ps.setLong(8, idMission);
-			ps.setLong(9, idClazz);
-			ps.setLong(10, user.getId());
+			if (achieved)
+				ps.setDate(8, new java.sql.Date((new java.util.Date()).getTime()));
+			else
+				ps.setNull(8, java.sql.Types.DATE);
+			
+			ps.setLong(9, idMission);
+			ps.setLong(10, idClazz);
+			ps.setLong(11, user.getId());
 
 			ps.executeUpdate();
 			ps.close();
@@ -365,7 +370,8 @@ public class GameJdbcDao implements GameDao {
 
 			bdCon.commit();
 			bdCon.setAutoCommit(true);
-
+		} catch(Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			if (bdCon != null)
 				try {
