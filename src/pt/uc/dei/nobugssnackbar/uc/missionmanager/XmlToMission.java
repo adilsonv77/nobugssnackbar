@@ -169,7 +169,6 @@ public class XmlToMission {
 		try {
 
 			if (!missionContent.isRepeatable()) {		
-				// missionContent.setSlider(null);
 				missionContent.setTimeLimit(null);
 			}
 			else {

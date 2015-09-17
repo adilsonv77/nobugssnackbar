@@ -182,8 +182,11 @@ public class MissionSettingsVC implements IMissionProvider, Serializable {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(Long timeLimit) {
+	public void setTimeLimit(Long timeLimit) throws Exception {
 		this.timeLimit = timeLimit;
+		if (missionManager != null && missionManager.getMissionContent() != null) {
+			missionManager.getMissionContent().setTimeLimit(this.timeLimit);
+		}
 	}
 
 	public MissionManager getMissionManager() {
