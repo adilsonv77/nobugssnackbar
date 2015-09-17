@@ -1811,4 +1811,82 @@ public class GameJdbcDao implements GameDao {
 		}
 	}
 
+	@Override
+	public List<String[]> loadStatusMissions(long classid) throws SQLException {
+		
+		List<String[]> ret = null;
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("select missionid, userid, classlevelid, missionname, achieved from classesmissions cm left outer join classesusers using (classid) "+
+										" left outer join missionsaccomplished using (missionid, userid) "+
+										" join missions using (missionid) "+
+										" where cm.classid = ? order by missionorder");
+			ps.setLong(1, classid);
+			
+			ret = new ArrayList<>();
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String [] r = new String[] {rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)};
+				
+				ret.add(r);
+			}
+			
+			ps.close();
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+
+		return ret;
+	}
+
+	@Override
+	public List<Map<String, String>> loadUsersInTheMission(int clazzId,	int missionId, String[] listOfUsers) throws Exception {
+		List<Map<String, String>> users = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon
+					.prepareStatement("select userid, username, achieved, executions, timespend from classesmissions cm left outer join classesusers using (classid) "+
+										" left outer join missionsaccomplished using (missionid, userid) "+
+										" join missions using (missionid) "+
+										" join users using (userid) " +
+										" where cm.classid = ? and cm.missionid = ? and  find_in_set (userid, ?) order by missionorder");
+			ps.setLong(1, clazzId);
+			ps.setLong(2, (missionId==0?1:missionId));
+			ps.setString(3, Arrays.toString(listOfUsers).replace("[", "").replace("]", "").replace(" ", ""));
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Map<String, String> user = new HashMap<>();
+
+				user.put("name", rs.getString(2));
+				user.put("executions", rs.getString(4));
+				user.put("timespend", rs.getString(5));
+				
+				users.add(user);
+			}
+			ps.close();
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return users;
+	}
+
 }

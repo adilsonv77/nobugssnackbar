@@ -2,17 +2,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html">
+	<style>
+	.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
+    	padding: 0.4em 0.4em !important;
+	}
+	</style>
+		
 	
 	<p:panel rendered="#{login.userLogged != null}">
 		<h:form>
-	       <p:menubar autoDisplay="false">
+	       <p:menubar autoDisplay="false" styleClass="menu-sistema">
 	            <p:menuitem ajax="false" 
 	                        value="#{msg.releaseLevel}" 
 	                        action="releaselevel"
 	                        />
+
 	            <p:menuitem ajax="false" 
-	                        value="#{msg.sendMail}" 
-	                        action="sendmail"
+	                        value="#{msg.statusMissions}" 
+	                        action="statusmissions"
 	                        />
 	       </p:menubar>
 	 

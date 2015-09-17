@@ -8,13 +8,46 @@
   		<script type="text/javascript" src="/nobugssnackbar/dwr/engine.js"></script>
   		<script type="text/javascript" src="/nobugssnackbar/dwr/interface/TeacherControl.js"></script>
 		
-		 <h:outputScript name="missionsstatus.js"/>
+  	    <h:outputScript name="missionsstatus.js"/>
 		
-		<div id="myDiagramDiv">
-			<canvas id="diagramCanvas" width="500" height="300"></canvas>
-		</div>
-    	 	
-	
+		<h:form>
+			<p:panelGrid columns="2"  styleClass="ui-noborder" >
+				<p:selectOneMenu value="#{statusMissions.clazz}" widgetVar="clazzTeacher">
+	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+	 				<f:selectItems value="#{statusMissions.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+					<p:ajax event="change" oncomplete="StatusMissions.callLoadMissions()"/>
+					<f:attribute name="dataProvider" value="statusMissions.clazzes"/>
+				</p:selectOneMenu>
+				
+				<h:outputText value="Após selecionar uma classe, clique num retângulo para obter mais informações sobre a missão"/>
+			</p:panelGrid>
+
+			<iframe id="myDiagram" style="border:0px"></iframe>
+		
+		
+			<p:remoteCommand name="updateMission" action="#{statusMissions.loadUsersFromMission}" update="usersFromMission"/>
+			
+			<p:dataTable id="usersFromMission" value="#{statusMissions.usersFromMission}"  var="u">
+		        <p:column headerText="#{msg.name}">
+		            <h:outputText value="#{u.name}"/>
+		        </p:column>
+
+		        <p:column headerText="#{msg.runs}">
+		            <h:outputText value="#{u.executions}"/>
+		        </p:column>
+
+		        <p:column headerText="#{msg.timespend}">
+		            <h:outputText value="#{u.timespend}"/>
+		        </p:column>
+		        
+		        <p:column></p:column>
+			</p:dataTable>
+			
+		</h:form>
+		
+		<script>
+		StatusMissions.initFormStatusMissions();
+		</script>
 	</ui:define>
 
 </ui:composition>

@@ -1,113 +1,197 @@
-TeacherControl.loadMissions(function(ret) {
-	
-	var squareWidth = 120;
+var StatusMissions = {};
 
-	var w = 500, h = 300, yDesloc = 10, xDesloc = 10;
-	var img = new Image();
-	img.src = "../images/user.png";
+StatusMissions.hMax = 80;
+StatusMissions.iframe = null;
+StatusMissions.canvas = null;
+StatusMissions.squareWidth = 120;
+StatusMissions.w = 0;
+StatusMissions.h = 0;
+StatusMissions.yDesloc = 10;
+StatusMissions.xDesloc = 10;
+StatusMissions.ctx = null;
+StatusMissions.my_gradient = null;
+StatusMissions.my_gradient_hover = null ;
+StatusMissions.missions = null;
+
+StatusMissions.callLoadMissions = function() {
+	var select = PF('clazzTeacher').value;
+
+	if (select === "") {
+		StatusMissions.teacherControlLoadMissionsRet(null);
+		return;
+	}
 	
-	var canvas = document.getElementById("diagramCanvas");
-	var ctx = canvas.getContext('2d');
-	ctx.font = "12px Arial";
-	ctx.lineWidth = 1;
+	TeacherControl.loadMissions(select, StatusMissions.teacherControlLoadMissionsRet);
+};
+
+StatusMissions.getMousePos = function (evt) {
+	var rect = StatusMissions.canvas.getBoundingClientRect();
+	return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+	};
+};
+
+StatusMissions.testMouseOver = function(x, y) {
+	if (StatusMissions.missions == null)
+		return null;
 	
-	var my_gradient = ctx.createLinearGradient(0,0,0,50);
-	my_gradient.addColorStop(0,"#2989d8");
-	my_gradient.addColorStop(0.5,"#7db9e8");
-	my_gradient.addColorStop(1,"#207cca");
+	if (y > StatusMissions.yDesloc+50 || y < StatusMissions.yDesloc)
+		return null;
 	
-	var my_gradient_hover = ctx.createLinearGradient(0,0,0,50);
-	my_gradient_hover.addColorStop(0,"#207cca");
-	my_gradient_hover.addColorStop(0.5,"#2989d8");
-	my_gradient_hover.addColorStop(1,"#207cca");
+	var squarecount = Math.floor(x/StatusMissions.squareWidth);
+	if (x < StatusMissions.xDesloc || x > StatusMissions.xDesloc + (squarecount*StatusMissions.squareWidth) + 100)
+		return null;
 	
-	function getMousePos(evt) {
-		var rect = canvas.getBoundingClientRect();
-		return {
-			x: evt.clientX - rect.left,
-			y: evt.clientY - rect.top
+	var m = StatusMissions.missions[squarecount];
+	if (m == null || m.qtdUsers == 0)
+		return null;
+	
+	return {x:squarecount};
+};
+
+StatusMissions.drawHover = function(x) {
+	var m = StatusMissions.missions[x];
+	StatusMissions.drawSquare(StatusMissions.xDesloc + (x*StatusMissions.squareWidth), StatusMissions.yDesloc, StatusMissions.my_gradient_hover, m);
+};
+
+StatusMissions.drawSquare = function(x, y, gradient, mission) {
+	
+	if (mission == null) {
+		
+		StatusMissions.ctx.fillStyle = "#000000";
+		StatusMissions.ctx.font = "20px Arial";
+		StatusMissions.ctx.fillText(" . . . ", x+30, y+40);
+		StatusMissions.ctx.font = "12px Arial";
+		
+	} else {
+		
+		var name = mission.idx + "-" + mission.name;
+		
+		StatusMissions.ctx.strokeStyle = "black";
+		StatusMissions.ctx.strokeRect(x, y, 100, 70);
+
+		StatusMissions.ctx.fillStyle = gradient;
+		StatusMissions.ctx.fillRect(x, y, 100, 70);
+		
+		StatusMissions.ctx.fillStyle = "#FFFFFF";
+		
+		var part = name;
+		while (StatusMissions.ctx.measureText(part).width > 95) {
+			part = part.substring(0, part.length-1);
 		};
-	}
-	
-	function testMouseOver(x, y) {
-		if (y > yDesloc+50 || y < yDesloc)
-			return null;
 		
-		var squarecount = Math.floor(x/squareWidth);
-		if (x < xDesloc || x > xDesloc + (squarecount*squareWidth) + 100)
-			return null;
+		StatusMissions.ctx.fillText(part, x+5, y+20);
 		
-		var m = ret[0][0][squarecount];
-		if (m.qtdUsers == 0)
-			return null;
+		if (part !== name) {
+			part = name.substring(part.length+1);
+			while (StatusMissions.ctx.measureText(part).width > 95) {
+				part = part.substring(0, part.length-1);
+			};
+			StatusMissions.ctx.fillText(part, x+5, y+40);
+		}
 		
-		return {x:squarecount};
-	}
+		StatusMissions.ctx.fillText(mission.qtdUsers, x+50, y+60);
+		
+		StatusMissions.ctx.drawImage(StatusMissions.img, x+34, y+50);
 
-	function drawHover(x) {
-		var m = ret[0][0][x];
-		drawSquare(xDesloc + (x*squareWidth), yDesloc, my_gradient_hover, m.idx + "-" + m.name, m.qtdUsers);
 	}
 	
-	function drawSquare(x, y, gradient, name, qtdUsers) {
+};
+	
+StatusMissions.draw = function() {
+	StatusMissions.ctx.clearRect(0, 0, StatusMissions.w, StatusMissions.h);
+	
+	var missions = StatusMissions.missions;
+	
+	if (missions == null)
+		return;
+	
+	var x = StatusMissions.xDesloc, y = StatusMissions.yDesloc; 
+	for (var i = 0; i < missions.length; i++) {
+		var m = missions[i];
 		
-		ctx.strokeStyle = "black";
-		ctx.strokeRect(x, y, 100, 50);
+		StatusMissions.drawSquare(x, y, StatusMissions.my_gradient, m);
+		
+		x+= StatusMissions.squareWidth;
+	}
+		
+};
 
-		ctx.fillStyle = gradient;
-		ctx.fillRect(x, y, 100, 50);
-		
-		ctx.fillStyle = "#FFFFFF";
-		ctx.fillText(name, x+10, y+20);
-		ctx.fillText(qtdUsers, x+50, y+40);
-		
-		ctx.drawImage(img, x+34, y+30);
-		
-	}
-		
-	function draw() {
-		ctx.clearRect(0, 0, w, h);
-		
-		var levels = ret[0];
-		
-		var x = xDesloc, y = yDesloc; 
-		levels.forEach(function(level) {
-			for (var i = 0; i < level.length; i++) {
-				var m = level[i];
-				
-				drawSquare(x, y, my_gradient, m.idx + "-"+m.name, m.qtdUsers);
-				
-				x+= squareWidth;
-			}
-			
-		});
-		
-	}
+StatusMissions.teacherControlLoadMissionsRet = function (retx) {
+	
+	StatusMissions.missions = retx;
 
-	// ret[0][1][2][3]:: 0 - classes; 1 - levels; 2 - missions; 3 - data of missions (idx, name, qtdUsers)
+	StatusMissions.canvas.width = (StatusMissions.missions == null?0:StatusMissions.missions.length*120);
+	StatusMissions.w = StatusMissions.canvas.width;
 	
-	draw();
+	// after canvas.width, some settings are reset
+	StatusMissions.ctx.font = "12px Arial";
+	StatusMissions.ctx.lineWidth = 1;
 	
-	canvas.addEventListener('mousemove', function(evt) {
-        var mousePos = getMousePos(evt);
-        var square = testMouseOver(mousePos.x, mousePos.y);
-        draw();
-        if (square != null && square.x < ret[0][0].length) {
-        	canvas.style.cursor = "pointer";
-        	drawHover(square.x);
+	// StatusMissions.missions[0][1] :: 0 - missions; 1 - data of missions (id, idx, name, qtdUsers)
+	StatusMissions.draw();
+		
+		
+};
+
+StatusMissions.initFormStatusMissions = function () {
+	
+	StatusMissions.iframe = document.getElementById("myDiagram");
+	StatusMissions.iframe.width = window.innerWidth - 10;
+	StatusMissions.iframe.height = StatusMissions.hMax + 80;
+
+	var iframediv = StatusMissions.iframe.contentWindow.document;
+
+	StatusMissions.canvas = document.createElement("canvas");
+	StatusMissions.ctx = StatusMissions.canvas.getContext('2d');
+	
+	StatusMissions.img = new Image();
+	
+	StatusMissions.img.onload = function() {
+		
+		StatusMissions.canvas.height = StatusMissions.hMax;
+		
+		StatusMissions.h = StatusMissions.canvas.height;
+		
+		StatusMissions.my_gradient = StatusMissions.ctx.createLinearGradient(0,0,0,50);
+		StatusMissions.my_gradient.addColorStop(0,"#2989d8");
+		StatusMissions.my_gradient.addColorStop(0.5,"#7db9e8");
+		StatusMissions.my_gradient.addColorStop(1,"#207cca");
+		
+		StatusMissions.my_gradient_hover = StatusMissions.ctx.createLinearGradient(0,0,0,50);
+		StatusMissions.my_gradient_hover.addColorStop(0,"#207cca");
+		StatusMissions.my_gradient_hover.addColorStop(0.5,"#2989d8");
+		StatusMissions.my_gradient_hover.addColorStop(1,"#207cca");
+	};
+	
+	StatusMissions.img.src = "../images/user.png";
+	
+	StatusMissions.canvas.addEventListener('mousemove', function(evt) {
+        var mousePos = StatusMissions.getMousePos(evt);
+        var square = StatusMissions.testMouseOver(mousePos.x, mousePos.y);
+        StatusMissions.draw();
+        if (square != null && square.x < StatusMissions.missions.length) {
+        	StatusMissions.canvas.style.cursor = "pointer";
+        	StatusMissions.drawHover(square.x);
         } else
-        	canvas.style.cursor = "default";
+        	StatusMissions.canvas.style.cursor = "default";
       }, false);
 	
-	canvas.addEventListener('click', function(evt) {
-        var mousePos = getMousePos(evt);
-        var square = testMouseOver(mousePos.x, mousePos.y);
+	StatusMissions.canvas.addEventListener('click', function(evt) {
+        var mousePos = StatusMissions.getMousePos(evt);
+        var square = StatusMissions.testMouseOver(mousePos.x, mousePos.y);
         if (square == null)
         	return;
-        var m = ret[0][0][square.x];
-        alert(m.qtdUsers);
-        draw();
+        var m = StatusMissions.missions[square.x];
+
+        updateMission([{name:'mission', value: m.id}, {name:'users', value: m.users}]); // updateMission is a <p:remotecommand/>
+
+        StatusMissions.draw();
       }, false);
 
-});
+	iframediv.body.appendChild(StatusMissions.canvas);
+
+};
+
 

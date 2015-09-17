@@ -190,6 +190,10 @@
 	    	<fileset dir="${web.home}" >
 
 	    		<exclude name="admin/**/**/*.*" />
+	    		
+	    		<include name="teacher/**/**/*.*" />
+	    		<include name="resources/**/**/*.*" />
+	    			
 	    		<include name="js/**/**/*.*" />
 	    		<exclude name="js/jsinterpreter/acorn.js"/>
 	    		<exclude name="js/jsinterpreter/interpreter.js"/>
@@ -202,7 +206,7 @@
 	    		<include name="images/**/*.*" />
 	    		<include name="media/**/*.*" />
 	    		<include name="xml/ns/**/*.*" />
-	    		<include name="music**/**/*.*" />
+	    		<include name="music/**/**/*.*" />
 	    		
 	    		<include name="META-INF/**/*.*" />
 	    		<include name="js/msg/js/en_us.js" />
