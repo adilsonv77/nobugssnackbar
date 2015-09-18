@@ -24,12 +24,12 @@ public class Messages extends ListResourceBundle implements Serializable {
 
 		if (contents == null)
 			try {
-				InputStream inputStream = getClass().getResourceAsStream("/pt/uc/dei/nobugssnackbar/i18n/messages_" + fileName + ".properties");
+				InputStream inputStream = getClass().getResourceAsStream("messages_" + fileName + ".properties");
 				
 				Properties props = new Properties();
 				props.load(inputStream);
 				
-				inputStream = getClass().getResourceAsStream("/pt/uc/dei/nobugssnackbar/i18n/" + fileName + ".json");
+				inputStream = getClass().getResourceAsStream(fileName + ".json");
 				JsonObject jsonObject = JsonObject.readFrom(new InputStreamReader( inputStream ));
 				
 				contents = new Object[jsonObject.size() + props.values().size()][2];

@@ -239,6 +239,7 @@
 	        <classes dir="${build.home}" >
 	            <include name="**/*.class" />
 	            <include name="**/*.properties" />
+	        	<include name="**/*.json" />
 	            <include name="**/*.xml" />
 	        	<exclude name="nobugssnackbar/**/*.*"/>
 	        </classes>

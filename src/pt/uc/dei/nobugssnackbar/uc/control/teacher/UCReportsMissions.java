@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.uc.control.teacher;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,9 @@ import pt.uc.dei.nobugssnackbar.model.User;
 
 @ManagedBean(name = "ucreportsmissions")
 @ApplicationScoped
-public class UCReportsMissions {
+public class UCReportsMissions  implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value = "#{factoryDao.clazzDao}")
 	private transient ClazzDao clazzDao;
