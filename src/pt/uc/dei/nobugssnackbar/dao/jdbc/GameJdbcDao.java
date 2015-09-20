@@ -1870,6 +1870,7 @@ public class GameJdbcDao implements GameDao {
 			while (rs.next()) {
 				Map<String, String> user = new HashMap<>();
 
+				user.put("id", rs.getString(1));
 				user.put("name", rs.getString(2));
 				user.put("executions", rs.getString(4));
 				user.put("timespend", rs.getString(5));
@@ -1887,6 +1888,98 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 		return users;
+	}
+
+	@Override
+	public List<Map<String, Object>> loadAttemptsFromUser(long userId,
+			int missionId) throws Exception {
+		List<Map<String, Object>> lattempts = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps;
+			ps = bdCon.prepareStatement("select executions, answer from missionsaccomplished where userid = ? and missionid = ?");
+			
+			ps.setLong(1, userId);
+			ps.setInt(2, missionId);
+			
+			
+			// create items in the list based on the number of attempts
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				int attempts = rs.getInt(1) + 1; // execution zero, before the first execution, and the current, after the last execution
+				HashMap<String, Object> at = null;
+				for (int i=0; i<=attempts; i++) {
+					at = new HashMap<String, Object>();
+					lattempts.add(at);
+				}
+				
+				at.put("answer", rs.getString(2));
+			}
+			ps.close();
+			
+			// see the fails : which goals failed 
+			ps = bdCon.prepareStatement("select execution, goaldescription from missionsfails where userid = ? and missionid = ? and goalachieved = 'F'");
+			ps.setLong(1, userId);
+			ps.setInt(2, missionId);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Map<String, Object> at = lattempts.get(rs.getInt(1));
+				@SuppressWarnings("unchecked")
+				List<String> fails = (List<String>) at.get("fails");
+				if (fails == null)
+					fails = new ArrayList<>();
+				
+				fails.add( rs.getString(2) );
+				
+				at.put("fails", fails);
+			}
+			ps.close();
+			
+			// see the errors : wrong use of the commands... 
+			ps = bdCon.prepareStatement("select execution, errormessage from missionserrors where userid = ? and missionid = ?");
+			ps.setLong(1, userId);
+			ps.setInt(2, missionId);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				Map<String, Object> at = lattempts.get(rs.getInt(1));
+				@SuppressWarnings("unchecked")
+				List<String> errors = (List<String>) at.get("errors");
+				if (errors == null)
+					errors = new ArrayList<>();
+				
+				errors.add( rs.getString(2) );
+				
+				at.put("errors", errors);
+			}
+			ps.close();
+
+			// see the answer in each attempt
+			ps = bdCon.prepareStatement("select execution, answer from logmissions  where userid = ? and missionid = ? order by moment");
+			ps.setLong(1, userId);
+			ps.setInt(2, missionId);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				Map<String, Object> at = lattempts.get(rs.getInt(1));
+				at.put("answer", rs.getString(2)); // the oldest is lost
+			}
+			ps.close();
+			
+		
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		return lattempts;
 	}
 
 }

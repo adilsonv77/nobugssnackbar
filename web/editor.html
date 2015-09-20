@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   
-  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no">
   <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <meta HTTP-EQUIV="Expires" CONTENT="-1">
   <title>NoBug's Snack Bar</title>
@@ -15,6 +14,24 @@
   <script src="js/_soy/soyutils.js"></script>
   <script src="js/commons/common.js"></script>
   <script src="js/nobugs.js"></script>
+  <script>
+	function loadEditor (ffAlternative, toolBox, showTrashCan, showSave) {
+		
+		fAlternative = ffAlternative;
+		
+		Blockly.myToolBox = toolBox;
+		
+		Blockly.showTrashCan = showTrashCan;
+		
+		var saveButton = document.getElementById("save");
+		saveButton.style.display = (showSave?"inline":"none");
+		
+		EditorNoBug.init(); 
+		
+	} 
+	
+  
+  </script>
 </head>
 	<!--[if !IE]> -->
 		<body onload="nav.onload()">
@@ -22,6 +39,7 @@
 	    		document.write(editor.start({}, null,
 	        		{lang: BlocklyApps.LANG,
 	         		langSrc: BlocklyApps.languagePack()}));
+	    		
 	  		</script>
   		</body>
 	<!--[endif]-->

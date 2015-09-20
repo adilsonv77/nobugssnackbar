@@ -5,17 +5,18 @@
 	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
 
 	<ui:define name="body">
-  		<script type="text/javascript" src="/nobugssnackbar/dwr/engine.js"></script>
-  		<script type="text/javascript" src="/nobugssnackbar/dwr/interface/TeacherControl.js"></script>
-		
+  		<script src="#{facesContext.externalContext.requestContextPath}/dwr/engine.js" type="text/javascript"></script>
+  		<script src="#{facesContext.externalContext.requestContextPath}/dwr/interface/TeacherControl.js" type="text/javascript"></script>
+
   	    <h:outputScript name="missionsstatus.js"/>
-		
-		<h:form>
+  	    
+  	    
+		<h:form id="frmStatusMissions">
 			<p:panelGrid columns="2"  styleClass="ui-noborder" >
 				<p:selectOneMenu value="#{statusMissions.clazz}" widgetVar="clazzTeacher">
 	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
 	 				<f:selectItems value="#{statusMissions.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
-					<p:ajax event="change" oncomplete="StatusMissions.callLoadMissions()"/>
+					<p:ajax event="change" update="usersFromMission" oncomplete="StatusMissions.callLoadMissions()"/>
 					<f:attribute name="dataProvider" value="statusMissions.clazzes"/>
 				</p:selectOneMenu>
 				
@@ -27,22 +28,97 @@
 		
 			<p:remoteCommand name="updateMission" action="#{statusMissions.loadUsersFromMission}" update="usersFromMission"/>
 			
-			<p:dataTable id="usersFromMission" value="#{statusMissions.usersFromMission}"  var="u">
+			<p:dataTable id="usersFromMission" value="#{statusMissions.usersFromMission}"  var="user">
 		        <p:column headerText="#{msg.name}">
-		            <h:outputText value="#{u.name}"/>
+		            <h:outputText value="#{user.name}"/>
 		        </p:column>
 
 		        <p:column headerText="#{msg.runs}">
-		            <h:outputText value="#{u.executions}"/>
+		            <h:outputText value="#{user.executions}"/>
 		        </p:column>
 
 		        <p:column headerText="#{msg.timespend}">
-		            <h:outputText value="#{u.timespend}"/>
+		            <h:outputText value="#{user.timespend}"/>
 		        </p:column>
 		        
-		        <p:column></p:column>
+		        <p:column>
+		        	<p:commandButton icon="ui-icon-search" title="#{msg.view}" rendered="#{user.executions != null}" 
+								actionListener="#{statusMissions.loadUserAttempts()}"
+								oncomplete="PF('userStatus').show()"
+								update="frmStatusMissions:dlgUserStatus">
+						<f:param name="userId" value="#{user.id}" />
+						<f:param name="userName" value="#{user.name}" />
+                   </p:commandButton>
+		        </p:column>
 			</p:dataTable>
+
+			<p:dialog id="dlgUserStatus" widgetVar="userStatus" modal="true" fitViewport="true" width="90%"
+						header="#{statusMissions.selectedUser}">
+
+				<p:dataTable value="#{statusMissions.userAttempts}" var="ua" rowIndexVar="row" rows="10" paginator="true">
+					<p:column width="50">
+						<h:outputText value="#{row}"/>
+					</p:column>
+					<p:column headerText="Erros">
+						<ul>
+							<ui:repeat var="error" value="#{ua.errors}">
+								<li><h:outputText value="#{error}"/></li>					
+							</ui:repeat>
+						</ul>
+					</p:column>
+					<p:column headerText="Objetivos não cumpridos">
+						<ul>
+							<ui:repeat var="fail" value="#{ua.fails}">
+								<li><h:outputText value="#{fail}"/></li>					
+							</ui:repeat>
+						</ul>
+					</p:column>
+					<p:column>
+			        	<p:commandButton icon="ui-icon-search" title="#{msg.view}"
+			        				rendered="#{ua.answer != null}"
+									actionListener="#{statusMissions.loadAnswer(row)}"
+									oncomplete="showAnswer('#{ua.answer}')"
+									update="frmStatusMissions:dlgUserAnswer"
+									>
+	                   </p:commandButton>
+					</p:column>
+				</p:dataTable>
+		        			
+				
 			
+			</p:dialog>
+			
+			<p:dialog id="dlgUserAnswer" widgetVar="userAnswer" modal="true" 
+					width="800"
+					maximizable="true"
+					>
+				<iframe id="editorBlockly" src="#{facesContext.externalContext.requestContextPath}/editor.html"
+					 style="width:100% !important; height:500px !important;">
+				</iframe>
+			</p:dialog>
+			
+			<script>
+
+			function showAnswer(answer) {
+				document.getElementById('editorBlockly').onload = function() {
+					
+					var iframe = document.getElementById("editorBlockly");
+					var iWin = iframe.contentWindow;
+					
+					var WinLoadEditor = iWin.loadEditor;
+					
+					var fAlternative = function() {return answer;};
+					
+					WinLoadEditor(fAlternative, '<xml></xml>', false, false);
+					
+				};
+				
+
+				PF('userAnswer').show();
+				
+			}
+			
+			</script>
 		</h:form>
 		
 		<script>

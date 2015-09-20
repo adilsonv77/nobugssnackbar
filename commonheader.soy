@@ -15,59 +15,66 @@
 {template .start}
    {let $v: randomInt(999999)/}
 
-  <link rel="stylesheet" type="text/css" href="css/vars.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/blackboard.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/leaderboard.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/avatar.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/chardialog.css?v={$v}" />
+   {let $cp}
+   {if isNonnull($ij.contextPath)}
+   	  {$ij.contextPath}
+   {/if}
+   {/let}
+   
+
+  <link rel="stylesheet" type="text/css" href="{$cp}css/vars.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/blackboard.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/leaderboard.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/avatar.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/chardialog.css?v={$v}" />
   
   /* it's outside the third folder because I modified it */
-  <link rel="stylesheet" type="text/css" href="css/tooltip-theme-arrows.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/tooltip-theme-arrows.css?v={$v}" />
   
-  <link rel="stylesheet" type="text/css" href="css/third/jquery.growl.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/third/drop-theme-arrows-alert.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/jquery.growl.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/drop-theme-arrows-alert.css?v={$v}" />
 
-  <link rel="stylesheet" type="text/css" href="css/third/jquery.countup.css?v={$v}">
-  <link rel="stylesheet" type="text/css" href="css/third/jquery.mCustomScrollbar.min.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/third/evol.colorpicker.min.css?v={$v}" />
-  <link rel="stylesheet" type="text/css" href="css/third/jquery.simplemodal.confirm.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/jquery.countup.css?v={$v}">
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/jquery.mCustomScrollbar.min.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/evol.colorpicker.min.css?v={$v}" />
+  <link rel="stylesheet" type="text/css" href="{$cp}css/third/jquery.simplemodal.confirm.css?v={$v}" />
   
-  <script type="text/javascript" src="js/blockly_compressed.js?v={$v}"></script>
-  <script type="text/javascript" src="js/blocks_compressed.js?v={$v}"></script>
-  <script type="text/javascript" src="js/javascript_compressed.js?v={$v}"></script>
-  <script type="text/javascript" src="{$ij.langSrc}?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/blockly_compressed.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/blocks_compressed.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/javascript_compressed.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}{$ij.langSrc}?v={$v}"></script>
 
-  <script type="text/javascript" src="js/third/jquery.min.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/jquery.growl.js?v={$v}" ></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.growl.js?v={$v}" ></script>
 
-  <script type="text/javascript" src="js/third/jquery.easytabs.min.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/jquery.ingrid.js?v={$v}"></script> 
+  <script type="text/javascript" src="{$cp}js/third/jquery.easytabs.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.ingrid.js?v={$v}"></script> 
 
-  <script  type="text/javascript" src="js/third/jquery.mCustomScrollbar.concat.min.js?v={$v}"></script>
+  <script  type="text/javascript" src="{$cp}js/third/jquery.mCustomScrollbar.concat.min.js?v={$v}"></script>
   
-  <script type="text/javascript" src="js/third/tether.min.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/drop.min.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/tooltip.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/tether.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/drop.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/tooltip.min.js?v={$v}"></script>
 
-  <script type="text/javascript" src="js/third/jquery.countup.base.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/jquery.countup.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.countup.base.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.countup.js?v={$v}"></script>
 
-  <script type="text/javascript" src="js/third/acorn_interpreter.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/acorn_interpreter.js?v={$v}"></script>
   
-  <script type="text/javascript" src="js/third/jquery-ui-custom.min.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/evol.colorpicker.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery-ui-custom.min.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/evol.colorpicker.min.js?v={$v}"></script>
 
-  <script type="text/javascript" src="js/third/jquery.simplemodal.js?v={$v}"></script>
-  <script type="text/javascript" src="js/third/jquery.simplemodal.confirm.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.simplemodal.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/third/jquery.simplemodal.confirm.js?v={$v}"></script>
 
-  <script type="text/javascript" src="dwr/engine.js"></script>
-  <script type="text/javascript" src="dwr/util.js"></script>
-  <script type="text/javascript" src="dwr/interface/UserControl.js?v={$v}"></script>
-  <script type="text/javascript" src="js/nobugs/signup.js"></script>
+  <script type="text/javascript" src="{$cp}dwr/engine.js"></script>
+  <script type="text/javascript" src="{$cp}dwr/util.js"></script>
+  <script type="text/javascript" src="{$cp}dwr/interface/UserControl.js?v={$v}"></script>
+  <script type="text/javascript" src="{$cp}js/nobugs/signup.js"></script>
   
-  <script type="text/javascript" src="js/cufon/cufon-yui.js"></script>
-  <script type="text/javascript" src="js/cufon/DK_Crayon_Crumble.font.js"></script>
-  <script type="text/javascript" src="js/cufon/LavosHandy.js"></script>
+  <script type="text/javascript" src="{$cp}js/cufon/cufon-yui.js"></script>
+  <script type="text/javascript" src="{$cp}js/cufon/DK_Crayon_Crumble.font.js"></script>
+  <script type="text/javascript" src="{$cp}js/cufon/LavosHandy.js"></script>
   
   <script>
   dwr.util.useLoadingMessage();

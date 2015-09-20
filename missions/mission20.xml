@@ -21,8 +21,9 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 		<errors>
 		   <!-- selected iddle because the type of dialog -->
 		   <hint category="Iddle" time="0" condition="Hints.isGoalNotAchieved(7)">
-		   No bloco [talk] precisa falar a SOMA da quantidade de lanches multiplicado pelo seu pre&#231;o unit&#225;rio com 
-		    a quantidade de bebidas tamb&#233;m multiplicado pelo seu pre&#231;o.
+		   No bloco [talk] precisa falar a SOMA das vendas dos lanches e das bebidas. Ou seja, some todos os lanches e multiplique pelo seu pre&#231;o. 
+		   Guarde esse total das vendas de lanches numa vari&#225;vel. Fa&#231;a o mesmo com as bebidas. Ao final SOME os dois totais para alcan&#231;ar o 
+		   total das vendas.
 		   </hint>
 		</errors>
 	</hints>

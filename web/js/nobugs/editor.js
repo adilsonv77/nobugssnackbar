@@ -81,13 +81,23 @@ EditorNoBug.init = function() {
 	  
 	  EditorNoBug.blockly = document.getElementById('blockly');
 	  
+	  var showTrashCan = (Blockly.showTrashCan === undefined?true:Blockly.showTrashCan);
+	  
 	  Blockly.inject(EditorNoBug.blockly,
 			     { media: "media/",
 			       rtl: false,
 			       toolbox: toolbox,
-			       trashcan: true,
+			       trashcan: showTrashCan,
 			       comments: false,
-			       scrollbars: true});
+			       scrollbars: true,
+			       zoom:
+		             {enabled: true,
+		              controls: true,
+		              wheel: true,
+		              maxScale: 2,
+		              minScale: .1,
+		              scaleSpeed: 1.1
+		             }});
 
 	var top = document.getElementById('title').clientHeight;
 	EditorNoBug.blockly.style.top = Math.max(70, top - window.pageYOffset) + 'px';
@@ -149,5 +159,8 @@ EditorNoBug.genJS = function() {
 	 
 };
 
+/*
+From now, the code needs to call EditorNoBug.init() 
 window.addEventListener('load', EditorNoBug.init);
+*/
 

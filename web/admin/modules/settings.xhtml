@@ -71,7 +71,7 @@
 		       			 </p:selectBooleanCheckbox>
 		       			 
 		       			 <h:outputText value=" #{msg['loadBlocks']} "/>
-		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="PF('loadBlocksDlg').show()"
+		       			 <p:commandButton id="loadBlocks" value="#{msg['open']}" oncomplete="EditorNoBug.init(); PF('loadBlocksDlg').show()"
 		        			disabled="#{!msVC.selectedLoadBlocks}" update="loadBlocksDialog"/>
 	        		</p:column>
         		</p:panelGrid>

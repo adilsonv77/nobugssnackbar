@@ -33,6 +33,11 @@ public class UCReportsMissions  implements Serializable {
 		return gameDao.loadUsersInTheMission(clazzId, missionId, lu);
 	}
 
+	public List<Map<String, Object>> loadAttemptsFromUser(long userId,
+			int missionId) throws Exception {
+		return gameDao.loadAttemptsFromUser(userId, missionId);
+	}
+
 	public ClazzDao getClazzDao() {
 		return clazzDao;
 	}

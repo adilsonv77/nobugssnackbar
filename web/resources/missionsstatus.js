@@ -1,9 +1,10 @@
 var StatusMissions = {};
 
-StatusMissions.hMax = 80;
+StatusMissions.hMax = 100;
 StatusMissions.iframe = null;
 StatusMissions.canvas = null;
-StatusMissions.squareWidth = 120;
+StatusMissions.squareWidth = 150;
+StatusMissions.squareDrawWidth = 130;
 StatusMissions.w = 0;
 StatusMissions.h = 0;
 StatusMissions.yDesloc = 10;
@@ -12,6 +13,7 @@ StatusMissions.ctx = null;
 StatusMissions.my_gradient = null;
 StatusMissions.my_gradient_hover = null ;
 StatusMissions.missions = null;
+StatusMissions.font = "12px Arial";
 
 StatusMissions.callLoadMissions = function() {
 	var select = PF('clazzTeacher').value;
@@ -36,11 +38,11 @@ StatusMissions.testMouseOver = function(x, y) {
 	if (StatusMissions.missions == null)
 		return null;
 	
-	if (y > StatusMissions.yDesloc+50 || y < StatusMissions.yDesloc)
+	if (y > StatusMissions.yDesloc+70 || y < StatusMissions.yDesloc)
 		return null;
 	
 	var squarecount = Math.floor(x/StatusMissions.squareWidth);
-	if (x < StatusMissions.xDesloc || x > StatusMissions.xDesloc + (squarecount*StatusMissions.squareWidth) + 100)
+	if (x < StatusMissions.xDesloc || x > StatusMissions.xDesloc + (squarecount*StatusMissions.squareWidth) + StatusMissions.squareDrawWidth)
 		return null;
 	
 	var m = StatusMissions.missions[squarecount];
@@ -62,38 +64,48 @@ StatusMissions.drawSquare = function(x, y, gradient, mission) {
 		StatusMissions.ctx.fillStyle = "#000000";
 		StatusMissions.ctx.font = "20px Arial";
 		StatusMissions.ctx.fillText(" . . . ", x+30, y+40);
-		StatusMissions.ctx.font = "12px Arial";
+		StatusMissions.ctx.font = StatusMissions.font;
 		
 	} else {
 		
 		var name = mission.idx + "-" + mission.name;
 		
 		StatusMissions.ctx.strokeStyle = "black";
-		StatusMissions.ctx.strokeRect(x, y, 100, 70);
+		StatusMissions.ctx.strokeRect(x, y, StatusMissions.squareDrawWidth, StatusMissions.hMax-10);
 
 		StatusMissions.ctx.fillStyle = gradient;
-		StatusMissions.ctx.fillRect(x, y, 100, 70);
+		StatusMissions.ctx.fillRect(x, y, StatusMissions.squareDrawWidth, StatusMissions.hMax-10);
 		
 		StatusMissions.ctx.fillStyle = "#FFFFFF";
 		
 		var part = name;
-		while (StatusMissions.ctx.measureText(part).width > 95) {
+		while (StatusMissions.ctx.measureText(part).width > StatusMissions.squareDrawWidth-5) {
 			part = part.substring(0, part.length-1);
 		};
 		
 		StatusMissions.ctx.fillText(part, x+5, y+20);
 		
 		if (part !== name) {
-			part = name.substring(part.length+1);
-			while (StatusMissions.ctx.measureText(part).width > 95) {
+			name = name.substring(part.length);
+			part = name;
+			while (StatusMissions.ctx.measureText(part).width > StatusMissions.squareDrawWidth-5) {
 				part = part.substring(0, part.length-1);
 			};
 			StatusMissions.ctx.fillText(part, x+5, y+40);
+			
+			if (part !== name) {
+				name = name.substring(part.length);
+				part = name;
+				while (StatusMissions.ctx.measureText(part).width > StatusMissions.squareDrawWidth-5) {
+					part = part.substring(0, part.length-1);
+				};
+				StatusMissions.ctx.fillText(part, x+5, y+60);
+			}
 		}
 		
-		StatusMissions.ctx.fillText(mission.qtdUsers, x+50, y+60);
+		StatusMissions.ctx.fillText(mission.qtdUsers, x+50, y+80);
 		
-		StatusMissions.ctx.drawImage(StatusMissions.img, x+34, y+50);
+		StatusMissions.ctx.drawImage(StatusMissions.img, x+34, y+70);
 
 	}
 	
@@ -122,11 +134,11 @@ StatusMissions.teacherControlLoadMissionsRet = function (retx) {
 	
 	StatusMissions.missions = retx;
 
-	StatusMissions.canvas.width = (StatusMissions.missions == null?0:StatusMissions.missions.length*120);
+	StatusMissions.canvas.width = (StatusMissions.missions == null?0:StatusMissions.missions.length*StatusMissions.squareWidth);
 	StatusMissions.w = StatusMissions.canvas.width;
 	
 	// after canvas.width, some settings are reset
-	StatusMissions.ctx.font = "12px Arial";
+	StatusMissions.ctx.font = StatusMissions.font;
 	StatusMissions.ctx.lineWidth = 1;
 	
 	// StatusMissions.missions[0][1] :: 0 - missions; 1 - data of missions (id, idx, name, qtdUsers)
@@ -154,12 +166,12 @@ StatusMissions.initFormStatusMissions = function () {
 		
 		StatusMissions.h = StatusMissions.canvas.height;
 		
-		StatusMissions.my_gradient = StatusMissions.ctx.createLinearGradient(0,0,0,50);
+		StatusMissions.my_gradient = StatusMissions.ctx.createLinearGradient(0,0,0,StatusMissions.hMax);
 		StatusMissions.my_gradient.addColorStop(0,"#2989d8");
 		StatusMissions.my_gradient.addColorStop(0.5,"#7db9e8");
 		StatusMissions.my_gradient.addColorStop(1,"#207cca");
 		
-		StatusMissions.my_gradient_hover = StatusMissions.ctx.createLinearGradient(0,0,0,50);
+		StatusMissions.my_gradient_hover = StatusMissions.ctx.createLinearGradient(0,0,0,StatusMissions.hMax);
 		StatusMissions.my_gradient_hover.addColorStop(0,"#207cca");
 		StatusMissions.my_gradient_hover.addColorStop(0.5,"#2989d8");
 		StatusMissions.my_gradient_hover.addColorStop(1,"#207cca");
