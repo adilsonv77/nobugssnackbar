@@ -625,7 +625,7 @@ function createRightDlg(x, y, text, modal) {
 	style.left = (x - 325) + "px";
 	
 	//BlocklyApps.showDialog(dialog, null, false, modal, style, null);
-	MyBlocklyApps.showDialog(dialog, null, false, modal, false, Game.missionTitle, style, null, function(){}, modal);
+	MyBlocklyApps.showDialog(dialog, null, false, modal, false, Game.missionTitle, style, null, function(){Hints.hideHintWithTimer();}, modal);
 
 };
 
@@ -637,7 +637,7 @@ function createInfoDlg(contentTxt, style, title, modal) {
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = contentTxt;
 
-	MyBlocklyApps.showDialog(content, null, true, modal, false, title, style, null, function(){}, modal);
+	MyBlocklyApps.showDialog(content, null, true, modal, false, title, style, null, function(){Hints.hideHintWithTimer();}, modal);
 
 }
 

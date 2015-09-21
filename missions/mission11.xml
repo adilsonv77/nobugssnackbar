@@ -41,6 +41,14 @@
 			que permitem gerir o zoom da &#225;rea de trabalho.
 			]]>
 			</hint>
+
+			<hint category="Iddle" modal="true"  condition = "Hints.showedHint() == false &amp;&amp; Hints.howManyRuns() &gt; 10">
+			<![CDATA[
+			Como podes ter somente duas vari&#225;veis nessa miss&#227;o, vais usar uma para anotar o pedido de comida e outro de bebida da cada cliente.
+			Ou seja, atenda UM cliente por vez. Atenda o primeiro cliente, pergunte o que ele deseja comer e beber, e traga os pedidos dele. Depois, selecione todos 
+			os blocos mantendo a tecla CTRL pressionada, copie (CTRL+C) e cole (CTRL+V) e altere para os clientes nas posi&#231;&#245;es 2 e 3.
+			]]>
+			</hint>
 		</sequence>
 	</hints>
 	<commands>
