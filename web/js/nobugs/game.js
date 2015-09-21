@@ -1553,6 +1553,8 @@ Game.goBackToDashboard = function(evt, callInit) {
 Game.closeBlockEditorStuffs = function() {
 
     Hints.stopHints();
+    
+    $("#tests").css("display", "none");
 
     Game.stopAlertGoalButton();
 	BlocklyApps.hideDialog(false);
@@ -1593,6 +1595,7 @@ Game.closeBlockEditorStuffs = function() {
 };
 
 Game.logoffButtonClick = function() {
+	
 	LogClick.store("logoffgame");
 	
 	Game.loginData.doingLogoff = true;
@@ -1610,12 +1613,13 @@ Game.logoffButtonClick = function() {
 	LogClick.save(false); // store the cache 
 	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff
 	
-	UserControl.logoff(function(){
+	// passing callback and async is necessary in FF, because, when unloads the page, it doesnt guarantee the ajax method is called 
+	UserControl.logoff({callback:function(){
 		Game.loginData = null;
 		
 		// because is synchronous, we need wait to finish the last request 
 		Game.init();
-	});
+	}, async:false});
 };
 
 /**

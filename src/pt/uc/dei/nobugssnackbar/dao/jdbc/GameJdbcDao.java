@@ -1526,11 +1526,11 @@ public class GameJdbcDao implements GameDao {
 				} 
 				
 				qt = createTestQuestion(rs.getLong(3), rs);
-				t.getQuestions().add(qt);
 				
 				boolean incompleteQuestion = rs.getString(11) != null && rs.getString(11).startsWith("?");
 				
 				if (incompleteQuestion) {
+					t.getQuestions().add(qt);
 					testWithIncompleteQuestion = true;
 					
 					TestQuestionAnswer answer = new TestQuestionAnswer();
@@ -1538,8 +1538,12 @@ public class GameJdbcDao implements GameDao {
 					answer.setTimeSpend(rs.getInt(12));
 					
 					qt.setPreviousAnswer(answer);
-				} else 
+				} else {
+					
 					testWithIncompleteQuestion = testWithIncompleteQuestion || rs.getString(11) == null;
+					if (testWithIncompleteQuestion)
+						t.getQuestions().add(qt);
+				}
 				
 			}
 			
