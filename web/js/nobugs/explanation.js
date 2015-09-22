@@ -16,10 +16,11 @@ Explanation.selectCommands = function(commands) {
 	return ret;
 };
 
-Explanation.showInfo = function(explanation, withHint, afterclosed, instruction) {
+Explanation.showInfo = function(explanation, withHint, afterclosed, instruction, style) {
 	
 	explanation = Explanation.parseUserLogged(explanation); // deal with all pages transformation to HTML
 
+	Explanation.style = (style === undefined?{width:"800px"}:style);
 	instruction = (instruction === undefined?false:instruction);
 	
 	Explanation.instruction = instruction;
@@ -97,7 +98,7 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 		Explanation.evaluateObjectives(nrPage, container);
 	
 	MyBlocklyApps.showDialog(content, null,
-							 false, true, true, Game.missionTitle, {width: "800px"}, afterclosed);
+							 false, true, true, Game.missionTitle, Explanation.style, afterclosed);
 	
 };
 

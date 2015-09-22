@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 Agora os nossos clientes podem ter sede E tamb&#233;m podem ter fome. E, se t&#234;m sede, podem pedir refrigerante ou sumo.<br/><br/>
 <b>Tens a limita&#231;&#227;o de 36 comandos</b> e a possibilidade de receber um b&#244;nus de no m&#237;nimo 30 <img style='vertical-align: middle;' src="images/coin2.png"/> se resolver em 5 minutos.<br/><br/>
@@ -9,6 +9,14 @@ Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.
 ]]>
 		</page>
 
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Vari&#225;veis</b><br/>
+</div></div>
+		]]>
+		</page>
 	</explanation>
 	<commands>
 		<category name="snackMan" show="true" />

@@ -30,6 +30,11 @@ Tests.createForm = function (test) {
 	tr.appendChild(td);
 	
 	var span = document.createElement("span");
+	
+	span.style['display'] = "block";
+	span.style['padding'] = "10px";
+	span.style['margin'] = "10px";
+	
 	span.innerHTML = test.description + "<br/><br/>";
 	var td = document.createElement("td");
 	td.appendChild(span);
@@ -292,7 +297,7 @@ Tests.drawQuestion = function() {
 	canvas.height = "32";
 	
 	stopWatch.appendChild(canvas);
-	stopWatch.innerHTML = stopWatch.innerHTML + "<br/>" + question.timeLimit + " s"; 
+	stopWatch.innerHTML = stopWatch.innerHTML + "<br/>" + (question.timeLimit/60) + " min"; 
 	$("#testquestions").append(stopWatch);
 	
 	CountXP.init("stopWatchTests");
@@ -302,7 +307,7 @@ Tests.drawQuestion = function() {
 		current = question.previousAnswer.timeSpend;
 	}
 	
-	CountXP.config(question.timeLimit, current, 0, 0, null, false);
+	CountXP.config(question.timeLimit, current, 0, 0, null, false, true);
 	CountXP.start();
 	
 	var table = document.createElement("table");

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-21 16:14:52.678000",
+		"lastupdated": "2015-09-22 23:11:54.976000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -223,6 +223,7 @@
 	"NoBugs.varvalue": "Value",
 	"NoBugs.RunButtonDisabled": "Because you tried sometimes unsuccessfully, I disabled the run button only in this mission. I believe the debug button will be most useful to you.",
 	"Profile.WrongPassword": "The password is empty or both fields does not have the same values",
+	"Profile.PlaceHolder": "Fill this field then will not request it automatically",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",

@@ -5,13 +5,14 @@ var CountXP = {};
 CountXP.init = function(canvasId) {
 	
 	if (CountXP.ctx != null)
-		CountXP.stop();
+		CountXP.stop(true);
 	
 	CountXP.ctx = document.getElementById(canvasId).getContext("2d");
 	
 };
 
-CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars, showPoints) {
+CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime) {
+	CountXP.stopShowingWhenReachTheTime = (stopShowingWhenReachTheTime === undefined?false:stopShowingWhenReachTheTime);
 	CountXP.eventChangeStars = eventChangeStars;
 	CountXP.showPoints = showPoints;
 	
@@ -39,9 +40,9 @@ CountXP.start = function() {
 	}
 };
 
-CountXP.stop = function() {
+CountXP.stop = function(clearRect) {
 	
-	if (CountXP.ctx != null) {
+	if (clearRect && CountXP.ctx != null) {
 		
 		CountXP.ctx.clearRect(0, 0, 32, 32);
 		
@@ -53,6 +54,10 @@ CountXP.stop = function() {
 CountXP.tick = function() {
 	
 	CountXP.draw();
+	
+	if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
+		CountXP.stop(false);
+	}
 	
 	CountXP.current++;
 	if (CountXP.current > CountXP.umaFracao) {
@@ -80,8 +85,12 @@ CountXP.draw = function() {
 	
 	ctx.stroke();
 
+	var clockPointer = CountXP.current/CountXP.umaFracao;
+	if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
+		clockPointer = 1;
+	} 
 	ctx.beginPath();
-	ctx.arc(16,18,5,1.5*Math.PI,(1.5+((CountXP.current/CountXP.umaFracao)*2))*Math.PI, false);
+	ctx.arc(16,18,5,1.5*Math.PI,(1.5+((clockPointer)*2))*Math.PI, false);
 	ctx.lineWidth = 10;
 	ctx.strokeStyle = '#ad2323';	
 	ctx.stroke();
@@ -105,7 +114,7 @@ CountXP.changeImgs = function() {
 		
 		CountXP.ctx.clearRect(0, 0, 32, 32);
 		$("#xpPoints").html("+ " + CountXP.pointsFinal);
-		CountXP.stop();
+		CountXP.stop(true);
 		
 	}
 };

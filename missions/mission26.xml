@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de chocolate.
  Para divulgar esse novo produto, estamos com uma nova promo&#231;&#227;o: na compra de dois cachorros e uma bebida, o cliente
@@ -13,6 +13,14 @@ Compramos um novo equipamento para a nossa esplanada: agora servimos gelados de 
 ]]>
 		</page>
 
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Vari&#225;veis</b><br/>
+</div></div>
+		]]>
+		</page>
 	</explanation>
 	<commands>
 		<category name="snackMan" show="true" />

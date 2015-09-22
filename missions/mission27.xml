@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de gelado. Agora temos morango, baunilha e chocolate.
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu 3 lanches ou 3 bebidas, ele recebe um gelado de morango. 
@@ -16,6 +16,14 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 ]]>
 		</page>
 
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Vari&#225;veis</b><br/>
+</div></div>
+		]]>
+		</page>
 	</explanation>
 	<commands>
 		<category name="snackMan" show="true" />

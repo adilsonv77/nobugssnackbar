@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="true">
+		<page type="goal">
 		<![CDATA[
 		- adicionar recursos para maquina de gelado.
 		- uso obrigatorio do operador de comparacao
@@ -10,7 +10,7 @@
  <i>falso</i> E <i>qualquer valor</i> resultar&#225; em <i>falso</i>.  <br/><br/>
 		]]>
 		</page>
-		<page>
+		<page type="goal">
 		<![CDATA[
 Como j&#225; te ensinei algumas ideias para divulga&#231;&#227;o de um novo produto no estabelecimento, podemos parar a promo&#231;&#227;o. Se o cliente 
  desejar gelados, agora ele pode ped&#237;-los. Entretanto, se ele pedir pelo menos dois cachorros e mais um gelado de chocolate, n&#243;s oferecemos 
@@ -22,6 +22,14 @@ O cliente consegue pedir no m&#225;ximo um gelado, e pode pedir 0 a 2 cachorros.
 ]]>
 		</page>
 
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Vari&#225;veis</b><br/>
+</div></div>
+		]]>
+		</page>
 	</explanation>
 	<commands>
 		<category name="snackMan" show="true" />

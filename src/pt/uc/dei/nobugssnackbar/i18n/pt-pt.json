@@ -288,5 +288,6 @@
 	"Profile.retypePassword" : "Redigite a senha",
 	"Profile.save" 			: "Salvar",
 	"Profile.cancel" 		: "Cancelar",
-	"Profile.WrongPassword":"A senha est&#225; em branco ou os dois campos de senha n&#227;o possuem os mesmos valores."
+	"Profile.WrongPassword":"A senha est&#225; em branco ou os dois campos de senha n&#227;o possuem os mesmos valores.",
+	"Profile.PlaceHolder" : "Preencha esse campo para n&#227;o voltar a pedir automaticamente"
 }

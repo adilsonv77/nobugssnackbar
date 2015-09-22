@@ -1,16 +1,22 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation>
-		<page>
+	<explanation hasInstruction="false">
+		<page type="goal">
 		<![CDATA[
 Ufaaaa... Est&#225; a dar trabalho, n&#227;o ? Mas est&#225;s a ficar cada vez melhor a atender clientes. Tanto que sinto que tens condi&#231;&#245;es de n&#227;o s&#243; anotar e entregar, mas 
 tamb&#233;m de come&#231;ar a preparar algumas coisas.<br/>
 <br/>
-Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja. Vou-te ensinar os truques de atender e preparar os sumos.
+Adquiri uma m&#225;quina de fazer sumos. Por isso, inclui no card&#225;pio sumo de laranja. Os comandos novos s&#227;o:<br/>
+<table>
+<tr><td></td><td>Vai até a caixa de frutas</td></tr>
+<tr><td></td><td>Pega uma fruta da caixa, de acordo com o tipo de sumo do pedido do cliente</td></tr>
+<tr><td></td><td>Vai até a máquina para preparar o sumo</td></tr>
+<tr><td></td><td>Com a fruta que tirou da caixa, prepara um sumo</td></tr>
+</table>
 ]]>
 		</page>
 		
-		<page>
+		<page type="goal">
 		<![CDATA[
 O cliente ter&#225; sempre sede. Logo, nesta miss&#227;o nem precisas de perguntar. 
 Come&#231;a por perguntar o que deseja beber. Em seguida, se o pedido foi um 

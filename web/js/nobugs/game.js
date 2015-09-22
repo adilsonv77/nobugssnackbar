@@ -382,7 +382,11 @@ Game.logged = function() {
 		    IntroGame.presentTeacher(function() {
 		    	IntroGame.focusAvatar();
 		    });
-	    }
+	    } else
+	    	if (Game.loginData.userLogged.mail == null && parseInt(Game.loginData.missionHist[0][3]) > 4) {
+	    		$("#profile_mail").attr("placeHolder", BlocklyApps.getMsg("Profile_PlaceHolder"));
+	    		Game.openProfileEditor();
+	    	}
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
 	}
@@ -476,7 +480,7 @@ Game.openProfileEditor = function() {
 	$("#profileErrorRetypePassw").html("");
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogEditProfile"), null, false, true, true, 
-			$("#profileEditorButton").html(), {width:"700px"}, null);
+			$("#profileEditorButton").html(), {width:"700px"}, function() {$("#profile_mail").attr("placeHolder", "");});
 	
 };
 
@@ -1525,7 +1529,7 @@ Game.instructionButtonClick = function() {
 	Blockly.WidgetDiv.hide();
 	Game.stopAlertGoalButton();
 	
-	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false, null, true);
+	Explanation.showInfo(Game.mission.childNodes[0].getElementsByTagName("explanation")[0], false, null, true, {width: "900px"});
 	
 };
 
@@ -1562,7 +1566,7 @@ Game.closeBlockEditorStuffs = function() {
 	
 	var now = new Date().getTime();
 	Game.cleanCronometro();
-    CountXP.stop();
+    CountXP.stop(true);
 	
 	Game.emptyLines();
 	
@@ -2139,7 +2143,7 @@ Game.nextStep = function() {
 					// if there isn't more lines to evaluate
 					Game.resetButtons();
 					
-			    	CountXP.stop();
+			    	CountXP.stop(true);
 			    	
 			    	var r = Game.beforeFinishMission();
 			    	
