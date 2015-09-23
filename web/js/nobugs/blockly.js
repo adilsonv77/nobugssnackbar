@@ -195,9 +195,12 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	    try {
 	        Blockly.hideChaff();
 	        
-	        if (Game.blocksSelected.length == 0)
-	        	Blockly.selected.dispose(true, true);
-	        else {
+	        if (Game.blocksSelected.length == 0) {
+	        	
+	        	if (Blockly.selected.isDeletable())
+	        		Blockly.selected.dispose(true, true);
+	        	
+	        } else {
 	        	
 		  		Game.blocksSelected.forEach(function(block) {
 					if (block.isDeletable())

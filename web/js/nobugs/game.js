@@ -2707,7 +2707,9 @@ Game.showError = function(iderror) {
 	Game.lastErrorData.block = Blockly.selected;
 	Game.lastErrorData.message = container.textContent;
 	
-	UserControl.missionError(Game.howManyRuns, CustomerManager.currentTest+1, iderror[0], Blockly.selected.id, container.textContent);
+	var blockid = (Blockly.selected == null?0:Blockly.selected.id);
+	
+	UserControl.missionError(Game.howManyRuns, CustomerManager.currentTest+1, iderror[0], blockid, container.textContent);
 	
     var style = {top: '120px', width: 'auto'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';

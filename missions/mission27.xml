@@ -3,6 +3,12 @@
 	<explanation hasInstruction="true">
 		<page type="goal">
 		<![CDATA[
+		
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
 Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de gelado. Agora temos morango, baunilha e chocolate.
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu 3 lanches ou 3 bebidas, ele recebe um gelado de morango. 
  Por&#233;m, se ele pediu pelo menos um lanche e uma bebida ent&#227;o ele recebe um gelado de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
@@ -20,7 +26,67 @@ Vais usar o mesmo bloco do <b>"Operador L&#243;gico"</b> <imghex id="m25_1">8950
 		<![CDATA[
 		<div class="ExplainContent">
 <div class="ExplainContentInternal">
-<b>Vari&#225;veis</b><br/>
+<b>Operadores l&#243;gicos</b><br/>
+Operadores l&#243;gicos frequentemente fornecem uma maneira de simplificar instru&#231;&#245;es condicionais aninhadas.
+  Por exemplo, podemos reescrever o c&#243;digo a seguir
+<pre style="margin-top: 0px">	
+<table cellspacing="0" cellpadding="0">
+<tr><td style="padding-left: 10px">if (num1 &lt; 0) {</td></tr>
+<tr><td style="padding-left: 10px">    if (num1 &lt; 10) {</td></tr>
+<tr><td style="padding-left: 10px">        System.out.println("&#201; um n&#250;mero positivo com um s&#243; d&#237;gito.");</td></tr>
+<tr><td style="padding-left: 10px">    }</td></tr>
+<tr><td style="padding-left: 10px">}</td></tr>
+</table>
+</pre>
+ usando uma &#250;nica condicional:
+<pre style="margin-top: 0px">	
+<table cellspacing="0" cellpadding="0">
+<tr><td style="padding-left: 10px">if (num1 &lt; 0 &#38;&#38; num1 &lt; 10) {</td></tr>
+<tr><td style="padding-left: 10px">    System.out.println("&#201; um n&#250;mero positivo com um s&#243; d&#237;gito.");</td></tr>
+<tr><td style="padding-left: 10px">}</td></tr>
+</table>
+</pre>
+Agora o <i>if</i> tem duas condi&#231;&#245;es (i) num1 menor que zero E (ii) num1 menor que 10. Quando usamos o operador E (&#38;&#38;) o bloco 
+ abaixo do <i>if</i> &#233; executado somente quando ambas as condi&#231;&#245;es forem verdadeiras.
+</div></div>
+		]]>
+		</page>
+
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Operadores l&#243;gicos</b><br/><br/>
+
+Existem tr&#234;s tipos de operadores l&#243;gicos:<br/>
+<table border="1" cellspacing="0" cellpadding="0" style="text-align: center">
+<tr>
+  <th>S&#237;mbolo</th>
+  <th>Significado</th>
+  <th>Exemplo</th>
+</tr>
+<tr>
+  <td>&#38;&#38;</td>
+  <td>E</td>
+  <td>num1 &lt; 0 &#38;&#38; num1 &lt; 10</td> 
+</tr>
+<tr>
+  <td>&#124;&#124;</td>
+  <td>OU</td>
+  <td>num1 % 2 == 0 &#124;&#124; num1 &gt; 100</td> 
+</tr>
+<tr>
+  <td>!</td>
+  <td>N&#195;O</td>
+  <td>!(askHasHunger())</td> 
+</tr>
+</table>
+<br/>
+A primeira linha da tabela j&#225; foi explicada na p&#225;gina anterior. A segunda linha l&#234;-se (i) 
+  o resto da divis&#227;o entre num1 e 2 &#233; igual a zero OU (ii) num1 &#233; maior que 100. Nesse caso basta uma das 
+  duas condi&#231;&#245;es ser verdadeira para o <i>if</i> ser verdadeiro.<br/><br/>
+O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos ler essa express&#227;o como:
+  n&#227;o tem fome. Se essa condi&#231;&#227;o for verdadeira (n&#227;o tem fome) ent&#227;o executa os blocos dentro do <i>if</i>.
 </div></div>
 		]]>
 		</page>

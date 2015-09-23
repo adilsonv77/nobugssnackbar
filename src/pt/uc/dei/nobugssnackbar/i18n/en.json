@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-22 23:11:54.976000",
+		"lastupdated": "2015-09-23 17:59:38.156000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -131,6 +131,9 @@
 	"Error.qtyOfMoneyInvalid": "The first parameter must be a number.",
 	"Error.typeOfMoneyInvalid": "The second parameter must be a bank note or a coin.",
 	"Error.changeExceeded": "You are trying to give the customer more change than necessary.",
+	"Error.isntFrontIceCreamMachine": "he cooker is not in front of the ice cream machine.",
+	"Error.onlyIceCream": "Here the cooker can only pick ice cream.",
+	"Error.isntHungerForIceCream": "The customer doesn't have ice cream.",
 	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
 	"NoBugs.goalAchieved": "New Goal Achieved",
 	"NoBugs.achieved": "Achieved",

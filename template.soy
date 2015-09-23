@@ -677,7 +677,10 @@
     {if $ij.enabled['logic']}
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
       <block type="controls_if"></block>
+       {if $ij.enabled['hide_logic_compare']}
+       {else}
       <block type="logic_compare"></block>
+       {/if}
       
       {if $ij.enabled['logic_operation']}
       	<block type="logic_operation"></block>

@@ -5,15 +5,74 @@
 		<![CDATA[
 Os nossos clientes podem ter fome OU sede (e pedirem refrigerante ou sumo).<br/><br/>
 Atenda todos os pedidos e no final fale o total financeiro das vendas. Lembrando que o cachorro &#233; 2 <img style='vertical-align: middle;' src="images/coin2.png"/>, 
- e o pre&#231;o das bebidas &#233; 3 <img style='vertical-align: middle;' src="images/coin2.png"/>. 
+ e o pre&#231;o das bebidas &#233; 3 <img style='vertical-align: middle;' src="images/coin2.png"/>. <br/><br/>
+  Para adiantar o trabalho, te trouxe a solu&#231;&#227;o da &#250;ltima miss&#227;o.
 ]]>
 		</page>
+
 
 		<page type="instruction">
 		<![CDATA[
 		<div class="ExplainContent">
 <div class="ExplainContentInternal">
-<b>Vari&#225;veis</b><br/>
+<b>Condicionais aninhados</b><br/>
+O <i>if</i> aninhado &#233; simplesmente um <i>if</i> dentro da declara&#231;&#227;o de um outro <i>if</i> externo. O &#250;nico cuidado que devemos ter &#233; o de saber exatamente a qual <i>if</i> um determinado <i>else</i> est&#225; ligado.<br/><br/> 
+O trecho de c&#243;digo abaixo testa se dois n&#250;meros digitados pelo usu&#225;rio s&#227;o iguais. Em caso negativo, qual dos dois &#233; o maior.
+<pre style="margin-top: 0px">	
+<table cellspacing="0" cellpadding="0">
+<tr><td style="border-right: 1px solid gray"></td><td style="padding-left: 10px">...</td></tr>
+<tr><td style="border-right: 1px solid gray">1.</td><td style="padding-left: 10px">int num1 = scanner.nextInt();</td></tr>
+<tr><td style="border-right: 1px solid gray">2.</td><td style="padding-left: 10px">int num2 = scanner.nextInt();</td></tr>
+<tr><td style="border-right: 1px solid gray">3.</td><td style="padding-left: 10px">if (num1 == num2) {</td></tr>
+<tr><td style="border-right: 1px solid gray">4.</td><td style="padding-left: 10px">   System.out.println("Ambos s&#227;o iguais.");</td></tr>
+<tr><td style="border-right: 1px solid gray">5.</td><td style="padding-left: 10px">} else {</td></tr>
+<tr style="background-color: #C7C7C7"><td style="border-right: 1px solid gray">6.</td><td style="padding-left: 10px">   if (num1 > num2) {</td></tr>
+<tr style="background-color: #C7C7C7"><td style="border-right: 1px solid gray">7.</td><td style="padding-left: 10px">      System.out.println("O primeiro &#233; o maior.");</td></tr>
+<tr style="background-color: #C7C7C7"><td style="border-right: 1px solid gray">8.</td><td style="padding-left: 10px">   } else {</td></tr>
+<tr style="background-color: #C7C7C7"><td style="border-right: 1px solid gray">9.</td><td style="padding-left: 10px">      System.out.println("O segundo &#233; o maior.");</td></tr>
+<tr style="background-color: #C7C7C7"><td style="border-right: 1px solid gray">10.</td><td style="padding-left: 10px">  }</td></tr>
+<tr><td style="border-right: 1px solid gray">11.</td><td style="padding-left: 10px">}</td></tr>
+</table>
+</pre>
+Observe que o aninhamento est&#225; entre as linhas 6-10: um <i>if</i> dentro de um <i>else</i>. Esse aninhamento pode ser tornar muito confuso no seu c&#243;digo. 
+ Por isso &#233; importante seguir a boa pr&#225;tica da indenta&#231;&#227;o: colocar espa&#231;os no come&#231;o da linha para visualmente agrup&#225;-las
+ como um bloco.
+</div></div>
+		]]>
+		</page>
+		<page type="instruction">
+		<![CDATA[
+		<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>Condicionais aninhados</b><br/>
+Na p&#225;gina anterior vimos o exemplo de um <i>if</i> aninhado dentro de um <i>else</i>. Entretanto, podemos extrapolar o aninhamento podendo ter blocos <i>if</i> aninhados mesmo dentro de outro <i>if</i>. 
+  Tamb&#233;m podemos ter v&#225;rios blocos de <i>if</i> dentro de outro bloco, ou aninhar dentro de outros blocos <i>if</i> j&#225; aninhados. <br/><br/> 
+O exemplo a seguir complementa o anterior, ao demonstrar todas essas ideias. 
+<pre style="margin-top: 0px">	
+<table cellspacing="0" cellpadding="0">
+<tr><td style="border-right: 1px solid gray"></td><td style="padding-left: 10px">...</td></tr>
+<tr><td style="border-right: 1px solid gray">1.</td><td style="padding-left: 10px">int num1 = scanner.nextInt();</td></tr>
+<tr><td style="border-right: 1px solid gray">2.</td><td style="padding-left: 10px">int num2 = scanner.nextInt();</td></tr>
+<tr><td style="border-right: 1px solid gray">3.</td><td style="padding-left: 10px">if (num1 == num2) {</td></tr>
+<tr><td style="border-right: 1px solid gray">4.</td><td style="padding-left: 10px">   System.out.println("Ambos s&#227;o iguais.");</td></tr>
+<tr style="background-color: #fdfd96"><td style="border-right: 1px solid gray">5.</td><td style="padding-left: 10px">   if (num1 % 2 == 0) {</td></tr>
+<tr style="background-color: #fdfd96"><td style="border-right: 1px solid gray">6.</td><td style="padding-left: 10px">       System.out.println("E ainda s&#227;o pares.");</td></tr>
+<tr style="background-color: #fdfd96"><td style="border-right: 1px solid gray">7.</td><td style="padding-left: 10px">   } else {</td></tr>
+<tr style="background-color: #fdfd96"><td style="border-right: 1px solid gray">8.</td><td style="padding-left: 10px">       System.out.println("E ainda s&#227;o &#237;mpares.");</td></tr>
+<tr style="background-color: #fdfd96"><td style="border-right: 1px solid gray">9. </td><td style="padding-left: 10px">   }</td></tr>
+<tr style="background-color: #9dc1e0"><td style="border-right: 1px solid gray">10.</td><td style="padding-left: 10px">   if (num1 &lt; 10) {</td></tr>
+<tr style="background-color: #9dc1e0"><td style="border-right: 1px solid gray">11.</td><td style="padding-left: 10px">       System.out.println("T&#234;m somente um d&#237;gito.");</td></tr>
+<tr style="background-color: #9dc1e0"><td style="border-right: 1px solid gray">12.</td><td style="padding-left: 10px">   } else {</td></tr>
+<tr style="background-color: #9dc1e0"><td style="border-right: 1px solid gray">13.</td><td style="padding-left: 10px">       System.out.println("T&#234;m mais de um d&#237;gito.");</td></tr>
+<tr style="background-color: #9dc1e0"><td style="border-right: 1px solid gray">14.</td><td style="padding-left: 10px">   }</td></tr>
+<tr><td style="border-right: 1px solid gray">15.</td><td style="padding-left: 10px">} else {</td></tr>
+<tr><td style="border-right: 1px solid gray">16-20</td><td style="padding-left: 10px">   ... </td></tr>
+<tr><td style="border-right: 1px solid gray">21.</td><td style="padding-left: 10px">}</td></tr>
+</table>
+</pre>
+Observe que existem dois blocos aninhados dentro do <i>if</i>, entre as linhas 5-14. Preste aten&#231;&#227;o na import&#226;ncia de indenta&#231;&#227;o para melhorar a legibilidade do
+ c&#243;digo. O bloco em amarelo compara se o numero &#233; par, verificando se o resto da divis&#227;o por 2 &#233; igual a zero (% 2 == 0). O bloco em azul verifica se o n&#250;mero possui um ou mais d&#237;gitos.
+ Ambas as verifica&#231;&#245;es s&#243; acontecem se os n&#250;meros forem iguais.
 </div></div>
 		]]>
 		</page>

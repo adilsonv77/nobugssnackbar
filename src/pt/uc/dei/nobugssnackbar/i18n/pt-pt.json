@@ -106,7 +106,7 @@
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
-	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente.",
+	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente. Antes de executar esse bloco, caminhe at&#233; onde est&#225; o cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",
 	"Error.thereIsntCustomer": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
 	"Error.isntFrontCooler": "O cozinheiro n&#227;o est&#225; em frente &#224; refrigerador.",
@@ -138,6 +138,9 @@
 	"Error.qtyOfMoneyInvalid" : "O primeiro par&#226;metro precisa ser um n&#250;mero.",
 	"Error.typeOfMoneyInvalid" : "O segundo par&#226;metro precisa ser uma moeda ou nota. ",
 	"Error.changeExceeded" : "Voc&#234; est&#225; tentando dar ao cliente mais troco do que o necess&#225;rio.",
+	"Error.isntFrontIceCreamMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de gelados.",
+	"Error.onlyIceCream" : "Aqui o cozinheiro somente consegue obter gelados.",
+	"Error.isntHungerForIceCream" : "O cliente n&#227;o est&#225; com fome de gelado.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",

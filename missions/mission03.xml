@@ -116,7 +116,7 @@ Enquanto depura observe na lista de vari&#225;veis aparecer uma vari&#225;vel e 
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>
 	<xml>
-		<block type="variables_set" inline="true" x = "300" y = "1" deletable = "false" >
+		<block type="variables_set" inline="true" x = "100" y = "1" deletable = "false" >
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
 				<block type="ask_askForFood" deletable = "false" >
@@ -124,14 +124,14 @@ Enquanto depura observe na lista de vari&#225;veis aparecer uma vari&#225;vel e 
 			</value>
 		</block>
 
-		<block type="move_goToBarCounter" x = "300" y = "50" deletable = "false" >
+		<block type="move_goToBarCounter" x = "100" y = "50" deletable = "false" >
 			<value name="VALUE">
 				<block type="math_number" deletable = "false" >
 					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>
-		<block type="move_goToBarCounter" x = "300" y = "100" deletable = "false" >
+		<block type="move_goToBarCounter" x = "100" y = "100" deletable = "false" >
 			<value name="VALUE">
 				<block type="math_number" deletable = "false" >
 					<field name="NUM">3</field>
