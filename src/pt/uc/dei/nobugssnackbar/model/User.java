@@ -56,6 +56,9 @@ public class User {
 	private String mail;
 	
 	@RemoteProperty
+	private boolean showSound;
+	
+	@RemoteProperty
 	private Map<String, String> flags;
 
 	public Map<String, String> getFlags() {
@@ -171,5 +174,13 @@ public class User {
 	
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	
+	public boolean isShowSound() {
+		return showSound;
+	}
+	
+	public void setShowSound(boolean showSound) {
+		this.showSound = showSound;
 	}
 }

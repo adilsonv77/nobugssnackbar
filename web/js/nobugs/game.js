@@ -552,6 +552,15 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   document.getElementById("mainBody").style.display = "inline";
   
+  if (Game.loginData.userLogged.showSound) {
+
+	  $("#musicControl").css("display", "inline");
+      CountXP.times = undefined; // reset this attribute
+	  Game.changeMusicControlButton( !(Game.loginData.userLogged.flags.MUSIC_DISABLED === "true") );
+ 
+  } else
+   	  $("#musicControl").css("display", "none");
+	  
   if (Game.counterInstruction != null) {
 	  mainBody.removeChild(Game.counterInstruction);
 	  Game.counterInstruction = null;
@@ -723,7 +732,7 @@ Game.changeStars = function(starNumber) {
 		window.setTimeout(f, 500);
 	}
 	
-	if (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true")
+	if (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true" || Game.loginData.userLogged.showSound == false)
 		return;
 
  	if (starNumber > 0)
@@ -1072,15 +1081,11 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  
 	  }
 	  
-	  
 	  Game.addCronometro( Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
 	  
-      Game.changeMusicControlButton( !(Game.loginData.userLogged.flags.MUSIC_DISABLED === "true") );
-		  
 	  BlocklyApps.bindClick('musicControl', Game.musicControlClick);
-	  
 	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
 	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
 	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
@@ -1764,14 +1769,16 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		$("#musicOff").css("display", "none");
 		$("#musicOn").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_enableMusic") );
-		Game.tracks[CountXP.times].stop();
+		if (CountXP.times != undefined)
+			Game.tracks[CountXP.times].stop();
 		
 	} else {
 	
 		$("#musicOn").css("display", "none");
 		$("#musicOff").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_disableMusic") );
-		Game.tracks[CountXP.times].play();
+		if (CountXP.times != undefined)
+			Game.tracks[CountXP.times].play();
 		
 	}
 	
