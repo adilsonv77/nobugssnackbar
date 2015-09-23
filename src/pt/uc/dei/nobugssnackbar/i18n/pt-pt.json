@@ -131,7 +131,7 @@
 	"Error.navigatorNotSupported": "Desculpe o transtorno. Este jogo n&#227;o &#233; suportado por este navegador. &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",
 	"Error.incorrectID": "O ID do usu&#225;rio, que voc&#234; est&#225; tentando usar est&#225; incorreto.",
 	"Error.variableDoesntInitialized" : "Existe pelo menos uma vari&#225;vel que n&#227;o recebeu qualquer valor antes desse bloco.\nn \nnObserve que aqui &#233; a primeira vez que a vari&#225;vel &#233; usada. ", 
-	"Error.variableNotInitialized" : "Antes de usar a vari&#225;vel %0, ela precisa ser inicializada com um valor 0 (zero). Crie um bloco de vari&#225;vel e guarde o valor ZERO (aceda esse bloco no menu [Matem&#225;tica]). ", 	"Error.onceVariableIsNotANumber" : "Uma das vari&#225;veis n&#227;o &#233; um n&#250;mero",
+	"Error.variableNotInitialized" : "Antes de usar a vari&#225;vel %0, ela precisa ser inicializada com um valor 0 (zero). \nn \nnLogo no come&#231;o do programa, crie um bloco de vari&#225;vel e guarde o valor ZERO (aceda esse bloco no menu [Matem&#225;tica]). ",  
 	"Error.paramIsNotANumber" : "O par&#226;metro n&#227;o &#233; um n&#250;mero.",
 	"Error.alreadyPaid" : "O cliente j&#225; pagou a refei&#231;&#227;o.",
 	"Error.incorrectAccount" : "A conta est&#225; incorreta. N&#227;o corresponde com o meu pedido.",

@@ -754,6 +754,15 @@ Hints.isGoalNotAchieved = function(idxGoal) {
 	return (!os[idxGoal-1].achieved);
 };
 
+Hints.lastTalkText = function() {
+
+	var tt = hero.talkText;
+	if (tt != null) 
+		return tt.data;
+	else
+		return null;
+};
+
 /****************************************************************************************/
 /**                              Categories                                             */
 /****************************************************************************************/

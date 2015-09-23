@@ -2804,7 +2804,9 @@ $(document).on('click', function(e) {
 	
 	if (t.id === "blockly") {
 		if (e.target.nodeName === "image") {
-			LogClick.store(e.target.getAttribute("clip-path").substring(5));
+			var cp = e.target.getAttribute("clip-path");
+			if (cp != null)
+				LogClick.store(cp.substring(5));
 			return;
 		}
 		
