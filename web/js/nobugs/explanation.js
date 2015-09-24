@@ -219,4 +219,3 @@ Explanation.parseUserLogged = function(explanations) {
 	explanations.setAttribute("done" , "true");
 	return explanations;
 };
-

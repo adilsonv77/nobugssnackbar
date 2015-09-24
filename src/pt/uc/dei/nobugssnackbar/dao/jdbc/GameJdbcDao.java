@@ -1460,7 +1460,8 @@ public class GameJdbcDao implements GameDao {
 			isFirstMission = true;
 		}
 		else
-			isFirstMission = Integer.parseInt(missions[currentLevel][3].toString()) == 0;
+			isFirstMission = (Integer.parseInt(missions[currentLevel][3].toString()) == 0) ||
+			    (user.getId() == 118 && Integer.parseInt(missions[currentLevel][3].toString()) == 2); // essa parte do ou pq esqueci de incluir os testes na bd
 		
 		if (!isFirstMission) {
 			return null; // Tests only happens when before playing the first mission of the current level. 

@@ -1410,7 +1410,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 
 SnackMan.prototype.hasMachineFor = function(product) {
 	
-	if (product === "hotdog" || product === "coke" || product === "juiceoforange")
+	if (product === "hotdog" || product === "coke" || product === "juiceoforange" || product.indexOf("icecreamof") == 0)
 		return true;
 	
 	for( var i= 0; i < this.installedMachines.length; i++ ) {

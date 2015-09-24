@@ -151,7 +151,7 @@ NoBugsJavaScript.newLogicCompare = function(block) {
 function nobugsComparison(arg0, arg1, operator) {
 	
 	if (hero !== null && hero !== undefined)
-		hero.verifyObjectives("useBlock", "logic_compare");
+		hero.verifyObjectives("useBlock", {type:"logic_compare", value:operator.data});
 	
 	operator = NoBugsJavaScript.OPERATORS[(operator.data == null?operator:operator.data)];
 	
@@ -178,17 +178,18 @@ function nobugsComparison(arg0, arg1, operator) {
 	return ret;
 };
 
-NoBugsJavaScript.verifyLogicOperation = function () {
+NoBugsJavaScript.verifyLogicOperation = function (op) {
 	if (hero !== null && hero !== undefined)
-		hero.verifyObjectives("useBlock", "logic_operation");
+		hero.verifyObjectives("useBlock", {type:"logic_operation", value:op.data});
 	
 	return true;
 };
 
 NoBugsJavaScript.newLogicOperation = function(block) {
 	
+	var op = block.getFieldValue('OP');
 	var r = NoBugsJavaScript.oldLogicOperation(block);
-	r[0] = '(verifyLogicOperation()' + " && " + r[0] + ')';
+	r[0] = '(verifyLogicOperation("' + op + '")' + " && " + r[0] + ')';
 	return r;
 	
 };

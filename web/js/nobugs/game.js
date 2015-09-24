@@ -2378,8 +2378,8 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'nobugsMathArith',
           interpreter.createNativeFunction(wrapper));
 
-	wrapper = function() {
-        return interpreter.createPrimitive(NoBugsJavaScript.verifyLogicOperation());
+	wrapper = function(op) {
+        return interpreter.createPrimitive(NoBugsJavaScript.verifyLogicOperation(op));
       };
     
     interpreter.setProperty(scope, 'verifyLogicOperation',

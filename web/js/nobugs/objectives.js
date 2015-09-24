@@ -732,16 +732,24 @@ Objective.UseBlock = function() {};
 
 Objective.UseBlock.prototype.init = function(elem) {
 	var p = Objective.init(elem, this);
+	
 	p.type = elem.getAttribute("type");
+	p.value = elem.getAttribute("value");
+	
 	return p;
 };
 
 Objective.UseBlock.prototype.checkObjective = function(options, objective)  {
-	return (objective.type === options);
+	if (objective.value != null) 
+		if (!(objective.value === options.value))
+			return false;
+	
+	return (objective.type === options.type);
 };
 
 Objective.UseBlock.prototype.createExplanationItem = function(objective)  {
 	var text = BlocklyApps.getMsg("explanation_useblock");
-	return text.format(BlocklyApps.getMsg("descr_" + objective.type));
+	var value = (objective.value != null? " [" + objective.value + "]":"");
+	return text.format(BlocklyApps.getMsg("descr_" + objective.type) + value);
 
 };
