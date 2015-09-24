@@ -88,8 +88,8 @@ TestRT.evalOut = function() {
 	
 	if (TestRT.slot[0] != null && TestRT.slot[1] != null) {
 		var aval =
-					(TestRT.slot[0].valor > TestRT.slot[1].valor) || 
-					(TestRT.slot[0].valor === TestRT.slot[1].valor && TestRT.slot[0].naipe >  TestRT.slot[1].naipe);
+					(TestRT.slot[0].valor < TestRT.slot[1].valor) || 
+					(TestRT.slot[0].valor === TestRT.slot[1].valor && TestRT.slot[0].naipe <  TestRT.slot[1].naipe);
 		
 		if (!aval)
 			return false;

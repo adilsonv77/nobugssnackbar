@@ -154,7 +154,7 @@ TestRT.initTest = function() {
 	TestRT.bolasEsperadas = ["c", "a", "b"];
 	TestRT.direcoesPortasP = [null, '\"$$$posicao_0\"', '\"$$$posicao_1\"', '\"$$$posicao_1\"'];
 	TestRT.direcoesPortasR = [null, '\"$$$posicao_1\"', '\"$$$posicao_1\"', '\"$$$posicao_0\"'];
-	TestRT.saidasEsperadas = ['\"$$$saida_c\"', '\"$$$saida_a\"', '\"$$$saida_b\"'];
+	TestRT.saidasEsperadas = ['\"$$$saida_b\"', '\"$$$saida_a\"', '\"$$$saida_c\"'];
 	TestRT.saidasRealizadas = [];
 };
 

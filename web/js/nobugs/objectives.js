@@ -455,7 +455,14 @@ Objective.DeliverGifts.prototype.checkObjective = function(options, objective)  
 		return false;
 	
 	var typeOfGift = eval(objective.value);
-	
+	if (typeOfGift === "") { // if he must not receive a gift
+		for (var i = 0; i<cust.deliveredItems.length; i++)
+			if (cust.deliveredItems[i].source == null)
+				return false;
+		
+		return true; // is true if the customer didnt received
+	}
+		
 	return (cust.hasReceivedGift(typeOfGift));
 };
 
@@ -496,6 +503,11 @@ Objective.CustomDeliver.prototype.checkObjective = function(options, objective) 
 		return false;
 	
 	var typeOfItem = eval(objective.value);
+	
+	if (typeOfItem === "") { // the customer must not received any item
+		
+		return (cust.fUnfulfilled == 0) && (cust.dUnfulfilled == 0); // there arent any deliver 
+	}
 	
 	var foodOrDrink = null;
 	var itemId = typeOfItem;

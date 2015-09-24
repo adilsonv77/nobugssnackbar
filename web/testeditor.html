@@ -17,46 +17,92 @@
    
   <script src="js/nobugs.js"></script>
 </head>
-		<body>
+		<body onload="fuca()">
 			<script type="text/javascript">
-				var fAlternative;
+			
+			var timer;
+			var fAlternative;
+			var afterGenJS;
+			var TestRT = {};
+			
+			function fuca() {
+				if (EditorNoBug === undefined) {
+					return;
+				}
+					window.clearInterval(timer);
+					
+		    		var script = document.createElement('script');
+		    		script.src = "js/tests/esteiralanguage.js"; // URL do seu script aqui
+		    		document.body.appendChild(script);
+		    		
+		    		script.onload = function() {
+		    			
+			    		 var toolbox = nobugspage.toolbox(null, null, 
+			    				  {enabled: {
+			 				  		 "loop": true, 
+	 		 				  		 "logic_operation": true,
+							  		 "logic": true, "math": true, "vars": true, "function": true}}); 
+				    		
+			    		 Blockly.myToolBox = toolbox;
+				    		
+			    		 EditorNoBug.init();
+				    		
+		    		};
+		    		fAlternative = function() {
+		    			 document.getElementById('genJS').style.display = "inline";
+	            	  return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="esteira_entrargarrafa" deletable="false" editable="false" x="380" y="-157"><next><block type="controls_if" deletable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_corgarrafa" deletable="false" editable="false"><value name="ESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></value><value name="B"><block type="cons_amarela" deletable="false" editable="false"></block></value></block></value><statement name="DO0"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value><next><block type="esteira_encherGarrafa" deletable="false" editable="false"><value name="BICO"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></next></block></next></block></statement><statement name="ELSE"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_encherGarrafa" deletable="false" editable="false"><value name="BICO"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value></block></next></block></next></block></statement><next><block type="esteira_colocarTampa" deletable="false" editable="false"><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_colarRotulo" deletable="false" editable="false"><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="controls_if" deletable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_corgarrafa" deletable="false" editable="false"><value name="ESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">6</field></block></value></block></value><value name="B"><block type="cons_amarela" deletable="false" editable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" deletable="false" editable="false"><field name="VAR">c</field><value name="VALUE"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value></block></statement><statement name="ELSE"><block type="variables_set" deletable="false" editable="false"><field name="VAR">c</field><value name="VALUE"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></statement><next><block type="controls_if" deletable="false" editable="false"><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_qtasGarrafas" deletable="false" editable="false"><value name="CAIXA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></value><value name="B"><block type="math_number" deletable="false" editable="false"><field name="NUM">6</field></block></value></block></value><statement name="DO0"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_novaCaixa" deletable="false" editable="false"><value name="ESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></next></block></statement><next><block type="esteira_garrafaNaCaixa" deletable="false" editable="false"><value name="ESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>';
+		    		};
+					
+		    		afterGenJS = function(code) {
+		           		TestRT.initTest()
+		           		for (var g = 1; g <= 7; g++) {
+		           			
+		           			try {
+			           			TestRT.addGarrafa(TestRT.liquidos[0]);
+	    	           			eval(code);
+			    	           			
+	    	           			TestRT.addGarrafa(TestRT.liquidos[1]);
+	       	           			eval(code);
+	       	           			
+		           				
+		           			} catch (ex) {
+		           				return false;
+		           			}
+		           			
+		           		}
+		           		return TestRT.evalOut([[TestRT.liquidos[0], null, null, null, null, null],
+		           		                               [TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0]]],
+		           		                      [[TestRT.liquidos[1], null, null, null, null, null],
+		           		                               [TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1]]] );
+		    		};
 				
+			}
+			
 	    		document.write(editor.start({}, null,
 	        		{lang: BlocklyApps.LANG,
 	         		langSrc: BlocklyApps.languagePack()}));
 	    		
-	    		var script = document.createElement('script');
-	    		script.src = "js/tests/truco.js"; // URL do seu script aqui
-	    		document.body.appendChild(script);
+	    		timer = window.setInterval(fuca, 1000);
+	    		/*
 	    		
-	    		script.onload = function() {
-	    			
-		    		 var toolbox = nobugspage.toolbox(null, null, 
-		    				  {enabled: {
-		 				  		 "loop": true, 
- 		 				  		 "logic_operation": true,
-						  		 "logic": true, "math": true, "vars": true, "function": true}}); 
-		    		  
+		    	*/	  
 		    		/*	
 		    		 var s = '<category name="Fliper"> <block type="fliper_pegarbola"/> <block type="fliper_dirporta"><value name="PORTA"><block type="cons_porta_p"></block></value></block> <block type="fliper_coloqueBola"><value name="BOLA"><block type="variables_get" id="103"><field name="VAR">bola</field></block></value><value name="SAIDA"><block type="cons_saida_a"></block></value></block> <block type="cons_porta_p"/><block type="cons_porta_r"/><block type="cons_posicao_0"/><block type="cons_posicao_1"/><block type="cons_saida_a"/><block type="cons_saida_b"/><block type="cons_saida_c"/></category>';
 		    			s = s + '<category name="Text"><block type="do_talk"></block><block type="text"></block><block type="text_join"><mutation items="2"></mutation><value name="ADD0"><block type="text"><field name="TEXT">Hello</field></block></value><value name="ADD1"><block type="text"><field name="TEXT">World</field></block></value></block></category></xml>';
 		    			*/
-		    			
+		    		/*	
 		    			
 		    		var s = '<category name="Truco"> <block type="truco_busqueUmaCarta"/> <block type="truco_valorDaCarta"><value name="CARTA"><block type="variables_get"><field name="VAR">carta1</field></block></value></block> <block type="truco_naipeDaCarta"><value name="CARTA"><block type="variables_get"><field name="VAR">carta1</field></block></value></block> <block type="truco_coloqueCartaNoSlot"><value name="CARTA"><block type="variables_get"><field name="VAR">carta1</field></block></value><value name="SLOT"><block type="math_number"><field name="NUM">1</field></block></value></block> </category> </xml>';
 		    			
 		    		toolbox = toolbox.replace('</xml>', s);
-
-		    		Blockly.myToolBox = toolbox;
-		    		
-		    		
-	    		};
+*//*
 	    		
 	            fAlternative = function() {
 	            	
 	            	 document.getElementById('genJS').style.display = "inline";
-	            	return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="variables_set" id="1" x="-31" y="-82"><field name="VAR">carta1</field><value name="VALUE"><block type="truco_busqueUmaCarta" id="2"></block></value><next><block type="variables_set" id="3"><field name="VAR">carta2</field><value name="VALUE"><block type="truco_busqueUmaCarta" id="4"></block></value><next><block type="variables_set" id="5"><field name="VAR">v1</field><value name="VALUE"><block type="truco_valorDaCarta" id="6"><value name="CARTA"><block type="variables_get" id="7"><field name="VAR">carta1</field></block></value></block></value><next><block type="variables_set" id="8"><field name="VAR">v2</field><value name="VALUE"><block type="truco_valorDaCarta" id="9"><value name="CARTA"><block type="variables_get" id="10"><field name="VAR">carta2</field></block></value></block></value><next><block type="variables_set" id="11"><field name="VAR">n1</field><value name="VALUE"><block type="truco_naipeDaCarta" id="12"><value name="CARTA"><block type="variables_get" id="13"><field name="VAR">carta1</field></block></value></block></value><next><block type="variables_set" id="14"><field name="VAR">n2</field><value name="VALUE"><block type="truco_naipeDaCarta" id="15"><value name="CARTA"><block type="variables_get" id="16"><field name="VAR">carta2</field></block></value></block></value><next><block type="controls_if" id="17"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="18"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="19"><field name="OP">GT</field><value name="A"><block type="variables_get" id="20"><field name="VAR">v1</field></block></value><value name="B"><block type="variables_get" id="21"><field name="VAR">v2</field></block></value></block></value><value name="B"><block type="logic_operation" id="22"><field name="OP">AND</field><value name="A"><block type="logic_compare" id="23"><field name="OP">EQ</field><value name="A"><block type="variables_get" id="24"><field name="VAR">v1</field></block></value><value name="B"><block type="variables_get" id="25"><field name="VAR">v2</field></block></value></block></value><value name="B"><block type="logic_compare" id="26"><field name="OP">GT</field><value name="A"><block type="variables_get" id="27"><field name="VAR">n1</field></block></value><value name="B"><block type="variables_get" id="28"><field name="VAR">n2</field></block></value></block></value></block></value></block></value><statement name="DO0"><block type="truco_coloqueCartaNoSlot" id="37"><value name="CARTA"><block type="variables_get" id="38"><field name="VAR">carta1</field></block></value><value name="SLOT"><block type="math_number" id="39"><field name="NUM">1</field></block></value><next><block type="truco_coloqueCartaNoSlot" id="40"><value name="CARTA"><block type="variables_get" id="41"><field name="VAR">carta2</field></block></value><value name="SLOT"><block type="math_number" id="42"><field name="NUM">2</field></block></value></block></next></block></statement><statement name="ELSE"><block type="truco_coloqueCartaNoSlot" id="43"><value name="CARTA"><block type="variables_get" id="44"><field name="VAR">carta2</field></block></value><value name="SLOT"><block type="math_number" id="45"><field name="NUM">2</field></block></value><next><block type="truco_coloqueCartaNoSlot" id="46"><value name="CARTA"><block type="variables_get" id="47"><field name="VAR">carta1</field></block></value><value name="SLOT"><block type="math_number" id="48"><field name="NUM">1</field></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>';
+	            	return '<xml><block type="controls_if" id="1" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="2" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="3" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_esq" id="4" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="logic_operation" id="5" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="6" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_dir" id="7" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="logic_operation" id="8" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="pacman_enxerga" id="9" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_acima" id="10" deletable="false" movable="false"></block></value></block></value><value name="B"><block type="pacman_enxerga" id="11" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_abaixo" id="12" deletable="false" movable="false"></block></value></block></value></block></value></block></value></block></value><statement name="DO0"><block type="controls_if" id="13" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="14" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_esq" id="15" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="16" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_esq" id="17" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="controls_if" id="18" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="19" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_dir" id="20" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="21" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_dir" id="22" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="controls_if" id="23" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="pacman_enxerga" id="24" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="cons_acima" id="25" deletable="false" movable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" id="26" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_acima" id="27" deletable="false" movable="false"></block></value></block></statement><statement name="ELSE"><block type="variables_set" id="28" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="cons_abaixo" id="29" deletable="false" movable="false"></block></value></block></statement></block></statement></block></statement><next><block type="variables_set" id="30" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field><value name="VALUE"><block type="pacman_calcdistheroi" id="31" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="variables_get" id="32" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field></block></value></block></value><next><block type="controls_if" id="33" inline="false" deletable="false" movable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="34" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="35" deletable="false" movable="false"><field name="OP">EQ</field><value name="A"><block type="variables_get" id="36" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="37" deletable="false" movable="false"><field name="NUM">10</field></block></value></block></value><value name="B"><block type="logic_compare" id="38" deletable="false" movable="false"><field name="OP">EQ</field><value name="A"><block type="pacman_heroiVitaminado" id="39" deletable="false" movable="false"></block></value><value name="B"><block type="logic_boolean" id="40" deletable="false" movable="false"><field name="BOOL">TRUE</field></block></value></block></value></block></value><statement name="DO0"><block type="pacman_acelerar" id="41" deletable="false" movable="false"></block></statement><statement name="ELSE"><block type="controls_if" id="42" inline="false" deletable="false" movable="false" editable="false"><value name="IF0"><block type="logic_operation" id="43" deletable="false" movable="false"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="44" deletable="false" movable="false"><field name="OP">GTE</field><value name="A"><block type="variables_get" id="45" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="46" deletable="false" movable="false"><field name="NUM">4</field></block></value></block></value><value name="B"><block type="logic_compare" id="47" deletable="false" movable="false"><field name="OP">LTE</field><value name="A"><block type="variables_get" id="48" deletable="false" movable="false" editable="false"><field name="VAR">distancia</field></block></value><value name="B"><block type="math_number" id="49" deletable="false" movable="false"><field name="NUM">6</field></block></value></block></value></block></value><statement name="DO0"><block type="pacman_disparar" id="50" deletable="false" movable="false"></block></statement></block></statement></block></next></block></next></block></statement><statement name="ELSE"><block type="variables_set" id="51" inline="true" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field><value name="VALUE"><block type="pacman_escolheDirecaoAleatoria" id="52" deletable="false" movable="false"></block></value></block></statement><next><block type="pacman_andarProxDirecao" id="53" inline="false" deletable="false" movable="false"><value name="VALUE"><block type="variables_get" id="54" deletable="false" movable="false" editable="false"><field name="VAR">direcao</field></block></value></block></next></block></xml>';
 	            	/*
+	            	 return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="variables_set" id="1" x="-31" y="-82"><field name="VAR">carta1</field><value name="VALUE"><block type="truco_busqueUmaCarta" id="2"></block></value><next><block type="variables_set" id="3"><field name="VAR">carta2</field><value name="VALUE"><block type="truco_busqueUmaCarta" id="4"></block></value><next><block type="variables_set" id="5"><field name="VAR">v1</field><value name="VALUE"><block type="truco_valorDaCarta" id="6"><value name="CARTA"><block type="variables_get" id="7"><field name="VAR">carta1</field></block></value></block></value><next><block type="variables_set" id="8"><field name="VAR">v2</field><value name="VALUE"><block type="truco_valorDaCarta" id="9"><value name="CARTA"><block type="variables_get" id="10"><field name="VAR">carta2</field></block></value></block></value><next><block type="variables_set" id="11"><field name="VAR">n1</field><value name="VALUE"><block type="truco_naipeDaCarta" id="12"><value name="CARTA"><block type="variables_get" id="13"><field name="VAR">carta1</field></block></value></block></value><next><block type="variables_set" id="14"><field name="VAR">n2</field><value name="VALUE"><block type="truco_naipeDaCarta" id="15"><value name="CARTA"><block type="variables_get" id="16"><field name="VAR">carta2</field></block></value></block></value><next><block type="controls_if" id="17"><mutation else="1"></mutation><value name="IF0"><block type="logic_operation" id="18"><field name="OP">OR</field><value name="A"><block type="logic_compare" id="19"><field name="OP">GT</field><value name="A"><block type="variables_get" id="20"><field name="VAR">v1</field></block></value><value name="B"><block type="variables_get" id="21"><field name="VAR">v2</field></block></value></block></value><value name="B"><block type="logic_operation" id="22"><field name="OP">AND</field><value name="A"><block type="logic_compare" id="23"><field name="OP">EQ</field><value name="A"><block type="variables_get" id="24"><field name="VAR">v1</field></block></value><value name="B"><block type="variables_get" id="25"><field name="VAR">v2</field></block></value></block></value><value name="B"><block type="logic_compare" id="26"><field name="OP">GT</field><value name="A"><block type="variables_get" id="27"><field name="VAR">n1</field></block></value><value name="B"><block type="variables_get" id="28"><field name="VAR">n2</field></block></value></block></value></block></value></block></value><statement name="DO0"><block type="truco_coloqueCartaNoSlot" id="37"><value name="CARTA"><block type="variables_get" id="38"><field name="VAR">carta1</field></block></value><value name="SLOT"><block type="math_number" id="39"><field name="NUM">1</field></block></value><next><block type="truco_coloqueCartaNoSlot" id="40"><value name="CARTA"><block type="variables_get" id="41"><field name="VAR">carta2</field></block></value><value name="SLOT"><block type="math_number" id="42"><field name="NUM">2</field></block></value></block></next></block></statement><statement name="ELSE"><block type="truco_coloqueCartaNoSlot" id="43"><value name="CARTA"><block type="variables_get" id="44"><field name="VAR">carta2</field></block></value><value name="SLOT"><block type="math_number" id="45"><field name="NUM">2</field></block></value><next><block type="truco_coloqueCartaNoSlot" id="46"><value name="CARTA"><block type="variables_get" id="47"><field name="VAR">carta1</field></block></value><value name="SLOT"><block type="math_number" id="48"><field name="NUM">1</field></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>';
 	            	
 		           
 		            //return '<xml xmlns="http://www.w3.org/1999/xhtml"><block deletable="false" editable="false" type="variables_set" id="3" x="223" y="54"><field name="VAR">g</field><value name="VALUE"><block deletable="false" editable="false" type="esteira_entrargarrafa" id="16"></block></value></block></xml>';
@@ -65,9 +111,10 @@
 	            	//return '<xml><block type="variables_set" id="14" x="154" y="29"><field name="VAR">b</field><value name="VALUE"><block type="fliper_pegarbola" id="11"></block></value><next><block type="controls_if" id="34"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" id="62"><field name="OP">EQ</field><value name="A"><block type="fliper_dirporta" id="45"><value name="PORTA"><block type="cons_porta_p" id="56"></block></value></block></value><value name="B"><block type="cons_posicao_0" id="73"></block></value></block></value><statement name="DO0"><block type="fliper_coloqueBola" id="88"><value name="BOLA"><block type="variables_get" id="103"><field name="VAR">b</field></block></value><value name="SAIDA"><block type="cons_saida_c" id="149"></block></value></block></statement><statement name="ELSE"><block type="controls_if" id="120"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" id="121"><field name="OP">EQ</field><value name="A"><block type="fliper_dirporta" id="122"><value name="PORTA"><block type="cons_porta_r" id="135"></block></value></block></value><value name="B"><block type="cons_posicao_0" id="124"></block></value></block></value><statement name="DO0"><block type="fliper_coloqueBola" id="136"><value name="BOLA"><block type="variables_get" id="137"><field name="VAR">b</field></block></value><value name="SAIDA"><block type="cons_saida_a" id="114"></block></value></block></statement><statement name="ELSE"><block type="fliper_coloqueBola" id="154"><value name="BOLA"><block type="variables_get" id="155"><field name="VAR">b</field></block></value><value name="SAIDA"><block type="cons_saida_b" id="167"></block></value></block></statement></block></statement></block></next></block></xml>';
 	            	return '<xml alwaysNew = "true">	      <block type="do_wait"> 		      <value name="VALUE">		          <block type="math_number">		            <field name="NUM">5</field>		          </block>			  </value>	      </block>	</xml>';
 	            	*/
-            	} ;
- 		        var TestTruco = {};    	 
-	           	var afterGenJS = function(code) {
+            	//} ;
+ 		        //var TestTruco = {};    	 
+	         
+ 		     //   var afterGenJS = function(code) {
 /*	           		var dirAr = ['\"$$$esquerda\"', '\"$$$direita\"', '\"$$$acima\"', '\"$$$abaixo\"'];
 	           		for (var dist = 1; dist <= 11; dist++) {
 	           			for (var dir=0; dir < 4; dir++) {
@@ -121,7 +168,7 @@
 	           		}
 	           		return TestRT.evalOut();
 	           		*/
-	           		
+	           		/*
 	           		TestTruco.initTest();
 	           		for (var i = 0; i < TestTruco.interactions(); i++) {
 	           			console.log(i);
@@ -136,8 +183,9 @@
 	           			}
 	           		}
 	           		return true;
-	    		};
-	    		
+	           		*/
+	    //		};
+				
 		  		</script>
   		</body>
 </html>

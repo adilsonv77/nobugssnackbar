@@ -558,7 +558,7 @@ Blockly.Blocks['const_chocolate'] = {
 		};
 
 Blockly.JavaScript['const_chocolate'] = function(block) {
-	return ['\"\\\"$$$chocolate\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$$icecreamofchocolate\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['const_strawberry'] = {
@@ -571,7 +571,7 @@ Blockly.Blocks['const_strawberry'] = {
 		};
 
 Blockly.JavaScript['const_strawberry'] = function(block) {
-	return ['\"\\\"$$$strawberry\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$$icecreamofstrawberry\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['const_vanilla'] = {
@@ -584,7 +584,7 @@ Blockly.Blocks['const_vanilla'] = {
 		};
 
 Blockly.JavaScript['const_vanilla'] = function(block) {
-	return ['\"\\\"$$$vanilla\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	return ['\"\\\"$$$icecreamofvanilla\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['ask_askWantHowManyIceCream'] = {

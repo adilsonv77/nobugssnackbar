@@ -2063,7 +2063,7 @@ Game.updateVariables = function() {
 				}
 			}
 				
-			rows.push({"name":entry.name, "value": data});
+			rows.push({"name":entry.name, "value": data+""});
 		}
 	});
 	

@@ -958,12 +958,12 @@ SnackMan.prototype.pickUpIceCream = function(order) {
 	}
 	
 	var order_data = order.data;
-	if (order_data === "\"$$$chocolate\"" || 
-			order_data === "\"$$$strawberry\"" || order_data === "\"$$$vanilla\"") {
+	if (order_data === "\"$$$icecreamofchocolate\"" || 
+			order_data === "\"$$$icecreamofstrawberry\"" || order_data === "\"$$$icecreamofvanilla\"") {
 		// prepare a ice cream even there is no customer order
 		// we create another variable, because changing order.data reflects outside 
 		
-		order_data = {type: "order", descr: "$$icecreamof" + order_data.substring(4, order_data.length - 1), source: null, sourceType: null};
+		order_data = {type: "order", descr: order_data.substring(2, order_data.length-1), source: null, sourceType: null};
 	}
 	
 	// does he have any order ? 

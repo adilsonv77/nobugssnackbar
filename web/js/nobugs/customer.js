@@ -92,6 +92,11 @@ Customer = function(options) {
 	this.foods = options.foods;
 	this.fUnfulfilled = 0;
 	
+	var fAddDeliveredFalse = function(item) { item.delivered = false; };
+	
+	this.drinks.forEach(fAddDeliveredFalse);
+	this.foods.forEach(fAddDeliveredFalse);
+	
 	this.currentNode = CustOpt.nodes[options.init];
 	this.reallyCurrentNode = this.currentNode;
 	this.dest = CustOpt.nodes[options.place.id];
@@ -457,12 +462,14 @@ Customer.prototype.draw = function(ctx) {
 			
 			var withouDoubt = (!withDoubt) || (Game.runningStatus !== 0) || (Game.victory);
 			if (withouDoubt) {
-				for (var i = this.fUnfulfilled;i < this.foods.length;i++) {
-					ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
+				for (var i = 0;i < this.foods.length;i++) {
+					if (!this.foods[i].delivered)
+						ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
 				}
 				
-				for (var i = this.dUnfulfilled;i < this.drinks.length;i++) {
-					ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
+				for (var i = 0;i < this.drinks.length;i++) {
+					if (!this.drinks[i].delivered)
+						ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
 				}
 				
 			} else
@@ -515,7 +522,13 @@ Customer.prototype.askForDrink = function() {
 	if (this.dUnfulfilled >= this.drinks.length)
 		return null;
 	
-	var d = this.drinks[this.dUnfulfilled];
+	var d = null;
+	for (var i=0; i<this.drinks.length; i++)
+		if (!this.drinks[i].delivered) {
+			d = this.drinks[i];
+			break;
+		}
+
 	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink", source: this.currentNode.id, sourceType: this.placeType};
 };
 
@@ -527,7 +540,13 @@ Customer.prototype.askForFood = function() {
 	if (this.fUnfulfilled >= this.foods.length)
 		return null;
 	
-	var d = this.foods[this.fUnfulfilled];
+	var d = null;
+	for (var i=0; i<this.foods.length; i++)
+		if (!this.foods[i].delivered) {
+			d = this.foods[i];
+			break;
+		}
+
 	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
 };
 
@@ -542,7 +561,7 @@ Customer.prototype.askForIceCream = function() {
 	
 	for (var i = this.fUnfulfilled; i < this.foods.length; i++) {
 		var d = this.foods[i];
-		if (d.descr.indexOf("icecreamof") == 0) {
+		if (d.item.indexOf("icecreamof") == 0) {
 			
 			return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
 		}
@@ -590,16 +609,22 @@ Customer.prototype.deliver = function(item) {
 				
 				if (item.source === this.currentNode.id) {
 
-					var d = (item.drinkOrFood === "drink"?this.drinks[this.dUnfulfilled]:this.foods[this.fUnfulfilled]);
-					// d is the "ordered item"
-					
-					
-					if (item.descr === "$$" + d.item) {
+					var d = null;
+					var l = (item.drinkOrFood === "drink"?this.drinks:this.foods);
+					for (var i=0; i<l.length; i++)
+						if (item.descr === "$$" + l[i].item) {
+							d = l[i];
+							break;
+						}
+							
+					if (d != null) {
 						
 						if (item.drinkOrFood === "drink")
 							this.dUnfulfilled++;
 						else
 							this.fUnfulfilled++;
+						
+						d.delivered = true;
 						
 						happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
 					} else {
@@ -643,7 +668,7 @@ Customer.prototype.deliver = function(item) {
 	}
 	
 	if (happy != Customer.DELIVERED_BAD)
-		this.deliveredItems.push((item.descr == undefined?item:item.descr));
+		this.deliveredItems.push(item); // i dont know how it is possible this situation : (item.descr == undefined?item:item.descr));
 	
 	return {money: money, happy: happy, reason: reason};
 };
@@ -658,8 +683,8 @@ Customer.prototype.totalOfDrinksDelivered = function() {
 
 Customer.prototype.qtdDeliveredOf = function(key) {
 	var t = 0;
-	this.deliveredItems.forEach(function(descr) {
-		if (descr.indexOf(key) == 0)
+	this.deliveredItems.forEach(function(delivered) {
+		if (delivered.descr.indexOf(key) == 0)
 			t++;
 	});
 	return t;
@@ -668,7 +693,7 @@ Customer.prototype.qtdDeliveredOf = function(key) {
 Customer.prototype.hasReceivedGift = function(gift) {
 	
 	for (var i = 0; i < this.deliveredItems.length; i++)
-		if (this.deliveredItems[i] === gift)
+		if (this.deliveredItems[i].source == null && this.deliveredItems[i].descr === gift)
 			return true;
 	
 	return false;
@@ -676,14 +701,14 @@ Customer.prototype.hasReceivedGift = function(gift) {
 
 Customer.prototype.hasReceivedItem = function(foodOrDrink, itemId) {
 	if (foodOrDrink == null || foodOrDrink === "food") {
-		for (var i = 0; i < this.fUnfulfilled; i++)
-			if (this.foods[i].descr == itemId)
+		for (var i = 0; i < this.foods.length; i++)
+			if (this.foods[i].delivered && this.foods[i].item == itemId)
 				return true;
 	}
 	
 	if (foodOrDrink == null || foodOrDrink === "drink") {
-		for (var i = 0; i < this.dUnfulfilled; i++)
-			if (this.drinks[i].descr == itemId)
+		for (var i = 0; i < this.drinks.length; i++)
+			if (this.drinks[i].delivered && this.drinks[i].item == itemId)
 				return true;
 	}
 	
