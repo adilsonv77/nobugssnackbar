@@ -18,7 +18,7 @@
  */
 
 /**
- * This code is based on Mazed application
+ * This code was started based on Mazed application
  * 
  * @fileoverview Game management for NoBugs Snack Bar application.
  * @author adilsonv77@gmail.com (Adilson Vahldick)
@@ -638,6 +638,9 @@ Game.missionLoaded = function(ret){
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
+  
+  Blockly.Blocks['controls_if'].useMutator = !(mission.childNodes[0].getAttribute("useIfMutator") === "false"); 
+	  
   var t = BlocklyApps.getMsg("_mission");
   Game.missionTitle =  t.charAt(0).toUpperCase() + t.substring(1) + " " + ret[0];
 	

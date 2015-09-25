@@ -99,7 +99,7 @@ Selector.prototype.build = function() {
 	
 	this.tabSelected = jTabSelected;
 	
-	if (data[i].levels.length >= 3) {
+	if (data[i].levels.length > 3) {
 		
 		var setOfTabs = Math.floor(jTabSelected / 3);
 		

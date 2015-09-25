@@ -620,6 +620,18 @@ Blockly.JavaScript['ask_askForIceCream'] = function(block) {
 /******************************************************************************
  *                          Modification of default language 
  ******************************************************************************/	
+Blockly.Blocks['controls_if'].oldControlsIfInit = Blockly.Blocks['controls_if'].init;
+
+Blockly.Blocks['controls_if'].init = function() {
+	
+	this.oldControlsIfInit();
+	
+	if (Blockly.Blocks['controls_if'].useMutator)
+		this.setMutator(new Blockly.Mutator(['controls_if_else']));
+	else
+		this.setMutator(null);
+	
+};
 
 Blockly.Blocks['variables_set'].init = function() {
     this.setHelpUrl(Blockly.Msg.VARIABLES_SET_HELPURL);

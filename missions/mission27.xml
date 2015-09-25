@@ -369,7 +369,7 @@ O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos 
 			</orders>	
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="900">
 		<objective pos="1" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="o gelado">deliverGifts</objective>
 		<objective pos="3" place="counter" value="Game.readVariableTest('iceCreamCust3')" gift="o gelado">deliverGifts</objective>
 		
