@@ -50,56 +50,140 @@ Selector.prototype.build = function() {
 	
 	var data = this.data;
 	
-	
 	if (document.getElementById("tt0") != null) {
 		$( "#tt0" ).remove();
 	}
 	
-	var wMax = 0;
-	for (var i = 0; i <data.length; i++) {
-		
-		var lastAllAchieved = true;
-		
-		var appendTo = "body";
-		var idTabs = "tt" + i;
-		var tabs = $('<div id = "'+idTabs+'"/>')
-						.addClass("tab-container")
-						.appendTo(appendTo);
-		var listTabs = $('<ul>').addClass(this.generalTabCss).appendTo(tabs);
-		var tabSelected = "";
-		for (var j = 0; j < data[i].levels.length; j++) {
+	var i = 0; // this I kept because sometime in the past a player was allowed to belong more than one class		
+	var lastAllAchieved = true;
+	
+	var appendTo = "body";
+	var idTabs = "tt" + i;
+	var tabs = $('<div id = "'+idTabs+'"/>')
+					.addClass("tab-container")
+					.appendTo(appendTo);
+	var listTabs = $('<ul>').addClass(this.generalTabCss).appendTo(tabs);
+	var tabSelected = "";
+	var jTabSelected = 0;
+	for (var j = 0; j < data[i].levels.length; j++) {
 
-			var id = 'selectMissionPanel' + i + j;
-			var div = $('<div id = "'+id+'"/>')
-				  			.addClass('selectMissionPanel')
-							.appendTo(tabs);
+		var id = 'selectMissionPanel' + i + j;
+		$('<div id = "'+id+'"/>')
+			  			.addClass('selectMissionPanel')
+						.appendTo(tabs);
+		
+		var mm = parseInt(data[i].levels[j].howManyItems);
+		var ma = parseInt((lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
+		
+		var li = $('<li id = "l'+id+'"/>').addClass(this.tabCss).appendTo(listTabs);
+		$('<a/>').attr("href","#"+id).appendTo(li).html(data[i].levels[j].name);
+		
+		if (ma < mm && lastAllAchieved) {
 			
-			var mm = parseInt(data[i].levels[j].howManyItems);
-			var ma = parseInt((lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
-			
-			var li = $('<li id = "l'+id+'"/>').addClass(this.tabCss).appendTo(listTabs);
-			$('<a/>').attr("href","#"+id).appendTo(li).html(data[i].levels[j].name);
-			
-			if (ma < mm && lastAllAchieved)
-				tabSelected = "li#l"+id;
-			data[i].levels[j].lastAllAchieved = lastAllAchieved;
-			
-			this.createGridView(i, j, "#" + id , mm, ma, data[i].groupId, data[i].levels[j].id);
-			
-			lastAllAchieved = ma == mm;
-				
-			wMax = this.width;
+			tabSelected = "li#l"+id;
+			jTabSelected = j;
 			
 		}
+		data[i].levels[j].lastAllAchieved = lastAllAchieved;
 		
-		$('#'+idTabs).easytabs({
-			defaultTab: tabSelected,
-			updateHash: false
-		});
+		this.createGridView(i, j, "#" + id , mm, ma, data[i].groupId, data[i].levels[j].id);
 		
+		lastAllAchieved = ma == mm;
+			
 	}
+	
+	$('#'+idTabs).easytabs({
+		defaultTab: tabSelected,
+		updateHash: false
+	});
+	
+	this.tabSelected = jTabSelected;
+	
+	if (data[i].levels.length >= 3) {
+		
+		var setOfTabs = Math.floor(jTabSelected / 3);
+		
+		var bPrevious = $("<button id='previousSetOfTab'/>")
+				.css("min-width", "2em")
+				.css("padding", "0px")
+				.css("background-color", "transparent")
+				.css("display", (setOfTabs == 0?"none":""))
+				.appendTo(listTabs);
 
+		$("<img>")
+			.attr("src", "images/talkprevious.png")
+			.css("width", "20px")
+			.appendTo(bPrevious);
+
+		$('#previousSetOfTab').unbind('click').click(this.previousTabs.bind(this));
+
+		var bNext = $("<button id='nextSetOfTab'/>")
+					.css("min-width", "2em")
+					.css("padding", "0px")
+					.css("background-color", "transparent")
+					.css("display", (setOfTabs == (data[i].levels.length/3)?"none":""))
+					.appendTo(listTabs);
+
+		$("<img>")
+			.attr("src", "images/talknext.png")
+			.css("width", "20px")
+			.appendTo(bNext);
+		
+		$('#nextSetOfTab').unbind('click').click(this.nextTabs.bind(this));
+		
+
+		// jTabSelected / 3 => set de 3 abas q	vais estar disponivel
+		
+		for (var j = 0; j < setOfTabs * 3; j++) {
+			$('#lselectMissionPanel' + i + j).css("display", "none");
+		}
+
+		for (var j = (setOfTabs+1) * 3; j < data[i].levels.length; j++) {
+			$('#lselectMissionPanel' + i + j).css("display", "none");
+		}
+	}
+	
 	return ("tt0");
+	
+};
+
+Selector.prototype.previousTabs = function() {
+	this.goToTabs((Math.floor(this.tabSelected/3) * 3) - 3);
+};
+
+Selector.prototype.nextTabs = function() {
+	this.goToTabs((Math.floor(this.tabSelected/3) * 3) + 3);
+};
+
+Selector.prototype.goToTabs = function(selectedTab) {
+	var setOfTabs = Math.floor(this.tabSelected/3);
+	var firstTab = setOfTabs * 3;
+	
+	var i = 0;
+	
+	for (var j = 0; j < 3; j++) {
+		$('#lselectMissionPanel' + '0' + (firstTab + j)).css("display", "none");
+	}
+	
+	firstTab = selectedTab;
+
+	for (var j = 0; j < 3 && j < this.data[i].levels.length; j++) {
+		$('#lselectMissionPanel' + '0' + (firstTab + j)).css("display", "");
+	}
+	
+	if (firstTab == 0)
+		$("#previousSetOfTab").css("display", "none");
+	else
+		$("#previousSetOfTab").css("display", "");
+		
+	
+	if (firstTab+3 >= this.data[i].levels.length)
+		$("#nextSetOfTab").css("display", "none");
+	else
+		$("#nextSetOfTab").css("display", "");
+	
+	this.tabSelected = firstTab;
+	$('#tt0').easytabs('select', 'selectMissionPanel' + '0' + this.tabSelected);
 	
 };
 
