@@ -2130,6 +2130,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("cashIn", {allCustomers:true});
 			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
 			    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
+			    hero.verifyObjectives("countTalk", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {

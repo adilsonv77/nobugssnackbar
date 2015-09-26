@@ -59,7 +59,7 @@ function createTable(table) {
 	table.ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
 				  gridClass: 'leaderboard-table',
 				  headerClass: 'leaderboard-table-header',
-				  colWidths: [25, 45, 200],
+				  colWidths: [25, 45, 250],
 				  colClasses: ['leaderboard-table-col-position', 'leaderboard-table-col-picture', 'leaderboard-table-col-name']});
 }
 

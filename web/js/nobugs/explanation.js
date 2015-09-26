@@ -102,6 +102,23 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	
 };
 
+Explanation.createGoal = function(goal) {
+	
+	var obj = document.createElement("li");
+	var text = goal.objective;
+	obj.className = "goal" + (goal.achieved?"ok":"cancel");
+
+	obj.innerHTML = Objective.factory(text).createExplanationItem(goal);
+	if (goal.notExists === "true") {
+		obj.innerHTML = "<span style='color:red'>"+BlocklyApps.getMsg("explanation_mustNot")+": </span>" +
+								obj.innerHTML;	
+	}
+	
+	return obj;
+};
+
+
+
 Explanation.evaluateObjectives = function(statement, container) {
 	
 	if (statement != Explanation.lastStatement)
@@ -112,17 +129,9 @@ Explanation.evaluateObjectives = function(statement, container) {
 	var os = hero.objective.objectives;
 	for (var i=0; i<os.length; i++) {
 		
-		var obj = document.createElement("li");
-		var text = os[i].objective;
-		obj.className = "goal" + (os[i].achieved?"ok":"cancel");
-		
-		obj.innerHTML = Objective.factory(text).createExplanationItem(os[i]);
-		if (os[i].notExists === "true") {
-			obj.innerHTML = "<span style='color:red'>"+BlocklyApps.getMsg("explanation_mustNot")+": </span>" +
-									obj.innerHTML;	
-		}
-		
+		var obj = Explanation.createGoal(os[i]);
 		ul.appendChild(obj);
+		
 	}
 	
 	var table = document.createElement("table");

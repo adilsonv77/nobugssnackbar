@@ -43,7 +43,7 @@ Primeiro lembre-se que o pre&#231;o do cachorro &#233; $2 e bebidas s&#227;o $3.
  c&#225;lculo do valor do pedido - o valor dele j&#225; ser&#225; $5:
  <ul>
  <li>Tr&#234;s cachorros</li>
- <li>Somente duas bebidas</li>
+ <li>Somente duas bebidas, ou seja, <b>sem cachorro e nem gelado</b></li>
  </ul>
 N&#227;o sei se j&#225; observastes, mas nas miss&#245;es anteriores os clientes n&#227;o pediam mais do que tr&#234;s itens. Esse &#233; o limite
  do pedido de qualquer cliente: ele consegue pedir de 0 a 3 itens.  

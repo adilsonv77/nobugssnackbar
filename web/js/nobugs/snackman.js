@@ -208,14 +208,20 @@ SnackMan = function(objectives, mission, avatar) {
 	
 	var children = objectives.getElementsByTagName("objective");
 	
+	var countTalk = 0;
+	
 	for (var i = 0; i < children.length; i++) {
 		var obj = children[i].childNodes[0].nodeValue;
 		
-		var o = Objective.factory(obj);
-		var p = o.init(children[i]);
-		this.objective.objectives.push(p);
+		if (obj === "talk") 
+			countTalk++;
+		
+		this.createObjective(obj, children[i]);
 	}
 	
+	if (countTalk > 0)
+		this.createObjective("countTalk", countTalk);
+		
 	this.hasVarQtd = this.createAditionalObjective(objectives, "varQtd");
 	this.hasCommQtd = this.createAditionalObjective(objectives, "commQtd");
 	
@@ -228,13 +234,20 @@ SnackMan = function(objectives, mission, avatar) {
 	this.talkText = null;
 };
 
+SnackMan.prototype.createObjective = function(key, elem) {
+
+	var o = Objective.factory(key);
+	var p = o.init(elem);
+	this.objective.objectives.push(p);
+	
+};
+
 SnackMan.prototype.createAditionalObjective = function(objectives, key) {
 	var m = objectives.getAttribute(key);
 	if (m != null) {
 
-		var o = Objective.factory(key);
-		var p = o.init(m);
-		this.objective.objectives.push(p);
+		this.createObjective(key, m);
+
 		return true;
 	}
 	return false;
@@ -273,7 +286,7 @@ SnackMan.prototype.reset = function() {
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
 	for (var i=0; i<this.objective.objectives.length; i++)
-		this.objective.objectives[i].achieved = false;
+		Objective.reset(this.objective.objectives[i]);
 	
 	for (var i = 0; i < this.installedMachines.length; i++) 
 		this.installedMachines[i].machineCfg.production = [];
@@ -787,6 +800,7 @@ SnackMan.prototype.talk = function(text) {
 	
 	this.update('TA', text);
 	this.verifyObjectives("talk", text);
+	this.verifyObjectives("countTalk");
 	
 };
 

@@ -88,6 +88,15 @@ Objective.notExists = function() {
 	}
 };
 
+Objective.reset = function(objective) {
+	objective.achieved = false;
+	
+	var dest = Objective.factory(objective.objective);
+	
+	if (dest.reset) 
+		dest.reset(objective);
+};
+
 Objective.markAchieved = function(objective) {
 	
 	objective.achieved = true;
@@ -171,6 +180,10 @@ Objective.factory = function(key) {
 		
 	case "talk":
 		this.factories[key] = new Objective.Talk();
+		break;
+		
+	case "countTalk":
+		this.factories[key] = new Objective.CountTalk();
 		break;
 		
 	case "cashIn":
@@ -737,7 +750,41 @@ Objective.Talk.prototype.createExplanationItem = function(objective) {
 };
 
 /******************************************************************************
- *                                Talk
+ *                                CountTalk
+ ******************************************************************************/
+
+Objective.CountTalk = function() {};
+Objective.CountTalk.prototype.init = function(qtd) {
+	var p = {objective:"countTalk", achieved:false, trata:this};
+	
+	p.qtd = qtd;
+	p.count = 0;
+	
+	return p;
+};
+
+Objective.CountTalk.prototype.reset = function(objective) {
+	objective.count = 0;
+};
+
+Objective.CountTalk.prototype.checkObjective = function(options, objective)  {
+
+	if (options && options.allCustomers) {
+		return objective.count <= objective.qtd;
+	} 
+	
+	objective.count++;
+	return false;
+
+};
+
+Objective.CountTalk.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_counttalk");
+	return text.format(objective.qtd);
+};
+
+/******************************************************************************
+ *                                UseBlock
  ******************************************************************************/
 
 Objective.UseBlock = function() {};

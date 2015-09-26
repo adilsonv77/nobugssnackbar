@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-26 14:57:27.657000",
+		"lastupdated": "2015-09-26 18:46:35.365000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -164,6 +164,7 @@
 	"Explane.VarQtd": "The max quantity of variables used is %0.",
 	"Explane.CommsQtd": "The max quantity of commands used is %0.",
 	"Explane.Talk": "Talk %0.",
+	"Explane.CountTalk": "Talk no more than %0 time(s).",
 	"Explane.AskWantHowManyFoods": "Ask the customer %0 how many foods he wants to eat.",
 	"Explane.AskWantHowManyDrinks": "Ask the customer %0 how many drinks he wants. ",
 	"Explane.UseBlock": "Use the block %0 in the program.",
