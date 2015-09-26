@@ -612,7 +612,7 @@ Customer.prototype.deliver = function(item) {
 					var d = null;
 					var l = (item.drinkOrFood === "drink"?this.drinks:this.foods);
 					for (var i=0; i<l.length; i++)
-						if (item.descr === "$$" + l[i].item) {
+						if (l[i].delivered == false && item.descr === "$$" + l[i].item) {
 							d = l[i];
 							break;
 						}

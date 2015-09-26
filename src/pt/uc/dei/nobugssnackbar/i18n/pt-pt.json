@@ -26,6 +26,7 @@
 	"Apps.save" : "Salvar",
 	"Apps.dialogCancel" : "Cancelar",
 	
+	"Blockly.controlFor":"para %1 a variar de %2 at&#233; %3 com incremento %4",
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
 	

@@ -79,7 +79,7 @@ Game.generalInit = function() {
 	  // window.removeEventListener('resize',  Game.resizeMainWindow); //
 	  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 	  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
-
+	  
 	  // Add to reserved word list: API, local variables in execution environment
 	  // (execute) and the infinite loop detection function.
 	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');

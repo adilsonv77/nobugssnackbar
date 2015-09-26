@@ -59,7 +59,7 @@ function createTable(table) {
 	table.ingrid({height: 250, paging: false, resizableCols: false, sorting: false,
 				  gridClass: 'leaderboard-table',
 				  headerClass: 'leaderboard-table-header',
-				  colWidths: [25, 74, 140],
+				  colWidths: [25, 45, 200],
 				  colClasses: ['leaderboard-table-col-position', 'leaderboard-table-col-picture', 'leaderboard-table-col-name']});
 }
 
@@ -190,6 +190,7 @@ function createsLeaderBoard() {
 	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 		.mCustomScrollbar({ theme:"nobug" });
 	
+	$(".mCSB_inside>.mCSB_container").css("margin", "15px");	
 	goToLine("#tabs-points", rowId);
 	
 	leaderBoardCreated = true;

@@ -516,6 +516,20 @@ Blockly.JavaScript['const_softDrink'] = function(block) {
 	return ['\"\\\"$$$coke\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['const_hotdog'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('hotdog');
+		    
+		  }
+		};
+
+Blockly.JavaScript['const_hotdog'] = function(block) {
+	return ['\"\\\"$$$hotdog\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 /******************************************************************************
  *                              Ice Cream
  ******************************************************************************/	

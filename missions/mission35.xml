@@ -3,13 +3,23 @@
 	<explanation hasInstruction="true">
 		<page type="goal">
 		<![CDATA[
+		Algumas coisa ficam aqui e outras vao para instrucao. Alguma coisas podem se manter aqui mais
+		superficialmente.
+		For dentro de outros blocos
+		Atencao para uso diferente de variaveis em cada for. Mostrar numa figura um for dentro de outro
+		e apontar para a diferenca no nome das variaveis
+		Uso de variaveis para o fim do for. Se o fim for menor que o comeco, nem executa o for.
+		Muitas vezes nem precisamos usar a variavel de contagem do for (o x do for (x=...)).
 		]]>
 		</page>
 
 		<page type="goal">
 		<![CDATA[
-		Atender a fome e a sede dos tres clientes.
-		Cada cliente pode feme e/ou sede.
+		Todas as nossas entregas sempre foram para entregar UM cachorro e UMA bebida. 
+		Uma coisa que nunca tentamos antes eh entregar mais de um item desses. Nunca fizemos antes porque 
+		seria necessario MUITO codigo repetido. Com uso de ciclos muitas coisas serao mais faceis para nohs agora. 
+		Atender a fome dos tres clientes.
+		Cada cliente pode querer 0 a 3 cachorros.
 		]]> 
 		</page>
 
@@ -38,13 +48,10 @@
 
 		<category name="goToBarCounter" show="true" />
 		<category name="askForFood" show="true" />
-		<category name="askForDrink" show="true" />
-		<category name="askHasThirsty" show="true" />
 		<category name="askHasHunger" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
 		<category name="goToDisplay" show="true" />
-		<category name="goToCooler" show="true" />
 		<category name="pickUpHotDog" show="true" />
-		<category name="pickUpDrink" show="true" />
 		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
@@ -65,9 +72,10 @@
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -80,10 +88,8 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -97,6 +103,8 @@
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -104,7 +112,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="300" commQtd="14">
+	<objectives xpIndividual="30" xpFinal="5" xpTotalTime="600" commQtd="9">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

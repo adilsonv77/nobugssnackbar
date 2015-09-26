@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-09-26 10:43:21.464000",
+		"lastupdated": "2015-09-26 14:57:27.657000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -69,6 +69,7 @@
 	"SignUp.backHomePage": "Back to NoBug's Snack Bar's home page",
 	"Blockly.variableSet": "%1 and store in %2",
 	"Blockly.ifThen": "then",
+	"Blockly.controlFor": "for %1 from %2 to %3 incrementing %4",
 	"Apps.catYourMachines": "Your machines",
 	"SnackMan.goToBarCounterTooltip": "Moves the snack man to the customer.",
 	"SnackMan.isThereACustomerTooltip": "Verify if there is a customer in the currently position.",

@@ -12,6 +12,8 @@ NoBugsJavaScript.typeComparison = "function nobugsComparison(arg0, arg1, operato
 NoBugsJavaScript.redefine = function() {
 	
     Blockly.Msg.CONTROLS_IF_MSG_THEN = BlocklyApps.getMsg('Blockly_ifThen'); 
+    Blockly.Msg.CONTROLS_FOR_TITLE = BlocklyApps.getMsg('Blockly_controlFor');
+
 	  
     if (NoBugsJavaScript.oldVarSet == null) {
     	
@@ -193,3 +195,29 @@ NoBugsJavaScript.newLogicOperation = function(block) {
 	return r;
 	
 };
+/* 
+ * I changed the default behaviour because always is an increment.
+ */
+Blockly.JavaScript['controls_for'] = function(block) {
+	  // For loop.
+	  var variable0 = Blockly.JavaScript.variableDB_.getName(
+	      block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+	  var argument0 = Blockly.JavaScript.valueToCode(block, 'FROM',
+	      Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+	  var argument1 = Blockly.JavaScript.valueToCode(block, 'TO',
+	      Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+	  var increment = Blockly.JavaScript.valueToCode(block, 'BY',
+	      Blockly.JavaScript.ORDER_ASSIGNMENT) || '1';
+	  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+	  branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+	  var code;
+
+	  code = 'for (' + variable0 + ' = ' + argument0 + '; ' +
+	        variable0 + ' <= '  + argument1 + '; ' +
+	        variable0;
+	  var step = Math.abs(parseFloat(increment));
+      code += ' += ' + step;
+	  code += ') {\n' + branch + '}\n';
+	  return code;
+};
+
