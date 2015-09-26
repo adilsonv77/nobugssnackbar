@@ -90,6 +90,14 @@ n&#227;o est&#225; mais l&#225;. Se voc&#234; n&#227;o salvou o n&#250;mero anti
 			]]>
 			</hint>
 			
+			<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 15">
+			<![CDATA[
+			V&#225; ao cliente 1 e pergunte o que ele quer. V&#225; ao cliente 3 e pergunte o que ele quer, mas guarde numa vari&#225;vel diferente. Pronto, essas s&#227;o
+			as duas vari&#225;veis que vais usar. Agora v&#225; ao mostrador e retire duas vezes o lanche do mostrador: um para cada vari&#225;vel. Por fim, volte e entregue
+			o pedido &#224; cada cliente. 
+			]]>
+			</hint>
+			
 			<hint category="Iddle" condition="Hints.countVariableName() == 1">
 			<![CDATA[
 			N&#227;o vais conseguir resolver essa miss&#227;o com somente uma vari&#225;vel. 

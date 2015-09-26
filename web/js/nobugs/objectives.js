@@ -44,7 +44,7 @@ Objective.verifyObjectives = function(key, options) {
 
 	var ret = false;
 	if (hero.objective.ordered) {
-		if (!hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective === key)
+		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective !== key)
 			return false;
 		
 		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].notExists === "true")

@@ -4,6 +4,8 @@
 		<page type="goal">
 		<![CDATA[
 Como um futuro gerente de uma esplanada, precisas aprender a controlar a quantidade de clientes atendidos. <br/><br/>
+Os clientes PODEM vir com fome E/OU com sede. E quando pedem, &#233; no m&#225;ximo uma unidade de cada. Logo, vais primeiro testar se o cliente 
+est&#225; com fome (ent&#227;o atend&#234;-lo) e se est&#225; com sede (ent&#227;o atend&#234;-lo).<br/><br/>
 Conte em duas vari&#225;veis separadas os cachorros e refrigerantes entregues. Ao final do programa, fale a quantidade de cachorros e fale a quantidade de refrigerantes entregues.<br/><br/>
  
 ]]>
@@ -12,10 +14,26 @@ Conte em duas vari&#225;veis separadas os cachorros e refrigerantes entregues. A
 	</explanation>
 	<hints>
 		<errors>
-		 	<hint category="Iddle" time="0" condition="Hints.lastTalkText() === undefined  &amp;&amp; (Hints.isGoalNotAchieved(7) || Hints.isGoalNotAchieved(8)) ">
+		 	<hint category="Iddle" condition="Hints.lastTalkText() === undefined  &amp;&amp; (Hints.isGoalNotAchieved(7) || Hints.isGoalNotAchieved(8)) ">
 		 	<![CDATA[
 		 	Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Resolva isso adicionando logo no come&#231;o do teu programa
 		 	um bloco de vari&#225;vel atribuindo um valor zero a essa vari&#225;vel em que ele falou "undefined".
+		 	]]>
+		 	</hint>
+		 	<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 15 &amp;&amp; Hints.howManyRuns() &lt; 17">
+		 	<![CDATA[
+		 	Vais precisar de tr&#234;s vari&#225;veis independentes entre si: uma para contar quantas vezes atendeu a comida;
+		 	outra quantas vezes atendeu a bebida; e mais uma para anotar o pedido do cliente, pegar o produto e entreg&#225;-lo.
+		 	]]>
+		 	</hint>
+		 	<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 16 &amp;&amp; Hints.howManyRuns() &lt; 19">
+		 	<![CDATA[
+		 	N&#227;o misture comida/bebida com n&#250;meros. Nas vari&#225;veis de contagem utilize somente n&#250;meros e opera&#231;&#245;es matem&#225;ticas.
+		 	]]>
+		 	</hint>
+		 	<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 18">
+		 	<![CDATA[
+		 	Dentro do primeiro bloco se-ent&#227;o para atender a comida/bebida guarde o valor 1 &#224; vari&#225;vel que voc&#234; criou para contagem. <br/> No segundo bloco se-ent&#227;o some UM &#224; vari&#225;vel.
 		 	]]>
 		 	</hint>
 		</errors>

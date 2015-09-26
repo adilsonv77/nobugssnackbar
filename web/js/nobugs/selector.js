@@ -121,7 +121,7 @@ Selector.prototype.build = function() {
 					.css("min-width", "2em")
 					.css("padding", "0px")
 					.css("background-color", "transparent")
-					.css("display", (setOfTabs == (data[i].levels.length/3)?"none":""))
+					.css("display", (setOfTabs == Math.floor(data[i].levels.length/3)?"none":""))
 					.appendTo(listTabs);
 
 		$("<img>")
