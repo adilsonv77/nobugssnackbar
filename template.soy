@@ -355,10 +355,18 @@
 		    <td align="center">
 		      <img src="images/teacher_expert.png" style="margin: 10px"/>
 		    </td>
-		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions.{/msg}</td>
+		    <td>{msg meaning="NoBugs.noMoreMissions" desc="--"}You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions. <br/><br/> However, you are also allowed to review your missions.{/msg}</td>
 	    </tr>
     </table>
-	{call apps.ok /}
+    <div class="farSide" style="padding: 1ex 3ex 0"> 
+   	    <button class="nobugs_button" onclick="BlocklyApps.hideDialog(false); SelectMission.finishGenerateBoard()">
+	      {{msg meaning="NoBugs.Review" desc="---"}}Review{{/msg}}
+	    </button>
+	    <button class="nobugs_button" onclick="BlocklyApps.hideDialog(false);">
+	      {{msg meaning="Apps.dialogOk" desc="IBID"}}OK{{/msg}}
+	    </button>
+    
+    </div>
   </div>
   
   <div id="dialogFail" class="dialogHiddenContent">
@@ -438,7 +446,7 @@
   	
   </div>  
   
-	<div id='confirm' style="display:none">
+  <div id="confirm" style="display:none">
 	
 		<div class='header'><span>{msg meaning="SnackMan.confirm" desc="--"}Confirm{/msg}</span></div>
 		<div class='message'></div>
@@ -446,7 +454,7 @@
 			<button class='yes nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.yes" desc="--"}Yes{/msg}</button>
 			<button class='no simplemodal-close nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.no" desc="--"}No{/msg}</button>
 		</div>
-	</div>
+  </div>
 
   <div id="dialogEditProfile" class="dialogHiddenContent">
     <table>

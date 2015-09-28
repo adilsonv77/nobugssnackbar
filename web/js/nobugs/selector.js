@@ -44,6 +44,7 @@ Selector = function(data, tamCell, width, height, enabledCssClass, disabledCssCl
 	this.height = height;
 	
 	this.tamCell = tamCell;
+	this.clickTargetEnabled = null;
 };
 
 Selector.prototype.build = function() {
@@ -65,6 +66,7 @@ Selector.prototype.build = function() {
 	var listTabs = $('<ul>').addClass(this.generalTabCss).appendTo(tabs);
 	var tabSelected = "";
 	var jTabSelected = 0;
+	var firstTabId = "";
 	for (var j = 0; j < data[i].levels.length; j++) {
 
 		var id = 'selectMissionPanel' + i + j;
@@ -78,12 +80,16 @@ Selector.prototype.build = function() {
 		var li = $('<li id = "l'+id+'"/>').addClass(this.tabCss).appendTo(listTabs);
 		$('<a/>').attr("href","#"+id).appendTo(li).html(data[i].levels[j].name);
 		
+		if (firstTabId === "")
+			firstTabId = "li#l"+id;
+		
 		if (ma < mm && lastAllAchieved) {
 			
 			tabSelected = "li#l"+id;
 			jTabSelected = j;
 			
 		}
+		
 		data[i].levels[j].lastAllAchieved = lastAllAchieved;
 		
 		this.createGridView(i, j, "#" + id , mm, ma, data[i].groupId, data[i].levels[j].id);
@@ -93,7 +99,7 @@ Selector.prototype.build = function() {
 	}
 	
 	$('#'+idTabs).easytabs({
-		defaultTab: tabSelected,
+		defaultTab: (tabSelected === ""?firstTabId:tabSelected),
 		updateHash: false
 	});
 	
@@ -223,6 +229,10 @@ Selector.prototype.createGridView = function (group, level, missionPanel, number
 
 	// without unbind, i need this code must appear just in one loop
 	 $('.missionTarget').unbind('click').click(this.clickTarget);
+	 
+	 $('.missionEnabled').unbind('click');
+	 if (this.clickTargetEnabled != null)
+		 $('.missionEnabled').click(this.clickTargetEnabled);
 	
 };
 

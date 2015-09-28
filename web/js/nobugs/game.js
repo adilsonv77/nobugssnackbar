@@ -138,7 +138,7 @@ Game.init = function() {
     	
 		if (ret[0]) {
 			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10]);
 			
 		} else {
 			window.removeEventListener('beforeunload', Game.unload);
@@ -203,7 +203,7 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, xpToHat, xpToClothes, clazzId, levelId, missionIdx) {
+Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, xpToHat, xpToClothes, clazzId, levelId, missionIdx, missionView) {
 	/*
 	 * missionsHistorical [...][n], where n are 
 	 *   0 - class name
@@ -226,7 +226,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
 	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
-					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes) };
+					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes) };
 	
 	try {
 		UserControl.retrieveQuestionnaire(function(q) {
@@ -388,7 +388,7 @@ Game.logged = function() {
 	    		Game.openProfileEditor();
 	    	}
 	} else {
-		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx);
+		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx, Game.loginData.missionView);
 	}
 };
 
@@ -543,7 +543,7 @@ Game.moveBlocksToZero = function() {
 	
 };
 
-Game.missionSelected = function(clazzId, levelId, missionIdx) {
+Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	
   document.getElementById("initialBackground").style.display = "none";
   document.getElementById("selectMission").style.display = "none";
@@ -582,7 +582,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx) {
 
   Game.variableBox = document.getElementById('variableBox');
   Game.blockly = document.getElementById('blockly');
-  CountXP.init("stopWatch");
+  
+  CountXP.init("stopWatch", !missionView);
   
   Game.imgDoor = PreloadImgs.get("doors");
   
@@ -614,6 +615,9 @@ Game.unload = function(e) {
 
 Game.saveMission = function() {
 	
+	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
+		return;
+	
 	var answer = null;
 	if (Blockly.mainWorkspace != null) 
 		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
@@ -635,6 +639,7 @@ Game.missionLoaded = function(ret){
   Game.howManyRuns = parseInt(ret[4]);
   Game.previousCode = ret[2];
   Game.zoomLevel = parseFloat(ret[5]);
+  Game.missionView = ret[6] == "T"; // it's an achieved mission
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -662,7 +667,7 @@ Game.missionLoaded = function(ret){
   else
 	  Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
-  
+  $("#playerRewardMission").css("display", (Game.missionView?"none":"inline"));
   UserControl.retrieveReward(Game.updatesReward);
   
   Game.slider.timesBefore = 0;
@@ -675,7 +680,6 @@ Game.missionLoaded = function(ret){
   if (!Game.openMission.open && Game.howManyRuns >= Game.slider.timesBefore) {
 	  Game.slider.svg.style.visibility = "visible";
   }
-   
   
   var commands = mission.childNodes[0].getElementsByTagName("commands")[0];
   
@@ -1113,6 +1117,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  // if Game.showedWindowRunDisabled == true is because the window is opened
 		  Hints.init(Game.mission.getElementsByTagName("hints")[0], !Game.showedWindowRunDisabled);
 		  Game.initTime();
+		  
+		  Game.alertMissionView();
 	  }
   };
   
@@ -1272,6 +1278,8 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 	$('#timerCountUp').empty();
 	Game.cronometro = null;
 	
+	if (Game.missionView) return;
+	
 	if (bonusTime != null) {
 		timeSpent = parseInt(timeSpent);
 		$('#timerCountUp').append("<span></span>");;
@@ -1319,6 +1327,40 @@ Game.verifyTestsInMission = function(finishFunction) {
 	} else
 		finishFunction();
 }; 
+
+Game.alertMissionView = function() {
+	if (!Game.missionView)
+		return;
+	
+	var talk = Game.loginData.userLogged.flags.TALK_MISSIONVIEW;
+	if (talk === undefined || talk === "false") {
+		var content = $("<div/>")
+			.append(BlocklyApps.getMsg("NoBugs_ReviewMission"));
+		Hints.stopHints();
+		
+		MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, 
+				function(){Hints.startHints();}, true);
+	
+		Game.changeFlag("TALK_MISSIONVIEW", "true");
+	}
+};
+
+Game.alertSuccessMissionView = function() {
+	if (!Game.missionView)
+		return;
+											    
+	var talk = Game.loginData.userLogged.flags.TALK_AFTERSUCCMVIEW;
+	if (talk === undefined || talk === "false") {
+		var content = $("<div/>")
+			.append(BlocklyApps.getMsg("NoBugs_AfterSuccessMissionView"));
+		Hints.stopHints();
+		
+		MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, 
+				function(){Hints.startHints();}, true);
+	
+		Game.changeFlag("TALK_AFTERSUCCMVIEW", "true");
+	}
+};
 
 Game.initTime = function() {
 	
@@ -1549,13 +1591,15 @@ Game.goBackToDashboard = function(evt, callInit) {
 	Blockly.hideChaff();
     Blockly.WidgetDiv.hide();
     
-    Game.tracks[CountXP.times].stop();
+    if (CountXP.times !== undefined)
+    	Game.tracks[CountXP.times].stop();
     
     var ret = Game.closeBlockEditorStuffs();
     
-	if (callInit !== false) {
+	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
+		
 		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, Blockly.getMainWorkspace().scale, ret[1],
-							{callback:function() {}, async:false});
+						{callback:function() {}, async:false});
 
 		Game.init();
 	}
@@ -2158,6 +2202,11 @@ Game.nextStep = function() {
 			    	
 			    	var r = Game.beforeFinishMission();
 			    	
+					if (Game.missionView) { // it's when the user achieved this mission, but came back to test or see something. 
+						Game.alertSuccessMissionView();
+						return;
+					}
+						
 			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 			    	
@@ -2222,7 +2271,9 @@ Game.nextStep = function() {
 						
 						objs[i] = [Objective.factory(os[i].objective).createExplanationItem(os[i]), os[i].achieved];
 					}
-					UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
+					
+					if (!Game.missionView)
+						UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
 
 					//Game.doResizeWindow("none");	
 				    if (debugging) {
@@ -2279,6 +2330,9 @@ Game.startSaveUserProgress = function() {
 	if (Game.logEvent == null)
 		Game.logEvent = Blockly.mainWorkspace.addChangeListener(function() {
 			
+			if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
+				return;
+			
 			if (Blockly.Block.dragMode_ != 0)
 				return;
 			
@@ -2293,8 +2347,6 @@ Game.startSaveUserProgress = function() {
 			var answer = "<xml></xml>";
 			if (Blockly.mainWorkspace != null) 
 				answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-			
-
 			
 			UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer);
 
@@ -2720,7 +2772,8 @@ Game.showError = function(iderror) {
 	
 	var blockid = (Blockly.selected == null?0:Blockly.selected.id);
 	
-	UserControl.missionError(Game.howManyRuns, CustomerManager.currentTest+1, iderror[0], blockid, container.textContent);
+	if (!Game.missionView)
+		UserControl.missionError(Game.howManyRuns, CustomerManager.currentTest+1, iderror[0], blockid, container.textContent);
 	
     var style = {top: '120px', width: 'auto'}; // };//{width: '370px', 
 	style[Blockly.RTL ? 'right' : 'left'] = '215px';

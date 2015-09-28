@@ -14,10 +14,17 @@ SelectMission.generateBoard = function(evt) {
 	
 	if (!thereAreMissions) {
 		
-		MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, null, {width: "600px"}, null);
+		MyBlocklyApps.showDialog(document.getElementById("dialogNoMoreMissions"), null, true, true, true, 
+				null, {width: "600px"}, null);
 		
 		return;
-	}
+	} 
+	
+	SelectMission.finishGenerateBoard();
+	
+};
+
+SelectMission.finishGenerateBoard = function() {
 	
 	var idRoot = SelectMission.missionsRetrieved(Game.loginData.missionHist);
 	
@@ -70,7 +77,7 @@ SelectMission.missionsRetrieved = function(missions) {
 	}
 	
 	var f1 = function (evt) {
-		 
+
 		 var itemId = this.getAttribute("idgroup");
 		 var missionIdx = this.getAttribute("iditem");
 		 var levelId = this.getAttribute("idlevel");
@@ -79,8 +86,8 @@ SelectMission.missionsRetrieved = function(missions) {
 		 
 		 MyBlocklyApps.hideDialog(true);
 		 SelectMission.stopAnimation = true;
-
-		 Game.missionSelected(itemId, levelId, missionIdx);
+		 
+		Game.missionSelected(itemId, levelId, missionIdx, this.classList.contains("missionEnabled"));
 		 
 	};
 	
@@ -111,8 +118,8 @@ SelectMission.missionsRetrieved = function(missions) {
 		return (idx == -1 && m == mt) || (idx > -1 && m <= mt);
 	};
 	
-
 	var sel = new Selector(data, 50, 385, 250, "unlockBack", "lockBack", "bbtabs",  "bbtab", f1, f2, f3, f4);
+	sel.clickTargetEnabled = f1;
 	return sel.build();
 	
 };

@@ -226,7 +226,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select timespend, answer, executions, zoomlevel from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+					.prepareStatement("select timespend, answer, executions, zoomlevel, achieved from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
 
 			ps.setLong(1, missionId);
 			ps.setLong(2, clazzId);
@@ -237,18 +237,20 @@ public class GameJdbcDao implements GameDao {
 			String timeSpent = null;
 			String executions = "0";
 			String zoomLevel = "1";
+			String achieved = "F";
 			if (rs.next()) {
 
 				timeSpent = rs.getString(1);
 				answer = rs.getString(2);
 				executions = rs.getString(3);
 				zoomLevel = rs.getString(4);
+				achieved = rs.getString(5);
 
 			}
 
 			ps.close();
 
-			ret = new String[1][7];
+			ret = new String[1][8];
 			ret[0][0] = missionId + "";
 			ret[0][1] = missionIdx + "";
 			ret[0][2] = xml;
@@ -256,6 +258,7 @@ public class GameJdbcDao implements GameDao {
 			ret[0][4] = timeSpent;
 			ret[0][5] = executions;
 			ret[0][6] = zoomLevel;
+			ret[0][7] = achieved;
 
 		} finally {
 			if (bdCon != null)
@@ -394,46 +397,6 @@ public class GameJdbcDao implements GameDao {
 
 			ps.executeUpdate();
 			ps.close();
-		} finally {
-			if (bdCon != null)
-				try {
-					bdCon.close();
-				} catch (SQLException ignore) {
-				}
-		}
-	}
-
-	public void addExecutionInMission(User user, long idMission, long idClass)
-			throws SQLException {
-
-		Connection bdCon = null;
-		try {
-			bdCon = getConnection();
-			bdCon.setAutoCommit(false);
-
-			int localTimeSpend = loadMissionAccomplished(idMission,
-					user.getId(), idClass);
-			PreparedStatement ps;
-			if (localTimeSpend == -1) {
-				ps = bdCon
-						.prepareStatement("insert into missionsaccomplished "
-								+ "(timespend, achieved, money, xp, missionid, classid, userid, executions) values (0, 'F', 0, 0, ?, ?, ?, 1)");
-			} else {
-				ps = bdCon
-						.prepareStatement("update missionsaccomplished set executions = executions + 1 "
-								+ "where missionid = ? and classid = ? and userid = ?");
-			}
-
-			ps.setLong(1, idMission);
-			ps.setLong(2, idClass);
-			ps.setLong(3, user.getId());
-
-			ps.executeUpdate();
-			ps.close();
-
-			bdCon.commit();
-			bdCon.setAutoCommit(true);
-
 		} finally {
 			if (bdCon != null)
 				try {

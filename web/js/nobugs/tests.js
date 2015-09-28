@@ -300,7 +300,7 @@ Tests.drawQuestion = function() {
 	stopWatch.innerHTML = stopWatch.innerHTML + "<br/>" + (question.timeLimit/60) + " min"; 
 	$("#testquestions").append(stopWatch);
 	
-	CountXP.init("stopWatchTests");
+	CountXP.init("stopWatchTests", true);
 	
 	var current = 0;
 	if (question.previousAnswer != null) {

@@ -82,6 +82,7 @@ public class UserControl {
 	private List<Object[]> avatar;
 	private int xpToHat;
 	private int xpToClothes;
+	private boolean achievedMission;
 
 	public User getUser() {
 		return user;
@@ -110,7 +111,7 @@ public class UserControl {
 		}
 		return new Object[] { user != null, this.user, this.missions,
 				(user == null ? null : retrieveLeaderBoard()), this.avatar, this.xpToHat, this.xpToClothes,
-				this.classid, this.levelid, this.missionidx };
+				this.classid, this.levelid, this.missionidx, this.achievedMission };
 	}
 
 	@RemoteMethod
@@ -197,8 +198,10 @@ public class UserControl {
 		this.classid = clazzId;
 		this.levelid = levelId;
 		this.missionidx = missionIdx;
+		
+		this.achievedMission = r[0][7].equals( "T" );
 
-		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5], r[0][6] };
+		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5], r[0][6], r[0][7] };
 	}
 
 	@RemoteMethod
@@ -241,7 +244,8 @@ public class UserControl {
 	@RemoteMethod
 	public void exitMission(int timeSpend, long execution, int typeRunning, float zoomLevel, String answer) throws Exception {
 		
-		saveMission(0, 0, timeSpend, execution, false, typeRunning, zoomLevel, answer);
+		if (!this.achievedMission)
+			saveMission(0, 0, timeSpend, execution, false, typeRunning, zoomLevel, answer);
 		
 		this.classid = 0;
 		this.levelid = 0;
@@ -268,11 +272,6 @@ public class UserControl {
 			return new Object[]{0, 0};
 
 		return new Object[]{this.user.getXp(), this.user.getMoney()};
-	}
-
-	@RemoteMethod
-	public void registerExecution() throws Exception {
-		gameDao.addExecutionInMission(this.user, this.mission, this.classid);
 	}
 
 	@RemoteMethod

@@ -70,7 +70,7 @@
 }
 
 .missionEnabled {
-	cursor: default;
+	cursor: pointer;
 }
 
 .missionTarget {

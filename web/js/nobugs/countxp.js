@@ -2,16 +2,21 @@
 
 var CountXP = {};
 
-CountXP.init = function(canvasId) {
+CountXP.init = function(canvasId, showCanvas) {
 	
 	if (CountXP.ctx != null)
 		CountXP.stop(true);
 	
 	CountXP.ctx = document.getElementById(canvasId).getContext("2d");
+	this.showCanvas = showCanvas;
 	
 };
 
 CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime) {
+	
+	if (!this.showCanvas)
+		return;
+	
 	CountXP.stopShowingWhenReachTheTime = (stopShowingWhenReachTheTime === undefined?false:stopShowingWhenReachTheTime);
 	CountXP.eventChangeStars = eventChangeStars;
 	CountXP.showPoints = showPoints;
@@ -34,6 +39,11 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventC
 	
 CountXP.start = function() {
 	
+	if (!this.showCanvas) {
+		CountXP.ctx.clearRect(0, 0, 32, 32);
+		return;
+	}
+	
 	if (CountXP.times < 3) {
 		CountXP.tick();
 		CountXP.handler = setInterval(CountXP.tick, 1000);
@@ -41,6 +51,9 @@ CountXP.start = function() {
 };
 
 CountXP.stop = function(clearRect) {
+	
+	if (!this.showCanvas)
+		return;
 	
 	if (clearRect && CountXP.ctx != null) {
 		

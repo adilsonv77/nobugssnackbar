@@ -27,9 +27,6 @@ public interface GameDao {
 	void insertAnswer(long questionnaireId, long questionId, long userId,
 			String answer) throws Exception;
 
-	void addExecutionInMission(User user, long mission, long classid)
-			throws Exception;
-
 	String loadAnswer(int idMission, long id) throws Exception;
 
 	Map<?,?> retrieveMissions(long id) throws Exception;
