@@ -111,13 +111,17 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 	<hints>
 		<sequence>
 			<hint category="Iddle" time="5000" modal="true" condition="Hints.instructionEnabled() == false &amp;&amp; Hints.showedHint() == false">
+			<![CDATA[
 			Leia com aten&#231;&#227;o a primeira p&#225;gina dos objetivos. Depure e observe a lista de vari&#225;veis.<br/><br/>
 			N&#227;o tenha medo de experimentar. &#201; preciso tentar e testar para evoluir.
+			]]>
 			</hint>
 			
 			<hint category="Iddle" time="5000" modal="true" condition="Hints.instructionEnabled() == true &amp;&amp; Hints.showedHint() == false">
+			<![CDATA[
 			Leia com aten&#231;&#227;o a primeira p&#225;gina dos objetivos e o conte&#250;do de aprendizagem. Depure e observe a lista de vari&#225;veis.<br/><br/>
 			N&#227;o tenha medo de experimentar. &#201; preciso tentar e testar para evoluir.
+			]]>
 			</hint>
 		</sequence>
 	
@@ -126,6 +130,19 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 		 	<![CDATA[
 		 	Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Resolva isso adicionando logo no come&#231;o do teu programa
 		 	um bloco de vari&#225;vel atribuindo um valor zero a essa vari&#225;vel em que ele falou "undefined".
+		 	]]>
+		 	</hint>
+		 	<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 15">
+		 	<![CDATA[
+		 	Pergunte ao cliente o que ele deseja e no bloco seguinte j&#225; use a vari&#225;vel em que guardou a quantidade para somar com a vari&#225;vel de totaliza&#231;&#227;o.
+		 	]]>
+		 	</hint>
+
+		 	<hint category="Iddle" modal="true" condition="Hints.howManyRuns() &gt; 10">
+		 	<![CDATA[
+		 	Preste aten&#231;&#227;o nas vari&#225;veis que recebem o desejo dos clientes. Sempre que &#233; guardado um novo valor na vari&#225;vel, o valor que tinhas antes &#233; eliminado.
+		 	Ent&#227;o se o teu personagem est&#225; a perguntar para cada cliente o que ele deseja, e usa a mesma vari&#225;vel, somente o &#250;ltimo cliente ser&#225;
+		 	considerado na soma do total.
 		 	]]>
 		 	</hint>
 		</errors>

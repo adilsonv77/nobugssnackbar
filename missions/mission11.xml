@@ -3,7 +3,7 @@
 	<explanation hasInstruction="true">
 		<page type="goal">
 		<![CDATA[
-        As vari&#225;veis nFa&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido 
+        As vari&#225;veis n&#227;o est&#227;o limitadas ao que anotastes na primeira vez. Numa vari&#225;vel que anotastes o pedido 
         podes depois colocar o produto que retirastes do mostrador ou do refrigerador. Essas vari&#225;veis podem ser 
         reaproveitadas. Mas lembra-te: quando se coloca um novo valor numa vari&#225;vel, perde-se o anterior. 
 		]]>
