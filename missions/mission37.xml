@@ -1,15 +1,20 @@
 <?xml version='1.0'?>
 <mission useIfMutator="false">
-	<explanation hasInstruction="true">
+	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		]]>
-		</page>
-
-		<page type="goal">
-		<![CDATA[
-		Perguntar a cada cliente o que deseja e falar a posicao do cliente que vai gastar mais.
-		Nao existe a possibilidade de empate entre dois clientes.
+		Nessa miss&#227;o vais resolver uma l&#243;gica muito usada por programadores profissionais: descobrir o maior
+		valor entre v&#225;rios valores. No caso da nossa esplanada, precisas falar qual foi o pedido com maior valor e 
+		em que posi&#231;&#227;o do balc&#227;o o cliente est&#225; sentado. <br/><br/>
+		Vais perguntar ao cliente o que deseja (cachorro, bebida e gelado) e calcular o valor do pedido. Lembre-se 
+		que o pre&#231;o do cachorro &#233; $2, da bebida &#233; $3 e do gelado &#233; $1. Voc&#234; j&#225; fez essa tarefa em miss&#245;es anteriores. 
+		<br/><br/>
+		Depois vais comparar esse valor com o maior valor j&#225; registrado: se ele for maior, ent&#227;o guarda esse novo valor
+		como maior valor registrado e j&#225; guardas a posi&#231;&#227;o do cliente. Logo, ter&#225;s que ter duas vari&#225;veis para guardar 
+		essa informa&#231;&#227;o. Por acaso, j&#225; deixei criadas essas vari&#225;veis na &#225;rea de trabalho.<br/><br/>
+		Ap&#243;s perguntar aos tr&#234;s clientes, vais falar o valor dessas duas vari&#225;veis. 
+		N&#227;o existe a possibilidade de empate entre dois clientes, ou seja, sempre somente um cliente vai ter sozinho 
+		o maior valor de pedido.
 		]]> 
 		</page>
 
@@ -163,5 +168,7 @@
 		<objective text="o valor do maior pedido" value="parseInt(CustomerManager.customerMoneyIfSell(parseInt(Game.readVariableTest('numBalcao'))-1))">talk</objective>
 	</objectives>
 	<xml>
+	<block type="variables_set" x="0" y="0"><field name="VAR">maiorCliente</field><value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value>
+	<next><block type="variables_set"><field name="VAR">maiorValor</field><value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value></block></next></block>
 	</xml>
 </mission>

@@ -1,16 +1,13 @@
 <?xml version='1.0'?>
 <mission useIfMutator="true">
-	<explanation hasInstruction="true">
+	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		]]>
-		</page>
-
-		<page type="goal">
-		<![CDATA[
-		Perguntar a cada cliente o que deseja. No final falar o maior valor total pedido.
-		Como agora existe a possibilidade de empate entre dois ou mais clientes, vais dizer quantos clientes
-		pediram o maior valor.
+		Vamos complicar um pouco mais a descoberta dos maiores valores. Agora mais de um cliente pode 
+		ter o maior valor do pedido. Aten&#231;&#227;o: os clientes podem ter pedidos diferentes, entretanto o valor
+		financeiro pode ser o mesmo. <br/><br/>
+		Vais precisar falar o valor do maior pedido, e quantos clientes pediram esse maior valor.<br/><br/>
+		Para dar um ajuda, te trouxe a solu&#231;&#227;o da miss&#227;o anterior.
 		]]> 
 		</page>
 

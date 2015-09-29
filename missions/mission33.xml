@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <mission useIfMutator="false">
-	<explanation hasInstruction="true">
+	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
 		Deves ter percebido que depois que resolves o problema com um cliente, basta selecionar os blocos, copiar e col&#225;-los. 

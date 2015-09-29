@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <mission useIfMutator="false">
-	<explanation hasInstruction="true">
+	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
 		Muito menos c&#243;digo para resolver o mesmo problema, n&#227;o ?<br/><br/>
