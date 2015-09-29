@@ -3,11 +3,7 @@
 	<explanation hasInstruction="true">
 		<page type="goal">
 		<![CDATA[
-		]]>
-		</page>
-
-		<page type="goal">
-		<![CDATA[
+		Muito menos c&#243;digo para resolver o mesmo problema, n&#227;o ?
 		Atender a fome e a sede dos tres clientes.
 		Cada cliente pode feme e/ou sede.
 		]]> 
@@ -17,7 +13,7 @@
 		<![CDATA[
 <div class="ExplainContent">
 <div class="ExplainContentInternal">
-<b>Ciclos</b><br/>
+<b>FOR: Em constru&#231;&#227;o</b><br/>
 </div>
 </div>
 

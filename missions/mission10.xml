@@ -18,8 +18,8 @@
 		<sequence>
 			<hint category="Iddle" modal="true" condition = "Hints.showedHint() == false &amp;&amp; Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countInstructions() == 2">
 			<![CDATA[
-			Ao selecionar um bloco podes utilizar as teclas [Ctr+C] e [Ctrl+V] para duplicar o bloco. 
-			Se manter a tecla [Ctrl] pressionada, pode selecionar v&#225;rios blocos. 
+			Ao selecionar um bloco podes utilizar as teclas [CTRL+C] e [CTRL+V] para duplicar o bloco. 
+			Se manter a tecla [SHIFT] pressionada, pode selecionar v&#225;rios blocos. 
 			Resolve primeiro para um cliente e depois utiliza esse recurso para reaproveitar o c&#243;digo para outro cliente.
 	       	]]>
     		</hint>

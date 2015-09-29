@@ -215,38 +215,75 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	      // from the console when the page rolls back.
 	      e.preventDefault();
 	    }
-	  } else if (e.altKey || e.ctrlKey || e.metaKey) {
-	    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
-	      Blockly.hideChaff();
-	      if (e.keyCode == 67) {
-	        // 'c' for copy.
-	        Blockly.copy_(Blockly.selected);
-	      } else if (e.keyCode == 88) {
-	        // 'x' for cut.
-	    	
-	    	Blockly.copy_(Blockly.selected);
-	    	if (Game.blocksSelected.length == 0) {
-	    		Blockly.selected.dispose(true, true);
-	    	} else {
-		  		Game.blocksSelected.forEach(function(block) {
-					if (block.isDeletable() && block.isMovable())
-						block.dispose(true, true);
-				});
-		  		Game.blocksSelected = [];
-	    	}
-/*
-	        Blockly.copy_(Blockly.selected);
-	        Blockly.selected.dispose(true, true);
-	        */
-	      }
-	    }
-	    if (e.keyCode == 86) {
-	      // 'v' for paste.
-	      if (Blockly.clipboardXml_) {
-	        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
-	      }
-	    }
-	  }
+	  } else
+		  if (e.ctrlKey && !e.shiftKey) {
+		    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
+		      Blockly.hideChaff();
+		      if (e.keyCode == 67) {
+		        // 'c' for copy.
+		        Blockly.copy_(Blockly.selected);
+		      } else if (e.keyCode == 88) {
+		        // 'x' for cut.
+		    	
+		    	Blockly.copy_(Blockly.selected);
+		    	if (Game.blocksSelected.length == 0) {
+		    		Blockly.selected.dispose(true, true);
+		    	} else {
+			  		Game.blocksSelected.forEach(function(block) {
+						if (block.isDeletable() && block.isMovable())
+							block.dispose(true, true);
+					});
+			  		Game.blocksSelected = [];
+		    	}
+		      }
+		    }
+		    if (e.keyCode == 86) {
+		      // 'v' for paste.
+		      if (Blockly.clipboardXml_) {
+		        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
+		      }
+		    } else
+		    	if (e.keyCode == 90) {
+		    		// 'z' undo the last delete
+		    		// future implementation
+		    		if (Game.lastDeletedBlocks.length > 0) {
+		    			Game.lastDeletedBlocks.forEach(function(block) {
+		    				
+		    			});
+		    			Game.lastDeletedBlocks = [];
+		    		}
+		    	}
+		  } else
+			  if (e.ctrlKey && e.shiftKey) {
+				  var xmlBlock = null;
+				  switch (e.keyCode) {
+				  
+				  case 71: // 'g'
+					  if (Game.toolbox.indexOf('<block type="move_goToBarCounter">') == -1)// is allowed insert goToBarCounter ?
+						  return;
+					  
+					  xmlBlock = transformStrToXml("<block type='move_goToBarCounter'><value name='VALUE'><block type='math_number'><field name='NUM'>3</field></block></value></block>").childNodes[0];
+					  break;
+					  
+				  case 86: // 'v'
+					  if (Game.toolbox.indexOf('custom="VARIABLE"') == -1) // is allowed insert variables ?
+						  return;
+					  
+					  xmlBlock = transformStrToXml("<block type='variables_set'></block>").childNodes[0];
+					  break;
+				  } 
+				  
+				  if (xmlBlock != null) {
+					  
+					  if (Blockly.selected) {
+						  Blockly.selected.unselect();
+					  }
+					  Blockly.hideChaff();
+					  Blockly.Xml.domToBlock(Blockly.mainWorkspace, xmlBlock);
+				  }
+				  
+			  }
+			  
 	};
 
 Blockly.BlockSvg.prototype.checkBlocks = function(base, typeAction, compare) {
@@ -301,7 +338,7 @@ Blockly.BlockSvg.prototype.select = function() {
 	
 	myIsTargetSvg = false;
     // Unselect any previously selected block.
-	if (!Game.CTRLPRESSED) {
+	if (!Game.SHIFTPRESSED) {
 		Game.blocksSelected.forEach(function(block) {block.unselect(); });
 		Game.blocksSelected = [];
 		if (Blockly.selected)

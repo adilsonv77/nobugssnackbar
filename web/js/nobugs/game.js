@@ -131,7 +131,9 @@ Game.init = function() {
     window.addEventListener('keyup',  Game.keyUp);
     
 	Game.CTRLPRESSED = false;
+	Game.SHIFTPRESSED = false;
 	Game.blocksSelected = [];
+	Game.lastDeletedBlocks = [];
 
 	// if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
@@ -168,10 +170,12 @@ Game.resizeMainWindow = function() {
 
 Game.keyDown = function(evt) {
 	Game.CTRLPRESSED = evt.ctrlKey;
+	Game.SHIFTPRESSED = evt.shiftKey;
 };
 
 Game.keyUp = function(evt) {
 	Game.CTRLPRESSED = false;
+	Game.SHIFTPRESSED = false;
 };
 
 Game.login = function() {
