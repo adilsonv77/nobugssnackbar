@@ -98,7 +98,7 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="10" xpTotalTime="300">
+	<objectives ordered="false" xpIndividual="30" xpFinal="10" xpTotalTime="960">
 		
 		<objective pos="2" place="counter">askWantHowManyFoods</objective>
 		<objective pos="2" place="counter">askWantHowManyDrinks</objective>

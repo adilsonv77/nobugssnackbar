@@ -125,6 +125,8 @@ Game.init = function() {
     window.removeEventListener('resize',  Game.resizeMainWindow);
     window.removeEventListener('keydown',  Game.keyDown);
     window.removeEventListener('keyup',  Game.keyUp);
+
+    document.removeEventListener('keydown', MyBlocklyApps.onKeyDown_, false);
     
     window.addEventListener('resize',  Game.resizeMainWindow);
     window.addEventListener('keydown',  Game.keyDown);
@@ -1984,7 +1986,7 @@ Game.hasEmptyInputs = function (activeBlock) {
 	var input = activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
 		if (input[i].connection != null) {
-			if (input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
+			if (!(input[i].sourceBlock_.type === "controls_for" && input[i].name === "DO") && input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
 			  return true;
 			if (input[i].connection.targetConnection != null) {
 				if (Game.hasEmptyInputs(input[i].connection.targetConnection.sourceBlock_))

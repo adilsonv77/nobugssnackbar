@@ -258,14 +258,14 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 				  var xmlBlock = null;
 				  switch (e.keyCode) {
 				  
-				  case 71: // 'g'
+				  case 49: // '1'
 					  if (Game.toolbox.indexOf('<block type="move_goToBarCounter">') == -1)// is allowed insert goToBarCounter ?
 						  return;
 					  
 					  xmlBlock = transformStrToXml("<block type='move_goToBarCounter'><value name='VALUE'><block type='math_number'><field name='NUM'>3</field></block></value></block>").childNodes[0];
 					  break;
 					  
-				  case 86: // 'v'
+				  case 50: // '2'
 					  if (Game.toolbox.indexOf('custom="VARIABLE"') == -1) // is allowed insert variables ?
 						  return;
 					  

@@ -105,7 +105,7 @@ J&#225; deixo alguns blocos para te servir como semente de inspira&#231;&#227;o.
 		</customer>
 		
 	</customers>
-	<objectives ordered="false" buttonRunQtdAttempts="5" xpIndividual="30" xpFinal="10" xpTotalTime="600">
+	<objectives ordered="false" buttonRunQtdAttempts="5" xpIndividual="30" xpFinal="10" xpTotalTime="2520">
 		
 		<objective pos="1" place="counter">cashIn</objective>
 		

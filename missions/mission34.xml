@@ -3,9 +3,10 @@
 	<explanation hasInstruction="true">
 		<page type="goal">
 		<![CDATA[
-		Muito menos c&#243;digo para resolver o mesmo problema, n&#227;o ?
-		Atender a fome e a sede dos tres clientes.
-		Cada cliente pode feme e/ou sede.
+		Muito menos c&#243;digo para resolver o mesmo problema, n&#227;o ?<br/><br/>
+		Para praticar o bloco de ciclos, vais atender a fome e a sede dos tr&#234;s clientes. Um cliente tem fome, outro sede e mais outro
+		com fome e sede. <br/><br/>
+		Vais usar a mesma l&#243;gica que usavas para atender um cliente, por&#233;m meter tudo dentro de um bloco de ciclos.		
 		]]> 
 		</page>
 
@@ -100,7 +101,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="300" commQtd="14">
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600" commQtd="14">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

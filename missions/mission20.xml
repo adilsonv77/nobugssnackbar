@@ -107,7 +107,7 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 			</orders>			
 		</customer>
 	</customers>
-	<objectives buttonRunQtdAttempts="5" ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="300">
+	<objectives buttonRunQtdAttempts="5" ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="840">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective pos="1" place="counter">askWantHowManyDrinks</objective>

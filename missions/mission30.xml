@@ -106,7 +106,7 @@ Dica: Vais usar o operador <imghex id="m19_4" style="height:27px">89504E470D0A1A
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="10" xpTotalTime="300" maxCommands="6" maxCommandsRewardCoins="30">
+	<objectives ordered="false" xpIndividual="30" xpFinal="10" xpTotalTime="900" maxCommands="6" maxCommandsRewardCoins="30">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective text="a quantidade de refrigerantes que consegue fornecer com a gorjeta do cliente 1" 

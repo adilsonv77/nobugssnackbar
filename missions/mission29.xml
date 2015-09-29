@@ -131,7 +131,7 @@ Dica: utilize a opera&#231;&#227;o de subtra&#231;&#227;o, diminuindo a quantida
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="300" maxCommands="7" maxCommandsRewardCoins="20">
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600" maxCommands="7" maxCommandsRewardCoins="20">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		

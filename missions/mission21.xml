@@ -204,7 +204,7 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 			</orders>			
 		</customer>
 	</customers>
-	<objectives buttonRunQtdAttempts="5" ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="300">
+	<objectives buttonRunQtdAttempts="5" ordered="false" xpIndividual="20" xpFinal="10" xpTotalTime="600">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective pos="1" place="counter">askWantHowManyDrinks</objective>
