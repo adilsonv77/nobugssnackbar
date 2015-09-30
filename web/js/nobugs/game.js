@@ -234,6 +234,8 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes) };
 	
+	AvatarImgMaker.configGender(Game.loginData.userLogged.sex);
+	
 	try {
 		UserControl.retrieveQuestionnaire(function(q) {
 			if (q != null) {
