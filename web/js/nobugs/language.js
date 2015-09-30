@@ -647,6 +647,28 @@ Blockly.Blocks['controls_if'].init = function() {
 	
 };
 
+Blockly.Blocks['variables_get'].oldVariablesGetInit = Blockly.Blocks['variables_get'].init;
+Blockly.Blocks['variables_get'].init = function() {
+	
+
+	this.oldVariablesGetInit();
+    
+    if (Game.toolbox) {
+    	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+        	// changes the context menu of the variable name
+    	    this.inputList[0].fieldRow[0].menuGenerator_ = function() {
+    	    	return [[this.getText(), this.getText()]];
+    	    };
+  		
+    	    this.contextMenuMsg_ = null;
+    	    this.contextMenuType_ = null;
+    	    
+    	    this.customContextMenu = null;
+    	}
+    }
+    
+};
+
 Blockly.Blocks['variables_set'].init = function() {
     this.setHelpUrl(Blockly.Msg.VARIABLES_SET_HELPURL);
     
@@ -665,18 +687,26 @@ Blockly.Blocks['variables_set'].init = function() {
     	         ],
     	 "colour": Blockly.Blocks.variables.HUE
     });
-    /*
-    this.interpolate_(
-    	BlocklyApps.getMsg('Blockly_variableSet'),
-    	['VALUE', null, Blockly.ALIGN_RIGHT],
-        ['VAR', new Blockly.FieldVariable(Blockly.Msg.VARIABLES_SET_ITEM)],
-        Blockly.ALIGN_RIGHT);
-        */
+ 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
-    this.contextMenuMsg_ = Blockly.Msg.VARIABLES_SET_CREATE_GET;
-    this.contextMenuType_ = 'variables_get';
+    
+    // if it's a mission that does not accept adding new blocks, then is not allowed to change the variables
+    var useContextMenu = true;
+    if (Game.toolbox) {
+    	useContextMenu = Game.toolbox !== '<xml id="toolbox" style="display: none"></xml>';
+    }
+    if (!useContextMenu) {
+    	// changes the context menu of the variable name
+	    this.inputList[1].fieldRow[1].menuGenerator_ = function() {
+	    	return [[this.getText(), this.getText()]];
+	    };
+	    this.customContextMenu = null;
+    };
+    
+    this.contextMenuMsg_ = (useContextMenu?Blockly.Msg.VARIABLES_SET_CREATE_GET:null);
+    this.contextMenuType_ = (useContextMenu?'variables_get':null);
   };
 
 
