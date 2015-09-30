@@ -1,4 +1,6 @@
 'use strict';
+
+
 String.prototype.format = function() {
     var formatted = this;
     for (var i = 0; i < arguments.length; i++) {
@@ -11,10 +13,51 @@ String.prototype.format = function() {
 };
 
 var window_prompt = window.prompt;
+var window_prompt_onclose, window_prompt_second_parameter;
 
-window.prompt = function(one, two) {
+function performWindowPrompt(p) {
+	
+	var errorMsg = null;
+	
+	try {
+		
+		if (p != null)
+			p = p.trim();
+
+		if (p === window_prompt_second_parameter) {
+			window_prompt_onclose(window_prompt_second_parameter);
+			return null;
+		}
+			
+
+		var valid = p == null || VariableNames.validate(p);
+		if (valid) {
+			
+			window_prompt_onclose(p);
+			return null;
+		}
+			
+		
+		if (valid == false) {
+			errorMsg = BlocklyApps.getMsg("Error_variableName");
+		}
+		
+	} catch (ex) {
+		errorMsg =  BlocklyApps.getMsg("Error_showPrompt");
+	}
+	
+	return errorMsg;
+}
+
+window.prompt = function(one, two, onclose) {
+	window_prompt_onclose = onclose;
+	window_prompt_second_parameter = two;
+	
 	Blockly.fireUiEventNow(window, 'showWindowPrompt');
-
+	
+	NoBugsWindowPrompt(one, two, performWindowPrompt, null);
+	
+/*
 	var p;
 	do {
 		try {
@@ -47,6 +90,7 @@ window.prompt = function(one, two) {
 	} while(!valid);
 
 	return p;
+	*/
 };
 
 

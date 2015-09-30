@@ -178,6 +178,7 @@
 			<arg line="${js.home}/sounds.js" />
 			<arg line="${js.home}/countxp.js" />
 			<arg line="${js.home}/tests.js" />
+			<arg line="${js.home}/window_prompt.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

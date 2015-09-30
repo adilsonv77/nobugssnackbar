@@ -736,6 +736,105 @@ Blockly.Blocks['variables_set'].init = function() {
   return false;
 };
 
+/* ************************************************************************************/
+/*     Crazy work to change the original window.prompt to nobugswindow.prompt         */
+/* ************************************************************************************/
+
+var window_prompt_field;
+
+function WindowPromptCallback(e) {
+    var menuItem = e.target;
+    if (menuItem) {
+      var value = menuItem.getValue();
+      if (window_prompt_field.sourceBlock_ && window_prompt_field.changeHandler_) {
+        // Call any change handler, and allow it to override.
+    	  
+        var override = window_prompt_field.changeHandler_(value);
+        if (override !== undefined) {
+          value = override;
+        }
+      }
+      if (value !== null) {
+    	  window_prompt_field.setValue(value);
+      }
+    }
+    Blockly.WidgetDiv.hideIfOwner(window_prompt_field);
+  };
+
+
+goog.events.oldListen = goog.events.listen; 
+goog.events.listenx = function(src, type, listener, opt_capt, opt_handler) {
+	// is the first event, then I can try this ;)
+	this.oldListen(src, type, WindowPromptCallback, opt_capt, opt_handler);
+	goog.events.listen = goog.events.oldListen;
+};
+
+Blockly.Field.prototype.oldOnMouseUp_ = Blockly.Field.prototype.onMouseUp_;
+Blockly.Field.prototype.onMouseUp_ = function(e) {
+	goog.events.listen = goog.events.listenx;
+	window_prompt_field = this;
+	this.oldOnMouseUp_(e);
+};
+
+Blockly.FieldVariable.dropdownChange = function(text) {
+	
+	  function promptName(promptText, defaultText, finishPrompt) {
+	    Blockly.hideChaff();
+	    var finishWindowPrompt = function(newVar) {
+		    // Merge runs of whitespace.  Strip leading and trailing whitespace.
+		    // Beyond this, all names are legal.
+		    if (newVar) {
+		      newVar = newVar.replace(/[\s\xa0]+/g, ' ').replace(/^ | $/g, '');
+		      if (newVar == Blockly.Msg.RENAME_VARIABLE ||
+		          newVar == Blockly.Msg.NEW_VARIABLE) {
+		        // Ok, not ALL names are legal...
+		        newVar = null;
+		      }
+		    }
+		    
+		    finishPrompt(newVar);
+	    };
+
+	    window.prompt(promptText, defaultText, finishWindowPrompt);
+	  }
+	  
+	  var workspace = this.sourceBlock_.workspace;
+	  if (text == Blockly.Msg.RENAME_VARIABLE) {
+	    var oldVar = this.getText();
+	    
+	    var finishRenameVariable = function(text) {
+		    if (text) {
+		      Blockly.Variables.renameVariable(oldVar, text, workspace);
+		    }
+	    };
+	    
+	    text = promptName(Blockly.Msg.RENAME_VARIABLE_TITLE.replace('%1', oldVar),
+	                      oldVar, finishRenameVariable);
+	    return null;
+	    
+	  } else 
+		  if (text == Blockly.Msg.NEW_VARIABLE) {
+		    
+			  var finishNewVariable = function(text) {
+				  
+				    // Since variables are case-insensitive, ensure that if the new variable
+				    // matches with an existing variable, the new case prevails throughout.
+				    if (text) {
+				      Blockly.Variables.renameVariable(text, text, workspace);
+				      window_prompt_field.setValue(text);
+				    }
+			  
+			  };
+			  
+			  promptName(Blockly.Msg.NEW_VARIABLE_TITLE, '', finishNewVariable);
+		      return null;
+		  }
+	  
+	  
+	  return undefined;
+	};
+
+
 /**********************************************************************************/
 /**            Provided from the blockly forum                                    */
 /** Author: Florian Pechwitz (Block) and Jungwon Rhyu (JavaScript)
