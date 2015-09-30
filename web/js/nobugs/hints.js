@@ -1120,3 +1120,16 @@ Hints.Categories["SliderEx"] = {
 
 	};
 
+Hints.Categories["Free"] = {
+		
+		show:
+				function (param) {
+			
+		    		var style = {top: '120px'}; 
+		    		style.width = "440px";
+		    		
+		    		createInfoDlg(Hints.hintSelected.content, style, Game.missionTitle, Hints.hintSelected.modal);
+		    		
+				}
+			
+		};

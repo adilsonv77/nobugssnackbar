@@ -80,6 +80,16 @@ n&#227;o est&#225; mais l&#225;. Se voc&#234; n&#227;o salvou o n&#250;mero anti
 			]]>
 			</hint>
 			
+			<!--  Free instead Iddle, because this last has a natural condition that compares countInstructions gt; 0 -->
+			<hint category="Free" modal="true" condition="Hints.showedHint() == false &amp;&amp; Hints.countInstructions() == 0">
+			<![CDATA[
+			<b>Teclas de atalho:</b><br/>
+			<ul>
+			<li>Para inserir novos blocos [goToBarCounter] utilize [CTRL+SHIFT+1]</li>
+			<li>Para inserir novos blocos de vari&#225;veis utilize [CTRL+SHIFT+2]</li>
+			</ul>
+			]]>
+			</hint> 
 		</sequence>
 		<errors>
 
