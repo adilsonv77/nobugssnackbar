@@ -219,23 +219,30 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		  if (e.ctrlKey && !e.shiftKey) {
 		    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
 		      Blockly.hideChaff();
-		      if (e.keyCode == 67) {
-		        // 'c' for copy.
-		        Blockly.copy_(Blockly.selected);
-		      } else if (e.keyCode == 88) {
-		        // 'x' for cut.
-		    	
-		    	Blockly.copy_(Blockly.selected);
-		    	if (Game.blocksSelected.length == 0) {
-		    		Blockly.selected.dispose(true, true);
-		    	} else {
-			  		Game.blocksSelected.forEach(function(block) {
-						if (block.isDeletable() && block.isMovable())
-							block.dispose(true, true);
-					});
-			  		Game.blocksSelected = [];
-		    	}
-		      }
+		      if (e.keyCode == 67 || e.keyCode == 88) {
+		    	  
+		    	  if (Game.toolbox !== '<xml id="toolbox" style="display: none"></xml>') {
+		    		  // if there is no commands in toolbox, it's not allowed to copy or cut commands 
+				      if (e.keyCode == 67) {
+					        // 'c' for copy.
+					        Blockly.copy_(Blockly.selected);
+				      } else if (e.keyCode == 88) {
+					        // 'x' for cut.
+					    	
+					    	Blockly.copy_(Blockly.selected);
+					    	if (Game.blocksSelected.length == 0) {
+					    		Blockly.selected.dispose(true, true);
+					    	} else {
+						  		Game.blocksSelected.forEach(function(block) {
+									if (block.isDeletable() && block.isMovable())
+										block.dispose(true, true);
+								});
+						  		Game.blocksSelected = [];
+					    	}
+					  }
+		    	  }
+		    	  
+		      	}
 		    }
 		    if (e.keyCode == 86) {
 		      // 'v' for paste.
