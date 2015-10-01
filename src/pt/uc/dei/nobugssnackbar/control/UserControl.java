@@ -119,6 +119,9 @@ public class UserControl {
 
 		log.info("logoff");
 
+		WebContext ctx = WebContextFactory.get();
+		ctx.getSession().removeAttribute("userid");
+		
 		this.user = null;
 		this.classid = 0;
 		this.levelid = 0;
@@ -142,6 +145,10 @@ public class UserControl {
 
 			this.avatar = retrieveAvatarParts();
 
+			// I use this to monitor in Tomcat Manager ;)
+			WebContext ctx = WebContextFactory.get();
+			ctx.getSession().setAttribute("userid", this.user.getId());
+			
 			return new Object[] { null, this.user, this.missions, 
 					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes }; // no errors
 

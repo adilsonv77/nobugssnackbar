@@ -76,10 +76,7 @@ public class BeanStatusMissions implements Serializable {
 	}
 	
 	public void loadAnswer(int row) {
-		System.out.println(row);
-		
-		Map<String, Object> at = this.userAttempts.get(row);
-		System.out.println(at.get("answer"));
+
 	}
 	
 	public List<Clazz> getClazzes() throws Exception {
