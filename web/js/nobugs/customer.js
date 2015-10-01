@@ -336,7 +336,7 @@ Customer.prototype.update = function() {
 				CustomerManager.createCustomerByPattern(this.idxPattern, CustOpt.door);
 			
 		}
-		break;
+		return; // doesn't matter... this is the last state of the customer... it's his death
 
 	case 39: ;
 	case 41: ;

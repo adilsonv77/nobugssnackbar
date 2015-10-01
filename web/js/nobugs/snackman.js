@@ -438,7 +438,7 @@ SnackMan.prototype.isThereACustomer = function() {
 	this.update('XX'); // reset any speech bubble
 	
 	this.update('IM', 0);  // turn to front
-	this.update('IM', 40); // turn to left to find a customer in the counter
+	this.update('IM', 80); // turn to left to find a customer in the counter
 	this.update('IM', 0);  // turn to front
 
 	return found != null;

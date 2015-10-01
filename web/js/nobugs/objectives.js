@@ -39,9 +39,6 @@ Objective.verifyObjectives = function(key, options) {
 		return;
 	}
 		
-	
-	var dest = Objective.factory(key);
-
 	var ret = false;
 	if (hero.objective.ordered) {
 		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective !== key)
@@ -50,6 +47,9 @@ Objective.verifyObjectives = function(key, options) {
 		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].notExists === "true")
 			return false;
 		
+		
+		var dest = Objective.factory(key); // put here for optimization in the time
+
 		if (dest.checkObjective(options, hero.objective.objectives[hero.lastObjectiveAchieved + 1])) {
 			
 			Objective.markAchieved(hero.objective.objectives[hero.lastObjectiveAchieved + 1]);
@@ -61,6 +61,7 @@ Objective.verifyObjectives = function(key, options) {
 		for (var i = 0; i < hero.objective.objectives.length; i++) {
 			if (hero.objective.objectives[i].objective === key && !hero.objective.objectives[i].achieved) {
 				
+				var dest = Objective.factory(key); // put here for optimization in the time
 				if (hero.objective.objectives[i].notExists == null && 
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					

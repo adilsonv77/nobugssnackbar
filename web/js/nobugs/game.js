@@ -78,7 +78,8 @@ Game.generalInit = function() {
 	  
 	  // window.removeEventListener('resize',  Game.resizeMainWindow); //
 	  Blockly.Generator.prototype.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-	  Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
+	  // I remove this because in this game the player notes this problem !!! 
+	  // Blockly.JavaScript.INFINITE_LOOP_TRAP = 'highlightBlock(%1);\n';
 	  
 	  // Add to reserved word list: API, local variables in execution environment
 	  // (execute) and the infinite loop detection function.
@@ -1908,15 +1909,8 @@ Game.execute = function(debug) {
   	    var code = "var NoBugsJavaScript = {};\n";
   	    var subcode = Game.convertWaits(js.workspaceToCode(Blockly.mainWorkspace));
 
-        // never happens that stop receives true !!! 
-  	    if (Game.openMission.open) {
-  	    	code += "NoBugsJavaScript.stop = false; \n while (!NoBugsJavaScript.stop) { \n " + subcode + "\n } ";
-  	    } else 
-  	    	code += subcode ;
+    	code += subcode ;
   	    
-  	   // code = "var xp = function() { " + code + "}; xp(); ";
-  	    
-      //  alert(code);
   	    Game.code = code;
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
@@ -2096,6 +2090,9 @@ Game.verifyMathArithVariable = function(verifyVars) {
 };
 
 Game.updateVariables = function() {
+	
+	if (Game.runningStatus != 2)
+		return;
 	
 	var rows = [];
 	
