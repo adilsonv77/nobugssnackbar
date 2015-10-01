@@ -685,7 +685,7 @@ Game.missionLoaded = function(ret){
 	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
   }
   // if the slider is not loaded in the begin, then the hint show it 
-  if (!Game.openMission.open && Game.howManyRuns >= Game.slider.timesBefore) {
+  if (Game.howManyRuns >= Game.slider.timesBefore) {
 	  Game.slider.svg.style.visibility = "visible";
   }
   

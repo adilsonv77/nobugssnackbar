@@ -1,20 +1,14 @@
 <?xml version='1.0'?>
-<mission useIfMutator="false">
+<mission useIfMutator="false" open="true" >
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		 - While com incremento variavel 
-		 - Ciclos aninhados
+		isThereACustomer
 		]]>
 		</page>
 
 		<page type="goal">
 		<![CDATA[
-		Reescrever essa frase: Atender os tres clientes por completo ate que tiver atendido no total da esplanada pelo menos 5 cachorros.
-		Se alcancou pelo menos  cincos cachorros, nao deve-se atender os demais clientes. 
-		
-		Atenda somente os cachorros. Os clientes podem pedir cachorros, gelados e bebidas. Eh garantido que sempre 
-		exista no minimo 5 cachorros no total da esplanada. Sempre vai pedir cachorros antes de gelados.
 		]]>
 		</page>
 
@@ -45,6 +39,7 @@
 		<category name="askForFood" show="true" />
 		<category name="askWantHowManyFoods" show="true" />
 		<category name="askWantHowManyIceCream" show="true" />
+		<category name="isThereACustomer" show="true" />
 		<category name="askHasHunger" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
@@ -62,36 +57,16 @@
 	</commands>
 	<cooker>initial</cooker>
 	
-	<tests>3</tests>
-	<testsvars>
-		<test>
-			<var name="totalDelivered1">2</var>
-			<var name="totalDelivered2">1</var>
-			<var name="totalDelivered3">2</var>
-		</test>
-		<test>
-			<var name="totalDelivered1">3</var>
-			<var name="totalDelivered2">2</var>
-			<var name="totalDelivered3">0</var>
-		</test>
-		<test>
-			<var name="totalDelivered1">1</var>
-			<var name="totalDelivered2">3</var>
-			<var name="totalDelivered3">2</var>
-		</test>
-	</testsvars>
-		
 	<customers>
 		<customer>
 			<id>01</id>
-			<init>counter1</init>
+			<init>door</init>
 			<dest>counter1</dest>
 			<orders>
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -108,10 +83,8 @@
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -119,16 +92,14 @@
 
 		<customer>
 			<id>02</id>
-			<init>counter2</init>
+			<init>door</init>
 			<dest>counter2</dest>
 			<orders>
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -137,7 +108,6 @@
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -154,7 +124,7 @@
 
 		<customer>
 			<id>03</id>
-			<init>counter3</init>
+			<init>door</init>
 			<dest>counter3</dest>
 			<orders>
 				<order>
@@ -163,7 +133,6 @@
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -178,11 +147,9 @@
 		</customer>
 	</customers>
 	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600">
-		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
-		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
-		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 6" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
 	</objectives>
-	<xml>
+	<xml preload="40">
 
 	</xml>
 </mission>
