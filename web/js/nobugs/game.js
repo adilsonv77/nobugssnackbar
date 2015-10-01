@@ -1988,7 +1988,9 @@ Game.hasEmptyInputs = function (activeBlock) {
 	var input = activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
 		if (input[i].connection != null) {
-			if (!(input[i].sourceBlock_.type === "controls_for" && input[i].name === "DO") && input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
+			if (!((input[i].sourceBlock_.type === "controls_for" || input[i].sourceBlock_.type === "controls_whileUntil") && input[i].name === "DO") &&
+					
+					input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
 			  return true;
 			if (input[i].connection.targetConnection != null) {
 				if (Game.hasEmptyInputs(input[i].connection.targetConnection.sourceBlock_))

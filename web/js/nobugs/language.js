@@ -736,45 +736,27 @@ Blockly.Blocks['variables_set'].init = function() {
   return false;
 };
 
-/* ************************************************************************************/
-/*     Crazy work to change the original window.prompt to nobugswindow.prompt         */
-/* ************************************************************************************/
+Blockly.Blocks['controls_whileUntil'].oldInit = Blockly.Blocks['controls_whileUntil'].init;
+Blockly.Blocks['controls_whileUntil'].init = function() {
+	
+	this.oldInit();
+	this.inputList.shift();
+	
+    this.appendValueInput('BOOL')
+    	.setCheck('Boolean')
+    	.appendField(new Blockly.FieldLabel(Blockly.Msg.CONTROLS_WHILEUNTIL_OPERATOR_WHILE));
+    
+    var f = this.inputList[0];
+    this.inputList[0] = this.inputList[1];
+    this.inputList[1] = f;
 
-var window_prompt_field;
-
-function WindowPromptCallback(e) {
-    var menuItem = e.target;
-    if (menuItem) {
-      var value = menuItem.getValue();
-      if (window_prompt_field.sourceBlock_ && window_prompt_field.changeHandler_) {
-        // Call any change handler, and allow it to override.
-    	  
-        var override = window_prompt_field.changeHandler_(value);
-        if (override !== undefined) {
-          value = override;
-        }
-      }
-      if (value !== null) {
-    	  window_prompt_field.setValue(value);
-      }
-    }
-    Blockly.WidgetDiv.hideIfOwner(window_prompt_field);
-  };
-
-
-goog.events.oldListen = goog.events.listen; 
-goog.events.listenx = function(src, type, listener, opt_capt, opt_handler) {
-	// is the first event, then I can try this ;)
-	this.oldListen(src, type, WindowPromptCallback, opt_capt, opt_handler);
-	goog.events.listen = goog.events.oldListen;
+	this.inputList[0].fieldRow[0].name = "MODE";
+	this.inputList[0].fieldRow[0].value = "WHILE";
 };
 
-Blockly.Field.prototype.oldOnMouseUp_ = Blockly.Field.prototype.onMouseUp_;
-Blockly.Field.prototype.onMouseUp_ = function(e) {
-	goog.events.listen = goog.events.listenx;
-	window_prompt_field = this;
-	this.oldOnMouseUp_(e);
-};
+/* ************************************************************************************/
+/*     Change the original window.prompt to nobugswindow.prompt         */
+/* ************************************************************************************/
 
 Blockly.FieldVariable.dropdownChange = function(text) {
 	
@@ -799,6 +781,7 @@ Blockly.FieldVariable.dropdownChange = function(text) {
 	  }
 	  
 	  var workspace = this.sourceBlock_.workspace;
+	  var window_prompt_field = this;
 	  if (text == Blockly.Msg.RENAME_VARIABLE) {
 	    var oldVar = this.getText();
 	    
