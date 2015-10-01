@@ -55,6 +55,7 @@ window.prompt = function(one, two, onclose) {
 	
 	Blockly.fireUiEventNow(window, 'showWindowPrompt');
 	
+	Hints.stopHints();
 	NoBugsWindowPrompt(one, two, performWindowPrompt, null);
 	
 /*

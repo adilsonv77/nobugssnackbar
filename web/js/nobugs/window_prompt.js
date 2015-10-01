@@ -49,10 +49,11 @@ function NoBugsWindowPrompt(info, initialValue, closeFunction, alertMsg) {
 	        loadSpeed: 200,
 	      },
 
-//	      top: Math.max(($(window).height() - 200) / 2, 0),
-//	      left:  Math.max(($(window).width() - 400) / 2, 0),
 	      closeOnClick: false,
-	      load: false
+	      load: false,
+	      onLoad : function() {
+	    	  $("#window_prompt input").focus();
+	      }
 	});
     
     $("#closePrompt").click(function(e) {

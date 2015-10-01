@@ -824,6 +824,7 @@ Blockly.FieldVariable.dropdownChange = function(text) {
 		      }
 		    }
 		    
+		    Hints.startHints();
 		    finishPrompt(newVar);
 	    };
 

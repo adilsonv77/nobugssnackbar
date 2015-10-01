@@ -65,7 +65,8 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if ((key === "deliver" || key === "giveTheWholeChange" ||  key === "giveSomeChange" ) && options.allCustomers) {
+					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional")
+							&& options.allCustomers) {
 						ret = true;
 					} else
 						return true;
@@ -168,6 +169,10 @@ Objective.factory = function(key) {
 		
 	case "customDeliver":
 		this.factories[key] = new Objective.CustomDeliver();
+		break;
+		
+	case "conditional":
+		this.factories[key] = new Objective.Conditional();
 		break;
 		
 	case "varQtd": 
@@ -538,6 +543,32 @@ Objective.CustomDeliver.prototype.createExplanationItem = function(objective) {
 	return Objective.createExplanationItemPlacePos("explanation_customdeliver", objective, objective.text);
 };
 
+/******************************************************************************
+ *                                 Conditional
+ ******************************************************************************/
+
+Objective.Conditional = function() {};
+
+Objective.Conditional.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.pos = elem.getAttribute("pos");
+	p.place = elem.getAttribute("place");
+	p.condition = elem.getAttribute("condition");
+	p.text = elem.getAttribute("text");
+
+	return p;
+};
+
+Objective.Conditional.prototype.checkObjective = function(options, objective)  {
+	
+	return eval(objective.condition);
+	
+};
+
+Objective.Conditional.prototype.createExplanationItem = function(objective) {
+	return objective.text;
+};
 /******************************************************************************
  *                                 CashIn
  ******************************************************************************/

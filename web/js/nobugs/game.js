@@ -2185,6 +2185,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
 			    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
 			    hero.verifyObjectives("countTalk", {allCustomers:true});
+			    hero.verifyObjectives("conditional", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {

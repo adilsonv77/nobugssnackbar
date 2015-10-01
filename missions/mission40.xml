@@ -1,0 +1,187 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		 - While com incremento variavel 
+		 - Ciclos aninhados
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+		Reescrever essa frase: Atender os tres clientes por completo ate que tiver atendido no total da esplanada pelo menos 5 cachorros.
+		
+		Atenda somente os cachorros. Os clientes podem pedir cachorros, gelados e bebidas. Eh garantido que sempre 
+		exista no minimo 5 cachorros no total da esplanada. Sempre vai pedir cachorros antes de gelados.
+		]]>
+		</page>
+
+		<page type="instruction">
+		<![CDATA[
+<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>FOR: Em constru&#231;&#227;o</b><br/>
+</div>
+</div>
+
+]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="totalDelivered1">2</var>
+			<var name="totalDelivered2">1</var>
+			<var name="totalDelivered3">2</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">3</var>
+			<var name="totalDelivered2">2</var>
+			<var name="totalDelivered3">0</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">1</var>
+			<var name="totalDelivered2">3</var>
+			<var name="totalDelivered3">2</var>
+		</test>
+	</testsvars>
+		
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600">
+		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>
+	</objectives>
+	<xml>
+
+	</xml>
+</mission>

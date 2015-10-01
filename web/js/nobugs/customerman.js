@@ -494,10 +494,16 @@ CustomerManager.customerMoneyGave = function(customeridx) {
 	
 } ;
 
+CustomerManager.totalOfFoodDeliveredCustomer = function(idx) {
+
+	return customers[idx-1].totalOfFoodDelivered();
+	
+};
+
 CustomerManager.totalOfFoodDelivered = function() {
 	var ret = 0;
 	for (var i = 0; i < customers.length; i++) {
-		ret += customers[i].totalOfFoodDelivered();
+		ret += CustomerManager.totalOfFoodDeliveredCustomer(i+1);
 	}
 	
 	return ret;
