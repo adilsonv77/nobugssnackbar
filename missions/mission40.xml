@@ -45,7 +45,6 @@
 		<category name="askForFood" show="true" />
 		<category name="askWantHowManyFoods" show="true" />
 		<category name="askWantHowManyIceCream" show="true" />
-		<category name="askHasHunger" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
 		<category name="deliver" show="true" />
@@ -160,6 +159,14 @@
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>

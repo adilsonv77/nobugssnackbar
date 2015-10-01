@@ -20,7 +20,7 @@ public class PopulateMissions {
 		
 		MissionDao mDao = new MissionJdbcDao();
 		
-		for (int i = 41; i <= 41; i++) {
+		for (int i = 42; i <= 42; i++) {
 			
 			xml = new StringBuffer();
 			arq = new BufferedReader(new FileReader(new File("missions/mission"+(i<10?"0"+i:i)+".xml")));

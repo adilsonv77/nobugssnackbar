@@ -626,7 +626,7 @@ Customer.prototype.deliver = function(item) {
 						
 						d.delivered = true;
 						
-						happy = ((this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length)?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
+						happy = (this.fullDelivered()?Customer.DELIVERED_TOTAL:Customer.DELIVERED_PARTIAL);
 					} else {
 						reason = "Error_deliveredWrongRequest"; 	
 					}
@@ -671,6 +671,10 @@ Customer.prototype.deliver = function(item) {
 		this.deliveredItems.push(item); // i dont know how it is possible this situation : (item.descr == undefined?item:item.descr));
 	
 	return {money: money, happy: happy, reason: reason};
+};
+
+Customer.prototype.fullDelivered = function() {
+	return (this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length);
 };
 
 Customer.prototype.totalOfFoodDelivered = function() {

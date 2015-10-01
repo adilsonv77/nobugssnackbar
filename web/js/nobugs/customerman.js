@@ -585,3 +585,16 @@ CustomerManager.qtdDeliveredOf = function(type) {
 	return f(customers) + f(this.history);
 	
 };
+
+CustomerManager.fullDeliveredCustomers = function() {
+	
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++)
+			ret += (customers[i].fullDelivered()?1:0);
+		return ret;
+	};
+	
+	return f(customers) + f(this.history);
+	
+};

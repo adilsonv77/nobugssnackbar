@@ -3,16 +3,16 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		isThereACustomer
-		
-		controle de mudar o indexador do goToBarCounter
+		while hasHunger
 		]]>
 		</page>
 
 		<page type="goal">
 		<![CDATA[
-		Os clientes querem somente cachorros.
-		Atenda por completo pelo menos tres clientes, nas tres posicoes do balcao, e entregue no minimo 8 cachorros. Nenhum cliente vai ficar com meia fome.
+		Atenda todos os clientes ate atingir o faturamento de X. O cliente pode nao ser atendido por completo. Eles tem fome de cachorro 
+		e sede de refrigerante.
+		Atenda a fome antes da sede
+		Jah deixei alguns pronto alguns blocos que aprendestes nas missoes anteriores. 
 		]]>
 		</page>
 
@@ -40,12 +40,19 @@
 		<category name="snackMan" show="true" />
 
 		<category name="goToBarCounter" show="true" />
-		<category name="askForFood" show="true" />
-		<category name="askWantHowManyFoods" show="true" />
-		<category name="askWantHowManyIceCream" show="true" />
 		<category name="isThereACustomer" show="true" />
+
+		<category name="askForFood" show="true" />
+		<category name="askHasHunger" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
+		
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+		
+		
 		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
@@ -69,9 +76,9 @@
 				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -88,6 +95,7 @@
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -100,9 +108,10 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -111,6 +120,7 @@
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -136,16 +146,33 @@
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
 					</drinks>
 				</order>
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="720"  maxCommands="16" maxCommandsRewardCoins="50">
-		<objective condition="CustomerManager.totalOfFoodDelivered() &gt;= 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3" 
-		          text="Entregar no total 8 cachorros">conditional</objective>
+
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="1200">
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 8" text="Entregar no total exatamente 8 cachorros">conditional</objective>
 	</objectives>
-	<xml preload="40">
+	<xml>
 
 	</xml>
 </mission>

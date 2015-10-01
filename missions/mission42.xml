@@ -1,0 +1,266 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false" open="true">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		{ c1 AND c2 }
+		
+		
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+		Os clientes querem somente cachorros.
+		Entregue exatamente 7 cachorros. Precisa atender por completo pelo menos tres clientes. Podem existir clientes totalmente nao saciados.
+		
+		Deixei pronta a estrutura basica para ir aos tres pontos do balcao e ver se existe um cliente.
+		]]>
+		</page>
+
+		<page type="instruction">
+		<![CDATA[
+<div class="ExplainContent">
+<div class="ExplainContentInternal">
+<b>FOR: Em constru&#231;&#227;o</b><br/>
+</div>
+</div>
+
+]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>door</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>door</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>door</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="720"
+		maxCommands="15" maxCommandsRewardCoins="50">
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 7"
+			text="Entregar no total exatamente 7 cachorros">conditional</objective>
+	</objectives>
+	<xml>
+
+		<block type="variables_set" x="13" y="14">
+			<field name="VAR">i</field>
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set">
+					<field name="VAR">total</field>
+					<value name="VALUE">
+						<block type="math_number">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block type="controls_whileUntil">
+							<value name="BOOL">
+								<block type="logic_compare">
+									<field name="OP">LT</field>
+									<value name="A">
+										<block type="variables_get">
+											<field name="VAR">total</field>
+										</block>
+									</value>
+									<value name="B">
+										<block type="math_number">
+											<field name="NUM">7</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO">
+								<block type="move_goToBarCounter">
+									<value name="VALUE">
+										<block type="variables_get">
+											<field name="VAR">i</field>
+										</block>
+									</value>
+									<next>
+										<block type="controls_if">
+											<value name="IF0">
+												<block type="ask_isThereACustomer"></block>
+											</value>
+											<next>
+												<block type="variables_set">
+													<field name="VAR">i</field>
+													<value name="VALUE">
+														<block type="math_arithmetic">
+															<field name="OP">ADD</field>
+															<value name="A">
+																<block type="variables_get">
+																	<field name="VAR">i</field>
+																</block>
+															</value>
+															<value name="B">
+																<block type="math_number">
+																	<field name="NUM">1</field>
+																</block>
+															</value>
+														</block>
+													</value>
+													<next>
+														<block type="controls_if">
+															<value name="IF0">
+																<block type="logic_compare">
+																	<field name="OP">EQ</field>
+																	<value name="A">
+																		<block type="variables_get">
+																			<field name="VAR">i</field>
+																		</block>
+																	</value>
+																	<value name="B">
+																		<block type="math_number">
+																			<field name="NUM">4</field>
+																		</block>
+																	</value>
+																</block>
+															</value>
+															<statement name="DO0">
+																<block type="variables_set">
+																	<field name="VAR">i</field>
+																	<value name="VALUE">
+																		<block type="math_number">
+																			<field name="NUM">1</field>
+																		</block>
+																	</value>
+																</block>
+															</statement>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</statement>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>
+
