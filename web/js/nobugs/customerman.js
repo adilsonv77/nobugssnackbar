@@ -38,6 +38,7 @@ CustomerManager.init = function(openMission, tests, customers, sn) {
 	this.optCustomers = customers;
 	
 	this.randomization = [];
+	this.history = [];
 
 	if (sn != undefined)
 		this.parseSN(sn);
@@ -75,6 +76,7 @@ CustomerManager.parseSN = function(sn) {
 // TODO need to improve this function. There is not neccessary load the configuration each time this function is called
 CustomerManager.reset = function() {
 	this.patterns = [];
+	this.history = [];
 	
 	customers = [];
 	this.currentTest = 0;
@@ -157,10 +159,6 @@ CustomerManager.createCustomers = function() {
 	this.createCustomersBasedOnPattern();
 	this.transformSN();
 
-	customers.forEach(function(cust) {
-		cust.afterConstruct();
-	});
-
 };
 
 /**
@@ -207,6 +205,8 @@ CustomerManager.transformSN = function() {
 			}
 		}
 		
+		customers.forEach(function (cust) { cust.afterConstruct(); });
+		
 	}
 	
 };
@@ -240,7 +240,7 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 	var foods = custPattern.foods;
 	var drinks = custPattern.drinks;
 	
-	customers.push(new Customer({
+	var cust = new Customer({
 							init: initPlace, 
 							place: this.patterns[i].place, 
 							id: this.patterns[i].id, 
@@ -250,7 +250,13 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							openMission: this.openMission, idxPattern: i,
 							baloonLeft: customers.length % 2 == 0,
 							pay: this.patterns[i].pay,
-							limitedChanges: this.patterns[i].limitedChanges}));
+							limitedChanges: this.patterns[i].limitedChanges});
+	
+	if (this.randomization.length == 0)
+		cust.afterConstruct();
+	
+	customers.push(cust);
+	return cust;
 	
 	// TODO thinking this method using the transformSN method
 	
@@ -366,6 +372,8 @@ CustomerManager.extractItems = function(key, list, foodsLen, randomType) {
 };
 
 CustomerManager.removeCustomer = function(customer) {
+	this.history.push(customer);
+	
 	var start = customers.indexOf(customer);
 	customers.splice(start, 1);
 };
@@ -437,93 +445,143 @@ CustomerManager.getCustomerPosition = function(id) {
 };
 
 CustomerManager.totalOfFood = function() {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++)
-		ret += customers[i].askWantHowManyFoods();
 	
-	return ret;
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++)
+			ret += customers[i].askWantHowManyFoods();
+		return ret;
+	};
+	
+	return f(customers) + f(this.history);
 };
 
 CustomerManager.totalOfDrink = function() {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++)
-		ret += customers[i].askWantHowManyDrinks();
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++)
+			ret += customers[i].askWantHowManyDrinks();
+		
+		return ret;
+	};
 	
-	return ret;
+	return f(customers) + f(this.history);
 };
 
 CustomerManager.totalOfMoneyIfSell = function() {
 	
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++) {
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			
+			ret += customers[i].askHowMuchInFoodsIfSell();
+			ret += customers[i].askHowMuchInDrinksIfSell();
+			
+		}
 		
-		ret += customers[i].askHowMuchInFoodsIfSell();
-		ret += customers[i].askHowMuchInDrinksIfSell();
-		
-	}
+		return ret;
+	};
 	
-	return ret;
+	return f(customers) + f(this.history);
 	
 };
 
 CustomerManager.customerMoneyIfSell = function(customeridx) {
-	return customers[customeridx].askHowMuchInFoodsIfSell() + 
-				customers[customeridx].askHowMuchInDrinksIfSell();
+	
+	customerIdx--;
+	
+	for (var i=0; i<customers.length;i++)
+		if (customers[i].currentNode.id === CustOpt.counter[customerIdx]) 
+			return customers[i].askHowMuchInFoodsIfSell() + customers[i].askHowMuchInDrinksIfSell();
+	
+	return 0;
 } ;
 
 CustomerManager.totalOfMoneyGave = function() {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++) {
+
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			
+			if (customers[i].isPaid()) 
+				ret += customers[i].amountPaid;
+			else
+				ret -= 100; // avoid cheating
+			
+		}
 		
-		if (customers[i].isPaid()) 
-			ret += customers[i].amountPaid;
-		else
-			ret -= 100; // avoid cheating
-		
-	}
+		return ret;
+	};
 	
-	return ret;
+	return f(customers) + f(this.history);
 	
 };
 
 CustomerManager.customerMoneyGave = function(customeridx) {
-	if (customers[customeridx].isPaid()) 
-		return customers[customeridx].amountPaid;
-	else
-		return -100; // avoid cheating
+	customerIdx--;
 	
+	for (var i=0; i<customers.length;i++)
+		if (customers[i].currentNode.id === CustOpt.counter[customerIdx]) 
+			if (customers[i].isPaid()) 
+				return customers[i].amountPaid;
+			else
+				return -100; // avoid cheating
+	
+	return -100;
 } ;
 
-CustomerManager.totalOfFoodDeliveredCustomer = function(idx) {
+CustomerManager.totalOfFoodDeliveredCustomer = function(customerIdx) {
 
-	return customers[idx-1].totalOfFoodDelivered();
+	customerIdx--;
+	
+	for (var i=0; i<customers.length;i++)
+		if (customers[i].currentNode.id === CustOpt.counter[customerIdx]) 
+			return customers[i].totalOfFoodDelivered();
+	
+	return 0;
 	
 };
 
 CustomerManager.totalOfFoodDelivered = function() {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++) {
-		ret += CustomerManager.totalOfFoodDeliveredCustomer(i+1);
-	}
+
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			ret += customers[i].totalOfFoodDelivered();
+		}
+		
+		return ret;
+	};
 	
-	return ret;
+	return f(customers) + f(this.history);
 	
 };
 
 CustomerManager.totalOfDrinksDelivered = function() {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++) {
-		ret += customers[i].totalOfDrinksDelivered();
-	}
+
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			ret += customers[i].totalOfDrinksDelivered();
+		}
+		
+		return ret;
+	};
 	
-	return ret;
+	return f(customers) + f(this.history);
 	
 };
 
 CustomerManager.qtdDeliveredOf = function(type) {
-	var ret = 0;
-	for (var i = 0; i < customers.length; i++) {
-		ret += customers[i].qtdDeliveredOf(type);
-	}
-	return ret;
+
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			ret += customers[i].qtdDeliveredOf(type);
+		}
+		return ret;
+	};
+	
+	return f(customers) + f(this.history);
+	
 };

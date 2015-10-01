@@ -9,6 +9,7 @@
 
 		<page type="goal">
 		<![CDATA[
+		Entregue exatamente 9 cachorros.
 		]]>
 		</page>
 
@@ -147,7 +148,7 @@
 		</customer>
 	</customers>
 	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600">
-		<objective condition="CustomerManager.totalOfFoodDelivered() == 6" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 8" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
 	</objectives>
 	<xml preload="40">
 

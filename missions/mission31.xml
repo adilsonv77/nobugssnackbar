@@ -103,7 +103,7 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 		<objective pos="2" place="counter">askWantHowManyFoods</objective>
 		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
 		<objective pos="2" place="counter" type='$$$money2' 
-			qtd="Math.floor((CustomerManager.customerMoneyGave(0)-CustomerManager.customerMoneyIfSell(0))/2)">giveSomeChange</objective>
+			qtd="Math.floor((CustomerManager.customerMoneyGave(1)-CustomerManager.customerMoneyIfSell(1))/2)">giveSomeChange</objective>
 		
 	</objectives>
 	<xml>

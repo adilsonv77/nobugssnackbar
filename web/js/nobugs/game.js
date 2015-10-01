@@ -666,15 +666,11 @@ Game.missionLoaded = function(ret){
   
   Game.openMission = {};
   Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
-  Game.openMission.time = mission.childNodes[0].getAttribute("timeLimit");
   
   Game.globalMoney = 0;
   Game.globalXP = 0;
 
-  if (Game.openMission.open)
-	  Game.timeSpent = 0;
-  else
-	  Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
+  Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
   $("#playerRewardMission").css("display", (Game.missionView?"none":"inline"));
   UserControl.retrieveReward(Game.updatesReward);
@@ -1085,18 +1081,9 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
       
 	  Game.reset();
 	  
-	  if (Game.openMission.open) {
-	  
-		  Game.bonusTime = Game.openMission.time;
-		  Game.bonusTimeReward = "0";
-			  
-	  } else {
+	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
+	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
 		  
-		  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
-		  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
-		  
-	  }
-	  
 	  Game.addCronometro( Game.bonusTime , timeSpent );
 	  
 	  Game.showCountInstructions();
@@ -1194,7 +1181,6 @@ Game.timesUp = function (m, s) {
 		if (((m*60 + s)) == Game.bonusTime) {
 			
 			Game.changeCSSOverCronometro();
-			Game.finishOpenMission();
 			
 		} 
 	}
@@ -1259,27 +1245,6 @@ Game.showDialogVictory = function(out) {
 				Game.init();
 		});
 
-};
-
-Game.finishOpenMission = function() {
-	/*
-	if (!Game.openMission.open) return;
-	
-	var r = Game.beforeFinishMission();
-	Game.runningStatus = 0;
-	
-	Game.missionMoney << nao existe mais !!!
-	
-	UserControl.saveMission(XP, Game.missionMoney.amount, r.timeSpent, Game.howManyRuns, true, 0, r.answer, function(){
-	
-		var msg = BlocklyApps.getHtmlMsg("NoBugs_finishOpenMission");
-		var coin2 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-		var out = msg.format(Game.missionMoney.amount + "&nbsp;" + coin2)+ "<br/>";
-		
-		Game.showDialogVictory(out);
-		
-	});
-	*/
 };
 
 Game.addCronometro = function(bonusTime, timeSpent) {
@@ -1535,13 +1500,6 @@ Game.display = function() {
 
 	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
 
-	/*
-	if (Game.openMission.open)
-		Game.missionMoney.draw(Game.ctxDisplay);
-	
-	Game.globalMoney.draw(Game.ctxDisplay);
-	*/
-	
 	hero.draw(Game.ctxDisplay);
 	CustomerManager.draw(Game.ctxDisplay);
 	
