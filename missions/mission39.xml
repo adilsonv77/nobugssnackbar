@@ -38,7 +38,7 @@
 		</errors>
 	</hints>
 	<commands>
-
+<!-- 
 		<category name="snackMan" show="true" />
 
 		<category name="goToBarCounter" show="true" />
@@ -55,7 +55,7 @@
 
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
-
+ -->
 	</commands>
 	<cooker>initial</cooker>
 	<customers>

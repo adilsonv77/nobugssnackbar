@@ -754,6 +754,56 @@ Blockly.Blocks['controls_whileUntil'].init = function() {
 	this.inputList[0].fieldRow[0].value = "WHILE";
 };
 
+Blockly.FieldTextInput.prototype.oldShowEditor_ = Blockly.FieldTextInput.prototype.showEditor_;
+
+Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>')
+		return;
+	
+	this.oldShowEditor_(opt_quietInput);
+};
+
+Blockly.Blocks['math_arithmetic'].oldInit = Blockly.Blocks['math_arithmetic'].init;
+Blockly.Blocks['math_arithmetic'].init = function() {
+	this.oldInit();
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+		
+		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
+		this.inputList[1].fieldRow[0].menuGenerator_ = function() {
+			var t = this.getText();
+	    	for (var i = 0; i < this.options_.length; i++)
+	    		if (this.options_[i][1] === this.getValue()) {
+	    			t = this.options_[i][0];
+	    			break;
+	    		}
+	    			
+			return [[t, this.getValue()]];
+	    };
+		
+	}
+};
+
+Blockly.Blocks['logic_compare'].oldInit = Blockly.Blocks['logic_compare'].init;
+Blockly.Blocks['logic_compare'].init = function() {
+	this.oldInit();
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+		
+		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
+		this.inputList[1].fieldRow[0].menuGenerator_ = function() {
+			var t = this.getText();
+	    	for (var i = 0; i < this.options_.length; i++)
+	    		if (this.options_[i][1] === this.getValue()) {
+	    			t = this.options_[i][0];
+	    			break;
+	    		}
+	    			
+			return [[t, this.getValue()]];
+	    };
+		
+	}
+	
+};
+
 /* ************************************************************************************/
 /*     Change the original window.prompt to nobugswindow.prompt         */
 /* ************************************************************************************/
