@@ -301,5 +301,9 @@
 	"Profile.save" : "Salvar",
 	"Profile.cancel" : "Cancelar",
 	"Profile.WrongPassword":"A senha est&#225; em branco ou os dois campos de senha n&#227;o possuem os mesmos valores.",
-	"Profile.PlaceHolder" : "Preencha esse campo para n&#227;o voltar a pedir automaticamente"
+	"Profile.PlaceHolder" : "Preencha esse campo para n&#227;o voltar a pedir automaticamente",
+	
+	"LeaderBoard.TabsPoints" : "A ordem nessa lista &#233; baseada pelos XP's conquistados nas miss&#245;es. Existem momentos no jogo que aparecem alguns testes que podem dar at&#233; 1000 XP's de b&#244;nus. Eles servem para acelerar no seu objetivo de abrir seu pr&#243;prio neg&#243;cio : 5000 XP's. Por&#233;m, n&#227;o s&#227;o considerados nessa lista.",
+	"LeaderBoard.TabsTime" : "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas e depois no tempo gasto para conclu&#237;-las. Se voc&#234; gastou 10 minutos para fazer 5 miss&#245;es, e seu amigo gastou 1 hora para fazer 6 miss&#245;es, ele fica na frente na lista pois tem mais miss&#245;es finalizadas.",
+	"LeaderBoard.TabsRuns" : "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas e depois na quantidade de tentativas (execu&#231;&#245;es ou depura&#231;&#245;es) para conclu&#237;-las. Se voc&#234; gastou 7 execu&#231;&#245;es para fazer 5 miss&#245;es, e seu amigo gastou 25 para fazer 6 miss&#245;es, ele fica na frente na lista pois tem mais miss&#245;es finalizadas."
 }

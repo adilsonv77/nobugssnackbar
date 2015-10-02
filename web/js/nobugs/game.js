@@ -169,6 +169,8 @@ Game.resizeMainWindow = function() {
     document.getElementById("suporte").style.left = (document.getElementById("suporte").clientWidth -
     														document.getElementById("suportespan").offsetWidth - 10) + "px";
 
+    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+
 };
 
 Game.keyDown = function(evt) {
@@ -374,6 +376,8 @@ Game.logged = function() {
 		document.getElementById("mainBody").style.display = "none";
 	    document.getElementById("initialBackground").style.display = "none";
 	    document.getElementById("selectMission").style.display = "inline";
+	    
+	    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 
 	    Game.resizeMainWindow();
 	    
@@ -1428,7 +1432,8 @@ Game.resizeWindow = function(e) {
     if (Game.counterInstruction != null)
     	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 
-  };
+    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+};
 
 
 Game.moveDownButtonClick = function() {

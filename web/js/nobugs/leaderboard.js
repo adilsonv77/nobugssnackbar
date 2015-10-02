@@ -105,6 +105,11 @@ function highlightCurrentUser(idrow) {
     $(idrow).addClass('leaderboard-row-me');
 }  
 
+function explainTab(event, clicked, targetPanel, settings) {
+	$("#explaintab").html(BlocklyApps.getMsg("LeaderBoard_" + targetPanel.selector.substring(1)));
+	
+}
+
 function createsLeaderBoard() {
 	
 	version++;
@@ -178,6 +183,8 @@ function createsLeaderBoard() {
            goToLine(targetPanel.selector, targetPanel.attr("rowId"));
 		});
 
+	$('#leaderboard').bind("easytabs:after", explainTab);
+	
 	createTable($("#table_points"));
 	highlightCurrentUser(rowId);
 
@@ -194,6 +201,7 @@ function createsLeaderBoard() {
 	goToLine("#tabs-points", rowId);
 	
 	leaderBoardCreated = true;
+	$("#explaintab").html(BlocklyApps.getMsg("LeaderBoard_tabs-points"));
 
 };
 
