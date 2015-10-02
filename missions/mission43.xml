@@ -3,16 +3,17 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		Assim que o cliente se sentir satisfeito pode sair imediamente, nem dando tempo para fazer mais perguntas.
-		]]>
-		</page>
-
-		<page type="goal">
-		<![CDATA[
-		Atenda todos os clientes ate atingir o faturamento de 26. O cliente pode nao ser atendido por completo. Eles tem fome de cachorro 
-		e sede de refrigerante.
-		Atenda a fome antes da sede. Nao esqueca: $2 para cachorro e $3 para bebida.
-		Jah deixei alguns pronto alguns blocos que aprendestes nas missoes anteriores. 
+		Os clientes vem com vontade de gelado e bebida. Podem querer mais de uma unidade de cada tipo.<br/><br/> 
+		Pare quando o total de vendas tiver alcan&#231;ado $26. Nem um produto a mais
+		pode ser entregue. Com isso, se a personagem estava atendendo um cliente e no meio do atendimento 
+		atingiu o total de vendas de $26, &#233; interrompido o atendimento, e o cliente vai ficar na vontade. 
+		Por isso, nessa miss&#227;o, quando atingir $26, vai existir um cliente atendido parcialmente. 
+		Atenda primeiro a fome depois a sede.<br/><br/>
+		A miss&#227;o somente &#233; satisfeita se ao final tiver vendido EXATAMENTE $26.
+		O pre&#231;o do gelado &#233; $1 e bebida &#233; $3. Tome cuidado para n&#227;o entregar um produto que acabe
+		por exceder o valor total das vendas. <br/><br/>
+		<b>Preste aten&#231;&#227;o no comportamento do cliente: assim que ele se sentir satisfeito vai sair imediamente, 
+		nem dando tempo para fazeres mais perguntas.</b><br/><br/>
 		]]>
 		</page>
 
@@ -44,8 +45,7 @@
 
 		<category name="askForFood" show="true" />
 		<category name="askHasHunger" show="true" />
-		<category name="goToDisplay" show="true" />
-		<category name="pickUpHotDog" show="true" />
+		<category name="icecream" show="true" />
 		
 		<category name="askHasThirsty" show="true" />
 		<category name="askForDrink" show="true" />
@@ -61,8 +61,8 @@
 		<category name="math" show="true" />
 
 		<category name="loop" show="true" />
+		<category name="logic_operation" show="true" />
 		<category name="whileUntil" show="true" />
-		<category name="for" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
@@ -75,7 +75,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -83,18 +83,17 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
@@ -108,6 +107,7 @@
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -116,20 +116,18 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -142,8 +140,8 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -151,29 +149,31 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
 		</customer>
 	</customers>
 
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="1200">
-		<objective condition="CustomerManager.totalOfFoodDelivered() == 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
-		text="Entregar no total em $26 de pelo menos tres clientes nas tres posicoes do balcao">conditional</objective>
+	<objectives xpIndividual="50" xpFinal="30" xpTotalTime="3000">
+		<objective condition="CustomerManager.totalOfMoneyDelivered() == 26 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
+		text="Entregar EXATAMENTE $26 em vendas, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>
-	<xml preload="42">
+	<xml>
 
 	</xml>
 </mission>

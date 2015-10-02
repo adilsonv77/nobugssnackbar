@@ -517,6 +517,22 @@ CustomerManager.totalOfMoneyGave = function() {
 	
 };
 
+CustomerManager.totalOfMoneyDelivered = function() {
+
+	var f = function(customers) {
+		var ret = 0;
+		for (var i = 0; i < customers.length; i++) {
+			
+			ret += customers[i].totalOfMoneyDelivered();
+		}
+		
+		return ret;
+	};
+	
+	return f(customers) + f(this.history);
+	
+};
+
 CustomerManager.customerMoneyGave = function(customeridx) {
 	customerIdx--;
 	

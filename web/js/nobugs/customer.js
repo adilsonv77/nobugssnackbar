@@ -719,6 +719,21 @@ Customer.prototype.hasReceivedItem = function(foodOrDrink, itemId) {
 	return false;
 };
 
+Customer.prototype.totalOfMoneyDelivered = function() {
+
+	var ret = 0;
+	
+	for (var i = 0; i < this.foods.length; i++)
+		if (this.foods[i].delivered)
+			ret += this.foods[i].price;
+	
+	for (var i = 0; i < this.drinks.length; i++)
+		if (this.drinks[i].delivered)
+			ret += this.drinks[i].price;
+	
+	return ret;
+};
+
 Customer.typesOfMoney = [10, 20];
 
 Customer.prototype.cashIn = function(value) {
