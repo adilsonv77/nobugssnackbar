@@ -598,3 +598,20 @@ CustomerManager.fullDeliveredCustomers = function() {
 	return f(customers) + f(this.history);
 	
 };
+
+CustomerManager.fullDeliveredCustomersHowManyPlaces = function() {
+	
+	var places = [];
+	
+	var f = function(customers) {
+		
+		for (var i = 0; i < customers.length; i++)
+			if (customers[i].fullDelivered()) {
+				if (places.indexOf(customers[i].place) == -1)
+					places.push(customers[i].place);
+			}
+	};
+	f(customers); f(this.history);
+	return  places.length;
+	
+};

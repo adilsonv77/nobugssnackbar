@@ -5,7 +5,7 @@
 		<![CDATA[
 		{ c1 AND c2 }
 		
-		
+		- ciclos aninhados (while dentro de while)
 		]]>
 		</page>
 
@@ -152,9 +152,9 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="720"
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="1200"
 		maxCommands="15" maxCommandsRewardCoins="50">
-		<objective condition="CustomerManager.totalOfFoodDelivered() == 7"
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 7  &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3&amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3"
 			text="Entregar no total exatamente 7 cachorros">conditional</objective>
 	</objectives>
 	<xml>

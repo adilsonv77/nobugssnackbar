@@ -3,15 +3,15 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		while hasHunger
+		Assim que o cliente se sentir satisfeito pode sair imediamente, nem dando tempo para fazer mais perguntas.
 		]]>
 		</page>
 
 		<page type="goal">
 		<![CDATA[
-		Atenda todos os clientes ate atingir o faturamento de X. O cliente pode nao ser atendido por completo. Eles tem fome de cachorro 
+		Atenda todos os clientes ate atingir o faturamento de 26. O cliente pode nao ser atendido por completo. Eles tem fome de cachorro 
 		e sede de refrigerante.
-		Atenda a fome antes da sede
+		Atenda a fome antes da sede. Nao esqueca: $2 para cachorro e $3 para bebida.
 		Jah deixei alguns pronto alguns blocos que aprendestes nas missoes anteriores. 
 		]]>
 		</page>
@@ -170,9 +170,10 @@
 	</customers>
 
 	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="1200">
-		<objective condition="CustomerManager.totalOfFoodDelivered() == 8" text="Entregar no total exatamente 8 cachorros">conditional</objective>
+		<objective condition="CustomerManager.totalOfFoodDelivered() == 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
+		text="Entregar no total em $26 de pelo menos tres clientes nas tres posicoes do balcao">conditional</objective>
 	</objectives>
-	<xml>
+	<xml preload="42">
 
 	</xml>
 </mission>
