@@ -31,9 +31,9 @@
 	"Blockly.ifThen":"ent&#227;o",
 	
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
-	"NoBugs.runTooltip" : "Executar o programa.",
-	"NoBugs.debugTooltip" : "Executar somente um passo.",
-	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o.",
+	"NoBugs.runTooltip" : "Executar o programa [F10].",
+	"NoBugs.debugTooltip" : "Executar somente um passo [F8].",
+	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o [Esc].",
 	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, ou solicitar nova senha, entre em contacto com ",
 	"NoBugs.buy": "Comprar",
 	"NoBugs.sponsoredBy": "Patrocinado por",

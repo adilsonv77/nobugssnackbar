@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-01 10:42:39.275000",
+		"lastupdated": "2015-10-02 13:30:30.455000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -253,9 +253,9 @@
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
-	"NoBugs.debugTooltip": "Makes the snack man do what the next block say.",
-	"NoBugs.runTooltip": "Makes the snack man do what the blocks say.",
-	"NoBugs.resetTooltip": "Restarts the execution.",
+	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
+	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",
+	"NoBugs.resetTooltip": "Restarts the execution [Esc].",
 	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
 	"NoBugs.instructionTooltip": "Show learning content related to this mission.",

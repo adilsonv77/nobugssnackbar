@@ -4,7 +4,7 @@
 
 		<page type="goal">
 		<![CDATA[
-		O objetivo dessa miss&#227;o &#233; falar valor o total de vendas na esplanada. <br/><br/>
+		O objetivo dessa miss&#227;o &#233; falar valor o total das vendas na esplanada. <br/><br/>
 		Os clientes podem querer cachorros ($2), gelados ($1) e bebidas ($3). <br/><br/>
 		A combina&#231;&#227;o de teclas [CTRL+SHIFT+5] permite inserir um bloco <i>repita-enquanto</i>.
 		]]>
@@ -34,21 +34,19 @@
 		<category name="snackMan" show="true" />
 
 		<category name="goToBarCounter" show="true" />
-		<category name="askForFood" show="true" />
+
 		<category name="askWantHowManyFoods" show="true" />
 		<category name="askWantHowManyIceCream" show="true" />
-		<category name="goToDisplay" show="true" />
-		<category name="pickUpHotDog" show="true" />
-		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
 
 		<category name="vars" show="true" />
 
-		<category name="logic" show="true" />
 		<category name="math" show="true" />
 
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
-		<category name="for" show="true" />
+
+		<category name="text" show="true" />
 
 	</commands>
 	<cooker>initial</cooker>
@@ -155,7 +153,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="600" commQtd="14">
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="600" commQtd="15" maxCommands="11" maxCommandsRewardCoins="80" >
 		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 	</objectives>
 	<xml>

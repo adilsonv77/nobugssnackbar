@@ -3,18 +3,25 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		 - While com incremento variavel 
-		 - Ciclos aninhados (for dentro do while)
+		Em miss&#245;es passadas tivestes que resolver v&#225;rias vezes com blocos <i>para</i> aninhados, e 
+		at&#233; blocos <i>se-ent&#227;o</i> dentro de blocos <i>para</i>. Blocos podem ser aninhados dentro uns 
+		dos outros conforme a necessidade do problema. Ent&#227;o, j&#225; vimos tr&#234;s tipos de blocos que aceitam 
+		outros dentro deles: <i>se-ent&#227;o</i>, <i>para</i> e <i>repita-enquanto</i>. Tamb&#233;m podemos cham&#225;-los 
+		como blocos de controle, pois eles controlam em que situa&#231;&#227;o outros blocos dentro deles s&#227;o executados.
+		<br/><br/>
+		Assim, podes usar blocos de ciclo dentro do condicional, ou blocos de ciclo dentro de blocos de ciclo 
+		(n&#227;o importa se &#233; <i>para</i> ou <i>repita-enquanto</i>). Enfim, use-os aninhados conforme precisa
+		na sua solu&#231;&#227;o.
 		]]>
 		</page>
 
 		<page type="goal">
 		<![CDATA[
-		Reescrever essa frase: Atender os tres clientes por completo ate que tiver atendido no total da esplanada pelo menos 5 cachorros.
-		Se alcancou pelo menos  cincos cachorros, nao deve-se atender os demais clientes. 
-		
-		Atenda somente os cachorros. Os clientes podem pedir cachorros, gelados e bebidas. Eh garantido que sempre 
-		exista no minimo 5 cachorros no total da esplanada. Sempre vai pedir cachorros antes de gelados.
+		Nessa miss&#227;o vais atender (entregar o pedido) os tr&#234;s cliente por completo. Por&#233;m, se tiver j&#225; atendido 5 cachorros, termine de 
+		atender o cliente, mas n&#227;o atendas nenhum novo cliente.<br/><br/>
+		Os clientes vem com fome e/ou sede. Logo, eles podem querer cachorros, gelados e bebidas. Entretanto, hoje vais entregar
+		somente cachorros. Quando tiverem vontade de cachorros e gelados, eles sempre pedem por primeiro os cachorros.<br/><br/>
+		&#201; garantido que a soma dos cachorros entre os tr&#234;s clientes sempre atingir&#225; no m&#237;nimo 5.
 		]]>
 		</page>
 
@@ -184,7 +191,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600">
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="720">
 		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>

@@ -188,8 +188,12 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	    return;
 	  }
 	  if (e.keyCode == 27) {
+		  if ($("#resetButton").attr("disabled") !== "disabled")
+			  $("#resetButton").click();
+		  
 	    // Pressing esc closes the context menu.
 	    Blockly.hideChaff();
+	    
 	  } else if (e.keyCode == 8 || e.keyCode == 46) {
 	    // Delete or backspace.
 	    try {
@@ -215,6 +219,16 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	      // from the console when the page rolls back.
 	      e.preventDefault();
 	    }
+	  } else if (e.keyCode == 119) {
+		  
+		  if ($("#debugButton").attr("disabled") !== "disabled")
+			  $("#debugButton").click();
+		  
+	  } else if (e.keyCode == 121) {
+		  
+		  if ($("#runButton").attr("disabled") !== "disabled")
+			  $("#runButton").click();
+		  
 	  } else
 		  if (e.ctrlKey && !e.shiftKey) {
 		    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
@@ -277,6 +291,13 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 						  return;
 					  
 					  xmlBlock = transformStrToXml("<block type='variables_set'></block>").childNodes[0];
+					  break;
+					  
+				  case 52: // '4'
+					  if (Game.toolbox.indexOf('<block type="controls_for">') == -1) 
+						  return;
+					  
+					  xmlBlock = transformStrToXml('<block type="controls_for"><field name="VAR">i</field><value name="FROM"><block type="math_number"><field name="NUM">1</field></block></value><value name="TO"><block type="math_number"><field name="NUM">3</field></block></value><value name="BY"><block type="math_number" deletable="false"><field name="NUM">1</field></block></value></block>').childNodes[0];
 					  break;
 					  
 				  case 53: // '5'
