@@ -278,6 +278,14 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					  
 					  xmlBlock = transformStrToXml("<block type='variables_set'></block>").childNodes[0];
 					  break;
+					  
+				  case 53: // '5'
+					  if (Game.toolbox.indexOf('<block type="controls_whileUntil">') == -1) 
+						  return;
+					  
+					  xmlBlock = transformStrToXml('<block type="controls_whileUntil"><value name="BOOL"><block type="logic_compare"><field name="OP">LTE</field><value name="A"><block type="variables_get"><field name="VAR">item</field></block></value><value name="B"><block type="math_number"><field name="NUM">10</field></block></value></block></value></block>').childNodes[0];
+						
+					  break;
 				  } 
 				  
 				  if (xmlBlock != null) {
