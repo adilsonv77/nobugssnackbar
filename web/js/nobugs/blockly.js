@@ -292,6 +292,13 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					  
 					  xmlBlock = transformStrToXml("<block type='variables_set'></block>").childNodes[0];
 					  break;
+						
+				  case 51: // '3'
+					  if (Game.toolbox.indexOf('<block type="controls_if">') == -1)
+						  return;
+					  
+					  xmlBlock = transformStrToXml("<block type='controls_if'></block>").childNodes[0];
+					  break;
 					  
 				  case 52: // '4'
 					  if (Game.toolbox.indexOf('<block type="controls_for">') == -1) 

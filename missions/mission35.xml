@@ -62,16 +62,12 @@
 
 		<category name="goToBarCounter" show="true" />
 		<category name="askForFood" show="true" />
-		<category name="askHasHunger" show="true" />
 		<category name="askWantHowManyFoods" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
 		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
-
-		<category name="logic" show="true" />
-		<category name="hide_logic_compare" show="true" />
 
 		<category name="loop" show="true" />
 		<category name="for" show="true" />
