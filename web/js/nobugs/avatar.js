@@ -569,16 +569,20 @@ AvatarEditor.init = function() {
 	AvatarEditor.choicesOfColor('#cpEyes', ["#000000", "#5977FF", "#188242"]);
 	$("#cpEyes div:first-child").css("width", "0px");
 	
-	$('#cpSkin').colorpicker({history: false, displayIndicator: false});
-	$('#cpSkin').on("change.color", function(event, color){
+	$('#cpSkin, #cpSkinSpecial').colorpicker({history: false, displayIndicator: false});
+	$('#cpSkin, #cpSkinSpecial').on("change.color", function(event, color){
 		AvatarEditor.selectSkin(color);
 		AvatarEditor.draw();
 	
 	});
 	AvatarEditor.removeColorLines('#cpSkin');
 	AvatarEditor.choicesOfColor('#cpSkin', ["#F39C7A", "#AF876D", "#544035"]);
-	$("#cpSkin div:first-child").css("width", "0px");
 	
+	AvatarEditor.removeColorLines('#cpSkinSpecial');
+	AvatarEditor.choicesOfColor('#cpSkinSpecial', ["#FFD90F", "#88CCFF"]);
+	
+	$("#cpSkin div:first-child, #cpSkinSpecial div:first-child").css("width", "0px");
+
 	AvatarEditor.scarfColor = {r: 255, g: 0, b: 0};
 	AvatarEditor.coatColor  = {r: 255, g: 255, b: 255};
 	
@@ -664,6 +668,12 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 		pointsClothes = clothes.split(":")[1];
 		clothes = clothes.split(":")[2];
 	}
+	
+	var pointsSkin = "";	
+	if (skin.indexOf("blocked") == 0) {
+		pointsSkin = skin.split(":")[1];
+		skin = skin.split(":")[2];
+	}
 
 	AvatarEditor.clothes = clothes;
 	AvatarEditor.hat = hat;
@@ -700,24 +710,44 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 	if (pointsClothes !== "")
 		AvatarEditor.blockTab(pointsClothes, "clothes");
 	
+	if (pointsSkin !== "")
+		AvatarEditor.blockElement(pointsSkin, "tdCpSkinSpecial");
+	
 };
 
-AvatarEditor.blockTab = function(points, id) {
-	
-	$("<div id ='block"+id+"'>")
-			.css("height", "450px")
-			.css("width", "272px")
-			.css("margin-top", "-7px")
-			.css("position","fixed")
-			.css("backgroundColor","grey")
-			.css("opacity","0.9")
-		.prependTo("#tab-"+id);
+AvatarEditor.createBlock = function(id, h, w, mt) {
+	return $("<div id ='block"+id+"'>")
+				.css("height", h)
+				.css("width", w)
+				.css("margin-top", mt)
+				.css("position","fixed")
+				.css("backgroundColor","grey")
+				.css("opacity","0.9");
+
+};
+
+
+AvatarEditor.createWarn = function(points, id, completeInfo) {
 	
 	var table = $("<table width='100%' height='100%'>").append($("<tr>").append($("<td align='center' id='avatar_info_"+id+"'>")));
 	$("#block"+id).append(table);
 
-	$("#avatar_info_" + id).append($("<span>").html(BlocklyApps.getMsg("Avatar_EnableByXp") + points + "<img style='vertical-align: middle;' src='images/xp.png'/>")
+	$("#avatar_info_" + id).append($("<span>").html((completeInfo?BlocklyApps.getMsg("Avatar_EnableByXp"):"") + points + "<img style='vertical-align: middle;' src='images/xp.png'/>")
 										.addClass("nobugs_font"));
+	
+};
+
+AvatarEditor.blockTab = function(points, id) {
+	
+	AvatarEditor.createBlock(id, "450px", "272px",  "-7px").prependTo("#tab-"+id);
+	
+	AvatarEditor.createWarn(points, id, true);
+};
+
+
+AvatarEditor.blockElement = function(points, id) {
+	AvatarEditor.createBlock(id, "50px", "120px", "-15px").prependTo("#" + id);
+	AvatarEditor.createWarn(points, id, false);
 };
 
 AvatarEditor.removeColorLines = function(divId) {
@@ -731,10 +761,11 @@ AvatarEditor.removeColorLines = function(divId) {
 AvatarEditor.choicesOfColor = function(divId, colors) {
 	var tr = $(divId + ' .evo-palette tr');
 	tr.empty();
+
+	for (var i = 0; i < colors.length; i++) {
+		tr.append($("<td/>").css('background-color', colors[i]));
+	}
 	
-	colors.forEach(function(entry) {
-		tr.append($("<td/>").css('background-color',entry));
-	});
 };
 
 AvatarEditor.draw = function() {

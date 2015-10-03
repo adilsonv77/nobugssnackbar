@@ -471,8 +471,9 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	
 	var sHat = (myXp < Game.loginData.xpToHat? "blocked:"+Game.loginData.xpToHat+":" : "") + hat;
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
+	var sSkin = (myXp < 150? "blocked:"+150+":" : "") + skin; 
 
-	AvatarEditor.show(sClothes , coatColor, scarfColor, skin, eyes, sHat, hatColor, fAfterClose);
+	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, fAfterClose);
 };
 
 Game.openProfileEditor = function() {
