@@ -1315,6 +1315,11 @@ public class GameJdbcDao implements GameDao {
 				
 			}
 			
+			if (lret.size() == 4) {
+				lret.add(new Object[]{"mouth", ""});
+				lret.add(new Object[]{"add", "", "#000000"});
+			}
+			
 		} finally {
 			if (bdCon != null)
 				try {
@@ -1333,6 +1338,8 @@ public class GameJdbcDao implements GameDao {
 		
 		try {
 			bdCon = getConnection();
+
+			String sts[] = new String[avatarConfig.length];
 			
 			PreparedStatement ps0 = bdCon.prepareStatement("update users set useravatarphoto = ? where userid = ?");
 			ps0.setBytes(1, photo);
@@ -1341,31 +1348,47 @@ public class GameJdbcDao implements GameDao {
 			ps0.close();
 			
 			Statement st = bdCon.createStatement();
+
+			String updateQuery = "update usersavatar set  avatarpartvalue=?, avatarpartcolor=? where avatarparttype=? and userid = ?"; 
+			String insertQuery = "insert into usersavatar (avatarpartvalue, avatarpartcolor, avatarparttype, userid) values (?, ?, ?, ?)";
+			
+			for (int i=0;i<avatarConfig.length;i++)
+				sts[i] = insertQuery;
 			
 			ResultSet rs = st.executeQuery("select avatarparttype from usersavatar where userid = " + userid);
-			String saveQuery;
-			if (rs.next()) {
-				saveQuery = "update usersavatar set  avatarpartvalue=?, avatarpartcolor=? where avatarparttype=? and userid = ?"; 
-			} else {
-				saveQuery = "insert into usersavatar (avatarpartvalue, avatarpartcolor, avatarparttype, userid) values (?, ?, ?, ?)";
+			while (rs.next()) {
+				String key = rs.getString(1);
+				for (int i=0;i<avatarConfig.length;i++)
+					if (avatarConfig[i][0].equals(key)) {
+						sts[i] = updateQuery;
+						break;
+					}
 			}
+			
+			
 			rs.close();st.close();
 			
-			PreparedStatement ps = bdCon.prepareStatement(saveQuery);
-			ps.setLong(4, userid);
-			
+			int i = 0;
 			for (String[] l:avatarConfig) {
+				PreparedStatement ps = bdCon.prepareStatement(sts[i]);
+				ps.setLong(4, userid);
+				
 				ps.setString(3, l[0]);
 				ps.setString(1, l[1]);
 				if (l.length == 4)
 					ps.setString(2, l[2].substring(1) + "-" + l[3].substring(1));
 				else
-					ps.setString(2, l[2].substring(1));
+					if (l.length == 3)
+						ps.setString(2, l[2].substring(1));
+					else
+						ps.setString(2, "FFFFFF");
 				
 				ps.execute();
+				ps.close();
+
+				i++;
 			}
 			
-			ps.close();
 			
 		} finally {
 			if (bdCon != null)

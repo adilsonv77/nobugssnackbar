@@ -445,7 +445,7 @@ Game.drawMiniAvatar = function() {
 
 Game.openAvatarEditor = function(event, fAfterClose) {
 	
-	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", hat = "", hatColor = "";
+	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", hat = "", hatColor = "", add = "", addColor = "";
 	
 	Game.loginData.avatar.forEach(function(entry) {
 		
@@ -455,13 +455,23 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 				coatColor = entry[2];
 				scarfColor = entry[3];
 				break;
+				
 			case "skin":
 				skin = entry[2];
 				break;
+				
 			case "hat":
 				hat = entry[1];
 				hatColor = entry[2];
 				break;
+				
+			case "add":
+				add = entry[1];
+				addColor = entry[2];
+				break;
+			case "mouth":
+				break;
+			
 			default:
 				eyes = entry[2];
 		}
@@ -472,8 +482,10 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	var sHat = (myXp < Game.loginData.xpToHat? "blocked:"+Game.loginData.xpToHat+":" : "") + hat;
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
 	var sSkin = (myXp < 150? "blocked:"+150+":" : "") + skin; 
+	
+	var sAdd = add ; //(myXp < 500 ? "blocked:"+500+":" : "") + add;
 
-	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, fAfterClose);
+	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, fAfterClose);
 };
 
 Game.openProfileEditor = function() {
