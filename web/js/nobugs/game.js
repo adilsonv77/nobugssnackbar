@@ -483,7 +483,7 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
 	var sSkin = (myXp < 150? "blocked:"+150+":" : "") + skin; 
 	
-	var sAdd = add ; //(myXp < 500 ? "blocked:"+500+":" : "") + add;
+	var sAdd = (myXp < 300 ? "blocked:"+300+":" : "") + add;
 
 	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, fAfterClose);
 };
@@ -1593,7 +1593,8 @@ Game.goBackToDashboard = function(evt, callInit) {
 
 Game.closeBlockEditorStuffs = function() {
 
-    Hints.stopHints();
+    Game.unlockBlockly();
+	Hints.stopHints();
     
     $("#tests").css("display", "none");
 

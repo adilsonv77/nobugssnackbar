@@ -29,7 +29,7 @@ function changeLanguageToPt() {
 	
 	 if (BlocklyApps.LANG = 'en' ) {
 		 BlocklyApps.LANGUAGES = ['pt-pt'];
-		 window.location.href = 'http://localhost:8080/nobugssnackbar/?lang=pt-PT';
+		 window.location.href = 'http://nobugssnackbar.dei.uc.pt/?lang=pt-PT';
 	 }
 };
 
@@ -38,6 +38,6 @@ function changeLanguageToEn() {
 	
 	 if (BlocklyApps.LANG = 'pt-pt' ) {
 		 BlocklyApps.LANGUAGES = ['en'];
-		 window.location.href = 'http://localhost:8080/nobugssnackbar/?lang=en';
+		 window.location.href = 'http://nobugssnackbar.dei.uc.pt/?lang=en';
 	 }
 };

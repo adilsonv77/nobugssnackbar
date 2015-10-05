@@ -486,7 +486,7 @@ CustomerManager.totalOfMoneyIfSell = function() {
 	
 };
 
-CustomerManager.customerMoneyIfSell = function(customeridx) {
+CustomerManager.customerMoneyIfSell = function(customerIdx) {
 	
 	customerIdx--;
 	
@@ -533,7 +533,7 @@ CustomerManager.totalOfMoneyDelivered = function() {
 	
 };
 
-CustomerManager.customerMoneyGave = function(customeridx) {
+CustomerManager.customerMoneyGave = function(customerIdx) {
 	customerIdx--;
 	
 	for (var i=0; i<customers.length;i++)

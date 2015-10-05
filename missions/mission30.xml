@@ -114,7 +114,7 @@ Dica: Vais usar o operador <imghex id="m19_4" style="height:27px">89504E470D0A1A
 		
 		<objective pos="3" place="counter">askWantHowManyFoods</objective>
 		<objective text="a quantidade de refrigerantes que consegue fornecer com a gorjeta do cliente 3" 
-				  value="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/3)">talk</objective>
+				  value="Math.floor((CustomerManager.customerMoneyGave(3)-CustomerManager.customerMoneyIfSell(3))/3)">talk</objective>
 		
 	</objectives>
 	<xml>
