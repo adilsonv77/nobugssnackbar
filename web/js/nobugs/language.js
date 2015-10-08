@@ -763,9 +763,42 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
 	this.oldShowEditor_(opt_quietInput);
 };
 
-Blockly.Blocks['math_arithmetic'].oldInit = Blockly.Blocks['math_arithmetic'].init;
+//I added parentesis in the expression, to facilitate reading to the students
 Blockly.Blocks['math_arithmetic'].init = function() {
-	this.oldInit();
+    var OPERATORS =
+        [[Blockly.Msg.MATH_ADDITION_SYMBOL, 'ADD'],
+         [Blockly.Msg.MATH_SUBTRACTION_SYMBOL, 'MINUS'],
+         [Blockly.Msg.MATH_MULTIPLICATION_SYMBOL, 'MULTIPLY'],
+         [Blockly.Msg.MATH_DIVISION_SYMBOL, 'DIVIDE'],
+         [Blockly.Msg.MATH_POWER_SYMBOL, 'POWER']];
+    this.setHelpUrl(Blockly.Msg.MATH_ARITHMETIC_HELPURL);
+    this.setColour(Blockly.Blocks.math.HUE);
+    this.setOutput(true, 'Number');
+    this.appendDummyInput()
+    	.appendField('(');
+    this.appendValueInput('A')
+        .setCheck('Number');
+    this.appendValueInput('B')
+        .setCheck('Number')
+        .appendField(new Blockly.FieldDropdown(OPERATORS), 'OP');
+    this.appendDummyInput()
+    	.appendField(')');
+
+    this.setInputsInline(true);
+    // Assign 'this' to a variable for use in the tooltip closure below.
+    var thisBlock = this;
+    this.setTooltip(function() {
+      var mode = thisBlock.getFieldValue('OP');
+      var TOOLTIPS = {
+        'ADD': Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_ADD,
+        'MINUS': Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_MINUS,
+        'MULTIPLY': Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_MULTIPLY,
+        'DIVIDE': Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_DIVIDE,
+        'POWER': Blockly.Msg.MATH_ARITHMETIC_TOOLTIP_POWER
+      };
+      return TOOLTIPS[mode];
+    });
+	  	
 	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
@@ -783,9 +816,50 @@ Blockly.Blocks['math_arithmetic'].init = function() {
 	}
 };
 
+//I added parentesis in the expression, to facilitate reading to the students
+Blockly.Blocks['logic_operation'] = {
+		  /**
+		   * Block for logical operations: 'and', 'or'.
+		   * @this Blockly.Block
+		   */
+		  init: function() {
+		    var OPERATORS =
+		        [[Blockly.Msg.LOGIC_OPERATION_AND, 'AND'],
+		         [Blockly.Msg.LOGIC_OPERATION_OR, 'OR']];
+		    this.setHelpUrl(Blockly.Msg.LOGIC_OPERATION_HELPURL);
+		    this.setColour(Blockly.Blocks.logic.HUE);
+		    this.setOutput(true, 'Boolean');
+		    
+		    this.appendDummyInput()
+		    	.appendField('(');
+		    this.appendValueInput('A')
+		        .setCheck('Boolean');
+		    this.appendValueInput('B')
+		        .setCheck('Boolean')
+		        .appendField(new Blockly.FieldDropdown(OPERATORS), 'OP');
+		    this.appendDummyInput()
+		    	.appendField(')');
+
+		    this.setInputsInline(true);
+		    // Assign 'this' to a variable for use in the tooltip closure below.
+		    var thisBlock = this;
+		    this.setTooltip(function() {
+		      var op = thisBlock.getFieldValue('OP');
+		      var TOOLTIPS = {
+		        'AND': Blockly.Msg.LOGIC_OPERATION_TOOLTIP_AND,
+		        'OR': Blockly.Msg.LOGIC_OPERATION_TOOLTIP_OR
+		      };
+		      return TOOLTIPS[op];
+		    });
+		  }
+		};
+
+
 Blockly.Blocks['logic_compare'].oldInit = Blockly.Blocks['logic_compare'].init;
 Blockly.Blocks['logic_compare'].init = function() {
+
 	this.oldInit();
+	
 	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
