@@ -1974,4 +1974,60 @@ public class GameJdbcDao implements GameDao {
 		return lattempts;
 	}
 
+	
+	@Override
+	public List<Object[][]> loadCompleteMap(long classId) throws Exception {
+		
+		List<Object[][]> res = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			Map<Long, Object[][]> r = new HashMap<>();
+			List<Long> missions = new ArrayList<>(); 
+			
+			Statement st = bdCon.createStatement();
+			ResultSet rs = st.executeQuery("select missionid, classlevelid from classesmissions where classid = " + classId + " order by missionorder");
+			while (rs.next()) {
+				missions.add(rs.getLong(1));
+			}
+			st.close();
+			
+			st = bdCon.createStatement();
+			rs = st.executeQuery("select userid, username from classesusers join users using (userid) where classid = " + classId + " order by username");
+			while (rs.next()) {
+				Object[][] data = new Object[missions.size() + 2][3];
+				data[0][0] = rs.getString(1);
+				data[0][1] = rs.getString(2);
+				r.put(rs.getLong(1), data);
+			}
+			st.close();
+			
+			st = bdCon.createStatement();
+			rs = st.executeQuery("select userid, missionorder, missionid, timespend, executions from missionsaccomplished join classesmissions using (missionid, classid) where classid = " + classId); 
+			while (rs.next()) {
+				Object[][] data = r.get(rs.getLong(1));
+				int idxMission = rs.getInt(2);
+				data[idxMission][0] = rs.getLong(3);
+				data[idxMission][1] = rs.getLong(4);
+				data[idxMission][2] = rs.getLong(5);
+			}
+			st.close();
+			
+			for (Object[][] data: r.values()) {
+				res.add(data);
+			}
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+			
+		return res;
+	}
+
 }

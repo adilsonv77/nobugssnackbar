@@ -129,7 +129,7 @@ A ordem em que utilizas as express&#245;es dentro de uma condi&#231;&#227;o &#23
 			</orders>						
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="70" xpFinal="30" xpTotalTime="1440">
+	<objectives ordered="false" xpIndividual="70" xpFinal="30" xpTotalTime="1440" xpTotalRun="9">
 		<objective pos="2" place="counter" value="Game.readVariableTest('iceCreamCust1')" text="o gelado">customDeliver</objective>
 		
 		<objective pos="2" place="counter" value="Game.readVariableTest('iceCreamExtraCust1')" gift="se merecer, o gelado de chocolate">deliverGifts</objective>

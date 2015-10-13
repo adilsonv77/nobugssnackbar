@@ -218,7 +218,7 @@ Se ela n&#227;o for verdadeira ent&#227;o s&#227;o executados os comandos dentro
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="1440" commQtd="20" >
+	<objectives ordered="false" xpIndividual="50" xpFinal="30" xpTotalTime="1440" commQtd="20" xpTotalRun="6" >
 		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter" notExists="true">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>

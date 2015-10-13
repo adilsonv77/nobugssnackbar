@@ -163,7 +163,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="50" xpFinal="10" xpTotalTime="1800" commQtd="17">
+	<objectives xpIndividual="50" xpFinal="10" xpTotalTime="1800" commQtd="17" xpTotalRun="3">
 		<objective text="o n&#250;mero do balc&#227;o do cliente com maior pedido" value="parseInt(Game.readVariableTest('numBalcao'))">talk</objective>
 		<objective text="o valor do maior pedido" value="parseInt(CustomerManager.customerMoneyIfSell(parseInt(Game.readVariableTest('numBalcao'))))">talk</objective>
 	</objectives>

@@ -1,5 +1,8 @@
 "use strict";
 
+PreloadImgs.put('run', 'images/run.png');
+PreloadImgs.put('runout', 'images/run_out.png');
+
 var CountXP = {};
 
 CountXP.init = function(canvasId, showCanvas) {
@@ -7,23 +10,37 @@ CountXP.init = function(canvasId, showCanvas) {
 	if (CountXP.ctx != null)
 		CountXP.stop(true);
 	
+	this.canvasId = canvasId;
 	CountXP.ctx = document.getElementById(canvasId).getContext("2d");
 	this.showCanvas = showCanvas;
 	
 };
 
-CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime) {
+//cfg: {aFraction, current}
+CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime) {
 	
 	if (!this.showCanvas)
 		return;
 	
+	CountXP.byTime = byTime;
+	if (byTime)
+		document.getElementById(CountXP.canvasId).width = "32";
+	else {
+		document.getElementById(CountXP.canvasId).width = "40";
+		CountXP.lastHowManyRuns = Game.howManyRuns;
+	}
+		
+	
+	CountXP.runImg = PreloadImgs.get("run");
+	CountXP.runOutImg = PreloadImgs.get("runout");
+
 	CountXP.stopShowingWhenReachTheTime = (stopShowingWhenReachTheTime === undefined?false:stopShowingWhenReachTheTime);
 	CountXP.eventChangeStars = eventChangeStars;
 	CountXP.showPoints = showPoints;
 	
-	CountXP.umaFracao = umaFracao;
-	CountXP.current = current % umaFracao;
-	CountXP.times = Math.floor(current / umaFracao);
+	CountXP.aFraction = cfg.aFraction;
+	CountXP.current = cfg.current % cfg.aFraction;
+	CountXP.times = Math.floor(cfg.current / cfg.aFraction);
 	CountXP.times = (CountXP.times > 3?3:CountXP.times);
 	
 	CountXP.pointsFinal = pointsFinal;
@@ -40,9 +57,12 @@ CountXP.config = function(umaFracao, current, pointsPerStar, pointsFinal, eventC
 CountXP.start = function() {
 	
 	if (!this.showCanvas) {
-		CountXP.ctx.clearRect(0, 0, 32, 32);
+		CountXP.ctx.clearRect(0, 0, 40, 40);
 		return;
 	}
+	
+	if (!CountXP.byTime)
+		return;
 	
 	if (CountXP.times < 3) {
 		CountXP.tick();
@@ -57,7 +77,7 @@ CountXP.stop = function(clearRect) {
 	
 	if (clearRect && CountXP.ctx != null) {
 		
-		CountXP.ctx.clearRect(0, 0, 32, 32);
+		CountXP.ctx.clearRect(0, 0, 40, 40);
 		
 	}
 	clearInterval(CountXP.handler);
@@ -73,7 +93,7 @@ CountXP.tick = function() {
 	}
 	
 	CountXP.current++;
-	if (CountXP.current > CountXP.umaFracao) {
+	if (CountXP.current > CountXP.aFraction) {
 		CountXP.times++;
 		
 		CountXP.changeImgs();
@@ -87,27 +107,47 @@ CountXP.draw = function() {
 	
 	var ctx = CountXP.ctx;
 	
-	ctx.clearRect(0, 0, 32, 32);
+	ctx.clearRect(0, 0, 40, 40);
 	
-	ctx.beginPath();
-	ctx.arc(16,18,10,0,2*Math.PI);
-	ctx.lineWidth = 2;
-	ctx.strokeStyle = '#000000';		
-	ctx.rect(15, 4, 2, 2);
-	ctx.rect(13, 2, 6, 2);
-	
-	ctx.stroke();
+	if (CountXP.byTime) {
+		
+		ctx.beginPath();
+		ctx.arc(16,18,10,0,2*Math.PI);
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = '#000000';		
+		ctx.rect(15, 4, 2, 2);
+		ctx.rect(13, 2, 6, 2);
+		
+		ctx.stroke();
 
-	var clockPointer = CountXP.current/CountXP.umaFracao;
-	if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
-		clockPointer = 1;
+		var clockPointer = CountXP.current/CountXP.aFraction;
+		if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
+			clockPointer = 1;
+		} 
+		ctx.beginPath();
+		ctx.arc(16,18,5,1.5*Math.PI,(1.5+((clockPointer)*2))*Math.PI, false);
+		ctx.lineWidth = 10;
+		ctx.strokeStyle = '#ad2323';	
+		ctx.stroke();
+
+	} else {
+		// CountXP.aFraction could be 1, 2 or 3
+		
+		var sizeImg = 32;
+		switch (CountXP.aFraction) {
+			case 2: sizeImg = 20; break;
+			case 3: sizeImg = 12; break;
+		}
+
+		var y = 16 - (sizeImg/2);
+		for (var i = 0; i < CountXP.aFraction; i++) {
+			ctx.drawImage((i<CountXP.current?CountXP.runOutImg:CountXP.runImg), (i%3)*sizeImg, y, sizeImg, sizeImg);
+		}
+		
+		
+		
 	} 
-	ctx.beginPath();
-	ctx.arc(16,18,5,1.5*Math.PI,(1.5+((clockPointer)*2))*Math.PI, false);
-	ctx.lineWidth = 10;
-	ctx.strokeStyle = '#ad2323';	
-	ctx.stroke();
-
+	
 };
 
 CountXP.changeImgs = function() {
@@ -123,11 +163,48 @@ CountXP.changeImgs = function() {
 	if (CountXP.eventChangeStars)
 		CountXP.eventChangeStars(CountXP.times);
 
-	if (CountXP.times >= 3) {
+	if (CountXP.times >= 3 && CountXP.byTime) {
 		
-		CountXP.ctx.clearRect(0, 0, 32, 32);
-		$("#xpPoints").html("+ " + CountXP.pointsFinal);
-		CountXP.stop(true);
+		CountXP.clearTheWatch();
 		
 	}
+};
+
+CountXP.clearTheWatch = function() {
+	
+	CountXP.ctx.clearRect(0, 0, 40, 40);
+	$("#xpPoints").html("+ " + CountXP.pointsFinal);
+	CountXP.stop(true);
+	
+};
+
+CountXP.newRun = function() {
+	if (CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.times < 3) {
+		
+		CountXP.lastHowManyRuns = Game.howManyRuns;
+		var added = false;
+		if (Game.howManyRuns % CountXP.aFraction == 1)
+			CountXP.current = 1;
+		else {
+			CountXP.current++;
+			added = true;
+		}
+			
+		
+		CountXP.tick();
+		if (added)
+			CountXP.current--;
+	}
+		
+};
+
+CountXP.updateStars = function() {
+	
+	if (CountXP.byTime) 
+		return;
+	
+	if (CountXP.times >= 3)
+		CountXP.clearTheWatch();
+	else
+		CountXP.draw();
 };

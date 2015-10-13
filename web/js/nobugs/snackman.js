@@ -195,6 +195,12 @@ SnackMan = function(objectives, mission, avatar) {
 	this.objective.xpFinal = parseInt(objectives.getAttribute("xpFinal"));
 	this.objective.xpTotalTime = parseInt(objectives.getAttribute("xpTotalTime"));
 	
+	var xpTotalRun = objectives.getAttribute("xpTotalRun");
+	if (xpTotalRun == null)
+		this.objective.xpTotalRun = null;
+	else
+		this.objective.xpTotalRun = parseInt(xpTotalRun);
+	
 	var m = objectives.getAttribute("maxCommands");
 	this.objective.maxCommands = parseInt( (m == null?"0":m) ); 
 	

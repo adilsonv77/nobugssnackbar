@@ -125,7 +125,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives buttonRun="false" xpIndividual="10" xpFinal="5" xpTotalTime="600">
+	<objectives buttonRun="false" xpIndividual="10" xpFinal="5" xpTotalTime="600" xpTotalRun="3">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

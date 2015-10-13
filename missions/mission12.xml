@@ -231,7 +231,7 @@ Observe na imagem, que &#233; sentido obrigat&#243;rio quando atende essa condi&
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="840">
+	<objectives ordered="false" xpIndividual="40" xpFinal="20" xpTotalTime="840" xpTotalRun="3">
 		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter">deliver</objective>
 

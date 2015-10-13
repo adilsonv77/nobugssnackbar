@@ -142,7 +142,7 @@ Trouxe o teu &#250;ltimo trabalho para apoiar nessa tarefa.
 			</orders>
 		</customer>
 	</customers>
-	<objectives ordered="false" commQtd="36" bonusTime="300" bonusTimeReward="90 45 30"  xpIndividual="50" xpFinal="30" xpTotalTime="600">
+	<objectives ordered="false" commQtd="36" bonusTime="300" bonusTimeReward="90 45 30"  xpIndividual="50" xpFinal="30" xpTotalTime="600" xpTotalRun="3">
 		<objective pos="1" place="counter">askHasThirsty</objective>
 		<objective pos="1" place="counter">askHasHunger</objective>
 		<objective pos="1" place="counter">deliver</objective>

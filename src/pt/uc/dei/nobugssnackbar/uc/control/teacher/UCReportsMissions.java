@@ -54,4 +54,8 @@ public class UCReportsMissions  implements Serializable {
 		this.gameDao = gameDao;
 	}
 
+	public List<Object[][]> loadUsersFromClazz(Integer classId) throws Exception {
+		return gameDao.loadCompleteMap(classId);
+	}
+
 }

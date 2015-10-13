@@ -167,3 +167,17 @@ CharacterDialog.prototype.updateText = function() {
   	this.txt.innerHTML = this.conversation[this.idx].msg;
 	Cufon('.dlgTalkText');
 };
+
+CharacterDialog.creates = function(x, y, finishFunction, msgs) {
+	
+	$("<img>").attr("id", "teachTalk").attr("src", "images/teacher.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
+	
+	var config = [];
+	msgs.forEach(function(msg) {
+		config.push({character: "teachTalk", msg: msg});
+	});
+	
+	new CharacterDialog(x, y, false, function(){$("#teachTalk").remove(); finishFunction();}, config);
+
+};
+

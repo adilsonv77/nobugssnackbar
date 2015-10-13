@@ -169,7 +169,7 @@
 		</customer>
 	</customers>
 
-	<objectives xpIndividual="50" xpFinal="30" xpTotalTime="3000">
+	<objectives xpIndividual="50" xpFinal="30" xpTotalTime="3000" xpTotalRun="6">
 		<objective condition="CustomerManager.totalOfMoneyDelivered() == 26 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
 		text="Entregar EXATAMENTE $26 em vendas, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>

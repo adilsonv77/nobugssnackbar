@@ -102,7 +102,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600" commQtd="14">
+	<objectives xpIndividual="10" xpFinal="5" xpTotalTime="600" commQtd="14" xpTotalRun="3">
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>

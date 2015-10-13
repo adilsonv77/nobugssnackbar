@@ -282,7 +282,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="50" xpFinal="10" xpTotalTime="900">
+	<objectives xpIndividual="50" xpFinal="10" xpTotalTime="900" xpTotalRun="6">
 		<objective text="o valor do maior pedido" value="parseInt(Game.readVariableTest('maiorValor'))">talk</objective>
 		<objective text="a quantidade de clientes que pediram igual ao maior valor" value="parseInt(Game.readVariableTest('qtosClientes'))">talk</objective>
 	</objectives>

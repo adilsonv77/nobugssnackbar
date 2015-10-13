@@ -137,7 +137,7 @@ Observe que existem dois blocos aninhados dentro do <i>if</i>, entre as linhas 5
 			</orders>						
 		</customer>
 	</customers>
-	<objectives ordered="false" maxCommands="15" maxCommandsRewardCoins="20" xpIndividual="50" xpFinal="30" xpTotalTime="720">
+	<objectives ordered="false" maxCommands="15" maxCommandsRewardCoins="20" xpIndividual="50" xpFinal="30" xpTotalTime="720" xpTotalRun="3">
 		<objective pos="2" place="counter">deliver</objective>
 	</objectives>
 	<xml preload="15">

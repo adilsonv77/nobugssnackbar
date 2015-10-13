@@ -154,7 +154,7 @@
 		</customer>
 	</customers>
 	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="1200"
-		maxCommands="15" maxCommandsRewardCoins="50">
+		maxCommands="15" maxCommandsRewardCoins="50" xpTotalRun="9">
 		<objective condition="CustomerManager.totalOfFoodDelivered() == 7  &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3&amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3"
 			text="Entregar EXATAMENTE 7 cachorros no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>

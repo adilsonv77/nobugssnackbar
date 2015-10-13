@@ -146,10 +146,21 @@ Explanation.evaluateObjectives = function(statement, container) {
 	table.appendChild(tr);
 	container.appendChild(table);
 	
-	var msg = BlocklyApps.getMsg("rewardExplanation");
+	var msg;
+	var finalValue;
+	
+	if (hero.objective.xpTotalRun == null) {
+		msg = BlocklyApps.getMsg("rewardExplanation");
+		finalValue = hero.objective.xpTotalTime/60;
+	}
+	else {
+		msg = BlocklyApps.getMsg("rewardExplanationByRun");
+		finalValue = hero.objective.xpTotalRun;
+	}
+	
 	var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
 	var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, hero.objective.xpTotalTime/60)+ "<br/>";
+	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, finalValue)+ "<br/>";
 	
 	if (hero.objective.maxCommandsReward > 0) {
 

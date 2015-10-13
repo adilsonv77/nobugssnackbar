@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-05 17:15:26.994000",
+		"lastupdated": "2015-10-13 18:08:32.272000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -176,6 +176,7 @@
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",
+	"NoBugs.rewardExplanationByRun": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 attempts.",
 	"NoBugs.commandBonusExplanation": "You'll receive a bonus of %0 if accomplish this mission in %1 commands or less.",
 	"NoBugs.timeBonusExplanation": "You'll receive a bonus of %0 (or more) if accomplish this mission in %1 minutes or less.",
 	"Single.Mission": "Mission",
@@ -226,6 +227,9 @@
 	"Intro.RepeatTest5": "Each time your program runs customer desires change. To succeed in the mission, your program must end without error every time it runs.",
 	"Intro.RepeatTest6": "After finishing the run, you will notice a small number",
 	"Intro.RepeatTest7": "below the icon. This indicates how many executions have succeeded.",
+	"Intro.StarsByRun1": "From now some missions have a new way to reward stars: by attempts.",
+	"Intro.StarsByRun2": "The missions variates from 1 to 3 attempts by star. You can observe next to the star counter how many attempts you have before lose a star.",
+	"Intro.StarsByRun3": "Each time you start a run or a debug and it not accomplishes the mission, it means you're consuming an attempt.",
 	"NoBugs.varname": "Name",
 	"NoBugs.varvalue": "Value",
 	"NoBugs.RunButtonDisabled": "Because you tried sometimes unsuccessfully, I disabled the run button only in this mission. I believe the debug button will be most useful to you.",

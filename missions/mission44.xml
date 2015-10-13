@@ -43,6 +43,10 @@
 
 		<category name="math" show="true" />
 
+
+		<!-- Tenho que criar no toolbox uma subcategoria para esconder o if -->
+		<category name="logic" show="true" />
+		
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
 
@@ -153,7 +157,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="600" commQtd="15" maxCommands="11" maxCommandsRewardCoins="80" >
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="600" commQtd="15" maxCommands="11" maxCommandsRewardCoins="80"  xpTotalRun="9">
 		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 	</objectives>
 	<xml>

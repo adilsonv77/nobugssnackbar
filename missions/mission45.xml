@@ -76,6 +76,9 @@
 
 		<category name="math" show="true" />
 
+		<!-- Tenho que criar no toolbox uma subcategoria para esconder o if -->
+		<category name="logic" show="true" />
+
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
 
@@ -196,7 +199,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="180">
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="180" xpTotalRun="3">
 		<objective text="o total das vendas" value="parseInt(Game.readVariableTest('total'))">talk</objective>
 	</objectives>
 	<xml preload="44">

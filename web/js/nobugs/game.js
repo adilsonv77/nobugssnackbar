@@ -31,7 +31,7 @@
 var Game = {};
 
 Game.runningStatus = 0;
-Game.howManyRuns = 0; // in this session
+Game.howManyRuns = 0; // in this mission
 
 var hero;
 Game.mission = null;
@@ -690,6 +690,7 @@ Game.missionLoaded = function(ret){
   Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
   $("#playerRewardMission").css("display", (Game.missionView?"none":"inline"));
+  $("#playerRewardMission").css("box-shadow","");
   UserControl.retrieveReward(Game.updatesReward);
   
   Game.slider.timesBefore = 0;
@@ -714,7 +715,17 @@ Game.missionLoaded = function(ret){
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(objectives, mission, Game.loginData.avatar);
-  CountXP.config( hero.objective.xpTotalTime/3, Game.timeSpent,
+  
+  var byTime = true;
+  var cfg = {};
+  if (hero.objective.xpTotalRun == null) {
+	  cfg = {aFraction: hero.objective.xpTotalTime/3, current: Game.timeSpent };
+  } else {
+//	  hero.objective.xpTotalRun = 6;
+	  byTime = false;
+	  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
+  }
+  CountXP.config(byTime, cfg,
 		  		    hero.objective.xpIndividual, hero.objective.xpFinal,
 		  		    Game.changeStars, true );
   
@@ -742,19 +753,27 @@ Game.assignIngrid = function() {
 
 Game.blinkPlayerReward = function() {
 	
-	if (Game.blinkPlayerRewardTimes % 2 === 0)
+	var stop = Game.blinkPlayerStop;
+	
+	if (!stop && Game.blinkPlayerRewardTimes % 2 === 0)
 		$("#playerRewardMission").css("box-shadow", "inset 0 0 100px 100px rgba(255, 255, 255, 0.4)");
 	else
 		$("#playerRewardMission").css("box-shadow","");
 	
 	Game.blinkPlayerRewardTimes++;
-	if (Game.blinkPlayerRewardTimes < 10)
+	if (!stop && Game.blinkPlayerRewardTimes < 10)
 		window.setTimeout(Game.blinkPlayerReward, 500);
+	else
+		CountXP.updateStars(); 
+	
+	Game.blinkPlayerStop = false;
 };
 
 Game.changeStars = function(starNumber) {
 	
 	if (!CountXP.starting) {
+
+		Game.blinkPlayerStop = false;
 		
 		var f = Game.blinkPlayerReward;
 		Game.blinkPlayerRewardTimes = 0;
@@ -1291,11 +1310,37 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 	
 };
 
+Game.showShadow = function() {
+
+	var shadow = document.getElementById('dialogShadow');
+    shadow.style.visibility = 'visible';
+    shadow.style.opacity = 0.3;
+	
+};
+
+Game.hideShadow = function() {
+
+	var shadow = document.getElementById('dialogShadow');
+    shadow.style.visibility = 'hidden';
+    shadow.style.opacity = 0; 
+	
+};
+
 Game.verifyTestsInMission = function(finishFunction) {
+	
+	var fAfterThisTest = function() {
+		
+		var f = function() {
+			Game.hideShadow();
+			finishFunction();
+		};
+		
+		Game.alertStarsByAttempt(f);
+	};
 	
 	if (Game.tests == 0) {
 		
-		finishFunction();
+		fAfterThisTest();
 		return;
 		
 	}
@@ -1304,20 +1349,45 @@ Game.verifyTestsInMission = function(finishFunction) {
 	if (talk === undefined || talk === "false") {
 		var bbBox = BlocklyApps.getBBox_(document.getElementById("tests_qtd"));
 		
-		$("<img>").attr("id", "teachTalk").attr("src", "images/teacher.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
-		new CharacterDialog(bbBox.x+30, bbBox.y-120, false, function(){finishFunction();$("#teachTalk").remove();},
-				[{character: "teachTalk", msg: 
-					BlocklyApps.getMsg("Intro_RepeatTest1") + " <img src='images/run.png' width='30'/> "
-				 + BlocklyApps.getMsg("Intro_RepeatTest2") + " <img src='images/tests.jpg' width='30'/> " + BlocklyApps.getMsg("Intro_RepeatTest3")},
-				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest4")},
-				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest5")},
-				{character: "teachTalk", msg:BlocklyApps.getMsg("Intro_RepeatTest6") + "<img src='images/tests_finished.png'/>"  + BlocklyApps.getMsg("Intro_RepeatTest7")} 
-					]);
+		var msgs = [];
+		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest1") + " <img src='images/run.png' width='30'/> "
+			 + BlocklyApps.getMsg("Intro_RepeatTest2") + " <img src='images/tests.jpg' width='30'/> " + BlocklyApps.getMsg("Intro_RepeatTest3"));
+		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest4"));
+		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest5"));
+		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest6") + "<img src='images/tests_finished.png'/>"  + BlocklyApps.getMsg("Intro_RepeatTest7"));
+		
+		Game.showShadow();
+
+		CharacterDialog.creates(bbBox.x+30, bbBox.y-120, fAfterThisTest, msgs) ;
 		
 		Game.changeFlag("TALK_RUNTESTS", "true");
 	} else
-		finishFunction();
+		fAfterThisTest();
 }; 
+
+Game.alertStarsByAttempt = function(finishFunction) {
+	if (hero.objective.xpTotalRun == null) {
+		finishFunction();
+		return;
+	}
+		
+	var talk = Game.loginData.userLogged.flags.TALK_STARSBYATTEMPT;
+	if (talk === undefined || talk === "false") {
+		var bbBox = BlocklyApps.getBBox_(document.getElementById("playerRewardMission"));
+		
+		var msgs = [];
+		msgs.push(BlocklyApps.getMsg("Intro_StarsByRun1"));
+		msgs.push(BlocklyApps.getMsg("Intro_StarsByRun2"));
+		msgs.push(BlocklyApps.getMsg("Intro_StarsByRun3"));
+		
+		Game.showShadow();
+		CharacterDialog.creates(bbBox.x-100, bbBox.y+80, finishFunction, msgs) ;
+
+		Game.changeFlag("TALK_STARSBYATTEMPT", "true");
+	} else
+		finishFunction();
+	
+};
 
 Game.alertMissionView = function() {
 	if (!Game.missionView)
@@ -1685,8 +1755,10 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 	
+	Game.finishedRun();
+	
    $("#tests_finished").css("display", "none");
-
+ 
    Game.lastErrorData.iderror = 0;
    Game.lastErrorData.message = "";
    Game.lastErrorData.block = null;
@@ -1838,6 +1910,12 @@ Game.resetButtons = function(hideVars) {
 };
 
 
+Game.finishedRun = function() {
+	
+	CountXP.newRun(); // after run, or after an error, then count the runs
+	
+};
+
 /**
  * Execute the user's code.  Heaven help us...
  */
@@ -1846,6 +1924,7 @@ Game.execute = function(debug) {
   if (Game.runningStatus === 0) {
 	  
 	  $("#tests_finished").css("display", "none");
+	  Game.blinkPlayerStop = true;
 	  
 	  Game.highlightPause = false;
 	  
@@ -2010,7 +2089,11 @@ Game.updateCounterInstructions = function(howMany) {
  */
 Game.lockBlockly = function() {
 	
-    var blocklyLock = document.createElement("div");
+	var blocklyLock = document.getElementById("blocklyLock");
+	if (blocklyLock != null)
+		return;
+	
+	blocklyLock = document.createElement("div");
     
     blocklyLock.id = "blocklyLock";
     blocklyLock.style.cssText = Game.blockly.style.cssText;
@@ -2247,6 +2330,7 @@ Game.nextStep = function() {
 			    	
 			    } else {
 			    	
+			    	Game.finishedRun();
 					// if there isn't more lines to evaluate
 					Game.resetButtons();
 					
@@ -2296,7 +2380,7 @@ Game.nextStep = function() {
 			  Game.unlockBlockly();
 			  Game.stopAlertGoalButton();
 			  Hints.startHints();
-
+			  Game.finishedRun();
 			  
 		      return;
 			
@@ -2734,6 +2818,8 @@ Game.step = function(command, values) {
 };
 
 Game.showError = function(iderror) {
+	
+	Game.finishedRun();
 	
 	Hints.stopHintsEx();
 	Game.lastErrorData.iderror = iderror[0];

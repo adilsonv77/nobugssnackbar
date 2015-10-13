@@ -765,24 +765,35 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
 
 //I added parentesis in the expression, to facilitate reading to the students
 Blockly.Blocks['math_arithmetic'].init = function() {
-    var OPERATORS =
-        [[Blockly.Msg.MATH_ADDITION_SYMBOL, 'ADD'],
-         [Blockly.Msg.MATH_SUBTRACTION_SYMBOL, 'MINUS'],
-         [Blockly.Msg.MATH_MULTIPLICATION_SYMBOL, 'MULTIPLY'],
-         [Blockly.Msg.MATH_DIVISION_SYMBOL, 'DIVIDE'],
-         [Blockly.Msg.MATH_POWER_SYMBOL, 'POWER']];
-    this.setHelpUrl(Blockly.Msg.MATH_ARITHMETIC_HELPURL);
+    this.jsonInit({
+        "message0": "(%1 %2 %3)",
+        "args0": [
+          {
+              "type": "input_value",
+              "name": "A",
+              "check" : "Boolean"
+            },
+          {
+            "type": "field_dropdown",
+            "name": "OP",
+            "options": [
+              [Blockly.Msg.MATH_ADDITION_SYMBOL, 'ADD'],
+              [Blockly.Msg.MATH_SUBTRACTION_SYMBOL, 'MINUS'],
+              [Blockly.Msg.MATH_MULTIPLICATION_SYMBOL, 'MULTIPLY'],
+              [Blockly.Msg.MATH_DIVISION_SYMBOL, 'DIVIDE'],
+              [Blockly.Msg.MATH_POWER_SYMBOL, 'POWER']
+            ]
+          },
+            {
+                "type": "input_value",
+                "name": "B",
+                "check" : "Boolean"
+              },
+        ]});
+
+	this.setHelpUrl(Blockly.Msg.MATH_ARITHMETIC_HELPURL);
     this.setColour(Blockly.Blocks.math.HUE);
     this.setOutput(true, 'Number');
-    this.appendDummyInput()
-    	.appendField('(');
-    this.appendValueInput('A')
-        .setCheck('Number');
-    this.appendValueInput('B')
-        .setCheck('Number')
-        .appendField(new Blockly.FieldDropdown(OPERATORS), 'OP');
-    this.appendDummyInput()
-    	.appendField(')');
 
     this.setInputsInline(true);
     // Assign 'this' to a variable for use in the tooltip closure below.
@@ -817,12 +828,7 @@ Blockly.Blocks['math_arithmetic'].init = function() {
 };
 
 //I added parentesis in the expression, to facilitate reading to the students
-Blockly.Blocks['logic_operation'] = {
-		  /**
-		   * Block for logical operations: 'and', 'or'.
-		   * @this Blockly.Block
-		   */
-		  init: function() {
+Blockly.Blocks['logic_operation'].init = function() {
 		    var OPERATORS =
 		        [[Blockly.Msg.LOGIC_OPERATION_AND, 'AND'],
 		         [Blockly.Msg.LOGIC_OPERATION_OR, 'OR']];
@@ -851,8 +857,8 @@ Blockly.Blocks['logic_operation'] = {
 		      };
 		      return TOOLTIPS[op];
 		    });
-		  }
-		};
+		  };
+		
 
 
 Blockly.Blocks['logic_compare'].oldInit = Blockly.Blocks['logic_compare'].init;

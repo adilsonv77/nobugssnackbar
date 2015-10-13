@@ -171,9 +171,9 @@ Tests.performQuestion = function(blankValue, finished) {
 			
 	var timeSpent = 0;
 	if (valueAnswer == -1)
-		timeSpent = CountXP.umaFracao; // blank option always consider using the total time
+		timeSpent = CountXP.aFraction; // blank option always consider using the total time
 	else
-		timeSpent = (CountXP.times*CountXP.umaFracao) + CountXP.current;
+		timeSpent = (CountXP.times*CountXP.aFraction) + CountXP.current;
 	
 	UserControl.saveTestQuestionAnswer(
 			parseInt(answer.testId),
@@ -307,7 +307,7 @@ Tests.drawQuestion = function() {
 		current = question.previousAnswer.timeSpend;
 	}
 	
-	CountXP.config(question.timeLimit, current, 0, 0, null, false, true);
+	CountXP.config(true, {aFraction: question.timeLimit, current: current}, 0, 0, null, false, true);
 	CountXP.start();
 	
 	var table = document.createElement("table");

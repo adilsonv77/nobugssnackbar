@@ -191,7 +191,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="720">
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="720" xpTotalRun="9">
 		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>

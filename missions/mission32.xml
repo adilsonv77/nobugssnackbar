@@ -248,7 +248,7 @@ Observe que usamos os parentesis para organizar a nossa express&#227;o. Isso fac
 			</orders>						
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="60" xpFinal="30" xpTotalTime="900">
+	<objectives ordered="false" xpIndividual="60" xpFinal="30" xpTotalTime="900" xpTotalRun="6">
 		<objective type="logic_operation" value="OR">useBlock</objective>
 
 		<objective text="o valor do pedido do cliente" value="parseInt(Game.readVariableTest('valorCliente1'))">talk</objective>

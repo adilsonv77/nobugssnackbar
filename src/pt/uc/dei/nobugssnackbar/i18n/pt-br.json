@@ -65,6 +65,7 @@
 	"NoBugs.afterSuccessMissionView" : "Ap&#243;s finalizar com sucesso uma miss&#227;o j&#225; vencida, voc&#234; mesmo deve sair dessa tela clicando no bot&#227;o no canto superior direito.",
 	
 	"NoBugs.rewardExplanation" : "Receba %0 para cada %1 habilitada ao cumprir todos os objetivos acima. \nn Receba %2 caso n&#227;o resolver a miss&#227;o em at&#233; %3 minutos.",
+	"NoBugs.rewardExplanationByRun" : "Receba %0 para cada %1 habilitada ao cumprir todos os objetivos acima. \nn Receba %2 caso n&#227;o resolver a miss&#227;o em at&#233; %3 tentativas.",
 	"NoBugs.commandBonusExplanation" : "Voc&#234; receber&#225; um b&#244;nus de %0 se cumprir a miss&#227;o com %1 comandos ou menos.",
 	"NoBugs.timeBonusExplanation"  : "Voc&#234; receber&#225; um b&#244;nus de %0 (ou mais) se cumprir a miss&#227;o em %1 minutos ou menos.",
 	
@@ -294,6 +295,10 @@
 	"Intro.RepeatTest5"     : "A cada vez que o seu programa for executado os desejos dos clientes modificam. Para ter sucesso na miss&#227;o, seu programa deve finalizar sem erros todas as vezes em que ser&#225; executado.",
 	"Intro.RepeatTest6"     : "Ap&#243;s finalizar a execu&#231;&#227;o, vais reparar um pequeno n&#250;mero ", 
 	"Intro.RepeatTest7"     : " abaixo do s&#237;mbolo. Isso indica, quantas execu&#231;&#245;es tiveram sucesso.",
+
+	"Intro.StarsByRun1"     : "A partir de agora algumas miss&#245;es ter&#227;o uma nova forma de ganhares estrelas: pelas tentativas.",
+	"Intro.StarsByRun2"     : "As miss&#245;es variam de 1 a 3 tentativas por estrela. Voc&#234; pode observar pr&#243;ximo ao contador de estrelas quantas tentativas ainda tens antes de perder uma estrela.",
+	"Intro.StarsByRun3"     : "Cada vez que voc&#234; inicia uma execu&#231;&#227;o ou depura&#231;&#227;o e n&#227;o consegue vencer a miss&#227;o, isso implica em consumir uma tentativa.",
 	
 	"Profile.mail" : "E-mail",
 	"Profile.resetPassword" : "Refazer a senha",

@@ -56,8 +56,6 @@
 		<category name="logic_operation" show="true" />
 		
 		<category name="math" show="true" />
-		<category name="const" show="true" />
-		<category name="const.hotdog" show="true" />
 
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
@@ -112,7 +110,7 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="1800">
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="1800" xpTotalRun="9">
 		<objective condition="CustomerManager.totalOfFoodDelivered() == 5  &amp;&amp; CustomerManager.totalOfDrinksDelivered() == 3  &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3&amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3"
 			text="Entregar EXATAMENTE 5 cachorros e 3 bebidas no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>
