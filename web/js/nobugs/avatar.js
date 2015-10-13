@@ -645,7 +645,7 @@ AvatarEditor.init = function() {
 		AvatarEditor.draw();
 	});
 	AvatarEditor.removeColorLines('#cpEyes');
-	AvatarEditor.choicesOfColor('#cpEyes', ["#000000", "#5977FF", "#188242"]);
+	AvatarEditor.choicesOfColor('#cpEyes', ["#000000", "#5977FF", "#188242", "#B16608"]);
 	$("#cpEyes div:first-child").css("width", "0px");
 	
 	$('#cpSkin, #cpSkinSpecial').colorpicker({history: false, displayIndicator: false});
@@ -655,7 +655,7 @@ AvatarEditor.init = function() {
 	
 	});
 	AvatarEditor.removeColorLines('#cpSkin');
-	AvatarEditor.choicesOfColor('#cpSkin', ["#F39C7A", "#AF876D", "#544035"]);
+	AvatarEditor.choicesOfColor('#cpSkin', ["#F2DAD5", "#F39C7A", "#AF876D", "#544035"]);
 	
 	AvatarEditor.removeColorLines('#cpSkinSpecial');
 	AvatarEditor.choicesOfColor('#cpSkinSpecial', ["#FFD90F", "#88CCFF"]);
