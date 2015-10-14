@@ -29,6 +29,11 @@
 	"Blockly.controlFor":"para %1 a variar de %2 at&#233; %3 com incremento %4",
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
+	"Blockly.listsCreate":"criar array com tamanho",
+	"Blockly.listsGet":"do array %1 obt&#233;m o elemento no &#237;ndice [%2]",
+	"Blockly.listsSet":"%3 e guardar no &#237;ndice [%2] do array %1",
+	
+	"NoBugs.anArray":"umArray",
 	
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa [F10].",
@@ -149,6 +154,11 @@
 	"Error.isntFrontIceCreamMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de gelados.",
 	"Error.onlyIceCream" : "Aqui o cozinheiro somente consegue obter gelados.",
 	"Error.isntHungerForIceCream" : "O cliente n&#227;o est&#225; com fome de gelado.",
+	"Error.parameterIsNotANumber" : "O par&#226;metro precisa ser um n&#250;mero.",
+	"Error.parameterMustBeGreaterThanZero" : "O par&#226;metro precisa ser maior que zero.",
+	"Error.parameterIsNotAnArray" : "O par&#226;metro precisa ser um array." ,
+	"Error.parameterMustBeEqualsGreaterThanZero" : "O par&#226;metro precisa ser maior ou igual a zero.",
+	"Error.tryToAccessAPositionOutOfBounds" : "Voc&#234; tentou aceder uma posi&#231;&#227;o inv&#225;lida do array.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",

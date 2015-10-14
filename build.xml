@@ -146,6 +146,7 @@
 			
 			<!-- list of files to compress -->
 			<arg line="${js.home}/navigator.js" />
+			<arg line="${js.home}/blocksnewversion.js" />
 			<arg line="${js.home}/language.js" />
 			<arg line="${js.home}/slider.js" />
 			<arg line="${js.home}/utils.js" />

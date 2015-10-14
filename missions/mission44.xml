@@ -43,9 +43,8 @@
 
 		<category name="math" show="true" />
 
-
-		<!-- Tenho que criar no toolbox uma subcategoria para esconder o if -->
 		<category name="logic" show="true" />
+		<category name="hide_if" show="true" />
 		
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />

@@ -26,19 +26,21 @@
 
 var Selector = {};
 Selector = function(data, tamCell, width, height, enabledCssClass, disabledCssClass, generalTabCss, tabCss, clickTarget, genContent, 
-					fMissionEnabled, fMissionTarget) {
+					fMissionEnabled, fMissionTarget, fMissionFreeAccess, freeAccessCssClass) {
 	this.data = data;
 	this.clickTarget = clickTarget;
 	this.genContent = genContent;
 	
 	this.enabledCssClass = enabledCssClass;
 	this.disabledCssClass = disabledCssClass;
+	this.freeAccessCssClass = freeAccessCssClass;
 	
 	this.generalTabCss = generalTabCss;
 	this.tabCss = tabCss;
 	
 	this.fMissionEnabled  = fMissionEnabled;
 	this.fMissionTarget   = fMissionTarget;
+	this.fMissionFreeAccess   = fMissionFreeAccess;
 	
 	this.width = width;
 	this.height = height;
@@ -217,7 +219,15 @@ Selector.prototype.createGridView = function (group, level, missionPanel, number
 				div.addClass('missionEnabled');
 			} else
 	    	if (this.fMissionTarget(group, level, i)) {
-				div.addClass(this.disabledCssClass);
+				var disableCssClass = true;
+	    		if (this.fMissionFreeAccess !== undefined) 
+	    			disableCssClass = !this.fMissionFreeAccess(group, level, i);
+	    		
+	    		if (disableCssClass)
+	    			div.addClass(this.disabledCssClass);
+	    		else
+	    			div.addClass(this.freeAccessCssClass);
+	    		
 	    		div.addClass('missionTarget');
 				div.addClass('missionTargetFlat');
 	    	} else {

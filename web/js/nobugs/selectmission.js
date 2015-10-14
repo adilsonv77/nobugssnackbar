@@ -67,11 +67,9 @@ SelectMission.missionsRetrieved = function(missions) {
 		var l = {name: missions[i][1], id: missions[i][5], 
 							 howManyItems: missions[i][2], 
 					 howManyItemsAchieved: missions[i][3], 
-					          repeateable: [],
-					          cust:[]};
+					          repeateable: []};
 		for (var j=0;j<missions[i][6].length;j++) {
 			l.repeateable.push(missions[i][6][j][0]);
-			l.cust.push(missions[i][6][j][1]);
 		}
 		rec.levels.push(l);
 	}
@@ -102,7 +100,7 @@ SelectMission.missionsRetrieved = function(missions) {
 	};
 	
 	var f3 = function(i, j, m) {
-		if (data[i].levels[j].repeateable.indexOf(m) > -1) // repeateable missions never are enabled
+		if (data[i].levels[j].repeateable.indexOf(m) > -1) // repeateable missions never are enabled (finished)
 			return false;
 		
 		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
@@ -113,12 +111,18 @@ SelectMission.missionsRetrieved = function(missions) {
 	
 	var f4 = function(i, j, m) {
 		var idx = data[i].levels[j].repeateable.indexOf(m);
+		if (idx > -1) 
+			return true;
 		var ma = parseInt((data[i].levels[j].lastAllAchieved?data[i].levels[j].howManyItemsAchieved:"-1"));
 		var mt = ma + 1;
 		return (idx == -1 && m == mt) || (idx > -1 && m <= mt);
 	};
 	
-	var sel = new Selector(data, 50, 385, 250, "unlockBack", "lockBack", "bbtabs",  "bbtab", f1, f2, f3, f4);
+	var f5 = function(i, j, m) {
+		return data[i].levels[j].repeateable.indexOf(m) > -1; 
+	};
+	
+	var sel = new Selector(data, 50, 385, 250, "unlockBack", "lockBack", "bbtabs",  "bbtab", f1, f2, f3, f4, f5, "freeAccessBack");
 	sel.clickTargetEnabled = f1;
 	return sel.build();
 	

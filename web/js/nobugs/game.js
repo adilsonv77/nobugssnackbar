@@ -1381,7 +1381,7 @@ Game.alertStarsByAttempt = function(finishFunction) {
 		msgs.push(BlocklyApps.getMsg("Intro_StarsByRun3"));
 		
 		Game.showShadow();
-		CharacterDialog.creates(bbBox.x-100, bbBox.y+80, finishFunction, msgs) ;
+		CharacterDialog.creates(bbBox.x-130, bbBox.y+80, finishFunction, msgs) ;
 
 		Game.changeFlag("TALK_STARSBYATTEMPT", "true");
 	} else
@@ -2700,6 +2700,35 @@ Game.initApi = function(interpreter, scope) {
 	    };
 	    
 	interpreter.setProperty(scope, 'giveChange',
+		interpreter.createNativeFunction(wrapper));
+
+	// array functions
+	wrapper = function(s) {
+	      return interpreter.createPrimitive(NoBugsJavaScript.arrayCreate(s));
+	    };
+	    
+	interpreter.setProperty(scope, 'arrayCreate',
+		interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(a, i) {
+	      return interpreter.createPrimitive(NoBugsJavaScript.arrayGetValue(a, i));
+	    };
+	    
+	interpreter.setProperty(scope, 'arrayGetValue',
+		interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(a, i, v) {
+	      return interpreter.createPrimitive(NoBugsJavaScript.arraySetValue(a, i, v));
+	    };
+	    
+	interpreter.setProperty(scope, 'arraySetValue',
+		interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(s) {
+	      return interpreter.createPrimitive(NoBugsJavaScript.arrayCreate(s));
+	    };
+	    
+	interpreter.setProperty(scope, 'arrayCreate',
 		interpreter.createNativeFunction(wrapper));
 
 	

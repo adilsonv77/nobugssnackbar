@@ -687,7 +687,11 @@
 
     {if $ij.enabled['logic']}
     <category name="{msg meaning="Apps.catLogic" desc="--"}Logic{/msg}">
+        {if $ij.enabled['hide_if']}
+       {else}
       <block type="controls_if"></block>
+       {/if}
+      
        {if $ij.enabled['hide_logic_compare']}
        {else}
       <block type="logic_compare"></block>
@@ -747,9 +751,54 @@
           <block type="math_arithmetic"></block>
     </category>
     {/if}
+    
+    {if $ij.enabled['array']}
+    <category name="{msg meaning="Apps.catArray" desc="--"}Array{/msg}">
+    	<block type="lists_create_limited">
+	        <value name="SIZE">
+	          <block type="math_number">
+	            <field name="NUM">5</field>
+	          </block>
+	        </value>
+    	</block>
+    	
+    	<block type="lists_length"></block>
+    	<block type="lists_get">
+	        <value name="ARRAY">
+				<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.anArray" desc="---"}}anArray{{/msg}}</field>
+				</block>	        
+			</value>
+	        <value name="INDEX">
+	          <block type="math_number">
+	            <field name="NUM">0</field>
+	          </block>
+	        </value>
+    	</block>
+    	<block type="lists_set">
+	        <value name="ARRAY">
+				<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.anArray" desc="---"}}anArray{{/msg}}</field>
+				</block>	        
+			</value>
+	        <value name="INDEX">
+	          <block type="math_number">
+	            <field name="NUM">0</field>
+	          </block>
+	        </value>
+    		<value name="VALUE">
+            	<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.order" desc="---"}}order{{/msg}}</field>
+				</block>
+    		</value>
+    	</block>
+    </category>
+    {/if}
+    
     {if $ij.enabled['function']}
     <category name="{msg meaning="Apps.catProcedures" desc="IBID"}Functions{/msg}" custom="PROCEDURE"></category>
     {/if}
+    
   </xml>
 {/template}
 

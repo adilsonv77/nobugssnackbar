@@ -87,6 +87,12 @@
 	background-position: bottom;
 }
 
+.freeAccessBack {
+	background-image: url('../images/freeaccess.png');
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
 .missionDisabled {
 	cursor: default;
 }
