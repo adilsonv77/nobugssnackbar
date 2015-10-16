@@ -607,7 +607,6 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	  Game.speedSlider = new Slider(10, 20, 130, Game.slider.svg);
 
   Game.variableBox = document.getElementById('variableBox');
-  Game.blockly = document.getElementById('blockly');
   
   CountXP.init("stopWatch", !missionView);
   
@@ -710,6 +709,45 @@ Game.missionLoaded = function(ret){
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
   Game.toolbox = toolbox;
+ 
+  Game.blocklys = [];
+  
+  if (commands.innerHTML.indexOf('name="function"') > -1) {
+	  
+	  $("#multiBlockly").css("display", "inline");
+	  $("#blockly").css("display", "none");
+	  
+	  $('#multiBlockly').easytabs({updateHash: false, animate: false});
+	  $('#multiBlockly').bind('easytabs:after', function(evt, clicked, targetPanel) {
+          
+		  Game.blocklys.forEach(function(b) {
+			 if (b.id === targetPanel.attr("id")) {
+				 b.ws.markFocused();
+				 b.ws.setVisible(true);
+			 } else
+				 b.ws.setVisible(false);
+		  });
+		  
+		  Blockly.fireUiEvent(window, 'resize');
+		});
+	  
+	  Game.redimDiv = document.getElementById("multiBlockly");
+	  
+	  Game.blocklys.push({id: "blockly1", ws: null, top: 35});
+	  Game.blocklys.push({id: "blockly2", ws: null, top: 35});
+	  
+  } else {
+	  
+	  $("#multiBlockly").css("display", "none");
+	  $("#blockly").css("display", "inline");
+	  
+	  Game.redimDiv = document.getElementById("blockly");
+	  
+	  Game.blockly = Game.redimDiv;
+	  
+	  Game.blocklys.push({id: "blockly", ws: null, top:0});
+	  
+  }
   
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
@@ -978,6 +1016,8 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 };
 
 Game.buyMachineButtonClick = function() {
+	/*
+	 * Deactivated some time... in future, i have to review the code below 
 	var idmachine = Game.machines[Game.selectedMachine.getAttribute("iditem")-1].id;
 	UserControl.buyMachine(idmachine, function() {
 
@@ -1045,6 +1085,7 @@ Game.buyMachineButtonClick = function() {
 				
 		});
 	});
+	 */
 };
 
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
@@ -1053,15 +1094,19 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
-    
-  document.getElementById('blockly').innerHTML = ""; // clean the editor
-  Blockly.inject(document.getElementById('blockly'),
-	     { media: "media/",
+    /*
+  var blockstyle = [];
+  blockstyle['width'] = Game.redimDiv.style.width; 
+  blockstyle['height'] = Game.redimDiv.style.height;
+*/  
+  var cfg = { media: "media/",
 	       rtl: Game.rtl,
 	       toolbox: toolbox,
 	       trashcan: true,
 	       comments: false,
 	       scrollbars: true,
+	  //     css: blockstyle, 
+
 	       zoom:
 	         {enabled: true,
 	          controls: true,
@@ -1069,8 +1114,23 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	          maxScale: 2,
 	          minScale: .1,
 	          scaleSpeed: 1.1
-	         }});
-	
+	         }};
+  
+  for (var i = 0; i < Game.blocklys.length; i++) {
+
+	  var b = Game.blocklys[i];
+	  var divBlockly = document.getElementById(b.id);
+	  divBlockly.innerHTML = ""; // clean the editor
+	  b.ws = Blockly.inject(divBlockly, cfg);
+/*	  
+	  var toolBox = $(".blocklyToolboxDiv");
+	  if (toolBox.length > 0) {
+			document.body.removeChild(toolBox[i]);
+			document.getElementById(b.id).appendChild(toolBox[i]);
+	  }
+	*/  
+  }
+  
   if (Game.zoomLevel > 1) {
 	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
 		Blockly.getMainWorkspace().zoomCenter(1);
@@ -1474,8 +1534,8 @@ Game.resizeWindow = function(e) {
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
 
-	Game.blockly.style.top = Math.max(10, top - window.pageYOffset) + 'px';
-	Game.blockly.style.left = Game.rtl ? '10px' : '380px';
+	Game.redimDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
+	Game.redimDiv.style.left = Game.rtl ? '10px' : '380px';
     var w = window.innerWidth;
     if (Game.variableBox.style.display === "none") {
     	//Game.blockly.style.height = "90%";
@@ -1485,35 +1545,47 @@ Game.resizeWindow = function(e) {
     	
     	document.getElementById("moveRight").style.display = 'none';
     	
-    	Game.blockly.style.height = Game.optResize.blocklyDivH;
+    	Game.redimDiv.style.height = Game.optResize.blocklyDivH;
         w -= Game.optResize.blocklyDivW;
     	
-        Game.variableBox.style.top = (Game.optResize.varBoxT?Game.blockly.style.top:(Game.blockly.offsetTop+Game.blockly.offsetHeight+10)+"px");
+        Game.variableBox.style.top = (Game.optResize.varBoxT?Game.redimDiv.style.top:(Game.redimDiv.offsetTop+Game.redimDiv.offsetHeight+10)+"px");
         if (Game.optResize.varBoxT) {
         	Game.variableBox.style.left = ((Game.rtl ? 10 : 380) + w + 5) + 'px';
         	Game.variableBox.style.width = "200px";
         }
         else {
-        	Game.variableBox.style.left = Game.blockly.style.left;
-        	Game.variableBox.style.width =  Game.blockly.style.width;
+        	Game.variableBox.style.left = Game.redimDiv.style.left;
+        	Game.variableBox.style.width =  Game.redimDiv.style.width;
         }
         Game.variableBox.style.height = Game.optResize.varBoxH;
         
     }
-    Game.blockly.style.width = (w) + 'px';
+    Game.redimDiv.style.width = (w) + 'px';
+    
+    Game.blocklys.forEach(function(b) {
+    	var blocklyDiv = document.getElementById(b.id);
+    	
+    	var t = Game.redimDiv.style.top;
+    	t = parseInt(t.substr(0, t.length-2));
+    	blocklyDiv.style.top = (t + b.top) + "px";
+    	blocklyDiv.style.left = Game.redimDiv.style.left;
+    	
+    	blocklyDiv.style.width = Game.redimDiv.style.width; 
+    	blocklyDiv.style.height = Game.redimDiv.style.height; 
+    });
     
     var blocklyLock = document.getElementById("blocklyLock");
 	
 	if (blocklyLock !== null && blocklyLock !== "undefined" && blocklyLock !== undefined) {
-	    blocklyLock.style.cssText = Game.blockly.style.cssText;
-	    blocklyLock.style.height = Game.blockly.clientHeight  + "px";;
+	    blocklyLock.style.cssText = Game.redimDiv.style.cssText;
+	    blocklyLock.style.height = Game.redimDiv.clientHeight  + "px";;
 	    blocklyLock.style.position = "fixed";
 	    blocklyLock.style.backgroundColor = "grey";
 	    blocklyLock.style.opacity = "0.3";
 	}
     
     if (Game.counterInstruction != null)
-    	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
+    	Game.counterInstruction.style.left = (Game.redimDiv.offsetLeft + Game.redimDiv.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 
     $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 };
@@ -1643,6 +1715,11 @@ Game.emptyLines = function() {
 };
 
 Game.goBackToDashboard = function(evt, callInit) {
+	
+	Game.blocklys.forEach(function(b) {
+		b.ws.dispose();
+	});
+	
 	Blockly.hideChaff();
     Blockly.WidgetDiv.hide();
     
@@ -2055,7 +2132,8 @@ Game.hasEmptyInputs = function (activeBlock) {
 
 Game.showCountInstructions = function() {
 
-	if (hero.hasCommQtd || hero.objective.maxCommands > 0) {
+	
+	if (Game.blockly && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
 
 		var ci = document.createElement("div");
 		ci.id = "countInstruction";
@@ -2724,11 +2802,11 @@ Game.initApi = function(interpreter, scope) {
 	interpreter.setProperty(scope, 'arraySetValue',
 		interpreter.createNativeFunction(wrapper));
 
-	wrapper = function(s) {
-	      return interpreter.createPrimitive(NoBugsJavaScript.arrayCreate(s));
+	wrapper = function(a) {
+	      return interpreter.createPrimitive(NoBugsJavaScript.arrayLength(a));
 	    };
 	    
-	interpreter.setProperty(scope, 'arrayCreate',
+	interpreter.setProperty(scope, 'arrayLength',
 		interpreter.createNativeFunction(wrapper));
 
 	

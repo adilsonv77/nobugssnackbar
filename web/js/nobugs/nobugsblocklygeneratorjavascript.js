@@ -237,6 +237,16 @@ NoBugsJavaScript.testParameters = function(array, index) {
 	
 };
 
+NoBugsJavaScript.arrayLength = function(array) {
+	array = array.data;
+	if (!array.length) {
+		BlocklyApps.log.push(["fail", "Error_parameterIsNotAnArray"]);
+		throw false;
+	}
+	
+	return array.length;
+};
+
 NoBugsJavaScript.arrayGetValue = function(array, index) {
 	
 	array = array.data;

@@ -1,0 +1,104 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false" open="true">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="hide_if" show="true" />
+		
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+
+		<category name="text" show="true" />
+		<category name="array" show="true" />
+		<category name="function" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>door</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>door</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>door</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalTime="1800" xpTotalRun="9">
+	</objectives>
+	<xml>
+
+	</xml>
+</mission>
+
