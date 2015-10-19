@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-19 15:08:56.399000",
+		"lastupdated": "2015-10-19 18:51:41.233000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -276,6 +276,7 @@
 	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
 	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
+	"NoBugs.main": "Main",
 	"NoBugs.variables": "Variables",
 	"NoBugs.noMoreMissions": "You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions. <x id='BREAK'/><x id='BREAK'/> However, you are also allowed to review your missions.",
 	"NoBugs.Review": "Review",

@@ -34,12 +34,15 @@
 		<category name="vars" show="true" />
 
 		<category name="logic" show="true" />
-		<category name="hide_if" show="true" />
 		
 		<category name="math" show="true" />
 
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+		
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
 
 		<category name="text" show="true" />
 		<category name="array" show="true" />

@@ -284,6 +284,45 @@ Blockly.JavaScript['controls_for'] = function(block) {
 /*     Change the original window.prompt to nobugswindow.prompt         */
 /* ************************************************************************************/
 
+Blockly.FieldVariable.dropdownCreate = function() {
+	  if (this.sourceBlock_ && this.sourceBlock_.workspace) {
+	    var variableList =
+	        Blockly.Variables.allVariables(this.sourceBlock_.workspace);
+
+	    var pb = this.sourceBlock_.parentBlock_;
+	    while (pb != null) {
+	    	if (pb.type.indexOf("procedures_") > -1) {
+	    		pb.getVars().forEach(function(v) {
+	    			variableList.push(v);	
+	    		})
+	    		
+	    		break;
+	    	}  
+	    	pb = pb.parentBlock_;
+	    }
+		  
+	  } else {
+	    var variableList = [];
+	  }
+	  
+	  // Ensure that the currently selected variable is an option.
+	  var name = this.getText();
+	  if (name && variableList.indexOf(name) == -1) {
+	    variableList.push(name);
+	  }
+	  variableList.sort(goog.string.caseInsensitiveCompare);
+	  variableList.push(Blockly.Msg.RENAME_VARIABLE);
+	  variableList.push(Blockly.Msg.NEW_VARIABLE);
+	  // Variables are not language-specific, use the name as both the user-facing
+	  // text and the internal representation.
+	  var options = [];
+	  for (var x = 0; x < variableList.length; x++) {
+	    options[x] = [variableList[x], variableList[x]];
+	  }
+	  return options;
+};
+
+
 Blockly.FieldVariable.dropdownChange = function(text) {
 	
 	  function promptName(promptText, defaultText, finishPrompt) {
@@ -463,4 +502,5 @@ Blockly.JavaScript['lists_length'] = function(block) {
 	      Blockly.JavaScript.ORDER_FUNCTION_CALL) || '[]';
 	  return ['arrayLength('+argument0 + ')', Blockly.JavaScript.ORDER_MEMBER];
 	};
+
 

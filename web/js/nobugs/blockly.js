@@ -531,6 +531,24 @@ Blockly.littleCopy_ = function(block) {
 	return xmlBlock;
 };
 
+// remove any variable that is not in global scope
+Blockly.WorkspaceSvg.prototype.checkVariables = function(block) {
+	if (block.getVars) {
+		var v = block.getVars();
+		for (var i = v.length-1; i >= 0; i--)
+			if (this.allVars.indexOf(v) == -1) {
+				block.inputList[i].fieldRow[0].setValue( "item" );
+			}
+	}
+	
+	if (block.childBlocks_) {
+		var workspaceSvg = this;
+		block.childBlocks_.forEach(function(child) {
+			workspaceSvg.checkVariables(child);
+		});
+	}
+};
+
 Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	var Game = Blockly.BlockSvg.Game;
 	
@@ -541,6 +559,8 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	if (Blockly.selected != null)
 		Blockly.selected.unselect();
 	
+	this.allVars = Blockly.Variables.allVariables(Blockly.mainWorkspace);
+	
 	Blockly.clipboard_.forEach(function(_xmlBlock) { 
 		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock.xml);
 		m();
@@ -550,6 +570,10 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 		}
 		pastedBlocks.push(Blockly.selected);
 		lastBlock = newBlock;
+		
+		Blockly.selected.childBlocks_.forEach(function(child) {
+			workspaceSvg.checkVariables(child);
+		});
 	});
 	
 	Game.blocksSelected = pastedBlocks;
@@ -726,3 +750,55 @@ Blockly.setMainWorkspaceMetrics_ = function(xyRatio) {
 	    this.options.gridPattern.setAttribute('y', y);
 	  }
 };
+
+MyBlocklyApps.variableIsArgument = function(root, varName) {
+	var blocks = root.getAllBlocks();
+	for (var i = 0; i < blocks.length; i++) {
+		if (blocks[i].getVars && blocks[i].type.indexOf("procedures_") > -1) {
+			var procVars = blocks[i].getVars();
+			for (var j = 0; j < procVars.length; j++)
+				if (procVars[j].toLowerCase() === varName)
+					return true;
+		}
+	}
+	return false;
+};
+
+
+Blockly.Variables.allVariables = function(root) {
+	  var blocks;
+	  if (root.getDescendants) {
+	    // Root is Block.
+	    blocks = root.getDescendants();
+	  } else if (root.getAllBlocks) {
+	    // Root is Workspace.
+	    blocks = root.getAllBlocks();
+	  } else {
+	    throw 'Not Block or Workspace: ' + root;
+	  }
+	  var variableHash = Object.create(null);
+	  // Iterate through every block and add each variable to the hash.
+	  for (var x = 0; x < blocks.length; x++) {
+		  // My modification: only lists global variables
+	    if (blocks[x].getVars && blocks[x].type.indexOf("procedures_") == -1) {
+	      var blockVariables = blocks[x].getVars();
+	      for (var y = 0; y < blockVariables.length; y++) {
+	        var varName = blockVariables[y];
+	        
+	        if (MyBlocklyApps.variableIsArgument(root, varName.toLowerCase()))
+	        	continue;
+	        
+	        // Variable name may be null if the block is only half-built.
+	        if (varName) {
+	          variableHash[varName.toLowerCase()] = varName;
+	        }
+	      }
+	    }
+	  }
+	  // Flatten the hash into a list.
+	  var variableList = [];
+	  for (var name in variableHash) {
+	    variableList.push(variableHash[name]);
+	  }
+	  return variableList;
+	};

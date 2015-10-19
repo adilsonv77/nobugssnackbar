@@ -9,7 +9,10 @@
 	"Apps.catVariables": "Vari&#225;veis",
 	"Apps.catMath": "Matem&#225;tica",
 	"Apps.catText": "Texto",
+	"Apps.catText": "Texto",
 	"Apps.catYourMachines" : "Seus equipamentos",
+	"Apps.catProcedures" : "Fun&#231;&#245;es",
+	
 	"SnackMan.catSnackMan": "SnackMan",
 	"SnackMan.constSnackMan": "Constantes",
 	"SnackMan.catMoney" : "Dinheiro",
@@ -44,6 +47,7 @@
 	"NoBugs.sponsoredBy": "Patrocinado por",
 	"NoBugs.developedBy": "Desenvolvido por",
 	
+	"NoBugs.main" : "Principal",
 	"NoBugs.variables" : "Vari&#225;veis",
 	"NoBugs.varname" : "Nome",
 	"NoBugs.varvalue" : "Valor",
