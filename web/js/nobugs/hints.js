@@ -16,6 +16,7 @@ Hints.hintBlockDeleted = null;
 Hints.evtChangeListener = null;
 
 Hints.specialControl = false;
+Hints.noHints = false;
 
 Hints.menuOpened = false;
 
@@ -32,7 +33,7 @@ var countInstructions, countTopInstructions, menuSelected, showedHint;
 
 Hints.init = function(hints, launch) {
 
-	if (!Game.loginData.userLogged.showHint)
+	if (!Game.loginData.userLogged.showHint || Hints.noHints)
 		return;
 
 	Hints.hints = {sequence:[], whenError:[]};
@@ -459,7 +460,7 @@ Hints.hideHints = function() {
 };
 
 Hints.startHints = function() {
-	if (Hints.specialControl)
+	if (Hints.specialControl || Hints.noHints)
 		return;
 	
 	Hints.showedErrorHint = false;
@@ -478,6 +479,9 @@ Hints.stopHints = function() {
  * This two methods are necessary because sometimes the main flow of the game doesn't favor to stop the hints.
  */
 Hints.startHintsEx = function() {
+	if (Hints.noHints)
+		return;
+	
 	Hints.specialControl = false;
 	Hints.startHints();
 };

@@ -714,6 +714,8 @@ Game.missionLoaded = function(ret){
   
   if (commands.innerHTML.indexOf('name="function"') > -1) {
 	  
+	  Hints.noHints = true;
+	  
 	  $("#multiBlockly").css("display", "inline");
 	  $("#blockly").css("display", "none");
 	  
@@ -742,6 +744,8 @@ Game.missionLoaded = function(ret){
 	  
   } else {
 	  
+	  Hints.noHints = false;
+
 	  $("#multiBlockly").css("display", "none");
 	  $("#blockly").css("display", "inline");
 	  
@@ -1098,11 +1102,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
-    /*
-  var blockstyle = [];
-  blockstyle['width'] = Game.redimDiv.style.width; 
-  blockstyle['height'] = Game.redimDiv.style.height;
-*/  
+    
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
 	       toolbox: toolbox,

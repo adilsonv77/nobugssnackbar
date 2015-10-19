@@ -625,6 +625,41 @@ Blockly.onKeyDown_ = function (e) {
 	}
 };
 
+
+/* ************************************************************************** */
+/*         Modifications to support more than one workspace                   */
+/* ************************************************************************** */
+
+Blockly.Procedures.findLegalName = function(name, block) {
+	  
+	if (block.isInFlyout) {
+	    // Flyouts can have multiple procedures called 'do something'.
+	    return name;
+	  }
+	
+	do  {
+		var legalName = true; 
+		for (var i=0; i<Game.blocklys.length; i++) {
+			legalName = Blockly.Procedures.isLegalName(name, Game.blocklys[i].ws, block);
+			if (!legalName)
+				break;
+		}	
+		
+		if (legalName)
+			return name;
+		
+	    // Collision with another procedure.
+	    var r = name.match(/^(.*?)(\d+)$/);
+	    if (!r) {
+	      name += '2';
+	    } else {
+	      name = r[1] + (parseInt(r[2], 10) + 1);
+	    }
+	} while(true);
+	
+	// never reachs this position
+};
+
 Blockly.Procedures.allProcedures = function(root) {
 	  
     var proceduresReturn = [];
