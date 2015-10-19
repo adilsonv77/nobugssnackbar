@@ -652,3 +652,42 @@ Blockly.Procedures.allProcedures = function(root) {
     return [proceduresNoReturn, proceduresReturn];
 
 };
+
+Blockly.Workspace.prototype.oldGetTopBlocks = Blockly.Workspace.prototype.getTopBlocks; 
+
+Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
+	
+	var ret = this.oldGetTopBlocks(ordered);
+	if (this.aux && this.genCode) {
+		
+		for (var i = ret.length-1; i>0; i--)
+			if (ret[i].type.indexOf("procedures_") == -1)
+				ret.splice(i, 1);
+		
+	}
+	
+	return ret;
+	
+};
+
+Blockly.setMainWorkspaceMetrics_ = function(xyRatio) {
+	if (Blockly.getMainWorkspace() != this)
+		return;
+  if (!this.scrollbar) {
+	    throw 'Attempt to set main workspace scroll without scrollbars.';
+	  }
+	  var metrics = this.getMetrics();
+	  if (goog.isNumber(xyRatio.x)) {
+	    this.scrollX = -metrics.contentWidth * xyRatio.x - metrics.contentLeft;
+	  }
+	  if (goog.isNumber(xyRatio.y)) {
+	    this.scrollY = -metrics.contentHeight * xyRatio.y - metrics.contentTop;
+	  }
+	  var x = this.scrollX + metrics.absoluteLeft;
+	  var y = this.scrollY + metrics.absoluteTop;
+	  this.translate(x, y);
+	  if (this.options.gridPattern) {
+	    this.options.gridPattern.setAttribute('x', x);
+	    this.options.gridPattern.setAttribute('y', y);
+	  }
+};

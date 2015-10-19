@@ -725,8 +725,8 @@ Game.missionLoaded = function(ret){
 
 		  Game.blocklys.forEach(function(b) {
 			 if (b.id === targetPanel.attr("id")) {
-				 b.ws.markFocused();
 				 b.ws.setVisible(true);
+				 b.ws.markFocused();
 			 } else
 				 b.ws.setVisible(false);
 		  });
@@ -1126,13 +1126,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  var divBlockly = document.getElementById(b.id);
 	  divBlockly.innerHTML = ""; // clean the editor
 	  b.ws = Blockly.inject(divBlockly, cfg);
-/*	  
-	  var toolBox = $(".blocklyToolboxDiv");
-	  if (toolBox.length > 0) {
-			document.body.removeChild(toolBox[i]);
-			document.getElementById(b.id).appendChild(toolBox[i]);
-	  }
-	*/  
+	  b.ws.aux = i > 0;
+	  b.ws.index = i;
   }
   
   if (Game.zoomLevel > 1) {
@@ -1571,11 +1566,11 @@ Game.resizeWindow = function(e) {
     	
     	var t = Game.redimDiv.style.top;
     	t = parseInt(t.substr(0, t.length-2));
-    	blocklyDiv.style.top = (t + b.top) + "px";
-    	blocklyDiv.style.left = Game.redimDiv.style.left;
+    	blocklyDiv.style.top = (b.top == 0?t:b.top) + "px";
+    	blocklyDiv.style.left = (b.top == 0?Game.redimDiv.style.left:"0px"); 
     	
     	blocklyDiv.style.width = Game.redimDiv.style.width; 
-    	blocklyDiv.style.height = Game.redimDiv.style.height; 
+    	blocklyDiv.style.height = (b.top == 0?"":(Game.redimDiv.clientHeight - 30)+"px"); 
     });
     
     var blocklyLock = document.getElementById("blocklyLock");
@@ -2044,9 +2039,16 @@ Game.execute = function(debug) {
 		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Game.semanticAnalysis);
 		
   	    var code = "var NoBugsJavaScript = {};\n";
-  	    var subcode = Game.convertWaits(js.workspaceToCode(Blockly.mainWorkspace));
-
-    	code += subcode ;
+  	    
+  	    
+        Game.blocklys.forEach(function(b) {
+   		  
+	    	b.ws.genCode = true;
+  	    	var s1 = Game.convertWaits(js.workspaceToCode(b.ws));
+  	    	code += s1;
+  	    	b.ws.genCode = false;
+  	    	
+  	    });
   	    
   	    Game.code = code;
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);

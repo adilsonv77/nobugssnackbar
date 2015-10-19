@@ -268,3 +268,9 @@ NoBugsJavaScript.arraySetValue = function(array, index, value) {
 	array[index] = value;
 	
 };
+
+NoBugsJavaScript.oldProcedureDefReturn = Blockly.JavaScript['procedures_defreturn'];
+
+Blockly.JavaScript['procedures_defreturn'] = function(block) {
+	NoBugsJavaScript.oldProcedureDefReturn(block);
+};
