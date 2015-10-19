@@ -372,7 +372,7 @@ Hints.showHint = function(hint) {
 
 Hints.launchTimer = function(time) {
 	
-	if (Hints.hndlTimer == 0) {
+	if (Hints.hndlTimer == 0 && !Hints.noHints) {
 		
     	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, time);
     	Hints.lastTimeSpent = time;

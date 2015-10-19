@@ -638,14 +638,28 @@ Game.unload = function(e) {
     return null;
 };
 
+Game.workspaceAnswer = function() {
+	var answer = "<xml></xml>";
+	if (Blockly.mainWorkspace != null) {
+		answer = "<answers>";
+		Game.blocklys.forEach(function(b) {
+			answer += "<ws id='" + b.ws.index + "'>" + Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(b.ws)) + "</ws>";	
+		});
+		answer += "</answers>";
+		
+	}
+	
+	return answer;
+	
+};
+
 Game.saveMission = function() {
 	
 	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;
 	
-	var answer = null;
-	if (Blockly.mainWorkspace != null) 
-		answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+	var answer = Game.workspaceAnswer();
+	
 	var timeSpent = 0;
 	if (Game.currTime != 0)
 		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
@@ -735,6 +749,8 @@ Game.missionLoaded = function(ret){
 		  
 		  Blockly.fireUiEvent(window, 'resize');
 		});
+	  
+	  $('#multiBlockly').easytabs("select", "#blockly1");
 	  
 	  Game.redimDiv = document.getElementById("multiBlockly");
 	  
@@ -838,11 +854,12 @@ Game.changeStars = function(starNumber) {
 Game.afterInstallMachines = function(toolbox) {
 
   var mission = Game.mission;
-  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
   if (Game.previousCode != null) // the user try this mission before, than load the previous code
 	  Game.nextPartOfMissionLoaded(false, toolbox, Game.previousCode, mission, Game.timeSpent);
   else {
-      var preload = sourceXML.getAttribute("preload");
+	  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+
+	  var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
 			  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission 
@@ -1146,9 +1163,32 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   var loginLoaded = function(data) {
 	  
-	  var xml = Blockly.Xml.textToDom(answer);
-	  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-	  Game.moveBlocks();
+	  var xml_ = transformStrToXml(answer);
+	  
+	  var root = xml_.firstElementChild;
+	  
+	  if (root.localName === "xml") {
+		// the old version
+		  
+		  var xml = Blockly.Xml.textToDom(answer);
+		  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+		  Game.moveBlocks();
+		  
+	  } else {
+		  
+		  var c = root.firstElementChild;
+		  while (c != null) {
+			  
+			  var id = parseInt(c.getAttribute("id"));
+			  
+			  var xml = Blockly.Xml.textToDom(c.innerHTML);
+			  Blockly.Xml.domToWorkspace(Game.blocklys[id].ws, xml);
+			  Game.moveBlocks();
+			  
+			  c = c.nextElementSibling;
+		  };
+		  
+	  }
 	  
 	  Game.tests = data.childNodes[0].getElementsByTagName("tests");
 	  if (Game.tests.length == 0) {
@@ -1319,8 +1359,8 @@ Game.beforeFinishMission = function() {
     
 	//TODO animar o cooker no final da missao
 
-	var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-    var answer = Blockly.Xml.domToText(xml);
+	//var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    var answer = Game.workspaceAnswer(); //Blockly.Xml.domToText(xml);
 
 	var now = new Date().getTime();
 	var timeSpent = Math.floor((now - Game.currTime)/1000);
@@ -1715,10 +1755,6 @@ Game.emptyLines = function() {
 
 Game.goBackToDashboard = function(evt, callInit) {
 	
-	Game.blocklys.forEach(function(b) {
-		b.ws.dispose();
-	});
-	
 	Blockly.hideChaff();
     Blockly.WidgetDiv.hide();
     
@@ -1727,6 +1763,10 @@ Game.goBackToDashboard = function(evt, callInit) {
     
     var ret = Game.closeBlockEditorStuffs();
     
+	Game.blocklys.forEach(function(b) {
+		b.ws.dispose();
+	});
+	
 	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
 		
 		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, Blockly.getMainWorkspace().scale, ret[1],
@@ -1761,7 +1801,7 @@ Game.closeBlockEditorStuffs = function() {
     var answer = null;
     var timeSpent = 0;
     if (Game.currTime != 0) {
-        answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+        answer = Game.workspaceAnswer(); //Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
     	timeSpent = Math.floor((now - Game.currTime)/1000);
     }
 
@@ -2497,10 +2537,13 @@ Game.startSaveUserProgress = function() {
 			if (timeSpent < 10) // the minimum interval to log the actions is 10 seconds
 				return; 
 			
+			/*
 			var answer = "<xml></xml>";
 			if (Blockly.mainWorkspace != null) 
 				answer = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+			*/
 			
+			var answer = Game.workspaceAnswer(); 
 			UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer);
 
 			Game.currTime = now;

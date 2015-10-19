@@ -695,7 +695,7 @@ Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
 	var ret = this.oldGetTopBlocks(ordered);
 	if (this.aux && this.genCode) {
 		
-		for (var i = ret.length-1; i>0; i--)
+		for (var i = ret.length-1; i>=0; i--)
 			if (ret[i].type.indexOf("procedures_") == -1)
 				ret.splice(i, 1);
 		

@@ -379,7 +379,8 @@ table.tableVictory td  {
 .blockly_tabs { margin: 0; padding: 0; }
 .blockly_tab { display: inline-block; zoom:1; *display:inline; background: #eee; border: solid 1px #999; border-bottom: none; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
 .blockly_tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; text-decoration: none}
-.blockly_tab a:hover { text-decoration: underline; }
+.blockly_tab a:visited { color: black }
+.blockly_tab a:hover { text-decoration: none; }
 .blockly_tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
 .blockly_tab a.active { font-weight: bold; }
 #multiBlockly .Xblocklys { background: #fff; border: solid #666 1px; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
