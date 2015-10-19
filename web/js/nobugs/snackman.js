@@ -919,8 +919,8 @@ SnackMan.prototype.animateSnackMan = function(dest) {
 
 SnackMan.prototype.cashIn = function(value) {
 	
-	if (value == undefined) {
-		BlocklyApps.log.push(["fail", "Error_variableNotInitialized", varName]);
+	if (value == undefined || value.data == undefined) {
+		BlocklyApps.log.push(["fail", "Error_noValueInParameter"]);
 		throw false;
 	}
 	

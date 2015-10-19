@@ -720,6 +720,9 @@ Game.missionLoaded = function(ret){
 	  $('#multiBlockly').easytabs({updateHash: false, animate: false});
 	  $('#multiBlockly').bind('easytabs:after', function(evt, clicked, targetPanel) {
           
+		  Blockly.hideChaff();
+		  Blockly.WidgetDiv.hide();
+
 		  Game.blocklys.forEach(function(b) {
 			 if (b.id === targetPanel.attr("id")) {
 				 b.ws.markFocused();
@@ -735,6 +738,7 @@ Game.missionLoaded = function(ret){
 	  
 	  Game.blocklys.push({id: "blockly1", ws: null, top: 35});
 	  Game.blocklys.push({id: "blockly2", ws: null, top: 35});
+	  Game.blocklys.push({id: "blockly3", ws: null, top: 35});
 	  
   } else {
 	  

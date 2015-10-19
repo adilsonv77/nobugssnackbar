@@ -158,6 +158,7 @@
 	"Error.parameterIsNotAnArray" : "O par&#226;metro precisa ser um array." ,
 	"Error.parameterMustBeEqualsGreaterThanZero" : "O par&#226;metro precisa ser maior ou igual a zero.",
 	"Error.tryToAccessAPositionOutOfBounds" : "Voc&#234; tentou aceder uma posi&#231;&#227;o inv&#225;lida do array.",
+	"Error.noValueInParameter" : "O par&#226;metro n&#227;o possui qualquer valor. Parece que voc&#234; esqueceu de atribuir o seu valor uns blocos anteriores.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",

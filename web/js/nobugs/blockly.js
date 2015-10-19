@@ -625,3 +625,30 @@ Blockly.onKeyDown_ = function (e) {
 	}
 };
 
+Blockly.Procedures.allProcedures = function(root) {
+	  
+    var proceduresReturn = [];
+    var proceduresNoReturn = [];
+	
+    Game.blocklys.forEach(function(b) {
+		var root = b.ws;
+		  var blocks = root.getAllBlocks();
+		  for (var i = 0; i < blocks.length; i++) {
+		    if (blocks[i].getProcedureDef) {
+		      var tuple = blocks[i].getProcedureDef();
+		      if (tuple) {
+		        if (tuple[2]) {
+		          proceduresReturn.push(tuple);
+		        } else {
+		          proceduresNoReturn.push(tuple);
+		        }
+		      }
+		    }
+		  }
+	});
+   
+    proceduresNoReturn.sort(Blockly.Procedures.procTupleComparator_);
+    proceduresReturn.sort(Blockly.Procedures.procTupleComparator_);
+    return [proceduresNoReturn, proceduresReturn];
+
+};

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-16 19:23:58.953000",
+		"lastupdated": "2015-10-19 11:51:30.818000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -127,6 +127,7 @@
 	"Error.showPrompt": "You checked before the box &quot;Prevent this page from creating additional dialogs&quot;. So you disabled new windows to ask you information. Press [F5] and try again to give a new variable name.",
 	"Error.variableNotInitialized": "Before the use of the variable %0, it must be initialized for instance with the value 0 (zero). ",
 	"Error.onceVariableIsNotANumber": "Once of the variables is not a number.",
+	"Error.noValueInParameter": "The parameter has no value. It seems that you forget to give it a value.",
 	"Error.paramIsNotANumber": "Parameter is not a number.",
 	"Error.alreadyPaid": "The customer has already paid the meal.",
 	"Error.incorrectAccount": "There is a problem in the account. It does not correspond to my request",
