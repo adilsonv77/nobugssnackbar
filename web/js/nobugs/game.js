@@ -1122,7 +1122,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
     
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
-	       toolbox: toolbox,
 	       trashcan: true,
 	       comments: false,
 	       scrollbars: true,
@@ -1137,11 +1136,25 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	          scaleSpeed: 1.1
 	         }};
   
+  var tbxml = Blockly.parseToolboxTree_(toolbox);
+  var l = tbxml.childNodes.length;
+  if (l > 0) {
+	  if (tbxml.childNodes[l-1].getAttribute("custom") === "PROCEDURE") {
+		  tbxml.removeChild(tbxml.childNodes[l-1]);
+	  }
+  }
+  var toolbox0 = tbxml.outerHTML;
+  
   for (var i = 0; i < Game.blocklys.length; i++) {
 
 	  var b = Game.blocklys[i];
 	  var divBlockly = document.getElementById(b.id);
 	  divBlockly.innerHTML = ""; // clean the editor
+	  if (i == 0)
+		  cfg.toolbox = toolbox0;
+	  else
+		  cfg.toolbox = toolbox;
+		  
 	  b.ws = Blockly.inject(divBlockly, cfg);
 	  b.ws.aux = i > 0;
 	  b.ws.index = i;
