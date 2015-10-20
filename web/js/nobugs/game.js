@@ -1152,6 +1152,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  cfg.toolbox = toolbox;
 		  
 	  b.ws = Blockly.inject(divBlockly, cfg);
+	  b.ws.id = b.id;
 	  b.ws.aux = i > 0;
 	  b.ws.index = i;
   }
@@ -2058,6 +2059,14 @@ Game.showTabs = function(id) {
 
 };
 
+Game.selectTab = function(id) {
+	
+	Game.showTabs(id);
+	$('#multiBlockly').easytabs("select", "#" + (id));
+	Blockly.fireUiEvent(window, 'resize');
+	
+};
+
 Game.verifyFunctionTabs = function() {
 	
 	for (var i = 1; i < Game.blocklys.length; i++) {
@@ -2067,9 +2076,7 @@ Game.verifyFunctionTabs = function() {
 
 			if (b.type.indexOf("procedures_def") == -1) {
 				
-				Game.showTabs(Game.blocklys[i].id);
-				$('#multiBlockly').easytabs("select", "#" + (Game.blocklys[i].id));
-				Blockly.fireUiEvent(window, 'resize');
+				Game.selectTab(Game.blocklys[i].id);
 				Blockly.selected = b;
 				throw {isNoBugs: true, msg : "Error_TabOnlyWithFunctions"};
 			} 
@@ -2129,7 +2136,11 @@ Game.execute = function(debug) {
 			
 		}
 		
-		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Game.semanticAnalysis);
+		Game.blocklys.forEach(function (b) {
+			
+			Game.countInstructions(b.ws.getTopBlocks(), Game.semanticAnalysis);
+			
+		});
 		
   	    var code = "var NoBugsJavaScript = {};\n";
   	    
@@ -2159,6 +2170,7 @@ Game.execute = function(debug) {
 		      return;
 		  } else
 			  if (e.isNoBugs) {
+				  Blockly.mainWorkspace.traceOn(true); // allowing the hightlight
 				  Blockly.mainWorkspace.highlightBlock(Blockly.selected.id);
 				  Game.showError([e.msg]);
 			      Game.resetButtons();
@@ -2203,7 +2215,9 @@ Game.semanticAnalysis  = function(block) {
 	
 	if (Game.hasEmptyInputs(block)) {
 		
-		Blockly.selected = block;
+		Game.selectTab(block.workspace.id);
+		Blockly.selected = Game.blockWithEmptyInputs;
+
 		throw {isNoBugs: true, msg : "Hints_EmptyInputError"};
 		
 	}
@@ -2214,10 +2228,14 @@ Game.hasEmptyInputs = function (activeBlock) {
 	var input = activeBlock.inputList;
 	for (var i=0; i<input.length; i++) {
 		if (input[i].connection != null) {
-			if (!((input[i].sourceBlock_.type === "controls_for" || input[i].sourceBlock_.type === "controls_whileUntil") && input[i].name === "DO") &&
-					
-					input[i].sourceBlock_.type !== "controls_if" && input[i].connection.targetConnection == null)
-			  return true;
+			if (!((input[i].sourceBlock_.type === "controls_for" || input[i].sourceBlock_.type === "controls_whileUntil" || input[i].sourceBlock_.type === "controls_if") && (input[i].name.indexOf("DO") === 0|| input[i].name === "ELSE")) &&
+					 input[i].connection.targetConnection == null) {
+				
+				Game.blockWithEmptyInputs = activeBlock;
+				
+				return true;
+			}
+			  
 			if (input[i].connection.targetConnection != null) {
 				if (Game.hasEmptyInputs(input[i].connection.targetConnection.sourceBlock_))
 					return true;

@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission useIfMutator="false" open="true">
+<mission useIfMutator="true" open="true">
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
