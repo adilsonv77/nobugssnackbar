@@ -736,6 +736,12 @@ Game.missionLoaded = function(ret){
 	  $('#multiBlockly').easytabs({updateHash: false, animate: false});
 	  $('#multiBlockly').bind('easytabs:after', function(evt, clicked, targetPanel) {
           
+		  if (Blockly.selected != null) {
+			  myIsTargetSvg = true;
+			  Blockly.selected.unselect();
+			  myIsTargetSvg = false;
+		  }
+		  
 		  Blockly.hideChaff();
 		  Blockly.WidgetDiv.hide();
 

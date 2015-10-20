@@ -552,16 +552,24 @@ Blockly.WorkspaceSvg.prototype.checkVariables = function(block) {
 Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	var Game = Blockly.BlockSvg.Game;
 	
-	var workspaceSvg = this;
+	var workspaceSvg = Blockly.mainWorkspace; // this;
 	var pastedBlocks = [];
 	var lastBlock = null;
 	
 	if (Blockly.selected != null)
 		Blockly.selected.unselect();
 	
-	this.allVars = Blockly.Variables.allVariables(Blockly.mainWorkspace);
+	workspaceSvg.allVars = Blockly.Variables.allVariables(Blockly.mainWorkspace);
 	
 	Blockly.clipboard_.forEach(function(_xmlBlock) { 
+		
+		if (!workspaceSvg.aux) {
+			// it is not allowed paste function blocks in the first tab
+			var t = _xmlBlock.xml.getAttribute("type");
+			if (t.indexOf("procedures_def") == 0)
+				return;
+		}
+		
 		var m = afterMyPaste.bind(workspaceSvg, _xmlBlock.xml);
 		m();
 		var newBlock = Blockly.mainWorkspace.getBlockById( _xmlBlock.xml.id );
@@ -575,6 +583,8 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 			workspaceSvg.checkVariables(child);
 		});
 	});
+	
+	workspaceSvg.allVars = null;
 	
 	Game.blocksSelected = pastedBlocks;
 	Game.blocksSelected.forEach( function(block) { block.addSelect(); } );
