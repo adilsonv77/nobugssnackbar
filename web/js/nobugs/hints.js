@@ -233,6 +233,9 @@ Hints.traverseHints = function(hint, error) {
 
 Hints.showErrorHint = function() {
 	
+	if (Hints.noHints)
+		return;
+	
 	countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
 	
 	Hints.dealError = true;

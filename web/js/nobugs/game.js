@@ -742,18 +742,8 @@ Game.missionLoaded = function(ret){
 			  myIsTargetSvg = false;
 		  }
 		  
-		  Blockly.hideChaff();
-		  Blockly.WidgetDiv.hide();
-
-		  Game.blocklys.forEach(function(b) {
-			 if (b.id === targetPanel.attr("id")) {
-				 b.ws.setVisible(true);
-				 b.ws.markFocused();
-			 } else
-				 b.ws.setVisible(false);
-		  });
+		  Game.showTabs(targetPanel.attr("id"));
 		  
-		  Blockly.fireUiEvent(window, 'resize');
 		});
 	  
 	  $('#multiBlockly').easytabs("select", "#blockly1");
@@ -773,11 +763,11 @@ Game.missionLoaded = function(ret){
 	  
 	  Game.redimDiv = document.getElementById("blockly");
 	  
-	  Game.blockly = Game.redimDiv;
-	  
 	  Game.blocklys.push({id: "blockly", ws: null, top:0});
 	  
   }
+
+  Game.blockly = Game.redimDiv;
   
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
@@ -2051,40 +2041,84 @@ Game.finishedRun = function() {
 	
 };
 
+Game.showTabs = function(id) {
+	
+	Blockly.hideChaff();
+	Blockly.WidgetDiv.hide();
+	
+	Game.blocklys.forEach(function(b) {
+		 if (b.id === id) {
+			 b.ws.setVisible(true);
+			 b.ws.markFocused();
+		 } else
+			 b.ws.setVisible(false);
+	 });
+	
+    Blockly.fireUiEvent(window, 'resize');
+
+};
+
+Game.verifyFunctionTabs = function() {
+	
+	for (var i = 1; i < Game.blocklys.length; i++) {
+		
+		var blocks = Game.blocklys[i].ws.getTopBlocks();
+		blocks.forEach(function(b) {
+
+			if (b.type.indexOf("procedures_def") == -1) {
+				
+				Game.showTabs(Game.blocklys[i].id);
+				$('#multiBlockly').easytabs("select", "#" + (Game.blocklys[i].id));
+				Blockly.fireUiEvent(window, 'resize');
+				Blockly.selected = b;
+				throw {isNoBugs: true, msg : "Error_TabOnlyWithFunctions"};
+			} 
+		});
+		
+	}
+	
+};
+
 /**
  * Execute the user's code.  Heaven help us...
  */
 Game.execute = function(debug) {
 	
   if (Game.runningStatus === 0) {
-	  
-	  $("#tests_finished").css("display", "none");
-	  Game.blinkPlayerStop = true;
-	  
-	  Game.highlightPause = false;
-	  
-	  Blockly.hideChaff();
-	  Hints.stopHints();
-	  Blockly.WidgetDiv.hide();
-	  
-	  Game.hideHints = false;
-	  
-	  BlocklyApps.log = [];
-	  BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
-
-	  Game.emptyLines();
-	  
-	  // Reset the graphic.
-	  Game.reset();
-
-	  Game.runningStatus = debug; // let here because the registration of the status in save mission
-	  
+	
 	  try {
 		  
+     	Game.howManyRuns++;
+
+	    Game.verifyFunctionTabs();
+		  
+	    if (Game.blocklys.length > 0) {
+		  $('#multiBlockly').easytabs("select", "#blockly1");
+	    }
+	  
+	    $("#tests_finished").css("display", "none");
+	    Game.blinkPlayerStop = true;
+	  
+	    Game.highlightPause = false;
+	  
+	    Blockly.hideChaff();
+	    Hints.stopHints();
+	    Blockly.WidgetDiv.hide();
+	  
+	    Game.hideHints = false;
+	  
+	    BlocklyApps.log = [];
+	    BlocklyApps.ticks = 10000; // how many loops are acceptable before the system define it is in infinite loop ? 
+
+	    Game.emptyLines();
+	  
+	    // Reset the graphic.
+	    Game.reset();
+
+	    Game.runningStatus = debug; // let here because the registration of the status in save mission
+	  
 		var js = Blockly.JavaScript;
 		
-		Game.howManyRuns++;
-
 		Game.saveMission();
 		
 		if (Blockly.selected != null) {

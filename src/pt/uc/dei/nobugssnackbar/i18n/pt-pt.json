@@ -163,6 +163,8 @@
 	"Error.tryToAccessAPositionOutOfBounds" : "Voc&#234; tentou aceder uma posi&#231;&#227;o inv&#225;lida do array.",
 	"Error.noValueInParameter" : "O par&#226;metro n&#227;o possui qualquer valor. Parece que voc&#234; esqueceu de atribuir o seu valor uns blocos anteriores.",
 	
+	"Error.TabOnlyWithFunctions" : "Esta guia deve conter somente fun&#231;&#245;es.",
+	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
 	"Single.Mission" : "miss&#227;o",
