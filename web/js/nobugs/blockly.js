@@ -731,6 +731,56 @@ Blockly.Procedures.allProcedures = function(root) {
 
 };
 
+Blockly.Procedures.flyoutCategory = function(blocks, gaps, margin, workspace) {
+	
+	if (workspace.targetWorkspace.aux) {
+		
+		  if (Blockly.Blocks['procedures_defnoreturn']) {
+			    var block = Blockly.Block.obtain(workspace, 'procedures_defnoreturn');
+			    block.initSvg();
+			    blocks.push(block);
+			    gaps.push(margin * 2);
+			  }
+			  if (Blockly.Blocks['procedures_defreturn']) {
+			    var block = Blockly.Block.obtain(workspace, 'procedures_defreturn');
+			    block.initSvg();
+			    blocks.push(block);
+			    gaps.push(margin * 2);
+			  }
+			  if (Blockly.Blocks['procedures_ifreturn']) {
+			    var block = Blockly.Block.obtain(workspace, 'procedures_ifreturn');
+			    block.initSvg();
+			    blocks.push(block);
+			    gaps.push(margin * 2);
+			  }
+			  if (gaps.length) {
+			    // Add slightly larger gap between system blocks and user calls.
+			    gaps[gaps.length - 1] = margin * 3;
+			  }
+
+	}
+	
+	  function populateProcedures(procedureList, templateName) {
+	    for (var x = 0; x < procedureList.length; x++) {
+	      var block = Blockly.Block.obtain(workspace, templateName);
+	      block.setFieldValue(procedureList[x][0], 'NAME');
+	      var tempIds = [];
+	      for (var t = 0; t < procedureList[x][1].length; t++) {
+	        tempIds[t] = 'ARG' + t;
+	      }
+	      block.setProcedureParameters(procedureList[x][1], tempIds);
+	      block.initSvg();
+	      blocks.push(block);
+	      gaps.push(margin * 2);
+	    }
+	  }
+
+	  var tuple = Blockly.Procedures.allProcedures(workspace.targetWorkspace);
+	  populateProcedures(tuple[0], 'procedures_callnoreturn');
+	  populateProcedures(tuple[1], 'procedures_callreturn');
+	};
+
+
 Blockly.Workspace.prototype.oldGetTopBlocks = Blockly.Workspace.prototype.getTopBlocks; 
 
 Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
@@ -739,7 +789,7 @@ Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
 	if (this.aux && this.genCode) {
 		
 		for (var i = ret.length-1; i>=0; i--)
-			if (ret[i].type.indexOf("procedures_") == -1)
+			if (ret[i].type.indexOf("procedures_def") == -1)
 				ret.splice(i, 1);
 		
 	}
@@ -773,7 +823,7 @@ Blockly.setMainWorkspaceMetrics_ = function(xyRatio) {
 MyBlocklyApps.variableIsArgument = function(root, varName) {
 	var blocks = root.getAllBlocks();
 	for (var i = 0; i < blocks.length; i++) {
-		if (blocks[i].getVars && blocks[i].type.indexOf("procedures_") > -1) {
+		if (blocks[i].getVars && blocks[i].type.indexOf("procedures_def") > -1) {
 			var procVars = blocks[i].getVars();
 			for (var j = 0; j < procVars.length; j++)
 				if (procVars[j].toLowerCase() === varName)
@@ -806,7 +856,7 @@ Blockly.Variables.allVariables = function(root) {
 	  // Iterate through every block and add each variable to the hash.
 	  for (var x = 0; x < blocks.length; x++) {
 		  // My modification: only lists global variables
-	    if (blocks[x].getVars && blocks[x].type.indexOf("procedures_") == -1 && !Blockly.Variables.isIntoAFunction(blocks[x])) {
+	    if (blocks[x].getVars && blocks[x].type.indexOf("procedures_def") == -1 && !Blockly.Variables.isIntoAFunction(blocks[x])) {
 	      var blockVariables = blocks[x].getVars();
 	      for (var y = 0; y < blockVariables.length; y++) {
 	        var varName = blockVariables[y];
@@ -842,7 +892,7 @@ Blockly.Variables.procVariables = function(block) {
     // get the function parameters
     var pb = block.parentBlock_;
     while (pb != null) {
-    	if (pb.type.indexOf("procedures_") > -1) {
+    	if (pb.type.indexOf("procedures_def") > -1) {
     		pb.getVars().forEach(function(v) {
     			variableHash[v.toLowerCase()] = v;	
     		});
@@ -888,6 +938,9 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
 	
 	if (selected != null && NoBugsDragMode2) {
 		var ws = selected.workspace;
+		if (ws == null)
+			return; // go to trash
+		
 		ws.allVars = Blockly.Variables.procVariables(selected);
 
 		ws.checkVariables(selected);

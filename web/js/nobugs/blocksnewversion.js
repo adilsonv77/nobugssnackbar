@@ -141,7 +141,7 @@ Blockly.Blocks['math_arithmetic'].init = function() {
           {
               "type": "input_value",
               "name": "A",
-              "check" : "Boolean"
+              "check" : "Number"
             },
           {
             "type": "field_dropdown",
@@ -157,7 +157,7 @@ Blockly.Blocks['math_arithmetic'].init = function() {
             {
                 "type": "input_value",
                 "name": "B",
-                "check" : "Boolean"
+                "check" : "Number"
               },
         ]});
 

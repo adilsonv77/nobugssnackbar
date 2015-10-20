@@ -1122,6 +1122,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	       comments: false,
 	       scrollbars: true,
 	  //     css: blockstyle, 
+	       toolbox: toolbox,
 
 	       zoom:
 	         {enabled: true,
@@ -1131,7 +1132,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	          minScale: .1,
 	          scaleSpeed: 1.1
 	         }};
-  
+  /*
   var tbxml = Blockly.parseToolboxTree_(toolbox);
   var l = tbxml.childNodes.length;
   if (l > 0) {
@@ -1139,18 +1140,19 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  tbxml.removeChild(tbxml.childNodes[l-1]);
 	  }
   }
-  var toolbox0 = tbxml.outerHTML;
-  
+//  var toolbox0 = tbxml.outerHTML;
+  */
   for (var i = 0; i < Game.blocklys.length; i++) {
 
 	  var b = Game.blocklys[i];
 	  var divBlockly = document.getElementById(b.id);
 	  divBlockly.innerHTML = ""; // clean the editor
+	  /*
 	  if (i == 0)
 		  cfg.toolbox = toolbox0;
 	  else
 		  cfg.toolbox = toolbox;
-		  
+		*/  
 	  b.ws = Blockly.inject(divBlockly, cfg);
 	  b.ws.id = b.id;
 	  b.ws.aux = i > 0;
@@ -2061,10 +2063,18 @@ Game.showTabs = function(id) {
 
 Game.selectTab = function(id) {
 	
+	if (id === "blockly") return;
+	
 	Game.showTabs(id);
 	$('#multiBlockly').easytabs("select", "#" + (id));
 	Blockly.fireUiEvent(window, 'resize');
 	
+};
+
+Game.changeTab = function(id) {
+	Game.selectTab(id);
+	Blockly.mainWorkspace.traceOn(true);
+	return true;
 };
 
 Game.verifyFunctionTabs = function() {
@@ -2100,7 +2110,7 @@ Game.execute = function(debug) {
 	    Game.verifyFunctionTabs();
 		  
 	    if (Game.blocklys.length > 0) {
-		  $('#multiBlockly').easytabs("select", "#blockly1");
+		  Game.changeTab("blockly1");
 	    }
 	  
 	    $("#tests_finished").css("display", "none");
@@ -2929,6 +2939,15 @@ Game.initApi = function(interpreter, scope) {
 	interpreter.setProperty(scope, 'arrayLength',
 		interpreter.createNativeFunction(wrapper));
 
+	
+	//
+	wrapper = function(a) {
+	      return interpreter.createPrimitive(Game.changeTab(a));
+	    };
+	    
+	interpreter.setProperty(scope, 'changeTab',
+		interpreter.createNativeFunction(wrapper));
+	
 	
     // extended commands
     for (var i=0; i<hero.extendedCommands.length; i++) {
