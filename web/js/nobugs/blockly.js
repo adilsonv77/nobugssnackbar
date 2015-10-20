@@ -547,7 +547,7 @@ Blockly.WorkspaceSvg.prototype.checkVariables = function(block) {
 					if (f.getVars().indexOf(v[i]) > -1)
 						continue;
 				
-				block.inputList[i].fieldRow[0].setValue( "item" );
+				block.setFieldValue( "item", "VAR" );
 			}
 	}
 	
@@ -589,9 +589,8 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 		pastedBlocks.push(Blockly.selected);
 		lastBlock = newBlock;
 		
-		Blockly.selected.childBlocks_.forEach(function(child) {
-			workspaceSvg.checkVariables(child);
-		});
+		workspaceSvg.checkVariables(Blockly.selected);
+		
 	});
 	
 	workspaceSvg.allVars = null;
@@ -784,6 +783,13 @@ MyBlocklyApps.variableIsArgument = function(root, varName) {
 	return false;
 };
 
+Blockly.Variables.isIntoAFunction = function(block) {
+	var f = block.parentBlock_;
+	while (f != null && f.type.indexOf("procedures_def") == -1)
+		f = f.parentBlock_;
+	
+	return (f != null);
+};
 
 Blockly.Variables.allVariables = function(root) {
 	  var blocks;
@@ -800,7 +806,7 @@ Blockly.Variables.allVariables = function(root) {
 	  // Iterate through every block and add each variable to the hash.
 	  for (var x = 0; x < blocks.length; x++) {
 		  // My modification: only lists global variables
-	    if (blocks[x].getVars && blocks[x].type.indexOf("procedures_") == -1) {
+	    if (blocks[x].getVars && blocks[x].type.indexOf("procedures_") == -1 && !Blockly.Variables.isIntoAFunction(blocks[x])) {
 	      var blockVariables = blocks[x].getVars();
 	      for (var y = 0; y < blockVariables.length; y++) {
 	        var varName = blockVariables[y];
@@ -822,3 +828,71 @@ Blockly.Variables.allVariables = function(root) {
 	  }
 	  return variableList;
 	};
+
+Blockly.Variables.procVariables = function(block) {
+    var variableList =
+        Blockly.Variables.allVariables(block.workspace);
+    
+    var variableHash = [];
+    variableList.forEach(function(v) {
+    	variableHash[v.toLowerCase()] = v;	
+    });
+    
+
+    // get the function parameters
+    var pb = block.parentBlock_;
+    while (pb != null) {
+    	if (pb.type.indexOf("procedures_") > -1) {
+    		pb.getVars().forEach(function(v) {
+    			variableHash[v.toLowerCase()] = v;	
+    		});
+    		
+    		break;
+    	}  
+    	pb = pb.parentBlock_;
+    }
+    
+    if (pb != null) {
+    	// get all variables into the function
+    	pb.childBlocks_.forEach(function(c) {
+    		Blockly.FieldVariable.getVars(c).forEach(function(v){
+    			variableHash[v.toLowerCase()] = v;	
+    		});
+    	});
+    }
+    
+    variableList = [];
+    for (var name in variableHash) {
+	    variableList.push(variableHash[name]);
+	}
+    
+    return variableList;
+};
+	
+Blockly.BlockSvg.oldTerminateDrag_ = Blockly.BlockSvg.terminateDrag_;
+
+var NoBugsDragMode2 = false;
+
+Blockly.BlockSvg.terminateDrag_ = function() {
+
+	NoBugsDragMode2 = NoBugsDragMode2 || Blockly.dragMode_ == 2;
+	Blockly.BlockSvg.oldTerminateDrag_();
+	
+};
+
+Blockly.BlockSvg.prototype.oldOnMouseUp_ = Blockly.BlockSvg.prototype.onMouseUp_;
+Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
+	var selected = Blockly.selected;
+
+	this.oldOnMouseUp_(e);
+	
+	if (selected != null && NoBugsDragMode2) {
+		var ws = selected.workspace;
+		ws.allVars = Blockly.Variables.procVariables(selected);
+
+		ws.checkVariables(selected);
+		
+		ws.allVars = null;
+		NoBugsDragMode2 = false;
+	}
+};

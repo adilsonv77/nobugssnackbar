@@ -80,8 +80,8 @@ Blockly.Blocks['variables_set'].init = function() {
   };
 
 
-  Blockly.Connection.prototype.checkType_ = function(otherConnection) {
-	  // Don't split a connection where both sides are immovable.
+Blockly.Connection.prototype.checkType_ = function(otherConnection) {
+  // Don't split a connection where both sides are immovable.
   var thisTargetBlock = this.targetBlock();
   if (thisTargetBlock && !thisTargetBlock.isMovable() &&
       !this.sourceBlock_.isMovable()) {
@@ -284,45 +284,6 @@ Blockly.JavaScript['controls_for'] = function(block) {
 /*     Change the original window.prompt to nobugswindow.prompt         */
 /* ************************************************************************************/
 
-Blockly.FieldVariable.dropdownCreate = function() {
-	  if (this.sourceBlock_ && this.sourceBlock_.workspace) {
-	    var variableList =
-	        Blockly.Variables.allVariables(this.sourceBlock_.workspace);
-
-	    var pb = this.sourceBlock_.parentBlock_;
-	    while (pb != null) {
-	    	if (pb.type.indexOf("procedures_") > -1) {
-	    		pb.getVars().forEach(function(v) {
-	    			variableList.push(v);	
-	    		})
-	    		
-	    		break;
-	    	}  
-	    	pb = pb.parentBlock_;
-	    }
-		  
-	  } else {
-	    var variableList = [];
-	  }
-	  
-	  // Ensure that the currently selected variable is an option.
-	  var name = this.getText();
-	  if (name && variableList.indexOf(name) == -1) {
-	    variableList.push(name);
-	  }
-	  variableList.sort(goog.string.caseInsensitiveCompare);
-	  variableList.push(Blockly.Msg.RENAME_VARIABLE);
-	  variableList.push(Blockly.Msg.NEW_VARIABLE);
-	  // Variables are not language-specific, use the name as both the user-facing
-	  // text and the internal representation.
-	  var options = [];
-	  for (var x = 0; x < variableList.length; x++) {
-	    options[x] = [variableList[x], variableList[x]];
-	  }
-	  return options;
-};
-
-
 Blockly.FieldVariable.dropdownChange = function(text) {
 	
 	  function promptName(promptText, defaultText, finishPrompt) {
@@ -383,9 +344,62 @@ Blockly.FieldVariable.dropdownChange = function(text) {
 	  return undefined;
 	};
 
-/*******************************************************************************/
-/**                              Lists/Arrays                                 **/   
-/*******************************************************************************/
+/* ************************************************************************************/
+/*     Change the original window.prompt to nobugswindow.prompt                       */
+/* ************************************************************************************/
+	
+Blockly.FieldVariable.getVars = function(block) {
+
+	var ret = [];
+	if (block.getVars) {
+		var v = block.getVars();
+		
+		for (var i = v.length-1; i >= 0; i--)
+			ret.push(v[i]);
+	}
+
+	if (block.childBlocks_) {
+		block.childBlocks_.forEach(function(c) {
+    		Blockly.FieldVariable.getVars(c).forEach(function(v){
+    			ret.push(v);	
+    		});
+    	});
+	}
+	
+	return ret;
+
+};
+
+Blockly.FieldVariable.dropdownCreate = function() {
+	
+  var variableList = [];
+  if (this.sourceBlock_ && this.sourceBlock_.workspace) {
+
+	  variableList = Blockly.Variables.procVariables(this.sourceBlock_);
+    
+  }
+  
+  // Ensure that the currently selected variable is an option.
+  var name = this.getText();
+  if (name && variableList.indexOf(name) == -1) {
+    variableList.push(name);
+  }
+  variableList.sort(goog.string.caseInsensitiveCompare);
+  variableList.push(Blockly.Msg.RENAME_VARIABLE);
+  variableList.push(Blockly.Msg.NEW_VARIABLE);
+  // Variables are not language-specific, use the name as both the user-facing
+  // text and the internal representation.
+  var options = [];
+  for (var x = 0; x < variableList.length; x++) {
+    options[x] = [variableList[x], variableList[x]];
+  }
+  return options;
+};
+
+
+/* ******************************************************************************/
+/* *                              Lists/Arrays                                 **/   
+/* ******************************************************************************/
 
 Blockly.Blocks['lists_create_limited'] = {
   /**
