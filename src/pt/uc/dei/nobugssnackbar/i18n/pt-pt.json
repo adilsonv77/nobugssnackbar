@@ -31,6 +31,8 @@
 	"Blockly.controlFor":"para %1 a variar de %2 at&#233; %3 com incremento %4",
 	"Blockly.variableSet":"%1 e guardar em %2",
 	"Blockly.ifThen":"ent&#227;o",
+	"Blockly.function":"fun&#231;&#227;o",
+    "Blockly.procedure":"procedimento",
 	"Blockly.listsCreate":"criar array com tamanho",
 	"Blockly.listsGet":"do array %1 obt&#233;m o elemento no &#237;ndice [%2]",
 	"Blockly.listsSet":"%3 e guardar no &#237;ndice [%2] do array %1",

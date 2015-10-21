@@ -13,7 +13,8 @@ NoBugsJavaScript.redefine = function() {
 	
     Blockly.Msg.CONTROLS_IF_MSG_THEN = BlocklyApps.getMsg('Blockly_ifThen'); 
     Blockly.Msg.CONTROLS_FOR_TITLE = BlocklyApps.getMsg('Blockly_controlFor');
-
+    Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = BlocklyApps.getMsg('Blockly_function');
+    Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE = BlocklyApps.getMsg('Blockly_procedure');
 	  
     if (NoBugsJavaScript.oldVarSet == null) {
     	
@@ -304,10 +305,6 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
 	        Blockly.JavaScript.STATEMENT_PREFIX.replace(/%1/g,
 	        '\'' + block.id + '\''), Blockly.JavaScript.INDENT) + branch;
 	  }
-	  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
-	    branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
-	        '\'' + block.id + '\'') + branch;
-	  }
 	  var returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
 	      Blockly.JavaScript.ORDER_NONE) || '';
 	  if (returnValue) {
@@ -328,7 +325,9 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
 	  
 	  var code = 'function ' + funcName + '(' + args.join(', ') + ') {\n' + defvars.join('\n') + 
 	      'changeTab("' + block.workspace.id + '");\n' +  
-	      branch + returnValue + '}';
+	      branch + Blockly.JavaScript.STATEMENT_PREFIX.replace(/%1/g,
+	  	        '\'' + block.id + '\'')
+	      + returnValue + '}';
 	  code = Blockly.JavaScript.scrub_(block, code);
 	  Blockly.JavaScript.definitions_[funcName] = code;
 	  return null;
@@ -347,6 +346,6 @@ NoBugsJavaScript.oldCallReturn = Blockly.JavaScript['procedures_callreturn'];
 Blockly.JavaScript['procedures_callreturn'] = function(block) {
 	
 	var s = NoBugsJavaScript.oldCallReturn(block);
-	return [ s[0] + '|| changeTab("' + block.workspace.id + '")', s[1]]; 
+	return [ 'changeTab("' + block.workspace.id + '", ' + s[0] + ')', s[1]]; 
 	
 };

@@ -518,3 +518,25 @@ Blockly.JavaScript['lists_length'] = function(block) {
 	};
 
 
+
+/* ******************************************************************************/
+/* *                              Procedures                                   **/   
+/* ******************************************************************************/
+
+Blockly.Blocks['procedures_callnoreturn'].oldInit = Blockly.Blocks['procedures_callnoreturn'].init;
+Blockly.Blocks['procedures_callnoreturn'].init = function() {
+	this.oldInit();
+	this.setInputsInline(true);
+};
+
+Blockly.Blocks['procedures_callnoreturn'].oldRenderArgs_ = Blockly.Blocks['procedures_callnoreturn'].renderArgs_;
+Blockly.Blocks['procedures_callnoreturn'].renderArgs_ = function() {
+	this.oldRenderArgs_();
+};
+
+Blockly.Blocks['procedures_callreturn'].oldInit = Blockly.Blocks['procedures_callreturn'].init;
+Blockly.Blocks['procedures_callreturn'].init = function() {
+	this.oldInit();
+	this.setInputsInline(true);
+};
+	

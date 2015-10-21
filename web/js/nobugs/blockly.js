@@ -747,12 +747,6 @@ Blockly.Procedures.flyoutCategory = function(blocks, gaps, margin, workspace) {
 			    blocks.push(block);
 			    gaps.push(margin * 2);
 			  }
-			  if (Blockly.Blocks['procedures_ifreturn']) {
-			    var block = Blockly.Block.obtain(workspace, 'procedures_ifreturn');
-			    block.initSvg();
-			    blocks.push(block);
-			    gaps.push(margin * 2);
-			  }
 			  if (gaps.length) {
 			    // Add slightly larger gap between system blocks and user calls.
 			    gaps[gaps.length - 1] = margin * 3;
@@ -919,34 +913,3 @@ Blockly.Variables.procVariables = function(block) {
     return variableList;
 };
 	
-Blockly.BlockSvg.oldTerminateDrag_ = Blockly.BlockSvg.terminateDrag_;
-
-var NoBugsDragMode2 = false;
-
-Blockly.BlockSvg.terminateDrag_ = function() {
-
-	NoBugsDragMode2 = NoBugsDragMode2 || Blockly.dragMode_ == 2;
-	Blockly.BlockSvg.oldTerminateDrag_();
-	
-};
-
-Blockly.BlockSvg.prototype.oldOnMouseUp_ = Blockly.BlockSvg.prototype.onMouseUp_;
-Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
-//	var selected = Blockly.selected;
-
-	this.oldOnMouseUp_(e);
-/*	
-	if (selected != null && NoBugsDragMode2) {
-		var ws = selected.workspace;
-		if (ws == null)
-			return; // go to trash
-		
-		ws.allVars = Blockly.Variables.procVariables(selected);
-
-		ws.checkVariables(selected);
-		
-		ws.allVars = null;
-		NoBugsDragMode2 = false;
-	}
-	*/
-};

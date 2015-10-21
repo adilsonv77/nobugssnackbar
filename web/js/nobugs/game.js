@@ -742,7 +742,7 @@ Game.missionLoaded = function(ret){
 			  myIsTargetSvg = false;
 		  }
 		  
-		  Game.showTabs(targetPanel.attr("id"));
+		  Game.selectTab (targetPanel.attr("id"));
 		  
 		});
 	  
@@ -2057,15 +2057,19 @@ Game.selectTab = function(id) {
 	
 };
 
-Game.changeTab = function(id) {
+Game.changeTab = function(id, f) {
 	
+	f = (f !== undefined && f !== null ?(f.data !== undefined?f.data:f):f);
 	id = (id.data ? id.data : id);
-	if (Game.selectedTab === id) 
-		return;
+	if (Game.selectedTab === id) {
+		
+		Blockly.mainWorkspace.traceOn(true);
+		return f;
+	} 
 	
 	Game.selectTab(id);
 	Blockly.mainWorkspace.traceOn(true);
-	return 0;
+	return f;
 };
 
 Game.verifyFunctionTabs = function() {
@@ -2951,8 +2955,8 @@ Game.initApi = function(interpreter, scope) {
 
 	
 	//
-	wrapper = function(a) {
-	      return interpreter.createPrimitive(Game.changeTab(a));
+	wrapper = function(a, f) {
+	      return interpreter.createPrimitive(Game.changeTab(a, f));
 	    };
 	    
 	interpreter.setProperty(scope, 'changeTab',

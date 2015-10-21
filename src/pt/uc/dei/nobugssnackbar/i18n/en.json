@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-20 17:52:30.434000",
+		"lastupdated": "2015-10-21 17:41:12.090000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -70,6 +70,8 @@
 	"Blockly.variableSet": "%1 and store in %2",
 	"Blockly.ifThen": "then",
 	"Blockly.controlFor": "for %1 from %2 to %3 incrementing %4",
+	"Blockly.function": "function",
+	"Blockly.procedure": "procedure",
 	"Blockly.listsCreate": "create array with size",
 	"Blockly.listsGet": "in array %1 gets element in position [%2]",
 	"Blockly.listsSet": "%3 and stores at position [%2] in array %1",
