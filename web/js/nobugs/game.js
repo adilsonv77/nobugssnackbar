@@ -2152,19 +2152,20 @@ Game.execute = function(debug) {
 			
 		});
 		
-  	    var code = "var NoBugsJavaScript = {};\n";
+  	    var code = "";
   	    
-  	    
-        Game.blocklys.forEach(function(b) {
-   		  
+  	    for (var i = Game.blocklys.length-1; i >= 0; i--) {
+  	    	var b = Game.blocklys[i];
 	    	b.ws.genCode = true;
   	    	var s1 = Game.convertWaits(js.workspaceToCode(b.ws));
   	    	code += s1;
   	    	b.ws.genCode = false;
   	    	
-  	    });
+  	    };
   	    
+  	    code = "var NoBugsJavaScript = {};\n" + code;
   	    Game.code = code;
+  	    
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
@@ -2361,30 +2362,48 @@ Game.updateVariables = function() {
 	
 	var rows = [];
 	
-	Game.jsInterpreter.variables.forEach(function(entry) {
-		var data = entry.scope.properties[entry.name].data;
-		if (data != undefined) {
-			if (data.type != undefined) {
-				data = "<div>" + 
-						"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
-						(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
-						"</div>";
-			} else {
-				
-				try {
-					
-					if (data.indexOf("\"$$$") == 0) {
-						data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
-						
-					}
-				} catch (ex) {
-					// this happens when data is a number or other type different of string or array
-				}
+	var js = Game.jsInterpreter;
+	for (var i = js.variables.length-1; i>=0; i--) {
+		
+		var found = false;
+		var entry = js.variables[i];
+		for (var j = 0; j < js.stateStack.length; j++)
+			if (js.stateStack[j].scope) {
+				found = entry.scope == js.stateStack[j].scope;
+				break;
 			}
 				
-			rows.push({"name":entry.name, "value": data+""});
-		}
-	});
+				
+		if (found) {
+			// only show the variables in current scope
+			var data = entry.scope.properties[entry.name].data;
+			if (data != undefined) {
+				if (data.type != undefined) {
+					data = "<div>" + 
+							"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
+							(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
+							"</div>";
+				} else {
+					
+					try {
+						
+						if (data.indexOf("\"$$$") == 0) {
+							data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
+							
+						}
+					} catch (ex) {
+						// this happens when data is a number or other type different of string or array
+					}
+				}
+					
+				rows.push({"name":entry.name, "value": data+""});
+			}
+
+		} 
+
+		
+	}
+
 	
 	//InGrid.loadLines('#_varsgrid_vars_0 div:nth-child(2) table', rows);
 
