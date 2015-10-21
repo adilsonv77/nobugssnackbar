@@ -774,6 +774,26 @@ Blockly.Procedures.flyoutCategory = function(blocks, gaps, margin, workspace) {
 	  populateProcedures(tuple[1], 'procedures_callreturn');
 	};
 
+Blockly.Procedures.rename = function(text) {
+	  // Strip leading and trailing whitespace.  Beyond this, all names are legal.
+	  text = text.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+
+	  var this_ = this;
+	  // Ensure two identically-named procedures don't exist.
+	  text = Blockly.Procedures.findLegalName(text, this.sourceBlock_);
+      Game.blocklys.forEach(function(b) {
+    	  
+    	  // Rename any callers.
+    	  var blocks = b.ws.getAllBlocks();
+    	  for (var i = 0; i < blocks.length; i++) {
+    	    if (blocks[i].renameProcedure) {
+    	      blocks[i].renameProcedure(this_.text_, text);
+    	    }
+    	  }
+      });
+
+	  return text;
+	};
 
 Blockly.Workspace.prototype.oldGetTopBlocks = Blockly.Workspace.prototype.getTopBlocks; 
 
