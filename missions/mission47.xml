@@ -3,6 +3,8 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
+		Atender todas as vontades dos clientes (cachorros, gelados, refrigerantes ou sumos)
+		ate atingir $100. Cobrar o valor antes de entregar, e dar o troco. 
 		]]>
 		</page>
 
@@ -19,33 +21,54 @@
 		<category name="snackMan" show="true" />
 
 		<category name="goToBarCounter" show="true" />
-		<category name="askForFood" show="true" />
+		
+		<category name="askWantHowManyFoods" show="true" />
 		<category name="isThereACustomer" show="true" />
 		<category name="askHasHunger" show="true" />
+		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
 		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
 
 		<category name="askHasThirsty" show="true" />
 		<category name="askForDrink" show="true" />
 		<category name="goToCooler" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
 		<category name="pickUpDrink" show="true" />
+		
+		<category name="icecream" show="true" />
+		<category name="askForIceCream" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
+		<category name="giveChange" show="true" />
 		
 		<category name="vars" show="true" />
 
 		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
 		
 		<category name="math" show="true" />
+		
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.chocolate" show="true" />
+		<category name="const.strawberry" show="true" />
+		<category name="const.vanilla" show="true" />
 
 		<category name="loop" show="true" />
 		<category name="whileUntil" show="true" />
 		<category name="for" show="true" />
 		
-		<category name="money" show="true" />
-		<category name="cashIn" show="true" />
-
 		<category name="text" show="true" />
-		<category name="array" show="true" />
+		
 		<category name="function" show="true" />
 
 	</commands>
@@ -65,6 +88,23 @@
 						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
 			</orders>
 		</customer>
 
@@ -80,6 +120,14 @@
 					<drinks>
 					</drinks>
 				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
 			</orders>
 		</customer>
 
@@ -90,6 +138,15 @@
 			<orders>
 				<order>
 					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>

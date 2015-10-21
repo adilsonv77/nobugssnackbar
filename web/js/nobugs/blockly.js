@@ -932,10 +932,10 @@ Blockly.BlockSvg.terminateDrag_ = function() {
 
 Blockly.BlockSvg.prototype.oldOnMouseUp_ = Blockly.BlockSvg.prototype.onMouseUp_;
 Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
-	var selected = Blockly.selected;
+//	var selected = Blockly.selected;
 
 	this.oldOnMouseUp_(e);
-	
+/*	
 	if (selected != null && NoBugsDragMode2) {
 		var ws = selected.workspace;
 		if (ws == null)
@@ -948,4 +948,5 @@ Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
 		ws.allVars = null;
 		NoBugsDragMode2 = false;
 	}
+	*/
 };

@@ -1121,7 +1121,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	       trashcan: true,
 	       comments: false,
 	       scrollbars: true,
-	  //     css: blockstyle, 
 	       toolbox: toolbox,
 
 	       zoom:
@@ -1132,32 +1131,18 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	          minScale: .1,
 	          scaleSpeed: 1.1
 	         }};
-  /*
-  var tbxml = Blockly.parseToolboxTree_(toolbox);
-  var l = tbxml.childNodes.length;
-  if (l > 0) {
-	  if (tbxml.childNodes[l-1].getAttribute("custom") === "PROCEDURE") {
-		  tbxml.removeChild(tbxml.childNodes[l-1]);
-	  }
-  }
-//  var toolbox0 = tbxml.outerHTML;
-  */
+
   for (var i = 0; i < Game.blocklys.length; i++) {
 
 	  var b = Game.blocklys[i];
 	  var divBlockly = document.getElementById(b.id);
 	  divBlockly.innerHTML = ""; // clean the editor
-	  /*
-	  if (i == 0)
-		  cfg.toolbox = toolbox0;
-	  else
-		  cfg.toolbox = toolbox;
-		*/  
 	  b.ws = Blockly.inject(divBlockly, cfg);
 	  b.ws.id = b.id;
 	  b.ws.aux = i > 0;
 	  b.ws.index = i;
   }
+  Game.selectedTab = Game.blocklys[0].id;
   
   if (Game.zoomLevel > 1) {
 	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
@@ -2065,6 +2050,7 @@ Game.selectTab = function(id) {
 	
 	if (id === "blockly") return;
 	
+	Game.selectedTab = id;
 	Game.showTabs(id);
 	$('#multiBlockly').easytabs("select", "#" + (id));
 	Blockly.fireUiEvent(window, 'resize');
@@ -2072,9 +2058,14 @@ Game.selectTab = function(id) {
 };
 
 Game.changeTab = function(id) {
+	
+	id = (id.data ? id.data : id);
+	if (Game.selectedTab === id) 
+		return;
+	
 	Game.selectTab(id);
 	Blockly.mainWorkspace.traceOn(true);
-	return true;
+	return 0;
 };
 
 Game.verifyFunctionTabs = function() {

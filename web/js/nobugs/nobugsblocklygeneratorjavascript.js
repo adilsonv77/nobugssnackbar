@@ -347,6 +347,6 @@ NoBugsJavaScript.oldCallReturn = Blockly.JavaScript['procedures_callreturn'];
 Blockly.JavaScript['procedures_callreturn'] = function(block) {
 	
 	var s = NoBugsJavaScript.oldCallReturn(block);
-	return [ 'changeTab("' + block.workspace.id + '") && ' + s[0], s[1]]; 
+	return [ s[0] + '|| changeTab("' + block.workspace.id + '")', s[1]]; 
 	
 };
