@@ -307,6 +307,7 @@ Blockly.FieldVariable.dropdownChange = function(text) {
 	    window.prompt(promptText, defaultText, finishWindowPrompt);
 	  }
 	  
+	  Game.sourceBlock_ = this.sourceBlock_;
 	  var workspace = this.sourceBlock_.workspace;
 	  var window_prompt_field = this;
 	  if (text == Blockly.Msg.RENAME_VARIABLE) {
