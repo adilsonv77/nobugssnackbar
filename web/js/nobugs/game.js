@@ -1145,7 +1145,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  b.ws.aux = i > 0;
 	  b.ws.index = i;
   }
-  Game.selectedTab = Game.blocklys[0].id;
+  Game.selectedTab = "";
   
   if (Game.zoomLevel > 1) {
 	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
