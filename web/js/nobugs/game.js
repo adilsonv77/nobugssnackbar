@@ -2347,7 +2347,7 @@ Game.verifyMathArithVariable = function(verifyVars) {
 					
 				}
 				
-				return true;
+				break;
 			}
 		}
 	
