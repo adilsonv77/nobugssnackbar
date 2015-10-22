@@ -134,56 +134,56 @@ Explanation.evaluateObjectives = function(statement, container) {
 		
 	}
 	
-	var table = document.createElement("table");
-	var tr = document.createElement("tr");
-	var div = document.createElement("td");
-	
-	div.style['border'] = "1px solid #FF0";
-	div.style['padding'] = "3px";
-	div.style.backgroundColor = "#F3F3CA";
-	
-	tr.appendChild(div);
-	table.appendChild(tr);
-	container.appendChild(table);
-	
-	var msg;
-	var finalValue;
-	
-	if (hero.objective.xpTotalRun == null) {
-		msg = BlocklyApps.getMsg("rewardExplanation");
-		finalValue = hero.objective.xpTotalTime/60;
-	}
-	else {
-		msg = BlocklyApps.getMsg("rewardExplanationByRun");
-		finalValue = hero.objective.xpTotalRun;
-	}
-	
-	var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
-	var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-	var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, finalValue)+ "<br/>";
-	
-	if (hero.objective.maxCommandsReward > 0) {
+	if (Game.pointsInThisMission) {
+		var table = document.createElement("table");
+		var tr = document.createElement("tr");
+		var div = document.createElement("td");
+		
+		div.style['border'] = "1px solid #FF0";
+		div.style['padding'] = "3px";
+		div.style.backgroundColor = "#F3F3CA";
+		
+		tr.appendChild(div);
+		table.appendChild(tr);
+		container.appendChild(table);
 
-		msg = BlocklyApps.getMsg("commandBonusExplanation");
-		out = out + msg.format(hero.objective.maxCommandsReward+coin2, hero.objective.maxCommands);
+		var msg;
+		var finalValue;
 		
-	} else 
-		if (hero.objective.maxCommandsRewardCoins > 0) {
-		
-			msg = BlocklyApps.getMsg("commandBonusExplanation");
-			out = out + msg.format(hero.objective.maxCommandsRewardCoins+coin3, hero.objective.maxCommands);
+		if (hero.objective.xpTotalRun == null) {
+			msg = BlocklyApps.getMsg("rewardExplanation");
+			finalValue = hero.objective.xpTotalTime/60;
 		}
-	
-	if (Game.bonusTime != null) {
+		else {
+			msg = BlocklyApps.getMsg("rewardExplanationByRun");
+			finalValue = hero.objective.xpTotalRun;
+		}
 		
-		msg = BlocklyApps.getMsg("timeBonusExplanation");
-		var a = Game.bonusTimeReward.split(" ");
-		out = out + msg.format(a[a.length-1]+coin3, Game.bonusTime/60);
+		var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+		var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+		var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, finalValue)+ "<br/>";
 		
+		if (hero.objective.maxCommandsReward > 0) {
+
+			msg = BlocklyApps.getMsg("commandBonusExplanation");
+			out = out + msg.format(hero.objective.maxCommandsReward+coin2, hero.objective.maxCommands);
+			
+		} else 
+			if (hero.objective.maxCommandsRewardCoins > 0) {
+			
+				msg = BlocklyApps.getMsg("commandBonusExplanation");
+				out = out + msg.format(hero.objective.maxCommandsRewardCoins+coin3, hero.objective.maxCommands);
+			}
+		
+		if (Game.bonusTime != null) {
+			
+			msg = BlocklyApps.getMsg("timeBonusExplanation");
+			var a = Game.bonusTimeReward.split(" ");
+			out = out + msg.format(a[a.length-1]+coin3, Game.bonusTime/60);
+			
+		}
+		div.innerHTML = out;
 	}
-	div.innerHTML = out;
-	
-	
 };
 
 Explanation.finishStatement = function() {

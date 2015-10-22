@@ -214,6 +214,7 @@
 	"Explane.GiveSomeChange" :"Devolva ao cliente %0 o troco em %1 de %2.",
 	"Explane.AskForIceCream":"Pergunta pelo que sabor do gelado que cliente %0 deseja comer.",
 	"Explane.AskWantHowManyIceCream":"Pergunta ao cliente %0 quantos gelados ele deseja.",
+	"Explane.SellObjective":"Venda pelo menos $%0 (&#233; computado com base nas cobran&#231;as)",
 	
 	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
 	

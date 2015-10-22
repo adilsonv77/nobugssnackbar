@@ -207,6 +207,10 @@ Objective.factory = function(key) {
 	case "useBlock":
 		this.factories[key] = new Objective.UseBlock();
 		break;
+		
+	case "totalOfSell":
+		this.factories[key] = new Objective.TotalOfSell();
+		break;
 	}
 	
 	return this.factories[key];
@@ -844,3 +848,38 @@ Objective.UseBlock.prototype.createExplanationItem = function(objective)  {
 	return text.format(BlocklyApps.getMsg("descr_" + objective.type) + value);
 
 };
+
+/******************************************************************************
+ *                                TotalOfSell
+ ******************************************************************************/
+
+Objective.TotalOfSell = function() {};
+
+Objective.TotalOfSell.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.value = parseInt(elem.getAttribute("value"));
+	p.current = 0;
+	
+	return p;
+};
+
+Objective.TotalOfSell.prototype.reset = function(objective) {
+	objective.current = 0;
+};
+
+Objective.TotalOfSell.prototype.checkObjective = function(options, objective)  {
+	
+	objective.current += options.value;
+	
+	
+	return (objective.current >= objective.value);
+};
+
+Objective.TotalOfSell.prototype.createExplanationItem = function(objective)  {
+	
+	var text = BlocklyApps.getMsg("explanation_sellobjective");
+	return text.format(objective.value);
+ 
+};
+

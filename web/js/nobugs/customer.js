@@ -103,6 +103,8 @@ Customer = function(options) {
 	
 	this.place = options.place.id;
 	this.placeType = options.place.type;
+	
+	this.goOutIfPayed = options.goOutIfPayed;
 
 	// if he is in the door, then he is in state = 0 else state = 8
 	this.state = (this.currentNode.id === CustOpt.customerFinalPath[0].id?0:8);
@@ -261,8 +263,16 @@ Customer.prototype.update = function() {
 			
 	// finish state: nothing to do on this moment
 	case 8: 
-		   if (this.drinks.length == this.dUnfulfilled && this.foods.length == this.fUnfulfilled && this.openMission)
+		   if (this.drinks.length == this.dUnfulfilled && this.foods.length == this.fUnfulfilled && this.openMission) {
+			   
+			   // customer go out only if payed and received the correct charge
+			   if (this.goOutIfPayed && (this.amountPaid == 0 || this.amountChangeExpected != this.amountChangeReceived))
+				   return;
+				   
 			   this.state = 32;
+			   
+		   }
+			   
 		   
 			return;
 	

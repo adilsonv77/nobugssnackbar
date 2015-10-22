@@ -933,7 +933,9 @@ SnackMan.prototype.cashIn = function(value) {
 	}
 	
 	var ret = found.cashIn(value);
+	
 	this.verifyObjectives("cashIn", {allCustomers:false, customer:found});
+	this.verifyObjectives("totalOfSell", {value:value});
 	
 	// TODO: o cozinheiro tem um balao com moedas e o cliente um balao com cedulas
 	

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-22 13:41:35.721000",
+		"lastupdated": "2015-10-22 16:19:41.703000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -185,6 +185,7 @@
 	"Explane.UseBlock": "Use the block %0 in the program.",
 	"Explane.AskForIceCream": "Ask the customer %0 the flavor of the ice cream.",
 	"Explane.AskWantHowManyIceCream": "Ask the customer %0 how many ice cream he wants.",
+	"Explane.SellObjective": "Sell at least $ %0 (it will computed based on charging)",
 	"Descr.LogicOperation": "Logic operator",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",

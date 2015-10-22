@@ -111,6 +111,12 @@ CustomerManager.reset = function() {
 		else
 			limitedChanges = limitedChanges.textContent.toString();
 		
+		var goOutIfPayed = customer.getElementsByTagName("goOutIfPayed")[0];
+		if (goOutIfPayed == null)
+			goOutIfPayed = false;
+		else
+			goOutIfPayed = goOutIfPayed.textContent.toString() === "true"; 
+		
 		var id = customer.getElementsByTagName("id")[0].textContent.toString();
 		
 		var orders = customer.getElementsByTagName("orders")[0].getElementsByTagName("order");
@@ -139,13 +145,13 @@ CustomerManager.reset = function() {
 			var dRMin = _drinks.getAttribute("randomMin");
 			
 			custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
-				                   randomType: randomType,
+				                   randomType: randomType, 
 								   foods: foods, drinks: drinks});
 		}
 		
 		if (custPattern.length > 0)
 			this.patterns.push({init: init, place: dest, id: id, 
-					pay: pay, limitedChanges: limitedChanges, 
+					pay: pay, limitedChanges: limitedChanges, goOutIfPayed:goOutIfPayed,
 					pattern: custPattern, idxCustPattern: 0});
 		
 		
@@ -250,7 +256,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							openMission: this.openMission, idxPattern: i,
 							baloonLeft: customers.length % 2 == 0,
 							pay: this.patterns[i].pay,
-							limitedChanges: this.patterns[i].limitedChanges});
+							limitedChanges: this.patterns[i].limitedChanges,
+							goOutIfPayed: this.patterns[i].goOutIfPayed});
 	
 	if (this.randomization.length == 0)
 		cust.afterConstruct();

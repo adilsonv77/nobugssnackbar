@@ -503,7 +503,7 @@ Game.openProfileEditor = function() {
 	$("input[name=profile_user_password]").attr("disabled", "disabled");
 	$("input[name=profile_user_retypepassword]").attr("disabled",  "disabled");
 	$("#profile_user_save").removeAttr("disabled");
-	$("#profileErrorRetypePassw").html("");
+	$("#popenMissionrofileErrorRetypePassw").html("");
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogEditProfile"), null, false, true, true, 
 			$("#profileEditorButton").html(), {width:"700px"}, function() {$("#profile_mail").attr("placeHolder", "");});
@@ -696,13 +696,17 @@ Game.missionLoaded = function(ret){
   
   Game.openMission = {};
   Game.openMission.open = mission.childNodes[0].getAttribute("open") != null && mission.childNodes[0].getAttribute("open") === "true";
+
+  Game.pointsInThisMission =  mission.childNodes[0].getAttribute("points") == null || mission.childNodes[0].getAttribute("points") === "true";
+  if (!Game.pointsInThisMission)
+	  CountXP.init("stopWatch", false);
   
   Game.globalMoney = 0;
   Game.globalXP = 0;
 
   Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
-  $("#playerRewardMission").css("display", (Game.missionView?"none":"inline"));
+  $("#playerRewardMission").css("display", (Game.missionView || !Game.pointsInThisMission?"none":"inline"));
   $("#playerRewardMission").css("box-shadow","");
   UserControl.retrieveReward(Game.updatesReward);
   
@@ -1387,7 +1391,7 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 	$('#timerCountUp').empty();
 	Game.cronometro = null;
 	
-	if (Game.missionView) return;
+	if (Game.missionView || Game.pointsInThisMission) return;
 	
 	if (bonusTime != null) {
 		timeSpent = parseInt(timeSpent);
@@ -2178,13 +2182,16 @@ Game.execute = function(debug) {
 		  if (e == Infinity) { 
 			  Game.showError(["Error_infinityLoopDetected"]);
 		      Game.resetButtons();
+		      Game.doResizeWindow("none");
 		      return;
 		  } else
 			  if (e.isNoBugs) {
 				  Blockly.mainWorkspace.traceOn(true); // allowing the hightlight
 				  Blockly.mainWorkspace.highlightBlock(Blockly.selected.id);
+
 				  Game.showError([e.msg]);
 			      Game.resetButtons();
+			      Game.doResizeWindow("none");
 			      return;
 			  }
 		  
@@ -2508,16 +2515,28 @@ Game.nextStep = function() {
 						return;
 					}
 						
-			    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
-			    	var reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
-			    	
-			    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
+					var reward;
+					if (Game.pointsInThisMission) {
+						
+				    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+				    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
+				    	
+				    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
+					} else {
+						reward = {totalXP: 0, totalCoins: 0, baseXP: 0, bonusCoins: 0};
+					}
+					
 
-			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, true, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
+			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.pointsInThisMission, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
-			    		var out = msg.format(reward.totalXP + xp2)+ "<br/>";
+			    		
+			    		if (reward.totalXP == 0) {
+			    			msg = msg.substring(0, msg.indexOf("<br/>"));
+			    		}
+			    		
+			    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2+ "<br/>"));
 			    		
 			    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
 			    			
