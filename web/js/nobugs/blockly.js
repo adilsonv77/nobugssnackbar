@@ -764,7 +764,21 @@ Blockly.Procedures.rename = function(text) {
 
 	  return text;
 	};
+	
+Blockly.Procedures.mutateCallers = function(name, workspace,
+            paramNames, paramIds) {
+	
+	Game.blocklys.forEach( function (b) {
+		
+		var callers = Blockly.Procedures.getCallers(name, b.ws);
+		for (var i = 0; i < callers.length; i++) {
+			callers[i].setProcedureParameters(paramNames, paramIds);
+		}
+		
+	});
+};
 
+    
 Blockly.Workspace.prototype.oldGetTopBlocks = Blockly.Workspace.prototype.getTopBlocks; 
 
 Blockly.Workspace.prototype.getTopBlocks = function(ordered) {
