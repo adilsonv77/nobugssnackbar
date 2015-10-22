@@ -2355,10 +2355,11 @@ Game.verifyMathArithVariable = function(verifyVars) {
 	return true;
 };
 
+/**
+ * - Show the values of variables in the variable window
+ * - Update the variables array removing that variables where their procedure is not in stack
+ */
 Game.updateVariables = function() {
-	
-	if (Game.runningStatus != 2)
-		return;
 	
 	var rows = [];
 	
@@ -2375,30 +2376,35 @@ Game.updateVariables = function() {
 				
 				
 		if (found) {
-			// only show the variables in current scope
-			var data = entry.scope.properties[entry.name].data;
-			if (data != undefined) {
-				if (data.type != undefined) {
-					data = "<div>" + 
-							"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
-							(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
-							"</div>";
-				} else {
-					
-					try {
-						
-						if (data.indexOf("\"$$$") == 0) {
-							data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
-							
-						}
-					} catch (ex) {
-						// this happens when data is a number or other type different of string or array
-					}
-				}
-					
-				rows.push({"name":entry.name, "value": data+""});
-			}
 
+			if (Game.runningStatus == 2) {
+				
+				// only show the variables in current scope
+				var data = entry.scope.properties[entry.name].data;
+				if (data != undefined) {
+					if (data.type != undefined) {
+						data = "<div>" + 
+								"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
+								(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
+								"</div>";
+					} else {
+						
+						try {
+							
+							if (data.indexOf("\"$$$") == 0) {
+								data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
+								
+							}
+						} catch (ex) {
+							// this happens when data is a number or other type different of string or array
+						}
+					}
+						
+					rows.push({"name":entry.name, "value": data+""});
+				}
+
+			}
+			
 		} else {
 			if (i == js.variables.length-1) // it was a variable in a finished procedure
 				js.variables.splice(i, 1);
@@ -3023,10 +3029,9 @@ Game.highlightBlock = function(id) {
 	CustomerManager.update();
 	
     Blockly.mainWorkspace.highlightBlock(id);
-	if (Game.runningStatus === 2) { // if runs, doesnt need to update the variables
-		Game.updateVariables();	
-	}
-    Game.highlightPause = true;
+	Game.updateVariables();	
+
+	Game.highlightPause = true;
 };
 
 /**
