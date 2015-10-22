@@ -531,34 +531,6 @@ Blockly.littleCopy_ = function(block) {
 	return xmlBlock;
 };
 
-// remove any variable that is not in global scope or function parameter 
-Blockly.WorkspaceSvg.prototype.checkVariables = function(block) {
-	if (block.getVars) {
-		var v = block.getVars();
-		
-		var f = block.parentBlock_;
-		while (f != null && f.type.indexOf("procedures_def") == -1)
-			f = f.parentBlock_;
-		
-		for (var i = v.length-1; i >= 0; i--)
-			if (this.allVars.indexOf(v[i]) == -1) {
-				
-				if (f != null)
-					if (f.getVars().indexOf(v[i]) > -1)
-						continue;
-				
-				block.setFieldValue( "item", "VAR" );
-			}
-	}
-	
-	if (block.childBlocks_) {
-		var workspaceSvg = this;
-		block.childBlocks_.forEach(function(child) {
-			workspaceSvg.checkVariables(child);
-		});
-	}
-};
-
 Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 	var Game = Blockly.BlockSvg.Game;
 	
@@ -588,8 +560,6 @@ Blockly.WorkspaceSvg.prototype.paste = function(xmlBlock) {
 		}
 		pastedBlocks.push(Blockly.selected);
 		lastBlock = newBlock;
-		
-		workspaceSvg.checkVariables(Blockly.selected);
 		
 	});
 	

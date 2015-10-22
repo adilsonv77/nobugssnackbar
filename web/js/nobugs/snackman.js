@@ -441,14 +441,8 @@ SnackMan.prototype.isThereACustomer = function() {
 	
 	var found = this.getCustomer();
 	
-	// this method have to be quick
-	/*
-	this.update('XX'); // reset any speech bubble
-	
-	this.update('IM', 0);  // turn to front
-	this.update('IM', 80); // turn to left to find a customer in the counter
-	this.update('IM', 0);  // turn to front
-	 */
+	// this method have to be quick. Doesn't add update animation
+
 	return found != null;
 };
 

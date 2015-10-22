@@ -754,6 +754,8 @@ Game.missionLoaded = function(ret){
 	  Game.blocklys.push({id: "blockly2", ws: null, top: 35});
 	  Game.blocklys.push({id: "blockly3", ws: null, top: 35});
 	  Game.blocklys.push({id: "blockly4", ws: null, top: 35});
+	  Game.blocklys.push({id: "blockly5", ws: null, top: 35});
+	  Game.blocklys.push({id: "blockly6", ws: null, top: 35});
 	  
   } else {
 	  
@@ -2060,6 +2062,8 @@ Game.selectTab = function(id) {
 
 Game.changeTab = function(id, f) {
 	
+	if (id === "blockly") return;
+	
 	f = (f !== undefined && f !== null ?(f.data !== undefined?f.data:f):f);
 	id = (id.data ? id.data : id);
 	if (Game.selectedTab === id) {
@@ -2105,7 +2109,7 @@ Game.execute = function(debug) {
 
 	    Game.verifyFunctionTabs();
 		  
-	    if (Game.blocklys.length > 0) {
+	    if (Game.blocklys.length > 1) {
 		  Game.changeTab("blockly1");
 	    }
 	  
@@ -2395,7 +2399,10 @@ Game.updateVariables = function() {
 				rows.push({"name":entry.name, "value": data+""});
 			}
 
-		} 
+		} else {
+			if (i == js.variables.length-1) // it was a variable in a finished procedure
+				js.variables.splice(i, 1);
+		}
 
 		
 	}

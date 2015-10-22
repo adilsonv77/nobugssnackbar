@@ -280,7 +280,7 @@ Blockly.Variables.intoTheFunction = function(fun, args) {
 	var variableHash = [];
 	fun.childBlocks_.forEach(function(c) {
 		Blockly.FieldVariable.getVars(c).forEach(function(v){
-			if (argsHash[v] == null)
+			if (argsHash[v.toLowerCase()] == null)
 				variableHash[v.toLowerCase()] = v;	
 		});
 	});
