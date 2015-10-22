@@ -745,9 +745,18 @@ Blockly.Procedures.flyoutCategory = function(blocks, gaps, margin, workspace) {
 	};
 
 Blockly.Procedures.rename = function(text) {
-	  // Strip leading and trailing whitespace.  Beyond this, all names are legal.
-	  text = text.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
-
+	var t = text.trim();
+	if (!VariableNames.regex.test(t)) {
+		t = t.replace(/ /gi, "_");
+		if (!VariableNames.regex.test(t)) {
+			t = t + "1";
+		}
+		text = t;
+	}
+    
+      // Strip leading and trailing whitespace.  Beyond this, all names are legal.
+      text = text.replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
+ 
 	  var this_ = this;
 	  // Ensure two identically-named procedures don't exist.
 	  text = Blockly.Procedures.findLegalName(text, this.sourceBlock_);

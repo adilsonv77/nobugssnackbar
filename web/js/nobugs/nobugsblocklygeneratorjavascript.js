@@ -15,6 +15,9 @@ NoBugsJavaScript.redefine = function() {
     Blockly.Msg.CONTROLS_FOR_TITLE = BlocklyApps.getMsg('Blockly_controlFor');
     Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = BlocklyApps.getMsg('Blockly_function');
     Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE = BlocklyApps.getMsg('Blockly_procedure');
+    
+    Blockly.Msg.PROCEDURES_DEFRETURN_PROCEDURE = BlocklyApps.getMsg('Blockly_functionName');;
+    Blockly.Msg.PROCEDURES_DEFNORETURN_PROCEDURE = Blockly.Msg.PROCEDURES_DEFRETURN_PROCEDURE; 
 	  
     if (NoBugsJavaScript.oldVarSet == null) {
     	
@@ -77,7 +80,7 @@ NoBugsJavaScript.newMathArith = function(block) {
 
 	  var code = 'nobugsMathArith(%0, %1, "%2")'.format(argument0, argument1, operator);
 	
-	return ["(verifyMathArithVariable([" + vars + "])?" + code + ":null)", 
+	return ["(verifyVariableInitialized([" + vars + "])?" + code + ":null)", 
 	        		Blockly.JavaScript.ORDER_FUNCTION_CALL]; 
 	
 };
@@ -334,12 +337,21 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
 	};
 	
 Blockly.JavaScript['procedures_defnoreturn'] = Blockly.JavaScript['procedures_defreturn'];
-NoBugsJavaScript.oldCallNoReturn = Blockly.JavaScript['procedures_callnoreturn'];
+
 Blockly.JavaScript['procedures_callnoreturn'] = function(block) {
-	
-	var s = NoBugsJavaScript.oldCallNoReturn(block);
-	return s  + 'changeTab("' + block.workspace.id + '");\n'; 
-	
+	  // Call a procedure with no return value.
+	  var funcName = Blockly.JavaScript.variableDB_.getName(
+	      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+	  var args = [];
+	  var args2 = [];
+	  for (var x = 0; x < block.arguments_.length; x++) {
+	    args[x] = Blockly.JavaScript.valueToCode(block, 'ARG' + x,
+	        Blockly.JavaScript.ORDER_COMMA) || 'null';
+	    args2[x] = '"' + args[x] + '"';
+	  }
+	  var code = funcName + '(' + args.join(', ') + ');\n';
+	  code = "verifyVariableInitialized([" + args2.join(', ') + "]);\n" + code;
+	  return code + 'changeTab("' + block.workspace.id + '");\n'; 
 };
 
 NoBugsJavaScript.oldCallReturn = Blockly.JavaScript['procedures_callreturn'];

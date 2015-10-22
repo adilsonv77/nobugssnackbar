@@ -2327,7 +2327,7 @@ Game.unlockBlockly = function() {
 	
 };
 
-Game.verifyMathArithVariable = function(verifyVars) {
+Game.verifyVariableInitialized = function(verifyVars) {
 	
 	var vars = Game.jsInterpreter.variables;
 
@@ -2336,10 +2336,10 @@ Game.verifyMathArithVariable = function(verifyVars) {
 	for (var i = 0; i < len; i++) {
 	
 		var entry = verifyVars[i].data;
-		for (var i = 0; i < vars.length; i++) {
-			if (vars[i].name === entry) {
+		for (var j = 0; j < vars.length; j++) {
+			if (vars[j].name === entry) {
 				
-				if (vars[i].scope.properties[entry].data === undefined) {
+				if (vars[j].scope.properties[entry].data === undefined) {
 					
 					BlocklyApps.log = [];
 					BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
@@ -2755,10 +2755,10 @@ Game.initApi = function(interpreter, scope) {
     
     
     wrapper = function(v) {
-        return interpreter.createPrimitive(Game.verifyMathArithVariable(v));
+        return interpreter.createPrimitive(Game.verifyVariableInitialized(v));
       };
     
-    interpreter.setProperty(scope, 'verifyMathArithVariable',
+    interpreter.setProperty(scope, 'verifyVariableInitialized',
           interpreter.createNativeFunction(wrapper));
 
     
