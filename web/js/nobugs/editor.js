@@ -117,8 +117,32 @@ EditorNoBug.init = function() {
     	
     }
     if (mx) {
-    	var xml = Blockly.Xml.textToDom(fAlternative());
-        Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+    	
+    	var answer = fAlternative();
+    	var xml_ = transformStrToXml(answer);
+    	
+    	var root = xml_.firstElementChild;
+	  
+    	if (root.localName === "xml") {
+    		
+        	var xml = Blockly.Xml.textToDom(answer);
+            Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+        	
+    	} else {
+  		  // por enquanto suporta somente um workspace
+    		var c = root.firstElementChild;
+		    if (c != null) {
+			  
+			  //var id = parseInt(c.getAttribute("id"));
+			  
+			  var xml = Blockly.Xml.textToDom(c.innerHTML);
+			  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+			  Game.moveBlocks();
+			  
+			  c = c.nextElementSibling;
+		    };
+    		
+    	}
     	
     } else {
 

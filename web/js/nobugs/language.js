@@ -48,6 +48,25 @@ Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  return 'goToBarCounter(' + value + ');\n';
 	};
 
+Blockly.Blocks['move_goToTable'] = {
+		  // Block for moving to a specific customer in the table.
+		  init: function() {
+		    this.setColour(160);
+		    this.appendValueInput('VALUE')
+		        .setCheck('Number')
+		        .appendField('goToTable');
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		  }
+		};
+
+Blockly.JavaScript['move_goToTable'] = function(block) {
+	  // Generate JavaScript for moving to a specific customer in the counter.
+	  var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+	      Blockly.JavaScript.ORDER_NONE) || '0';
+	  return 'goToTable(' + value + ');\n';
+	};
+
 Blockly.Blocks['do_talk'] = {
 		  init: function() {
 		    this.setColour(160);
