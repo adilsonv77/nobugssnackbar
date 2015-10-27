@@ -96,6 +96,9 @@
 	"NoBugs.amountCharged" : "valorPedido",
 	"NoBugs.numberBankNotes" : "quantas",
 
+	"NoBugs.helpFreeTooltip" : "Mostra uma explica&#231;&#227;o detalhada da solu&#231;&#227;o. Se n&#227;o tens mais estrelas para pontuar, n&#227;o existe custo. Do contr&#225;rio, todas as estrelas ser&#227;o consumidas.",
+	"NoBugs.helpPayTooltip" : "Apaga todos os blocos atuais e substitui pela solu&#231;&#227;o. Ap&#243;s clicar nesse bot&#227;o, ser&#225; exibida uma janela com o custo e a solicitar sua confirma&#231;&#227;o.",
+	
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja comer.",
 	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",

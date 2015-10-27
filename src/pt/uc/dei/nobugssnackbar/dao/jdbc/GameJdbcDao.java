@@ -226,7 +226,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select timespend, answer, executions, zoomlevel, achieved from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+					.prepareStatement("select timespend, answer, executions, zoomlevel, achieved, freewizardexecutions from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
 
 			ps.setLong(1, missionId);
 			ps.setLong(2, clazzId);
@@ -238,6 +238,7 @@ public class GameJdbcDao implements GameDao {
 			String executions = "0";
 			String zoomLevel = "1";
 			String achieved = "F";
+			String freeWizardUsed = "F";
 			if (rs.next()) {
 
 				timeSpent = rs.getString(1);
@@ -245,12 +246,13 @@ public class GameJdbcDao implements GameDao {
 				executions = rs.getString(3);
 				zoomLevel = rs.getString(4);
 				achieved = rs.getString(5);
-
+				
+				freeWizardUsed = (rs.getInt(6) == 0 && rs.wasNull()?"F":"T");
 			}
 
 			ps.close();
 
-			ret = new String[1][8];
+			ret = new String[1][9];
 			ret[0][0] = missionId + "";
 			ret[0][1] = missionIdx + "";
 			ret[0][2] = xml;
@@ -259,6 +261,7 @@ public class GameJdbcDao implements GameDao {
 			ret[0][5] = executions;
 			ret[0][6] = zoomLevel;
 			ret[0][7] = achieved;
+			ret[0][8] = freeWizardUsed;
 
 		} finally {
 			if (bdCon != null)
@@ -2030,6 +2033,33 @@ public class GameJdbcDao implements GameDao {
 		}
 			
 		return res;
+	}
+
+	@Override
+	public void markWizardFreeConsumed(long user, long mission, int attempts,
+			int timeSpend) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("update missionsaccomplished set freewizardexecutions=?, freewizardtimespend=timespend + ? where userid = ? and missionid = ?");
+			ps.setLong(1, attempts);
+			ps.setLong(2, timeSpend);
+			ps.setLong(3, user);
+			ps.setLong(4, mission);
+			ps.executeUpdate();
+			ps.close();
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+			
+		
 	}
 
 }

@@ -94,4 +94,7 @@ public interface GameDao {
 	
 	List<Object[][]> loadCompleteMap(long classId) throws Exception;
 
+	void markWizardFreeConsumed(long user, long mission, int attempts,
+			int timeSpend) throws Exception;
+
 }

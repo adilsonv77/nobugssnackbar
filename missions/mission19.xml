@@ -147,7 +147,22 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 		 	</hint>
 		</errors>
 	</hints>
-	
+	<help>
+		<line>Guarde o valor zero na vari&#225;vel [totalCachorros]</line>
+		<line>V&#225; at&#231; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>V&#225; at&#231; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>V&#225; at&#231; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Fale o totalCachorros</line>
+	</help>
+	<solution custCoins="5">
+		<answers><ws id='0'><xml xmlns="http://www.w3.org/1999/xhtml"><block type="variables_set" deletable="false" x="78" y="43"><field name="VAR">totalCachorros</field><value name="VALUE"><block type="math_number" deletable="false"><field name="NUM">0</field></block></value><next><block type="move_goToBarCounter"><value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value><next><block type="variables_set" deletable="false"><field name="VAR">qtosCachorros</field><value name="VALUE"><block type="ask_askWantHowManyFoods" deletable="false"></block></value><next><block type="variables_set" deletable="false"><field name="VAR">totalCachorros</field><value name="VALUE"><block type="math_arithmetic" deletable="false"><field name="OP">ADD</field><value name="A"><block type="variables_get" deletable="false"><field name="VAR">totalCachorros</field></block></value><value name="B"><block type="variables_get" deletable="false"><field name="VAR">qtosCachorros</field></block></value></block></value><next><block type="move_goToBarCounter"><value name="VALUE"><block type="math_number"><field name="NUM">2</field></block></value><next><block type="variables_set"><field name="VAR">qtosCachorros</field><value name="VALUE"><block type="ask_askWantHowManyFoods" deletable="false"></block></value><next><block type="variables_set"><field name="VAR">totalCachorros</field><value name="VALUE"><block type="math_arithmetic" deletable="false"><field name="OP">ADD</field><value name="A"><block type="variables_get" deletable="false"><field name="VAR">totalCachorros</field></block></value><value name="B"><block type="variables_get" deletable="false"><field name="VAR">qtosCachorros</field></block></value></block></value><next><block type="move_goToBarCounter"><value name="VALUE"><block type="math_number"><field name="NUM">3</field></block></value><next><block type="variables_set"><field name="VAR">qtosCachorros</field><value name="VALUE"><block type="ask_askWantHowManyFoods" deletable="false"></block></value><next><block type="variables_set"><field name="VAR">totalCachorros</field><value name="VALUE"><block type="math_arithmetic" deletable="false"><field name="OP">ADD</field><value name="A"><block type="variables_get" deletable="false"><field name="VAR">totalCachorros</field></block></value><value name="B"><block type="variables_get" deletable="false"><field name="VAR">qtosCachorros</field></block></value></block></value><next><block type="do_talk" deletable="false"><value name="VALUE"><block type="variables_get" deletable="false"><field name="VAR">totalCachorros</field></block></value></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml></ws></answers>
+	</solution>
 	<commands>
 		<category name="snackMan" show="true"/>
 		

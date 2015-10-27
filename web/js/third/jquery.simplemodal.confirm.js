@@ -20,7 +20,7 @@ jQuery(function ($) {
 	});
 });
 */
-function confirm(message, callback) {
+function confirm(message, callbackYes, callbackNo, options) {
 	
 	$('#confirm').modal({
 		closeHTML: "<button style='padding:0px;margin:0px;min-width:0px;background-color:transparent;position:absolute; right:10px; top:2px;'><img src='images/closedialog.png' style='width:16px;height:16px'/></button>",
@@ -28,6 +28,15 @@ function confirm(message, callback) {
 		overlayId: 'confirm-overlay',
 		containerId: 'confirm-container', 
 		onShow: function (dialog) {
+
+			if (options != undefined) {
+				
+				var cc = $("#confirm-container"); 
+				for (var opt in options) {
+					cc.css(opt, options[opt]);
+				}
+			}
+			
 			var modal = this;
 
 			$('.message', dialog.data[0]).append(message);
@@ -35,12 +44,21 @@ function confirm(message, callback) {
 			// if the user clicks "yes"
 			$('.yes', dialog.data[0]).click(function () {
 				// call the callback
-				if ($.isFunction(callback)) {
-					callback.apply();
+				if ($.isFunction(callbackYes)) {
+					callbackYes.apply();
 				}
 				// close the dialog
 				modal.close(); // or $.modal.close();
 			});
+			
+			$('.no', dialog.data[0]).click(function () {
+				if ($.isFunction(callbackNo)) {
+					callbackNo.apply();
+				}
+				
+			});
+			
+			
 		}
 	});
 }

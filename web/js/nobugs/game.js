@@ -653,16 +653,21 @@ Game.workspaceAnswer = function() {
 	
 };
 
+Game.getTimeSpend = function() {
+	
+	var timeSpent = 0;
+	if (Game.currTime != 0)
+		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
+	return timeSpent;
+};
+
 Game.saveMission = function() {
 	
 	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;
 	
 	var answer = Game.workspaceAnswer();
-	
-	var timeSpent = 0;
-	if (Game.currTime != 0)
-		timeSpent = Math.floor(((new Date().getTime()) - Game.currTime)/1000);
+	var timeSpent = Game.getTimeSpend();
 	
 	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer,
 			{callback:function() {}, async:false});
@@ -678,7 +683,7 @@ Game.missionLoaded = function(ret){
   Game.howManyRuns = parseInt(ret[4]);
   Game.previousCode = ret[2];
   Game.zoomLevel = parseFloat(ret[5]);
-  Game.missionView = ret[6] == "T"; // it's an achieved mission
+  Game.missionView = ret[6] === "T"; // it's an achieved mission
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
@@ -709,6 +714,21 @@ Game.missionLoaded = function(ret){
   $("#playerRewardMission").css("display", (Game.missionView || !Game.pointsInThisMission?"none":"inline"));
   $("#playerRewardMission").css("box-shadow","");
   UserControl.retrieveReward(Game.updatesReward);
+  
+  Game.wizardFreeContent = mission.childNodes[0].getElementsByTagName("help");
+  if (Game.wizardFreeContent.length == 0) {
+	  
+	  $("#wizardFreeButton").css("display", "none");
+	  $("#wizardPayButton").css("display", "none");
+	  
+  } else {
+	  
+	  $("#wizardFreeButton").css("display", "inline");
+	  $("#wizardPayButton").css("display", "inline");
+	  
+	  Game.wizardPayContent = mission.childNodes[0].getElementsByTagName("solution");
+	  
+  }
   
   Game.slider.timesBefore = 0;
   
@@ -788,10 +808,10 @@ Game.missionLoaded = function(ret){
   if (hero.objective.xpTotalRun == null) {
 	  cfg = {aFraction: hero.objective.xpTotalTime/3, current: Game.timeSpent };
   } else {
-//	  hero.objective.xpTotalRun = 6;
 	  byTime = false;
 	  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
   }
+  cfg.freeWizardConsumed = ret[7] === "T";
   CountXP.config(byTime, cfg,
 		  		    hero.objective.xpIndividual, hero.objective.xpFinal,
 		  		    Game.changeStars, true );
@@ -1239,6 +1259,10 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('instructionButton', Game.instructionButtonClick);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
+	  
+	  BlocklyApps.bindClick('wizardFreeButton', Game.wizardFreeButtonClick);
+	  BlocklyApps.bindClick('wizardPayButton', Game.wizardPayButtonClick);
+	  
 	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
 	  // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
@@ -1780,6 +1804,40 @@ Game.goBackToDashboard = function(evt, callInit) {
 
 		Game.init();
 	}
+	
+};
+
+Game.wizardFreeButtonClick = function() {
+	
+	var fShowTips = function(recordChanges) {
+		
+		if (recordChanges == 1) {
+			
+			CountXP.setConsumedMaxStars();
+
+			UserControl.askWizardFree(Game.howManyRuns, Game.getTimeSpend());
+			Game.saveMission();
+			
+		}
+		
+		Hints.startHints();
+		
+	//	Game.wizardFreeContent
+	};
+	
+	if (CountXP.getEnabledStars() > 0) {
+		Hints.stopHints();
+		confirm("Deseja realmente ver a dica para resolver a miss&#227;o ? <br/> "+
+				"Ao confirmar ser&#227;o consumidas todas as estrelas.", 
+				function () { fShowTips(1); },
+				function () { Hints.startHints(); },
+				{"height": "180px"}
+		);
+	} else
+		fShowTips(0);
+};
+
+Game.wizardPayButtonClick = function() {
 	
 };
 

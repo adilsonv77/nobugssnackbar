@@ -40,8 +40,15 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	
 	CountXP.aFraction = cfg.aFraction;
 	CountXP.current = cfg.current % cfg.aFraction;
-	CountXP.times = Math.floor(cfg.current / cfg.aFraction);
-	CountXP.times = (CountXP.times > 3?3:CountXP.times);
+	
+	if (cfg.freeWizardConsumed) {
+		CountXP.times = 3;
+	} else {
+		
+		CountXP.times = Math.floor(cfg.current / cfg.aFraction);
+		CountXP.times = (CountXP.times > 3?3:CountXP.times);
+		
+	}
 	
 	CountXP.pointsFinal = pointsFinal;
 	CountXP.starting = true;
@@ -168,6 +175,16 @@ CountXP.changeImgs = function() {
 		CountXP.clearTheWatch();
 		
 	}
+};
+
+CountXP.getEnabledStars = function() {
+	return 3 - CountXP.times;
+};
+
+CountXP.setConsumedMaxStars = function() {
+	CountXP.stop();
+	CountXP.times = 3; 
+	CountXP.changeImgs();
 };
 
 CountXP.clearTheWatch = function() {

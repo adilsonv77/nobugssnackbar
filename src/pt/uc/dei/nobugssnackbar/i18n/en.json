@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-27 13:18:09.447000",
+		"lastupdated": "2015-10-27 17:41:04.292000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -277,6 +277,8 @@
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
+	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
+	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",
 	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",
 	"NoBugs.resetTooltip": "Restarts the execution [Esc].",

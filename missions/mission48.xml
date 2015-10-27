@@ -97,7 +97,7 @@
 	<cooker>initial</cooker>
 
 	<customers>
-	<!-- 
+	
 		<customer>
 			<id>01</id>
 			<init>door</init>
@@ -136,24 +136,17 @@
 				</order>
 			</orders>
 		</customer>
--->
+
 		<customer>
 			<id>02</id>
-			<init>table2</init>
-			<dest>table2</dest>
+			<init>door</init>
+			<dest>-</dest>
 			<goOutIfPayed>true</goOutIfPayed>
 			<pay>10</pay>
 			<limitedChanges>5, 2, 1</limitedChanges>
 			<orders>
 				<order>
-					<foods>
-						<food qt="1" price="2">hotdog</food>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">coke</drink>
-					</drinks>
-				</order>
-				<order>
+					<dest>table1</dest>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
@@ -161,6 +154,7 @@
 					</drinks>
 				</order>
 				<order>
+					<dest>counter2</dest>
 					<foods>
 					</foods>
 					<drinks>
@@ -173,8 +167,8 @@
 
 		<customer>
 			<id>03</id>
-			<init>table1</init>
-			<dest>table1</dest>
+			<init>door</init>
+			<dest>counter3</dest>
 			<goOutIfPayed>true</goOutIfPayed>
 			<pay>10</pay>
 			<limitedChanges>5, 2, 1</limitedChanges>
