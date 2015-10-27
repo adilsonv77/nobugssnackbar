@@ -33,6 +33,32 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 		   </hint>
 		</errors>
 	</hints>
+	<help>
+		<line>Guarde o valor zero na vari&#225;vel [totalCachorros]</line>
+		<line>Guarde o valor zero na vari&#225;vel [totalBebidas]</line>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasBebidas]</line>
+		<line>Multiplique qtosCachorros por 2 e guarde em qtosCachorros</line>
+		<line>Multiplique qtasBebidas por 3 e guarde em qtasBebidas</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some totalBebidas com qtasBebidas e guarde em totalBebidas</line>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasBebidas]</line>
+		<line>Multiplique qtosCachorros por 2 e guarde em qtosCachorros</line>
+		<line>Multiplique qtasBebidas por 3 e guarde em qtasBebidas</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some totalBebidas com qtasBebidas e guarde em totalBebidas</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasBebidas]</line>
+		<line>Multiplique qtosCachorros por 2 e guarde em qtosCachorros</line>
+		<line>Multiplique qtasBebidas por 3 e guarde em qtasBebidas</line>
+		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some totalBebidas com qtasBebidas e guarde em totalBebidas</line>
+		<line>Fale a soma do totalCachorros com o totalBebidas</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
@@ -54,7 +80,7 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order randomType="random" randomMin="1" randomMax="3">
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
@@ -73,7 +99,7 @@ o operador de adi&#231;&#227;o para o de multiplica&#231;&#227;o. No final fale 
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<orders>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order randomType="random" randomMin="1" randomMax="3">
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>

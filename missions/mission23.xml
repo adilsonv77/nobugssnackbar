@@ -45,6 +45,26 @@ J&#225; deixo alguns blocos para te servir como semente de inspira&#231;&#227;o.
 		</errors>
 		
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasBebidas]</line>
+		<line>Multiplique qtosCachorros por 2 e guarde em qtosCachorros</line>
+		<line>Multiplique qtasBebidas por 3 e guarde em qtasBebidas</line>
+		<line>Some qtosCachorros com qtasBebidas e guarde em [totalAReceber]</line>
+		<line>Cobre o totalAReceber e o resultado guarde em [valorRecebido1]</line>
+		<line>Subtraia o totalAReceber de valorRecebido1 e guarde em [gorjeta1]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasBebidas]</line>
+		<line>Multiplique qtosCachorros por 2 e guarde em qtosCachorros</line>
+		<line>Multiplique qtasBebidas por 3 e guarde em qtasBebidas</line>
+		<line>Some qtosCachorros com qtasBebidas e guarde em [totalAReceber]</line>
+		<line>Cobre o totalAReceber e o resultado guarde em [valorRecebido2]</line>
+		<line>Subtraia o totalAReceber de valorRecebido2 e guarde em [gorjeta2]</line>
+		<line>Fale a soma de valorRecebido1 com valorRecebido2</line>
+		<line>Fale a soma de gorjeta1 com gorjeta2</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true"/>
 		

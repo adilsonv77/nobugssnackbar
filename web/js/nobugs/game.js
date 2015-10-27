@@ -1651,6 +1651,11 @@ Game.resizeWindow = function(e) {
     	box.style.width = "200px";
         box.style.height = Game.optResize.varBoxH;
         
+        if (Game.tipBox.style.display !== "none") {
+        	var th = $("#tipBox .move-header")[0].clientHeight;
+        	$("#tips_content").css("height", (box.clientHeight-th) + "px");
+        }
+        
     }
     Game.redimDiv.style.width = (w) + 'px';
     

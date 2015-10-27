@@ -60,6 +60,7 @@ InGrid.createNewTipTable = function(rows) {
 	var t = $("<table>").attr("id", "tips");
 	t.addClass("varsgrid").addClass("tipsgrid");
 	
+	
 /*	var thead = $("<thead>");
 	
 	var tr = $("<tr>");
