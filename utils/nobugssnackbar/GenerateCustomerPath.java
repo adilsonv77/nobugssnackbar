@@ -18,9 +18,13 @@ public class GenerateCustomerPath {
 				s.append("n" + (contaN + 1) + ":{n" + (c0) + ":1, n" + (contaN + 2) + ":1}, ");
 			}
 			else
-				if (i < numLin)
-					s.append("n" + (contaN + 1) + ":{n" + (contaN) + ":1, n" + (contaN + 2)
-							+ ":1}, ");
+				if (c0 < 0 && i == 1) {
+
+					s.append("n" + (contaN + 1) + ":{n" + Math.abs(c0) + ":1, n" + (contaN + 2) + ":1}, ");
+				} else
+					if (i < numLin)
+						s.append("n" + (contaN + 1) + ":{n" + (contaN) + ":1, n" + (contaN + 2)
+								+ ":1}, ");
 			contaN++;
 		}
 
@@ -85,11 +89,39 @@ public class GenerateCustomerPath {
 		int c3 = r[0]; int nCounter3 = r[1];
 		s.append("n" + c3 + ":{n" + (c3 - 1) + ":1, n" + (c3 + 1) + ":1}, ");
 
+		int linkTableDoor = contaN + 1;
+		x = 40; y = 105; // (40, 105) => (160, 145)
+		int yd = 2; xd = 6;
+		for (int i = 1; i <= 20; i++) {
+			createNode(n, contaN + 1, x + (xd * i), y + (yd * i));
+			if (i == 1) {
+				s.append("n" + (contaN + 1) + ":{n1:1, n" + (contaN + 2) + ":1}, ");
+			} else 
+				s.append("n" + (contaN + 1) + ":{n" + (contaN) + ":1, n" + (contaN + 2) + ":1}, ");
+			contaN++;
+		}
+		
+		//int nTable1 = contaN;
+		k.append("'n" + contaN + "', ");
+		
+		x = 160; y = 145;
+		//(160, 145) => (290, 145)
+		yd = 0; xd = 6;
+		for (int i = 1; i <= 20; i++) {
+			createNode(n, contaN + 1, x + (xd * i), y + (yd * i));
+			s.append("n" + (contaN + 1) + ":{n" + (contaN) + ":1, n" + (contaN + 2) + ":1}, ");
+			contaN++;
+		}
+		
+		int nTable2 = contaN;
+		k.append("'n" + contaN + "', ");
+		
 		// ligacoes entre os nós principais
-		s.append("n1:{n2:1}, ");
+		s.append("n1:{n2:1, n" + (linkTableDoor) +":1}, ");
 		s.append("n" + nCounter1 + ":{n" + (nCounter1 - 1) + ":1}, ");
 		s.append("n" + nCounter2 + ":{n" + (nCounter2 - 1) + ":1}, ");
 		s.append("n" + nCounter3 + ":{n" + (nCounter3 - 1) + ":1}, ");
+		s.append("n" + nTable2 + ":{n" + (nTable2 - 1) + ":1}, ");
 
 		pw.println(s + "};");
 		pw.println(n + "};");

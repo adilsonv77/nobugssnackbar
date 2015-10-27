@@ -169,7 +169,7 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 			<dest>counter1</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="3">
+					<foods randomMin="1" randomMax="3">
 						<food qt="1" price="0">hotdog</food>
 						<food qt="1" price="0">hotdog</food>
 						<food qt="1" price="0">hotdog</food>
@@ -185,7 +185,7 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 			<dest>counter2</dest>
 			<orders>
 				<order>
-					<foods randomMin="0" randomMax="3">
+					<foods randomMin="1" randomMax="3">
 						<food qt="1" price="0">hotdog</food>
 						<food qt="1" price="0">hotdog</food>
 						<food qt="1" price="0">hotdog</food>

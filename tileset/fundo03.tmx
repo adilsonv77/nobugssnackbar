@@ -21,20 +21,26 @@
  <tileset firstgid="22" name="balcaocanto1" tilewidth="40" tileheight="40">
   <image source="balcaocanto1.png" width="200" height="40"/>
  </tileset>
- <tileset firstgid="28" name="blackboard" tilewidth="40" tileheight="40">
+ <tileset firstgid="27" name="blackboard" tilewidth="40" tileheight="40">
   <image source="blackboard.png" width="120" height="80"/>
  </tileset>
- <tileset firstgid="34" name="banco1" tilewidth="40" tileheight="40">
+ <tileset firstgid="33" name="banco1" tilewidth="40" tileheight="40">
   <image source="banco1.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="35" name="cooler2" tilewidth="40" tileheight="40">
+ <tileset firstgid="34" name="cooler2" tilewidth="40" tileheight="40">
   <image source="cooler2.png" width="320" height="80"/>
  </tileset>
- <tileset firstgid="51" name="display2" tilewidth="40" tileheight="40">
+ <tileset firstgid="50" name="display2" tilewidth="40" tileheight="40">
   <image source="display2.png" width="160" height="40"/>
  </tileset>
- <tileset firstgid="55" name="kitchentools" tilewidth="40" tileheight="40">
+ <tileset firstgid="54" name="kitchentools" tilewidth="40" tileheight="40">
   <image source="kitchentools.png" width="40" height="80"/>
+ </tileset>
+ <tileset firstgid="56" name="cadeiras" tilewidth="40" tileheight="40">
+  <image source="cadeiras.png" width="80" height="80"/>
+ </tileset>
+ <tileset firstgid="60" name="mesa" tilewidth="40" tileheight="40">
+  <image source="mesa.png" width="80" height="80"/>
  </tileset>
  <layer name="chao" width="9" height="11">
   <data encoding="base64" compression="zlib">
@@ -68,22 +74,27 @@
  </layer>
  <layer name="quadro" width="9" height="11">
   <data encoding="base64" compression="zlib">
-   eJxjYEAFMkAsC8RyDLiBPBArALEiHjWjgHQAAADTALg=
+   eJxjYEAF0kAsA8SyDLiBHBDLA7ECHjWjgHQAAPhgALI=
   </data>
  </layer>
  <layer name="banco" width="9" height="11" visible="0">
   <data encoding="base64" compression="zlib">
-   eJxjYBi+QGmImQMAKvwAZw==
+   eJxjYBi+QHGImQMAKcQAZA==
   </data>
  </layer>
  <layer name="cooler" width="9" height="11">
   <data encoding="base64" compression="zlib">
-   eJxjYBgewHigHYADaAOxChFq9IAYADesANw=
+   eJxjYBgewGigHYADaAGxMhFqdIEYADaIANc=
   </data>
  </layer>
  <layer name="tools" width="9" height="11">
   <data encoding="base64" compression="zlib">
-   eJxjYMANzPHIwYAFEWpGAXEAAJk8AHA=
+   eJxjYMANzPDIwYA5EWpGAXEAAJaAAG4=
+  </data>
+ </layer>
+ <layer name="mesa" width="9" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANsABiGyC2BWJLHGqsgNgOiO2B2JpG7hhKAAARGgHd
   </data>
  </layer>
 </map>

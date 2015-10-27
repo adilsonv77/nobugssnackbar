@@ -61,11 +61,11 @@
 		
 		<page type="goal">
 		<![CDATA[
-		Voc&#234; consegue resolver essa miss&#227;o sem usar as fun&#231;&#245;es e procedimentos. Por&#233;m, ser&#225; horr&#237;vel a visualiza&#231;&#227;o e manuten&#231;&#227;o 
+		Voc&#234; at&#233; consegue resolver essa miss&#227;o sem usar as fun&#231;&#245;es e procedimentos. Por&#233;m, ser&#225; horr&#237;vel a visualiza&#231;&#227;o e manuten&#231;&#227;o 
 		desse c&#243;digo. Aproveite a oportunidade para praticar esse conceito. <br/><br/>
 		<b>
 		IMPORTANTE: como o problema &#233; muito complexo, resolva por partes. 
-		Resolva primeiro para um clinete: a cobran&#231;a, depois o atendimento de um tipo de comida,
+		Resolva primeiro para um cliette: a cobran&#231;a, depois o atendimento de um tipo de comida,
 		em seguida outro tipo, e assim por diante at&#233; teres resolvido o problema por completo para um cliente.
 		Ao final movimente-se pela esplanada para atender os outros dois clientes.
 		</b> 
@@ -117,6 +117,7 @@
 
 		<category name="logic" show="true" />
 		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
 		
 		<category name="math" show="true" />
 		
@@ -230,7 +231,7 @@
 		</customer>
 	</customers>
 	<objectives>
-		<objective value="3">totalOfSell</objective>
+		<objective value="50">totalOfSell</objective>
 	</objectives>
 	<xml>
 

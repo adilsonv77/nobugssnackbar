@@ -90,6 +90,9 @@ CustomerManager.reset = function() {
 		} else {
 			if (init.indexOf("counter") == 0) {
 				init = CustOpt.counter[parseInt(init.substring(7)) - 1];
+			} else {
+				// table
+				init = CustOpt.table[parseInt(init.substring(5)) - 1];
 			}
 		}
 		
@@ -98,7 +101,11 @@ CustomerManager.reset = function() {
 			dest = dest.textContent.toString();
 			if (dest.indexOf("counter") == 0) {
 				dest = {id : CustOpt.counter[parseInt(dest.substring(7)) - 1], type : "counter"};
-			}
+			} else 
+				if (dest.indexOf("table") == 0){
+					// table
+					dest = {id : CustOpt.table[parseInt(dest.substring(5)) - 1], type : "table"};
+				}
 		}
 		
 		var pay = customer.getElementsByTagName("pay")[0];
@@ -129,6 +136,15 @@ CustomerManager.reset = function() {
 			var _drinks = orders[i].getElementsByTagName("drinks")[0];
 			var foods = CustomerManager.extractItems("food", _foods, null, randomType);
 			var drinks =  CustomerManager.extractItems("drink", _drinks, foods.length, randomType);
+			
+			var orderDest = orders[i].getElementsByTagName("dest")[0];
+			if (orderDest != null) {
+				orderDest = orderDest.textContent.toString();
+				if (orderDest.indexOf("table") == 0) {
+					orderDest = {id : CustOpt.table[parseInt(orderDest.substring(5)) - 1], type : "table"};
+				}
+				
+			}
 		
 			if (randomType === "random") {
 				var res = CustomerManager.randomOrder(
@@ -145,7 +161,7 @@ CustomerManager.reset = function() {
 			var dRMin = _drinks.getAttribute("randomMin");
 			
 			custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
-				                   randomType: randomType, 
+				                   randomType: randomType, place: orderDest,
 								   foods: foods, drinks: drinks});
 		}
 		
@@ -246,9 +262,11 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 	var foods = custPattern.foods;
 	var drinks = custPattern.drinks;
 	
+	var dest = (this.patterns[i].place === "-" ? custPattern.place : this.patterns[i].place);
+	
 	var cust = new Customer({
 							init: initPlace, 
-							place: this.patterns[i].place, 
+							place: dest, 
 							id: this.patterns[i].id, 
 							hasRandom: custPattern.hasRandom, 
 							randomType: custPattern.randomType,
@@ -417,6 +435,7 @@ CustomerManager.draw = function(ctx) {
 	
 	for (var i=0; i<customers.length; i++) 
 		customers[i].draw(ctx);
+	
 };
 
 CustomerManager.drawCounters = function(ctx, counters) {
@@ -436,6 +455,17 @@ CustomerManager.getCustomerCounter = function(id) {
 	
 	for (var i=0; i<customers.length; i++)
 	  if (customers[i].currentNode.id === CustOpt.counter[id])
+		return customers[i];
+	
+	return null;
+};
+
+CustomerManager.getCustomerTable = function(id) {
+	
+	id = id - 1;
+	
+	for (var i=0; i<customers.length; i++)
+	  if (customers[i].currentNode.id === CustOpt.table[id])
 		return customers[i];
 	
 	return null;

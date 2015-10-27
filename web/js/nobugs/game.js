@@ -730,6 +730,8 @@ Game.missionLoaded = function(ret){
  
   Game.blocklys = [];
   
+  var hasTable = commands.innerHTML.indexOf('name="array"') > -1;
+  
   if (commands.innerHTML.indexOf('name="function"') > -1) {
 	  
 	  Hints.noHints = true;
@@ -779,7 +781,7 @@ Game.missionLoaded = function(ret){
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
   
-  hero = new SnackMan(objectives, mission, Game.loginData.avatar);
+  hero = new SnackMan(hasTable, objectives, mission, Game.loginData.avatar);
   
   var byTime = true;
   var cfg = {};
@@ -2787,6 +2789,13 @@ Game.initApi = function(interpreter, scope) {
     };
     
     interpreter.setProperty(scope, 'goToBarCounter',
+        interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(n) {
+	      return interpreter.createPrimitive(hero.goToTable(n));
+	    };
+	    
+    interpreter.setProperty(scope, 'goToTable',
         interpreter.createNativeFunction(wrapper));
 
 	wrapper = function() {

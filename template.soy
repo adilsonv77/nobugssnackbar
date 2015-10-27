@@ -545,6 +545,17 @@
 	        </value>
 	      </block>
 	      {/if}
+
+	      {if $ij.enabled['goToTable']}
+	      <block type="move_goToTable">
+	        <value name="VALUE">
+	          <block type="math_number">
+	            <field name="NUM">1</field>
+	          </block>
+	        </value>
+	      </block>
+	      {/if}
+
 	      {if $ij.enabled['isThereACustomer']}<block type="ask_isThereACustomer"> </block>{/if}
 		  
 		  {if $ij.enabled['askWantHowManyFoods']}<block type="ask_askWantHowManyFoods"> </block>{/if}

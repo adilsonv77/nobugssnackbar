@@ -235,6 +235,7 @@
 	    		<include name="error.html" />
 	    		<include name="quest.html" />
 	    		<include name="editor.html" />
+	    		<include name="comp.html" />
 
 	    		<include name="jsp/**/*.*" />
 	        </fileset>

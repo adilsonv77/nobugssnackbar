@@ -1,0 +1,210 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" open="true" points="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToTable" show="true" />
+		
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+		<category name="pickUpDrink" show="true" />
+		
+		<category name="icecream" show="true" />
+		<category name="askForIceCream" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
+		<category name="giveChange" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		
+		<category name="math" show="true" />
+		
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.chocolate" show="true" />
+		<category name="const.strawberry" show="true" />
+		<category name="const.vanilla" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+		
+		<category name="text" show="true" />
+		
+		<category name="function" show="true" />
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+
+	<customers>
+	<!-- 
+		<customer>
+			<id>01</id>
+			<init>door</init>
+			<dest>-</dest>
+			<goOutIfPayed>true</goOutIfPayed>
+			<pay>10</pay>
+			<limitedChanges>5, 2, 1</limitedChanges>
+			<orders>
+				<order>
+					<dest>table2</dest>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<dest>counter1</dest>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<dest>table1</dest>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+-->
+		<customer>
+			<id>02</id>
+			<init>table2</init>
+			<dest>table2</dest>
+			<goOutIfPayed>true</goOutIfPayed>
+			<pay>10</pay>
+			<limitedChanges>5, 2, 1</limitedChanges>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>door</init>
+			<dest>counter3</dest>
+			<goOutIfPayed>true</goOutIfPayed>
+			<pay>10</pay>
+			<limitedChanges>5, 2, 1</limitedChanges>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		
+		 -->
+	</customers>
+	<objectives>
+		<objective value="50">totalOfSell</objective>
+	</objectives>
+	<xml>
+
+	</xml>
+</mission>
+
