@@ -173,8 +173,8 @@
 
 		<customer>
 			<id>03</id>
-			<init>door</init>
-			<dest>counter3</dest>
+			<init>table1</init>
+			<dest>table1</dest>
 			<goOutIfPayed>true</goOutIfPayed>
 			<pay>10</pay>
 			<limitedChanges>5, 2, 1</limitedChanges>
@@ -198,7 +198,6 @@
 			</orders>
 		</customer>
 		
-		 -->
 	</customers>
 	<objectives>
 		<objective value="50">totalOfSell</objective>

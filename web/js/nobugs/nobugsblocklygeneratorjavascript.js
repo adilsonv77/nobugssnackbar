@@ -258,6 +258,8 @@ NoBugsJavaScript.arrayGetValue = function(array, index) {
 	
 	NoBugsJavaScript.testParameters(array, index);
 	
+	Game.forDeliver = {array: array, index: index};
+	
 	return array[index];
 	
 };

@@ -272,7 +272,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							randomType: custPattern.randomType,
 							foods: foods, drinks: drinks,
 							openMission: this.openMission, idxPattern: i,
-							baloonLeft: customers.length % 2 == 0,
+							baloonLeft: ((dest.type === "counter" && customers.length % 2 == 0) || 
+							              (dest.type === "table" && dest.id === CustOpt.table[0])),
 							pay: this.patterns[i].pay,
 							limitedChanges: this.patterns[i].limitedChanges,
 							goOutIfPayed: this.patterns[i].goOutIfPayed});
@@ -478,6 +479,9 @@ CustomerManager.getCustomerPosition = function(id) {
 			return i+1 + " ";
 	
 	// in future, test the tables
+	for (var i=0; i<CustOpt.table.length; i++)
+		  if (id === CustOpt.table[i])
+			return i+1 + " ";
 	return "0";
 };
 

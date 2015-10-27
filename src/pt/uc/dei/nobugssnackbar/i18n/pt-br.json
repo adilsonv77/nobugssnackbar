@@ -124,7 +124,8 @@
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
-	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
+	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 3.",
+	"Error.doesntExistTable": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 2.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente. Antes de executar esse bloco, caminhe at&#233; onde est&#225; o cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",
 	"Error.thereIsntCustomer": "N&#227;o existe qualquer cliente nessa posi&#231;&#227;o do balc&#227;o.",
@@ -168,10 +169,11 @@
 	"Error.tryToAccessAPositionOutOfBounds" : "Voc&#234; tentou aceder uma posi&#231;&#227;o inv&#225;lida do array.",
 	"Error.noValueInParameter" : "O par&#226;metro n&#227;o possui qualquer valor. Parece que voc&#234; esqueceu de atribuir o seu valor uns blocos anteriores.",
 
-	"Error.TabOnlyWithFunctions" : "Esta guia deve conter somente fun&#231;&#245;es.",
+	"Error.tabOnlyWithFunctions" : "Esta guia deve conter somente fun&#231;&#245;es.",
 	
 	"Single.Counter" : "no balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
+	"Single.table" : "Mesa",
 	"Single.Mission" : "miss&#227;o",
 	"Single.YourProgress" : "Seu Progresso", 
 	"Single.King" : "o Rei",

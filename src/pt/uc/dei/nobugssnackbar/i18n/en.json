@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-27 10:28:06.903000",
+		"lastupdated": "2015-10-27 13:18:09.447000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -105,7 +105,7 @@
 	"Error.error": "Error",
 	"Error.login": "User not found.",
 	"Error.infinityLoopDetected": "Infinity loop detected by system.",
-	"Error.doesntExistCounter": "This position is invalid.",
+	"Error.doesntExistCounter": "This position is invalid: only between 1 and 3.",
 	"Error.isntCloseToCustomer": "The cooker is not close to any customer.",
 	"Error.thereIsntCustomer": "There isn't any customer in this position of the counter.",
 	"Error.isntFrontCooler": "The cooker is not in front of the cooler.",
@@ -147,7 +147,8 @@
 	"Error.parameterIsNotAnArray": "The parameter is not an array.",
 	"Error.parameterMustBeEqualsGreaterThanZero": "The parameter must be equals or greater than zero.",
 	"Error.tryToAccessAPositionOutOfBounds": "You're trying to access a position in the array that doesn't exists.",
-	"Error.TabOnlyWithFunctions": "This tab must have only functions.",
+	"Error.tabOnlyWithFunctions": "This tab must have only functions.",
+	"Error.doesntExistTable": "This position is invalid: only between 1 and 2.",
 	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
 	"NoBugs.goalAchieved": "New Goal Achieved",
 	"NoBugs.achieved": "Achieved",
@@ -189,6 +190,7 @@
 	"Descr.LogicOperation": "Logic operator",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
+	"Single.table": "Table",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",
 	"NoBugs.rewardExplanationByRun": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 attempts.",
 	"NoBugs.commandBonusExplanation": "You'll receive a bonus of %0 if accomplish this mission in %1 commands or less.",

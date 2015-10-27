@@ -819,7 +819,14 @@ SnackMan.prototype.deliver = function(item) {
 		this.verifyObjectives("deliver", {allCustomers:false, customer:found});
 	}
 	
-	item.data = null; // was deliver, then it's null
+	if (Game.forDeliver === undefined || Game.forDeliver === null)
+		item.data = null; // was deliver, then it's null
+	else {
+		var a = Game.forDeliver.array;
+		a[Game.forDeliver.index] = null;
+		delete Game.forDeliver;	
+	}
+	
 	
 	if (amount.happy >= Customer.DELIVERED_PARTIAL)
 		this.delivered++;

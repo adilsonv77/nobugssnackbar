@@ -2391,22 +2391,44 @@ Game.updateVariables = function() {
 				// only show the variables in current scope
 				var data = entry.scope.properties[entry.name].data;
 				if (data != undefined) {
-					if (data.type != undefined) {
-						data = "<div>" + 
-								"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
-								(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
-								"</div>";
-					} else {
-						
-						try {
+					
+					var fBuildData = function(data) {
+						var res = "";
+						if (data != null) {
 							
-							if (data.indexOf("\"$$$") == 0) {
-								data = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
+							if (data.type != undefined) {
+								res = "<div>" + 
+										"<p style='margin: 0px' class="+data.type+"><img src='images/"+ data.descr + ".png'/></p>"+
+										(data.sourceType==null?"":"<p style='margin: 0px'>"+BlocklyApps.getMsg("__" + data.sourceType)+" "+CustomerManager.getCustomerPosition(data.source)+"</p>") +  
+										"</div>";
+							} else {
 								
+								try {
+									
+									if (data.indexOf("\"$$$") == 0) {
+										res = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
+										
+									}
+								} catch (ex) {
+									// this happens when data is a number or other type different of string or array
+								}
 							}
-						} catch (ex) {
-							// this happens when data is a number or other type different of string or array
-						}
+
+						} 
+						return res;
+					};
+					
+					if (Array.isArray(data)) {
+						var sV = "[";
+						data.forEach(function (elem) {
+							if (sV.length > 1)
+								sV = sV + ",";
+							sV = sV + fBuildData(elem);
+						});
+						
+						data = sV + "]";
+					} else {
+						data = fBuildData(data);
 					}
 						
 					rows.push({"name":entry.name, "value": data+""});
