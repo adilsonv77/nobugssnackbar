@@ -49,7 +49,9 @@ Game.globalXP;
 
 Game.lastErrorData;
 Game.jsInterpreter;
+
 Game.variableBox = null;
+Game.tipBox = null;
 
 Game.DOWN = 1;
 Game.RIGHT = 2;
@@ -367,6 +369,8 @@ Game.logged = function() {
 	if (Game.variableBox != null)
 		Game.variableBox.style.display = "none";
 	
+	if (Game.tipBox != null)
+		Game.tipBox.style.display = "none";
 	
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
@@ -607,6 +611,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	  Game.speedSlider = new Slider(10, 20, 130, Game.slider.svg);
 
   Game.variableBox = document.getElementById('variableBox');
+  Game.tipBox = document.getElementById('tipBox');
   
   CountXP.init("stopWatch", !missionView);
   
@@ -716,7 +721,7 @@ Game.missionLoaded = function(ret){
   UserControl.retrieveReward(Game.updatesReward);
   
   Game.wizardFreeContent = mission.childNodes[0].getElementsByTagName("help");
-  if (Game.wizardFreeContent.length == 0) {
+  if (Game.missionView || Game.wizardFreeContent.length == 0) {
 	  
 	  $("#wizardFreeButton").css("display", "none");
 	  $("#wizardPayButton").css("display", "none");
@@ -724,7 +729,7 @@ Game.missionLoaded = function(ret){
   } else {
 	  
 	  $("#wizardFreeButton").css("display", "inline");
-	  $("#wizardPayButton").css("display", "inline");
+	//  $("#wizardPayButton").css("display", "inline");
 	  
 	  Game.wizardPayContent = mission.childNodes[0].getElementsByTagName("solution");
 	  
@@ -818,7 +823,7 @@ Game.missionLoaded = function(ret){
   
   Game.mission = mission;
 
-  Game.assignIngrid();
+//  Game.assignIngrid();
   
   Game.installMachines(toolbox);
 };
@@ -1267,6 +1272,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 
 	  // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
 	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
+	  BlocklyApps.bindClick('moveRightTipBox', Game.moveRightTipBoxButtonClick);
 	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
@@ -1279,7 +1285,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  Hints.init(Game.mission.getElementsByTagName("hints")[0], !Game.showedWindowRunDisabled);
 		  Game.initTime();
 		  
-		  Game.alertMissionView();
+		  Game.alertWizardFree(Game.alertMissionView);
 	  }
   };
   
@@ -1455,6 +1461,26 @@ Game.hideShadow = function() {
 	
 };
 
+Game.alertWizardFree = function(finishFunction) {
+	var talk = Game.loginData.userLogged.flags.TALK_WIZARDFREE;
+	if (!Game.missionView && Game.wizardFreeContent.length > 0 && (talk === undefined || talk === "false")) {
+		
+		var content = $("<div/>")
+							.append("Observe quando esse bot&#227;o for visivel, indica que podes obter uma ajuda do jogo, consumindo todas as estrelas dessa miss&#227;o.");
+		Hints.stopHints();
+		var bbBox = BlocklyApps.getBBox_(document.getElementById("wizardFreeButton"));
+		var bY = 0;
+		var bX = bbBox.x+35;
+	
+		MyBlocklyApps.showDialog(content[0], null, true, true, false, "", 
+				{width: "500px", left: bX + "px", top: bY + "px"}, null, 
+				function(){finishFunction();}, true);
+		
+		Game.changeFlag("TALK_WIZARDFREE", "true");
+	} else 
+		finishFunction();
+};
+
 Game.verifyTestsInMission = function(finishFunction) {
 	
 	var fAfterThisTest = function() {
@@ -1586,17 +1612,14 @@ Game.doResizeWindow = function(style) {
 	if (Game.variableBox == null)
 		return; // this happens in the select mission dialog
 	
-	if (style != undefined) {
-	  Game.variableBox.style.display = style;
-	}
 	Game.resizeWindow(null);
     Blockly.fireUiEvent(window, 'resize');
 };
 
 Game.scrollEvent =  function() {
-	  Hints.hideHintWithTimer();
+    Hints.hideHintWithTimer();
     Game.doResizeWindow();
-  };
+};
   
 Game.resizeWindow = function(e) {
 	
@@ -1606,7 +1629,7 @@ Game.resizeWindow = function(e) {
 	Game.redimDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
 	Game.redimDiv.style.left = Game.rtl ? '10px' : '380px';
     var w = window.innerWidth;
-    if (Game.variableBox.style.display === "none") {
+    if (Game.variableBox.style.display === "none" && Game.tipBox.style.display === "none") {
     	//Game.blockly.style.height = "90%";
         w -= 400;
     	
@@ -1617,16 +1640,16 @@ Game.resizeWindow = function(e) {
     	Game.redimDiv.style.height = Game.optResize.blocklyDivH;
         w -= Game.optResize.blocklyDivW;
     	
-        Game.variableBox.style.top = (Game.optResize.varBoxT?Game.redimDiv.style.top:(Game.redimDiv.offsetTop+Game.redimDiv.offsetHeight+10)+"px");
-        if (Game.optResize.varBoxT) {
-        	Game.variableBox.style.left = ((Game.rtl ? 10 : 380) + w + 5) + 'px';
-        	Game.variableBox.style.width = "200px";
-        }
-        else {
-        	Game.variableBox.style.left = Game.redimDiv.style.left;
-        	Game.variableBox.style.width =  Game.redimDiv.style.width;
-        }
-        Game.variableBox.style.height = Game.optResize.varBoxH;
+        var box = null;
+        if (Game.variableBox.style.display !== "none")
+        	box = Game.variableBox;
+        else
+        	box = Game.tipBox;
+        
+        box.style.top = (Game.redimDiv.style.top);
+    	box.style.left = ((Game.rtl ? 10 : 380) + w + 5) + 'px';
+    	box.style.width = "200px";
+        box.style.height = Game.optResize.varBoxH;
         
     }
     Game.redimDiv.style.width = (w) + 'px';
@@ -1689,8 +1712,17 @@ Game.moveRightButtonClick = function() {
 				varBoxT: true,
 				varBoxH: "90%"
 			  };
-			  
-	  Game.doResizeWindow("none");
+	  Game.variableBox.style.display = "none";
+	  
+	  Game.doResizeWindow();
+};
+
+Game.moveRightTipBoxButtonClick = function() {
+	  Hints.hideHintWithTimer();
+	  Game.tipBox.style.display = "none";
+	  
+	  Game.doResizeWindow();
+	
 };
 	
 /**
@@ -1811,6 +1843,8 @@ Game.wizardFreeButtonClick = function() {
 	
 	var fShowTips = function(recordChanges) {
 		
+		Game.closeBoxes();
+		
 		if (recordChanges == 1) {
 			
 			CountXP.setConsumedMaxStars();
@@ -1820,9 +1854,19 @@ Game.wizardFreeButtonClick = function() {
 			
 		}
 		
+		var rows = [];
+		
+		var lines = Game.wizardFreeContent[0].getElementsByTagName("line");
+		for (var i = 0; i < lines.length; i++)
+			rows.push(lines[i].textContent.toString());
+		
+		InGrid.createNewTipTable(rows);
+		
+		Game.tipBox.style.display = "inline";
+		Game.doResizeWindow();
+		
 		Hints.startHints();
 		
-	//	Game.wizardFreeContent
 	};
 	
 	if (CountXP.getEnabledStars() > 0) {
@@ -1838,6 +1882,13 @@ Game.wizardFreeButtonClick = function() {
 };
 
 Game.wizardPayButtonClick = function() {
+	
+};
+
+Game.closeBoxes = function() {
+	
+    Game.variableBox.style.display = "none";
+    Game.tipBox.style.display = "none";
 	
 };
 
@@ -1858,7 +1909,8 @@ Game.closeBlockEditorStuffs = function() {
 	
 	Game.emptyLines();
 	
-    Game.doResizeWindow("none");
+	Game.closeBoxes();
+	Game.doResizeWindow();
     Game.killAll();
     Game.runningStatus = 0;
 	
@@ -1924,7 +1976,9 @@ Game.runButtonClick = function() {
   Game.disableButton("debugButton");
   Game.disableButton("buyButton");
   
-  Game.doResizeWindow("none");
+  Game.closeBoxes();
+  
+  Game.doResizeWindow();
   
   Blockly.mainWorkspace.traceOn(true);
   Game.execute(1);
@@ -1948,7 +2002,8 @@ Game.resetButtonClick = function() {
   Game.resetButtons();
   Game.reset(1); // dont reset the CustomerManager
   
-  Game.doResizeWindow("none");
+  Game.closeBoxes();
+  Game.doResizeWindow();
   
   Game.hideHints = true;
   
@@ -2014,7 +2069,10 @@ Game.debugButtonClick = function() {
 		Game.enableButton('resetButton');
 
 		if (Game.enabledVarWindow) {
-			Game.doResizeWindow("inline");
+			Game.closeBoxes();
+			Game.variableBox.style.display = "inline";
+			Game.doResizeWindow();
+			Game.disableButton('wizardFreeButton');
 		}
 		
 		Blockly.mainWorkspace.traceOn(true);
@@ -2078,6 +2136,8 @@ Game.resetButtons = function(hideVars) {
 	Game.enableButton('runButton');
 	
 	Game.enableButton('buyButton');
+	
+	Game.enableButton('wizardFreeButton');
 	
 	if (Blockly.mainWorkspace != null)
 		Blockly.mainWorkspace.traceOn(false); 
@@ -2242,7 +2302,8 @@ Game.execute = function(debug) {
 		  if (e == Infinity) { 
 			  Game.showError(["Error_infinityLoopDetected"]);
 		      Game.resetButtons();
-		      Game.doResizeWindow("none");
+		      Game.closeBoxes();
+		      Game.doResizeWindow();
 		      return;
 		  } else
 			  if (e.isNoBugs) {
@@ -2251,7 +2312,8 @@ Game.execute = function(debug) {
 
 				  Game.showError([e.msg]);
 			      Game.resetButtons();
-			      Game.doResizeWindow("none");
+			      Game.closeBoxes();
+			      Game.doResizeWindow();
 			      return;
 			  }
 		  
@@ -2451,7 +2513,7 @@ Game.updateVariables = function() {
 				if (data != undefined) {
 					
 					var fBuildData = function(data) {
-						var res = "";
+						var res = data;
 						if (data != null) {
 							
 							if (data.type != undefined) {
@@ -2466,7 +2528,7 @@ Game.updateVariables = function() {
 									if (data.indexOf("\"$$$") == 0) {
 										res = "<img src='images/"+ data.substring(2, data.length-1) + ".png'/>";
 										
-									}
+									} 
 								} catch (ex) {
 									// this happens when data is a number or other type different of string or array
 								}
@@ -2505,7 +2567,7 @@ Game.updateVariables = function() {
 	
 	//InGrid.loadLines('#_varsgrid_vars_0 div:nth-child(2) table', rows);
 
-	InGrid.createNewTable(rows);
+	InGrid.createNewVarTable(rows);
 	Game.assignIngrid();
 };
 
@@ -2678,7 +2740,6 @@ Game.nextStep = function() {
 					if (!Game.missionView)
 						UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
 
-					//Game.doResizeWindow("none");	
 				    if (debugging) {
 					  document.getElementById("moveRight").style.display = 'inline-block';
 				    }

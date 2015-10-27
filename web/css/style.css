@@ -104,7 +104,7 @@ button.secondary:disabled {
 }
 
 /* Variable box */
-#variableBox {
+#variableBox, #tipBox {
 	width: 200px;
 	position: fixed;
 	display: block;

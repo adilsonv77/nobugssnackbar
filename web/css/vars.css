@@ -28,3 +28,11 @@
 .varsgrid-header tr { height: 30px }
 
 .varsgrid-col0 {width: 100px }
+
+.tipsgrid-header { display: none }
+
+.tipsgrid td {
+	border-style: solid;
+	border-color: #DDDDDD;
+	
+}

@@ -194,13 +194,18 @@ Explanation.finishStatement = function() {
 		return;
 	}
 	
-	Game.verifyTestsInMission( function() {
+	var f = function() {
 		
-		Hints.init(Game.mission.getElementsByTagName("hints")[0], true);
-
-		Game.initTime();
-	});
+		Game.verifyTestsInMission( function() {
+			
+			Hints.init(Game.mission.getElementsByTagName("hints")[0], true);
 	
+			Game.initTime();
+		});
+		
+	};
+	
+	Game.alertWizardFree(f);
 };
 
 Explanation.parseUserLogged = function(explanations) {

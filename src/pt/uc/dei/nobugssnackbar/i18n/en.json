@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-10-27 17:41:04.292000",
+		"lastupdated": "2015-10-27 20:20:09.655000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -287,6 +287,7 @@
 	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.main": "Main",
 	"NoBugs.variables": "Variables",
+	"NoBugs.missionSolveExplanation": "Explanation",
 	"NoBugs.noMoreMissions": "You're an expert !!! At this moment, there aren't more missions for you. We'll contact you when release new missions. <x id='BREAK'/><x id='BREAK'/> However, you are also allowed to review your missions.",
 	"NoBugs.Review": "Review",
 	"NoBugs.goalAchievedFail": "You don't achieved this mission. <x id='BREAK'/><x id='BREAK'/> You need to try again.",

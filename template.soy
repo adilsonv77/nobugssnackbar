@@ -183,7 +183,7 @@
 		      		<div class="playerRewardIcon" style="background-image: url('images/coin2.png');"></div>
 		      		<span id="yourCashInMission"></span>
 		      	</div>
-		      	<button id="wizardFreeButton" style="background-color: #dd4b39; border-width: 0px; padding:0px; margin:0px; display: none"
+		      	<button id="wizardFreeButton" style="border-width: 0px; padding:0px; margin:0px; display: none"
 		      			title="{msg meaning="NoBugs.helpFreeTooltip" desc="--"}Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.{/msg}">
 		      		<img src="images/help_free.png" style="width: 32px; height: 32px"/>
 		      	</button>
@@ -335,7 +335,7 @@
 		  	</div>
 
 	  	</div>
-	  	<div class="var-content">
+	  	<div id="var_content" class="var-content">
 	  	<table id="vars">
 			<thead>
 				<tr>
@@ -348,6 +348,25 @@
 		</table>
 	  	</div>
 	  </div>
+	  
+	  <div id="tipBox" style="display:none">
+	  	<div class="move-header">
+		  	<div class="move-title">{msg meaning="NoBugs.missionSolveExplanation" desc="--"}Explanation{/msg}</div>
+	
+		  	<div class="move-panel">
+		  		<a id="moveRightTipBox" class="move-right" href="javascript:void(0)"></a>
+		  	</div>
+
+	  	</div>
+	  	<div id="tips_content" class="var-content">
+		  	<table id="tips">
+				<tbody>
+				</tbody>
+			</table>
+	  	</div>
+	  </div>
+	  
+	  
   </div>
 
   {call apps.dialog /}
