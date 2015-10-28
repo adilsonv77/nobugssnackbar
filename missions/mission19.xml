@@ -151,13 +151,13 @@ Observe que em ambos os exemplos, na primeira linha sempre salvamos o valor 0 &#
 		<line>Guarde o valor zero na vari&#225;vel [totalCachorros]</line>
 		<line>V&#225; at&#233; o cliente 1</line>
 		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
-		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some [totalCachorros] com [qtosCachorros] e guarde em [totalCachorros]</line>
 		<line>V&#225; at&#233; o cliente 2</line>
 		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
-		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some [totalCachorros] com [qtosCachorros] e guarde em [totalCachorros]</line>
 		<line>V&#225; at&#233; o cliente 3</line>
 		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
-		<line>Some totalCachorros com qtosCachorros e guarde em totalCachorros</line>
+		<line>Some [totalCachorros] com [qtosCachorros] e guarde em [totalCachorros]</line>
 		<line>Fale o totalCachorros</line>
 	</help>
 	<solution custCoins="5">

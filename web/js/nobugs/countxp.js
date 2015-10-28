@@ -170,7 +170,7 @@ CountXP.changeImgs = function() {
 	if (CountXP.eventChangeStars)
 		CountXP.eventChangeStars(CountXP.times);
 
-	if (CountXP.times >= 3 && CountXP.byTime) {
+	if (CountXP.times >= 3) {
 		
 		CountXP.clearTheWatch();
 		
@@ -209,7 +209,7 @@ CountXP.newRun = function() {
 			
 		
 		CountXP.tick();
-		if (added)
+		if (added && CountXP.current > 0)
 			CountXP.current--;
 	}
 		

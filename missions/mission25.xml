@@ -101,6 +101,27 @@ O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos 
 		 	</hint>
 		</errors>
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Se ele tiver fome E sede</line>
+		<line indent="1">Guarde o valor 4 na vari&#225;vel [v1]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Se ele tiver fome</line>
+		<line indent="2">Guarde o valor 2 na vari&#225;vel [v1]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Guarde o valor 3 na vari&#225;vel [v1]</line>
+		
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Se ele tiver fome E sede</line>
+		<line indent="1">Guarde o valor 4 na vari&#225;vel [v2]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Se ele tiver fome</line>
+		<line indent="2">Guarde o valor 2 na vari&#225;vel [v2]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Guarde o valor 3 na vari&#225;vel [v2]</line>
+		<line>Some [v1] com [v2] e guarde na vari&#225;vel [total]</line>
+		<line>Fale [total]</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true" />
 

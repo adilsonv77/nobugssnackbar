@@ -106,6 +106,33 @@ O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos 
 		 	</hint>
 		</errors>
 	</hints>
+	
+	<help>
+		<line>Guarde o valor 0 na vari&#225;vel [conta]</line>
+		
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [b]</line>
+		<line>Se [c] for igual a 2 E [b] for igual a 1</line>
+		<line indent="1">V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line indent="1">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [g]</line>
+		<line indent="1">V&#225; at&#233; o cliente 1</line>
+		<line indent="1">Entregue [g]</line>
+		<line indent="1">Some [conta] com valor 1 e guarde na vari&#225;vel [conta]</line>
+
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [b]</line>
+		<line>Se [c] for igual a 2 E [b] for igual a 1</line>
+		<line indent="1">V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line indent="1">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [g]</line>
+		<line indent="1">V&#225; at&#233; o cliente 3</line>
+		<line indent="1">Entregue [g]</line>
+		<line indent="1">Some [conta] com valor 1 e guarde na vari&#225;vel [conta]</line>
+
+		<line>Fale [conta]</line>
+	</help>
+
 	<commands>
 		<category name="snackMan" show="true" />
 
@@ -254,7 +281,7 @@ O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos 
 	</customers>
 
 	<objectives ordered="false" xpIndividual="50" xpFinal="30"
-		xpTotalTime="720" xpTotalRun="3">
+		xpTotalTime="720" xpTotalRun="6">
 
 		<objective type="logic_operation">useBlock</objective>
 		<objective text="a quantidade de gelados entregues"

@@ -87,6 +87,50 @@ Observe que existem dois blocos aninhados dentro do <i>if</i>, entre as linhas 5
 		 	</hint>
 		</errors>
 	</hints>
+	
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Se ele tiver fome</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue a comida informada em [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Guarde o valor 2 na vari&#225;vel [total]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Se o pedido for igual a softDrink</line>
+		<line indent="2">V&#225; at&#233; o refrigerador</line>
+		<line indent="2">Pegue a bebida informada em [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">V&#225; at&#233; a caixa de frutas</line>
+		<line indent="2">Pegue uma fruta informada em [pedido] e guarde na vari&#225;vel [frutas]</line>
+		<line indent="2">V&#225; at&#233; a m&#225;quina de sumos</line>
+		<line indent="2">Prepare e pegue o sumo com [frutas] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Guarde o valor 3 na vari&#225;vel [total]</line>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Entregue [pedido]</line>
+		
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Se ele tiver fome</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue a comida informada em [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Some 2 com [total] e guarde na vari&#225;vel [total]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Se o pedido for igual a softDrink</line>
+		<line indent="2">V&#225; at&#233; o refrigerador</line>
+		<line indent="2">Pegue a bebida informada em [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">V&#225; at&#233; a caixa de frutas</line>
+		<line indent="2">Pegue uma fruta informada em [pedido] e guarde na vari&#225;vel [frutas]</line>
+		<line indent="2">V&#225; at&#233; a m&#225;quina de sumos</line>
+		<line indent="2">Prepare e pegue o sumo com [frutas] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">Some 3 com [total] guarde na vari&#225;vel [total]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Entregue [pedido]</line>
+		<line>Fale [pedido]</line>
+	</help>	
+	
 	<commands>
 		<category name="snackMan" show="true" />
 
