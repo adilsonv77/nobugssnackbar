@@ -29,8 +29,10 @@ public class Startup implements ServletContextListener {
     public void contextInitialized(ServletContextEvent contextEvent) {
 
     	// I need this to solve a problem when edit and save dates with JSF
-        TimeZone zone = TimeZone.getTimeZone("GMT-03:00");
+        /*
+    	TimeZone zone = TimeZone.getTimeZone("GMT-03:00");
         TimeZone.setDefault(zone);
+    	*/
     	
     	String url = "";
     	String className = "";

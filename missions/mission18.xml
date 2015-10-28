@@ -38,6 +38,45 @@ Conte em duas vari&#225;veis separadas os cachorros e refrigerantes entregues. A
 		 	</hint>
 		</errors>
 	</hints>
+	<help>
+		<line>Guarde o valor 0 na vari&#225;vel [contaC]</line>
+		<line>Guarde o valor 0 na vari&#225;vel [contaB]</line>
+
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Se ele tiver sede</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o refrigerador</line>
+		<line indent="1">Pegue a bebida informada em [bebida] e guarde  na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 1</line>
+		<line indent="1">Entregue [bebida]</line>
+		<line indent="1">Some [contaB] e o valor 1 e guarde  na vari&#225;vel [contaB]</line>
+		<line>Se ele tiver fome</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja comer e guarde na vari&#225;vel [comida]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue a comida informada em [comida] e guarde  na vari&#225;vel [comida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 1</line>
+		<line indent="1">Entregue [comida]</line>
+		<line indent="1">Some [contaC] e o valor 1 e guarde  na vari&#225;vel [contaC]</line>
+
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Se ele tiver sede</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o refrigerador</line>
+		<line indent="1">Pegue a bebida informada em [bebida] e guarde  na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 2</line>
+		<line indent="1">Entregue [bebida]</line>
+		<line indent="1">Some [contaB] e o valor 1 e guarde  na vari&#225;vel [contaB]</line>
+		<line>Se ele tiver fome</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja comer e guarde na vari&#225;vel [comida]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue a comida informada em [comida] e guarde  na vari&#225;vel [comida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 2</line>
+		<line indent="1">Entregue [comida]</line>
+		<line indent="1">Some [contaC] e o valor 1 e guarde  na vari&#225;vel [contaC]</line>
+		
+		<line>Fale [contaC]</line>
+		<line>Fale [contaB]</line>
+	</help>	
 	<commands>
 		<category name="snackMan" show="true" />
 

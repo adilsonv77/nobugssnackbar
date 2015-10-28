@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -29,6 +30,7 @@ import pt.uc.dei.nobugssnackbar.model.User;
 public class GameJdbcDao implements GameDao {
 
 	private static Logger log = Logger.getGlobal();
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private Connection getConnection() throws SQLException {
 		return NoBugsConnection.getConnection().getDataSource().getConnection();
@@ -1790,7 +1792,12 @@ public class GameJdbcDao implements GameDao {
 
 				if (click[0] != null) {
 					ps.setString(2, click[0]);
-					ps.setTimestamp(3, new java.sql.Timestamp(Long.parseLong(click[1])));
+					
+					Long l = Long.parseLong(click[1]);
+					Date d = new Date(l);
+					
+					ps.setString(3, sdf.format(d));
+					//ps.setTimestamp(3, new java.sql.Timestamp(Long.parseLong(click[1])));
 					ps.executeUpdate();
 				}
 			}
