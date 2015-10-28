@@ -14,6 +14,23 @@ Por exemplo, se tinhas que dar $12 de troco, vais entregar 2 notas de $5, 1 moed
 		</page>
 
 	</explanation>
+	<help>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosC]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasB]</line>
+		<line>Multiplique qtosC por 2 e guarde na vari&#225;vel [valorC]</line>
+		<line>Multiplique qtasB por 3 e guarde na vari&#225;vel [valorB]</line>
+		<line>Some valorC com valorB e guarde na vari&#225;vel [valorPedido]</line>
+		<line>Cobre do cliente o valorPedido e o resultado guarde na vari&#225;vel [valorRecebido]</line>
+		<line>Subtraia valorPedido de valorRecebido e guarde na vari&#225;vel [troco]</line>
+		<line>Divida o troco por 5 e guarde na vari&#225;vel [n5]</line>
+		<line>Subtraia do troco o valor de n5 multiplicado por 5 e guarde na vari&#225;vel [troco]</line>
+		<line>Divida o troco por 2 e guarde na vari&#225;vel [n2]</line>
+		<line>Subtraia do troco o valor de n2 multiplicado por 2 e guarde na vari&#225;vel [n1]</line>
+		<line>Dar o troco com [moeda 1] com a a quantidade n1</line>
+		<line>Dar o troco com [moeda 2] com a a quantidade n2</line>
+		<line>Dar o troco com [nota 5] com a a quantidade n5</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true"/>
 		

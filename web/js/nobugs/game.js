@@ -1981,6 +1981,7 @@ Game.runButtonClick = function() {
   Game.enableButton("resetButton");
   Game.disableButton("debugButton");
   Game.disableButton("buyButton");
+  Game.disableButton("wizardFreeButton");
   
   Game.closeBoxes();
   

@@ -26,6 +26,18 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 		
 		</sequence>
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtosC]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [qtasB]</line>
+		<line>Multiplique qtosC por 2 e guarde na vari&#225;vel [valorC]</line>
+		<line>Multiplique qtasB por 3 e guarde na vari&#225;vel [valorB]</line>
+		<line>Some valorC com valorB e guarde na vari&#225;vel [valorPedido]</line>
+		<line>Cobre do cliente o valorPedido e o resultado guarde na vari&#225;vel [valorRecebido]</line>
+		<line>Subtraia valorPedido de valorRecebido e guarde na vari&#225;vel [troco]</line>
+		<line>Divida o troco por 2 e guarde na vari&#225;vel [quantasMoedas2]</line>
+		<line>Dar o troco com [moeda 2] com a a quantidade quantasMoedas2</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
