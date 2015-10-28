@@ -54,7 +54,7 @@ InGrid.createNewVarTable = function(rows) {
 	t.append(tBody);
 };
 
-InGrid.createNewTipTable = function(rows) {
+InGrid.createNewTipTable = function(cols, rows) {
 	$("#tips_content").empty();
 	
 	var t = $("<table>").attr("id", "tips");
@@ -76,7 +76,13 @@ InGrid.createNewTipTable = function(rows) {
 		  
 		  var tr = $("<tr/>");
 		  
-		  tr.append($("<td>").html(entry));
+		  var text = entry.text;
+		  var indent = entry.indent;
+		  
+		  for (var i = 0; i < indent; i++)
+			  tr.append($("<td>").css("background-color", "#DDDDDD"));
+		  
+		  tr.append($("<td>").attr("colspan", (cols-indent)+1).html(text));
 		 
 		  tBody.append(tr);
 		  

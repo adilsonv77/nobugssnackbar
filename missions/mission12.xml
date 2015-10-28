@@ -136,6 +136,22 @@ Observe na imagem, que &#233; sentido obrigat&#243;rio quando atende essa condi&
 			
 		</sequence>
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Se ele tiver sede</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o refrigerador</line>
+		<line indent="1">Pegue a bebida informada em [bebida] e guarde  na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 1</line>
+		<line indent="1">Entregue [bebida]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Se ele tiver sede</line>
+		<line indent="1">Pergunte ao cliente o que ele deseja beber e guarde na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o refrigerador</line>
+		<line indent="1">Pegue a bebida informada em [bebida] e guarde  na vari&#225;vel [bebida]</line>
+		<line indent="1">V&#225; at&#233; o cliente 3</line>
+		<line indent="1">Entregue [bebida]</line>
+	</help>	
 	
 	<commands>
 		<category name="snackMan" show="true" />

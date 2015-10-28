@@ -1862,11 +1862,19 @@ Game.wizardFreeButtonClick = function() {
 		
 		var rows = [];
 		
-		var lines = Game.wizardFreeContent[0].getElementsByTagName("line");
-		for (var i = 0; i < lines.length; i++)
-			rows.push(lines[i].textContent.toString());
+		var manyCols = 0;
 		
-		InGrid.createNewTipTable(rows);
+		var lines = Game.wizardFreeContent[0].getElementsByTagName("line");
+		for (var i = 0; i < lines.length; i++) {
+			var indent = lines[i].getAttribute("indent");
+			if (indent != null && manyCols < parseInt(indent)) {
+				manyCols = parseInt(indent);
+			}
+			rows.push({text: lines[i].textContent.toString(), indent: (indent==null?0:parseInt(indent))});
+		}
+			
+		
+		InGrid.createNewTipTable(manyCols, rows);
 		
 		Game.tipBox.style.display = "inline";
 		Game.doResizeWindow();
