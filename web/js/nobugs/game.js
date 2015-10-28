@@ -1473,8 +1473,9 @@ Game.alertWizardFree = function(finishFunction) {
 		var bX = bbBox.x+35;
 	
 		MyBlocklyApps.showDialog(content[0], null, true, true, false, "", 
-				{width: "500px", left: bX + "px", top: bY + "px"}, null, 
-				function(){finishFunction();}, true);
+				{width: "500px", left: bX + "px", top: bY + "px"}, function(){finishFunction();}, 
+				function() {}, 
+				true);
 		
 		Game.changeFlag("TALK_WIZARDFREE", "true");
 	} else 

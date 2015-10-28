@@ -27,6 +27,16 @@ Dica: utilize a opera&#231;&#227;o de subtra&#231;&#227;o, diminuindo a quantida
 		 	</hint>
 		</errors>
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos1]</line>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos2]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos3]</line>
+		<line>Some qtos1, qtos2 e qtos3 e guarde na vari&#225;vel [qtos]</line>
+		<line>Fale a diferen&#231;a entre 10 e qtos</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true"/>
 		
