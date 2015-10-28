@@ -648,7 +648,7 @@ Game.workspaceAnswer = function() {
 	if (Blockly.mainWorkspace != null) {
 		answer = "<answers>";
 		Game.blocklys.forEach(function(b) {
-			answer += "<ws id='" + b.ws.index + "'>" + Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(b.ws)) + "</ws>";	
+			answer += "<ws id=\"" + b.ws.index + "\">" + Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(b.ws)) + "</ws>";	
 		});
 		answer += "</answers>";
 		

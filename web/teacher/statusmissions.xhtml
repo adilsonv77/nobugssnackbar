@@ -77,7 +77,7 @@
 			        	<p:commandButton icon="ui-icon-search" title="#{msg.view}"
 			        				rendered="#{ua.answer != null}"
 									actionListener="#{statusMissions.loadAnswer(row)}"
-									oncomplete="showAnswer('#{ua.answer}')"
+									oncomplete="foi(); showAnswer('#{ua.answer}');"
 									update="frmStatusMissions:dlgUserAnswer"
 									>
 	                   </p:commandButton>
@@ -99,6 +99,10 @@
 			
 			<script>
 
+			function foi() {
+				console.log("foi");	
+			}
+			
 			function showAnswer(answer) {
 				document.getElementById('editorBlockly').onload = function() {
 					
