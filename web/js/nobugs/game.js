@@ -1423,7 +1423,7 @@ Game.addCronometro = function(bonusTime, timeSpent) {
 	$('#timerCountUp').empty();
 	Game.cronometro = null;
 	
-	if (Game.missionView || Game.pointsInThisMission) return;
+	if (Game.missionView || !Game.pointsInThisMission) return;
 	
 	if (bonusTime != null) {
 		timeSpent = parseInt(timeSpent);
