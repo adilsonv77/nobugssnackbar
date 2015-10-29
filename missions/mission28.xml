@@ -42,6 +42,26 @@ A ordem em que utilizas as express&#245;es dentro de uma condi&#231;&#227;o &#23
 		</page>
 
 	</explanation>
+	<help>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantos gelados ele deseja e guarde na vari&#225;vel [g]</line>
+		<line>Fa&#231;a a diferen&#231;a entre [c] e [g] e guarde na vari&#225;vel [c]</line>
+		<line>se [g] for maior ou igual a 1</line>
+		<line indent="1">se [c] for igual a 2</line>
+		<line indent="2">Guarde o valor [verdadeiro] na vari&#225;vel [entregarGelado]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Guarde o valor [falso] na vari&#225;vel [entregarGelado]</line>
+		<line indent="1">Pergunte qual gelado ele deseja e guarde na vari&#225;vel [ic]</line>
+		<line indent="1">V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line indent="1">Prepare e pegue um gelado de [ic] e guarde na vari&#225;vel [ic]</line>
+		<line indent="1">se [entregarGelado]</line>		
+		<line indent="2">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [oferta]</line>
+		<line indent="1">V&#225; at&#233; o cliente 2</line>
+		<line indent="1">Entregue [ic]</line>
+		<line indent="1">se [entregarGelado]</line>		
+		<line indent="2">Entregue [oferta]</line>
+	</help>
 	<commands>
 		<category name="snackMan" show="true" />
 

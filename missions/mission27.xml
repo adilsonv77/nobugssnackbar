@@ -111,6 +111,51 @@ O terceiro operador nega tudo que estiver dentro da condi&#231;&#227;o. Podemos 
 		 	</hint>
 		</errors>
 	</hints>
+	
+	<help>
+		<line>Guarde o valor 0 na vari&#225;vel [contaB]</line>
+		<line>Guarde o valor 0 na vari&#225;vel [contaC]</line>
+		<line>Guarde o valor 0 na vari&#225;vel [contaM]</line>
+		
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [b]</line>
+		<line>V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line>Se [c] for igual a 3 OU [b] for igual a 3</line>
+		<line indent="1">Prepare e pegue um gelado de [morango] e guarde na vari&#225;vel [g]</line>
+		<line indent="1">Some [contaM] com valor 1 e guarde na vari&#225;vel [contaM]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Se [c] for maior igual a 1 E [b] for maior igual a 1</line>
+		<line indent="2">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [g]</line>
+		<line indent="2">Some [contaC] com valor 1 e guarde na vari&#225;vel [contaC]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Prepare e pegue um gelado de [baunilha] e guarde na vari&#225;vel [g]</line>
+		<line indent="2">Some [contaB] com valor 1 e guarde na vari&#225;vel [contaB]</line>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Entregue [g]</line>
+
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [b]</line>
+		<line>V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line>Se [c] for igual a 3 OU [b] for igual a 3</line>
+		<line indent="1">Prepare e pegue um gelado de [morango] e guarde na vari&#225;vel [g]</line>
+		<line indent="1">Some [contaM] com valor 1 e guarde na vari&#225;vel [contaM]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">Se [c] for maior igual a 1 E [b] for maior igual a 1</line>
+		<line indent="2">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [g]</line>
+		<line indent="2">Some [contaC] com valor 1 e guarde na vari&#225;vel [contaC]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Prepare e pegue um gelado de [baunilha] e guarde na vari&#225;vel [g]</line>
+		<line indent="2">Some [contaB] com valor 1 e guarde na vari&#225;vel [contaB]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Entregue [g]</line>
+
+		<line>Fale [contaB]</line>
+		<line>Fale [contaC]</line>
+		<line>Fale [contaM]</line>
+	</help>
+	
 	<commands>
 		<category name="snackMan" show="true" />
 
