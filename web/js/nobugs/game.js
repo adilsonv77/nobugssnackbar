@@ -887,7 +887,10 @@ Game.afterInstallMachines = function(toolbox) {
   if (Game.previousCode != null) // the user try this mission before, than load the previous code
 	  Game.nextPartOfMissionLoaded(false, toolbox, Game.previousCode, mission, Game.timeSpent);
   else {
-	  var sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+	  var sourceXML = mission.childNodes[0].getElementsByTagName("answers")[0];
+	  if (sourceXML == null) {
+		  sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+	  } 
 
 	  var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {

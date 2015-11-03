@@ -672,3 +672,22 @@ CustomerManager.fullDeliveredCustomersHowManyPlaces = function() {
 	return  places.length;
 	
 };
+
+CustomerManager.greatestCustomer = function(f) {
+	
+	var g = -1;
+	var idx = 0;
+	
+	for (var i = 0; i < customers.length; i++) {
+
+		var vc = customers[i][f]();
+		
+		if (vc > g) {
+			g = vc;
+			idx = i;
+		}
+		
+	}
+		
+	return idx;
+};

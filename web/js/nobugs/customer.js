@@ -692,6 +692,11 @@ Customer.prototype.deliver = function(item) {
 	return {money: money, happy: happy, reason: reason};
 };
 
+Customer.prototype.howManyHotDogs = function() {
+	return this.askWantHowManyFoods() - this.askWantHowManyIceCream();
+}
+
+
 Customer.prototype.fullDelivered = function() {
 	return (this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length);
 };
