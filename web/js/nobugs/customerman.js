@@ -404,9 +404,14 @@ CustomerManager.removeCustomer = function(customer) {
 	customers.splice(start, 1);
 };
 
-CustomerManager.update = function() {
+CustomerManager.update = function(howManyTimes) {
+	
+	if (howManyTimes === undefined)
+		howManyTimes = 1;
+	
 	for (var i = 0; i < customers.length; i++)
-		customers[i].update();
+		for (var j=0; j<howManyTimes; j++)
+			customers[i].update();
 	
 };
 

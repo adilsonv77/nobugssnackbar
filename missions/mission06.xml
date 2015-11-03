@@ -141,7 +141,7 @@ n&#227;o est&#225; mais l&#225;. Se voc&#234; n&#227;o salvou o n&#250;mero anti
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600">
+	<objectives ordered="false" xpIndividual="10" xpFinal="5" xpTotalTime="600" xpTotalRun="6">
 		<objective pos="1" place="counter">askForFood</objective>
 		<objective pos="1" place="counter">pickUpFood</objective>
 		<objective pos="1" place="counter">deliver</objective>

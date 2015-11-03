@@ -1288,7 +1288,17 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  Hints.init(Game.mission.getElementsByTagName("hints")[0], !Game.showedWindowRunDisabled);
 		  Game.initTime();
 		  
-		  Game.alertWizardFree(Game.alertMissionView);
+		  if (Game.missionView)
+			  Game.alertMissionView();
+		  else {
+			  var fAlert = function() {
+				  var f = function() {Game.hideShadow();};
+				  Game.alertStarsByAttempt(f);
+			  };
+			  
+			  Game.alertWizardFree(fAlert);  
+		  }
+			  
 	  }
   };
   
@@ -3213,7 +3223,12 @@ Game.highlightBlock = function(id) {
 		Blockly.mainWorkspace.traceOn(true);
 	
 	BlocklyApps.log.push(['IM', 0]);
-	CustomerManager.update();
+	BlocklyApps.log.push(['IM', 0]);
+	BlocklyApps.log.push(['IM', 0]);
+	BlocklyApps.log.push(['IM', 0]);
+	BlocklyApps.log.push(['IM', 0]);
+	
+	CustomerManager.update(5);
 	
     Blockly.mainWorkspace.highlightBlock(id);
 	Game.updateVariables();	

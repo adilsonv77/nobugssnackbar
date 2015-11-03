@@ -157,7 +157,7 @@ Experimente depurar e observar as duas vari&#225;veis em a&#231;&#227;o.
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false"  xpIndividual="10" xpFinal="5" xpTotalTime="420">
+	<objectives ordered="false"  xpIndividual="10" xpFinal="5" xpTotalTime="420" xpTotalRun="9">
 		<objective pos="1" place="counter" distinct="true">askForFood</objective>
 		<objective pos="3" place="counter" distinct="true">askForFood</objective>
 	</objectives>

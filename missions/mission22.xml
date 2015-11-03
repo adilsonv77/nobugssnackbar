@@ -104,7 +104,7 @@ Por exemplo, se tinhas que dar $12 de troco, vais entregar 2 notas de $5, 1 moed
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="70" xpFinal="20" xpTotalTime="3120">
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="70" xpFinal="20" xpTotalTime="3120">
 		
 		<objective pos="2" place="counter">askWantHowManyFoods</objective>
 		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
