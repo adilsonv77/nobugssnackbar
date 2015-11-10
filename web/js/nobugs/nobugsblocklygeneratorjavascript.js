@@ -213,8 +213,11 @@ NoBugsJavaScript.arrayCreate = function(size) {
 		BlocklyApps.log.push(["fail", "Error_parameterMustBeGreaterThanZero"]);
 		throw false;
 	}
+	var r = new Array(size)
+	for (var k=0; k<r.length; k++)
+		r[k] = 0;
 	
-	return new Array(size);
+	return r;
 };
 
 NoBugsJavaScript.testParameters = function(array, index) {

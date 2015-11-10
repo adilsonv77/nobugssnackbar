@@ -1211,7 +1211,25 @@ SnackMan.prototype.animate = function(command, values) {
 	 		break;
 	 	
 	 	case 'TA':
-	 		this.talkText = values.shift();
+	 		var s = values.shift();
+	 		s = s.data;
+	 		if (Array.isArray(s)) {
+	 			var rs = "[";
+	 			for (var k = 0; k < s.length; k++) {
+	 				
+	 				if (rs.length > 1)
+						rs = rs + ",";
+	 				
+	 				var e = s[k];
+	 				if (e === undefined)
+	 					e = "0";
+	 				
+	 				rs = rs + e;
+	 			}
+	 				
+	 			s = rs + "]";
+	 		}
+	 		this.talkText = s;
 	 		break;
 	 	
 	 	case 'DI': ;

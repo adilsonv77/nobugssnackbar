@@ -830,7 +830,10 @@ Game.missionLoaded = function(ret){
 
 Game.assignIngrid = function() {
 	  
-	  $("#vars").ingrid({height: 250, paging: false, sorting: false,
+	  var th = $("#variableBox .move-header")[0].clientHeight;
+	  var h = (Game.variableBox.clientHeight-th);
+	
+	  $("#vars").ingrid({height: h, paging: false, sorting: false,
 			  gridClass: 'varsgrid',
 			  headerClass: 'varsgrid-header',
 			  colClasses:['varsgrid-col0', ''],
@@ -1668,7 +1671,16 @@ Game.resizeWindow = function(e) {
         if (Game.tipBox.style.display !== "none") {
         	var th = $("#tipBox .move-header")[0].clientHeight;
         	$("#tips_content").css("height", (box.clientHeight-th) + "px");
-        }
+        } else {
+        	var th = $("#variableBox .move-header")[0].clientHeight;
+        	
+        	var h = (box.clientHeight-th) + "px";
+        	$("#var_content").css("height", h);
+        	var dv = $("#var_content .basevarsgrid div:nth(2)");
+        	if (dv.length > 0)
+        		dv.css("height", h);
+        } 
+        	
         
     }
     Game.redimDiv.style.width = (w) + 'px';
@@ -2568,11 +2580,15 @@ Game.updateVariables = function() {
 					
 					if (Array.isArray(data)) {
 						var sV = "[";
-						data.forEach(function (elem) {
+						for (var k=0; k<data.length; k++) {
+							var elem = data[k];
 							if (sV.length > 1)
 								sV = sV + ",";
-							sV = sV + fBuildData(elem);
-						});
+							var r = fBuildData(elem);
+							if (r === undefined)
+								r = "0";
+							sV = sV + r;
+						}
 						
 						data = sV + "]";
 					} else {
