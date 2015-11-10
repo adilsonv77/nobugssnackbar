@@ -1223,6 +1223,9 @@ SnackMan.prototype.animate = function(command, values) {
 	 				var e = s[k];
 	 				if (e === undefined)
 	 					e = "0";
+	 				else
+	 					if (typeof(s[k]) === "object")
+	 						e = "-";
 	 				
 	 				rs = rs + e;
 	 			}

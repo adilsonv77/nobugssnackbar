@@ -769,12 +769,27 @@ Objective.Talk.prototype.init = function(elem) {
 	var p = Objective.init(elem, this);
 	p.text = elem.getAttribute("text");
 	p.value = elem.getAttribute("value");
+	p.type = elem.getAttribute("type");
 	return p;
 };
 
 Objective.Talk.prototype.checkObjective = function(options, objective)  {
 
 	var value = eval(objective.value);
+	
+	if (objective.type !== null) {
+		if (Array.isArray(options.data) && objective.type === "array") {
+			value = value.split("##");
+			if (value.length !== options.data.length)
+				return false;
+			
+			for (var i = 0; i<options.data.length; i++) {
+				if (JSON.stringify(options.data[i]) !== value[i])
+					return false;
+			}
+			return true;
+		}
+	}
 	
 	return value === options.data;
 
