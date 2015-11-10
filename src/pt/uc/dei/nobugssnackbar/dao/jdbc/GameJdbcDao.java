@@ -452,7 +452,7 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes from classeslevels cl join classes c on (cl.classid = c.classid) join ("
+			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
@@ -478,7 +478,7 @@ public class GameJdbcDao implements GameDao {
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
 						rs.getLong(3), rs.getLong(4), rs.getLong(5),
-						rs.getLong(6), new ArrayList<Integer[]>() };
+						rs.getLong(6), new ArrayList<Integer[]>(), null };
 
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));
@@ -486,12 +486,16 @@ public class GameJdbcDao implements GameDao {
 				xpToHat = rs.getInt(7);
 				xpToClothes = rs.getInt(8);
 				
+				if (rs.getString(9).equals("T")) { // open level
+					li[7] = new ArrayList<Integer>();
+				}
+				
 				l.add(li);
 			}
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select missionorder from classesmissions where classid = ? and classlevelid = ? and freeaccess = 'T' order by missionorder");
+					.prepareStatement("select missionorder, freeaccess from classesmissions where classid = ? and classlevelid = ? and (freeaccess = 'T' or freeaccess = 'X') order by missionorder");
 
 			for (int i = 0; i < classesId.size(); i++) {
 
@@ -505,17 +509,39 @@ public class GameJdbcDao implements GameDao {
 				int j = 1;
 				while (rs.next()) {
 					int mr = rs.getInt(1);
-					missions.add(new Integer[]{j});
+					missions.add(new Integer[]{j, (rs.getString(2).equals("X")?1:0)});
 					if (mr <= qtasResolvidas+1)
 						qtasResolvidas++;
 					j++;
 				}
-				
+				rs.close();
 				l.get(i)[3] = qtasResolvidas;
 
 			}
 			ps.close();
 
+			ps = bdCon
+					.prepareStatement("select achieved from missionsaccomplished join classesmissions using (classid, missionid) where userid = ? and classlevelid = ? order by missionorder");
+			ps.setLong(1, idUser);
+			for (int i = 0; i < l.size(); i++) {
+				Object[] r = l.get(i);
+				if (r[7] != null) {
+					
+					List<Integer> lm = (List<Integer>) r[7];
+					ps.setInt(2, classesLevelId.get(i));	
+					
+					rs = ps.executeQuery();
+					int j = 1;
+					while (rs.next()) {
+						if (rs.getString(1).equals("T"))
+							lm.add(j);
+						j++;
+					}
+					rs.close();
+				}
+			}
+			ps.close();
+			
 			Object[][] ret = new Object[l.size()][];
 			for (int i = 0; i < l.size(); i++)
 				ret[i] = l.get(i);

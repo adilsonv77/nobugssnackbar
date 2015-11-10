@@ -122,17 +122,24 @@ CityMap.init = function(options) {
 	CityMap.canvas = document.getElementById('city_map');
 	CityMap.canvasCtx = CityMap.canvas.getContext('2d');
 
-	CityMap.canvas.addEventListener('mousemove', function(evt) {
-	        var mousePos = CityMap.getMousePos(evt);
-	        CityMap.blinkSchool = CityMap.testMouseOver(mousePos.x, mousePos.y);
-	      }, false);
+	CityMap.canvas.removeEventListener('mousemove', CityMap.mouseMove);
+	CityMap.canvas.removeEventListener('click', CityMap.click);
+	
+	CityMap.canvas.addEventListener('mousemove', CityMap.mouseMove, false);
 		  
-	CityMap.canvas.addEventListener('click', function(evt) {
-	        if (CityMap.blinkSchool) 
-	        	CityMap.onclick(evt);
-	      }, false);
+	CityMap.canvas.addEventListener('click', CityMap.click, false);
 };
 
+CityMap.mouseMove = function(evt) {
+    var mousePos = CityMap.getMousePos(evt);
+    CityMap.blinkSchool = CityMap.testMouseOver(mousePos.x, mousePos.y);
+};
+  
+CityMap.click = function(evt) {
+      if (CityMap.blinkSchool) 
+      	CityMap.onclick(evt);
+};
+  
 CityMap.getMousePos = function(evt) {
 	var rect = CityMap.canvas.getBoundingClientRect();
 	return {
