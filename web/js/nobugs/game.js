@@ -355,24 +355,25 @@ Game.continueLoginProcessEx = function() {
 
 Game.logged = function() {
 	
-	AvatarEditor.init(); 
-
-	UserControl.retrieveReward(Game.updatesReward);
-
-	$("#playerName").html(Game.loginData.userLogged.name);
-	$("#playerNameInMission").html(Game.loginData.userLogged.name);
-	$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
-	
-	Game.drawMiniAvatar();
-	UserControl.updateUserLastTime();
-	
-	if (Game.variableBox != null)
-		Game.variableBox.style.display = "none";
-	
-	if (Game.tipBox != null)
-		Game.tipBox.style.display = "none";
 	
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
+
+		AvatarEditor.init(); 
+
+		UserControl.retrieveReward(Game.updatesReward);
+
+		$("#playerName").html(Game.loginData.userLogged.name);
+		$("#playerNameInMission").html(Game.loginData.userLogged.name);
+		$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
+		
+		Game.drawMiniAvatar();
+		UserControl.updateUserLastTime();
+		
+		if (Game.variableBox != null)
+			Game.variableBox.style.display = "none";
+		
+		if (Game.tipBox != null)
+			Game.tipBox.style.display = "none";
 
 		// this is necessary when unloads
 		window.removeEventListener('beforeunload', Game.unload);
@@ -710,6 +711,8 @@ Game.missionLoaded = function(ret){
   Game.pointsInThisMission =  mission.childNodes[0].getAttribute("points") == null || mission.childNodes[0].getAttribute("points") === "true";
   if (!Game.pointsInThisMission)
 	  CountXP.init("stopWatch", false);
+  
+  Game.missionFinishable = mission.childNodes[0].getAttribute("finishable") == null || mission.childNodes[0].getAttribute("finishable") === "true";
   
   Game.globalMoney = 0;
   Game.globalXP = 0;
@@ -1182,7 +1185,15 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  b.ws.aux = i > 0;
 	  b.ws.index = i;
   }
+  
   Game.selectedTab = "";
+  if (Game.blocklys.length > 0) {
+	  
+	  Game.selectTab(Game.blocklys[0].id);
+	  Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
+	  
+  } 
+  
   
   if (Game.zoomLevel > 1) {
 	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
@@ -2222,6 +2233,11 @@ Game.selectTab = function(id) {
 	$('#multiBlockly').easytabs("select", "#" + (id));
 	Blockly.fireUiEvent(window, 'resize');
 	
+	if (Game.counterInstruction != null) {
+		Game.counterInstruction.style.display = (id === "blockly1"?"inline":"none");
+		Game.updateCounterInstructions(-1);	
+	}
+	
 };
 
 Game.changeTab = function(id, f) {
@@ -2432,18 +2448,27 @@ Game.showCountInstructions = function() {
 	
 	if (Game.blockly && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
 
+		var blck = (Game.blocklys.length == 0?Game.blockly:document.getElementById(Game.blocklys[0].id));
+		var t = blck.offsetTop;
+		
+		if (Game.blocklys.length > 0) {
+			t = t + blck.parentElement.parentElement.offsetTop;;
+		} 
+
 		var ci = document.createElement("div");
 		ci.id = "countInstruction";
 		ci.style.position = "absolute";
-		ci.style.top = blockly.offsetTop + "px";
+		ci.style.top = t + "px";
 		ci.style.backgroundColor = "rgba(153, 152, 152, 0.28)";
 		ci.style.opacity = "0.3";
 		
-		ci.innerHTML = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks()) + " blocks";
-		document.getElementById("mainBody").appendChild(ci);
-
-		ci.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - ci.clientWidth - 15) + "px";
 		
+		ci.innerHTML = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks()) + " blocks";
+		
+		document.getElementById("mainBody").appendChild(ci);
+		
+
+		ci.style.left = (blck.offsetLeft + blck.offsetWidth - ci.clientWidth - 15) + "px";
 		
 		Game.counterInstruction = ci;
 	} else
@@ -2455,8 +2480,9 @@ Game.updateCounterInstructions = function(howMany) {
 	if (Game.counterInstruction == null)
 		return;
 	
-	Game.counterInstruction.innerHTML = howMany + " blocks";
-	Game.counterInstruction.style.left = (Game.blockly.offsetLeft + Game.blockly.offsetWidth - Game.clientWidth - 15) + "px";
+	var blck = (Game.blocklys.length == 0?Game.blockly:document.getElementById(Game.blocklys[0].id));
+	Game.counterInstruction.innerHTML = (howMany > -1?howMany + " blocks":Game.counterInstruction.innerHTML);
+	Game.counterInstruction.style.left = (blck.offsetLeft + blck.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 };
 
 /**
@@ -2715,7 +2741,7 @@ Game.nextStep = function() {
 					}
 					
 
-			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.pointsInThisMission, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
+			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
 			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";

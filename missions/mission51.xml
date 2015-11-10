@@ -8,8 +8,10 @@
 		Eles podem pedir nenhuma ou uma bebida. O pedido sempre precisa ser guardado na primeira posição não 
 		utilizada do array. Por exemplo, o primeiro que pedir uma bebida, o seu pedido deve ser guardado na
 		posição ZERO do array, não importando se for o cliente 1 ou o cliente 3 do balcão.
-		Apenas pergunte aos clientes: não busque e nem atenda os pedidos.
-		Você tem uma limitação quanto à quantidade de blocos no programa principal: 10 blocos.
+		Depois de pedido, prepare a bebida: vá ao frigorífico e pegue o refrigerante, ou prepare o sumo. 
+		A bebida preparada deve substituir o próprio pedido no array. Por exemplo, se a posição UM do array
+		foi para guardar um pedido de refrigerante, você deve guardar a bebida que pegou no frigorífico exatamente
+		na mesma posição UM.
 		Ao final fale o array. Esse array será usado para comparar se o você fez os pedidos corretamente. 
 		]]>
 		</page>
@@ -82,22 +84,19 @@
 
 	</commands>
 	<cooker>initial</cooker>
-	<tests>5</tests>
+	<tests>4</tests>
 	<testsvars>
 		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}</var>
+			<var name="pedidos">{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$juiceoforange","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0</var>
+		</test>
+		<test>
+			<var name="pedidos">{"type":"item","descr":"$$juiceoforange","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##0</var>
+		</test>
+		<test>
+			<var name="pedidos">{"type":"item","descr":"$$juiceoforange","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0</var>
 		</test>
 		<test>
 			<var name="pedidos">0##0##0</var>
-		</test>
-		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0##0</var>
-		</test>
-		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##0##0</var>
-		</test>
-		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0</var>
 		</test>
 	</testsvars>
 	<customers>
@@ -118,6 +117,7 @@
 					<foods>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
@@ -130,13 +130,6 @@
 					<foods>
 					</foods>
 					<drinks>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -151,19 +144,6 @@
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
 					</drinks>
 				</order>
 				<order>
@@ -171,6 +151,13 @@
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
@@ -190,7 +177,7 @@
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
@@ -210,26 +197,20 @@
 					<foods>
 					</foods>
 					<drinks>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
 		</customer>
 
 	</customers>
-	<objectives commQtd="10" >
+	<objectives>
 		<objective
-			text="o array com os pedidos de bebidas"  type="array"
+			text="o array com as bebidas prontas a servir"  type="array"
 			value="Game.readVariableTest('pedidos')">talk</objective>
-	</objectives>
+</objectives>
 
-	<answers>
-	</answers>
+	<xml preload="50">
+
+	</xml>
 
 </mission>
