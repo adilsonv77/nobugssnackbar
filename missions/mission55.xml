@@ -1,0 +1,384 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" points="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		<b>Nível médio</b>
+		Crie dois arrays de tamanho três.
+		Vá a cada cliente e pergunte o que ele deseja comer. No máximo 3 clientes podem ter fome. Ele pode pedir um cachorro 
+		ou um gelado. Guarde esse pedido em um array. Guarde num segundo array a posição do cliente (1 a 5). 
+		
+		Existe um procedimento pronto na guia [Funções 1] para fazer a deslocação do cozinheiro até uma posição da esplanada.
+		
+		No segundo momento, com base no array de pedidos, pegue o cachorro no mostrador ou o gelado na máquina.
+		
+		No terceiro momento, vá a cada cliente (utilize o segundo array) e entregue o pedido.
+		
+		Ao final fale esse segundo array. Esse array será usado para comparar se o você fez a soma correta das bebidas.
+		
+		Vamos limitar a quantidade de comandos no principal para pensares um pouco em como modularizar esse problema. 
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToTable" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+		<category name="pickUpDrink" show="true" />
+
+		<category name="icecream" show="true" />
+		<category name="askForIceCream" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
+		<category name="giveChange" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.chocolate" show="true" />
+		<category name="const.strawberry" show="true" />
+		<category name="const.vanilla" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+		<category name="text" show="true" />
+
+		<category name="function" show="true" />
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<testsvars>
+		<test>
+			<var name="pedidos">1##2##3</var>
+			<var name="pedB1">food#hotdog</var>
+			<var name="pedB2">food#icecreamofchocolate</var>
+			<var name="pedB3">food#icecreamofvanilla</var>
+			<var name="pedM1"></var>
+			<var name="pedM2"></var>
+		</test>
+		<test>
+			<var name="pedidos">4##0##0</var>
+			<var name="pedB1"></var>
+			<var name="pedB2"></var>
+			<var name="pedB3"></var>
+			<var name="pedM1">food#hotdog</var>
+			<var name="pedM2"></var>
+		</test>
+		<test>
+			<var name="pedidos">3##5##0</var>
+			<var name="pedB1"></var>
+			<var name="pedB2"></var>
+			<var name="pedB3">food#hotdog</var>
+			<var name="pedM1"></var>
+			<var name="pedM2">food#icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="pedidos">0##0##0</var>
+			<var name="pedB1"></var>
+			<var name="pedB2"></var>
+			<var name="pedB3"></var>
+			<var name="pedM1"></var>
+			<var name="pedM2"></var>
+		</test>
+	</testsvars>
+	<customers>
+
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">icecreamofvanilla</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>table1</init>
+			<dest>table1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>01</id>
+			<init>table2</init>
+			<dest>table2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+							
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	
+	<objectives commQtd="16">
+		<objective pos="1" place="counter" value="Game.readVariableTest('pedB1')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('pedB2')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('pedB3')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+
+		<objective pos="1" place="table" value="Game.readVariableTest('pedM1')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="2" place="table" value="Game.readVariableTest('pedM2')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+
+		<objective
+			text="o array a posição dos clientes que pediram alguma coisa" type="array"
+			value="Game.readVariableTest('pedidos')">talk</objective>
+	</objectives>
+
+	<answers>
+		<ws id="0">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="1">
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defnoreturn" x="46" y="34">
+					<mutation>
+						<arg name="indice"></arg>
+					</mutation>
+					<field name="NAME">vaiAteCliente</field>
+					<statement name="STACK">
+						<block type="controls_if">
+							<mutation else="1"></mutation>
+							<value name="IF0">
+								<block type="logic_compare">
+									<field name="OP">LTE</field>
+									<value name="A">
+										<block type="variables_get">
+											<field name="VAR">indice</field>
+										</block>
+									</value>
+									<value name="B">
+										<block type="math_number">
+											<field name="NUM">3</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO0">
+								<block type="move_goToBarCounter">
+									<value name="VALUE">
+										<block type="variables_get">
+											<field name="VAR">indice</field>
+										</block>
+									</value>
+								</block>
+							</statement>
+							<statement name="ELSE">
+								<block type="move_goToTable">
+									<value name="VALUE">
+										<block type="math_arithmetic">
+											<field name="OP">MINUS</field>
+											<value name="A">
+												<block type="variables_get">
+													<field name="VAR">indice</field>
+												</block>
+											</value>
+											<value name="B">
+												<block type="math_number">
+													<field name="NUM">3</field>
+												</block>
+											</value>
+										</block>
+									</value>
+								</block>
+							</statement>
+						</block>
+					</statement>
+				</block>
+			</xml>
+		</ws>
+		<ws id="2">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="3">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="4">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="5">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+	</answers>
+
+</mission>

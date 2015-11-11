@@ -694,8 +694,7 @@ Customer.prototype.deliver = function(item) {
 
 Customer.prototype.howManyHotDogs = function() {
 	return this.askWantHowManyFoods() - this.askWantHowManyIceCream();
-}
-
+};
 
 Customer.prototype.fullDelivered = function() {
 	return (this.dUnfulfilled == this.drinks.length) && (this.fUnfulfilled == this.foods.length);

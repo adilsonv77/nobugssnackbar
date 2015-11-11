@@ -66,7 +66,7 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional")
+					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional" || key == "customDeliver")
 							&& options.allCustomers) {
 						ret = true;
 					} else
@@ -521,7 +521,17 @@ Objective.CustomDeliver.prototype.checkObjective = function(options, objective) 
 			if (options.customer.currentNode.id === CustOpt.counter[objective.pos-1]) 
 				cust = options.customer;
 		}
-	}
+	} else
+		if (objective.place === "table") {
+			
+			if (options.allCustomers)
+				cust = CustomerManager.getCustomerTable(objective.pos);
+			else {
+				
+				if (options.customer.currentNode.id === CustOpt.table[objective.pos-1]) 
+					cust = options.customer;
+			}
+		}
 	if (cust == null)
 		return false;
 	

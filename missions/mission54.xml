@@ -1,0 +1,226 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" points="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		<b>Nível médio</b>
+		Crie um array para guardar quantidades de bebidas.
+		Vá a cada cliente, pergunte quantas bebidas o cliente deseja e guarde essa quantidade numa posição do array. 
+		Aproveite e vá comparando qual é a maior quantidade pedida. Após esse primeiro ciclo, tens essa quantidade.  
+		
+		Crie outro array para guardar o valor dos pedidos que vais calcular nesse segundo momento. 
+		Itere sobre o array das quantidades para calcular os preços. 
+		O cálculo é o seguinte: a bebida custa $3. Porém, se o cliente é daqueles que tem a maior quantidade bebida, então cada
+		bebida custa $1. Você só vai calcular o valor do pedido. Não vai cobrar do cliente. Pode existir mais de um cliente que deseja
+		a maior quantidade.  
+		
+		Ao final fale o primeiro e o segundo arrays. Esse array será usado para comparar se você fez o cálculo do pedido corretamente.
+		Tome cuidado com o tamanho dos arrays, para que o seu tamanho seja compatível com o enunciado da missão. Se numa missão basta 
+		o tamanho 3 e você criar com tamanho 5, na hora de comparar os arrays na fala, o jogo avisará que não foi cumprido o objetivo.   
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToTable" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+		<category name="pickUpDrink" show="true" />
+
+		<category name="icecream" show="true" />
+		<category name="askForIceCream" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
+		<category name="giveChange" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.chocolate" show="true" />
+		<category name="const.strawberry" show="true" />
+		<category name="const.vanilla" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+		<category name="text" show="true" />
+
+		<category name="function" show="true" />
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<customers>
+
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">juiceoforange</drink>
+						<drink qt="1" price="1">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives>
+		<objective
+			text="o array com as quantidades pedidas" type="array"
+			value="[customers[0].askWantHowManyDrinks(), customers[1].askWantHowManyDrinks(), customers[2].askWantHowManyDrinks()]">talk</objective>
+		
+		<objective
+			text="o array com os valores dos pedidos" type="array"
+			value="[customers[0].askHowMuchInDrinksIfSell(), customers[1].askHowMuchInDrinksIfSell(), customers[2].askHowMuchInDrinksIfSell()]">talk</objective>
+	</objectives>
+
+	<answers>
+	</answers>
+
+</mission>
