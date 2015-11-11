@@ -2480,9 +2480,8 @@ Game.updateCounterInstructions = function(howMany) {
 	if (Game.counterInstruction == null)
 		return;
 	
-	var blck = (Game.blocklys.length == 0?Game.blockly:document.getElementById(Game.blocklys[0].id));
 	Game.counterInstruction.innerHTML = (howMany > -1?howMany + " blocks":Game.counterInstruction.innerHTML);
-	Game.counterInstruction.style.left = (blck.offsetLeft + blck.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
+	Game.counterInstruction.style.left = (Game.redimDiv.offsetLeft + Game.redimDiv.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 };
 
 /**

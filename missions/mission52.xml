@@ -107,6 +107,7 @@
 			<var name="pedidos">3##0##3</var>
 		</test>
 	</testsvars>
+
 	<customers>
 
 		<customer>
@@ -250,10 +251,11 @@
 			</orders>
 		</customer>
 
+
 	</customers>
 	<objectives commQtd="10">
 		<objective
-			text="o array com o valor a ser cobrado dos clientes"  type="array"
+			text="o array com o dinheiro recebido dos clientes" type="array"
 			value="Game.readVariableTest('pedidos')">talk</objective>
 	</objectives>
 

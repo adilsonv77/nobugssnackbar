@@ -779,12 +779,15 @@ Objective.Talk.prototype.checkObjective = function(options, objective)  {
 	
 	if (objective.type !== null) {
 		if (Array.isArray(options.data) && objective.type === "array") {
-			value = value.split("##");
-			if (value.length !== options.data.length)
-				return false;
+			if (value.indexOf("##") > -1) {
+				
+				value = value.split("##");
+				if (value.length !== options.data.length)
+					return false;
+			}
 			
 			for (var i = 0; i<options.data.length; i++) {
-				if (JSON.stringify(options.data[i]) !== value[i])
+				if (JSON.stringify(options.data[i]) !== value[i]+"")
 					return false;
 			}
 			return true;
