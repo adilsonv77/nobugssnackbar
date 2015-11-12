@@ -59,6 +59,8 @@ Game.varWindow = Game.RIGHT;
 
 Game.counterInstruction = null;
 
+Game.callTimes = {};
+
 PreloadImgs.put('fundo', 'images/fundo_new.png');
 PreloadImgs.put('doors', 'images/door_new.png');
 
@@ -2286,6 +2288,7 @@ Game.execute = function(debug) {
 	  try {
 		  
      	Game.howManyRuns++;
+     	Game.callTimes = {};
 
 	    Game.verifyFunctionTabs();
 		  
@@ -2703,6 +2706,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
 			    hero.verifyObjectives("countTalk", {allCustomers:true});
 			    hero.verifyObjectives("conditional", {allCustomers:true});
+			    hero.verifyObjectives("callTimes", {allCustomers:true});
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
@@ -3441,6 +3445,14 @@ Game.readVariableTest = function(variableName) {
 	
 	return null;
 	
+};
+
+Game.addCallTimes = function(block) {
+	if (Game.callTimes[block] === undefined) {
+		Game.callTimes[block] = 0;
+	}
+	
+	Game.callTimes[block]++;
 };
 
 $(document).on('click', function(e) {

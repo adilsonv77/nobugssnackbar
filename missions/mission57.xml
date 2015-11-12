@@ -15,7 +15,7 @@
 		Ao final fale esses arrays. Esses arrays serão usados para comparar se o você fez o cálculo corretamente de moedas de 2 e moedas 1. 
 
 		- em função 1 existe o esqueleto da função para calcular o preço recebendo como parâmetro a comida e a bebida pedidas
-		- em função 3 existe os esqueletos de duas funções: uma para calcular a quantidade de moedas de 2 a dar troco e outra em moedas de 1 
+		- em função 2 existe os esqueletos de duas funções: uma para calcular a quantidade de moedas de 2 a dar troco e outra em moedas de 1 
 				
 		Você somente pode perguntar uma vez o que o cliente deseja comer (askForFood) e beber (askForDrink).
 		
@@ -60,8 +60,6 @@
 		<category name="prepareAndPickUpJuice" show="true" />
 		<category name="pickUpDrink" show="true" />
 
-		<category name="askWantHowManyIceCream" show="true" />
-
 		<category name="money" show="true" />
 		<category name="cashIn" show="true" />
 		<category name="giveChange" show="true" />
@@ -93,21 +91,7 @@
 
 	</commands>
 	<cooker>initial</cooker>
-	<tests>4</tests>
-	<testsvars>
-		<test>
-			<var name="pedidos">4##1</var>
-		</test>
-		<test>
-			<var name="pedidos">1##4</var>
-		</test>
-		<test>
-			<var name="pedidos">1##2</var>
-		</test>
-		<test>
-			<var name="pedidos">0##1</var>
-		</test>
-	</testsvars>
+	<tests>3</tests>
 	<customers>
 
 		<customer>
@@ -117,6 +101,7 @@
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="2">hotdog</food>	
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -124,22 +109,16 @@
 				</order>
 				<order>
 					<foods>
+						<food qt="1" price="0">icecreamofchocolate</food>	
 					</foods>
 					<drinks>
-						<drink qt="1" price="2">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="2">coke</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
+						<drink qt="1" price="4">juiceoforange</drink>
 					</drinks>
 				</order>
 			</orders>
@@ -154,25 +133,19 @@
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="2">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
+						<food qt="1" price="2">hotdog</food>	
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="4">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
+						<food qt="1" price="2">hotdog</food>	
 					</foods>
 					<drinks>
 					</drinks>
@@ -186,183 +159,45 @@
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="0">icecreamofchocolate</food>	
 					</foods>
 					<drinks>
-						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="4">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="2">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
+						<food qt="1" price="0">icecreamofchocolate</food>	
 					</foods>
 					<drinks>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 			</orders>
 		</customer>
 
-		<customer>
-			<id>03</id>
-			<init>table1</init>
-			<dest>table1</dest>
-			<orders>
-				<order>
-					<foods>
-						</foods>
-					<drinks>
-						<drink qt="1" price="3">coke</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
-		<customer>
-			<id>01</id>
-			<init>table2</init>
-			<dest>table2</dest>
-			<orders>
-				<order>
-					<foods>
-						</foods>
-					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">coke</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-						<drink qt="1" price="3">juiceoforange</drink>
-					</drinks>
-				</order>
-				<order>
-					<foods>
-					</foods>
-					<drinks>
-					</drinks>
-				</order>
-			</orders>
-		</customer>
 	</customers>
 	
-	<objectives>
+	<objectives commQtd="20">
+		<objective block="askForFood" times="1">callTimes</objective>
+		<objective block="askForDrink" times="1">callTimes</objective>
+		
 		<objective
-			text="o array com a quantidade de refrigerante e sumos" type="array"
-			value="Game.readVariableTest('pedidos')">talk</objective>
+			text="o array com a quantidade de moedas de 2" type="array"
+			value="[Math.floor(customers[0].amountChangeExpected/2), Math.floor(customers[1].amountChangeExpected/2), Math.floor(customers[2].amountChangeExpected/2)]">talk</objective>
+		<objective
+			text="o array com a quantidade de moedas de 1" type="array"
+			value="[customers[0].amountChangeExpected % 2, customers[1].amountChangeExpected % 2, customers[2].amountChangeExpected % 2]">talk</objective>
 	</objectives>
 
 	<answers>
-		<ws id="0">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-		</ws>
-		<ws id="1">
-			<xml xmlns="http://www.w3.org/1999/xhtml">
-				<block type="procedures_defnoreturn" x="46" y="34">
-					<mutation>
-						<arg name="indice"></arg>
-					</mutation>
-					<field name="NAME">vaiAteCliente</field>
-					<statement name="STACK">
-						<block type="controls_if">
-							<mutation else="1"></mutation>
-							<value name="IF0">
-								<block type="logic_compare">
-									<field name="OP">LTE</field>
-									<value name="A">
-										<block type="variables_get">
-											<field name="VAR">indice</field>
-										</block>
-									</value>
-									<value name="B">
-										<block type="math_number">
-											<field name="NUM">3</field>
-										</block>
-									</value>
-								</block>
-							</value>
-							<statement name="DO0">
-								<block type="move_goToBarCounter">
-									<value name="VALUE">
-										<block type="variables_get">
-											<field name="VAR">indice</field>
-										</block>
-									</value>
-								</block>
-							</statement>
-							<statement name="ELSE">
-								<block type="move_goToTable">
-									<value name="VALUE">
-										<block type="math_arithmetic">
-											<field name="OP">MINUS</field>
-											<value name="A">
-												<block type="variables_get">
-													<field name="VAR">indice</field>
-												</block>
-											</value>
-											<value name="B">
-												<block type="math_number">
-													<field name="NUM">3</field>
-												</block>
-											</value>
-										</block>
-									</value>
-								</block>
-							</statement>
-						</block>
-					</statement>
-				</block>
-			</xml>
-		</ws>
-		<ws id="2">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-		</ws>
-		<ws id="3">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-		</ws>
-		<ws id="4">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-		</ws>
-		<ws id="5">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-		</ws>
 	</answers>
 
 </mission>

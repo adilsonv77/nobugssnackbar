@@ -66,7 +66,7 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional" || key == "customDeliver")
+					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional" || key == "customDeliver" || key === "callTimes")
 							&& options.allCustomers) {
 						ret = true;
 					} else
@@ -210,6 +210,10 @@ Objective.factory = function(key) {
 		
 	case "totalOfSell":
 		this.factories[key] = new Objective.TotalOfSell();
+		break;
+		
+	case "callTimes":
+		this.factories[key] = new Objective.CallTimes();
 		break;
 	}
 	
@@ -908,6 +912,40 @@ Objective.TotalOfSell.prototype.createExplanationItem = function(objective)  {
 	
 	var text = BlocklyApps.getMsg("explanation_sellobjective");
 	return text.format(objective.value);
+ 
+};
+
+/******************************************************************************
+ *                                CallTimes
+ ******************************************************************************/
+
+Objective.CallTimes = function() {};
+
+Objective.CallTimes.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.block = elem.getAttribute("block");
+	p.times = parseInt(elem.getAttribute("times"));
+	
+	return p;
+};
+
+Objective.CallTimes.prototype.reset = function(objective) {
+	Game.callTimes = {};
+};
+
+Objective.CallTimes.prototype.checkObjective = function(options, objective)  {
+	
+	var times = Game.callTimes[objective.block];
+	times = (times === undefined?0:times);
+	
+	return (times <= objective.times);
+};
+
+Objective.CallTimes.prototype.createExplanationItem = function(objective)  {
+	
+	var text = BlocklyApps.getMsg("explanation_callTimesObjective");
+	return text.format(objective.block, objective.times);
  
 };
 

@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-11-10 11:28:34.946000",
+		"lastupdated": "2015-11-12 11:35:53.465000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -187,6 +187,7 @@
 	"Explane.AskForIceCream": "Ask the customer %0 the flavor of the ice cream.",
 	"Explane.AskWantHowManyIceCream": "Ask the customer %0 how many ice cream he wants.",
 	"Explane.SellObjective": "Sell at least $ %0 (it will computed based on charging)",
+	"Explane.CallTimesObjective": "The block %0 is not called more than %1 time(s).",
 	"Descr.LogicOperation": "Logic operator",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",

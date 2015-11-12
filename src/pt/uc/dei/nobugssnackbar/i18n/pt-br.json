@@ -222,6 +222,7 @@
 	"Explane.AskForIceCream":"Pergunta pelo que sabor do gelado que cliente %0 deseja comer.",
 	"Explane.AskWantHowManyIceCream":"Pergunta ao cliente %0 quantos gelados ele deseja.",
 	"Explane.SellObjective":"Venda pelo menos $%0 (&#233; computado com base nas cobran&#231;as)",
+	"Explane.CallTimesObjective":"N&#227;o use o bloco %0 mais do que %1 vez(es).",
 	
 	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
 	
