@@ -2523,28 +2523,35 @@ Game.unlockBlockly = function() {
 
 Game.verifyVariableInitialized = function(verifyVars) {
 	
-	var vars = Game.jsInterpreter.variables;
+	var found = null;
+	for (var j = 0; j < Game.jsInterpreter.stateStack.length; j++)
+		if (Game.jsInterpreter.stateStack[j].scope) {
+			found = Game.jsInterpreter.stateStack[j].scope;
+			break;
+		}
+	
+	if (found == null) {
+		BlocklyApps.log = [];
+		BlocklyApps.log.push(["fail", "Impossivel"]);
+		throw false;
+		
+	} 
+	
 
 	var len = verifyVars.length;
 	verifyVars = verifyVars.properties;
 	for (var i = 0; i < len; i++) {
 	
 		var entry = verifyVars[i].data;
-		for (var j = 0; j < vars.length; j++) {
-			if (vars[j].name === entry) {
-				
-				if (vars[j].scope.properties[entry].data === undefined) {
-					
-					BlocklyApps.log = [];
-					BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
-					throw false;
-					
-				}
-				
-				break;
-			}
+		
+		if (found.properties[entry].data === undefined) {
+			
+			BlocklyApps.log = [];
+			BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
+			throw false;
+			
 		}
-	
+		
 	}
 	return true;
 };

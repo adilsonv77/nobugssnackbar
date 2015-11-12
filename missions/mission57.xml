@@ -1,0 +1,368 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" points="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		<b>Nível Difícil</b>
+		Pergunte aos clientes o que desejam beber e comer. Eles podem não ter fome ou nem sede. Mas quando o tem, a vontade
+		é somente de uma comida e/ou uma bebida. Alguns terão vontade de gelado, mas hoje não temos disponível a máquina de
+		gelados. Por essa razão, mesmo ele tendo vontade, não conseguimos atendê-lo.
+		
+		Calcule o preço a ser cobrado: cachorro: $2, refrigerante: $3 e sumo $4.
+		Cobre do cliente. Calcule o troco em moedas de 2, e a quantidade de moedas guarde num array (uma posição para cada cliente). 
+		Se fosse dar as moedas de 2, quantas moedas de 1 ainda faltariam para dar o troco ao cliente ? Armazene isso em outro array (uma posição para cada cliente)
+		
+		Ao final fale esses arrays. Esses arrays serão usados para comparar se o você fez o cálculo corretamente de moedas de 2 e moedas 1. 
+
+		- em função 1 existe o esqueleto da função para calcular o preço recebendo como parâmetro a comida e a bebida pedidas
+		- em função 3 existe os esqueletos de duas funções: uma para calcular a quantidade de moedas de 2 a dar troco e outra em moedas de 1 
+				
+		Você somente pode perguntar uma vez o que o cliente deseja comer (askForFood) e beber (askForDrink).
+		
+		(criar uma restricao para perguntar somente uma vez o que deseja comer e beber)
+		(criar uma restricao de comandos)
+		
+		
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToTable" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+		<category name="pickUpDrink" show="true" />
+
+		<category name="askWantHowManyIceCream" show="true" />
+
+		<category name="money" show="true" />
+		<category name="cashIn" show="true" />
+		<category name="giveChange" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.chocolate" show="true" />
+		<category name="const.strawberry" show="true" />
+		<category name="const.vanilla" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+		<category name="text" show="true" />
+
+		<category name="function" show="true" />
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<testsvars>
+		<test>
+			<var name="pedidos">4##1</var>
+		</test>
+		<test>
+			<var name="pedidos">1##4</var>
+		</test>
+		<test>
+			<var name="pedidos">1##2</var>
+		</test>
+		<test>
+			<var name="pedidos">0##1</var>
+		</test>
+	</testsvars>
+	<customers>
+
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>table1</init>
+			<dest>table1</dest>
+			<orders>
+				<order>
+					<foods>
+						</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>01</id>
+			<init>table2</init>
+			<dest>table2</dest>
+			<orders>
+				<order>
+					<foods>
+						</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	
+	<objectives>
+		<objective
+			text="o array com a quantidade de refrigerante e sumos" type="array"
+			value="Game.readVariableTest('pedidos')">talk</objective>
+	</objectives>
+
+	<answers>
+		<ws id="0">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="1">
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defnoreturn" x="46" y="34">
+					<mutation>
+						<arg name="indice"></arg>
+					</mutation>
+					<field name="NAME">vaiAteCliente</field>
+					<statement name="STACK">
+						<block type="controls_if">
+							<mutation else="1"></mutation>
+							<value name="IF0">
+								<block type="logic_compare">
+									<field name="OP">LTE</field>
+									<value name="A">
+										<block type="variables_get">
+											<field name="VAR">indice</field>
+										</block>
+									</value>
+									<value name="B">
+										<block type="math_number">
+											<field name="NUM">3</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO0">
+								<block type="move_goToBarCounter">
+									<value name="VALUE">
+										<block type="variables_get">
+											<field name="VAR">indice</field>
+										</block>
+									</value>
+								</block>
+							</statement>
+							<statement name="ELSE">
+								<block type="move_goToTable">
+									<value name="VALUE">
+										<block type="math_arithmetic">
+											<field name="OP">MINUS</field>
+											<value name="A">
+												<block type="variables_get">
+													<field name="VAR">indice</field>
+												</block>
+											</value>
+											<value name="B">
+												<block type="math_number">
+													<field name="NUM">3</field>
+												</block>
+											</value>
+										</block>
+									</value>
+								</block>
+							</statement>
+						</block>
+					</statement>
+				</block>
+			</xml>
+		</ws>
+		<ws id="2">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="3">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="4">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="5">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+	</answers>
+
+</mission>
