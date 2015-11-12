@@ -3,14 +3,22 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível fácil</b>
-		Pergunte aos clientes que estão no balcão que bebidas eles desejam e guarde o pedido no array. 
-		Eles podem pedir nenhuma ou uma bebida. O pedido sempre precisa ser guardado na primeira posição não 
-		utilizada do array. Por exemplo, o primeiro que pedir uma bebida, o seu pedido deve ser guardado na
-		posição ZERO do array, não importando se for o cliente 1 ou o cliente 3 do balcão.
-		Apenas pergunte aos clientes: não busque e nem atenda os pedidos.
-		Você tem uma limitação quanto à quantidade de blocos no programa principal: 10 blocos.
-		Ao final fale o array. Esse array será usado para comparar se o você fez os pedidos corretamente. 
+		<b>N&#237;vel f&#225;cil</b><br/><br/>
+		Pergunte aos clientes que est&#227;o no balc&#227;o que bebidas eles desejam. Pergunte primeiro 
+		ao cliente 1, depois 2 e por &#250;ltimo o cliente 3. Os clientes podem pedir uma ou nenhuma 
+		bebida. Guarde os pedidos em um <i>array</i>. Se o cliente n&#227;o tiver sede, nem guarde no 
+		<i>array</i>.<br/><br/> 
+		
+		O pedido sempre precisa ser guardado na primeira posi&#231;&#227;o n&#227;o utilizada do
+		<i>array</i>. Por exemplo, o primeiro que pedir uma bebida, o seu pedido deve ser guardado na
+		posi&#231;&#227;o ZERO do <i>array</i>, n&#227;o importando se for o cliente 1 ou o cliente 3 
+		do balc&#227;o.<br/><br/>
+		
+		Apenas pergunte aos clientes: n&#227;o busque e nem atenda os pedidos. Ao final fale o <i>array</i>. 
+		Esse <i>array</i> ser&#225; usado para comparar se voc&#234; fez os pedidos corretamente. <br/><br/>
+
+		Voc&#234; tem uma limita&#231;&#227;o quanto &#224; quantidade de blocos: 10 blocos.   <br/><br/>
+		J&#225; deixei dois blocos essenciais prontos: o primeiro e &#250;ltimo blocos do programa.
 		]]>
 		</page>
 
@@ -85,19 +93,23 @@
 	<tests>5</tests>
 	<testsvars>
 		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}</var>
+			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}
+			</var>
 		</test>
 		<test>
 			<var name="pedidos">0##0##0</var>
 		</test>
 		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0##0</var>
+			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0##0
+			</var>
 		</test>
 		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##0##0</var>
+			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##0##0
+			</var>
 		</test>
 		<test>
-			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0</var>
+			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##0
+			</var>
 		</test>
 	</testsvars>
 	<customers>
@@ -223,13 +235,32 @@
 		</customer>
 
 	</customers>
-	<objectives commQtd="10" >
-		<objective
-			text="o array com os pedidos de bebidas"  type="array"
+	<objectives commQtd="10">
+		<objective text="o array com os pedidos de bebidas" type="array"
 			value="Game.readVariableTest('pedidos')">talk</objective>
 	</objectives>
 
-	<answers>
-	</answers>
+	<xml>
+		<block type="variables_set" x="1" y="1">
+			<field name="VAR">bebidas</field>
+			<value name="VALUE">
+				<block type="lists_create_limited">
+					<value name="SIZE">
+						<block type="math_number">
+							<field name="NUM">3</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+
+		<block type="do_talk">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">bebidas</field>
+				</block>
+			</value>
+		</block>
+	</xml>
 
 </mission>

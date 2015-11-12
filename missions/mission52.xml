@@ -14,6 +14,8 @@
 		Você tem uma limitação quanto à quantidade de blocos no programa principal: 7 blocos.
 		
 		Ao final fale o array. Esse array será usado para comparar se o você fez os cálculos corretamente. 
+		<b>Importante:</b> Tome cuidado com o tamanho dos <i>array</i>. O tamanho sempre deve ser compatível com o enunciado da missão. Se na missão basta 
+		o tamanho 3 e você criar com tamanho 5, na hora de comparar os <i>array</i> na fala, o jogo avisará que não foi cumprido o objetivo.<br/><br/>
 		]]>
 		</page>
 

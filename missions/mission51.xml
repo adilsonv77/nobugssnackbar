@@ -3,16 +3,29 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível fácil</b>
-		Pergunte aos clientes que estão no balcão que bebidas eles desejam e guarde o pedido no array. 
-		Eles podem pedir nenhuma ou uma bebida. O pedido sempre precisa ser guardado na primeira posição não 
-		utilizada do array. Por exemplo, o primeiro que pedir uma bebida, o seu pedido deve ser guardado na
-		posição ZERO do array, não importando se for o cliente 1 ou o cliente 3 do balcão.
-		Depois de pedido, prepare a bebida: vá ao frigorífico e pegue o refrigerante, ou prepare o sumo. 
-		A bebida preparada deve substituir o próprio pedido no array. Por exemplo, se a posição UM do array
-		foi para guardar um pedido de refrigerante, você deve guardar a bebida que pegou no frigorífico exatamente
-		na mesma posição UM.
-		Ao final fale o array. Esse array será usado para comparar se o você fez os pedidos corretamente. 
+		<b>N&#237;vel f&#225;cil</b><br/><br/>
+		Pergunte aos clientes que est&#227;o no balc&#227;o que bebidas eles desejam. Pergunte primeiro 
+		ao cliente 1, depois 2 e por &#250;ltimo o cliente 3. Os clientes podem pedir uma ou nenhuma 
+		bebida. Guarde os pedidos em um <i>array</i>. Se o cliente n&#227;o tiver sede, nem guarde no 
+		<i>array</i>.<br/><br/> 
+		
+		O pedido sempre precisa ser guardado na primeira posi&#231;&#227;o n&#227;o utilizada do
+		<i>array</i>. Por exemplo, o primeiro que pedir uma bebida, o seu pedido deve ser guardado na
+		posi&#231;&#227;o ZERO do <i>array</i>, n&#227;o importando se for o cliente 1 ou o cliente 3 
+		do balc&#227;o.<br/><br/>
+		
+		Depois de pedir a todos os clientes, e ter guardado no <i>array</i>, &#233; o momento de preparar as bebidas: 
+		v&#225; ao frigor&#237;fico e pegue o refrigerante, ou v&#225; a caixa 
+		de frutas e depois para a m&#225;quina, e prepare o sumo. A bebida preparada deve substituir o pr&#243;prio 
+		pedido no <i>array</i>. Por exemplo, se a posi&#231;&#227;o UM do <i>array</i> 	foi para guardar um pedido 
+		de refrigerante, voc&#234; deve guardar a bebida que pegou no frigor&#237;fico exatamente na mesma 
+		posi&#231;&#227;o UM.<br/><br/>
+		
+		Apenas pergunte aos clientes e busque a bebida. N&#227;o entregue o pedido. Ao final fale o <i>array</i>.
+		Esse <i>array</i> ser&#225; usado para comparar se voc&#234; preparou as bebidas corretamente. <br/><br/>
+		
+		Para te adiantar o servi&#231;o, trouxe a tua solu&#231;&#227;o da miss&#227;o anterior.
+		
 		]]>
 		</page>
 

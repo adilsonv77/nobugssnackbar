@@ -903,7 +903,10 @@ Game.afterInstallMachines = function(toolbox) {
 	  var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
 		  UserControl.loadAnswer(preload, function (ret) {
-			  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission 
+			  if (ret != null)
+				  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission
+			  else
+				  ret = "<xml></xml>";
 			  Game.nextPartOfMissionLoaded(true, toolbox, ret, mission, 0);
 		  });
 	  }
@@ -2546,14 +2549,14 @@ Game.verifyVariableInitialized = function(verifyVars) {
 	for (var i = 0; i < len; i++) {
 	
 		var entry = verifyVars[i].data;
-		
-		if (found.properties[entry].data === undefined) {
-			
-			BlocklyApps.log = [];
-			BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
-			throw false;
-			
-		}
+		if (found.properties[entry] !== undefined) // it's not a variable, but a statement declaration
+			if (found.properties[entry].data === undefined) {
+				
+				BlocklyApps.log = [];
+				BlocklyApps.log.push(["fail", "Error_variableNotInitialized", entry]);
+				throw false;
+				
+			}
 		
 	}
 	return true;
