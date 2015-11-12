@@ -774,6 +774,18 @@ Blockly.Procedures.rename = function(text) {
 	  return text;
 	};
 	
+Blockly.Procedures.disposeCallers = function(name, workspace) {
+	Game.blocklys.forEach( function (b) {
+		
+	  var callers = Blockly.Procedures.getCallers(name, b.ws);
+	  for (var i = 0; i < callers.length; i++) {
+	    callers[i].dispose(true, false);
+	  }
+		
+	});
+};
+	
+	
 Blockly.Procedures.mutateCallers = function(name, workspace,
             paramNames, paramIds) {
 	
