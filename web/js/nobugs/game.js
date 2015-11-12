@@ -3444,7 +3444,7 @@ Game.readVariableTest = function(variableName) {
 	var vars = tests[CustomerManager.currentTest].getElementsByTagName("var");
 	for (var i = 0; i < vars.length; i++)
 		if (vars[i].getAttribute("name") === variableName)
-			return vars[i].textContent; 
+			return vars[i].textContent.trim(); 
 	
 	return null;
 	
