@@ -3,20 +3,27 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível médio</b>
-		Crie dois arrays de tamanho três.
-		Vá a cada cliente e pergunte o que ele deseja comer. No máximo 3 clientes podem ter fome. Ele pode pedir um cachorro 
-		ou um gelado. Guarde esse pedido em um array. Guarde num segundo array a posição do cliente (1 a 5). 
+		<b>N&#237;vel m&#233;dio</b><br/><br/>
 		
-		Existe um procedimento pronto na guia [Funções 1] para fazer a deslocação do cozinheiro até uma posição da esplanada.
-		
-		No segundo momento, com base no array de pedidos, pegue o cachorro no mostrador ou o gelado na máquina.
-		
-		No terceiro momento, vá a cada cliente (utilize o segundo array) e entregue o pedido.
-		
-		Ao final fale esse segundo array. Esse array será usado para comparar se o você fez a soma correta das bebidas.
-		
-		Vamos limitar a quantidade de comandos no principal para pensares um pouco em como modularizar esse problema. 
+		Crie dois arrays de tamanho tr&#234;s. Pergunte aos clientes que est&#227;o no balc&#227;o e na mesa que comida eles desejam. 
+		Existe um procedimento pronto na guia [Fun&#231;&#245;es 1] para fazer a desloca&#231;&#227;o do cozinheiro at&#233; uma posi&#231;&#227;o da esplanada. 
+		No m&#225;ximo 3 clientes podem ter fome. Ele pode pedir um cachorro ou um gelado. Guarde esse item pedido em um dos <i>arrays</i>. 
+		No outro <i>array</i> guarde a posi&#231;&#227;o do cliente que pediu: de 1 a 5.<br/><br/>
+		 
+		Depois de perguntar a todos os clientes, fa&#231;a um segundo ciclo com base no <i>array</i> dos itens pedidos, para pegar/preparar o item. 
+		V&#225; ao mostrador para pegar o cachorro ou &#224; m&#225;quina para pegar o gelado. Substitua no <i>array</i> o item que pegou na 
+		mesma posi&#231;&#227;o do item pedido. <br/><br/> 
+
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+		Depois de pegar todos os itens, chegou o momento de entregar os clientes que pediram. Fa&#231;a um terceiro ciclo utilizando as posi&#231;&#245;es
+		do segundo <i>array</i> para se deslocar at&#233; o cliente, e o primeiro <i>array</i> para entregar o produto.<br/><br/>
+		Ao final fale o <i>array</i> com as posi&#231;&#245;es dos clientes. Esse <i>array</i> ser&#225; usado para comparar se voc&#234; anotou os pedidos 
+		corretamente.<br/><br/>
+		Vou te limitar bastante a quantidade de comandos no principal para pensares um pouco em como modularizar esse problema. 
 		]]>
 		</page>
 
@@ -133,7 +140,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -166,7 +173,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="0">icecreamofchocolate</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -198,7 +205,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="0">icecreamofvanilla</food>	
+						<food qt="1" price="0">icecreamofvanilla</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -211,7 +218,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="0">hotdog</food>	
+						<food qt="1" price="0">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -238,7 +245,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -279,7 +286,7 @@
 						<food qt="1" price="0">icecreamofchocolate</food>
 					</foods>
 					<drinks>
-							
+
 					</drinks>
 				</order>
 				<order>
@@ -291,23 +298,59 @@
 			</orders>
 		</customer>
 	</customers>
-	
-	<objectives commQtd="16">
-		<objective pos="1" place="counter" value="Game.readVariableTest('pedB1')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
-		<objective pos="2" place="counter" value="Game.readVariableTest('pedB2')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
-		<objective pos="3" place="counter" value="Game.readVariableTest('pedB3')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
 
-		<objective pos="1" place="table" value="Game.readVariableTest('pedM1')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
-		<objective pos="2" place="table" value="Game.readVariableTest('pedM2')" text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+	<objectives commQtd="16">
+		<objective pos="1" place="counter" value="Game.readVariableTest('pedB1')"
+			text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('pedB2')"
+			text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('pedB3')"
+			text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+
+		<objective pos="1" place="table" value="Game.readVariableTest('pedM1')"
+			text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
+		<objective pos="2" place="table" value="Game.readVariableTest('pedM2')"
+			text="o que ele pediu (SE PEDIU ALGO)">customDeliver</objective>
 
 		<objective
-			text="o array a posição dos clientes que pediram alguma coisa" type="array"
-			value="Game.readVariableTest('pedidos')">talk</objective>
+			text="o array com a posi&#231;&#227;o dos clientes que pediram alguma coisa"
+			type="array" value="Game.readVariableTest('pedidos')">talk</objective>
 	</objectives>
 
 	<answers>
 		<ws id="0">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="controls_for">
+					<field name="VAR">i</field>
+					<value name="FROM">
+						<block type="math_number">
+							<field name="NUM">1</field>
+						</block>
+					</value>
+					<value name="TO">
+						<block type="math_number">
+							<field name="NUM">5</field>
+						</block>
+					</value>
+					<value name="BY">
+						<block type="math_number">
+							<field name="NUM">1</field>
+						</block>
+					</value>
+					<statement name="DO">
+						<block type="procedures_callnoreturn">
+							<mutation name="vaiAteCliente">
+								<arg name="indice"></arg>
+							</mutation>
+							<value name="ARG0">
+								<block type="variables_get">
+									<field name="VAR">i</field>
+								</block>
+							</value>
+						</block>
+					</statement>
+				</block>
+			</xml>
 		</ws>
 		<ws id="1">
 			<xml xmlns="http://www.w3.org/1999/xhtml">

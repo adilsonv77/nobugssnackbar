@@ -3,19 +3,26 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível fácil</b>
-		Pergunte aos clientes que estão no balcão o que desejam beber. Nem todos tem sede, porém podem 
-		pedir um refrigerante ou um sumo. Crie uma função que receba como parâmetro o ITEM pedido e retorne o valor
-		do item: se for um refrigerante sao $3 o sumo custa $4. Utilize essa função para calcular o valor a ser cobrado do cliente. 
-		Guarde os valores em um array. 
-		Se ele não pediu nada para comer, guarde zero. Utilize a posição ZERO do array para guardar o valor do cliente no balcão 1, 
-		posição UM do cliente 2 e DOIS para o cliente 3. 
-		 
-		Você tem uma limitação quanto à quantidade de blocos no programa principal: 7 blocos.
+		<b>N&#237;vel f&#225;cil</b><br/><br/>
+		Pergunte aos clientes que est&#227;o no balc&#227;o que bebidas eles desejam. Pergunte primeiro 
+		ao cliente 1, depois 2 e por &#250;ltimo o cliente 3. Os clientes podem pedir uma ou nenhuma 
+		bebida. Se tiver sede, ele pode pedir um refrigerante ou um sumo.<br/><br/> 
+	
+		Crie uma fun&#231;&#227;o que receba como par&#226;metro o ITEM pedido e retorne o pre&#231;o
+		do item: se for um refrigerante retorna 3 e o sumo retorna 4. Utilize essa fun&#231;&#227;o para calcular 
+		o valor do pedido do cliente. Guarde o valor retornado da fun&#231;&#227;o em um <i>array</i>. Se o cliente n&#227;o tiver 
+		sede, guarde o valor 0. Utilize a posi&#231;&#227;o ZERO do <i>array</i> para guardar o valor do 
+		cliente no balc&#227;o 1, posi&#231;&#227;o UM do cliente 2 e DOIS para o cliente 3. <br/><br/> 
 		
-		Ao final fale o array. Esse array será usado para comparar se o você fez os cálculos corretamente. 
-		<b>Importante:</b> Tome cuidado com o tamanho dos <i>array</i>. O tamanho sempre deve ser compatível com o enunciado da missão. Se na missão basta 
-		o tamanho 3 e você criar com tamanho 5, na hora de comparar os <i>array</i> na fala, o jogo avisará que não foi cumprido o objetivo.<br/><br/>
+		Apenas pergunte aos clientes e calcule: n&#227;o busque e nem atenda os pedidos. Ao final fale o <i>array</i>. 
+		Esse <i>array</i> ser&#225; usado para comparar se voc&#234; fez os c&#225;lculos corretamente. <br/><br/>
+
+		<b>Importante:</b> Tome cuidado com o tamanho dos <i>array</i>. O tamanho sempre deve ser compat&#237;vel 
+		com o enunciado da miss&#227;o. Se na miss&#227;o basta o tamanho 3 e voc&#234; criar com tamanho 5, na 
+		hora de comparar os <i>array</i> na fala, o jogo avisar&#225; que n&#227;o foi cumprido o objetivo.<br/><br/>
+		
+		J&#225; deixei pronto o essencial para a miss&#227;o.
+		
 		]]>
 		</page>
 
@@ -255,13 +262,39 @@
 
 
 	</customers>
-	<objectives commQtd="10">
-		<objective
-			text="o array com o dinheiro recebido dos clientes" type="array"
-			value="Game.readVariableTest('pedidos')">talk</objective>
+	<objectives commQtd="8">
+		<objective text="o array com o dinheiro recebido dos clientes"
+			type="array" value="Game.readVariableTest('pedidos')">talk</objective>
 	</objectives>
 
-	<answers>
-	</answers>
+	<xml>
+		<block type="controls_for">
+			<field name="VAR">i</field>
+			<value name="FROM">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<value name="TO">
+				<block type="math_number">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+			<value name="BY">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<statement name="DO">
+				<block type="move_goToBarCounter">
+					<value name="VALUE">
+						<block type="variables_get">
+							<field name="VAR">i</field>
+						</block>
+					</value>
+				</block>
+			</statement>
+		</block>
+	</xml>
 
 </mission>

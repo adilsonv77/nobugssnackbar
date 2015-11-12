@@ -3,19 +3,27 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível médio</b>
-		Crie um array para guardar os pedidos das bebidas.
-		Vá a cada cliente, pergunte a bebida o que o cliente deseja e guarde o pedido numa posição do array.
-		É possível que o cliente não deseje beber. Quando tem sede, será somente UMA bebida.  
+		<b>N&#237;vel m&#233;dio</b><br/><br/>
+		Pergunte aos clientes que est&#227;o no balc&#227;o e na mesa que bebidas eles desejam. Os 
+		clientes podem pedir uma ou nenhuma bebida. Guarde os pedidos em um <i>array</i>. Se o cliente 
+		n&#227;o tiver sede, nem guarde no <i>array</i>. Existe um procedimento pronto na guia [Fun&#231;&#245;es 1] para 
+		fazer a desloca&#231;&#227;o do cozinheiro at&#233; uma posi&#231;&#227;o da esplanada.<br/><br/> 
 		
-		Existe um procedimento pronto na guia [Funções 1] para fazer a deslocação do cozinheiro até uma posição da esplanada.
-		
-		Depois de pedido, crie outro array de duas posições: na primeira para guardar a quantidade de 
-		refrigerantes e o segundo para a quantidade de sumos. 
-		Faça a contagem do tipo de bebida iterando pelo array dos pedidos, somando mais um na posição zero se for um
-		refrigerante, senão na posição UM se for sumo.
-		
-		Ao final fale esse segundo array. Esse array será usado para comparar se o você fez a soma correta das bebidas. 
+		Depois que perguntou e guardou o pedido de todos os clientes, vais criar um novo <i>array</i> de duas posi&#231;&#245;es.
+		Iterando pelo primeiro <i>array</i> vais comparar cada item, se &#233; refrigerante ou sumo. Se for refrigerante vais somar
+		mais um na posi&#231;&#227;o ZERO do segundo <i>array</i> sen&#227;o vais somar mais um na posi&#231;&#227;o UM.
+		Esse segundo <i>array</i> vai ter armazenado na posi&#231;&#227;o ZERO a quantidade de refrigerantes pedidos e na 
+		posi&#231;&#227;o UM a quantidade de sumos. 
+		<br/><br/> 
+
+		Ao final fale esse segundo <i>array</i>. Esse <i>array</i> ser&#225; usado para comparar se voc&#234; fez a soma das bebidas 
+		corretamente.<br/><br/>
+
+		J&#225; deixei pronto o c&#243;digo b&#225;sico para a solu&#231;&#227;o. Permaneceram alguns espa&#231;os vazios para desvendares.<br/><br/>
+	
+		<b>Importante:</b> Tome cuidado com o tamanho dos <i>array</i>. O tamanho sempre deve ser compat&#237;vel 
+		com o enunciado da miss&#227;o. Se na miss&#227;o basta o tamanho 3 e voc&#234; criar com tamanho 5, na 
+		hora de comparar os <i>array</i> na fala, o jogo avisar&#225; que n&#227;o foi cumprido o objetivo.
 		]]>
 		</page>
 
@@ -215,7 +223,7 @@
 			<orders>
 				<order>
 					<foods>
-						</foods>
+					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
 					</drinks>
@@ -249,7 +257,7 @@
 			<orders>
 				<order>
 					<foods>
-						</foods>
+					</foods>
 					<drinks>
 						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
@@ -277,16 +285,111 @@
 			</orders>
 		</customer>
 	</customers>
-	
+
 	<objectives>
-		<objective
-			text="o array com a quantidade de refrigerante e sumos" type="array"
-			value="Game.readVariableTest('pedidos')">talk</objective>
+		<objective text="o array com a quantidade de refrigerante e sumos"
+			type="array" value="Game.readVariableTest('pedidos')">talk</objective>
 	</objectives>
 
 	<answers>
 		<ws id="0">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="variables_set" x="19" y="14">
+					<field name="VAR">bebidas</field>
+					<value name="VALUE">
+						<block type="lists_create_limited">
+							<value name="SIZE">
+								<block type="math_number">
+									<field name="NUM">5</field>
+								</block>
+							</value>
+						</block>
+					</value>
+					<next>
+						<block type="controls_for">
+							<field name="VAR">i</field>
+							<value name="FROM">
+								<block type="math_number">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<value name="TO">
+								<block type="math_number">
+									<field name="NUM">5</field>
+								</block>
+							</value>
+							<value name="BY">
+								<block type="math_number">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<statement name="DO">
+								<block type="procedures_callnoreturn">
+									<mutation name="vaiAteCliente">
+										<arg name="indice"></arg>
+									</mutation>
+									<value name="ARG0">
+										<block type="variables_get">
+											<field name="VAR">i</field>
+										</block>
+									</value>
+									<next>
+										<block type="controls_if">
+											<value name="IF0">
+												<block type="ask_askHasThirsty"></block>
+											</value>
+											<statement name="DO0">
+												<block type="lists_set">
+													<value name="VALUE">
+														<block type="ask_askForDrink"></block>
+													</value>
+													<value name="ARRAY">
+														<block type="variables_get">
+															<field name="VAR">bebidas</field>
+														</block>
+													</value>
+												</block>
+											</statement>
+										</block>
+									</next>
+								</block>
+							</statement>
+							<next>
+								<block type="variables_set">
+									<field name="VAR">conta</field>
+									<value name="VALUE">
+										<block type="lists_create_limited"></block>
+									</value>
+									<next>
+										<block type="controls_for">
+											<field name="VAR">i</field>
+											<value name="FROM">
+												<block type="math_number">
+													<field name="NUM">0</field>
+												</block>
+											</value>
+											<value name="BY">
+												<block type="math_number">
+													<field name="NUM">1</field>
+												</block>
+											</value>
+											<next>
+												<block type="do_talk">
+													<value name="VALUE">
+														<block type="variables_get">
+															<field name="VAR">conta</field>
+														</block>
+													</value>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</xml>
 		</ws>
 		<ws id="1">
 			<xml xmlns="http://www.w3.org/1999/xhtml">

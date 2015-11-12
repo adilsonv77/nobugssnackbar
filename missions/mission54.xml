@@ -3,20 +3,23 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível médio</b>
-		Crie um array para guardar quantidades de bebidas.
-		Vá a cada cliente, pergunte quantas bebidas o cliente deseja e guarde essa quantidade numa posição do array. 
-		Aproveite e vá comparando qual é a maior quantidade pedida. Após esse primeiro ciclo, tens essa quantidade.  
+		<b>N&#237;vel m&#233;dio</b><br/><br/>
+		Pergunte a cada cliente a quantidade de bebida que ele deseja e guarde esse valor em um <i>array</i>,
+		uma posi&#231;&#227;o para cada cliente. Ao mesmo tempo v&#225; comparando para descobrir qual &#233; a maior 
+		quantidade pedida. Ap&#243;s esse primeiro ciclo, tens essa quantidade. <br/><br/>
+		  
+		Crie uma fun&#231;&#227;o que receba como par&#226;metros a quantidade de bebidas e a o valor da maior 
+		quantidade pedida. Essa fun&#231;&#227;o vai devolver o valor do pedido. O c&#225;lculo deve considerar a 
+		seguinte regra: se a quantidade pedida for igual a maior quantidade pedida, ent&#227;o cada bebida custa $1 
+		sen&#227;o custa $3.<br/><br/>
 		
-		Crie outro array para guardar o valor dos pedidos que vais calcular nesse segundo momento. 
-		Itere sobre o array das quantidades para calcular os preços. 
-		O cálculo é o seguinte: a bebida custa $3. Porém, se o cliente é daqueles que tem a maior quantidade bebida, então cada
-		bebida custa $1. Você só vai calcular o valor do pedido. Não vai cobrar do cliente. Pode existir mais de um cliente que deseja
-		a maior quantidade.  
-		
-		Ao final fale o primeiro e o segundo arrays. Esse array será usado para comparar se você fez o cálculo do pedido corretamente.
-		Tome cuidado com o tamanho dos arrays, para que o seu tamanho seja compatível com o enunciado da missão. Se numa missão basta 
-		o tamanho 3 e você criar com tamanho 5, na hora de comparar os arrays na fala, o jogo avisará que não foi cumprido o objetivo.   
+		Depois do primeiro ciclo vais criar um novo <i>array</i> para guardar os valores do pedido de cada cliente. 
+		Itere sobre o primeiro <i>array</i> e chame a fun&#231;&#227;o que voc&#234; criou. Utilize o valor retornado
+		pela fun&#231;&#227;o para armazenar no segundo <i>array</i>. Ao final desse segundo ciclo, tens o valor do 
+		pedido de cada um dos clientes em uma posi&#231;&#227;o do segundo <i>array</i>. <br/><br/>
+
+		Ao final fale os dois <i>arrays</i>. Eles ser&#227;o usados para comparar se voc&#234; fez o c&#225;lculo  
+		corretamente de cada pedido.<br/><br/>
 		]]>
 		</page>
 
@@ -220,7 +223,34 @@
 			value="[customers[0].askHowMuchInDrinksIfSell(), customers[1].askHowMuchInDrinksIfSell(), customers[2].askHowMuchInDrinksIfSell()]">talk</objective>
 	</objectives>
 
-	<answers>
-	</answers>
+	<xml>
+		<block type="controls_for">
+			<field name="VAR">i</field>
+			<value name="FROM">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<value name="TO">
+				<block type="math_number">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+			<value name="BY">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<statement name="DO">
+				<block type="move_goToBarCounter">
+					<value name="VALUE">
+						<block type="variables_get">
+							<field name="VAR">i</field>
+						</block>
+					</value>
+				</block>
+			</statement>
+		</block>
+	</xml>
 
 </mission>

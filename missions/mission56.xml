@@ -3,7 +3,7 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível médio</b>
+		<b>N&#237;vel m&#233;dio</b><br/><br/>
 		Vá a cada cliente, e atenda toda a fome que ele deseja. O cliente pode pedir um ou mais cachorros ou gelados. 
 		Pergunte e já atenda: vá ao mostrador ou à máquina de gelados, pegue o pedido e entregue ao cliente. 
 		Em um array, em cada posição, guarde o valor total do pedido de cada cliente. 

@@ -3,19 +3,22 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível fácil</b>
-		Agora existem clientes no balcão e nas mesas. Existe um procedimento pronto na guia [Funções 1] para 
-		fazer a deslocação do cozinheiro até uma posição da esplanada.
-		Crie uma função que receba como parâmetros a quantidade de cachorros e bebidas e retorne o preço do pedido. 
-		O preço do cachorro é $2 e do refrigerante é $3. Porém, se o cliente pedir pelo menos 2 cachorros o preço unitário fica em $1.
-		Se o cliente pedir pelo menos duas bebidas, o preço desce de $3 para $2. 
-		Cobre do cliente e guarde num array o valor a ser dado de troco. Não é para dar o troco: apenas guardar a diferença entre o valor
-		recebido do cliente com o valor do pedido.
+		<b>N&#237;vel f&#225;cil</b><br/><br/>
+		Agora existem clientes no balc&#227;o e na mesa. Existe um procedimento pronto na guia [Fun&#231;&#245;es 1] para 
+		fazer a desloca&#231;&#227;o do cozinheiro at&#233; uma posi&#231;&#227;o da esplanada. Pergunte a cada cliente a 
+		quantidade de comida e bebida que ele deseja. Estais restrito a usar somente uma vez cada um desses blocos (askWantHowManyFoods 
+		e askWantHowManyDrinks) em todo o programa.<br/><br/>
+		
+		Crie uma fun&#231;&#227;o que receba como par&#226;metros a quantidade de cachorros e bebidas e retorne o valor do pedido. 
+		O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3. Por&#233;m, se o cliente pedir pelo menos 2 cachorros o 
+		pre&#231;o unit&#225;rio fica em $1. Se o cliente pedir pelo menos duas bebidas, o pre&#231;o desce de $3 para $2. <br/><br/>
+		
+		Cobre do cliente (use o bloco cashIn no menu [Dinheiro]) e guarde num <i>array</i> o valor a ser dado de troco. 
+		N&#227;o &#233; para dar o troco: apenas guardar a diferen&#231;a entre o valor recebido do cliente com o valor do pedido.
+		Utilize a posi&#231;&#227;o ZERO do <i>array</i> para guardar o valor do 
+		cliente no balc&#227;o 1, posi&#231;&#227;o UM do cliente 2 e DOIS para o cliente 3. <br/><br/> 
 		 
-	    Utilize a posição ZERO do array para guardar o valor do cliente no balcão 1, posição UM do balcão 2, DOIS para o balcão 3,
-	    TRÊS para a mesa 1 e QUATRO para a mesa 2. 
-		 
-		Ao final fale o array. Esse array será usado para comparar se o você fez o cálculo do troco corretamente. 
+		Ao final fale o <i>array</i>. Esse <i>array</i> ser&#225; usado para comparar se voc&#234; fez o c&#225;lculo do troco corretamente.
 		]]>
 		</page>
 
@@ -211,6 +214,9 @@
 	</customers>
 	
 	<objectives commQtd="8">
+		<objective block="askWantHowManyFoods" times="1">callTimes</objective>
+		<objective block="askWantHowManyDrinks" times="1">callTimes</objective>
+		
 		<objective
 			text="o array com o troco a ser dado para o cliente" type="array"
 			value="[customers[0].amountChangeExpected, customers[1].amountChangeExpected, customers[2].amountChangeExpected, customers[3].amountChangeExpected, customers[4].amountChangeExpected]">talk</objective>

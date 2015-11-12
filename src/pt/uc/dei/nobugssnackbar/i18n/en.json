@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-11-12 11:35:53.465000",
+		"lastupdated": "2015-11-12 16:57:56.789000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -192,6 +192,7 @@
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"Single.table": "Table",
+	"Single.Table": "in the table",
 	"NoBugs.rewardExplanation": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 minutes.",
 	"NoBugs.rewardExplanationByRun": "Receive %0 for each %1 enabled to meet all the objectives above. \nn \nn Receive %2 if not solve the mission up to %3 attempts.",
 	"NoBugs.commandBonusExplanation": "You'll receive a bonus of %0 if accomplish this mission in %1 commands or less.",
