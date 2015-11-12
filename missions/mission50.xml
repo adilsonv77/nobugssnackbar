@@ -254,7 +254,7 @@
 			</value>
 		</block>
 
-		<block type="do_talk">
+		<block type="do_talk" x="1" y="50">
 			<value name="VALUE">
 				<block type="variables_get">
 					<field name="VAR">bebidas</field>

@@ -521,7 +521,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select achieved from missionsaccomplished join classesmissions using (classid, missionid) where userid = ? and classlevelid = ? order by missionorder");
+					.prepareStatement("select achieved from classesmissions left outer join (select * from missionsaccomplished where userid = ?) ma using (classid, missionid) where classlevelid = ? order by missionorder");
 			ps.setLong(1, idUser);
 			for (int i = 0; i < l.size(); i++) {
 				Object[] r = l.get(i);
@@ -533,7 +533,7 @@ public class GameJdbcDao implements GameDao {
 					rs = ps.executeQuery();
 					int j = 1;
 					while (rs.next()) {
-						if (rs.getString(1).equals("T"))
+						if (rs.getString(1) != null && rs.getString(1).equals("T"))
 							lm.add(j);
 						j++;
 					}
