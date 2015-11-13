@@ -77,7 +77,7 @@ function populateLBTables(table, data) {
 		  
 		  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
 		  
-		  tr.append($("<td>").html(contaRow));
+		  tr.append($("<td>").html((data.pos !== undefined?data.pos:contaRow)));
 		  // the version i use to force the server give another photo
 		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + entry.id + "&v=" + version + "'/>"));
 		  tr.append($("<td>").html(entry.name + "<br/>" + entry.value));
@@ -93,23 +93,8 @@ function populateLBTables(table, data) {
 
 function populateContestTable(table, data) {
 	
-	  var tBody = $("<tbody/>");
-	  
-	  var tr = $("<tr id = " + table + "_" + data.id + "/>");
-	  
-	  if (data.id > -1) {
-		  
-		  tr.append($("<td>").html(data.pos));
-		  // the version i use to force the server give another photo
-		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + data.id + "&v=" + version + "'/>"));
-	  }
-
-	  tr.append($("<td>").html(data.name));
-	 
-	  tBody.append(tr);
-	
-	  
-	  return finishTable(table, tBody);
+	data = [{id: Game.loginData.userLogged.id, name: data.name, value: "", pos: data.pos}];
+    return populateLBTables(table);
 }
 
 function finishTable(table, tBody) {
@@ -274,6 +259,7 @@ function createNoLeaderBoardInfo() {
 	
 	$('#leaderboard').easytabs({updateHash: false, animate: false});
 	$('#leaderboard').easytabs('select', '#tabs-points');
+	$('#leaderboard').bind("easytabs:after", explainTab);
 	
 	createTable($("#table_points"));
 	createTable($("#table_time"));
@@ -283,5 +269,6 @@ function createNoLeaderBoardInfo() {
 		.mCustomScrollbar({ theme:"nobug" });
 	
 	leaderBoardCreated = true;
+	$("#explaintab").html(BlocklyApps.getMsg("LeaderBoard_tabs-points"));
 	
 };
