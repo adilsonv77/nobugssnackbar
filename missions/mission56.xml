@@ -4,14 +4,16 @@
 		<page type="goal">
 		<![CDATA[
 		<b>N&#237;vel m&#233;dio</b><br/><br/>
-		Vá a cada cliente, e atenda toda a fome que ele deseja. O cliente pode pedir um ou mais cachorros ou gelados. 
-		Pergunte e já atenda: vá ao mostrador ou à máquina de gelados, pegue o pedido e entregue ao cliente. 
-		Em um array, em cada posição, guarde o valor total do pedido de cada cliente. 
-		Lembrando que o cachorro custa $2 e o gelado $1. 
+		Pergunte aos clientes que est&#227;o no balc&#227;o o que eles desejam comer, e atenda toda a fome dele. 
+		Isso implica em perguntar o que ele quer comer, j&#225; ir preparar (no mostrador ou na m&#225;quina de 
+		gelados) e entregar o produto. O cliente pode pedir um ou mais cachorros ou gelados.<br/><br/>
+		Antes de atender o pedido, calcule o valor do pedido e guarde esses valores em um <i>array</i>.		
+		Lembrando que o cachorro custa $2 e o gelado $1. <br/><br/>
 		
-		Ao final fale o array. Esse array será usado para comparar se você fez o cálculo correto do valor do pedido.
+		Ao final fale o <i>array</i>. Esse <i>array</i> ser&#225; usado para comparar se voc&#234; calculou os 
+		valores dos pedidos corretamente.<br/><br/>
 		
-		Vou te limitar a quantidade de comandos para usar e abusar das funções. 
+		Vou te limitar a quantidade de comandos para usar e abusar das fun&#231;&#245;es. 
 		]]>
 		</page>
 
@@ -179,6 +181,8 @@
 	</customers>
 	
 	<objectives commQtd="7">
+		<objective block="askWantHowManyFoods" times="1">callTimes</objective>
+
 		<objective pos="1" place="counter">deliver</objective>
 		<objective pos="2" place="counter">deliver</objective>
 		<objective pos="3" place="counter">deliver</objective>
@@ -188,7 +192,56 @@
 			value="[customers[0].askHowMuchInFoodsIfSell(), customers[1].askHowMuchInFoodsIfSell(), customers[2].askHowMuchInFoodsIfSell()]">talk</objective>
 	</objectives>
 
-	<answers>
-	</answers>
+	<xml>
+		<block type="variables_set" x="1" y="1">
+			<field name="VAR">valores</field>
+			<value name="VALUE">
+				<block type="lists_create_limited">
+					<value name="SIZE">
+						<block type="math_number">
+							<field name="NUM">3</field>
+						</block>
+					</value>
+				</block>
+			</value>
+		</block>
+
+		<block type="controls_for" y="60" x="1">
+			<field name="VAR">i</field>
+			<value name="FROM">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<value name="TO">
+				<block type="math_number">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+			<value name="BY">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<statement name="DO">
+				<block type="move_goToBarCounter">
+					<value name="VALUE">
+						<block type="variables_get">
+							<field name="VAR">i</field>
+						</block>
+					</value>
+				</block>
+			</statement>
+		</block>
+
+		<block type="do_talk" x="1" y="150">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">valores</field>
+				</block>
+			</value>
+		</block>
+	
+	</xml>
 
 </mission>

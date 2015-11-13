@@ -2474,7 +2474,7 @@ Game.showCountInstructions = function() {
 		document.getElementById("mainBody").appendChild(ci);
 		
 
-		ci.style.left = (blck.offsetLeft + blck.offsetWidth - ci.clientWidth - 15) + "px";
+		ci.style.left = (Game.redimDiv.offsetLeft + Game.redimDiv.offsetWidth - ci.clientWidth - 15) + "px";
 		
 		Game.counterInstruction = ci;
 	} else

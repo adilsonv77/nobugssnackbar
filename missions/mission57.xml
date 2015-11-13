@@ -3,26 +3,29 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível Difícil</b>
-		Pergunte aos clientes o que desejam beber e comer. Eles podem não ter fome ou nem sede. Mas quando o tem, a vontade
-		é somente de uma comida e/ou uma bebida. Alguns terão vontade de gelado, mas hoje não temos disponível a máquina de
-		gelados. Por essa razão, mesmo ele tendo vontade, não conseguimos atendê-lo.
+		<b>N&#237;vel dif&#237;cil</b><br/><br/>
+		Pergunte aos clientes o que desejam beber e comer. Eles podem n&#227;o ter fome ou nem sede. Mas quando o tem, a vontade
+		&#233; somente de uma comida e/ou uma bebida. Alguns ter&#227;o vontade de gelado, mas hoje n&#227;o temos dispon&#237;vel a m&#225;quina de
+		gelados. Por essa raz&#227;o, mesmo ele tendo vontade, n&#227;o conseguir&#237;amos atend&#234;-lo.<br/><br/>
 		
-		Calcule o preço a ser cobrado: cachorro: $2, refrigerante: $3 e sumo $4.
-		Cobre do cliente. Calcule o troco em moedas de 2, e a quantidade de moedas guarde num array (uma posição para cada cliente). 
-		Se fosse dar as moedas de 2, quantas moedas de 1 ainda faltariam para dar o troco ao cliente ? Armazene isso em outro array (uma posição para cada cliente)
+		Com base nas quantidades perguntadas para os clientes calcule o valor do pedido: cachorro &#233; $2, refrigerante &#233; $3 e 
+		sumo &#233; $4. Observe que os gelados devem ser desconsiderados. Depois que tiveres calculado o valor do pedido, cobre do 
+		cliente com o bloco cashIn do menu [Dinheiro]. <br/><br/>
 		
-		Ao final fale esses arrays. Esses arrays serão usados para comparar se o você fez o cálculo corretamente de moedas de 2 e moedas 1. 
+		]]>
+		</page>
+		<page type="goal">
+		<![CDATA[
+		Com base no valor recebido, calcule quantas moedas de 2 e de 1 precisaria ser dada ao cliente como troco. Primeiro 
+		calcule a quantidade de moedas de 2 e armazene num <i>array</i> (uma posi&#231;&#227;o para cada cliente). Em seguida, calcule
+		a quantidade de moedas de 1 para completar o troco. Armazene essa quantidade em outro <i>array</i> (uma posi&#231;&#227;o 
+		para cada cliente, mas a mesma do <i>array</i> anterior). <br/><br/>
+		
+		Ao final fale os dois <i>arrays</i>. Eles ser&#227;o usados para comparar se voc&#234; calculou o troco corretamente para cada moeda.<br/><br/>
 
-		- em função 1 existe o esqueleto da função para calcular o preço recebendo como parâmetro a comida e a bebida pedidas
-		- em função 2 existe os esqueletos de duas funções: uma para calcular a quantidade de moedas de 2 a dar troco e outra em moedas de 1 
-				
-		Você somente pode perguntar uma vez o que o cliente deseja comer (askForFood) e beber (askForDrink).
-		
-		(criar uma restricao para perguntar somente uma vez o que deseja comer e beber)
-		(criar uma restricao de comandos)
-		
-		
+		Em [Fun&#231;&#245;es 1] existe o esqueleto da fun&#231;&#227;o para calcular o pre&#231;o recebendo como par&#226;metro a comida e a bebida pedidas.
+		Em [Fun&#231;&#245;es 2] existem os esqueletos de duas fun&#231;&#245;es: uma para calcular a quantidade de moedas de 2 a dar troco e outra em moedas de 1. 
+		Lembre-se que podes chamar suas pr&#243;prias fun&#231;&#245;es de dentro dessas guias. 
 		]]>
 		</page>
 
@@ -101,7 +104,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -109,7 +112,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="0">icecreamofchocolate</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -137,7 +140,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="4">juiceoforange</drink>
@@ -145,7 +148,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -159,7 +162,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="0">icecreamofchocolate</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="4">juiceoforange</drink>
@@ -174,7 +177,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="0">icecreamofchocolate</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -184,20 +187,171 @@
 		</customer>
 
 	</customers>
-	
+
 	<objectives commQtd="20">
 		<objective block="askForFood" times="1">callTimes</objective>
 		<objective block="askForDrink" times="1">callTimes</objective>
-		
-		<objective
-			text="o array com a quantidade de moedas de 2" type="array"
+
+		<objective text="o array com a quantidade de moedas de 2"
+			type="array"
 			value="[Math.floor(customers[0].amountChangeExpected/2), Math.floor(customers[1].amountChangeExpected/2), Math.floor(customers[2].amountChangeExpected/2)]">talk</objective>
-		<objective
-			text="o array com a quantidade de moedas de 1" type="array"
+		
+		<objective text="o array com a quantidade de moedas de 1"
+			type="array"
 			value="[customers[0].amountChangeExpected % 2, customers[1].amountChangeExpected % 2, customers[2].amountChangeExpected % 2]">talk</objective>
 	</objectives>
 
 	<answers>
+		<ws id="0">
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="variables_set" x="2" y="6">
+					<field name="VAR">moedas2</field>
+					<value name="VALUE">
+						<block type="lists_create_limited">
+							<value name="SIZE">
+								<block type="math_number">
+									<field name="NUM">3</field>
+								</block>
+							</value>
+						</block>
+					</value>
+					<next>
+						<block type="variables_set">
+							<field name="VAR">moedas1</field>
+							<value name="VALUE">
+								<block type="lists_create_limited">
+									<value name="SIZE">
+										<block type="math_number">
+											<field name="NUM">3</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<next>
+								<block type="controls_for">
+									<field name="VAR">i</field>
+									<value name="FROM">
+										<block type="math_number">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<value name="TO">
+										<block type="math_number">
+											<field name="NUM">3</field>
+										</block>
+									</value>
+									<value name="BY">
+										<block type="math_number">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<next>
+										<block type="do_talk">
+											<value name="VALUE">
+												<block type="variables_get">
+													<field name="VAR">moedas2</field>
+												</block>
+											</value>
+											<next>
+												<block type="do_talk">
+													<value name="VALUE">
+														<block type="variables_get">
+															<field name="VAR">moedas1</field>
+														</block>
+													</value>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</xml>
+		</ws>
+		<ws id="1">
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defreturn" x="1" y="13">
+					<mutation>
+						<arg name="comida"></arg>
+						<arg name="bebida"></arg>
+					</mutation>
+					<field name="NAME">calcular</field>
+					<statement name="STACK">
+						<block type="variables_set">
+							<field name="VAR">res</field>
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">0</field>
+								</block>
+							</value>
+						</block>
+					</statement>
+					<value name="RETURN">
+						<block type="variables_get">
+							<field name="VAR">res</field>
+						</block>
+					</value>
+				</block>
+			</xml>
+		</ws>
+		<ws id="2">
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defreturn" x="41" y="-176">
+					<mutation>
+						<arg name="valorRecebido"></arg>
+						<arg name="valorPedido"></arg>
+					</mutation>
+					<field name="NAME">qtasMoedas2</field>
+					<statement name="STACK">
+						<block type="variables_set">
+							<field name="VAR">res</field>
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">0</field>
+								</block>
+							</value>
+						</block>
+					</statement>
+					<value name="RETURN">
+						<block type="variables_get">
+							<field name="VAR">res</field>
+						</block>
+					</value>
+				</block>
+				<block type="procedures_defreturn" x="43" y="-30">
+					<mutation>
+						<arg name="valorRecebido"></arg>
+						<arg name="valorPedido"></arg>
+					</mutation>
+					<field name="NAME">qtasMoedas1</field>
+					<statement name="STACK">
+						<block type="variables_set">
+							<field name="VAR">res</field>
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">0</field>
+								</block>
+							</value>
+						</block>
+					</statement>
+					<value name="RETURN">
+						<block type="variables_get">
+							<field name="VAR">res</field>
+						</block>
+					</value>
+				</block>
+			</xml>
+		</ws>
+		<ws id="3">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="4">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
+		<ws id="5">
+			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+		</ws>
 	</answers>
-
 </mission>

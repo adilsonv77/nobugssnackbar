@@ -3,22 +3,22 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-		<b>Nível Difícil</b>
-		Os clientes podem ter fome (cachorros ou gelados) e/ou sede (refrigerante). Sempre os clientes terão vontade de alguma coisa.
-		Vá a cada cliente e pergunte a quantidade que eles desejam. Calcule o preço do pedido: gelado $1, cachorro $2 e refrigerante $3,
-		e guarde o resultado em um array.
+		<b>N&#237;vel dif&#237;cil</b><br/><br/>
+		Os clientes podem ter fome (cachorros ou gelados) e/ou sede (refrigerante). Sempre os clientes ter&#227;o vontade de alguma coisa.
+		Pergunte a cada cliente a quantidade que eles desejam de comida e bebida. Calcule o pre&#231;o do pedido: gelado &#233; $1, cachorro &#233; $2 
+		e refrigerante &#233; $3. Depois que tiveres calculado o valor do pedido, guarde o resultado em um <i>array</i>.<br/><br/>
 		
-		Ordene o array, de tal forma que o menor valor esteja na posição ZERO e o maior na posição QUATRO. Ou seja, o array vai guardar
-		os valores dos pedidos em ordem crescente.
+		Ordene o <i>array</i>, de tal forma que o menor valor esteja na posi&#231;&#227;o ZERO e o maior na posi&#231;&#227;o QUATRO. Ou seja, 
+		o <i>array</i> vai guardar os valores dos pedidos em ordem crescente.
 		
-		Existe um procedimento pronto na guia [Funções 1] para fazer a deslocação do cozinheiro até uma posição da esplanada.
-		- Função 2: esqueleto para cálculo do preço. Observe que não há parâmetros. Logo, subentende-se que aí dentro vais perguntar aos clientes o
-		que desejam
-		- Função 3: esqueleto para ordenação. Vais receber um array com os valores pedidos e retornar outro array
-		com os valores. Podes te inspirar nesse algoritmo para resolver o problema (https://pt.wikipedia.org/wiki/Bubble_sort).
-		Pode perguntar somente uma vez por cliente: quantos lanches, quantos gelados e quantas bebidas.		
+		Existe um procedimento pronto na guia [Fun&#231;&#245;es 1] para fazer a desloca&#231;&#227;o do cozinheiro at&#233; uma posi&#231;&#227;o da esplanada.
+		Em [Fun&#231;&#245;es 2] existe o esqueleto da fun&#231;&#227;o para calcular o pre&#231;o. Observe que n&#227;o h&#225; par&#226;metros. Isso significa dentro 
+		dessa fun&#231;&#227;o vais perguntar aos clientes as quantidades.
+		Em [Fun&#231;&#245;es 3] existe o esqueleto para ordena&#231;&#227;o. Essa fun&#231;&#227;o recebe um <i>array</i> com os valores pedidos e 
+		retorna outro <i>array</i> com os valores ordenados. Podes te inspirar nesse algoritmo 
+		(<a href="http://pt.wikipedia.org/wiki/Bubble_sort" target="_blank">http://pt.wikipedia.org/wiki/Bubble_sort</a>) para resolver o problema. 
 		
-		Ao final fale esse array. Esse array será usado para comparar se o você ordenou corretamente. 
+		Ao final fale esse <i>array</i>. Ele ser&#225; usado para comparar se voc&#234; ordenou corretamente. 
 		]]>
 		</page>
 
@@ -91,7 +91,7 @@
 
 	</commands>
 	<cooker>initial</cooker>
-	
+
 	<tests>3</tests>
 	<testsvars>
 		<test>
@@ -104,7 +104,7 @@
 			<var name="valores">2##3##6##6##7</var>
 		</test>
 	</testsvars>
-	
+
 	<customers>
 
 		<customer>
@@ -114,7 +114,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -122,7 +122,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="1">icecreamofchocolate</food>	
+						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -150,8 +150,8 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -159,7 +159,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -173,7 +173,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="1">icecreamofchocolate</food>	
+						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -188,7 +188,7 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="1">icecreamofchocolate</food>	
+						<food qt="1" price="1">icecreamofchocolate</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -205,7 +205,7 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -214,18 +214,18 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="1">icecreamofstrawberry</food>	
-						<food qt="1" price="1">icecreamofchocolate</food>	
-						<food qt="1" price="1">icecreamofvanilla</food>	
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
-						<food qt="1" price="2">hotdog</food>	
-						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -239,9 +239,9 @@
 			<orders>
 				<order>
 					<foods>
-						<food qt="1" price="1">icecreamofchocolate</food>	
-						<food qt="1" price="2">hotdog</food>	
-						<food qt="1" price="1">icecreamofvanilla</food>	
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -257,8 +257,8 @@
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>	
-						<food qt="1" price="1">icecreamofvanilla</food>	
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
 					</foods>
 					<drinks>
 						<drink qt="1" price="3">coke</drink>
@@ -267,20 +267,90 @@
 			</orders>
 		</customer>
 	</customers>
-	
-	<objectives commQtd = "8">
+
+	<objectives commQtd="8">
 		<objective block="askWantHowManyFoods" times="1">callTimes</objective>
 		<objective block="askWantHowManyIceCream" times="1">callTimes</objective>
 		<objective block="askWantHowManyDrinks" times="1">callTimes</objective>
-		
-		<objective
-			text="o array com os valores dos pedidos em ordem crescente" type="array"
-			value="Game.readVariableTest('valores')">talk</objective>
+
+		<objective text="o array com os valores dos pedidos em ordem crescente"
+			type="array" value="Game.readVariableTest('valores')">talk</objective>
 	</objectives>
 
 	<answers>
 		<ws id="0">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="variables_set" x="25" y="7">
+					<field name="VAR">valores</field>
+					<value name="VALUE">
+						<block type="lists_create_limited">
+							<value name="SIZE">
+								<block type="math_number">
+									<field name="NUM">5</field>
+								</block>
+							</value>
+						</block>
+					</value>
+					<next>
+						<block type="controls_for">
+							<field name="VAR">i</field>
+							<value name="FROM">
+								<block type="math_number">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<value name="TO">
+								<block type="math_number">
+									<field name="NUM">5</field>
+								</block>
+							</value>
+							<value name="BY">
+								<block type="math_number">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<statement name="DO">
+								<block type="procedures_callnoreturn">
+									<mutation name="vaiAteCliente">
+										<arg name="indice"></arg>
+									</mutation>
+									<value name="ARG0">
+										<block type="variables_get">
+											<field name="VAR">i</field>
+										</block>
+									</value>
+								</block>
+							</statement>
+							<next>
+								<block type="variables_set">
+									<field name="VAR">valores</field>
+									<value name="VALUE">
+										<block type="procedures_callreturn">
+											<mutation name="ordenar">
+												<arg name="valores"></arg>
+											</mutation>
+											<value name="ARG0">
+												<block type="variables_get">
+													<field name="VAR">valores</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<next>
+										<block type="do_talk">
+											<value name="VALUE">
+												<block type="variables_get">
+													<field name="VAR">valores</field>
+												</block>
+											</value>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</xml>
 		</ws>
 		<ws id="1">
 			<xml xmlns="http://www.w3.org/1999/xhtml">
@@ -341,10 +411,41 @@
 			</xml>
 		</ws>
 		<ws id="2">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defreturn" x="30" y="34">
+					<field name="NAME">calcularPreco</field>
+					<statement name="STACK">
+						<block type="variables_set">
+							<field name="VAR">res</field>
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">0</field>
+								</block>
+							</value>
+						</block>
+					</statement>
+					<value name="RETURN">
+						<block type="variables_get">
+							<field name="VAR">res</field>
+						</block>
+					</value>
+				</block>
+			</xml>
 		</ws>
 		<ws id="3">
-			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
+			<xml xmlns="http://www.w3.org/1999/xhtml">
+				<block type="procedures_defreturn" x="43" y="13">
+					<mutation>
+						<arg name="valores"></arg>
+					</mutation>
+					<field name="NAME">ordenar</field>
+					<value name="RETURN">
+						<block type="variables_get">
+							<field name="VAR">valores</field>
+						</block>
+					</value>
+				</block>
+			</xml>
 		</ws>
 		<ws id="4">
 			<xml xmlns="http://www.w3.org/1999/xhtml"></xml>
