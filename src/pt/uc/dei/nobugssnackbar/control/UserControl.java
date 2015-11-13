@@ -501,4 +501,9 @@ public class UserControl {
 		gameDao.markWizardFreeConsumed(this.user.getId(), this.mission, attempts, timeSpend);
 	}
 	
+	@RemoteMethod
+	public Object[] verifyContest(int clazzId, int levelId, int missionIdx) throws Exception  {
+		return gameDao.verifyContest(this.user.getId(), clazzId, levelId, missionIdx);
+	}
+	
 }

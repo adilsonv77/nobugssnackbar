@@ -49,7 +49,7 @@ SelectMission.finishGenerateBoard = function() {
 SelectMission.missionsRetrieved = function(missions) {
 	
 	var s = [];
-	
+	var this_ = null; 
 	var data = [];
 	for (var i= 0; i<missions.length; i++){
 		var rec = null;
@@ -90,13 +90,33 @@ SelectMission.missionsRetrieved = function(missions) {
 		 var missionIdx = this.getAttribute("iditem");
 		 var levelId = this.getAttribute("idlevel");
 		 
-		 $("#selectMissionBoard").empty();
+		 var fMissionSelect = function() {
+			 
+			 $("#selectMissionBoard").empty();
+			 
+			 MyBlocklyApps.hideDialog(true);
+			 SelectMission.stopAnimation = true;
+			 
+			 Game.missionSelected(itemId, levelId, missionIdx, this_.classList.contains("missionEnabled"));
+			 
+		 };
 		 
-		 MyBlocklyApps.hideDialog(true);
-		 SelectMission.stopAnimation = true;
+		 this_ = this;
 		 
-		Game.missionSelected(itemId, levelId, missionIdx, this.classList.contains("missionEnabled"));
+		 if (!this.classList.contains("missionEnabled")) {
+			 UserControl.verifyContest(itemId, levelId, missionIdx, function(ret) {
+				 if (ret[0] == true) {
+					 
+					 fMissionSelect();
+				 }
+				 else {
+					 alert(ret[1] + " " + ret[2]);
+				 }
+			 });
+		 } else
+			 fMissionSelect();
 		 
+			 
 	};
 	
 	var f2 = function(i) {

@@ -97,4 +97,6 @@ public interface GameDao {
 	void markWizardFreeConsumed(long user, long mission, int attempts,
 			int timeSpend) throws Exception;
 
+	Object[] verifyContest(long userId, int clazzId, int levelId, int missionIdx) throws Exception;
+
 }

@@ -2095,4 +2095,93 @@ public class GameJdbcDao implements GameDao {
 		
 	}
 
+	@Override
+	public Object[] verifyContest(long userId, int clazzId, int levelId,
+			int missionIdx) throws Exception {
+		Object[] ret = new Object[]{true, null, null};
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+
+			PreparedStatement ps = bdCon
+					.prepareStatement("select missionid from classesmissions cm "
+							+ "where classid = ? and classlevelid = ? order by missionorder "
+							+ "limit ?, 1");
+
+			ps.setLong(1, clazzId);
+			ps.setLong(2, levelId);
+			ps.setLong(3, missionIdx - 1);
+
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+
+			long missionId = rs.getLong(1);
+			ps.close();
+			
+			ps = bdCon.prepareStatement("select torneioid from torneiosmissoes where torneiomissionid = ? and torneioclasslevelid = ?");
+			ps.setLong(1, missionId);
+			ps.setLong(2, levelId);
+			rs = ps.executeQuery();
+			long torneioId = 0;
+					
+			if (rs.next()) {
+				torneioId = rs.getLong(1);
+			}
+			ps.close();
+			
+			if (torneioId > 0) {
+				ps = bdCon.prepareStatement("select torneiodtini, torneiodtfim, torneiouser, now()>=torneiodtini, now()>=torneiodtfim from torneios left outer join (select torneiouser, torneioid from torneiosusers where torneiouser = ?) tu using (torneioid) where torneioid = ?");
+				ps.setLong(1, userId);
+				ps.setLong(2, torneioId);
+				rs = ps.executeQuery();
+				rs.next();
+				
+				boolean userAllowed = rs.getLong(3) > 0;
+				boolean jaIniciouTorneio = rs.getBoolean(4);
+				boolean finalizouTorneio = rs.getBoolean(5);
+				
+				if (jaIniciouTorneio) {
+					
+					if (!finalizouTorneio && !userAllowed) {
+
+						ret[0] = false;
+						ret[1] = "contest_user_notapplied"; // wait finish the contest
+						ret[2] = rs.getString(2);
+
+					} else {
+						
+						// contest is finished. everybody can access the missions
+					}
+					
+				} else {
+					
+					ret[0] = false;
+					if (userAllowed) {
+						
+						ret[1] = "contest_notstarted"; // wait to start the contest
+						ret[2] = rs.getString(1);
+						
+					} else {
+						
+						ret[1] = "contest_user_notapplied"; // wait finish the contest
+						ret[2] = rs.getString(2);
+						
+					}
+				}
+				
+				ps.close();
+			}
+			
+		} finally {
+			bdCon.setAutoCommit(true);
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+			
+		return ret;
+	}
+
 }
