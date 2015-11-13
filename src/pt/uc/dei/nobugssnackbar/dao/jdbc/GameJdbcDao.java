@@ -340,9 +340,9 @@ public class GameJdbcDao implements GameDao {
 			ps.setInt(6, money);
 			ps.setFloat(7, zoomLevel);
 			if (achieved)
-				ps.setDate(8, new java.sql.Date((new java.util.Date()).getTime()));
+				ps.setTimestamp(8, new java.sql.Timestamp((new java.util.Date()).getTime()));
 			else
-				ps.setNull(8, java.sql.Types.DATE);
+				ps.setNull(8, java.sql.Types.TIME);
 			
 			ps.setLong(9, idMission);
 			ps.setLong(10, idClazz);
@@ -2227,7 +2227,7 @@ public class GameJdbcDao implements GameDao {
 
 						m.put("id", userId+"");
 						m.put("name", userName);
-						m.put("pos", "10");
+						m.put("pos", positionContest(bdCon, userId));
 						
 					}
 				}
@@ -2253,7 +2253,7 @@ public class GameJdbcDao implements GameDao {
 
 							m.put("id", userId+"");
 							m.put("name", userName);
-							m.put("pos", "10");
+							m.put("pos", positionContest(bdCon, userId));
 							
 						}
 					
@@ -2270,6 +2270,11 @@ public class GameJdbcDao implements GameDao {
 		}
 		
 		return ret;
+	}
+
+	private String positionContest(Connection bdCon, long userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

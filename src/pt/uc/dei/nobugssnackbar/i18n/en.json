@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2015-11-13 17:28:25.677000",
+		"lastupdated": "2015-11-13 19:38:05.852000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -256,6 +256,7 @@
 	"LeaderBoard.TabsPoints": "Tabs Point",
 	"LeaderBoard.TabsTime": "Tabs Time",
 	"LeaderBoard.TabsRuns": "Tabs Run",
+	"LeaderBoard.TabsContest": "Tabs Contest",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"Avatar.Body": "Body",

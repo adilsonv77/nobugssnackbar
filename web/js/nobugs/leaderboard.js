@@ -94,7 +94,7 @@ function populateLBTables(table, data) {
 function populateContestTable(table, data) {
 	
 	data = [{id: Game.loginData.userLogged.id, name: data.name, value: "", pos: data.pos}];
-    return populateLBTables(table);
+    return populateLBTables(table, data);
 }
 
 function finishTable(table, tBody) {
@@ -228,7 +228,7 @@ function continueCreating(ret) {
 	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 		.mCustomScrollbar({ theme:"nobug" });
 	
-	$(".mCSB_inside>.mCSB_container").css("margin", "15px");	
+	// $(".mCSB_inside>.mCSB_container").css("margin", "15px"); this is ugly.... wont repeat it	
 	goToLine("#tabs-points", rowId);
 	
 	leaderBoardCreated = true;
