@@ -93,3 +93,39 @@ function NoBugsWindowPrompt(info, initialValue, closeFunction, alertMsg) {
 	centerWindowPrompt();
 
 }
+
+function alert(message, callback, options) {
+	$('#alert').modal({
+		closeHTML: "<button style='padding:0px;margin:0px;min-width:0px;background-color:transparent;position:absolute; right:10px; top:2px;'><img src='images/closedialog.png' style='width:16px;height:16px'/></button>",
+		position: ["20%",],
+		overlayId: 'confirm-overlay',
+		containerId: 'confirm-container', 
+		onShow: function (dialog) {
+
+			if (options != undefined) {
+				
+				var cc = $("#confirm-container"); 
+				for (var opt in options) {
+					cc.css(opt, options[opt]);
+				}
+			}
+			
+			var modal = this;
+
+			$('.message', dialog.data[0]).append(message);
+
+			// if the user clicks "yes"
+			$('.yes', dialog.data[0]).click(function () {
+				// call the callback
+				if ($.isFunction(callback)) {
+					callback.apply();
+				}
+				// close the dialog
+				modal.close(); // or $.modal.close();
+			});
+			
+			
+		}
+	});
+	
+}

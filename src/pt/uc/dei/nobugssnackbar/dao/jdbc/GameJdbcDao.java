@@ -383,6 +383,7 @@ public class GameJdbcDao implements GameDao {
 			ex.printStackTrace();
 		} finally {
 			if (bdCon != null)
+				bdCon.setAutoCommit(true);
 				try {
 					bdCon.close();
 				} catch (SQLException ignore) {
@@ -747,6 +748,7 @@ public class GameJdbcDao implements GameDao {
 		} finally {
 			if (bdCon != null)
 				try {
+					bdCon.setAutoCommit(true);
 					bdCon.close();
 				} catch (SQLException ignore) {
 				}
@@ -792,6 +794,7 @@ public class GameJdbcDao implements GameDao {
 		} finally {
 			if (bdCon != null)
 				try {
+					bdCon.setAutoCommit(true);
 					bdCon.close();
 				} catch (SQLException ignore) {
 				}
@@ -918,6 +921,7 @@ public class GameJdbcDao implements GameDao {
 		} finally {
 			if (bdCon != null)
 				try {
+					bdCon.setAutoCommit(true);
 					bdCon.close();
 				} catch (SQLException ignore) {
 				}
@@ -1045,6 +1049,7 @@ public class GameJdbcDao implements GameDao {
 		} finally {
 			if (bdCon != null)
 				try {
+					bdCon.setAutoCommit(true);
 					bdCon.close();
 				} catch (SQLException ignore) {
 				}
@@ -2002,7 +2007,6 @@ public class GameJdbcDao implements GameDao {
 			
 		
 		} finally {
-			bdCon.setAutoCommit(true);
 			if (bdCon != null)
 				try {
 					bdCon.close();
@@ -2057,7 +2061,6 @@ public class GameJdbcDao implements GameDao {
 			}
 			
 		} finally {
-			bdCon.setAutoCommit(true);
 			if (bdCon != null)
 				try {
 					bdCon.close();
@@ -2084,7 +2087,6 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 			
 		} finally {
-			bdCon.setAutoCommit(true);
 			if (bdCon != null)
 				try {
 					bdCon.close();
@@ -2118,9 +2120,8 @@ public class GameJdbcDao implements GameDao {
 			long missionId = rs.getLong(1);
 			ps.close();
 			
-			ps = bdCon.prepareStatement("select torneioid from torneiosmissoes where torneiomissionid = ? and torneioclasslevelid = ?");
+			ps = bdCon.prepareStatement("select torneioid from torneiosmissoes where torneiomissionid = ?");
 			ps.setLong(1, missionId);
-			ps.setLong(2, levelId);
 			rs = ps.executeQuery();
 			long torneioId = 0;
 					
@@ -2145,7 +2146,7 @@ public class GameJdbcDao implements GameDao {
 					if (!finalizouTorneio && !userAllowed) {
 
 						ret[0] = false;
-						ret[1] = "contest_user_notapplied"; // wait finish the contest
+						ret[1] = "Usuário não registado para o torneio. Aguarde terminar o torneio para ter acesso às missões. O torneio termina às "; //"contest_user_notapplied"; // wait finish the contest
 						ret[2] = rs.getString(2);
 
 					} else {
@@ -2158,12 +2159,12 @@ public class GameJdbcDao implements GameDao {
 					ret[0] = false;
 					if (userAllowed) {
 						
-						ret[1] = "contest_notstarted"; // wait to start the contest
+						ret[1] = "Aguarde iniciar o torneio para ter acesso às missões. O torneio inicia às "; //"contest_notstarted"; // wait to start the contest
 						ret[2] = rs.getString(1);
 						
 					} else {
 						
-						ret[1] = "contest_user_notapplied"; // wait finish the contest
+						ret[1] ="Usuário não registado para o torneio. Aguarde terminar o torneio para ter acesso às missões. O torneio termina às "; // wait finish the contest
 						ret[2] = rs.getString(2);
 						
 					}
@@ -2173,7 +2174,6 @@ public class GameJdbcDao implements GameDao {
 			}
 			
 		} finally {
-			bdCon.setAutoCommit(true);
 			if (bdCon != null)
 				try {
 					bdCon.close();
@@ -2181,6 +2181,94 @@ public class GameJdbcDao implements GameDao {
 				}
 		}
 			
+		return ret;
+	}
+
+	@Override
+	public Object[] retrieveContest(long userId, String userName) throws Exception {
+		
+		Object[] ret = new Object[]{false, null};
+		
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps = bdCon.prepareStatement(
+					"select torneiodtini, torneiodtfim, torneiouser, "
+							+ " now()>=torneiodtini, now()>=torneiodtfim, "
+							+ "time_to_sec(timediff(now(), torneiodtini)) < 60*60, "
+							+ "time_to_sec(timediff(torneiodtfim, now())) < 60*60*2, "
+							+ "time_to_sec(timediff(now(), torneiodtfim)) > 0 and time_to_sec(timediff(now(), torneiodtfim)) < 60*30 "
+							+ " from torneios left outer join (select torneiouser, torneioid from torneiosusers where torneiouser = ?) tu using (torneioid)");
+			ps.setLong(1, userId);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			
+			// TODO: at this moment it works only with one contest
+			
+			boolean jaIniciouTorneio = rs.getBoolean(4);
+			boolean finalizouTorneio = rs.getBoolean(5);
+
+			HashMap<String, String> m = new HashMap<String, String>();
+			if (rs.getLong(3) > 0 && jaIniciouTorneio && !finalizouTorneio) {
+				ret[0] = true;
+				
+				ret[1] = m;
+				// jaIniciouTorneio
+				if (rs.getBoolean(6)) {
+					
+					m.put("id", "-1");
+					m.put("name", "O torneio já iniciou mas na primeira hora não é exibido o ranking.");
+					
+				} else {
+					if (rs.getBoolean(7)) {
+						m.put("id", "-1");
+						m.put("name", "Faltam menos de duas horas para finalizar o torneio. O ranking volta a ser exibido meia hora após o término do torneio.");
+					} else {
+
+						m.put("id", userId+"");
+						m.put("name", userName);
+						m.put("pos", "10");
+						
+					}
+				}
+			} else {
+				if (rs.getLong(3) > 0) {
+					
+					ret[0] = true;
+					ret[1] = m;
+					
+					if (!jaIniciouTorneio) {
+						
+						m.put("id", "-1");
+						m.put("name", "O torneio inicia às " + rs.getString(1));
+						
+					} else {
+
+						if (rs.getBoolean(8)) {
+							
+							m.put("id", "-1");
+							m.put("name", "O torneio já terminou. Entretanto, o ranking só será exibido meia hora após o término.");
+							
+					} else {
+
+							m.put("id", userId+"");
+							m.put("name", userName);
+							m.put("pos", "10");
+							
+						}
+					
+					}
+				}
+			}
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
 		return ret;
 	}
 

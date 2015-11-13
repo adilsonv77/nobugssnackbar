@@ -8,7 +8,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  */
 
-#confirm {display:none;}
+#confirm, #alert {display:none;}
 
 /* Overlay */
 #confirm-overlay {background-color:#eee;}

@@ -125,12 +125,15 @@
 						<li id="leaderpoints" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-points"><img src="images/badge_points_gold.png"/></a></li>
 						<li id="leadertime" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-time"><img src="images/badge_time_gold.png"/></a></li>
 						<li id="leaderruns" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-runs"><img src="images/badge_runs_gold.png"/></a></li>
+						<li id="leadercontest" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-contest"><img src="images/badge_contest_gold.png"/></a></li>
 					</ul>
 					<div id="tabs-points">
 					</div>
 					<div id="tabs-time">
 					</div>
 					<div id="tabs-runs">
+					</div>
+					<div id="tabs-contest">
 					</div>
 				</div>  				
   			</td>
@@ -516,6 +519,15 @@
 		<div class='buttons'>
 			<button class='yes nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.yes" desc="--"}Yes{/msg}</button>
 			<button class='no simplemodal-close nobugs_button' style="font-size: 14px" >{msg meaning="SnackMan.no" desc="--"}No{/msg}</button>
+		</div>
+  </div>
+
+  <div id="alert" style="display:none">
+	
+		<div class='header'><span>Mensagem</span></div>
+		<div class='message'></div>
+		<div class='buttons'>
+			<button class='no simplemodal-close nobugs_button' style="font-size: 14px" >OK</button>
 		</div>
   </div>
 

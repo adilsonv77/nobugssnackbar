@@ -53,6 +53,11 @@ function addTooltip() {
 		  content: BlocklyApps.getMsg("Tooltip_TabRun")
 	});
 	
+	new Tooltip({
+		  target: document.getElementById("leadercontest"),
+		  position: 'top left',
+		  content: "Entre as miss&#245;es do torneio: ordenado pela quantidade vencida, tentativas e tempo"
+	});
 };
 
 function createTable(table) {
@@ -83,6 +88,31 @@ function populateLBTables(table, data) {
 
 	  });
 	  
+	  return finishTable(table, tBody);
+}
+
+function populateContestTable(table, data) {
+	
+	  var tBody = $("<tbody/>");
+	  
+	  var tr = $("<tr id = " + table + "_" + data.id + "/>");
+	  
+	  if (data.id > -1) {
+		  
+		  tr.append($("<td>").html(data.pos));
+		  // the version i use to force the server give another photo
+		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + data.id + "&v=" + version + "'/>"));
+	  }
+
+	  tr.append($("<td>").html(data.name));
+	 
+	  tBody.append(tr);
+	
+	  
+	  return finishTable(table, tBody);
+}
+
+function finishTable(table, tBody) {
 	  var tTable = $("<table id = " + table + "/>");
 	  
 	  var trHead = $("<tr/>");
@@ -111,6 +141,17 @@ function explainTab(event, clicked, targetPanel, settings) {
 }
 
 function createsLeaderBoard() {
+	
+	UserControl.retrieveContest(continueCreating);
+}
+
+function continueCreating(ret) {
+	
+	if (ret[0]) {
+		$("#leadercontest").css("display", "inline-block");
+	} else {
+		$("#leadercontest").css("display", "none");
+	}
 	
 	version++;
 	addTooltip();
@@ -162,13 +203,15 @@ function createsLeaderBoard() {
     	$("#tabs-points").empty();
     	$("#tabs-time").empty();
     	$("#tabs-runs").empty();
+    	$("#tabs-contest").empty();
     	
     }
-	
 
 	$("#tabs-points").append(populateLBTables("table_points", lbMoneyData));
 	$("#tabs-time").append(populateLBTables("table_time", lbTimeData));
 	$("#tabs-runs").append(populateLBTables("table_runs", lbRunData));
+	if (ret[0])
+		$("#tabs-contest").append(populateContestTable("table_contest", ret[1]));
 
 	var rowId = "#table_points_" + Game.loginData.userLogged.id;
 	$("#tabs-points").attr("rowId", rowId);
@@ -193,7 +236,10 @@ function createsLeaderBoard() {
 	
 	createTable($("#table_runs"));
 	highlightCurrentUser($("#tabs-runs").attr("rowId"));
-
+	
+	if (ret[0])
+		createTable($("#table_contest"));
+	
 	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 		.mCustomScrollbar({ theme:"nobug" });
 	
@@ -208,6 +254,8 @@ function createsLeaderBoard() {
 function createNoLeaderBoardInfo() {
 	version++;
 	addTooltip();
+	
+	$("#leadercontest").css("display", "none");
 	
 	var data = [{id: Game.loginData.userLogged.id, 
 		         name: BlocklyApps.getMsg("Text_NotEnabledToSeeLeaderBoard").format(Game.loginData.leaderBoard[0][1]), value: ""}];

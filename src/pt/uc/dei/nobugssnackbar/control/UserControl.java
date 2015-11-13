@@ -506,4 +506,9 @@ public class UserControl {
 		return gameDao.verifyContest(this.user.getId(), clazzId, levelId, missionIdx);
 	}
 	
+	@RemoteMethod
+	public Object[] retrieveContest() throws Exception  {
+		return gameDao.retrieveContest(this.user.getId(), this.user.getName());
+	}
+	
 }

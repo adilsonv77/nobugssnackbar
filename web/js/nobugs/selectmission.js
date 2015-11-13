@@ -110,7 +110,7 @@ SelectMission.missionsRetrieved = function(missions) {
 					 fMissionSelect();
 				 }
 				 else {
-					 alert(ret[1] + " " + ret[2]);
+					 alert(ret[1] + " " + ret[2], null, {"height": "200px"});
 				 }
 			 });
 		 } else

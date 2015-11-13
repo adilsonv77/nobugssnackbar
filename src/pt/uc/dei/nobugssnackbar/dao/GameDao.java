@@ -99,4 +99,6 @@ public interface GameDao {
 
 	Object[] verifyContest(long userId, int clazzId, int levelId, int missionIdx) throws Exception;
 
+	Object[] retrieveContest(long userId, String userName) throws Exception;
+
 }
