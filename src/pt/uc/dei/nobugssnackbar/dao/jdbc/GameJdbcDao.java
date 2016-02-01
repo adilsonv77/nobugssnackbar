@@ -2224,7 +2224,7 @@ public class GameJdbcDao implements GameDao {
 						m.put("id", "-1");
 						m.put("name", "Faltam menos de duas horas para finalizar o torneio. O ranking volta a ser exibido meia hora após o término do torneio.");
 					} else {
-
+						ps.close();
 						m.put("id", userId+"");
 						m.put("name", userName);
 						m.put("pos", positionContest(bdCon, userId));
@@ -2250,7 +2250,7 @@ public class GameJdbcDao implements GameDao {
 							m.put("name", "O torneio já terminou. Entretanto, o ranking só será exibido meia hora após o término.");
 							
 					} else {
-
+							ps.close();
 							m.put("id", userId+"");
 							m.put("name", userName);
 							m.put("pos", positionContest(bdCon, userId));
@@ -2260,6 +2260,7 @@ public class GameJdbcDao implements GameDao {
 					}
 				}
 			}
+			ps.close();
 			
 		} finally {
 			if (bdCon != null)
@@ -2272,9 +2273,31 @@ public class GameJdbcDao implements GameDao {
 		return ret;
 	}
 
-	private String positionContest(Connection bdCon, long userId) {
-		// TODO Auto-generated method stub
-		return null;
+	private String positionContest(Connection bdCon, long userId) throws SQLException {
+		
+		String s =
+				"select userid, count(*) c, sum(executions) e, sum(timespend) t from "
+					+ "  missionsaccomplished " 
+					+ "   join torneiosmissoes on (missionid = torneiomissionid) " 
+					+ "   join torneios t using (torneioid) "
+					+ "   where achieved = 'T' and finishdate between t.torneiodtini and t.torneiodtfim "
+					+ "   group by userid "
+					+ "   order by c desc, e asc, t asc" ;
+		
+		
+		PreparedStatement ps = bdCon.prepareStatement(s);
+		ResultSet rs = ps.executeQuery();
+		
+		int ranking = 1; boolean entrou = false;
+		while (rs.next()) {
+			entrou = true;
+			if (rs.getLong(1) == userId) {
+				break;
+			}
+			ranking++;
+		}
+		
+		return (entrou?ranking:10) + "";
 	}
 
 }

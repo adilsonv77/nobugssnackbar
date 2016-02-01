@@ -77,7 +77,7 @@ function populateLBTables(table, data) {
 		  
 		  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
 		  
-		  tr.append($("<td>").html((data.pos !== undefined?data.pos:contaRow)));
+		  tr.append($("<td>").html((entry.pos !== undefined?entry.pos:contaRow)));
 		  // the version i use to force the server give another photo
 		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + entry.id + "&v=" + version + "'/>"));
 		  tr.append($("<td>").html(entry.name + "<br/>" + entry.value));
@@ -93,7 +93,7 @@ function populateLBTables(table, data) {
 
 function populateContestTable(table, data) {
 	
-	data = [{id: Game.loginData.userLogged.id, name: data.name, value: "", pos: data.pos}];
+	data = [{id: Game.loginData.userLogged.id, name: data.name, value: "", pos: data.pos+"&#186;"}];
     return populateLBTables(table, data);
 }
 
