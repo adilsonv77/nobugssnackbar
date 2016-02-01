@@ -137,6 +137,7 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
 Blockly.Blocks['math_arithmetic'].init = function() {
     this.jsonInit({
         "message0": "(%1 %2 %3)",
+        "colour" : Blockly.Blocks.math.HUE,
         "args0": [
           {
               "type": "input_value",
@@ -162,7 +163,7 @@ Blockly.Blocks['math_arithmetic'].init = function() {
         ]});
 
 	this.setHelpUrl(Blockly.Msg.MATH_ARITHMETIC_HELPURL);
-    this.setColour(Blockly.Blocks.math.HUE);
+
     this.setOutput(true, 'Number');
 
     this.setInputsInline(true);
@@ -541,3 +542,18 @@ Blockly.Blocks['procedures_callreturn'].init = function() {
 	this.setInputsInline(true);
 };
 	
+
+Blockly.Block.prototype.setColour = function(colour) {
+	  var hue = parseFloat(colour);
+	  if (!isNaN(hue)) {
+	    this.colour_ = Blockly.hueToRgb(hue);
+	  } else if (goog.isString(colour) && colour.match(/^#[0-9a-fA-F]{6}$/)) {
+	    this.colour_ = colour;
+	  } else {
+	    throw 'Invalid colour: ' + colour;
+	  }
+	  if (this.rendered) {
+	    this.updateColour();
+	  }
+
+}
