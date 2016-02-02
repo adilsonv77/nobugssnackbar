@@ -205,6 +205,17 @@ BlocklyEditor.prototype.lengthTopBlocks = function() {
 	return Blockly.mainWorkspace.getTopBlocks().length;	
 };
 
+BlocklyEditor.prototype.traceOn = function(on) {
+	 Blockly.mainWorkspace.traceOn(on);
+};
+
+BlocklyEditor.prototype.hideChaff = function() {
+	Blockly.hideChaff();
+};
+
+BlocklyEditor.prototype.highlightBlock = function(id) {
+	Blockly.mainWorkspace.highlightBlock(id);
+};
 /* *************************************************************************** */
 
 var MultiBlockEditor = {};
@@ -455,7 +466,7 @@ CodeEditor.prototype.semanticAnalysis = function() {
 };
 
 CodeEditor.prototype.getJsCode = function() {
-	
+	return this.editor.getValue();
 };
 
 CodeEditor.prototype.getFirstEditArea = function() {
@@ -503,4 +514,16 @@ CodeEditor.prototype.removeChangeListener = function(evt) {
 
 CodeEditor.prototype.lengthTopBlocks = function() {
 	return 0;	
+};
+
+CodeEditor.prototype.traceOn = function(on) {
+	 
+};
+
+CodeEditor.prototype.hideChaff = function() {
+	
+};
+
+CodeEditor.prototype.highlightBlock = function(id) {
+	
 };

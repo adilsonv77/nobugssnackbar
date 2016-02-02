@@ -674,7 +674,7 @@ Game.saveMission = function() {
 	var answer = Game.workspaceAnswer();
 	var timeSpent = Game.getTimeSpend();
 	
-	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, Blockly.getMainWorkspace().scale, answer,
+	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, (Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), answer,
 			{callback:function() {}, async:false});
 	
 	Game.currTime = new Date().getTime();
@@ -1081,10 +1081,13 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  if (root.localName === "xml") {
 		// the old version
 		  // in march delete this if block
+		  
+		  Game.editor.loadCode(answer);
+		  /*
 		  var xml = Blockly.Xml.textToDom(answer);
 		  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
 		  Game.moveBlocks();
-		  
+		  */
 	  } else {
 		  
 		  var c = root.firstElementChild;
@@ -1710,7 +1713,7 @@ Game.emptyLines = function() {
 
 Game.goBackToDashboard = function(evt, callInit) {
 	
-	Blockly.hideChaff();
+	Game.editor.hideChaff();
     Blockly.WidgetDiv.hide();
     
     if (CountXP.times !== undefined)
@@ -1880,7 +1883,7 @@ Game.runButtonClick = function() {
   
   Game.doResizeWindow();
   
-  Blockly.mainWorkspace.traceOn(true);
+  Game.editor.traceOn(true);
   Game.execute(1);
 };
 
@@ -1975,7 +1978,7 @@ Game.debugButtonClick = function() {
 			Game.disableButton('wizardFreeButton');
 		}
 		
-		Blockly.mainWorkspace.traceOn(true);
+		Game.editor.traceOn(true);
 		Game.firstClick = true;
 		
 	} else {
@@ -1983,7 +1986,7 @@ Game.debugButtonClick = function() {
 		Hints.stopHints();
 		Game.firstClick = false;
 		if (!Blockly.mainWorkspace.traceOn_) // the second complete debug didn't show the highlight on the blocks 
-			Blockly.mainWorkspace.traceOn(true);
+			Game.editor.traceOn(true);
 		
 	}
 	
@@ -2040,7 +2043,7 @@ Game.resetButtons = function(hideVars) {
 	Game.enableButton('wizardFreeButton');
 	
 	if (Blockly.mainWorkspace != null)
-		Blockly.mainWorkspace.traceOn(false); 
+		Game.editor.traceOn(false);
 	
 	Game.runningStatus = 0;
 	
@@ -2058,7 +2061,7 @@ Game.finishedRun = function() {
 
 Game.showTabs = function(id) {
 	
-	Blockly.hideChaff();
+	Game.editor.hideChaff();
 	Blockly.WidgetDiv.hide();
 	
 	Game.editor.visibleTabs(id);
@@ -2091,12 +2094,12 @@ Game.changeTab = function(id, f) {
 	id = (id.data ? id.data : id);
 	if (Game.selectedTab === id) {
 		
-		Blockly.mainWorkspace.traceOn(true);
+		Game.editor.traceOn(true);
 		return f;
 	} 
 	
 	Game.selectTab(id);
-	Blockly.mainWorkspace.traceOn(true);
+	Game.editor.traceOn(true);
 	return f;
 };
 
@@ -2127,7 +2130,7 @@ Game.execute = function(debug) {
 	  
 	    Game.highlightPause = false;
 	  
-	    Blockly.hideChaff();
+	    Game.editor.hideChaff();
 	    Hints.stopHints();
 	    Blockly.WidgetDiv.hide();
 	  
@@ -2177,8 +2180,8 @@ Game.execute = function(debug) {
 		      return;
 		  } else
 			  if (e.isNoBugs) {
-				  Blockly.mainWorkspace.traceOn(true); // allowing the hightlight
-				  Blockly.mainWorkspace.highlightBlock(Blockly.selected.id);
+				  Game.editor.traceOn(true); // allowing the hightlight
+				  Game.editor.highlightBlock(Blockly.selected.id);
 
 				  Game.showError([e.msg]);
 			      Game.resetButtons();
@@ -2501,7 +2504,7 @@ Game.nextStep = function() {
 				
 				var debugging = Game.runningStatus == 2;
 
-			    Blockly.mainWorkspace.highlightBlock(null);
+			    Game.editor.highlightBlock(null);
 			    
 			    hero.verifyObjectives("deliver", {allCustomers:true});
 			    hero.verifyObjectives("varQtd", null);
@@ -3078,7 +3081,7 @@ Game.highlightPause = false;
 Game.highlightBlock = function(id) {
 	
 	if (!Blockly.mainWorkspace.traceOn_) // this happens when there was a previous block selected
-		Blockly.mainWorkspace.traceOn(true);
+		Game.editor.traceOn(true);
 	
 	BlocklyApps.log.push(['IM', 0]);
 	BlocklyApps.log.push(['IM', 0]);
@@ -3088,7 +3091,7 @@ Game.highlightBlock = function(id) {
 	
 	CustomerManager.update(5);
 	
-    Blockly.mainWorkspace.highlightBlock(id);
+    Game.editor.highlightBlock(id);
 	Game.updateVariables();	
 
 	Game.highlightPause = true;
@@ -3124,7 +3127,7 @@ Game.animate = function() {
    } else {
 	   // TODO ???
 	  Game.resetButtons(false);
-	  Blockly.mainWorkspace.highlightBlock(null);
+	  Game.editor.highlightBlock(null);
 	  
   }
 };
