@@ -145,6 +145,7 @@
 			<arg line="-o ${js.compress.out}"/>
 			
 			<!-- list of files to compress -->
+			<arg line="${js.home}/solutioneditor.js" />
 			<arg line="${js.home}/navigator.js" />
 			<arg line="${js.home}/blocksnewversion.js" />
 			<arg line="${js.home}/language.js" />

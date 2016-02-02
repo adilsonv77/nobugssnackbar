@@ -64,6 +64,8 @@ Game.callTimes = {};
 PreloadImgs.put('fundo', 'images/fundo_new.png');
 PreloadImgs.put('doors', 'images/door_new.png');
 
+Game.useCodeEditor = false;
+Game.editor = null;
 
 Game.generalInit = function() {
 	
@@ -649,12 +651,7 @@ Game.unload = function(e) {
 Game.workspaceAnswer = function() {
 	var answer = "<xml></xml>";
 	if (Blockly.mainWorkspace != null) {
-		answer = "<answers>";
-		Game.blocklys.forEach(function(b) {
-			answer += "<ws id=\"" + b.ws.index + "\">" + Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(b.ws)) + "</ws>";	
-		});
-		answer += "</answers>";
-		
+		answer = "<answers>" + Game.editor.getXmlValue() + "</answers>";
 	}
 	
 	return answer;
@@ -757,56 +754,14 @@ Game.missionLoaded = function(ret){
 		  {enabled: Explanation.selectCommands(commands)}); // xml definition of the available commands
   
   Game.toolbox = toolbox;
- 
-  Game.blocklys = [];
-  
+  var hasFunction = commands.innerHTML.indexOf('name="function"') > -1;
+
+  //Game.useCodeEditor = true; /// essa informacao deveria vir do servidor
+  Game.editor = (Game.useCodeEditor?new CodeEditor():(hasFunction?new MultiBlockEditor():new BlocklyEditor("blockly", 0))); 
+
   var hasTable = commands.innerHTML.indexOf('name="array"') > -1;
   
-  if (commands.innerHTML.indexOf('name="function"') > -1) {
-	  
-	  Hints.noHints = true;
-	  
-	  $("#multiBlockly").css("display", "inline");
-	  $("#blockly").css("display", "none");
-	  
-	  $('#multiBlockly').easytabs({updateHash: false, animate: false});
-	  $('#multiBlockly').bind('easytabs:after', function(evt, clicked, targetPanel) {
-          
-		  if (Blockly.selected != null) {
-			  myIsTargetSvg = true;
-			  Blockly.selected.unselect();
-			  myIsTargetSvg = false;
-		  }
-		  
-		  Game.selectTab (targetPanel.attr("id"));
-		  
-		});
-	  
-	  $('#multiBlockly').easytabs("select", "#blockly1");
-	  
-	  Game.redimDiv = document.getElementById("multiBlockly");
-	  
-	  Game.blocklys.push({id: "blockly1", ws: null, top: 35});
-	  Game.blocklys.push({id: "blockly2", ws: null, top: 35});
-	  Game.blocklys.push({id: "blockly3", ws: null, top: 35});
-	  Game.blocklys.push({id: "blockly4", ws: null, top: 35});
-	  Game.blocklys.push({id: "blockly5", ws: null, top: 35});
-	  Game.blocklys.push({id: "blockly6", ws: null, top: 35});
-	  
-  } else {
-	  
-	  Hints.noHints = false;
-
-	  $("#multiBlockly").css("display", "none");
-	  $("#blockly").css("display", "inline");
-	  
-	  Game.redimDiv = document.getElementById("blockly");
-	  
-	  Game.blocklys.push({id: "blockly", ws: null, top:0});
-	  
-  }
-
-  Game.blockly = Game.redimDiv;
+  Game.redimDiv = Game.editor.editArea;
   
   var objectives = mission.childNodes[0].getElementsByTagName("objectives")[0];
   Game.verifyButtons(objectives);
@@ -1160,7 +1115,7 @@ Game.buyMachineButtonClick = function() {
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
   Game.resizeWindow(); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
-  
+ 
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
     
@@ -1180,25 +1135,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	          scaleSpeed: 1.1
 	         }};
 
-  for (var i = 0; i < Game.blocklys.length; i++) {
-
-	  var b = Game.blocklys[i];
-	  var divBlockly = document.getElementById(b.id);
-	  divBlockly.innerHTML = ""; // clean the editor
-	  b.ws = Blockly.inject(divBlockly, cfg);
-	  b.ws.id = b.id;
-	  b.ws.aux = i > 0;
-	  b.ws.index = i;
-  }
-  
   Game.selectedTab = "";
-  if (Game.blocklys.length > 0) {
-	  
-	  Game.selectTab(Game.blocklys[0].id);
-	  Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
-	  
-  } 
-  
+  Game.editor.initialize(cfg); // xixi
   
   if (Game.zoomLevel > 1) {
 	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
@@ -1222,7 +1160,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  
 	  if (root.localName === "xml") {
 		// the old version
-		  
+		  // in march delete this if block
 		  var xml = Blockly.Xml.textToDom(answer);
 		  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
 		  Game.moveBlocks();
@@ -1233,10 +1171,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  while (c != null) {
 			  
 			  var id = parseInt(c.getAttribute("id"));
-			  
-			  var xml = Blockly.Xml.textToDom(c.innerHTML);
-			  Blockly.Xml.domToWorkspace(Game.blocklys[id].ws, xml);
-			  Game.moveBlocks();
+			  Game.editor.loadCode(c.innerHTML, id);
 			  
 			  c = c.nextElementSibling;
 		  };
@@ -1663,7 +1598,6 @@ Game.resizeWindow = function(e) {
 	Game.redimDiv.style.left = Game.rtl ? '10px' : '380px';
     var w = window.innerWidth;
     if (Game.variableBox.style.display === "none" && Game.tipBox.style.display === "none") {
-    	//Game.blockly.style.height = "90%";
         w -= 400;
     	
     } else {
@@ -1700,18 +1634,11 @@ Game.resizeWindow = function(e) {
         
     }
     Game.redimDiv.style.width = (w) + 'px';
+   
+	var t = Game.redimDiv.style.top;
+	t = parseInt(t.substr(0, t.length-2));
     
-    Game.blocklys.forEach(function(b) {
-    	var blocklyDiv = document.getElementById(b.id);
-    	
-    	var t = Game.redimDiv.style.top;
-    	t = parseInt(t.substr(0, t.length-2));
-    	blocklyDiv.style.top = (b.top == 0?t:b.top) + "px";
-    	blocklyDiv.style.left = (b.top == 0?Game.redimDiv.style.left:"0px"); 
-    	
-    	blocklyDiv.style.width = Game.redimDiv.style.width; 
-    	blocklyDiv.style.height = (b.top == 0?"":(Game.redimDiv.clientHeight - 30)+"px"); 
-    });
+	Game.editor.resize(t);
     
     var blocklyLock = document.getElementById("blocklyLock");
 	
@@ -1872,9 +1799,7 @@ Game.goBackToDashboard = function(evt, callInit) {
     
     var ret = Game.closeBlockEditorStuffs();
     
-	Game.blocklys.forEach(function(b) {
-		b.ws.dispose();
-	});
+    Game.editor.dispose();
 	
 	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
 		
@@ -2217,13 +2142,7 @@ Game.showTabs = function(id) {
 	Blockly.hideChaff();
 	Blockly.WidgetDiv.hide();
 	
-	Game.blocklys.forEach(function(b) {
-		 if (b.id === id) {
-			 b.ws.setVisible(true);
-			 b.ws.markFocused();
-		 } else
-			 b.ws.setVisible(false);
-	 });
+	Game.editor.visibleTabs(id);
 	
     Blockly.fireUiEvent(window, 'resize');
 
@@ -2264,20 +2183,7 @@ Game.changeTab = function(id, f) {
 
 Game.verifyFunctionTabs = function() {
 	
-	for (var i = 1; i < Game.blocklys.length; i++) {
-		
-		var blocks = Game.blocklys[i].ws.getTopBlocks();
-		blocks.forEach(function(b) {
-
-			if (b.type.indexOf("procedures_def") == -1) {
-				
-				Game.selectTab(Game.blocklys[i].id);
-				Blockly.selected = b;
-				throw {isNoBugs: true, msg : "Error_TabOnlyWithFunctions"};
-			} 
-		});
-		
-	}
+	Game.editor.verifyFunctionTabs();
 	
 };
 
@@ -2295,10 +2201,8 @@ Game.execute = function(debug) {
 
 	    Game.verifyFunctionTabs();
 		  
-	    if (Game.blocklys.length > 1) {
-		  Game.changeTab("blockly1");
-	    }
-	  
+	    Game.editor.changeToFirstTab();
+
 	    $("#tests_finished").css("display", "none");
 	    Game.blinkPlayerStop = true;
 	  
@@ -2320,8 +2224,6 @@ Game.execute = function(debug) {
 
 	    Game.runningStatus = debug; // let here because the registration of the status in save mission
 	  
-		var js = Blockly.JavaScript;
-		
 		Game.saveMission();
 		
 		if (Blockly.selected != null) {
@@ -2332,22 +2234,9 @@ Game.execute = function(debug) {
 			
 		}
 		
-		Game.blocklys.forEach(function (b) {
-			
-			Game.countInstructions(b.ws.getTopBlocks(), Game.semanticAnalysis);
-			
-		});
+		Game.editor.semanticAnalysis();
 		
-  	    var code = "";
-  	    
-  	    for (var i = Game.blocklys.length-1; i >= 0; i--) {
-  	    	var b = Game.blocklys[i];
-	    	b.ws.genCode = true;
-  	    	var s1 = Game.convertWaits(js.workspaceToCode(b.ws));
-  	    	code += s1;
-  	    	b.ws.genCode = false;
-  	    	
-  	    };
+  	    var code = Game.editor.getJsCode();
   	    
   	    code = "var NoBugsJavaScript = {};\n" + code;
   	    Game.code = code;
@@ -2451,16 +2340,11 @@ Game.hasEmptyInputs = function (activeBlock) {
 
 Game.showCountInstructions = function() {
 
-	
-	if (Game.blockly && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
+	if (Game.editor.editArea && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
 
-		var blck = (Game.blocklys.length == 0?Game.blockly:document.getElementById(Game.blocklys[0].id));
-		var t = blck.offsetTop;
+		var blck = Game.editor.getFirstEditArea();
+		var t = blck.offsetTop + Game.editor.getOffsetTop();
 		
-		if (Game.blocklys.length > 0) {
-			t = t + blck.parentElement.parentElement.offsetTop;;
-		} 
-
 		var ci = document.createElement("div");
 		ci.id = "countInstruction";
 		ci.style.position = "absolute";
@@ -2502,8 +2386,8 @@ Game.lockBlockly = function() {
 	blocklyLock = document.createElement("div");
     
     blocklyLock.id = "blocklyLock";
-    blocklyLock.style.cssText = Game.blockly.style.cssText;
-    blocklyLock.style.height = Game.blockly.clientHeight + "px";
+    blocklyLock.style.cssText = Game.editor.editArea.style.cssText;
+    blocklyLock.style.height = Game.editor.editArea.clientHeight + "px";
     blocklyLock.style.position = "fixed";
     blocklyLock.style.backgroundColor = "grey";
     blocklyLock.style.opacity = "0.3";

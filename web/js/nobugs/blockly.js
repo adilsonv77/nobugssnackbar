@@ -651,12 +651,7 @@ Blockly.Procedures.findLegalName = function(name, block) {
 	  }
 	
 	do  {
-		var legalName = true; 
-		for (var i=0; i<Game.blocklys.length; i++) {
-			legalName = Blockly.Procedures.isLegalName(name, Game.blocklys[i].ws, block);
-			if (!legalName)
-				break;
-		}	
+		var legalName = Game.editor.newProcedureNameIsLegal(name, block);
 		
 		if (legalName)
 			return name;
@@ -678,23 +673,8 @@ Blockly.Procedures.allProcedures = function(root) {
     var proceduresReturn = [];
     var proceduresNoReturn = [];
 	
-    Game.blocklys.forEach(function(b) {
-		var root = b.ws;
-		  var blocks = root.getAllBlocks();
-		  for (var i = 0; i < blocks.length; i++) {
-		    if (blocks[i].getProcedureDef) {
-		      var tuple = blocks[i].getProcedureDef();
-		      if (tuple) {
-		        if (tuple[2]) {
-		          proceduresReturn.push(tuple);
-		        } else {
-		          proceduresNoReturn.push(tuple);
-		        }
-		      }
-		    }
-		  }
-	});
-   
+    Game.editor.retrieveProcedures(proceduresReturn, proceduresNoReturn);
+    
     proceduresNoReturn.sort(Blockly.Procedures.procTupleComparator_);
     proceduresReturn.sort(Blockly.Procedures.procTupleComparator_);
     return [proceduresNoReturn, proceduresReturn];
@@ -760,43 +740,21 @@ Blockly.Procedures.rename = function(text) {
 	  var this_ = this;
 	  // Ensure two identically-named procedures don't exist.
 	  text = Blockly.Procedures.findLegalName(text, this.sourceBlock_);
-      Game.blocklys.forEach(function(b) {
-    	  
-    	  // Rename any callers.
-    	  var blocks = b.ws.getAllBlocks();
-    	  for (var i = 0; i < blocks.length; i++) {
-    	    if (blocks[i].renameProcedure) {
-    	      blocks[i].renameProcedure(this_.text_, text);
-    	    }
-    	  }
-      });
-
+	  Game.editor.renameCallers(this_.text_, text);
+	  
 	  return text;
 	};
 	
 Blockly.Procedures.disposeCallers = function(name, workspace) {
-	Game.blocklys.forEach( function (b) {
-		
-	  var callers = Blockly.Procedures.getCallers(name, b.ws);
-	  for (var i = 0; i < callers.length; i++) {
-	    callers[i].dispose(true, false);
-	  }
-		
-	});
+	Game.editor.disposeCallers(name);
 };
 	
 	
 Blockly.Procedures.mutateCallers = function(name, workspace,
             paramNames, paramIds) {
 	
-	Game.blocklys.forEach( function (b) {
-		
-		var callers = Blockly.Procedures.getCallers(name, b.ws);
-		for (var i = 0; i < callers.length; i++) {
-			callers[i].setProcedureParameters(paramNames, paramIds);
-		}
-		
-	});
+	Game.editor.mutateCallers(name, paramNames, paramIds);
+	
 };
 
     
