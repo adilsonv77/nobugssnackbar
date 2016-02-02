@@ -762,7 +762,7 @@ Objective.CommsQtd.prototype.init = function(qtd) {
 
 Objective.CommsQtd.prototype.checkObjective = function(options, objective)  {
 
-	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	var count = Game.editor.countInstructions();
 
 	return count <= objective.qtd;
 };

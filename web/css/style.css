@@ -54,6 +54,12 @@ button.secondary:disabled {
   position: fixed;
   bottom: 10px;
 }
+#codeeditor {
+  position: fixed;
+  bottom: 10px;
+  font-size: 16pt;
+}
+
 #display {
   border: 1px solid #ccc;
 }

@@ -8,6 +8,16 @@ function showOneEditArea(id) {
 	
 }
 
+function resizeOneEditArea(blocklyDiv, t, top) {
+
+	blocklyDiv.style.top = (top == 0?t:top) + "px";
+	blocklyDiv.style.left = (top == 0?Game.redimDiv.style.left:"0px"); 
+
+	blocklyDiv.style.width = Game.redimDiv.style.width; 
+	blocklyDiv.style.height = (top == 0?"":(Game.redimDiv.clientHeight - 30)+"px"); 
+
+}
+
 var BlocklyEditor = {};
 
 BlocklyEditor = function(id, top) {
@@ -31,6 +41,19 @@ BlocklyEditor.prototype.initialize = function(cfg, i) {
 	this.ws.index = i;
 };
 
+BlocklyEditor.prototype.zoom = function() {
+	
+	if (Game.zoomLevel > 1) {
+		  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
+			Blockly.getMainWorkspace().zoomCenter(1);
+	} else 
+		  if (Game.zoomLevel < 1) {
+			  while (Blockly.getMainWorkspace().scale > Game.zoomLevel) 
+				  Blockly.getMainWorkspace().zoomCenter(-1);
+		  }
+	
+};
+
 BlocklyEditor.prototype.loadCode = function(xmlCode) {
 	
 	var xml = Blockly.Xml.textToDom(xmlCode);
@@ -41,13 +64,7 @@ BlocklyEditor.prototype.loadCode = function(xmlCode) {
 
 BlocklyEditor.prototype.resize = function(t) {
 	
-	var blocklyDiv = this.editArea;
-
-	blocklyDiv.style.top = (this.top == 0?t:this.top) + "px";
-	blocklyDiv.style.left = (this.top == 0?Game.redimDiv.style.left:"0px"); 
-
-	blocklyDiv.style.width = Game.redimDiv.style.width; 
-	blocklyDiv.style.height = (this.top == 0?"":(Game.redimDiv.clientHeight - 30)+"px"); 
+	resizeOneEditArea(this.editArea, t, this.top);
 
 };
 
@@ -161,6 +178,33 @@ BlocklyEditor.prototype.mutateCallers = function(name, paramNames, paramIds) {
 
 };
 
+BlocklyEditor.prototype.countInstructions = function(visitor, blocks) {
+	blocks = (blocks == undefined?Blockly.mainWorkspace.getTopBlocks():blocks);
+	if (visitor == undefined)
+		return Game.countInstructions(blocks);
+	else
+		return Game.countInstructions(blocks, visitor);
+};
+
+BlocklyEditor.prototype.addChangeListener = function(evt) {
+	
+	Blockly.mainWorkspace.addChangeListener(evt);
+};
+
+BlocklyEditor.prototype.removeChangeListener = function(evt) {
+	Blockly.mainWorkspace.removeChangeListener(evt);
+};
+
+BlocklyEditor.prototype.bindMouseDownSvgGroupEvent = function(game, evt) {
+	
+	return Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', game, evt);
+	
+};
+
+BlocklyEditor.prototype.lengthTopBlocks = function() {
+	return Blockly.mainWorkspace.getTopBlocks().length;	
+};
+
 /* *************************************************************************** */
 
 var MultiBlockEditor = {};
@@ -199,6 +243,8 @@ MultiBlockEditor = function() {
 
 };
 	  
+inherits(BlocklyEditor, MultiBlockEditor);
+
 MultiBlockEditor.prototype.initialize = function(cfg) {
 
 	for (var i = 0; i < this.blocklys.length; i++) {
@@ -211,6 +257,10 @@ MultiBlockEditor.prototype.initialize = function(cfg) {
    Game.selectTab(this.blocklys[0].id);
    Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
 		  
+};
+
+MultiBlockEditor.prototype.zoom = function() {
+	this.blocklys[0].zoom();
 };
 
 MultiBlockEditor.prototype.loadCode = function(xmlCode, idx) {
@@ -344,6 +394,7 @@ var CodeEditor = {};
 CodeEditor = function() {
 	this.editArea = document.getElementById("codeeditor");
 	this.id = "codeeditor";
+	this.top = 0;
 	
 };
 
@@ -353,14 +404,31 @@ CodeEditor.prototype.show = function() {
 
 CodeEditor.prototype.initialize = function() {
 	
+    var editor = ace.edit("codeeditor");
+    editor.setTheme("ace/theme/chrome");
+    editor.getSession().setMode("ace/mode/javascript");
+
+    editor.getSession().setTabSize(2);
+    editor.getSession().setUseSoftTabs(true);
+   // editor.getSession().setUseWrapMode(true);
+   // editor.getSession().setWrapLimitRange(null, null);
+    editor.$blockScrolling = Infinity;
+    
+    this.editor = editor;
+	
 };
+
+CodeEditor.prototype.zoom = function() {
+
+};
+
 
 CodeEditor.prototype.loadCode = function(xmlCode) {
 	
 };
 
 CodeEditor.prototype.resize = function(t) {
-	
+	resizeOneEditArea(this.editArea, t, this.top);
 };
 
 CodeEditor.prototype.dispose = function() {
@@ -417,4 +485,22 @@ CodeEditor.prototype.disposeCallers = function(name) {
 
 CodeEditor.prototype.mutateCallers = function(name, paramNames, paramIds) {
 	
+};
+
+CodeEditor.prototype.bindMouseDownSvgGroupEvent= function () {};
+
+CodeEditor.prototype.countInstructions = function(visitor) {
+	return 0;
+};
+
+CodeEditor.prototype.addChangeListener = function(evt) {
+	
+};
+
+CodeEditor.prototype.removeChangeListener = function(evt) {
+	
+};
+
+CodeEditor.prototype.lengthTopBlocks = function() {
+	return 0;	
 };

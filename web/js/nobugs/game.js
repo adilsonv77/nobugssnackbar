@@ -756,7 +756,7 @@ Game.missionLoaded = function(ret){
   Game.toolbox = toolbox;
   var hasFunction = commands.innerHTML.indexOf('name="function"') > -1;
 
-  //Game.useCodeEditor = true; /// essa informacao deveria vir do servidor
+  Game.useCodeEditor = true; /// essa informacao deveria vir do servidor
   Game.editor = (Game.useCodeEditor?new CodeEditor():(hasFunction?new MultiBlockEditor():new BlocklyEditor("blockly", 0))); 
 
   var hasTable = commands.innerHTML.indexOf('name="array"') > -1;
@@ -1039,79 +1039,6 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 	
 };
 
-Game.buyMachineButtonClick = function() {
-	/*
-	 * Deactivated some time... in future, i have to review the code below 
-	var idmachine = Game.machines[Game.selectedMachine.getAttribute("iditem")-1].id;
-	UserControl.buyMachine(idmachine, function() {
-
-		UserControl.loadWholeMachineData([idmachine], function(machine) {
-			
-				var k = "machine" + idmachine;
-				var imgsrc = "images/" + k + ".png";
-				PreloadImgs.put(k, imgsrc, true);
-
-				hero.installMachine(idmachine, machine[0][1], machine[0][2], 
-							machine[0][3], machine[0][4], machine[0][5], 
-							machine[0][6], machine[0][7], machine[0][8], 
-							k, machine[0][9], machine[0][10]);
-				 
-				var tb = Game.loadToolBoxWithMachines(Game.toolbox);
-				
-				if (Game.machines.length  == 1) {
-
-					Game.enabledBuy = false;
-					Game.disableButton('buyButton');
-					
-				}
-					
-				if (hero.installedMachines.length == 1) { // reduce a half the slider capacity
-					Game.speedSlider.setValue(1);
-					Game.speedMultFactor = 125; 
-				} else {
-					Game.speedSlider.setValue(0.5);
-					Game.speedMultFactor = 0; 
-					
-				}
-				Game.slider.svg.style.visibility = "visible";
-					
-				var dom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-				
-				document.getElementById('blockly').innerHTML = ""; // clean the editor
-				Blockly.inject(document.getElementById('blockly'),
-					     {path: '',
-					       rtl: Game.rtl,
-					       toolbox: tb,
-					       trashcan: true,
-					       comments: false,
-					       scrollbars: true,
-					       zoom:
-				             {enabled: true,
-				              controls: true,
-				              wheel: true,
-				              maxScale: 2,
-				              minScale: .1,
-				              scaleSpeed: 1.1
-				             }});
-				
-			    document.removeEventListener('keydown', Blockly.onKeyDown_, false);
-			    Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
-				
-				Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, dom);
-				
-				var f = function() {
-					
-					BlocklyApps.hideDialog(false);
-					Game.display();
-				};
-				
-				window.setTimeout(f, 500); // i dont know why, but with this approach the game is able to draw the machine
-				
-		});
-	});
-	 */
-};
-
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
   Game.resizeWindow(); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
@@ -1138,14 +1065,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   Game.selectedTab = "";
   Game.editor.initialize(cfg); // xixi
   
-  if (Game.zoomLevel > 1) {
-	  while (Blockly.getMainWorkspace().scale < Game.zoomLevel) 
-		Blockly.getMainWorkspace().zoomCenter(1);
-  } else 
-	  if (Game.zoomLevel < 1) {
-		  while (Blockly.getMainWorkspace().scale > Game.zoomLevel) 
-			  Blockly.getMainWorkspace().zoomCenter(-1);
-	  }
+  Game.editor.zoom();
 
   document.removeEventListener('keydown', Blockly.onKeyDown_, false);
   Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
@@ -1195,8 +1115,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  $("#tests_finished").css("display", "none");
 
 	  document.removeEventListener('mousedown', MyBlocklyApps.onMouseDown_, false);
-	  Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', this, MyBlocklyApps.onMouseDown_);
-
+	  Game.editor.bindMouseDownSvgGroupEvent(this, MyBlocklyApps.onMouseDown_);
 	  
       CustomerManager.init(Game.openMission.open, Game.tests,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
@@ -2353,7 +2272,7 @@ Game.showCountInstructions = function() {
 		ci.style.opacity = "0.3";
 		
 		
-		ci.innerHTML = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks()) + " blocks";
+		ci.innerHTML = Game.editor.countInstructions();
 		
 		document.getElementById("mainBody").appendChild(ci);
 		
@@ -2629,7 +2548,7 @@ Game.nextStep = function() {
 					var reward;
 					if (Game.pointsInThisMission) {
 						
-				    	var count = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+				    	var count = Game.editor.countInstructions();
 				    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
 				    	
 				    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
@@ -2759,7 +2678,7 @@ Game.logEvent = null;
 Game.startSaveUserProgress = function() {
 	
 	if (Game.logEvent == null)
-		Game.logEvent = Blockly.mainWorkspace.addChangeListener(function() {
+		Game.logEvent = Game.editor.addChangeListener(function() {
 			
 			if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 				return;

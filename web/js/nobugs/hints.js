@@ -58,12 +58,12 @@ Hints.init = function(hints, launch) {
 
 	Hints.lastInsertedBlock = null;
 	Hints.activeBlock = null;
-	Hints.lastCountBlocks = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	Hints.lastCountBlocks = Game.editor.countInstructions();
 	Hints.showedCountInstrutionsHint = false;
 
 	
 	if (Hints.evtChangeListener == null)
-		Hints.evtChangeListener = Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
+		Hints.evtChangeListener = Game.editor.addChangeListener(Hints.changeListener);
 		
 	if (hints != null) {
 		
@@ -82,7 +82,7 @@ Hints.init = function(hints, launch) {
     if (launch && Hints.hints.sequence.length > 0) 
     	Hints.launchTimer(Hints.hints.sequence[0].time);
     
-    if (Blockly.mainWorkspace.toolbox_ != undefined)
+    if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined)
     	Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, Hints.menuEvent);
     
     if (Hints.beforeHideChaff == null) {
@@ -236,7 +236,7 @@ Hints.showErrorHint = function() {
 	if (Hints.noHints)
 		return;
 	
-	countInstructions = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	countInstructions = Game.editor.countInstructions();
 	
 	Hints.dealError = true;
 	Hints.hintSelected = null;
@@ -249,7 +249,7 @@ Hints.showErrorHint = function() {
 		if (hint.category === "TestBlock") {
 			
 			Hints.foundTestBlock = false;
-			Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
+			Game.editor.countInstructions(Hints.visitBlocks);
 			
 			if (Hints.foundTestBlock)
 				return;
@@ -296,19 +296,16 @@ Hints.timeIsUp = function() {
 	}
 	var beforeHH = Game.hideHints;
 	Game.hideHints = false;
-	var blocks = Blockly.mainWorkspace.getTopBlocks();
 	
 	 // variables used into conditions
-	countInstructions = Game.countInstructions(blocks);
-	countTopInstructions = blocks.length;
-	if (Blockly.mainWorkspace.toolbox_ != undefined)
+	countInstructions = Game.editor.countInstructions();
+	countTopInstructions = Game.editor.lengthTopBlocks();
+	if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined) {
 		menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_;
+		menuSelected = menuSelected.element_;
+	}
 	else
 		menuSelected = null;
-	
-	if (menuSelected != null)
-		menuSelected = menuSelected.element_;
-	
 	
 	Hints.hintSelected = null;
 	for (var i=0; i<hints.length; i++) {
@@ -335,7 +332,7 @@ Hints.runHint = function(hint) {
 	if (hint.category === "TestBlock") {
 		
 		Hints.foundTestBlock = false;
-		Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.visitBlocks);
+		Game.editor.countInstructions(Hints.visitBlocks);
 		
 		if (Hints.foundTestBlock)
 			return true;
@@ -422,21 +419,23 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	if (bindEvent == undefined || bindEvent == null)
 		bindEvent = Hints.hideHintWithTimer;
 	
-	Hints.bindEvent1 = Blockly.mainWorkspace.addChangeListener(bindEvent);
+	Hints.bindEvent1 = Game.editor.addChangeListener(bindEvent);
 	
-	if (Blockly.mainWorkspace.toolbox_ != undefined)
+	if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined)
 		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
 	
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.svgGroup_, 'mousedown', null, bindEvent));
+	Hints.bindEvents.push(Game.editor.bindMouseDownSvgGroupEvent(null, bindEvent));
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
 		Hints.bindEvents.push(specialEvent);
 	
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgBackground_, 'mousedown', null, bindEvent));
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgKnob_, 'mousedown', null, bindEvent));
+	if (Blockly.mainWorkspace) {
+		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgBackground_, 'mousedown', null, bindEvent));
+		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.hScroll.svgKnob_, 'mousedown', null, bindEvent));
 
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgBackground_, 'mousedown', null, bindEvent));
-	Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgKnob_, 'mousedown', null, bindEvent));
+		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgBackground_, 'mousedown', null, bindEvent));
+		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgKnob_, 'mousedown', null, bindEvent));
+	}
 	Hints.bindEvents.push(Blockly.bindEvent_(Game.slider.svg, 'mousedown', null, bindEvent));
 };
 
@@ -452,7 +451,8 @@ Hints.hideHints = function() {
 	MyBlocklyApps.hideDialog(false);
 	
 	if (Hints.bindEvent1 != null) {
-		Blockly.mainWorkspace.removeChangeListener(Hints.bindEvent1);
+		Game.editor.removeChangeListener(Hints.bindEvent1);
+		
 		Hints.bindEvent1 = null;
 	}
 	
@@ -499,7 +499,7 @@ Hints.stopHintsEx = function() {
 
 Hints.changeListener = function() {
 	
-	var howMany = Game.countInstructions(Blockly.mainWorkspace.getTopBlocks());
+	var howMany = Game.editor.countInstructions();
 	Game.updateCounterInstructions(howMany);
 	if (howMany > Hints.lastCountBlocks) {
 		Hints.lastInsertedBlock = Blockly.selected;
@@ -525,7 +525,7 @@ Hints.countChildren = function(block) {
 	} else {
 		blocks.push(block);
 	}
-	return Game.countInstructions(blocks);
+	return Game.editor.countInstructions(null, blocks);
 };
 
 /****************************************************************************************/
@@ -699,7 +699,7 @@ Hints.fCountVariable = function(block) {
 
 Hints.countVariable = function() {
 	Hints.totalVariable = 0;
-	Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.fCountVariable);
+	Game.editor.countInstructions(Hints.fCountVariable);
 	return Hints.totalVariable;
 };
 
@@ -748,7 +748,7 @@ Hints.fCountVariableName = function(block) {
 
 Hints.countVariableName  = function() {
 	Hints.variablesNames = [];
-	Game.countInstructions(Blockly.mainWorkspace.getTopBlocks(), Hints.fCountVariableName);
+	Game.editor.countInstructions(Hints.fCountVariableName);
 	return Hints.variablesNames.length;
 };
 
