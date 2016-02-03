@@ -424,7 +424,9 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 	if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined)
 		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.toolbox_.HtmlDiv, 'mousedown', null, bindEvent));
 	
-	Hints.bindEvents.push(Game.editor.bindMouseDownSvgGroupEvent(null, bindEvent));
+	if (Blockly.mainWorkspace)
+		Hints.bindEvents.push(Game.editor.bindMouseDownSvgGroupEvent(null, bindEvent));
+	
 	Hints.bindEvents.push(Blockly.bindEvent_(window, 'showWindowPrompt', null, bindEvent));
 	if (specialEvent != null)
 		Hints.bindEvents.push(specialEvent);

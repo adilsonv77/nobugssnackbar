@@ -1725,7 +1725,8 @@ Game.goBackToDashboard = function(evt, callInit) {
 	
 	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
 		
-		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, Blockly.getMainWorkspace().scale, ret[1],
+		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, 
+				(Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), ret[1],
 						{callback:function() {}, async:false});
 
 		Game.init();

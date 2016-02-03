@@ -415,18 +415,43 @@ CodeEditor.prototype.show = function() {
 
 CodeEditor.prototype.initialize = function() {
 	
-    var editor = ace.edit("codeeditor");
+    ace.require("ace/ext/language_tools");
+	var editor = ace.edit("codeeditor");
     editor.setTheme("ace/theme/chrome");
     editor.getSession().setMode("ace/mode/javascript");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
 
+    
+    var snippetManager = ace.require("ace/snippets").snippetManager; 
+
+    ace.config.loadModule("ace/snippets/javascript", function(m) { 
+        if (m) { 
+            snippetManager.files.javascript = m; 
+
+            m.snippets = [];
+            
+            // or do this if you already have them parsed 
+            m.snippets.push({ 
+                content: "goToBarCounter(${1:1});", 
+                name: "goToBarCounter", 
+                tabTrigger: "goto" 
+            }); 
+
+            snippetManager.register(m.snippets, m.scope); 
+        } 
+    }); 
     editor.getSession().setTabSize(2);
     editor.getSession().setUseSoftTabs(true);
-   // editor.getSession().setUseWrapMode(true);
-   // editor.getSession().setWrapLimitRange(null, null);
     editor.$blockScrolling = Infinity;
     
+    editor.completers = [myAPICompleter];
     this.editor = editor;
 	
+    
 };
 
 CodeEditor.prototype.zoom = function() {
@@ -526,4 +551,20 @@ CodeEditor.prototype.hideChaff = function() {
 
 CodeEditor.prototype.highlightBlock = function(id) {
 	
+};
+
+/* *************************************************************************** */
+
+var myAPICompleter = { 
+		getCompletions : function(editor, session, pos, prefix, callback) {
+			var completions = [];
+			completions.push({
+		        caption: "goToBarCounter",
+		        snippet: "goToBarCounter(${1:1});",
+		        meta: "snippet",
+		        type: "snippet"
+		    });	       
+			
+			callback(null, completions);
+		}
 };
