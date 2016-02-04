@@ -25,6 +25,8 @@
 
 // Extensions to Blockly's language and JavaScript generator.
 
+Blockly.Snippets = {};
+
 /******************************************************************************
  *                          Snackman General
  ******************************************************************************/	
@@ -48,6 +50,15 @@ Blockly.JavaScript['move_goToBarCounter'] = function(block) {
 	  return 'goToBarCounter(' + value + ');\n';
 	};
 
+Blockly.Snippets['move_goToBarCounter'] = {
+		completer : {
+	        caption: "goToBarCounter",
+	        snippet: "goToBarCounter(${1:1});",
+	        meta: "snackman",
+	        type: "snackman"
+	    }
+};	
+	
 Blockly.Blocks['move_goToTable'] = {
 		  // Block for moving to a specific customer in the table.
 		  init: function() {
@@ -355,7 +366,15 @@ Blockly.JavaScript['ask_askWantHowManyFoods'] = function(block) {
 	  return ['askWantHowManyFoods()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 	
-
+Blockly.Snippets['ask_askWantHowManyFoods'] = {
+		completer : {
+	        caption: "askWantHowManyFoods",
+	        snippet: "askWantHowManyFoods()",
+	        meta: "snackman",
+	        type: "snackman"
+	    }
+};		
+		
 /******************************************************************************
  *                          Snackman Drinks
  ******************************************************************************/	
@@ -510,6 +529,15 @@ Blockly.JavaScript['ask_askWantHowManyDrinks'] = function(block) {
 		  Game.addCallTimes("askWantHowManyDrinks");
 	  return ['askWantHowManyDrinks()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
+	
+Blockly.Snippets['ask_askWantHowManyDrinks'] = {
+		completer : {
+	        caption: "askWantHowManyDrinks",
+	        snippet: "askWantHowManyDrinks()",
+	        meta: "snackman",
+	        type: "snackman"
+	    }
+};		
 		
 /******************************************************************************
  *                          Snackman Constants
@@ -644,6 +672,15 @@ Blockly.JavaScript['ask_askWantHowManyIceCream'] = function(block) {
 	  return ['askWantHowManyIceCream()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 		
+Blockly.Snippets['ask_askWantHowManyIceCream'] = {
+		completer : {
+	        caption: "askWantHowManyIceCream",
+	        snippet: "askWantHowManyIceCream()",
+	        meta: "snackman",
+	        type: "snackman"
+	    }
+};		
+		
 Blockly.Blocks['ask_askForIceCream'] = {
 		  init: function() {
 		    this.setColour(160);
@@ -658,7 +695,36 @@ Blockly.JavaScript['ask_askForIceCream'] = function(block) {
 	return ['askForIceCream( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+/**********************************************************************************/
+/**        Snippets for common blocks
+/**********************************************************************************/
 
+Blockly.Snippets['controls_if'] = {
+		completer : {
+	        caption: "if",
+	        snippet: "if (${1:true}) {\n\ ${0}\n}\n",
+	        meta: "condicional",
+	        type: "condicional"
+	    }
+};	
+
+Blockly.Snippets['controls_for'] = {
+		completer : {
+	        caption: "for",
+	        snippet: "for (var ${1:i} = 1; $1 < ${2:3}; $1++) {\n\ \n}\n",
+	        meta: "ciclo",
+	        type: "ciclo"
+	    }
+};		
+
+Blockly.Snippets['var'] = {
+		completer : {
+	        caption: "var",
+	        snippet: "var ${1:pedido} = ${2:0};",
+	        meta: "variaveis",
+	        type: "variaveis"
+	    }
+};	
 /**********************************************************************************/
 /**            Provided from the blockly forum                                    */
 /** Author: Florian Pechwitz (Block) and Jungwon Rhyu (JavaScript)

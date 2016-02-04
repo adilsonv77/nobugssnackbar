@@ -41,6 +41,10 @@ BlocklyEditor.prototype.initialize = function(cfg, i) {
 	this.ws.index = i;
 };
 
+
+BlocklyEditor.prototype.showCountInstructions = function() { return true; };
+BlocklyEditor.prototype.hasDebug = function() { return true; };
+
 BlocklyEditor.prototype.zoom = function() {
 	
 	if (Game.zoomLevel > 1) {
@@ -216,6 +220,12 @@ BlocklyEditor.prototype.hideChaff = function() {
 BlocklyEditor.prototype.highlightBlock = function(id) {
 	Blockly.mainWorkspace.highlightBlock(id);
 };
+
+BlocklyEditor.prototype.addCommands = function(toolbox) {
+	
+};
+
+
 /* *************************************************************************** */
 
 var MultiBlockEditor = {};
@@ -427,20 +437,13 @@ CodeEditor.prototype.initialize = function() {
 
     
     var snippetManager = ace.require("ace/snippets").snippetManager; 
-
+    // remove all javascript snippets... i didnt find a way to avoid to load these snippets
     ace.config.loadModule("ace/snippets/javascript", function(m) { 
         if (m) { 
             snippetManager.files.javascript = m; 
 
             m.snippets = [];
             
-            // or do this if you already have them parsed 
-            m.snippets.push({ 
-                content: "goToBarCounter(${1:1});", 
-                name: "goToBarCounter", 
-                tabTrigger: "goto" 
-            }); 
-
             snippetManager.register(m.snippets, m.scope); 
         } 
     }); 
@@ -448,11 +451,35 @@ CodeEditor.prototype.initialize = function() {
     editor.getSession().setUseSoftTabs(true);
     editor.$blockScrolling = Infinity;
     
-    editor.completers = [myAPICompleter];
+    editor.completers = [this.completer];
     this.editor = editor;
 	
     
 };
+
+CodeEditor.prototype.addCommands = function(toolbox) {
+	
+	this.editor.completerItems = [];
+	var xmlBlock = Blockly.parseToolboxTree_(toolbox);
+	
+	var children = xmlBlock.children;
+	for (var i = 0; i < children.length; i++) {
+		for (var j = 0; j < children[i].children.length; j++) {
+			var snippet = Blockly.Snippets[xmlBlock.children[i].children[j].attributes.type.nodeValue];
+			if (snippet) {
+				this.editor.completerItems.push(snippet.completer);
+			}
+				
+			
+		}
+	}
+	
+	this.editor.completerItems.push(Blockly.Snippets['var'].completer);
+	
+};
+
+CodeEditor.prototype.showCountInstructions = function() { return false; };
+CodeEditor.prototype.hasDebug = function() { return false; };
 
 CodeEditor.prototype.zoom = function() {
 
@@ -553,18 +580,8 @@ CodeEditor.prototype.highlightBlock = function(id) {
 	
 };
 
-/* *************************************************************************** */
-
-var myAPICompleter = { 
+CodeEditor.prototype.completer = { 
 		getCompletions : function(editor, session, pos, prefix, callback) {
-			var completions = [];
-			completions.push({
-		        caption: "goToBarCounter",
-		        snippet: "goToBarCounter(${1:1});",
-		        meta: "snippet",
-		        type: "snippet"
-		    });	       
-			
-			callback(null, completions);
+			callback(null, editor.completerItems);
 		}
 };

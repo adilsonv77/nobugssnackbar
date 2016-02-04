@@ -1063,8 +1063,9 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	         }};
 
   Game.selectedTab = "";
-  Game.editor.initialize(cfg); // xixi
-  
+  Game.editor.initialize(cfg); 
+  Game.editor.addCommands(toolbox);
+
   Game.editor.zoom();
 
   document.removeEventListener('keydown', Blockly.onKeyDown_, false);
@@ -1917,7 +1918,11 @@ Game.resetButtonClick = function() {
 };
 
 Game.enableButton = function(buttonName) {
-
+	if (buttonName === "debugButton" && !Game.editor.hasDebug()) {
+		Game.disableButton(buttonName);
+		return;
+	}
+			
 	if ((buttonName === "debugButton" && !Game.enabledDebug) ||
 		(buttonName === "runButton" && (!Game.enabledRun || 
 				(Game.qtAttempts != null && Game.howManyRuns > Game.qtAttempts))) ||
@@ -2263,7 +2268,7 @@ Game.hasEmptyInputs = function (activeBlock) {
 
 Game.showCountInstructions = function() {
 
-	if (Game.editor.editArea && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
+	if (Game.editor.editArea && Game.editor.showCountInstructions() && (hero.hasCommQtd || hero.objective.maxCommands > 0)) {
 
 		var blck = Game.editor.getFirstEditArea();
 		var t = blck.offsetTop + Game.editor.getOffsetTop();
