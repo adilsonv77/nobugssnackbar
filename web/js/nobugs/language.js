@@ -56,7 +56,9 @@ Blockly.Snippets['move_goToBarCounter'] = {
 	        snippet: "goToBarCounter(${1:1});",
 	        meta: "snackman",
 	        type: "snackman"
-	    }
+	    },
+	    
+	    registeredName : "goToBarCounter"
 };	
 	
 Blockly.Blocks['move_goToTable'] = {

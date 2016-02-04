@@ -426,6 +426,9 @@ CodeEditor.prototype.show = function() {
 CodeEditor.prototype.initialize = function() {
 	
     ace.require("ace/ext/language_tools");
+    ace.require("ace/mode/javascript");
+    ace.require("ace/worker/javascript");
+    
 	var editor = ace.edit("codeeditor");
     editor.setTheme("ace/theme/chrome");
     editor.getSession().setMode("ace/mode/javascript");
@@ -451,6 +454,23 @@ CodeEditor.prototype.initialize = function() {
     editor.getSession().setUseSoftTabs(true);
     editor.$blockScrolling = Infinity;
     
+    editor.getSession().on('changeMode', function(e) {
+    	
+    	var session = ace.edit("codeeditor").getSession();
+    	
+    	session.$worker.removeAllListeners("annotate");
+    	session.$worker.on("annotate", function(results) {
+    	   var annotations = results.data;
+    	   // modify annotations
+    	   session.setAnnotations(annotations);
+    	});
+    	
+    	session.$worker.call("changeOptions", [{undef:true, global: editor.availableCommands}]); 
+
+    });
+    
+   // var m = ace.require("ace/mode/javascript").Mode;
+    
     editor.completers = [this.completer];
     this.editor = editor;
 	
@@ -460,6 +480,7 @@ CodeEditor.prototype.initialize = function() {
 CodeEditor.prototype.addCommands = function(toolbox) {
 	
 	this.editor.completerItems = [];
+	this.editor.availableCommands = {};
 	var xmlBlock = Blockly.parseToolboxTree_(toolbox);
 	
 	var children = xmlBlock.children;
@@ -468,6 +489,8 @@ CodeEditor.prototype.addCommands = function(toolbox) {
 			var snippet = Blockly.Snippets[xmlBlock.children[i].children[j].attributes.type.nodeValue];
 			if (snippet) {
 				this.editor.completerItems.push(snippet.completer);
+				if (snippet.registeredName)
+					this.editor.availableCommands[snippet.registeredName] = true;
 			}
 				
 			
