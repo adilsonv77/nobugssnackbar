@@ -71,7 +71,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	this.juiceMachineNode = this.snackManFinalPath[7];
 	this.iceCreamMachineNode = this.snackManFinalPath[8];
 	
-	this.heightCooker = 76;
+	this.heightCooker = 91;
 	
 	if (position.indexOf("counter") == 0) 
 		this.initialPosition = this.counter[parseInt(position.substring(7)) - 1];
@@ -92,7 +92,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 			horzSeq: true,
 			x: this.currentNode.x,
 			y: this.currentNode.y - this.heightCooker,
-			width: 120,
+			width: 150,
 			height: this.heightCooker,
 			sourceY: 0,
 			img : Game.tempDisplay
@@ -111,7 +111,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 		horzSeq: true,
 		x: this.currentNode.x,
 		y: this.currentNode.y - this.heightCooker,
-		width: 120,
+		width: 150,
 		height: this.heightCooker,
 		sourceY: 0,
 		img : runCanvas
@@ -1253,12 +1253,12 @@ SnackMan.prototype.changeSnackManImage = function(id) {
 
 SnackMan.prototype.changeSnackManPosition = function(ox, oy, nx, ny) {
 	if (nx < ox)
-		this.img.sourceY = 80;
+		this.img.sourceY = this.heightCooker;
 	else
 		if (nx > ox)
-			this.img.sourceY = 160;
+			this.img.sourceY = this.heightCooker*2;
 		else if (ny < oy)
-			    this.img.sourceY = 240;
+			    this.img.sourceY = this.heightCooker*3;
 			 else
 				this.img.sourceY = 0;
 	
