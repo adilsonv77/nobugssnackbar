@@ -756,7 +756,7 @@ Game.missionLoaded = function(ret){
   Game.toolbox = toolbox;
   var hasFunction = commands.innerHTML.indexOf('name="function"') > -1;
 
-  Game.useCodeEditor = true; /// essa informacao deveria vir do servidor
+  //Game.useCodeEditor = true; /// essa informacao deveria vir do servidor
   Game.editor = (Game.useCodeEditor?new CodeEditor():(hasFunction?new MultiBlockEditor():new BlocklyEditor("blockly", 0))); 
 
   var hasTable = commands.innerHTML.indexOf('name="array"') > -1;

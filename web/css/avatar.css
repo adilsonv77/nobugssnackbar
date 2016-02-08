@@ -49,3 +49,6 @@
 	opacity: 0.5;
 }
 
+.evo-palette td {
+	border-radius: 100%
+}

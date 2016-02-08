@@ -66,6 +66,7 @@ function createTable(table) {
 				  headerClass: 'leaderboard-table-header',
 				  colWidths: [25, 45, 250],
 				  colClasses: ['leaderboard-table-col-position', 'leaderboard-table-col-picture', 'leaderboard-table-col-name']});
+	
 }
 
 function populateLBTables(table, data) {
@@ -227,6 +228,8 @@ function continueCreating(ret) {
 	
 	$(".ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 		.mCustomScrollbar({ theme:"nobug" });
+	
+	$(".mCSB_container").css({"margin-right":"0px"});
 	
 	// $(".mCSB_inside>.mCSB_container").css("margin", "15px"); this is ugly.... wont repeat it	
 	goToLine("#tabs-points", rowId);

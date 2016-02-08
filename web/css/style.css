@@ -1,6 +1,7 @@
 body {
 	overflow: hidden; /* hide the scrollbars */ 
 	min-height: 100%;
+	font-family: 'Montserrat', sans-serif;
 }
 #containerCode {
   direction: ltr;
@@ -21,9 +22,6 @@ button.notEnabled>img {
   opacity: 1;
 }
 
-button.notEnabled:hover, button.secondary:disabled:hover {
-	box-shadow: 0px 0px 0px ;
-}
 
 button.notEnabled {
   border: 1px solid #707070;
@@ -225,49 +223,21 @@ table.tableVictory td  {
 	background-color: rgb(250, 250, 125);
 }
 
-.nobugs_background {
-	background: #ffc578; /* Old browsers */
-	background: -moz-linear-gradient(top,  #ffc578 0%, #fb9d23 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffc578), color-stop(100%,#fb9d23)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #ffc578 0%,#fb9d23 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #ffc578 0%,#fb9d23 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #ffc578 0%,#fb9d23 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #ffc578 0%,#fb9d23 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc578', endColorstr='#fb9d23',GradientType=0 ); /* IE6-9 */
-}
-
-.inverse_nobugs_background {
-	background: #fb9d23; /* Old browsers */
-	background: -moz-linear-gradient(top, #fb9d23  0%, #ffc578 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fb9d23), color-stop(100%,#ffc578)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #fb9d23 0%,#ffc578 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #fb9d23 0%,#ffc578 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #fb9d23 0%,#ffc578 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #fb9d23 0%,#ffc578 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb9d23', endColorstr='#ffc578',GradientType=0 ); /* IE6-9 */
+.nobugs_background, .inverse_nobugs_background {
+	background: #ffd89d;
 }
 	
 .nobugs_buttons{ text-align: right}
 .nobugs_button{
 	 cursor: pointer;
-	 border:2px solid #f5240a; -webkit-border-radius: 10px; -moz-border-radius: 10px;border-radius: 10px;
+	 color: #ffbe5b;
+	 border:2px solid #ffbe5b;
 	 padding: 10px 10px 10px 10px;display:inline-block; 
-	 background-color: #F75440; background-image: -webkit-gradient(linear, left top, left bottom, from(#F75440), to(#AD3B2D));
-	 background-image: -webkit-linear-gradient(top, #F75440, #AD3B2D);
-	 background-image: -moz-linear-gradient(top, #F75440, #AD3B2D);
-	 background-image: -ms-linear-gradient(top, #F75440, #AD3B2D);
-	 background-image: -o-linear-gradient(top, #F75440, #AD3B2D);
-	 background-image: linear-gradient(to bottom, #F75440, #AD3B2D);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#F75440, endColorstr=#AD3B2D);
+	 background-color: #ed6d54; 
 }
 
 .nobugs_button:hover{
-	 border:2px solid #c91d08;
-	 background-color: #AD3B2D; background-image: -webkit-gradient(linear, left top, left bottom, from(#AD3B2D), to(#F75440));
-	 background-image: -webkit-linear-gradient(top, #AD3B2D, #F75440);
-	 background-image: -moz-linear-gradient(top, #AD3B2D, #F75440);
-	 background-image: -ms-linear-gradient(top, #AD3B2D, #F75440);
-	 background-image: -o-linear-gradient(top, #AD3B2D, #F75440);
-	 background-image: linear-gradient(to bottom, #AD3B2D, #F75440);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#AD3B2D, endColorstr=#F75440);
+	 background-color: #e8371f
 }
 
 .nobugs_button:disabled {
@@ -282,11 +252,11 @@ table.tableVictory td  {
 }
 
 .nobugs_font_light, .nobugs_font, .nobugs_button {
-	font-size:20px;font-family:arial, helvetica, sans-serif; text-decoration:none;  color: #FFFFFF;
+	font-size:20px; text-decoration:none; 
 }
 
 .nobugs_font, .nobugs_button {
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold;
+	font-weight:bold;
 }
 
 .nobugs_border {
@@ -318,17 +288,17 @@ table.tableVictory td  {
 	line-height: 32px;
 	width: 100px;
 	float: left;
-	color: white;
+	color: black;
 	
 	padding-right: 10px;
 	margin-right: 10px;
 	
 	border-radius: 10px;
 	
-	border: 1px solid black;
+	border: 1px solid #ed6d54;
 	font-size: 14px;
 	
-	background-image: url('../images/fundoreward.png')
+	background-color: #fff7eb;
 	
 }
 

@@ -1,24 +1,20 @@
 #leaderboard {}
 #leaderboard_tabs { margin: 0; padding: 0; }
-.leaderboard_tab { display: inline-block; zoom:1; background: #ccc; border: solid 1px #999; border-bottom: none; border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+.leaderboard_tab { display: inline-block; zoom:1; background: #fff7eb; border: solid 1px #ed6d54; border-bottom: none; border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
 .leaderboard_tab img { width: 32px; height: 32px; }
 .leaderboard_tab a { font-size: 14px; line-height: 2em; display: block; padding: 0 10px; outline: none; text-decoration: none}
 .leaderboard_tab a:hover { text-decoration: underline; }
-.leaderboard_tab.active { background: #fff; padding-top: 6px; position: relative; top: 1px; border-color: #666; }
+.leaderboard_tab.active { background: #ffd89d; padding-top: 6px; position: relative; top: 1px; }
 .leaderboard_tab a.active { font-weight: bold; }
 .leaderboard_tab-container .panel-container { background: #fff; border: solid #666 1px; padding: 10px; border-radius: 0 4px 4px 4px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
 
-.leaderboard-table { font-size: 12px }
-.leaderboard-table tr { height: 40px }
-.leaderboard-row-me { 
-	    color: white; 
+.leaderboard-table { font-size: 12px; }
+.leaderboard-table tr { height: 40px; background-color: #ffd89d; }
+.leaderboard-row-me td { 
 		font-weight: bold;
-		background-color: #ffc578;
-		background: -webkit-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background: -moz-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background: -o-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background:	linear-gradient(to bottom,#ffc578 0,#fb9d23 100%); 
+		background-color: #fff7eb;
 }
+
 .leaderboard-table-header {display: none}
 .leaderboard-table-col-position {
         text-align: right;
@@ -29,13 +25,7 @@
 		border-width: 0 1px 1px 0;
 		border-style: dotted;
 		margin: 0;
-		color: white;
-		background-color: #ffc578;
-		background: -webkit-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background: -moz-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background: -o-linear-gradient(top,#ffc578 0,#fb9d23 100%);
-		background:	linear-gradient(to bottom,#ffc578 0,#fb9d23 100%)
-		}
+}
 .leaderboard-table-col-picture { padding-left: 5px; padding-right: 5px }
 .leaderboard-table-col-name {padding-left: 5px; text-align: center}
 
@@ -44,3 +34,5 @@
 .mCS-nobug.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
 		background-color: #F28E0C;
 	}
+	 
+.ingrid {border : 1px solid #ed6d54;}

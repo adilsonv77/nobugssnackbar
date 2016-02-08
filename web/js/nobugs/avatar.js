@@ -214,7 +214,7 @@ function filterChangeColor(ctx, w, h, findColor, applyColor, ctxDest) {
 		var b = imgData.data[i+2];
 		
 		var d = Math.sqrt((r - findColor.r)*(r - findColor.r) + (g - findColor.g)*(g - findColor.g) + (b - findColor.b)*(b - findColor.b));
-		if (d < 200){
+		if (d < 100){
 		
 			imgDataDest.data[i] = destColor.r;
 			imgDataDest.data[i+1] = destColor.g;
