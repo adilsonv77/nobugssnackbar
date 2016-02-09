@@ -170,6 +170,18 @@ MyBlocklyApps.newShowModalDialog = function(content) {
 	
 };
 
+MyBlocklyApps.lockWindow = function() {
+  var shadow = document.getElementById('dialogShadow');
+  shadow.style.visibility = 'visible';
+  shadow.style.opacity = 0.3;
+};
+
+MyBlocklyApps.unlockWindow = function() {
+	  var shadow = document.getElementById('dialogShadow');
+	  shadow.style.visibility = 'hidden';
+	  shadow.style.opacity = 0;
+	};
+
 /**
  * Multiple blocks selection then CTRL+C and CTRL+V.
  * I modified some methods.

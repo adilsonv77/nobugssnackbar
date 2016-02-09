@@ -1,0 +1,90 @@
+<?xml version='1.0'?>
+<mission>
+	
+	<explanation hasInstruction="false" dialog="true">
+	
+		<page type="goal" >
+		<![CDATA[
+		Antes de enfrentar os desafios do jogo, vais aprender algumas tarefas b&#225;sicas que vais usar em todas as miss&#245;es.<br/><br/>
+		Todos os comandos sempre s&#227;o representados pelos blocos. Nesse momento tens dispon&#237;vel dois blocos <span>goToBarCounter</span> que mandam a
+		sua personagem andar at&#233; uma posi&#231;&#227;o do balc&#227;o. 
+		]]>
+		</page>
+	
+		<page type="goal">
+		<![CDATA[
+		Junte os blocos para cumprir os objetivos da miss&#227;o: ir ao cliente na posi&#231;&#227;o 1 e depois ao cliente na posi&#231;&#227;o 3, <b>exatamente</b>
+		nessa ordem. Depois clique no bot&#227;o para executar (<img src="images/iconplay.png" style="width:32px;height:32px"/>) o seu programa.
+		]]>
+		</page>
+		
+	</explanation>
+	
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	
+	<commands>
+	</commands>
+	
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives ordered="true" buttonDebug="false" xpFinal="10" noXP="true">
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+	</objectives>
+	
+	<xml>
+
+		<block type="move_goToBarCounter">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">3</field>
+				</block>
+			</value>
+		</block>
+
+
+		<block type="move_goToBarCounter">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">1</field>
+				</block>
+			</value>
+		</block>
+	</xml>
+	
+</mission>

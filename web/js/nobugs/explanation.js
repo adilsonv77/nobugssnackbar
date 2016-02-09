@@ -27,16 +27,31 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 	
 	var showType = (instruction?"instruction":"goal");
 	
+	Explanation.isDialog = (instruction?false:explanation.getAttribute("dialog"));
+	var msgs = [];
+	
 	var children = explanation.getElementsByTagName("page");
 	Explanation.children = [];
 	for (var i = 0; i < children.length; i++) {
 		var child = children[i];
 		var type = child.getAttribute("type");
-		if (type === showType)
-			Explanation.children.push(child);
+		if (Explanation.isDialog) 
+			msgs.push(child.innerHTML);
+		else
+			if (type === showType)
+				Explanation.children.push(child);
 		
 	}
 	
+	Explanation.showHint = withHint;
+	Explanation.hintNumber = -1;
+
+	if (Explanation.isDialog) {
+		MyBlocklyApps.lockWindow();
+		CharacterDialog.creates($("#" + Game.editor.id).position().left, 
+				$( document ).height() - 250 /* 250 is a close value $("#talkDlg").height()*/, Explanation.finishTalk, msgs) ;
+		return;
+	}
 	
 	Explanation.firstStatement = 0;
 	Explanation.lastStatement = Explanation.children.length - 1;
@@ -52,8 +67,6 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 		Explanation.createDialog(Explanation.lastStatement, afterclosed);
 	}
 		
-	Explanation.showHint = withHint;
-	Explanation.hintNumber = -1;
 };
 
 Explanation.nextStatement = function() {
@@ -77,6 +90,7 @@ Explanation.previousStatement = function() {
 };
 
 Explanation.createDialog = function(nrPage, afterclosed) {
+	
     var content = document.getElementById('dialogInfo');
 	var container = document.getElementById('dialogInfoText');
 	var children = Explanation.children;//Explanation.explanation.getElementsByTagName("page");
@@ -243,4 +257,9 @@ Explanation.parseUserLogged = function(explanations) {
 	
 	explanations.setAttribute("done" , "true");
 	return explanations;
+};
+
+Explanation.finishTalk = function() {
+	MyBlocklyApps.unlockWindow();
+	Explanation.finishStatement();
 };

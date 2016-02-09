@@ -781,18 +781,21 @@ Game.missionLoaded = function(ret){
   hero = new SnackMan(hasTable, objectives, mission, Game.loginData.avatar);
   
   var byTime = true;
-  var cfg = {};
-  if (hero.objective.xpTotalRun == null) {
-	  cfg = {aFraction: hero.objective.xpTotalTime/3, current: Game.timeSpent };
-  } else {
-	  byTime = false;
-	  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
+  if (objectives.getAttribute("noXP") == null) {
+	  
+	  var cfg = {};
+	  if (hero.objective.xpTotalRun == null) {
+		  cfg = {aFraction: hero.objective.xpTotalTime/3, current: Game.timeSpent };
+	  } else {
+		  byTime = false;
+		  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
+	  }
+	  cfg.freeWizardConsumed = ret[7] === "T";
+	  CountXP.config(byTime, cfg,
+			  		    hero.objective.xpIndividual, hero.objective.xpFinal,
+			  		    Game.changeStars, true );
+	  
   }
-  cfg.freeWizardConsumed = ret[7] === "T";
-  CountXP.config(byTime, cfg,
-		  		    hero.objective.xpIndividual, hero.objective.xpFinal,
-		  		    Game.changeStars, true );
-  
   Game.mission = mission;
 
 //  Game.assignIngrid();
@@ -1083,7 +1086,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   document.removeEventListener('keydown', Blockly.onKeyDown_, false);
   Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
 	
-  Game.firstTime = firstTime;
+  Game.firstTime = true; //firstTime;
   
   var loginLoaded = function(data) {
 	  
