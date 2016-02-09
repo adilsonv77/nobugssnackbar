@@ -30,7 +30,9 @@ PreloadImgs.put("body", "images/cooker-body.png", false);
 PreloadImgs.put("mouth-M", "images/cooker-mouth-m.png", false);
 PreloadImgs.put("mouth-F", "images/cooker-mouth-f.png", false);
 PreloadImgs.put("eyes-M", "images/cooker-eyes-m.png", false);
+PreloadImgs.put("eyes-M-fundo", "images/cooker-eyes-f-fundo.png", false);
 PreloadImgs.put("eyes-F", "images/cooker-eyes-f.png", false);
+PreloadImgs.put("eyes-F-fundo", "images/cooker-eyes-f-fundo.png", false);
 PreloadImgs.put("head", "images/cooker-head.png", false);
 PreloadImgs.put("Hat-1", "images/cooker-hat-1.png", false);
 PreloadImgs.put("Hat-2", "images/cooker-hat-2.png", false);
@@ -214,11 +216,11 @@ function filterChangeColor(ctx, w, h, findColor, applyColor, ctxDest) {
 		var b = imgData.data[i+2];
 		
 		var d = Math.sqrt((r - findColor.r)*(r - findColor.r) + (g - findColor.g)*(g - findColor.g) + (b - findColor.b)*(b - findColor.b));
-		if (d < 100){
+		if (d < 400){
 		
-			imgDataDest.data[i] = destColor.r;
-			imgDataDest.data[i+1] = destColor.g;
-			imgDataDest.data[i+2]= destColor.b;
+			imgDataDest.data[i] = (r/255) * destColor.r;
+			imgDataDest.data[i+1] = (g/255) * destColor.g;
+			imgDataDest.data[i+2]= (b/255) * destColor.b;
 		}
 	}
 	
@@ -263,10 +265,18 @@ CreateItems.mouth = function(prefix) {
 };
 
 CreateItems.eyes = function (id, eyesColor) {
-//	if (id === "eyes")
-		id += "-"+AvatarImgMaker.gender; 
+
+	id += "-"+AvatarImgMaker.gender; 
+
+	var _imgBack = null;
+	try {
+		_imgBack = PreloadImgs.get(id+"-fundo");
+	} catch (ex) {
+		
+	}
 	return {img: PreloadImgs.get(id), x: 0, y: 0, width: ae_Width, height: ae_Height,
-		 baseColor: {r:255, g: 255, b: 0}, color: eyesColor};
+		 baseColor: {r:255, g: 255, b: 255}, color: eyesColor,
+		 imgBack: _imgBack}; // baseColor: {r:255, g: 255, b: 0}
 };
 
 CreateItems.head = function(id, colorHead) {
@@ -560,6 +570,13 @@ AvatarImgMaker._draw = function(canvasDest, x, y, w, h, p, keys, items) {
 		
 		AvatarImgMaker.canvasTemp.width = ew;
 		AvatarImgMaker.canvasTemp.height = eh;
+		
+		if (entry.imgBack != undefined) {
+			
+			AvatarImgMaker.canvasTempCtx.clearRect(0, 0, ew, eh);
+			AvatarImgMaker.canvasTempCtx.drawImage(entry.imgBack, 0, 0);
+			canvasDest.drawImage(AvatarImgMaker.canvasTemp, x+(entry.x/p), y+(entry.y/p));
+		}
 		
 		AvatarImgMaker.canvasTempCtx.clearRect(0, 0, ew, eh);
 		AvatarImgMaker.canvasTempCtx.drawImage(eimg, 0, 0);

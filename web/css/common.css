@@ -70,9 +70,8 @@ button.notext {
   visibility: hidden;
   background-color: #fff;
   color: #000;
-  border: 1px solid #ccc;
+  border: 1px solid #ed6d54;
   position: absolute;
-  border-radius: 8px;
   box-shadow: 5px 5px 5px #888;
   padding: 10px;
 }
@@ -110,9 +109,7 @@ button.notext {
 #dialogHeader, .dialogheader {
   height: 25px;
   margin: -10px -10px 15px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: #ddd;
+  background-color: #ffd89d;
   cursor: move;
 }
 #dialog button {
