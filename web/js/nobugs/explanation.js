@@ -36,7 +36,7 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 		var child = children[i];
 		var type = child.getAttribute("type");
 		if (Explanation.isDialog) 
-			msgs.push(child.innerHTML);
+			msgs.push(changeImgHex(child.innerHTML));
 		else
 			if (type === showType)
 				Explanation.children.push(child);
