@@ -110,7 +110,8 @@
   	  </div>
   
   
-  	  <table id="tbSelectMission" style="margin: auto">
+  	  <!-- width:10px is to force a small size -->
+  	  <table id="tbSelectMission" style="margin: auto; width:10px">
   		<tr>
   			<td id="tdSelectMission" style="height: 342px">
   				
@@ -135,14 +136,25 @@
 					</div>
 					<div id="tabs-contest">
 					</div>
-				</div>  				
+				</div>  	
   			</td>
   			
-  			<td id = "explaintab" style="font-size: 14px">
-  			</td>
+  		</tr>
+  		<tr id="explaintr" style="display:none">
+  			<td></td>
+			<td  id = "explaintab" style="font-size: 14px">
+			</td>
+		</tr>
+		<tr>
+			<td/>
+			<td class="farSide">
+				<button id="infotabButton" style="background-color: transparent; border: 0px">
+					<img id="imgInfoTab" src="images/iconmoreinfo.png" style="width:16px; height:16px"/>
+				</button>
+  	  		</td>			
   		</tr>
   	  </table>
-  
+	    
   </div>
   
   <div id="preloadimgsxx" style="height: 0px; width: 0px"></div>

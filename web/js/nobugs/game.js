@@ -175,7 +175,7 @@ Game.resizeMainWindow = function() {
     document.getElementById("suporte").style.left = (document.getElementById("suporte").clientWidth -
     														document.getElementById("suportespan").offsetWidth - 10) + "px";
 
-    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+   // $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 
 };
 
@@ -386,12 +386,13 @@ Game.logged = function() {
 	    document.getElementById("initialBackground").style.display = "none";
 	    document.getElementById("selectMission").style.display = "inline";
 	    
-	    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+	  //  $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 
 	    Game.resizeMainWindow();
 	    
 	    BlocklyApps.bindClick('avatarEditorButton', Game.openAvatarEditor);
 	    BlocklyApps.bindClick('profileEditorButton', Game.openProfileEditor);
+	    BlocklyApps.bindClick('infotabButton', Game.openInfoTab);
 	    
 	    CityMap.init({onclick: Game.cityClick});
 	    
@@ -405,12 +406,23 @@ Game.logged = function() {
 		    	IntroGame.focusAvatar();
 		    });
 	    } else
-	    	if (Game.loginData.userLogged.mail == null && parseInt(Game.loginData.missionHist[0][3]) > 4) {
+	    	if (Game.loginData.userLogged.mail == null && parseInt(Game.loginData.missionHist[0][3]) > 4) { {}
 	    		$("#profile_mail").attr("placeHolder", BlocklyApps.getMsg("Profile_PlaceHolder"));
 	    		Game.openProfileEditor();
 	    	}
 	} else {
 		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx, Game.loginData.missionView);
+	}
+};
+
+Game.openInfoTab = function() {
+	var display = $("#explaintr").css("display");
+	if (display == "none"){
+		$("#explaintr").css("display", "table-row");
+		$("#imgInfoTab").attr("src", "images/iconlessinfo.png");
+	} else {
+		$("#explaintr").css("display", "none");
+		$("#imgInfoTab").attr("src", "images/iconmoreinfo.png");
 	}
 };
 
@@ -1576,7 +1588,7 @@ Game.resizeWindow = function(e) {
     if (Game.counterInstruction != null)
     	Game.counterInstruction.style.left = (Game.redimDiv.offsetLeft + Game.redimDiv.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
 
-    $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+ //   $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 };
 
 
