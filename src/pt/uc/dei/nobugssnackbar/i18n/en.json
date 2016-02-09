@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-09 14:20:07.855000",
+		"lastupdated": "2016-02-09 15:29:22.734000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -282,8 +282,8 @@
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
 	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",
-	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",
+	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
 	"NoBugs.resetTooltip": "Restarts the execution [Esc].",
 	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",

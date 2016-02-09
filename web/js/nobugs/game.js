@@ -1968,13 +1968,13 @@ Game.enableButton = function(buttonName) {
 	
    var button = document.getElementById(buttonName);
    button.disabled = "";
-   button.className = "primary";
+   button.className = "buttonIDE";
 };
 
 Game.disableButton = function(buttonName) {
    var button = document.getElementById(buttonName);
    button.disabled = "disabled";
-   button.className = "notEnabled";
+   button.className = "buttonIDENotEnabled";
 };
 
 Game.firstClick = true;

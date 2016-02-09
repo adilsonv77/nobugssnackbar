@@ -49,10 +49,11 @@ button>img {
 button:hover>img {
   opacity: 1;
 }
-button:active {
+button:active:not([disabled]) {
   border: 1px solid #888 !important;
 }
-button:hover {
+button:focus {outline:0;}
+button:hover:not([disabled]) {
   box-shadow: 2px 2px 5px #888;
 }
 button.disabled:hover>img {

@@ -85,6 +85,25 @@ button.secondary:disabled {
   fill: #eee;
 }
 
+.buttonIDE, .buttonIDENotEnabled {
+	margin: 0px; padding: 0px; background-color: transparent; border-radius: 0px; border: 0px;
+}
+
+.buttonIDENotEnabled {
+	cursor: initial;
+}
+
+button.buttonIDE:hover, button.buttonIDENotEnabled:hover {
+  box-shadow: none;
+}
+
+.buttonIDE > img {
+	opacity: 1;
+}
+.buttonIDE:hover {
+	box-shadow: 0px;
+}
+
 /* Sprited icons. */
 .icon21 {
   height: 21px;
@@ -98,13 +117,30 @@ button.secondary:disabled {
   background-position: 0px 0px;
 }
 .debug {
-  background-position: -43px 0px;
+  background-image: url(../images/icondebug.png);
+}
+div.debug:hover {
+  background-image: url(../images/icondebugover.png);
 }
 .run {
-  background-position: -63px -21px;
+  background-image: url(../images/iconplay.png);
+}
+div.run:hover {
+  background-image: url(../images/iconplayover.png);
 }
 .stop {
-  background-position: -63px 0px;
+  background-image: url(../images/iconstop.png);
+}
+.buttonIDE div.stop:hover {
+  background-image: url(../images/iconstopover.png);
+}
+
+.buttonIDENotEnabled .stop {
+  background-image: url(../images/iconstopdisabled.png);
+}
+
+.run, .debug, .stop {
+	width: 32px; height: 32px;
 }
 
 /* Variable box */
