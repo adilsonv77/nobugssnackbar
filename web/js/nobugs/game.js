@@ -786,21 +786,29 @@ Game.missionLoaded = function(ret){
   hero.addListener("ObjectiveAccomplished", Game);
   
   var byTime = true;
+  var cfg = {};
+  var xpIndiv;
+  cfg.freeWizardConsumed = ret[7] === "T";
   if (objectives.getAttribute("noXP") == null) {
 	  
-	  var cfg = {};
 	  if (hero.objective.xpTotalRun == null) {
 		  cfg = {aFraction: hero.objective.xpTotalTime/3, current: Game.timeSpent };
 	  } else {
 		  byTime = false;
 		  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
 	  }
-	  cfg.freeWizardConsumed = ret[7] === "T";
-	  CountXP.config(byTime, cfg,
-			  		    hero.objective.xpIndividual, hero.objective.xpFinal,
-			  		    Game.changeStars, true );
-	  
+	  xpIndiv = hero.objective.xpIndividual;
+  } else {
+	  byTime = false;
+	  cfg = {aFraction: hero.objective.xpFinal, current: 3};
+	  xpIndiv = hero.objective.xpFinal;
+	  cfg.freeWizardConsumed = false;
   }
+  
+  CountXP.config(byTime, cfg,
+		         xpIndiv, hero.objective.xpFinal,
+		         Game.changeStars, true );
+  
   Game.noXP = objectives.getAttribute("noXP") !== null;
   Game.mission = mission;
 
@@ -1716,11 +1724,70 @@ Game.openGoalsButtonClick = function() {
 	$("#goalsAccomplished").css("display", "none");
 	$("#goalsAccomplishedWindow").css("display", "inline");
 	
+	if (Game.dialogMouseDownWrapper_) {
+	   Blockly.unbindEvent_(Game.dialogMouseDownWrapper_);
+	   Game.dialogMouseDownWrapper_ = null;
+	}
+
+	Game.dialogMouseDownWrapper_ =
+        Blockly.bindEvent_(document.getElementById("goalsAccomplishedWindowHeader"), 'mousedown', null,
+        		Game.dialogMouseDown_);
 };
+
+Game.dialogUnbindDragEvents_ = function() {
+  if (Game.dialogMouseUpWrapper_) {
+    Blockly.unbindEvent_(Game.dialogMouseUpWrapper_);
+    Game.dialogMouseUpWrapper_ = null;
+  }
+  if (Game.dialogMouseMoveWrapper_) {
+    Blockly.unbindEvent_(Game.dialogMouseMoveWrapper_);
+    Game.dialogMouseMoveWrapper_ = null;
+  }
+};
+	
+Game.dialogMouseMove_ = function(e) {
+	  var dialog = document.getElementById('goalsAccomplishedWindow');
+	  var dialogLeft = Game.dialogStartX_ + e.clientX;
+	  var dialogTop = Game.dialogStartY_ + e.clientY;
+	  dialogTop = Math.max(dialogTop, 0);
+	  dialogTop = Math.min(dialogTop, window.innerHeight - dialog.offsetHeight);
+	  dialogLeft = Math.max(dialogLeft, 0);
+	  dialogLeft = Math.min(dialogLeft, window.innerWidth - dialog.offsetWidth);
+	  dialog.style.left = dialogLeft + 'px';
+	  dialog.style.top = dialogTop + 'px';
+	};
+
+
+Game.dialogMouseDown_ = function(e) {
+  Game.dialogUnbindDragEvents_();
+  if (Blockly.isRightButton(e)) {
+	// Right-click.
+	return;
+   }
+  
+  // Left click (or middle click).
+  // Record the starting offset between the current location and the mouse.
+  var dialog = document.getElementById('goalsAccomplishedWindow');
+  Game.dialogStartX_ = dialog.offsetLeft - e.clientX;
+  Game.dialogStartY_ = dialog.offsetTop - e.clientY;
+
+  Game.dialogMouseUpWrapper_ = Blockly.bindEvent_(document,
+      'mouseup', null, Game.dialogUnbindDragEvents_);
+  Game.dialogMouseMoveWrapper_ = Blockly.bindEvent_(document,
+      'mousemove', null, Game.dialogMouseMove_);
+  // This event has been handled.  No need to bubble up to the document.
+  e.stopPropagation();
+};
+
 
 Game.closeGoalsButtonClick = function() {
 	$("#goalsAccomplished").css("display", "inline");
 	$("#goalsAccomplishedWindow").css("display", "none");
+
+	if (Game.dialogMouseDownWrapper_) {
+	   Blockly.unbindEvent_(Game.dialogMouseDownWrapper_);
+	   Game.dialogMouseDownWrapper_ = null;
+	}
 };
 
 Game.goalButtonClick = function() {
@@ -2559,6 +2626,7 @@ Game.nextStep = function() {
 			    hero.verifyObjectives("countTalk", {allCustomers:true});
 			    hero.verifyObjectives("conditional", {allCustomers:true});
 			    hero.verifyObjectives("callTimes", {allCustomers:true});
+			    hero.verifyObjectives("ordered", null);
 			    
 			    Game.lastErrorData.block = null;
 			    if (hero.allObjectivesAchieved) {
@@ -2594,10 +2662,18 @@ Game.nextStep = function() {
 					var reward;
 					if (Game.pointsInThisMission) {
 						
-				    	var count = Game.editor.countInstructions();
-				    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
-				    	
-				    	Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
+						if (Game.noXP) {
+							
+							reward = hero.addReward(count, 0, 0, 0);
+							
+						} else {
+							
+					    	var count = Game.editor.countInstructions();
+					    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
+					    	
+						}
+
+						Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
 					} else {
 						reward = {totalXP: 0, totalCoins: 0, baseXP: 0, bonusCoins: 0};
 					}
@@ -3351,7 +3427,11 @@ Game.onObjectiveAccomplished = function(params) {
 	$("#goalsAccomplishedTextHeader").html(msg);
 
 	var container = document.getElementById("goalsAccomplishedWindowText");
+	var firstTime = container.innerHTML === "";
 	container.innerHTML = "";
 	Explanation.createGoals(container);
+	
+	if (firstTime)
+		$("#goalsAccomplishedWindow").css("top", $("#goalsAccomplished").position().top - $("#goalsAccomplishedWindow").height());
 };
 

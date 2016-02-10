@@ -53,12 +53,16 @@ PreloadImgs.put("mini-body", "images/mini-cooker-body.png", false);
 PreloadImgs.put("mini-mouth-M", "images/mini-cooker-mouth-m.png", false);
 PreloadImgs.put("mini-mouth-F", "images/mini-cooker-mouth-f.png", false);
 PreloadImgs.put("mini-eyes-M", "images/mini-cooker-eyes-m.png", false);
+PreloadImgs.put("mini-eyes-M-fundo", "images/mini-cooker-eyes-f-fundo.png", false);
 PreloadImgs.put("mini-eyes-F", "images/mini-cooker-eyes-f.png", false);
-PreloadImgs.put("mini-head", "images/mini-cooker-head.png", false);
+PreloadImgs.put("mini-eyes-F-fundo", "images/mini-cooker-eyes-f-fundo.png", false);
+PreloadImgs.put("mini-head-M", "images/mini-cooker-head-m.png", false);
+PreloadImgs.put("mini-head-F", "images/mini-cooker-head-f.png", false);
 PreloadImgs.put("mini-Hat-1", "images/mini-cooker-hat-1.png", false);
 PreloadImgs.put("mini-Hat-2", "images/mini-cooker-hat-2.png", false);
 PreloadImgs.put("mini-Clothes-1", "images/mini-cooker-clothes-1.png", false);
-PreloadImgs.put("mini-Clothes-1-scarf", "images/cooker-clothes-1.png", false);
+PreloadImgs.put("mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants.png", false);
+PreloadImgs.put("mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf.png", false);
 
 PreloadImgs.put("mini-Add-1-M", "images/mini-cooker-add-1-m.png", false);
 PreloadImgs.put("mini-Add-2-M", "images/mini-cooker-add-2-m.png", false);
@@ -73,8 +77,16 @@ PreloadImgs.put("mini-Add-3-F", "images/mini-cooker-add-3-f.png", false);
 /* ******************************************************************** */
 
 PreloadImgs.put("0#0.mini-Clothes-1", "images/mini-cooker-clothes-1-r0c0.png", false);
+PreloadImgs.put("0#0.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r0c0.png", false);
+PreloadImgs.put("0#0.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf.png", false);
+
 PreloadImgs.put("0#1.mini-Clothes-1", "images/mini-cooker-clothes-1.png", false);
+PreloadImgs.put("0#1.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants.png", false);
+PreloadImgs.put("0#1.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf.png", false);
+
 PreloadImgs.put("0#2.mini-Clothes-1", "images/mini-cooker-clothes-1-r0c2.png", false);
+PreloadImgs.put("0#2.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r0c2.png", false);
+PreloadImgs.put("0#2.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf.png", false);
 
 PreloadImgs.put("0#0.mini-body", "images/mini-cooker-body-r0c0.png", false);
 PreloadImgs.put("0#1.mini-body", "images/mini-cooker-body.png", false);
@@ -119,12 +131,25 @@ PreloadImgs.put("1.mini-Add-3-F", "images/mini-cooker-add-3-f-r1.png", false);
 /* ******************************************************************** */
 
 PreloadImgs.put("2#0.mini-Clothes-1", "images/mini-cooker-clothes-1-r2c0.png", false);
-PreloadImgs.put("2#1.mini-Clothes-1", "images/mini-cooker-clothes-1-r2c1.png", false);
-PreloadImgs.put("2#2.mini-Clothes-1", "images/mini-cooker-clothes-1-r2c2.png", false);
+PreloadImgs.put("2#0.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r2c0.png", false);
+PreloadImgs.put("2#0.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf-r2.png", false);
 
+PreloadImgs.put("2#1.mini-Clothes-1", "images/mini-cooker-clothes-1-r2c1.png", false);
+PreloadImgs.put("2#1.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r2c1.png", false);
+PreloadImgs.put("2#1.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf-r2.png", false);
+
+PreloadImgs.put("2#2.mini-Clothes-1", "images/mini-cooker-clothes-1-r2c2.png", false);
+PreloadImgs.put("2#2.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r2c2.png", false);
+PreloadImgs.put("2#2.mini-Clothes-1-scarf", "images/mini-cooker-clothes-1-scarf-r2.png", false);
+
+/*
 PreloadImgs.put("2#0.mini-body", "images/mini-cooker-body-r2c0.png", false);
 PreloadImgs.put("2#1.mini-body", "images/mini-cooker-body-r2c1.png", false);
 PreloadImgs.put("2#2.mini-body", "images/mini-cooker-body-r2c2.png", false);
+*/
+PreloadImgs.put("2#0.mini-body", "", false);
+PreloadImgs.put("2#1.mini-body", "", false);
+PreloadImgs.put("2#2.mini-body", "", false);
 
 PreloadImgs.put("2#0.mini-hand", "images/mini-cooker-body-r2c0-hand.png", false);
 PreloadImgs.put("2#1.mini-hand", "images/mini-cooker-body-r2c1-hand.png", false);
@@ -132,9 +157,13 @@ PreloadImgs.put("2#2.mini-hand", "images/mini-cooker-body-r2c2-hand.png", false)
 
 PreloadImgs.put("2.mini-mouth-M", "images/mini-cooker-mouth-m-r2.png", false);
 PreloadImgs.put("2.mini-mouth-F", "images/mini-cooker-mouth-f-r2.png", false);
+
 PreloadImgs.put("2.mini-head", "images/mini-cooker-head-r2.png", false);
+
 PreloadImgs.put("2.mini-eyes-M", "images/mini-cooker-eyes-m-r2.png", false);
+PreloadImgs.put("2.mini-eyes-M-fundo", "images/mini-cooker-eyes-m-r2-fundox.png", false);
 PreloadImgs.put("2.mini-eyes-F", "images/mini-cooker-eyes-f-r2.png", false);
+PreloadImgs.put("2.mini-eyes-F-fundo", "images/mini-cooker-eyes-f-r2-fundox.png", false);
 
 PreloadImgs.put("2.mini-Add-1-M", "images/mini-cooker-add-1-m-r2.png", false);
 PreloadImgs.put("2.mini-Add-2-M", "images/mini-cooker-add-2-m-r2.png", false);
@@ -149,14 +178,22 @@ PreloadImgs.put("2.mini-Add-3-F", "images/mini-cooker-add-3-f-r2.png", false);
 /* ******************************************************************** */
 
 PreloadImgs.put("3#0.mini-Clothes-1", "images/mini-cooker-clothes-1-r3c0.png", false);
+PreloadImgs.put("3#0.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r0c0.png", false);
+PreloadImgs.put("3#0.mini-Clothes-1-scarf", "", false);
+
 PreloadImgs.put("3#1.mini-Clothes-1", "images/mini-cooker-clothes-1-r3c1.png", false);
+PreloadImgs.put("3#1.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants.png", false);
+PreloadImgs.put("3#1.mini-Clothes-1-scarf", "", false);
+
 PreloadImgs.put("3#2.mini-Clothes-1", "images/mini-cooker-clothes-1-r3c2.png", false);
+PreloadImgs.put("3#2.mini-Clothes-1-pants", "images/mini-cooker-clothes-1-pants-r0c2.png", false);
+PreloadImgs.put("3#2.mini-Clothes-1-scarf", "", false);
 
 PreloadImgs.put("3#0.mini-body", "images/mini-cooker-body-r0c0.png", false);
 PreloadImgs.put("3#1.mini-body", "images/mini-cooker-body.png", false);
 PreloadImgs.put("3#2.mini-body", "images/mini-cooker-body-r0c2.png", false);
 
-PreloadImgs.put("3.mini-head", "images/mini-cooker-head.png", false);
+PreloadImgs.put("3.mini-head", "images/mini-cooker-head-r3.png", false);
 
 PreloadImgs.put("3#0.mini-hand", "", false);
 PreloadImgs.put("3#1.mini-hand", "", false);
@@ -165,9 +202,11 @@ PreloadImgs.put("3#2.mini-hand", "", false);
 PreloadImgs.put("3.mini-eyes-F", "", false);
 PreloadImgs.put("3.mini-eyes-M", "", false);
 
-PreloadImgs.put("mini-Hat-1-back", "images/mini-cooker-hat-1.png", false);
-PreloadImgs.put("mini-Hat-2-back", "images/mini-cooker-hat-2.png", false);
-PreloadImgs.put("mini-Add-F-back", "images/mini-cooker-add-f-r3.png", false);
+PreloadImgs.put("mini-Hat-1-back", "images/mini-cooker-hat-1-r3.png", false);
+PreloadImgs.put("mini-Hat-2-back", "images/mini-cooker-hat-2-r3.png", false);
+PreloadImgs.put("mini-Add-1-F-back", "images/mini-cooker-add-1-f-r3.png", false);
+PreloadImgs.put("mini-Add-2-F-back", "images/mini-cooker-add-2-f-r3.png", false);
+PreloadImgs.put("mini-Add-3-F-back", "images/mini-cooker-add-3-f-r3.png", false);
 
 /* ******************************************************************** */
 /*                                Platter                               */
@@ -296,8 +335,7 @@ CreateItems.eyes = function (id, eyesColor) {
 
 CreateItems.head = function(id, colorHead) {
 
-	if (id == "head")
-		id = id + "-"+AvatarImgMaker.gender; 
+	id = id + "-"+AvatarImgMaker.gender; 
 	return 	{img: PreloadImgs.get(id), x: 0, y: 0, width: ae_Width, height: ae_Height,
 		 baseColor: {r:255, g: 255, b: 0}, color: colorHead};
 
@@ -390,6 +428,8 @@ AvatarImgMaker.createMiniBody = function(canvasDest, configOrig) {
 
 AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 
+//	canvasDest = Game.ctxDisplay;
+	
 	// it is neccessary because changes the original array
 	var config = cloneArray(configOrig);
 	
@@ -434,7 +474,7 @@ AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 			if (AvatarImgMaker.items.add.id !== "" && AvatarImgMaker.gender === "F")
 				miniAdd = PreloadImgs.get("mini-Add-F-back");
 			
-			keys.splice(4, 1);
+			//keys.splice(4, 1);
 			if (AvatarImgMaker.items.hat.id !== "")
 				AvatarImgMaker.items.hat.img = PreloadImgs.get("mini-"+AvatarImgMaker.items.hat.id + "-back");
 		}
@@ -443,6 +483,12 @@ AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 		AvatarImgMaker.items.mouth.img = miniMouth;
 		AvatarImgMaker.items.head.img = PreloadImgs.get(j+".mini-head"); 
 		AvatarImgMaker.items.eyes.img = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender);
+		try {
+			AvatarImgMaker.items.eyes.imgBack = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender+"-fundo");	
+		} catch (ex) {
+			
+		}
+		
 			
 		for (var i = 0; i <= 2; i++) {
 			var prefix = j+"#"+i+".mini-";
@@ -531,8 +577,20 @@ AvatarImgMaker.createMiniAnimationBodyPlatter = function(canvasDest, config) {
 
 
 AvatarImgMaker.createRowItems = function(prefix) {
-	
+	 
 	AvatarImgMaker.items.clothes.img = PreloadImgs.get(prefix + AvatarImgMaker.items.clothes.id);
+	try {
+		AvatarImgMaker.items.clothes.imgBack = PreloadImgs.get(prefix + AvatarImgMaker.items.clothes.id + "-pants");
+	} catch (ex) {
+		
+	}
+	try {
+		AvatarImgMaker.items.scarf.img = PreloadImgs.get(prefix + AvatarImgMaker.items.clothes.id + "-scarf");	
+	} catch (ex) {
+		
+	}
+	
+		
 	AvatarImgMaker.items.body.img = PreloadImgs.get(prefix + "body");
 	AvatarImgMaker.items["hand"] = CreateItems.body(prefix + "hand", AvatarImgMaker.items.body.color);
 	

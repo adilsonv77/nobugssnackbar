@@ -104,12 +104,11 @@ Objective.reset = function(objective) {
 
 Objective.markAchieved = function(objective) {
 	
-	objective.achieved = true;
-	objective.achievedOrder = hero.lastObjectiveAchieved;
 	hero.lastObjectiveAchieved++;
-	
 	hero.allObjectivesAchieved = (hero.lastObjectiveAchieved+1) == hero.objective.objectives.length;
 
+	objective.achieved = true;
+	objective.achievedOrder = hero.lastObjectiveAchieved;
 	
 };
 
@@ -971,15 +970,20 @@ Objective.Ordered.prototype.init = function() {
 };
 
 Objective.Ordered.prototype.reset = function(objective) {
-	objective.achievedOrder = hero.objective.objectives.length;
+	objective.achievedOrder = hero.objective.objectives.length-1;
 };
 
 Objective.Ordered.prototype.checkObjective = function(options, objective)  {
-
+	
+	if (!hero.objective.ordered) 
+		return true;
+	
 	var lastOrder = -1;
 	for (var i = 0; i < hero.objective.objectives.length-1; i++) {
-		if (hero.objective.objectives[i].achievedOrder === lastOrder+1) 
+		if (!(hero.objective.objectives[i].achievedOrder === lastOrder+1)) 
 			return false;
+		
+		lastOrder = hero.objective.objectives[i].achievedOrder;
 	}
 	return true;
 

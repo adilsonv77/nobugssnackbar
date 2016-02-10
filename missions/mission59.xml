@@ -88,6 +88,10 @@
 				</block>
 			</value>
 		</block>
+		
+		<block type="move_goToDisplay" x="10" y = "200">
+		</block>
+		
 	</xml>
 	
 </mission>

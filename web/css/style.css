@@ -409,19 +409,20 @@ table.tableVictory td  {
 #goalsAccomplishedWindow {
 	position: fixed;
 	left: 8px;
-	top: 100px;
 	width: 360px;
-	height: 500px;
 	background-color: #fff7eb;
 	border: 1px solid #ed6d54;
 	font-size: 14px;
+	z-index: 100
 }
 
-.goalsAccomplishedWindowHeader {
+#goalsAccomplishedWindowHeader {
 	background-color: #ffd89d;
 	text-align: center;
 	height: 32px;
 	
 	vertical-align: middle;
 	line-height: 32px;
+	
+	cursor: move;
 }
