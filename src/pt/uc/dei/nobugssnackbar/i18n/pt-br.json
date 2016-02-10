@@ -231,6 +231,7 @@
 	
 	"NoBugs.slider": "Aqui voc&#234; configura a velocidade do cozinheiro.",
 	
+	"Hints.Title" : "Dica",
 	"Hints.ChooseCategory" : "Selecione a categoria %0 para ver os blocos.",
 	"Hints.SelectCommand"  : "Arraste um bloco para a &#225;rea de trabalho.",
 	"Hints.StackTogether"  : "Empilhe um par desse bloco para ficar mais perto do objetivo.",

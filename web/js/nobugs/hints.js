@@ -603,8 +603,9 @@ function createDownDlg(bX, bY, txt) {
 	style.width = "550px";
 	
 	
-	BlocklyApps.showDialog(dialog, null, false, false, style, null);
-	
+	MyBlocklyApps.showDialog(dialog, null, false, false, false, BlocklyApps.getMsg("Hints_Title"), 
+			 style, null, function() {Hints.hideHintWithTimer();}, true);
+
 	
 };
 
@@ -858,6 +859,7 @@ Hints.Categories["StackTogether"] = {
 		function (param) {
 		
 			var dialog = document.getElementById("StackTogether");
+			dialog.getElementsByTagName("img").HelpStack.style.display = "inline";
 			
 			var blocks = Blockly.mainWorkspace.topBlocks_;
 			for (var i = 0; i < blocks.length; i++) {
@@ -883,6 +885,23 @@ Hints.Categories["StackTogether"] = {
 	hideOnMenu : false
 	
 };
+
+Hints.Categories["StackTogetherTwo"] = {
+	show:
+		function(param) {
+			var dialog = document.getElementById("StackTogether");
+			dialog.getElementsByTagName("img").HelpStack.style.display = "none";
+			
+			var blocks = Blockly.mainWorkspace.topBlocks_;
+			MyBlocklyApps.showDialog(dialog, null, false, false, false, BlocklyApps.getMsg("Hints_Title"), 
+									 createStyle(blocks[1].getSvgRoot(), 50, dialog), 
+									 null, function() {Hints.hideHintWithTimer();}, true);
+		},
+		
+	condition:
+		"Blockly.mainWorkspace.topBlocks_.length == 2",
+};
+
 
 Hints.Categories["RunProgram"] = {
 	show:

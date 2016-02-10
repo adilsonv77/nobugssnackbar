@@ -1086,7 +1086,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   document.removeEventListener('keydown', Blockly.onKeyDown_, false);
   Blockly.bindEvent_(document, 'keydown', null, MyBlocklyApps.onKeyDown_);
 	
-  Game.firstTime = true; //firstTime;
+  Game.firstTime = firstTime;
   
   var loginLoaded = function(data) {
 	  

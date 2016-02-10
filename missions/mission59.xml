@@ -23,6 +23,8 @@
 	
 	<hints>
 		<sequence>
+			<hint category="StackTogetherTwo"/>
+			<hint category="RunProgram"/>
 		</sequence>
 
 		<errors>
@@ -70,19 +72,19 @@
 	
 	<xml>
 
-		<block type="move_goToBarCounter">
+		<block type="move_goToBarCounter" x="10" y = "50">
 			<value name="VALUE">
-				<block type="variables_get">
-					<field name="VAR">3</field>
+				<block type="math_number">
+					<field name="NUM">3</field>
 				</block>
 			</value>
 		</block>
 
 
-		<block type="move_goToBarCounter">
+		<block type="move_goToBarCounter" x="10" y = "150">
 			<value name="VALUE">
-				<block type="variables_get">
-					<field name="VAR">1</field>
+				<block type="math_number">
+					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>

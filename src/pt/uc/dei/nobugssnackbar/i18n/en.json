@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-09 15:29:22.734000",
+		"lastupdated": "2016-02-10 11:24:39.759000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
+	"Hints.Title": "Hint",
 	"Hints.ChooseCategory": "Choose a category %0 to see the blocks.",
 	"Hints.RunProgram": "Click in this button for track the cooker actions according your program.",
 	"Hints.DebugProgram": "Click in this button for track the next cooker action according your program.",

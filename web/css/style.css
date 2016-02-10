@@ -119,15 +119,24 @@ button.buttonIDE:hover, button.buttonIDENotEnabled:hover {
 .debug {
   background-image: url(../images/icondebug.png);
 }
-div.debug:hover {
+.buttonIDE div.debug:hover {
   background-image: url(../images/icondebugover.png);
 }
+.buttonIDENotEnabled .debug {
+  background-image: url(../images/icondebugdisabled.png);
+}
+
 .run {
   background-image: url(../images/iconplay.png);
 }
-div.run:hover {
+.buttonIDE div.run:hover {
   background-image: url(../images/iconplayover.png);
 }
+
+.buttonIDENotEnabled .run {
+  background-image: url(../images/iconplaydisabled.png);
+}
+
 .stop {
   background-image: url(../images/iconstop.png);
 }
