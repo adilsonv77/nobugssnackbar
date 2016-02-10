@@ -598,8 +598,8 @@ function createDownDlg(bX, bY, txt) {
 	text.innerHTML = txt;
 
 	var style = {};
-	style.top = (bY - 130) + "px";
-	style.left = bX + "px";
+	style.top = (bY - 155) + "px";
+	style.left =(bX - 10) + "px";
 	style.width = "550px";
 	
 	

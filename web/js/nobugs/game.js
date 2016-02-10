@@ -66,6 +66,7 @@ PreloadImgs.put('doors', 'images/door_new.png');
 
 Game.useCodeEditor = false;
 Game.editor = null;
+Game.clickReseting = false;
 
 Game.generalInit = function() {
 	
@@ -780,6 +781,10 @@ Game.missionLoaded = function(ret){
   
   hero = new SnackMan(hasTable, objectives, mission, Game.loginData.avatar);
   
+  Game.onObjectiveAccomplished([0, hero.objective.objectives.length]);
+  
+  hero.addListener("ObjectiveAccomplished", Game);
+  
   var byTime = true;
   if (objectives.getAttribute("noXP") == null) {
 	  
@@ -796,6 +801,7 @@ Game.missionLoaded = function(ret){
 			  		    Game.changeStars, true );
 	  
   }
+  Game.noXP = objectives.getAttribute("noXP") !== null;
   Game.mission = mission;
 
 //  Game.assignIngrid();
@@ -1153,6 +1159,9 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  BlocklyApps.bindClick('runButton', Game.runButtonClick);
 	  BlocklyApps.bindClick('resetButton', Game.resetButtonClick);
 	  BlocklyApps.bindClick('debugButton', Game.debugButtonClick);
+	  
+	  BlocklyApps.bindClick('openGoalsButton', Game.openGoalsButtonClick);
+	  BlocklyApps.bindClick('closeGoalsButton', Game.closeGoalsButtonClick);
 
 	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
 	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
@@ -1703,6 +1712,17 @@ Game.countInstructions = function(c, f) {
 	
 };
 
+Game.openGoalsButtonClick = function() {
+	$("#goalsAccomplished").css("display", "none");
+	$("#goalsAccomplishedWindow").css("display", "inline");
+	
+};
+
+Game.closeGoalsButtonClick = function() {
+	$("#goalsAccomplished").css("display", "inline");
+	$("#goalsAccomplishedWindow").css("display", "none");
+};
+
 Game.goalButtonClick = function() {
 	
 	Hints.stopHints();
@@ -1909,6 +1929,7 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 	
+	Game.clickReseting = true;
 	Game.finishedRun();
 	
    $("#tests_finished").css("display", "none");
@@ -1930,6 +1951,7 @@ Game.resetButtonClick = function() {
   Hints.startHints();
   Game.unlockBlockly();
   Game.stopAlertGoalButton();
+  Game.clickReseting = false;
 };
 
 Game.enableButton = function(buttonName) {
@@ -2745,6 +2767,9 @@ Game.removeChangeListeners = function() {
 	  MyBlocklyApps.unbindClick('runButton', Game.runButtonClick);
 	  MyBlocklyApps.unbindClick('resetButton', Game.resetButtonClick);
 	  MyBlocklyApps.unbindClick('debugButton', Game.debugButtonClick);
+	  
+	  MyBlocklyApps.unbindClick('openGoalsButton', Game.openGoalsButtonClick);
+	  MyBlocklyApps.unbindClick('closeGoalsButton', Game.closeGoalsButtonClick);
 
 	  MyBlocklyApps.unbindClick('goalButton', Game.goalButtonClick);
 	  MyBlocklyApps.unbindClick('logoffButton', Game.goBackToDashboard);
@@ -3315,3 +3340,18 @@ $(document).on('click', function(e) {
 	
 	LogClick.store(t.id);
 });
+
+Game.onObjectiveAccomplished = function(params) {
+	if (Game.clickReseting) return;
+	
+	var i = params[0], j = params[1];
+	var msg = BlocklyApps.getMsg("NoBugs_GoalsAccomplished");	
+	msg = msg.format(i, j);
+	$("#goalsAccomplishedText").html(msg);
+	$("#goalsAccomplishedTextHeader").html(msg);
+
+	var container = document.getElementById("goalsAccomplishedWindowText");
+	container.innerHTML = "";
+	Explanation.createGoals(container);
+};
+

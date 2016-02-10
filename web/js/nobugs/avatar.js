@@ -33,10 +33,13 @@ PreloadImgs.put("eyes-M", "images/cooker-eyes-m.png", false);
 PreloadImgs.put("eyes-M-fundo", "images/cooker-eyes-f-fundo.png", false);
 PreloadImgs.put("eyes-F", "images/cooker-eyes-f.png", false);
 PreloadImgs.put("eyes-F-fundo", "images/cooker-eyes-f-fundo.png", false);
-PreloadImgs.put("head", "images/cooker-head.png", false);
+PreloadImgs.put("head-M", "images/cooker-head-m.png", false);
+PreloadImgs.put("head-F", "images/cooker-head-f.png", false);
 PreloadImgs.put("Hat-1", "images/cooker-hat-1.png", false);
 PreloadImgs.put("Hat-2", "images/cooker-hat-2.png", false);
 PreloadImgs.put("Clothes-1", "images/cooker-clothes-1.png", false);
+PreloadImgs.put("Clothes-1-pants", "images/cooker-clothes-1-pants.png", false);
+PreloadImgs.put("Clothes-1-scarf", "images/cooker-clothes-1-scarf.png", false);
 
 PreloadImgs.put("Add-1-M", "images/cooker-add-1-m.png", false);
 PreloadImgs.put("Add-2-M", "images/cooker-add-2-m.png", false);
@@ -55,6 +58,7 @@ PreloadImgs.put("mini-head", "images/mini-cooker-head.png", false);
 PreloadImgs.put("mini-Hat-1", "images/mini-cooker-hat-1.png", false);
 PreloadImgs.put("mini-Hat-2", "images/mini-cooker-hat-2.png", false);
 PreloadImgs.put("mini-Clothes-1", "images/mini-cooker-clothes-1.png", false);
+PreloadImgs.put("mini-Clothes-1-scarf", "images/cooker-clothes-1.png", false);
 
 PreloadImgs.put("mini-Add-1-M", "images/mini-cooker-add-1-m.png", false);
 PreloadImgs.put("mini-Add-2-M", "images/mini-cooker-add-2-m.png", false);
@@ -208,7 +212,7 @@ function filterChangeColor(ctx, w, h, findColor, applyColor, ctxDest) {
 	var destColor = applyColor;
 	for (var i=0;i<imgData.data.length;i+=4)  {
 	
-		if (imgData.data[i+3] < 230) // skip transparent/semiTransparent pixels
+		if (imgData.data[i+3] < 50) // skip transparent/semiTransparent pixels
 			continue;
 		
 		var r = imgData.data[i];
@@ -244,19 +248,30 @@ CreateItems.hat = function (prefix, id, hatColor) {
 CreateItems.add = function (prefix, id, addColor) {
 
 	return {id: id, img: (id === ""?id:PreloadImgs.get(prefix + id+"-"+AvatarImgMaker.gender)), x: 0, y: 0, width: ae_Width, height: ae_Height,
-		 baseColor: {r:0, g: 0, b: 0}, color: addColor};
+		 baseColor: {r:255, g: 255, b: 255}, color: addColor};
 
 };
  
 
-CreateItems.clothes = function (prefix, id, coatColor, scarfColor) {
+CreateItems.clothes = function (prefix, id, coatColor) {
 	
+	var _imgBack = null;
+	try {
+		_imgBack = PreloadImgs.get(prefix + id + "-pants");
+	} catch (ex) {
+		
+	}
 	var r = {img: PreloadImgs.get(prefix + id), x: 0, y: 0, width: ae_Width, height: ae_Height,
 		 baseColor: {r:255, g: 255, b: 255}, color: coatColor,
-		 baseColor2: {r:255, g: 0, b: 0}, color2: scarfColor};
+		 imgBack: _imgBack};
 	
 	r.id = id;
-	
+	return r;
+};
+
+CreateItems.scarf = function (prefix, id, scarfColor) {
+	var r = {img: PreloadImgs.get(prefix + id + "-scarf"), x: 0, y: 0, width: ae_Width, height: ae_Height,
+			 baseColor: {r:255, g: 255, b: 255}, color: scarfColor};
 	return r;
 };
 
@@ -281,6 +296,8 @@ CreateItems.eyes = function (id, eyesColor) {
 
 CreateItems.head = function(id, colorHead) {
 
+	if (id == "head")
+		id = id + "-"+AvatarImgMaker.gender; 
 	return 	{img: PreloadImgs.get(id), x: 0, y: 0, width: ae_Width, height: ae_Height,
 		 baseColor: {r:255, g: 255, b: 0}, color: colorHead};
 
@@ -322,6 +339,7 @@ AvatarImgMaker.init = function() {
 	AvatarImgMaker.keys = [];
 	AvatarImgMaker.keys.push("body");
 	AvatarImgMaker.keys.push("clothes");
+	AvatarImgMaker.keys.push("scarf");
 	AvatarImgMaker.keys.push("head");
 	AvatarImgMaker.keys.push("eyes");
 	AvatarImgMaker.keys.push("mouth");
@@ -381,6 +399,7 @@ AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 	
 	keys.push("body");
 	keys.push("clothes");
+	keys.push("scarf");
 	keys.push("head");
 	keys.push("eyes");
 	keys.push("mouth");
@@ -443,6 +462,7 @@ AvatarImgMaker.createMiniAnimationBodyPlatter = function(canvasDest, config) {
 	
 	keys.push("body");
 	keys.push("clothes");
+	keys.push("scarf");
 	keys.push("platter");
 	keys.push("head");
 	keys.push("eyes");
@@ -526,15 +546,15 @@ AvatarImgMaker.createItems = function(config, prefix) {
 		
 		var e = null;
 		switch (entry[0]) {
-			case "clothes":
-				e = CreateItems[entry[0]](prefix, entry[1], hexToRgb(entry[2]), hexToRgb(entry[3]));
-				break;
 			case "body":
 			case "skin":
 				AvatarImgMaker.items["head"] = CreateItems.head(prefix + "head", hexToRgb(entry[2]));
 				e = CreateItems.body(prefix + "body", hexToRgb(entry[2]));
 				entry[0] = "body";
 				break;
+			case "clothes":
+				AvatarImgMaker.items["scarf"] = CreateItems.scarf(prefix, entry[1], hexToRgb(entry[3]));
+				
 			case "add":;
 			case "hat":
 				e = CreateItems[entry[0]](prefix, entry[1], hexToRgb(entry[2]));
@@ -768,11 +788,10 @@ AvatarEditor.okClick = function() {
 	avatar[0] = ["skin", "", rgbToHex(AvatarEditor.skinColor)];
 	avatar[1] = ["eyes", "eyes", rgbToHex(AvatarEditor.eyeColor)];
 	avatar[2] = ["hat", AvatarEditor.hat, rgbToHex(AvatarEditor.hatColor)];
-	avatar[3] = ["clothes", AvatarEditor.clothes, 
-	             				rgbToHex(AvatarEditor.coatColor), 
-	             				rgbToHex(AvatarEditor.scarfColor)];
-	avatar[4] = ["mouth", ""];
-	avatar[5] = ["add", AvatarEditor.add, rgbToHex(AvatarEditor.addColor)];
+	avatar[3] = ["clothes", AvatarEditor.clothes, rgbToHex(AvatarEditor.coatColor)]; 
+	avatar[4] = ["scarf", AvatarEditor.clothes, rgbToHex(AvatarEditor.scarfColor)];
+	avatar[5] = ["mouth", ""];
+	avatar[6] = ["add", AvatarEditor.add, rgbToHex(AvatarEditor.addColor)];
 	
 	AvatarEditor.cancelClick();
 	
@@ -960,13 +979,18 @@ AvatarEditor.selectHat = function(id) {
 
 AvatarEditor.selectClothes = function(id) {
 	
-	if (AvatarEditor.keys.indexOf("clothes") == -1)
+	if (AvatarEditor.keys.indexOf("clothes") == -1) {
 		AvatarEditor.keys.push("clothes");
+		AvatarEditor.keys.push("scarf");
+	}
+		
 
 	AvatarEditor.clothes = id;
 	
-	AvatarEditor.items["clothes"] = CreateItems.clothes("", id, AvatarEditor.coatColor, AvatarEditor.scarfColor);  
-	AvatarEditor.miniItems["clothes"] = CreateItems.clothes("mini-", id, AvatarEditor.coatColor, AvatarEditor.scarfColor);  
+	AvatarEditor.items["clothes"] = CreateItems.clothes("", id, AvatarEditor.coatColor);
+	AvatarEditor.items["scarf"] = CreateItems.scarf("", id, AvatarEditor.scarfColor);  
+	AvatarEditor.miniItems["clothes"] = CreateItems.clothes("mini-", id, AvatarEditor.coatColor);  
+	AvatarEditor.miniItems["scarf"] = CreateItems.scarf("mini-", id, AvatarEditor.scarfColor);  
 	
 };
 

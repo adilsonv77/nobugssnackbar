@@ -206,6 +206,20 @@
 		      	        title="{msg meaning="NoBugs.helpPayTooltip" desc="--"}Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.{/msg}">
 		      		<img src="images/help_pay.png" style="width: 32px; height: 32px"/>
 		      	</button>
+		        <button id="buyButton" class="primary" style="margin:5px; display:none" 
+		        	title="{msg meaning="NoBugs.buyTooltip" desc="--"}Buy some machines.{/msg}">
+		          <img src="media/1x1.gif" class="buy icon21"/>
+		        </button>
+		        
+		        <button id="goalButton" class="primary" style="margin:5px" 
+		        	title="{msg meaning="NoBugs.goalsTooltip" desc="--"}See the objectives of this mission.{/msg}">
+		          <img src="media/1x1.gif" class="code icon21"/>
+		        </button>
+		        
+		        <button id="instructionButton" class="primary" style="display: none; margin:5px" title="{msg meaning="NoBugs.instructionTooltip" desc="--"}Show learning content related to this mission.{/msg}">
+		          <img src="images/instruction.png" width="21px" height="21px"/>
+		        </button>
+		      	
 	    	</td>
 	    	<td>
 	    		<div id="playerRewardMission" class="playerReward" style="width: auto;">
@@ -223,7 +237,7 @@
 	  	<canvas id="display" width="360" height="440"></canvas>
 	  	<canvas id="displayTemp" width="150" height="370" style="display:none"></canvas>
 	  </div>
-	  <table class="buttons">
+	  <table class="buttons" width="360">
 	    <tr>
 	      <td style="width: 120px; text-align: center">
 	        <button id="runButton" class="buttonIDE" title="{msg meaning="NoBugs.runTooltip" desc="--"}Makes the snack man do what the blocks say [F10].{/msg}">
@@ -237,6 +251,32 @@
 	        <button id="resetButton" class="buttonIDE" title="{msg meaning="NoBugs.resetTooltip" desc="--"}Restarts the execution [Esc].{/msg}">
 	          <div class="stop"></div>
 	        </button>
+	      </td>
+	       
+	      <td style="width: 120px; text-align: center">
+		    <div style="margin: 0 auto; width: 150px" id="divslider">
+		        <svg
+		            id="slider"
+		            xmlns="http://www.w3.org/2000/svg"
+		            xmlns:svg="http://www.w3.org/2000/svg"
+		            xmlns:xlink="http://www.w3.org/1999/xlink"
+		            version="1.1"
+		            width="150"
+		            height="50">
+		          <!-- Slow icon. -->
+		          <clipPath id="slowClipPath">
+		            <rect width=26 height=12 x=5 y=0 />
+		          </clipPath>
+		          <image xlink:href="images/icons.png" height=42 width=84 x=-21 y=-24
+		              clip-path="url(#slowClipPath)" />
+		          <!-- Fast icon. -->
+		          <clipPath id="fastClipPath">
+		            <rect width=26 height=16 x=120 y=0 />
+		          </clipPath>
+		          <image xlink:href="images/icons.png" height=42 width=84 x=120 y=-24
+		              clip-path="url(#fastClipPath)" />
+		        </svg>
+			</div>
 	      </td>
 	       
 	      <td style="text-align: center">
@@ -258,50 +298,29 @@
     				position: relative;">
     		</div>
 	      </td>
-
-	      <td style="width: 120px; text-align: center">
-	        <button id="buyButton" class="primary" style="margin:5px; display:none" 
-	        	title="{msg meaning="NoBugs.buyTooltip" desc="--"}Buy some machines.{/msg}">
-	          <img src="media/1x1.gif" class="buy icon21"/>
-	        </button>
-	        
-	        <button id="goalButton" class="primary" style="margin:5px" 
-	        	title="{msg meaning="NoBugs.goalsTooltip" desc="--"}See the objectives of this mission.{/msg}">
-	          <img src="media/1x1.gif" class="code icon21"/>
-	        </button>
-	        
-	        <button id="instructionButton" class="primary" style="display: none; margin:5px" title="{msg meaning="NoBugs.instructionTooltip" desc="--"}Show learning content related to this mission.{/msg}">
-	          <img src="images/instruction.png" width="21px" height="21px"/>
-	        </button>
-	      </td>
-	       
+	      
 	    </tr>
 	    <tr>
-		    <td colspan="3">
-			    <div style="margin: 0 auto; width: 150px" id="divslider">
-			        <svg
-			            id="slider"
-			            xmlns="http://www.w3.org/2000/svg"
-			            xmlns:svg="http://www.w3.org/2000/svg"
-			            xmlns:xlink="http://www.w3.org/1999/xlink"
-			            version="1.1"
-			            width="150"
-			            height="50">
-			          <!-- Slow icon. -->
-			          <clipPath id="slowClipPath">
-			            <rect width=26 height=12 x=5 y=0 />
-			          </clipPath>
-			          <image xlink:href="images/icons.png" height=42 width=84 x=-21 y=-24
-			              clip-path="url(#slowClipPath)" />
-			          <!-- Fast icon. -->
-			          <clipPath id="fastClipPath">
-			            <rect width=26 height=16 x=120 y=0 />
-			          </clipPath>
-			          <image xlink:href="images/icons.png" height=42 width=84 x=120 y=-24
-			              clip-path="url(#fastClipPath)" />
-			        </svg>
-				</div>
-		    </td>
+	    	<td colspan="3">
+	    		<div id="goalsAccomplished" class="playerReward" style="width:100%; text-align:center;display:inline;border-radius:0px">
+	    			<span id="goalsAccomplishedText"></span>
+		    		<button id="openGoalsButton" style="background-color: transparent; border: 0px; position:absolute; left:340px; margin: 0px; padding: 0px; box-shadow: none; top:600px">
+						<img src="images/iconmoreinfo.png" style="width:16px; height:16px"/>
+					</button>
+	    		</div>
+	    		
+	    		<div id="goalsAccomplishedWindow" style="display:none;">
+	    			<div class="goalsAccomplishedWindowHeader">
+	    				<span id="goalsAccomplishedTextHeader"></span>
+			    		<button id="closeGoalsButton" style="background-color: transparent; border: 0px; position:absolute; left:340px; margin: 0px; padding: 0px; box-shadow: none; top:5px">
+							<img src="images/iconlessinfo.png" style="width:16px; height:16px"/>
+						</button>
+	    			</div>
+	    			<div id="goalsAccomplishedWindowText">
+	    			</div>
+	    		</div>
+	    	</td>
+	    	
 	    </tr>
 	  </table>
 	  

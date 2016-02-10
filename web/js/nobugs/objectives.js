@@ -27,7 +27,10 @@ var Objective = {
 };
 
 Objective.init = function(elem, trata) {
-	return {objective:elem.childNodes[0].nodeValue, notExists:elem.getAttribute("notExists"),  achieved:false, trata:trata};
+	return {objective:elem.childNodes[0].nodeValue, 
+			notExists:elem.getAttribute("notExists"),  
+			achieved:false, achievedOrder: 0,
+			trata:trata};
 };
 
 Objective.verifyObjectives = function(key, options) {
@@ -40,6 +43,7 @@ Objective.verifyObjectives = function(key, options) {
 	}
 		
 	var ret = false;
+	/*
 	if (hero.objective.ordered) {
 		if (hero.objective.objectives[hero.lastObjectiveAchieved + 1].objective !== key)
 			return false;
@@ -57,7 +61,7 @@ Objective.verifyObjectives = function(key, options) {
 		} 
 
 		
-	} else {
+	} else { */
 		for (var i = 0; i < hero.objective.objectives.length; i++) {
 			if (hero.objective.objectives[i].objective === key && !hero.objective.objectives[i].achieved) {
 				
@@ -76,7 +80,6 @@ Objective.verifyObjectives = function(key, options) {
 			}
 		}
 		
-	}
 
 	return ret;
 };
@@ -102,6 +105,7 @@ Objective.reset = function(objective) {
 Objective.markAchieved = function(objective) {
 	
 	objective.achieved = true;
+	objective.achievedOrder = hero.lastObjectiveAchieved;
 	hero.lastObjectiveAchieved++;
 	
 	hero.allObjectivesAchieved = (hero.lastObjectiveAchieved+1) == hero.objective.objectives.length;
@@ -215,7 +219,12 @@ Objective.factory = function(key) {
 	case "callTimes":
 		this.factories[key] = new Objective.CallTimes();
 		break;
+
+	case "ordered" :
+		this.factories[key] = new Objective.Ordered();
+		break;
 	}
+	
 	
 	return this.factories[key];
 };
@@ -947,5 +956,37 @@ Objective.CallTimes.prototype.createExplanationItem = function(objective)  {
 	var text = BlocklyApps.getMsg("explanation_callTimesObjective");
 	return text.format(objective.block, objective.times);
  
+};
+
+/******************************************************************************
+ *                                  Ordered
+ ******************************************************************************/
+
+Objective.Ordered = function() {};
+Objective.Ordered.prototype.init = function() {
+	
+	var p = {objective:"ordered", achieved:false, trata:this, achievedOrder: 0};
+	
+	return p;
+};
+
+Objective.Ordered.prototype.reset = function(objective) {
+	objective.achievedOrder = hero.objective.objectives.length;
+};
+
+Objective.Ordered.prototype.checkObjective = function(options, objective)  {
+
+	var lastOrder = -1;
+	for (var i = 0; i < hero.objective.objectives.length-1; i++) {
+		if (hero.objective.objectives[i].achievedOrder === lastOrder+1) 
+			return false;
+	}
+	return true;
+
+};
+
+Objective.Ordered.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_ordered");
+	return text;
 };
 

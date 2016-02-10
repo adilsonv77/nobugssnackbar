@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <mission>
 	
-	<explanation hasInstruction="false" dialog="true">
+	<explanation hasInstruction="false">
 	
 		<page type="goal" >
 		<![CDATA[

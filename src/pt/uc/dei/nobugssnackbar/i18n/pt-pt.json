@@ -89,6 +89,7 @@
 	"NoBugs.profileTooltip" : "Alterar o seu perfil.",
 	"NoBugs.yourSnackBarTooltip" : "Alterar o snack bar que voc&#234; &#233; dono.",
 	
+	"NoBugs.GoalsAccomplished" : "Objectivos %0 de %1 cumpridos",
 	"NoBugs.missionSolveExplanation" : "Solu&#231;&#227;o",
 
 	"Apps.dialogLogin": "Entrar",
@@ -221,6 +222,7 @@
 	"Explane.AskWantHowManyIceCream":"Pergunta ao cliente %0 quantos gelados ele deseja.",
 	"Explane.SellObjective":"Venda pelo menos $%0 (&#233; computado com base nas cobran&#231;as)",
 	"Explane.CallTimesObjective":"N&#227;o use o bloco %0 mais do que %1 vez(es).",
+	"Explane.Ordered" : "Precisa cumprir os objetivos exatamente nessa ordem.",
 	
 	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
 	

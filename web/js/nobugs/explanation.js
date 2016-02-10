@@ -138,17 +138,9 @@ Explanation.evaluateObjectives = function(statement, container) {
 	if (statement != Explanation.lastStatement)
 		return
 		
-	var ul = document.createElement("ul");
-	container.appendChild(ul);
-	var os = hero.objective.objectives;
-	for (var i=0; i<os.length; i++) {
-		
-		var obj = Explanation.createGoal(os[i]);
-		ul.appendChild(obj);
-		
-	}
-	
-	if (Game.pointsInThisMission) {
+	Explanation.createGoals(container);
+
+	if (Game.pointsInThisMission || Game.noXP) {
 		var table = document.createElement("table");
 		var tr = document.createElement("tr");
 		var div = document.createElement("td");
@@ -199,6 +191,20 @@ Explanation.evaluateObjectives = function(statement, container) {
 		div.innerHTML = out;
 	}
 };
+
+Explanation.createGoals = function(container) {
+	
+	var ul = document.createElement("ul");
+	container.appendChild(ul);
+	var os = hero.objective.objectives;
+	for (var i=0; i<os.length; i++) {
+		
+		var obj = Explanation.createGoal(os[i]);
+		ul.appendChild(obj);
+		
+	}
+}
+
 
 Explanation.finishStatement = function() {
 	BlocklyApps.hideDialog(false);

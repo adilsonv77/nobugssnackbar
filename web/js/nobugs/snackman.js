@@ -248,6 +248,9 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	if (countTalk > 0)
 		this.createObjective("countTalk", countTalk);
 		
+	if (this.objective.ordered)
+		this.createAditionalObjective(objectives, "ordered");
+	
 	this.hasVarQtd = this.createAditionalObjective(objectives, "varQtd");
 	this.hasCommQtd = this.createAditionalObjective(objectives, "commQtd");
 	
@@ -258,6 +261,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	this.delivered = 0;
 	
 	this.talkText = null;
+	this.listeners = [];
 };
 
 SnackMan.prototype.createObjective = function(key, elem) {
@@ -313,6 +317,8 @@ SnackMan.prototype.reset = function() {
 	this.allObjectivesAchieved = false;
 	for (var i=0; i<this.objective.objectives.length; i++)
 		Objective.reset(this.objective.objectives[i]);
+	
+	this.notifyListeners("ObjectiveAccomplished", 0, this.objective.objectives.length);
 	
 	for (var i = 0; i < this.installedMachines.length; i++) 
 		this.installedMachines[i].machineCfg.production = [];
@@ -1532,6 +1538,10 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
 		message: BlocklyApps.getMsg("NoBugs_achieved") + " " + (this.lastObjectiveAchieved+1) + 
 						 " "  + BlocklyApps.getMsg("NoBugs_of") + " " +  this.objective.objectives.length});
+	
+	this.notifyListeners("ObjectiveAccomplished", this.lastObjectiveAchieved+1, this.objective.objectives.length);
+	
+	
 	Game.alertGoalButton();
 	
 };
@@ -1592,3 +1602,26 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 	
 };
 
+SnackMan.prototype.addListener = function(eventType, obj) {
+	
+	this.listeners.push({eventType: eventType, listener: obj});
+	
+};
+
+SnackMan.prototype.notifyListeners = function() {
+	
+	var eventType = arguments[0];
+	
+	var params = [];
+	for (var i=1;i<arguments.length;i++)
+		params.push(arguments[i]);
+	
+	this.listeners.forEach(function (listener) {
+		
+		if (listener.eventType === eventType) {
+			listener.listener["on"+eventType](params);
+		}
+		
+	});
+	
+};
