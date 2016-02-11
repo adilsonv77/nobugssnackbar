@@ -113,7 +113,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "DebugProgram";
 	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
 	Hints.hints.whenError.push(hint);
-	
+	/*
 	hint.next = new Object();
 	hint = hint.next;
 	hint.content = document.getElementById("Hints_GoalButtonError").innerHTML;
@@ -123,7 +123,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "GoalButton";
 	
 	Hints.hints.whenError.push(hint);
-	
+	*/
 	hint = new Object();
 	
 	hint.category = "TestBlock";

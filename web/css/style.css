@@ -93,15 +93,8 @@ button.secondary:disabled {
 	cursor: initial;
 }
 
-button.buttonIDE:hover, button.buttonIDENotEnabled:hover {
-  box-shadow: none;
-}
-
 .buttonIDE > img {
 	opacity: 1;
-}
-.buttonIDE:hover {
-	box-shadow: 0px;
 }
 
 /* Sprited icons. */
@@ -353,11 +346,6 @@ table.tableVictory td  {
 	width: 32px;
 	float:  left;
 } 
-
-#selectMissionLogoffButton:hover, #logoffButton:hover  {
-	border: 0px;
-	box-shadow: 0px 0px 0px 0px;
-}
 
 .ExplainGameInstance {
 	color: blue;
