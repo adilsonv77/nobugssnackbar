@@ -123,6 +123,10 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.Counter();
 		break;
 
+	case "goesToDisplay": 
+		this.factories[key] = new Objective.GoesToDisplay();
+		break;
+
 	case "askForFood":
 		this.factories[key] = new Objective.AskForFood();
 		break;
@@ -260,6 +264,31 @@ Objective.Counter.prototype.checkObjective = function(options, objective)  {
 Objective.Counter.prototype.createExplanationItem = function(objective) {
 	var text = BlocklyApps.getMsg("explanation_counter");
 	return text.format(objective.pos);
+};
+
+/******************************************************************************
+ *                                GoesToDisplay
+ ******************************************************************************/
+
+Objective.GoesToDisplay = function() {};
+Objective.GoesToDisplay.prototype.init = function(elem) {
+	var p = {objective:"goesToDisplay", achieved:false, trata:this};
+	return p;
+};
+
+Objective.GoesToDisplay.prototype.checkObjective = function(options, objective)  {
+	if (options.nx == hero.displayNode.x && options.ny == hero.displayNode.y) {
+		
+		return true;
+	} 
+	
+	return false;
+
+};
+
+Objective.GoesToDisplay.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_goestodisplay");
+	return text;
 };
 
 /******************************************************************************

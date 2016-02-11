@@ -1523,6 +1523,8 @@ SnackMan.prototype.hasMachineFor = function(product) {
 SnackMan.prototype.checkObjectives = function() {
 	
 	this.verifyObjectives("goesTo", {nx: this.img.x, ny: this.img.y+this.heightCooker});
+	this.verifyObjectives("goesToDisplay", {nx: this.img.x, ny: this.img.y+this.heightCooker});
+	
 };
 
 SnackMan.prototype.verifyObjectives = function(key, options) {
