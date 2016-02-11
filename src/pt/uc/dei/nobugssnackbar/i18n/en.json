@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-11 14:41:51.421000",
+		"lastupdated": "2016-02-11 15:04:04.691000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -279,9 +279,9 @@
 	"NoBugs.developedBy": "Developed by",
 	"NoBugs.logoffTooltip": "Logoff the game.",
 	"NoBugs.avatarTooltip": "Change your avatar.",
-	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
+	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
 	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",

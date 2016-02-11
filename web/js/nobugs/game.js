@@ -3338,7 +3338,7 @@ Game.lastErrorHas = function(blockName) {
 	return false;
 };
 
-Game.alertColor = ["#DD4B39", "#E07c70", "#edcdc9", "#E07c70"];
+Game.alertOpacity = [0.25, 0.5, 0.75, 1];
 Game.handleAlertTimer = 0;
 
 Game.alertGoalButton = function() {
@@ -3351,8 +3351,9 @@ Game.alertGoalButton = function() {
 	Game.handleAlertTimer = 
 		window.setInterval(function() {
 			var gb = document.getElementById("goalButton");
+			gb = gb.getElementsByTagName("img")[0];
 			Game.alertControl = (Game.alertControl + 1) % 4;
-			gb.style.backgroundColor = Game.alertColor[Game.alertControl];
+			gb.style.opacity = Game.alertOpacity[Game.alertControl];
 		}, 300);
 };
 
@@ -3365,7 +3366,8 @@ Game.stopAlertGoalButton = function() {
 	Game.handleAlertTimer = 0;
 	
 	var gb = document.getElementById("goalButton");
-	gb.style.backgroundColor = "#DD4B39";
+	gb = gb.getElementsByTagName("img")[0];
+	gb.style.opacity = "";
 	
 };
 
