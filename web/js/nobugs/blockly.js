@@ -28,6 +28,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
   if (modal) {
     shadow.style.visibility = 'visible';
     shadow.style.opacity = 0.3;
+    shadow.style.zIndex = 110;
   }
 	var header = null;
 	if (showHeader === undefined || showHeader === true) {
@@ -45,6 +46,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
 	    	bClose.style.margin = "0px";
 	    	bClose.style.minWidth = "0px";
 	    	bClose.style.backgroundColor = "transparent";
+	    	bClose.style.border = "none";
 	    	bClose.innerHTML = "<img src='images/closedialog.png' style='width:16px;height:16px'/>";
 	    	bClose.onclick = function() { 
 	    		closeButtonFunc();
@@ -75,7 +77,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
     // Check that the dialog wasn't closed during opening.
     if (BlocklyApps.isDialogVisible_) {
       dialog.style.visibility = 'visible';
-      dialog.style.zIndex = 1;
+      dialog.style.zIndex = 120;
       border.style.visibility = 'hidden';
     }
   }
@@ -300,27 +302,34 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					  break;
 					  
 				  case 50: // '2'
+					  if (Game.toolbox.indexOf('<block type="move_goToDisplay">') == -1)// is allowed insert goToDisplay ?
+						  return;
+					  
+					  xmlBlock = transformStrToXml("<block type='move_goToDisplay'></block></value></block>").childNodes[0];
+					  break;
+					  
+				  case 51: // '3'
 					  if (Game.toolbox.indexOf('custom="VARIABLE"') == -1) // is allowed insert variables ?
 						  return;
 					  
 					  xmlBlock = transformStrToXml("<block type='variables_set'></block>").childNodes[0];
 					  break;
 						
-				  case 51: // '3'
+				  case 52: // '4'
 					  if (Game.toolbox.indexOf('<block type="controls_if">') == -1)
 						  return;
 					  
 					  xmlBlock = transformStrToXml("<block type='controls_if'></block>").childNodes[0];
 					  break;
 					  
-				  case 52: // '4'
+				  case 53: // '5'
 					  if (Game.toolbox.indexOf('<block type="controls_for">') == -1) 
 						  return;
 					  
 					  xmlBlock = transformStrToXml('<block type="controls_for"><field name="VAR">i</field><value name="FROM"><block type="math_number"><field name="NUM">1</field></block></value><value name="TO"><block type="math_number"><field name="NUM">3</field></block></value><value name="BY"><block type="math_number" deletable="false"><field name="NUM">1</field></block></value></block>').childNodes[0];
 					  break;
 					  
-				  case 53: // '5'
+				  case 54: // '6'
 					  if (Game.toolbox.indexOf('<block type="controls_whileUntil">') == -1) 
 						  return;
 					  

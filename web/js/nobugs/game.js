@@ -289,7 +289,7 @@ Game.finishQuestionnaire = function() {
 			UserControl.saveQuestionnaire(saveAnswers);
 		});
 		
-		BlocklyApps.hideDialog(false);
+		MyBlocklyApps.hideDialog(false);
 
 		Game.continueLoginProcess();
 	}
@@ -1911,7 +1911,7 @@ Game.closeBlockEditorStuffs = function() {
     $("#tests").css("display", "none");
 
     Game.stopAlertGoalButton();
-	BlocklyApps.hideDialog(false);
+	MyBlocklyApps.hideDialog(false);
 	window.removeEventListener('beforeunload', Game.unload);
 	
 	var now = new Date().getTime();
@@ -1962,7 +1962,7 @@ Game.logoffButtonClick = function() {
 		
 	});
 	*/
-	BlocklyApps.hideDialog(false);
+	MyBlocklyApps.hideDialog(false);
 	CityMap.stopAnimation();
 	
 	LogClick.save(false); // store the cache 

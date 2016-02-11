@@ -71,7 +71,7 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 
 Explanation.nextStatement = function() {
 	
-	BlocklyApps.hideDialog(false);
+	MyBlocklyApps.hideDialog(false);
 	
 	Explanation.pageNumber = Explanation.pageNumber + 1; 
 	
@@ -81,7 +81,7 @@ Explanation.nextStatement = function() {
 
 Explanation.previousStatement = function() {
 	
-	BlocklyApps.hideDialog(false);
+	MyBlocklyApps.hideDialog(false);
 	
 	Explanation.pageNumber = Explanation.pageNumber - 1;
 	
@@ -214,7 +214,7 @@ Explanation.createGoals = function(container) {
 
 
 Explanation.finishStatement = function() {
-	BlocklyApps.hideDialog(false);
+	MyBlocklyApps.hideDialog(false);
 
 	if (!Explanation.showHint) {
 		Hints.startHints();

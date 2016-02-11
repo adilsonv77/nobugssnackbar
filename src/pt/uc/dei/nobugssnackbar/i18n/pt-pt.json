@@ -103,9 +103,9 @@
 	"NoBugs.helpFreeTooltip" : "Mostra uma explica&#231;&#227;o detalhada da solu&#231;&#227;o. Se n&#227;o tens mais estrelas para pontuar, n&#227;o existe custo. Do contr&#225;rio, todas as estrelas ser&#227;o consumidas.",
 	"NoBugs.helpPayTooltip" : "Apaga todos os blocos atuais e substitui pela solu&#231;&#227;o. Ap&#243;s clicar nesse bot&#227;o, ser&#225; exibida uma janela com o custo e a solicitar sua confirma&#231;&#227;o.",
 	
-	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o.",
+	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o. [Ctrl+Shift+1]",
 	"SnackMan.askForFoodTooltip": "Pergunto ao cliente o que ele deseja comer.",
-	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador.",
+	"SnackMan.goToDisplayTooltip": "Move o cozinheiro at&#233; o mostrador. [Ctrl+Shift+2]",
 	"SnackMan.isThereACustomerTooltip" : "Verifica se existe um cliente na posi&#231;&#227;o atual.",
 	"SnackMan.catchFoodTooltip" : "Pega a comida do mostrador e coloca na bandeja pronto para ser entregue ao cliente.",
 	"SnackMan.deliverTooltip" : "Entrega a comida ou bebida ao cliente na posi&#231;&#227;o atual.",

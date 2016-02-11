@@ -302,7 +302,8 @@ Hints.timeIsUp = function() {
 	countTopInstructions = Game.editor.lengthTopBlocks();
 	if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined) {
 		menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_;
-		menuSelected = menuSelected.element_;
+		
+		menuSelected = (menuSelected!=null?menuSelected.element_:null);
 	}
 	else
 		menuSelected = null;

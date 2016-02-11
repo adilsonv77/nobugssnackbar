@@ -342,65 +342,6 @@ BlocklyApps.dialogOrigin_ = null;
 BlocklyApps.dialogDispose_ = null;
 
 /**
- * Show the dialog pop-up.
- * @param {!Element} content DOM element to display in the dialog.
- * @param {Element} origin Animate the dialog opening/closing from/to this
- *     DOM element.  If null, don't show any animations for opening or closing.
- * @param {boolean} animate Animate the dialog opening (if origin not null).
- * @param {boolean} modal If true, grey out background and prevent interaction.
- * @param {!Object} style A dictionary of style rules for the dialog.
- * @param {Function} disposeFunc An optional function to call when the dialog
- *     closes.  Normally used for unhooking events.
- */
-BlocklyApps.showDialog = function(content, origin, animate, modal, style,
-                                  disposeFunc) {
-  if (BlocklyApps.isDialogVisible_) {
-    BlocklyApps.hideDialog(false);
-  }
-  BlocklyApps.isDialogVisible_ = true;
-  BlocklyApps.dialogOrigin_ = origin;
-  BlocklyApps.dialogDispose_ = disposeFunc;
-  var dialog = document.getElementById('dialog');
-  var shadow = document.getElementById('dialogShadow');
-  var border = document.getElementById('dialogBorder');
-
-  // Copy all the specified styles to the dialog.
-  for (var name in style) {
-    dialog.style[name] = style[name];
-  }
-  if (modal) {
-    shadow.style.visibility = 'visible';
-    shadow.style.opacity = 0.3;
-    var header = document.createElement('div');
-    header.id = 'dialogHeader';
-    dialog.appendChild(header);
-    BlocklyApps.dialogMouseDownWrapper_ =
-        Blockly.bindEvent_(header, 'mousedown', null,
-                           BlocklyApps.dialogMouseDown_);
-  }
-  dialog.appendChild(content);
-  content.className = content.className.replace('dialogHiddenContent', '');
-
-  function endResult() {
-    // Check that the dialog wasn't closed during opening.
-    if (BlocklyApps.isDialogVisible_) {
-      dialog.style.visibility = 'visible';
-      dialog.style.zIndex = 1;
-      border.style.visibility = 'hidden';
-    }
-  }
-  if (animate && origin) {
-    BlocklyApps.matchBorder_(origin, false, 0.2);
-    BlocklyApps.matchBorder_(dialog, true, 0.8);
-    // In 175ms show the dialog and hide the animated border.
-    window.setTimeout(endResult, 175);
-  } else {
-    // No animation.  Just set the final state.
-    endResult();
-  }
-};
-
-/**
  * Horizontal start coordinate of dialog drag.
  */
 BlocklyApps.dialogStartX_ = 0;
@@ -464,57 +405,6 @@ BlocklyApps.dialogUnbindDragEvents_ = function() {
   if (BlocklyApps.dialogMouseMoveWrapper_) {
     Blockly.unbindEvent_(BlocklyApps.dialogMouseMoveWrapper_);
     BlocklyApps.dialogMouseMoveWrapper_ = null;
-  }
-};
-
-/**
- * Hide the dialog pop-up.
- * @param {boolean} opt_animate Animate the dialog closing.  Defaults to true.
- *     Requires that origin was not null when dialog was opened.
- */
-BlocklyApps.hideDialog = function(opt_animate) {
-  if (!BlocklyApps.isDialogVisible_) {
-    return;
-  }
-  BlocklyApps.dialogUnbindDragEvents_();
-  if (BlocklyApps.dialogMouseDownWrapper_) {
-    Blockly.unbindEvent_(BlocklyApps.dialogMouseDownWrapper_);
-    BlocklyApps.dialogMouseDownWrapper_ = null;
-  }
-
-  BlocklyApps.isDialogVisible_ = false;
-  BlocklyApps.dialogDispose_ && BlocklyApps.dialogDispose_();
-  BlocklyApps.dialogDispose_ = null;
-  var origin = (opt_animate === false) ? null : BlocklyApps.dialogOrigin_;
-  var dialog = document.getElementById('dialog');
-  var shadow = document.getElementById('dialogShadow');
-  var border = document.getElementById('dialogBorder');
-
-  shadow.style.opacity = 0;
-
-  function endResult() {
-    shadow.style.visibility = 'hidden';
-    border.style.visibility = 'hidden';
-  }
-  if (origin) {
-    BlocklyApps.matchBorder_(dialog, false, 0.8);
-    BlocklyApps.matchBorder_(origin, true, 0.2);
-    // In 175ms hide both the shadow and the animated border.
-    window.setTimeout(endResult, 175);
-  } else {
-    // No animation.  Just set the final state.
-    endResult();
-  }
-  dialog.style.visibility = 'hidden';
-  dialog.style.zIndex = -1;
-  var header = document.getElementById('dialogHeader');
-  if (header) {
-    header.parentNode.removeChild(header);
-  }
-  while (dialog.firstChild) {
-    var content = dialog.firstChild;
-    content.className += ' dialogHiddenContent';
-    document.body.appendChild(content);
   }
 };
 

@@ -47,7 +47,7 @@ Quest.finishQuestionnaire = function() {
 			});
 		});
 		
-		BlocklyApps.hideDialog(false);
+		MyBlocklyApps.hideDialog(false);
 
 	}
 	
