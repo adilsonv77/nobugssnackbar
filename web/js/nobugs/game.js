@@ -601,6 +601,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 
   CityMap.stopAnimation();
 
+  $("#playerRewardMission").css("display", "none");
+	
   document.getElementById("mainBody").style.display = "inline";
   
   if (Game.loginData.userLogged.showSound) {
@@ -698,7 +700,6 @@ Game.saveMission = function() {
 };
 
 Game.missionLoaded = function(ret){
-	
   Game.showedWindowRunDisabled = false;
 	  
   Game.howManyRuns = parseInt(ret[4]);
@@ -734,8 +735,7 @@ Game.missionLoaded = function(ret){
 
   Game.timeSpent = (ret[3] == null?0:parseInt(ret[3]));
 
-  $("#playerRewardMission").css("display", (Game.missionView || !Game.pointsInThisMission?"none":"inline"));
-  $("#playerRewardMission").css("box-shadow","");
+  //$("#playerRewardMission").css("box-shadow","");
   UserControl.retrieveReward(Game.updatesReward);
   
   Game.wizardFreeContent = mission.childNodes[0].getElementsByTagName("help");
@@ -808,6 +808,7 @@ Game.missionLoaded = function(ret){
 	  cfg.freeWizardConsumed = false;
   }
   
+  $("#playerRewardMission").css("display", (Game.missionView || !Game.pointsInThisMission?"none":"inline"));
   CountXP.config(byTime, cfg,
 		         xpIndiv, hero.objective.xpFinal,
 		         Game.changeStars, true, null, 

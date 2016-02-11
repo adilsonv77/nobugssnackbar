@@ -491,7 +491,9 @@ AvatarImgMaker.createMiniAnimationBody = function(canvasDest, configOrig) {
 		AvatarImgMaker.items.mouth.img = miniMouth;
 		AvatarImgMaker.items.head.img = PreloadImgs.get(j+".mini-head"); 
 		AvatarImgMaker.items.eyes.img = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender);
-		AvatarImgMaker.items.hat.img = PreloadImgs.get(j+".mini-"+AvatarImgMaker.items.hat.id);
+		if (AvatarImgMaker.items.hat.id !== "")
+			AvatarImgMaker.items.hat.img = PreloadImgs.get(j+".mini-"+AvatarImgMaker.items.hat.id);
+		
 		try {
 			AvatarImgMaker.items.eyes.imgBack = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender+"-fundo");	
 		} catch (ex) {
@@ -558,7 +560,8 @@ AvatarImgMaker.createMiniAnimationBodyPlatter = function(canvasDest, config) {
 		AvatarImgMaker.items.mouth.img = miniMouth;
 		AvatarImgMaker.items.head.img = PreloadImgs.get(j+".mini-head"); 
 		AvatarImgMaker.items.eyes.img = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender);
-		AvatarImgMaker.items.hat.img = PreloadImgs.get(j+".mini-"+AvatarImgMaker.items.hat.id);
+		if (AvatarImgMaker.items.hat.id !== "")
+			AvatarImgMaker.items.hat.img = PreloadImgs.get(j+".mini-"+AvatarImgMaker.items.hat.id);
 		try {
 			AvatarImgMaker.items.eyes.imgBack = PreloadImgs.get(j+".mini-eyes-"+AvatarImgMaker.gender+"-fundo");	
 		} catch (ex) {

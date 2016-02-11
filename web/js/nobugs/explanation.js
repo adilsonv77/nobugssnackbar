@@ -140,7 +140,7 @@ Explanation.evaluateObjectives = function(statement, container) {
 		
 	Explanation.createGoals(container);
 
-	if (Game.pointsInThisMission || Game.noXP) {
+	if (Game.pointsInThisMission) {
 		var table = document.createElement("table");
 		var tr = document.createElement("tr");
 		var div = document.createElement("td");
@@ -154,20 +154,27 @@ Explanation.evaluateObjectives = function(statement, container) {
 		container.appendChild(table);
 
 		var msg;
-		var finalValue;
+		var finalValue = 0;
+		var individualValue;
 		
-		if (hero.objective.xpTotalRun == null) {
-			msg = BlocklyApps.getMsg("rewardExplanation");
-			finalValue = hero.objective.xpTotalTime/60;
-		}
-		else {
-			msg = BlocklyApps.getMsg("rewardExplanationByRun");
-			finalValue = hero.objective.xpTotalRun;
+		if (Game.noXP) {
+			msg = BlocklyApps.getMsg("rewardSimpleExplanation");
+			individualValue = hero.objective.xpFinal;
+		} else {
+			individualValue = hero.objective.xpIndividual;
+			if (hero.objective.xpTotalRun == null) {
+				msg = BlocklyApps.getMsg("rewardExplanation");
+				finalValue = hero.objective.xpTotalTime/60;
+			}
+			else {
+				msg = BlocklyApps.getMsg("rewardExplanationByRun");
+				finalValue = hero.objective.xpTotalRun;
+			}
 		}
 		
-		var coin2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
-		var coin3 = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
-		var out = msg.format(hero.objective.xpIndividual + coin2, coin2, hero.objective.xpFinal + coin2, finalValue)+ "<br/>";
+		var coin2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
+		var coin3 = "<img style='vertical-align: middle; padding-left: 3px;' src='images/coin2.png'/>";
+		var out = msg.format(individualValue + coin2, coin2, hero.objective.xpFinal + coin2, finalValue)+ "<br/>";
 		
 		if (hero.objective.maxCommandsReward > 0) {
 
