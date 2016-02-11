@@ -1551,6 +1551,13 @@ SnackMan.prototype.addReward = function(count, timeSpent, timeLimit, timeReward)
 	var ret = {totalXP: 0, baseXP: 0, totalCoins:0, baseCoins: 0, bonusXP : [], bonusCoins: []};
 	if (this.allObjectivesAchieved) {
 		
+		if (count == -1) {
+			// noXP
+			ret.totalXP = this.objective.xpFinal;
+			ret.baseXP = ret.totalXP;
+			return ret;
+		}
+		
 		var times = 3 - CountXP.times;
 		if (times == 0)
 			ret.totalXP = this.objective.xpFinal;

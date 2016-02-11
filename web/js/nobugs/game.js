@@ -810,7 +810,8 @@ Game.missionLoaded = function(ret){
   
   CountXP.config(byTime, cfg,
 		         xpIndiv, hero.objective.xpFinal,
-		         Game.changeStars, true );
+		         Game.changeStars, true, null, 
+		         objectives.getAttribute("noXP") );
   
   Game.noXP = objectives.getAttribute("noXP") !== null;
   Game.mission = mission;
@@ -2667,7 +2668,7 @@ Game.nextStep = function() {
 						
 						if (Game.noXP) {
 							
-							reward = hero.addReward(count, 0, 0, 0);
+							reward = hero.addReward(-1, 0, 0, 0);
 							
 						} else {
 							

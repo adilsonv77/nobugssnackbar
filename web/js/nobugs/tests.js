@@ -307,7 +307,7 @@ Tests.drawQuestion = function() {
 		current = question.previousAnswer.timeSpend;
 	}
 	
-	CountXP.config(true, {aFraction: question.timeLimit, current: current}, 0, 0, null, false, true);
+	CountXP.config(true, {aFraction: question.timeLimit, current: current}, 0, 0, null, false, true, true);
 	CountXP.start();
 	
 	var table = document.createElement("table");

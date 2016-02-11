@@ -17,9 +17,12 @@ CountXP.init = function(canvasId, showCanvas) {
 };
 
 //cfg: {aFraction, current}
-CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime) {
+CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime, noXP) {
 	
-	if (!this.showCanvas)
+	$("#playerRewardMission").css("display", (noXP?"none":"inline"));
+	$("#stopWatch").css("display", (noXP?"none":"inline"));
+
+	if (noXP || !this.showCanvas)
 		return;
 	
 	CountXP.byTime = byTime;

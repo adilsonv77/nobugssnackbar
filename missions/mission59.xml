@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <mission>
-	
+	<slider timesBefore="100000"/>
 	<explanation hasInstruction="false">
 	
 		<page type="goal" >
@@ -72,7 +72,7 @@
 	
 	<xml>
 
-		<block type="move_goToBarCounter" x="10" y = "50">
+		<block type="move_goToBarCounter" x="10" y = "50" deletable = "false" >
 			<value name="VALUE">
 				<block type="math_number">
 					<field name="NUM">3</field>
@@ -81,15 +81,12 @@
 		</block>
 
 
-		<block type="move_goToBarCounter" x="10" y = "150">
+		<block type="move_goToBarCounter" x="10" y = "150" deletable = "false" >
 			<value name="VALUE">
 				<block type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
-		</block>
-		
-		<block type="move_goToDisplay" x="10" y = "200">
 		</block>
 		
 	</xml>
