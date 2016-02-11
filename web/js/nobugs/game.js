@@ -458,10 +458,13 @@ Game.cityClick = function() {
 
 Game.drawMiniAvatar = function() {
 	
+	$("#avatarPlayer").css("width", "100%");
 	AvatarImgMaker.createBody(
 			           document.getElementById("avatarPlayer").getContext("2d"), 
 			           Game.loginData.avatar, 
-			           72, 116);
+			           288, 464);
+	// the best approach to resize images, instead streatching images 
+	$("#avatarPlayer").css("width", "72px");
 	
 };
 
