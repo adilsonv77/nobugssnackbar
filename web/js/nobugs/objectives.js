@@ -230,6 +230,10 @@ Objective.factory = function(key) {
 	case "ordered" :
 		this.factories[key] = new Objective.Ordered();
 		break;
+		
+	case "music" : 
+		this.factories[key] = new Objective.Music();
+		break;
 	}
 	
 	
@@ -1052,3 +1056,25 @@ Objective.Ordered.prototype.createExplanationItem = function(objective) {
 	return text;
 };
 
+
+/******************************************************************************
+ *                                  Music
+ ******************************************************************************/
+
+Objective.Music = function() {};
+Objective.Music.prototype.init = function(elem) {
+	
+	var p = {objective:"music", achieved:false, trata:this, achievedOrder: 0};
+	p.status = elem.getAttribute("status");
+	
+	return p;
+};
+
+Objective.Music.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_music");
+	return text.format(BlocklyApps.getMsg("explanation_"+objective.status));
+};
+
+Objective.Music.prototype.checkObjective = function(options, objective)  {
+	return options.status === objective.status;
+};

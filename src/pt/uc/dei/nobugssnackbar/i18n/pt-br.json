@@ -201,6 +201,9 @@
 	"Single.Strawberry" : "Morango",
 	"Single.Vanilla" : "Baunilha",
 
+	"Explane.Music":"%0 m&#250;sica",
+	"Explane.On":"Ligar",
+	"Explane.Off":"Desligar",
 	"Explane.GoesToDisplay":"V&#225; para o mostrador.",
 	"Explane.GoesToCooler":"V&#225; para a geladeira.",
 	"Explane.MustNot":"N&#227;o deve",

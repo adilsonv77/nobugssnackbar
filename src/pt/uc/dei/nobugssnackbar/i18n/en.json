@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-16 15:28:40.501000",
+		"lastupdated": "2016-02-16 20:47:15.309000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -163,6 +163,9 @@
 	"NoBugs.finishOpenMission": "The mission's time is over. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; You earned &amp;#60;b&amp;#62;%0&amp;#60;/b&amp;#62; delivering the requests.",
 	"NoBugs.reviewMission": "You entered in an achieved mission. In this case you can change and test the code as you wish. However, this work will not be saved e neither to consider your points.",
 	"NoBugs.afterSuccessMissionView": "After finished the execution of an achieved mission, yourself go out this screen by clicking in the button on the right superior corner.",
+	"Explane.Music": "Turn the music %0.",
+	"Explane.On": "on",
+	"Explane.Off": "off",
 	"Explane.GoesToDisplay": "Go to display",
 	"Explane.GoesToCooler": "Go to cooler",
 	"Explane.MustNot": "Must not",

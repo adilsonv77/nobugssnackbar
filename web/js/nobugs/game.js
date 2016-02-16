@@ -2178,7 +2178,10 @@ Game.changeFlag = function(name, value) {
 Game.changeMusicControlButton = function(musicDisabled) {
 	
 	if (!musicDisabled) {
-
+		
+		if (hero)
+			hero.verifyObjectives("music", {status: "off"});
+		
 		$("#musicOff").css("display", "none");
 		$("#musicOn").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_enableMusic") );
@@ -2187,6 +2190,9 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		
 	} else {
 	
+		if (hero)
+			hero.verifyObjectives("music", {status: "on"});
+		
 		$("#musicOn").css("display", "none");
 		$("#musicOff").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_disableMusic") );
