@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-11 17:26:38.974000",
+		"lastupdated": "2016-02-16 11:18:54.036000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -164,6 +164,7 @@
 	"NoBugs.reviewMission": "You entered in an achieved mission. In this case you can change and test the code as you wish. However, this work will not be saved e neither to consider your points.",
 	"NoBugs.afterSuccessMissionView": "After finished the execution of an achieved mission, yourself go out this screen by clicking in the button on the right superior corner.",
 	"Explane.GoesToDisplay": "Go to display",
+	"Explane.GoesToCooler": "Go to cooler",
 	"Explane.MustNot": "Must not",
 	"Explane.Counter": "Go to counter %0.",
 	"Explane.AskForFood": "Ask the customer %0 what he wants to eat.",
@@ -284,12 +285,12 @@
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
 	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
-	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
+	"NoBugs.buyTooltip": "Buy some machines.",
+	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
 	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",
-	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
-	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
+	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",
 	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
 	"NoBugs.resetTooltip": "Restarts the execution [Esc].",

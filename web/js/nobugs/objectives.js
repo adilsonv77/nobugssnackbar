@@ -127,6 +127,10 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.GoesToDisplay();
 		break;
 
+	case "goesToCooler": 
+		this.factories[key] = new Objective.GoesToCooler();
+		break;
+
 	case "askForFood":
 		this.factories[key] = new Objective.AskForFood();
 		break;
@@ -288,6 +292,31 @@ Objective.GoesToDisplay.prototype.checkObjective = function(options, objective) 
 
 Objective.GoesToDisplay.prototype.createExplanationItem = function(objective) {
 	var text = BlocklyApps.getMsg("explanation_goestodisplay");
+	return text;
+};
+
+/******************************************************************************
+ *                                GoesToCooler
+ ******************************************************************************/
+
+Objective.GoesToCooler = function() {};
+Objective.GoesToCooler.prototype.init = function(elem) {
+	var p = {objective:"goesToCooler", achieved:false, trata:this};
+	return p;
+};
+
+Objective.GoesToCooler.prototype.checkObjective = function(options, objective)  {
+	if (options.nx == hero.coolerNode.x && options.ny == hero.coolerNode.y) {
+		
+		return true;
+	} 
+	
+	return false;
+
+};
+
+Objective.GoesToCooler.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_goestocooler");
 	return text;
 };
 

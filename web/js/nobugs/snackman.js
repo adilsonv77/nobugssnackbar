@@ -1524,6 +1524,7 @@ SnackMan.prototype.checkObjectives = function() {
 	
 	this.verifyObjectives("goesTo", {nx: this.img.x, ny: this.img.y+this.heightCooker});
 	this.verifyObjectives("goesToDisplay", {nx: this.img.x, ny: this.img.y+this.heightCooker});
+	this.verifyObjectives("goesToCooler", {nx: this.img.x, ny: this.img.y+this.heightCooker});
 	
 };
 

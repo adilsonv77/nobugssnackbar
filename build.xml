@@ -182,6 +182,7 @@
 			<arg line="${js.home}/countxp.js" />
 			<arg line="${js.home}/tests.js" />
 			<arg line="${js.home}/window_prompt.js" />
+			<arg line="${js.home}/missionsselection.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

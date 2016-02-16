@@ -1,0 +1,128 @@
+<?xml version='1.0'?>
+<mission>
+	<slider timesBefore="100000" />
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+		Muitas vezes &#233; preciso que se execute um comando de cada vez no programa, pois podes 
+		cometer algum erro com na programa&#231;&#227;o da tua personagem e &#233; mais f&#225;cil descobrir esse 
+		erro se executares um de cada vez.<br/><br/>
+		Podes fazer isso clicando no bot&#227;o Depurar	(<img src="images/icondebug.png"  style="width:32px;height:32px"/>).
+		<span style="color:red">Toda vez que clicas nesse bot&#227;o, &#233; executado um comando por vez. Clique v&#225;rias vezes at&#233; o programa encerrar</span>.]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+		O comportamento da tua personagem &#233; o mesmo da miss&#227;o anterior, e por isso
+		j&#225; est&#225; pronto na &#225;rea de trabalho. Utilize o bot&#227;o para depurar at&#233; o programa encerrar. 
+		]]>
+		</page>
+
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives ordered="true" buttonDebug="true" buttonRun="false"
+		xpFinal="10" noXP="true">
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+		<objective pos="2" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+	</objectives>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="move_goToBarCounter" deletable="false" x="10" y="150">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<next>
+				<block type="move_goToDisplay" deletable="false">
+					<next>
+						<block type="move_goToBarCounter" deletable="false">
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">2</field>
+								</block>
+							</value>
+							<next>
+								<block type="move_goToDisplay" deletable="false">
+									<next>
+										<block type="move_goToBarCounter" deletable="false">
+											<value name="VALUE">
+												<block type="math_number">
+													<field name="NUM">3</field>
+												</block>
+											</value>
+											<next>
+												<block type="move_goToDisplay" deletable="false"></block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+			</xml>
+</mission>

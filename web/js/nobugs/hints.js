@@ -558,7 +558,7 @@ function createLeftDlg(e, dialogContent) {
 
 	var dialog = document.getElementById("LeftHint");
 	
-	BlocklyApps.showDialog(dialog, null, false, false, style, null);
+	MyBlocklyApps.showDialog(dialog, null, false, false, style, null);
 	
 	
 }
@@ -829,7 +829,7 @@ Hints.Categories["SelectCommand"] = {
 			var res = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
 			
 			if (res.length > 0) {
-				BlocklyApps.showDialog(dialog, null, false, false, res[0], null);
+				MyBlocklyApps.showDialog(dialog, null, false, false, res[0], null);
 				Hints.chooseCategoryCalled = true;
 				
 			} else {
@@ -871,7 +871,7 @@ Hints.Categories["StackTogether"] = {
 						Blockly.mainWorkspace.toolbox_.tree_.setSelectedItem(Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(param[0])]);
 						
 						var r = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
-						BlocklyApps.showDialog(dialog, null, false, false, r[0], null);
+						MyBlocklyApps.showDialog(dialog, null, false, false, r[0], null);
 				        
 						return r[1];
 					}

@@ -202,6 +202,7 @@
 	"Single.Vanilla" : "Baunilha",
 
 	"Explane.GoesToDisplay":"V&#225; para o mostrador.",
+	"Explane.GoesToCooler":"V&#225; para a geladeira.",
 	"Explane.MustNot":"N&#227;o deve",
 	"Explane.Counter":"V&#225; para o balc&#227;o %0.",
 	"Explane.AskForFood":"Pergunta pelo que o cliente %0 deseja comer.",

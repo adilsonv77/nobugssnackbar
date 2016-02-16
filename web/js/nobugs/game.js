@@ -93,6 +93,7 @@ Game.generalInit = function() {
 	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');
 	  
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
+	  BlocklyApps.bindClick('selectMissionLogoffButtonIntoMission', Game.logoffButtonClick);
 
 	  Game.tracks = [];
 	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"]);
@@ -648,6 +649,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   var mid = BlocklyApps.getMsg("_mission") + " " + levelId + "/" + missionIdx;
   $("#missionIdentification").html(mid.charAt(0).toUpperCase() + mid.slice(1));
 
+  Game.missionSelection = new MissionSelection(levelId);
   
   try {
 	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
@@ -1830,15 +1832,22 @@ Game.goBackToDashboard = function(evt, callInit) {
     var ret = Game.closeBlockEditorStuffs();
     
     Game.editor.dispose();
+    Game.missionSelection.dispose();
 	
 	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
 		
-		UserControl.exitMission(ret[0], Game.howManyRuns, Game.runningStatus, 
-				(Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), ret[1],
-						{callback:function() {}, async:false});
-
+		Game.exitMission(ret[0], ret[1]);
+		
 		Game.init();
 	}
+	
+};
+
+Game.exitMission = function(timeSpend, answer) {
+	
+	UserControl.exitMission(timeSpend, Game.howManyRuns, Game.runningStatus, 
+			(Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), answer,
+					{callback:function() {}, async:false});
 	
 };
 
@@ -2687,7 +2696,7 @@ Game.nextStep = function() {
 			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
 			    		
 			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
-			    		var xp2 = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+			    		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
 			    		
 			    		if (reward.totalXP == 0) {
 			    			msg = msg.substring(0, msg.indexOf("<br/>"));

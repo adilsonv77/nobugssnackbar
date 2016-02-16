@@ -418,3 +418,8 @@ table.tableVictory td  {
 	
 	cursor: move;
 }
+
+table.mainBodyClass  {border-collapse: collapse}
+table.mainBodyClass td {border: none}
+
+.mainBodyClass button {padding: 0px}
