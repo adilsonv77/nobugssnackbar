@@ -1533,18 +1533,22 @@ Game.alertMissionView = function() {
 Game.alertSuccessMissionView = function() {
 	if (!Game.missionView)
 		return;
-											    
+	/*										    
 	var talk = Game.loginData.userLogged.flags.TALK_AFTERSUCCMVIEW;
 	if (talk === undefined || talk === "false") {
+	*/
 		var content = $("<div/>")
 			.append(BlocklyApps.getMsg("NoBugs_AfterSuccessMissionView"));
 		Hints.stopHints();
-		
-		MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, 
-				function(){Hints.startHints();}, true);
 	
+		MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, 
+				function(){
+					Game.resetButtonClick();
+				}, true);
+/*	
 		Game.changeFlag("TALK_AFTERSUCCMVIEW", "true");
 	}
+	*/
 };
 
 Game.initTime = function() {
