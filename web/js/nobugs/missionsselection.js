@@ -1,0 +1,124 @@
+PreloadImgs.put('mission_selected', 'images/mission-completed.png');
+PreloadImgs.put('mission_selected_high', 'images/mission-completed-hightlight.png');
+
+var MissionSelection = {};
+
+MissionSelection = function(level) {
+	this.canvas = document.getElementById("mission_level");
+	this.canvasCtx = this.canvas.getContext('2d');
+	
+	this.level = Game.loginData.missionHist[level-1];
+	this.current = Game.loginData.missionIdx;
+	this.hightlight = -1;
+	
+	this.mouseMoveWrapper = Blockly.bindEvent_(this.canvas, 'mousemove', this, this.mouseMove);
+	this.clickWrapper = Blockly.bindEvent_(this.canvas, 'click', this, this.click);
+	
+	this.circles = [];
+	
+	this.show();
+};
+
+MissionSelection.prototype.mouseMove = function(evt) {
+    var mousePos = this.getMousePos(evt);
+    var found = -1;
+    
+    for (var i=0; i<this.circles.length; i++) {
+    	if (this.testMouseOver(mousePos.x, mousePos.y, this.circles[i].x, this.circles[i].y)) {
+    		found = i;
+    		break;
+    	}
+    }
+    
+    this.hightlight = found;
+    this.show();
+    this.canvas.style.cursor = (found==-1?"default":"pointer");
+    
+};
+
+MissionSelection.prototype.click = function(evt) {
+	
+    var mousePos = this.getMousePos(evt);
+    var found = -1;
+    for (var i=0; i<this.circles.length; i++) {
+    	if (this.testMouseOver(mousePos.x, mousePos.y, this.circles[i].x, this.circles[i].y)) {
+    		found = i;
+    		break;
+    	}
+    }
+
+    if (found > -1) {
+    	LogClick.store(found+1);
+    	Game.nextMission(this.level[4], this.level[5], found+1, found+1<=this.level[3]);
+    	
+    }
+};
+
+MissionSelection.prototype.dispose = function() {
+	
+	Blockly.unbindEvent_(this.mouseMoveWrapper);
+	Blockly.unbindEvent_(this.clickWrapper);
+	
+};
+
+MissionSelection.prototype.getMousePos = function(evt) {
+	var rect = this.canvas.getBoundingClientRect();
+	return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+	};
+};
+
+MissionSelection.prototype.testMouseOver = function(px, py, cx, cy) {
+    var distX = Math.abs(px - cx),
+    	distY = Math.abs(py - cy),
+    	dist = Math.sqrt(distX * distX + distY * distY);
+    
+    return dist < 8;
+};
+
+MissionSelection.prototype.show = function() {
+	
+	var ctx = this.canvasCtx;
+	var circ = 2*Math.PI;
+	ctx.clearRect(0, 0, 500, 500);
+	
+	ctx.strokeStyle = "#ffd89d";
+	
+	var ref = 12;
+	
+	for (var i = 0; i<this.level[2]; i++) {
+		ctx.beginPath();
+		ctx.moveTo(ref+(i*20)+8, ref);
+		ctx.arc(ref+(i*20), ref, 8, 0, circ);
+		if (i <= this.level[3]) {
+			
+			this.circles.push({x: ref+(i*20), y: ref});
+			if (i == this.hightlight) 
+				ctx.fillStyle = "#ffd89d";
+			else
+				ctx.fillStyle = "#fff7eb";
+			ctx.fill();
+			
+		}
+		ctx.stroke();
+		
+		if (this.current-1 == i) {
+			
+			ctx.moveTo(ref+(i*20)+10, ref);
+			ctx.arc(ref+(i*20), ref, 10, 0, circ);
+			ctx.stroke();
+			
+		}
+		if (i < this.level[3]) {
+			if (i == this.hightlight) 
+				ctx.drawImage(PreloadImgs.get('mission_selected_high'), (ref/2)+(i*20), (ref/2)-3);
+			else
+				ctx.drawImage(PreloadImgs.get('mission_selected'), (ref/2)+(i*20), (ref/2)-3);
+		}
+
+		
+	}
+	ctx.closePath();
+	
+};
