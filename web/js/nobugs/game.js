@@ -595,8 +595,44 @@ Game.moveBlocksToZero = function() {
 	
 };
 
+Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
+	var finishedMission = clazzId == undefined;
+	if (finishedMission) {
+		
+		if (Game.loginData.missionIdx+1 == Game.loginData.missionHist[2]) {
+			
+			Game.goBackToDashboard();
+			Game.init();
+			
+			return;
+			
+		}
+		 
+		clazzId = Game.loginData.clazzId;
+		levelId = Game.loginData.levelId;
+		missionIdx = Game.loginData.missionIdx+1;
+		missionView = false;
+		Game.loginData.missionHist[levelId-1][3]++;
+	}
+	
+	Game.missionSelection.dispose();
+	
+	var ret = Game.closeBlockEditorStuffs();
+	Game.editor.dispose();
+	
+	if (!finishedMission)
+		Game.exitMission(ret[0], ret[1]);
+	
+	Game.missionSelected(clazzId, levelId, missionIdx, missionView);
+
+};
+
 Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	
+  Game.loginData.clazzId = parseInt(clazzId);
+  Game.loginData.levelId = parseInt(levelId);
+  Game.loginData.missionIdx = parseInt(missionIdx);
+
   document.getElementById("initialBackground").style.display = "none";
   document.getElementById("selectMission").style.display = "none";
 
@@ -1178,7 +1214,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  BlocklyApps.bindClick('openGoalsButton', Game.openGoalsButtonClick);
 	  BlocklyApps.bindClick('closeGoalsButton', Game.closeGoalsButtonClick);
 
-	  //BlocklyApps.bindClick('nextMissionButton', Game.nextMissionButtonClick);
 	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('instructionButton', Game.instructionButtonClick);
@@ -1341,8 +1376,12 @@ Game.showDialogVictory = function(out) {
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, {width: "600px"}, 
 			function(){
+		
+				Game.nextMission();
+/*
 				Game.goBackToDashboard(null, false);		
 				Game.init();
+				*/
 		});
 
 };

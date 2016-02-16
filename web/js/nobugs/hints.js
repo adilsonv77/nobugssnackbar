@@ -544,6 +544,21 @@ function calcLeft(e) {
 	return e.offsetLeft + e.offsetParent.offsetLeft + e.offsetParent.offsetParent.offsetLeft;
 }
 
+function HintShowDialog(content, style, centered, closeFunc) {
+
+	MyBlocklyApps.showDialog(content, null, false, false, centered == true, BlocklyApps.getMsg("Hints_Title"), 
+			style, null, function() {if (closeFunc) closeFunc(); Hints.hideHintWithTimer();}, true);
+	
+}
+
+function HintShowModalDialog(content, style, centered, closeFunc) {
+	
+	MyBlocklyApps.showDialog(content, null, false, true, centered == true, BlocklyApps.getMsg("Hints_Title"), 
+			style, null, function() {if (closeFunc) closeFunc(); Hints.hideHintWithTimer();}, true);
+	
+}
+
+
 function createLeftDlg(e, dialogContent) {
 	document.getElementById("LeftHintText").innerHTML = dialogContent;
 	
@@ -558,8 +573,7 @@ function createLeftDlg(e, dialogContent) {
 
 	var dialog = document.getElementById("LeftHint");
 	
-	MyBlocklyApps.showDialog(dialog, null, false, false, style, null);
-	
+	HintShowDialog(dialog, style);
 	
 }
 
@@ -603,10 +617,7 @@ function createDownDlg(bX, bY, txt) {
 	style.left =(bX - 10) + "px";
 	style.width = "550px";
 	
-	
-	MyBlocklyApps.showDialog(dialog, null, false, false, false, BlocklyApps.getMsg("Hints_Title"), 
-			 style, null, function() {Hints.hideHintWithTimer();}, true);
-
+	HintShowDialog(dialog, style);
 	
 };
 
@@ -635,20 +646,24 @@ function createRightDlg(x, y, text, modal) {
 	style.top = y + "px";
 	style.left = (x - 325) + "px";
 	
-	//BlocklyApps.showDialog(dialog, null, false, modal, style, null);
-	MyBlocklyApps.showDialog(dialog, null, false, modal, false, Game.missionTitle, style, null, function(){Hints.hideHintWithTimer();}, modal);
+	if (modal)
+		HintShowModalDialog(dialog, style);
+	else
+		HintShowDialog(dialog, style);
 
 };
 
 
 function createInfoDlg(contentTxt, style, title, modal) {
 	
-//	modal = (modal === undefined || modal === "false"?false:true);
 	var content = document.getElementById('dialogHint');
 	var container = document.getElementById('dialogHintText');
 	container.innerHTML = contentTxt;
 
-	MyBlocklyApps.showDialog(content, null, true, modal, false, title, style, null, function(){Hints.hideHintWithTimer();}, modal);
+	if (modal)
+		HintShowModalDialog(content, style, true);
+	else
+		HintShowDialog(content, style, true);
 
 }
 
@@ -829,7 +844,8 @@ Hints.Categories["SelectCommand"] = {
 			var res = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
 			
 			if (res.length > 0) {
-				MyBlocklyApps.showDialog(dialog, null, false, false, res[0], null);
+				HintShowDialog(dialog, res[0]);
+				
 				Hints.chooseCategoryCalled = true;
 				
 			} else {
@@ -871,7 +887,7 @@ Hints.Categories["StackTogether"] = {
 						Blockly.mainWorkspace.toolbox_.tree_.setSelectedItem(Blockly.mainWorkspace.toolbox_.tree_.children_[parseInt(param[0])]);
 						
 						var r = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
-						MyBlocklyApps.showDialog(dialog, null, false, false, r[0], null);
+						HintShowDialog(dialog, r[0]);
 				        
 						return r[1];
 					}
@@ -894,9 +910,7 @@ Hints.Categories["StackTogetherTwo"] = {
 			dialog.getElementsByTagName("img").HelpStack.style.display = "none";
 			
 			var blocks = Blockly.mainWorkspace.topBlocks_;
-			MyBlocklyApps.showDialog(dialog, null, false, false, false, BlocklyApps.getMsg("Hints_Title"), 
-									 createStyle(blocks[1].getSvgRoot(), 50, dialog), 
-									 null, function() {Hints.hideHintWithTimer();}, true);
+			HintShowDialog(dialog, createStyle(blocks[1].getSvgRoot(), 50, dialog));
 		},
 		
 	condition:
