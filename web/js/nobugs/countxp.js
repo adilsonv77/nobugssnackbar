@@ -24,7 +24,10 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	$("#stopWatch").css("display", (noXP?"none":"inline"));
 
 	if (noXP) {
+		CountXP.times = 0;
 		$("#xpPoints").html(pointsPerStar);
+		if (eventChangeStars)
+			eventChangeStars(0);
 	}
 	
 	if (noXP || !this.showCanvas)

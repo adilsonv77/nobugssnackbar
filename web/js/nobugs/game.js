@@ -599,9 +599,9 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 	var finishedMission = clazzId == undefined;
 	if (finishedMission) {
 		
-		if (Game.loginData.missionIdx+1 == Game.loginData.missionHist[2]) {
+		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
 			
-			Game.goBackToDashboard();
+			Game.goBackToDashboard(null, false);
 			Game.init();
 			
 			return;
