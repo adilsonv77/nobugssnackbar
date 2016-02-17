@@ -96,14 +96,16 @@ MissionSelection.prototype.show = function() {
 	ctx.strokeStyle = "#ffd89d";
 	
 	var ref = 12;
+	var raio = 6;
+	var esp = 18;
 	
-	for (var i = 0; i<this.level[2]; i++) {
+	for (var i = 0; i<15; i++) { // this.level[2]
 		ctx.beginPath();
-		ctx.moveTo(ref+(i*20)+8, ref);
-		ctx.arc(ref+(i*20), ref, 8, 0, circ);
+		ctx.moveTo(ref+(i*esp)+raio, ref);
+		ctx.arc(ref+(i*esp), ref, raio, 0, circ);
 		if (i <= this.level[3]) {
 			
-			this.circles.push({x: ref+(i*20), y: ref});
+			this.circles.push({x: ref+(i*esp), y: ref});
 			if (i == this.hightlight) 
 				ctx.fillStyle = "#ffd89d";
 			else
@@ -115,16 +117,16 @@ MissionSelection.prototype.show = function() {
 		
 		if (this.current-1 == i) {
 			
-			ctx.moveTo(ref+(i*20)+10, ref);
-			ctx.arc(ref+(i*20), ref, 10, 0, circ);
+			ctx.moveTo(ref+(i*esp)+raio+2, ref);
+			ctx.arc(ref+(i*esp), ref, raio+2, 0, circ);
 			ctx.stroke();
 			
 		}
 		if (i < this.level[3]) {
 			if (i == this.hightlight) 
-				ctx.drawImage(PreloadImgs.get('mission_selected_high'), (ref/2)+(i*20), (ref/2)-3);
+				ctx.drawImage(PreloadImgs.get('mission_selected_high'), (ref/2)+(i*esp), (ref/2)-3);
 			else
-				ctx.drawImage(PreloadImgs.get('mission_selected'), (ref/2)+(i*20), (ref/2)-3);
+				ctx.drawImage(PreloadImgs.get('mission_selected'), (ref/2)+(i*esp), (ref/2)-3);
 		}
 
 		

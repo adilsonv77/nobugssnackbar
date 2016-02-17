@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-17 17:29:23.862000",
+		"lastupdated": "2016-02-17 19:19:29.641000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -282,17 +282,17 @@
 	"Apps.dialogLogin": "Login",
 	"Apps.dialogSignUp": "Sign Up",
 	"NoBugs.support": "In case of technical problems, or reset password, please contact ",
-	"NoBugs.sponsoredBy": "Sponsored by",
 	"NoBugs.developedBy": "Developed by",
+	"NoBugs.sponsoredBy": "Sponsored by",
 	"NoBugs.logoffTooltip": "Logoff the game.",
 	"NoBugs.avatarTooltip": "Change your avatar.",
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
 	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
 	"NoBugs.buyTooltip": "Buy some machines.",
-	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
 	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",
+	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",

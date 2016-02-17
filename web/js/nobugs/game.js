@@ -94,7 +94,7 @@ Game.generalInit = function() {
 	  Blockly.JavaScript.addReservedWords('Game, code, NoBugsJavaScript');
 	  
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
-	  BlocklyApps.bindClick('selectMissionLogoffButtonIntoMission', Game.logoffButtonClick);
+	  BlocklyApps.bindClick('selectMissionLogoffButtonIntoMission', Game.intoTheMissionLogoffButtonClick);
 
 	  Game.tracks = [];
 	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"]);
@@ -365,6 +365,8 @@ Game.continueLoginProcessEx = function() {
 Game.logged = function() {
 	
 	
+	$("#playerNameInMission").html(Game.loginData.userLogged.name);
+
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
 		AvatarEditor.init(); 
@@ -372,7 +374,6 @@ Game.logged = function() {
 		UserControl.retrieveReward(Game.updatesReward);
 
 		$("#playerName").html(Game.loginData.userLogged.name);
-		$("#playerNameInMission").html(Game.loginData.userLogged.name);
 		$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
 		
 		Game.drawMiniAvatar();
@@ -1871,7 +1872,7 @@ Game.emptyLines = function() {
 	InGrid.emptyLines("#_varsgrid_vars_0 div:nth-child(2) table");
 };
 
-Game.goBackToDashboard = function(evt, callInit) {
+Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
 	
 	Game.editor.hideChaff();
     Blockly.WidgetDiv.hide();
@@ -1884,11 +1885,12 @@ Game.goBackToDashboard = function(evt, callInit) {
     Game.editor.dispose();
     Game.missionSelection.dispose();
 	
-	if (callInit !== false) { // this peace of code runs when the user clicks the logoff button
+	if (callExitMission !== false) { // this peace of code runs when the user clicks the logoff button
 		
 		Game.exitMission(ret[0], ret[1]);
 		
-		Game.init();
+		if (callGameInit || callGameInit == undefined) 
+			Game.init();
 	}
 	
 };
@@ -2008,19 +2010,19 @@ Game.closeBlockEditorStuffs = function() {
 	return [timeSpent, answer];
 };
 
+Game.intoTheMissionLogoffButtonClick = function() {
+	
+	Game.goBackToDashboard(null, true, false);
+	Game.logoffButtonClick();
+	
+};
+
 Game.logoffButtonClick = function() {
 	
 	LogClick.store("logoffgame");
 	
 	Game.loginData.doingLogoff = true;
-	/*
-	var res= Game.closeBlockEditorStuffs();
-    UserControl.logoff(res[0], Game.howManyRuns, res[1], function(){
-		// because is synchronous, we need wait to finish the last request 
-		Game.init();
-		
-	});
-	*/
+
 	MyBlocklyApps.hideDialog(false);
 	CityMap.stopAnimation();
 	
