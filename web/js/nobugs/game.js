@@ -2179,8 +2179,11 @@ Game.changeMusicControlButton = function(musicDisabled) {
 	
 	if (!musicDisabled) {
 		
-		if (hero)
+		if (hero) {
 			hero.verifyObjectives("music", {status: "off"});
+			if (hero.allObjectivesAchieved)
+				Game.verifyVictory();
+		}
 		
 		$("#musicOff").css("display", "none");
 		$("#musicOn").css("display", "inline");
@@ -2190,8 +2193,11 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		
 	} else {
 	
-		if (hero)
+		if (hero) {
 			hero.verifyObjectives("music", {status: "on"});
+			if (hero.allObjectivesAchieved)
+				Game.verifyVictory();
+		}
 		
 		$("#musicOn").css("display", "none");
 		$("#musicOff").css("display", "inline");
@@ -2666,172 +2672,7 @@ Game.nextStep = function() {
 				
 			} else {
 				
-				if (Game.waitFunction) {
-					
-					hero.update('IM', 0);					
-					BlocklyApps.log.push(['nextStep']);
-					
-					Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
-					return;
-				}
-				
-				var debugging = Game.runningStatus == 2;
-
-			    Game.editor.highlightBlock(null);
-			    
-			    hero.verifyObjectives("deliver", {allCustomers:true});
-			    hero.verifyObjectives("varQtd", null);
-			    hero.verifyObjectives("commQtd", null);
-			    hero.verifyObjectives("notExists", null);
-			    hero.verifyObjectives("cashIn", {allCustomers:true});
-			    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
-			    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
-			    hero.verifyObjectives("countTalk", {allCustomers:true});
-			    hero.verifyObjectives("conditional", {allCustomers:true});
-			    hero.verifyObjectives("callTimes", {allCustomers:true});
-			    hero.verifyObjectives("ordered", null);
-			    
-			    Game.lastErrorData.block = null;
-			    if (hero.allObjectivesAchieved) {
-			    	
-			    	if (Game.tests > 0) {
-			    		$("#tests_finished").css("display", "inline").html(CustomerManager.currentTest+1);
-		    			
-			    		if (CustomerManager.nextTest()) {
-			    			
-			    			hero.reset();
-			    			
-			    			// there is no start or restart method
-			    			Game.jsInterpreter = new NoBugsInterpreter(Game.code, Game.initApi);
-			    			
-			    			Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
-			    			return;
-			    		}
-		    			
-			    	}
-			    	
-					// if there isn't more lines to evaluate
-					Game.resetButtons();
-					
-			    	CountXP.stop(true);
-			    	
-			    	var r = Game.beforeFinishMission();
-			    	
-					if (Game.missionView) { // it's when the user achieved this mission, but came back to test or see something. 
-						Game.alertSuccessMissionView();
-						return;
-					}
-						
-					var reward;
-					if (Game.pointsInThisMission) {
-						
-						if (Game.noXP) {
-							
-							reward = hero.addReward(-1, 0, 0, 0);
-							
-						} else {
-							
-					    	var count = Game.editor.countInstructions();
-					    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
-					    	
-						}
-
-						Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
-					} else {
-						reward = {totalXP: 0, totalCoins: 0, baseXP: 0, bonusCoins: 0};
-					}
-					
-
-			    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
-			    		
-			    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
-			    		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
-			    		
-			    		if (reward.totalXP == 0) {
-			    			msg = msg.substring(0, msg.indexOf("<br/>"));
-			    		}
-			    		
-			    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2+ "<br/>"));
-			    		
-			    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
-			    			
-				    		var out2;
-				    		
-				    		if (reward.baseXP != reward.totalXP) {
-				    			
-				    			out2 = "<table border='2px'  class='tableVictory' >";
-					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_XPBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
-					    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
-					    		for (var i=0; i < reward.bonusXP.length; i++) {
-					    			var b = BlocklyApps.getMsg(reward.bonusXP[i].name);
-					    			var s = b.format(reward.bonusXP[i].extraInfo);
-					    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusXP[i].value + "</td></tr>";   
-					    		}
-
-					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalXP + "</td></tr>";
-					    		out = out + out2 + "</table>";
-				    		}
-
-				    		if (reward.bonusCoins != reward.totalCoins) {
-
-				    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
-				    					                       "<img style='vertical-align: middle;' src='images/coin2.png'/>") + "<br/>";
-				    			
-				    			out2 = out2 + "<table border='2px' class='tableVictory' >";
-				    			
-					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_CoinsBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseCoins + "</td></tr>";
-					    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
-					    		for (var i=0; i < reward.bonusCoins.length; i++) {
-					    			var b = BlocklyApps.getMsg(reward.bonusCoins[i].name);
-					    			var s = b.format(reward.bonusCoins[i].extraInfo);
-					    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusCoins[i].value + "</td></tr>";   
-					    		}
-					    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalCoins + "</td></tr>";
-					    		out = out + out2 + "</table>";
-				    		}
-
-			    		}
-			    		
-			    		Game.showDialogVictory(out);
-			    	});
-			    	
-			    } else {
-			    	
-			    	Game.finishedRun();
-					// if there isn't more lines to evaluate
-					Game.resetButtons();
-					
-			    	var objs = [];
-					var os = hero.objective.objectives;
-					for (var i=0; i<os.length; i++) {
-						
-						objs[i] = [Objective.factory(os[i].objective).createExplanationItem(os[i]), os[i].achieved];
-					}
-					
-					if (!Game.missionView)
-						UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
-
-				    if (debugging) {
-					  document.getElementById("moveRight").style.display = 'inline-block';
-				    }
-			    	
-		    	    Game.lastErrorData.iderror = "missionFail";
-		    	    Game.lastErrorData.message = document.getElementById("dialogFailText");
-
-		    		var style = {};
-		    		style.width = "600px";
-
-			    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
-			    			function() {
-			    				Game.hideHints = true;
-				    			Hints.showErrorHint();
-			    			}
-			    	);
-			    }
-			    
-			    Game.unlockBlockly();
-			    
-			    return;
+				Game.verifyVictory();
 				
 			}
 		} catch (ex) {
@@ -2852,6 +2693,175 @@ Game.nextStep = function() {
 			
 		}
 	}
+};
+
+Game.verifyVictory = function() {
+	
+	if (Game.waitFunction) {
+		
+		hero.update('IM', 0);					
+		BlocklyApps.log.push(['nextStep']);
+		
+		Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
+		return;
+	}
+	
+	var debugging = Game.runningStatus == 2;
+
+    Game.editor.highlightBlock(null);
+    
+    hero.verifyObjectives("deliver", {allCustomers:true});
+    hero.verifyObjectives("varQtd", null);
+    hero.verifyObjectives("commQtd", null);
+    hero.verifyObjectives("notExists", null);
+    hero.verifyObjectives("cashIn", {allCustomers:true});
+    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
+    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
+    hero.verifyObjectives("countTalk", {allCustomers:true});
+    hero.verifyObjectives("conditional", {allCustomers:true});
+    hero.verifyObjectives("callTimes", {allCustomers:true});
+    hero.verifyObjectives("ordered", null);
+    
+    Game.lastErrorData.block = null;
+    if (hero.allObjectivesAchieved) {
+    	
+    	if (Game.tests > 0) {
+    		$("#tests_finished").css("display", "inline").html(CustomerManager.currentTest+1);
+			
+    		if (CustomerManager.nextTest()) {
+    			
+    			hero.reset();
+    			
+    			// there is no start or restart method
+    			Game.jsInterpreter = new NoBugsInterpreter(Game.code, Game.initApi);
+    			
+    			Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
+    			return;
+    		}
+			
+    	}
+    	
+		// if there isn't more lines to evaluate
+		Game.resetButtons();
+		
+    	CountXP.stop(true);
+    	
+    	var r = Game.beforeFinishMission();
+    	
+		if (Game.missionView) { // it's when the user achieved this mission, but came back to test or see something. 
+			Game.alertSuccessMissionView();
+			return;
+		}
+			
+		var reward;
+		if (Game.pointsInThisMission) {
+			
+			if (Game.noXP) {
+				
+				reward = hero.addReward(-1, 0, 0, 0);
+				
+			} else {
+				
+		    	var count = Game.editor.countInstructions();
+		    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
+		    	
+			}
+
+			Game.updatesReward([Game.globalXP + reward.totalXP, Game.globalMoney + reward.totalCoins]);
+		} else {
+			reward = {totalXP: 0, totalCoins: 0, baseXP: 0, bonusCoins: 0};
+		}
+		
+
+    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
+    		
+    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
+    		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
+    		
+    		if (reward.totalXP == 0) {
+    			msg = msg.substring(0, msg.indexOf("<br/>"));
+    		}
+    		
+    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2+ "<br/>"));
+    		
+    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
+    			
+	    		var out2;
+	    		
+	    		if (reward.baseXP != reward.totalXP) {
+	    			
+	    			out2 = "<table border='2px'  class='tableVictory' >";
+		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_XPBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
+		    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+		    		for (var i=0; i < reward.bonusXP.length; i++) {
+		    			var b = BlocklyApps.getMsg(reward.bonusXP[i].name);
+		    			var s = b.format(reward.bonusXP[i].extraInfo);
+		    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusXP[i].value + "</td></tr>";   
+		    		}
+
+		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalXP + "</td></tr>";
+		    		out = out + out2 + "</table>";
+	    		}
+
+	    		if (reward.bonusCoins != reward.totalCoins) {
+
+	    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
+	    					                       "<img style='vertical-align: middle;' src='images/coin2.png'/>") + "<br/>";
+	    			
+	    			out2 = out2 + "<table border='2px' class='tableVictory' >";
+	    			
+		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_CoinsBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseCoins + "</td></tr>";
+		    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+		    		for (var i=0; i < reward.bonusCoins.length; i++) {
+		    			var b = BlocklyApps.getMsg(reward.bonusCoins[i].name);
+		    			var s = b.format(reward.bonusCoins[i].extraInfo);
+		    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusCoins[i].value + "</td></tr>";   
+		    		}
+		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalCoins + "</td></tr>";
+		    		out = out + out2 + "</table>";
+	    		}
+
+    		}
+    		
+    		Game.showDialogVictory(out);
+    	});
+    	
+    } else {
+    	
+    	Game.finishedRun();
+		// if there isn't more lines to evaluate
+		Game.resetButtons();
+		
+    	var objs = [];
+		var os = hero.objective.objectives;
+		for (var i=0; i<os.length; i++) {
+			
+			objs[i] = [Objective.factory(os[i].objective).createExplanationItem(os[i]), os[i].achieved];
+		}
+		
+		if (!Game.missionView)
+			UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
+
+	    if (debugging) {
+		  document.getElementById("moveRight").style.display = 'inline-block';
+	    }
+    	
+	    Game.lastErrorData.iderror = "missionFail";
+	    Game.lastErrorData.message = document.getElementById("dialogFailText");
+
+		var style = {};
+		style.width = "600px";
+
+    	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
+    			function() {
+    				Game.hideHints = true;
+	    			Hints.showErrorHint();
+    			}
+    	);
+    }
+    
+    Game.unlockBlockly();
+    
 };
 
 /**********************************************************************
