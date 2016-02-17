@@ -130,7 +130,7 @@
 	"SnackMan.pickUpIceCreamTooltip" : "Pega o gelado da m&#225;quina.",
 	
 	"Error.error" : "Erro",
-	"Error.login" : "Usu&#225;rio n&#227;o encontrado.",
+	"Error.login" : "Usu&#225;rio n&#227;o encontrado",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 3.",
 	"Error.doesntExistTable": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 2.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente. Antes de executar esse bloco, caminhe at&#233; onde est&#225; o cliente.",

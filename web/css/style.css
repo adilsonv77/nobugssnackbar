@@ -209,18 +209,24 @@ button.secondary:disabled {
 }
 
 #initialBackground {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background: url('../images/logotipo.png') center center no-repeat;
 }
 
 .nobugs_inputs {
 	font-size: large;
-	margin: 5px;
-	padding: 10px;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	box-sizing: border-box;
+	padding-left: 5px;
+	font-family: Montserrat, sans-serif;
+	font-size: 16px; 
 }
 
 li.goalok {
@@ -423,3 +429,7 @@ table.mainBodyClass  {border-collapse: collapse}
 table.mainBodyClass td {border: none}
 
 .mainBodyClass button {padding: 0px}
+
+#suportespan a {
+	color: red;
+}

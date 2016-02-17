@@ -13,48 +13,62 @@
   {call commonheader.start/}	
   {call importsjs.imports/}	
   
-  <div id="initialBackground" style="display: none">
+  <div id="initialBackground" style="display: none;">
   	<div>
-  		<form class="farSide" onsubmit="return false">
-	  		<fieldset style="border: 0px none">
-	  			<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
-	  			<a href="#"onclick="changeLanguageToEn()" style="position: absolute; left: 40px"><img src="images/en.png" alt="Portuguese Language" height="30" width="30"></a>
-	  			
+  		<div class="farSide">
+	  		<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
+	  		<a href="#"onclick="changeLanguageToEn()" style="position: absolute; left: 40px"><img src="images/en.png" alt="Portuguese Language" height="30" width="30"></a>
+	  	</div>	
+	  	<div style="width: 230px; position: relative; top: 100px; margin-left: auto; margin-right: auto;">
+	  	    <img src="images/logotipo-home.png" style="height: 80px; margin-bottom: 30px"/>
+	  	
+	 		<div style="text-align: center">
+	  			<div id="errorLogin" style="color: red; position: relative"></div>
+	  		</div>
+
+	  		<form onsubmit="return false">
 	  			<label class="user">
 	  				<input type="text" class="nobugs_inputs" id="loginuser" placeHolder="{msg meaning="NoBugs.user" desc="--"}User{/msg}"/>
 	  			</label>
 	  			<label class="password">
-	  			    <input type="password" class="nobugs_inputs" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"/>
+	  			    <input type="password" class="nobugs_inputs" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"
+	  			          style="margin-bottom: 30px;"/>
 	  			</label>
-	  			<button id="ButtonLogin" class="nobugs_button" onclick="Game.login()">
+	  			<button id="ButtonLogin" class="nobugs_button" onclick="Game.login()" style="font-size: 16px; margin: 0px 0px 5px; width: 100%; padding: 5px 10px 5px">
 	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
-	    		</button>
+	    		</button> 
 	    		<button class="nobugs_button" onclick="location.href='javascript:void(0)'"  id="sign" style="display: none">
-	    		{{msg meaning="Apps.dialogSignUp" desc="---"}}Sign Up{{/msg}}
+	    				{{msg meaning="Apps.dialogSignUp" desc="---"}}Sign Up{{/msg}}
 	    		</button>
-	  		</fieldset>
-  		</form>
-  		<div>
-  			<div id="errorLogin" style="color: red; position: relative"></div>
+	  		</form>
+	  		<div id="suporte" style="text-align: center; width: 230px; line-height: 10px">
+	  			<span id="suportespan" style="font-size: 10px">
+	  			{{msg meaning="NoBugs.support" desc="---"}}In case of technical problems, or reset password, please contact {{/msg}}<a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a>
+	  			</span>
+	  		</div>
   		</div>
-  		<div id="suporte" style="position: relative">
-  			<span id="suportespan">
-  			{{msg meaning="NoBugs.support" desc="---"}}In case of technical problems, or reset password, please contact {{/msg}}<a href="mailto:adilsonv77@gmail.com">adilsonv77@gmail.com</a>
-  			</span>
-  		</div>
-  	</div>
-  	<div style="width: 100%"> 
-	  	<table style="position: fixed; bottom: 0px; right: 0px;">
-	  		<tr>
-	  			<td colspan="2" align="center" style="padding-bottom: 5px"><i>{{msg meaning="NoBugs.sponsoredBy" desc="---"}}Sponsored by{{/msg}}</i></td><td colspan="2" align="center"><i>{{msg meaning="NoBugs.developedBy" desc="---"}}Developed by{{/msg}}</i></td>
-	  		</tr>
-	  		<tr>
-	  			<td align="center" style="padding: 5px;"><img src="images/capes.png"/></td>
-	  			<td align="center" style="padding: 5px; border-right: solid 1px black"><img src="images/udesc.png"/></td>
-	  			<td align="center" style="padding: 5px;"><img src="images/uc.png"/></td>
-	  			<td align="center" style="padding: 5px;"><img src="images/cms.png"/></td>
-	  		</tr>
-	  	</table>
+   	</div>
+  	<div style="width: 100%; position: relative"> 
+  		<table style="width: 960px; bottom: 0px; position: fixed">
+  			<tr>
+  				<td style="width: 50%">
+  					<span>{{msg meaning="NoBugs.sponsoredBy" desc="---"}}Sponsored by{{/msg}}</span>
+  				</td>
+  				<td>
+  					<span>{{msg meaning="NoBugs.developedBy" desc="---"}}Developed by{{/msg}}</span>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+		  		   <img src="images/capes.png" style="width: 60px; margin-right: 10px"/>
+		  		   <img src="images/udesc.png" style="width: 60px"/>
+  				</td>
+  				<td>
+  					<img src="images/uc.png" style="height: 55px; margin-right: 10px"/>
+			  		<img src="images/cms.png" style="height: 55px"/>
+  				</td>
+  			</tr>
+  		</table>
   	</div>
   </div>
 

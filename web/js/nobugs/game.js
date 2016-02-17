@@ -172,11 +172,13 @@ Game.init = function() {
 window.addEventListener('load', Game.generalInit);
 
 Game.resizeMainWindow = function() {
-	
+	/*
 	var lu = document.getElementById("loginuser");
     document.getElementById("errorLogin").style.left = lu.offsetLeft + "px";
     document.getElementById("suporte").style.left = (document.getElementById("suporte").clientWidth -
     														document.getElementById("suportespan").offsetWidth - 10) + "px";
+    */
+  //  document.getElementById("logoDevelopedBy").style.top = $("#logoSponsoredBy").position().top + "px";
 
    // $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
 

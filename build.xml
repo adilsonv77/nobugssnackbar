@@ -145,8 +145,6 @@
 			<arg line="-o ${js.compress.out}"/>
 			
 			<!-- list of files to compress -->
-			<arg line="${js.home}/acetranslator.js" />
-			<arg line="${js.home}/solutioneditor.js" />
 			<arg line="${js.home}/navigator.js" />
 			<arg line="${js.home}/blocksnewversion.js" />
 			<arg line="${js.home}/language.js" />
@@ -183,6 +181,7 @@
 			<arg line="${js.home}/tests.js" />
 			<arg line="${js.home}/window_prompt.js" />
 			<arg line="${js.home}/missionsselection.js" />
+			<arg line="${js.home}/solutioneditor.js" />
 			
 			<classpath>
 				<path refid="lib.base" />
