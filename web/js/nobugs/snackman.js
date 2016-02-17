@@ -1529,13 +1529,16 @@ SnackMan.prototype.checkObjectives = function() {
 };
 
 SnackMan.prototype.verifyObjectives = function(key, options) {
+	var res = true;
 	if (key === "deliver") {
-		this.verifyObjectives("deliverGifts", options);
-		this.verifyObjectives("customDeliver", options);
+		res = this.verifyObjectives("deliverGifts", options);
+		res = this.verifyObjectives("customDeliver", options) && res;
 	}
 
 	if (!Objective.verifyObjectives(key, options)) {
-		return;
+		return false;
+	} else {
+		res = res && true;
 	}
 	
 	$.growl({ title: BlocklyApps.getMsg("NoBugs_goalAchieved"), 
@@ -1546,6 +1549,8 @@ SnackMan.prototype.verifyObjectives = function(key, options) {
 	
 	
 	Game.alertGoalButton();
+	
+	return res;
 	
 };
 

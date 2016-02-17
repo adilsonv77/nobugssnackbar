@@ -48,8 +48,18 @@ MissionSelection.prototype.click = function(evt) {
     }
 
     if (found > -1) {
+    	
     	LogClick.store(found+1);
-    	Game.nextMission(this.level[4], this.level[5], found+1, found+1<=this.level[3]);
+    	var nextMission = true;
+    	if (hero.verifyObjectives("clickMission", {missionId: found+1})) {
+    		if (hero.allObjectivesAchieved) {
+    			Game.verifyVictory();
+    			nextMission = false;
+    		}
+    	}
+    	
+    	if (nextMission)
+    		Game.nextMission(this.level[4], this.level[5], found+1, found+1<=this.level[3]);
     	
     }
 };

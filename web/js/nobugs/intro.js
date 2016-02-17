@@ -61,7 +61,7 @@ IntroGame.start = function () {
 			 {character: "youTalk", msg: BlocklyApps.getMsg("Intro_Dlg9")}]);
 	
 	IntroGame.track.play();
-	dlg.show();
+	dlg.show({"z-index": 150});
 	
 };
 

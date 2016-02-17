@@ -234,6 +234,10 @@ Objective.factory = function(key) {
 	case "music" : 
 		this.factories[key] = new Objective.Music();
 		break;
+		
+	case "clickMission" : 
+		this.factories[key] = new Objective.ClickMission();
+		break;
 	}
 	
 	
@@ -1077,4 +1081,26 @@ Objective.Music.prototype.createExplanationItem = function(objective) {
 
 Objective.Music.prototype.checkObjective = function(options, objective)  {
 	return options.status === objective.status;
+};
+
+/******************************************************************************
+ *                                  Click Mission 
+ ******************************************************************************/
+
+Objective.ClickMission = function() {};
+Objective.ClickMission.prototype.init = function(elem) {
+	
+	var p = {objective:"clickMission", achieved:false, trata:this, achievedOrder: 0};
+	p.missionId = parseInt(elem.getAttribute("missionId"));
+	
+	return p;
+};
+
+Objective.ClickMission.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_clickmission");
+	return text.format(objective.missionId);
+};
+
+Objective.ClickMission.prototype.checkObjective = function(options, objective)  {
+	return options.missionId === objective.missionId;
 };

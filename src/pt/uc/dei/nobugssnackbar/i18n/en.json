@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-16 20:47:15.309000",
+		"lastupdated": "2016-02-17 11:49:48.216000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -166,6 +166,7 @@
 	"Explane.Music": "Turn the music %0.",
 	"Explane.On": "on",
 	"Explane.Off": "off",
+	"Explane.ClickMission": "Click in mission %0.",
 	"Explane.GoesToDisplay": "Go to display",
 	"Explane.GoesToCooler": "Go to cooler",
 	"Explane.MustNot": "Must not",

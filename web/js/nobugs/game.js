@@ -32,6 +32,7 @@ var Game = {};
 
 Game.runningStatus = 0;
 Game.howManyRuns = 0; // in this mission
+Game.loadingMission = false;
 
 var hero;
 Game.mission = null;
@@ -629,6 +630,8 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 
 Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	
+  Game.loadingMission = true;
+  
   Game.loginData.clazzId = parseInt(clazzId);
   Game.loginData.levelId = parseInt(levelId);
   Game.loginData.missionIdx = parseInt(missionIdx);
@@ -1231,6 +1234,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(BlocklyApps.importPrettify, 1);
+	  
+	  Game.loadingMission = false; /// mission loaded
 	  
 	  if (Game.firstTime) {
 		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
@@ -2179,7 +2184,7 @@ Game.changeMusicControlButton = function(musicDisabled) {
 	
 	if (!musicDisabled) {
 		
-		if (hero) {
+		if (!Game.loadingMission && hero) {
 			hero.verifyObjectives("music", {status: "off"});
 			if (hero.allObjectivesAchieved)
 				Game.verifyVictory();
@@ -2193,7 +2198,7 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		
 	} else {
 	
-		if (hero) {
+		if (!Game.loadingMission && hero) {
 			hero.verifyObjectives("music", {status: "on"});
 			if (hero.allObjectivesAchieved)
 				Game.verifyVictory();
@@ -2673,6 +2678,7 @@ Game.nextStep = function() {
 			} else {
 				
 				Game.verifyVictory();
+				return; // exit the while(true) loop
 				
 			}
 		} catch (ex) {

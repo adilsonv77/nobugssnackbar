@@ -114,8 +114,11 @@ CharacterDialog =  function (left, top, showClose, evtClose, conversation) {
 	Cufon('.dlgTalkText');
 };
 
-CharacterDialog.prototype.show = function() {
+CharacterDialog.prototype.show = function(style) {
   this.dlg.style.display = "inline";
+  
+  for (var s in style)
+	  this.dlg.style[s] = style[s];
 };
 
 CharacterDialog.prototype.nextClose = function() {

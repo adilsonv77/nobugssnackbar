@@ -30,8 +30,8 @@
 		<page type="goal">
 		<![CDATA[
 		As tarefas dessa miss&#227;o s&#227;o relacionadas a usar os recursos do ambiente. N&#227;o vais fazer qualquer
-		tipo de programa. Quando clicares para ir &#224; miss&#227;o 1, primeiro ser&#225; conclu&#237;da a miss&#227;o
-		atual. Por isso deixe essa tarefa por &#250;ltimo. 
+		tipo de programa. <br/><br/>
+		Deixe por &#250;ltimo a tarefa de clicar para ir &#224; miss&#227;o 1.
 		]]>
 		</page>
 
@@ -97,7 +97,7 @@
 		xpFinal="10" noXP="true" variableWindow="false">
 		<objective status="off">music</objective>
 		<objective status="on">music</objective>
-	<!-- 	<objective missionId="1">clickMission</objective> -->
+	 	<objective missionId="1">clickMission</objective>
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
