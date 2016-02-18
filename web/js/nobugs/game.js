@@ -511,7 +511,7 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	
 	var sHat = (myXp < Game.loginData.xpToHat? "blocked:"+Game.loginData.xpToHat+":" : "") + hat;
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
-	var sSkin = (myXp < 150? "blocked:"+150+":" : "") + skin; 
+	var sSkin = (myXp < 300? "blocked:"+300+":" : "") + skin; 
 	
 	var sAdd = (myXp < 300 ? "blocked:"+300+":" : "") + add;
 

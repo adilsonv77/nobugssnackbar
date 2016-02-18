@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-17 19:51:06.111000",
+		"lastupdated": "2016-02-18 15:32:01.221000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -275,6 +275,8 @@
 	"Avatar.Eyes": "Eyes",
 	"Avatar.Skin": "Skin",
 	"Avatar.SkinSpecial": "Skin Special",
+	"Avatar.Hair": "Hair",
+	"Avatar.Mustache": "Mustache",
 	"Avatar.Coat": "Coat",
 	"Avatar.Scarf": "Scarf",
 	"NoBugs.user": "User",

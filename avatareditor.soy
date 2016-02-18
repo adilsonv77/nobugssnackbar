@@ -9,7 +9,7 @@
 	<tr>
 		<td style="width: 400px; height: 464px">
 		
-		<div id="avatar-tabs" class="nobugs_background nobugs_font_light" style="display:none">
+		<div id="avatar-tabs" class="nobugs_background nobugs_font_light" style="display:none; height: 100%; width: 466px">
 		 <ul>
 		  <li class="avatar-tab"><a id="tab-avatar-body" href="#tab-body" class="">{msg meaning="Avatar.Body" desc="--"}Body{/msg}</a></li>
 		  <li class="avatar-tab"><a id="tab-avatar-hat" href="#tab-hats">{msg meaning="Avatar.Hat" desc="--"}Hat{/msg}</a></li>
@@ -35,29 +35,41 @@
 				</td>
 				
 			  </tr>
+			  <tr>
+			  	<td id="notab-adds" colspan="2" class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;" >
+			  	  <span id="cpAdd-F" style="display:none">{msg meaning="Avatar.Hair" desc="--"}Hair{/msg}</span>
+			  	  <span id="cpAdd-M" style="display:none">{msg meaning="Avatar.Mustache" desc="--"}Mustache{/msg}</span>
+			  	  <div id="cpAdd"></div>
+			    </td>
+			  </tr>
 			</table>
 			
-			<div id="notab-adds">
+			<div id="withtab-adds">
 				<table>
-				  <tr><td class="colorPickerSquare" style="padding: 10px;"><div id="cpAdd"></div></td></tr>
-				  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Add-1-?" width="150px" height="90px"/></div></td></tr>
-				  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Add-2-?" width="150px" height="90px"/></div></td></tr>
-				  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Add-3-?" width="150px" height="90px"/></div></td></tr>
+				  <tr><td><div class="nobugs_center_horz" style="margin-left:0px"><canvas class="avatar-item" id="Add-1-?" width="150px" height="208px"/></div></td>
+				      <td><div class="nobugs_center_horz" style="margin-left:0px"><canvas class="avatar-item" id="Add-2-?" width="150px" height="208px"/></div></td>
+				      <td><div class="nobugs_center_horz" style="margin-left:0px"><canvas class="avatar-item" id="Add-3-?" width="150px" height="208px"/></div></td></tr>
 				</table>
 			</div>
 		  
 		  </div>
 		  <div id="tab-hats">
-			<table>
-			  <tr><td class="colorPickerSquare" style="padding: 10px;"><div id="cpHat"></div></td></tr>
-			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-1" width="200px" height="100px"/></div></td></tr>
-			  <tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Hat-2" width="200px" height="100px"/></div></td></tr>
+			<table style="width:100%">
+			  <tr><td id="notab-hats" class="colorPickerSquare" style="padding: 10px;"><div id="cpHat"></div></td></tr>
+			  <tr>
+			  	<td>
+			  		<div class="nobugs_center_horz" style="width: 100%; margin-left: 0px">
+			  			<canvas class="avatar-item" id="Hat-1" width="200px" height="118px" imgHeight="170" imgWidth="288"></canvas>
+			  			<canvas class="avatar-item" id="Hat-2" width="200px" height="118px" imgHeight="170" imgWidth="288"></canvas>
+			  		</div>
+			  	</td>
+			  </tr>
 			</table>
 		  </div>
 		  <div id="tab-clothes">
-			<table>
+			<table style="width:100%">
 				<tr>
-					<td class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
+					<td  id="notab-clothes" class="colorPickerSquare colorPickerSquare_font" style="padding: 10px;">
 					{msg meaning="Avatar.Coat" desc="--"}Coat{/msg}
 					<div id="cpCoat"></div>
 					</td>
@@ -67,7 +79,7 @@
 					{msg meaning="Avatar.Scarf" desc="--"}Scarf{/msg}<div id="cpScarf"></div>
 					</td>
 				</tr>
-				<tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Clothes-1" width="200px" height="124px"/></div></td></tr>
+				<tr><td><div class="nobugs_center_horz"><canvas class="avatar-item" id="Clothes-1" width="289px" height="221px" imgTop="180"/></div></td></tr>
 			</table>
 		  </div>
 		 </div>

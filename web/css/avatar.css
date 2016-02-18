@@ -10,7 +10,9 @@
 .avatar-tab.selected-tab {  background: #ffd89d;; padding-top: 6px; position: relative; top: 1px; border-color: #ed6d54; }
 .avatar-tab a.selected-tab { font-weight: bold; color: #ed6d54; }
 
-.avatar-container { border: solid #ed6d54 1px; }
+.avatar-container { border: solid #ed6d54 1px; height: 450px }
+
+.avatar-item:hover { cursor: pointer; background-color: #ccc; }
 /*
 
 #avatar-tabs ul { height: 464px; list-style: none; margin: 0; padding: 0; background: #FCDBA1; float: left; border-right: solid 1px; }
@@ -22,7 +24,7 @@
 #avatar-tabs ul li a.selected-tab {  }
 #avatar-tabs .avatar-container { padding-top: 5px; padding-left: 120px; }	
 
-.avatar-item:hover { cursor: pointer; background-color: #ccc; }
+
 */
 
 #profileditor {
