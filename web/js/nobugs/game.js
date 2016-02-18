@@ -152,7 +152,7 @@ Game.init = function() {
     	
 		if (ret[0]) {
 			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12]);
 			
 		} else {
 			window.removeEventListener('beforeunload', Game.unload);
@@ -213,7 +213,7 @@ Game.login = function() {
 	  			
 	  			error.innerHTML = "";
 	  			
-  				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]);
+  				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8]);
 	  			
 	  				  			
 	  		} else {
@@ -223,7 +223,7 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, xpToHat, xpToClothes, clazzId, levelId, missionIdx, missionView) {
+Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, xpToHat, xpToClothes, xpToSpecialSkin, xpToAdd, clazzId, levelId, missionIdx, missionView) {
 	/*
 	 * missionsHistorical [...][n], where n are 
 	 *   0 - class name
@@ -246,7 +246,8 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
 	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
-					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes) };
+					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes),
+					     xpToSpecialSkin:parseInt(xpToSpecialSkin), xpToAdd:parseInt(xpToAdd) };
 	
 	AvatarImgMaker.configGender(Game.loginData.userLogged.sex);
 	
@@ -511,9 +512,9 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	
 	var sHat = (myXp < Game.loginData.xpToHat? "blocked:"+Game.loginData.xpToHat+":" : "") + hat;
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
-	var sSkin = (myXp < 300? "blocked:"+300+":" : "") + skin; 
+	var sSkin = (myXp < Game.loginData.xpToSpecialSkin? "blocked:"+Game.loginData.xpToSpecialSkin+":" : "") + skin; 
 	
-	var sAdd = (myXp < 300 ? "blocked:"+300+":" : "") + add;
+	var sAdd = (myXp < Game.loginData.xpToAdd ? "blocked:"+Game.loginData.xpToAdd+":" : "") + add;
 
 	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, fAfterClose);
 };

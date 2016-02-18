@@ -837,14 +837,10 @@ AvatarEditor.init = function() {
 };
 
 AvatarEditor.cancelClick = function() {
-	if (document.getElementById("blockhats") != null)
-		$("#blockhats").remove();
-	
-	if (document.getElementById("blockclothes") != null)
-		$("#blockclothes").remove();
-	
-	if (document.getElementById("blockskinSpecial") != null)
-		$("#blockskinSpecial").remove();
+	$("#blocknotab-hats").remove();
+	$("#blocknotab-clothes").remove();
+	$("#blockskinSpecial").remove();
+	$("#blocknotab-adds").remove();
 	
 	MyBlocklyApps.hideDialog(true); 
 	

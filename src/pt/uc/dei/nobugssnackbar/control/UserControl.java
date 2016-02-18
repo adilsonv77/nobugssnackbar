@@ -83,6 +83,8 @@ public class UserControl {
 	private int xpToHat;
 	private int xpToClothes;
 	private boolean achievedMission;
+	private int xpToSpecialSkin;
+	private int xpToAdd;
 
 	public User getUser() {
 		return user;
@@ -98,6 +100,8 @@ public class UserControl {
 			this.missions = null;
 			this.xpToHat = 0;
 			this.xpToClothes = 0;
+			this.xpToSpecialSkin = 0;
+			this.xpToAdd = 0;
 			
 		}
 		else {
@@ -107,11 +111,15 @@ public class UserControl {
 			this.missions = (Object[][]) m.get("missions");
 			this.xpToHat = (int) m.get("xpToHat");
 			this.xpToClothes = (int) m.get("xpToClothes");
+			this.xpToSpecialSkin = (int) m.get("xpToSpecialSkin");
+			this.xpToAdd = (int) m.get("xpToAdd");
 			
 		}
 		return new Object[] { user != null, this.user, this.missions,
-				(user == null ? null : retrieveLeaderBoard()), this.avatar, this.xpToHat, this.xpToClothes,
-				this.classid, this.levelid, this.missionidx, this.achievedMission };
+				(user == null ? null : retrieveLeaderBoard()), this.avatar, 
+				this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd,
+				this.classid, this.levelid, this.missionidx, this.achievedMission,
+				 };
 	}
 
 	@RemoteMethod
@@ -142,6 +150,8 @@ public class UserControl {
 			this.missions = (Object[][]) m.get("missions");
 			this.xpToHat = (int) m.get("xpToHat");
 			this.xpToClothes = (int) m.get("xpToClothes");
+			this.xpToSpecialSkin = (int) m.get("xpToSpecialSkin");
+			this.xpToAdd = (int) m.get("xpToAdd");
 
 			this.avatar = retrieveAvatarParts();
 
@@ -150,7 +160,7 @@ public class UserControl {
 			ctx.getSession().setAttribute("userid", this.user.getId());
 			
 			return new Object[] { null, this.user, this.missions, 
-					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes }; // no errors
+					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd }; // no errors
 
 		} catch (Exception e) {
 			e.printStackTrace();

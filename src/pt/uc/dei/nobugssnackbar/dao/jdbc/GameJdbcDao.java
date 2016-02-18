@@ -453,7 +453,7 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen from classeslevels cl join classes c on (cl.classid = c.classid) join ("
+			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen, c.xptospecialskin, c.xptoadd from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
@@ -474,7 +474,7 @@ public class GameJdbcDao implements GameDao {
 			List<Object[]> l = new ArrayList<>();
 			rs = ps.executeQuery();
 			
-			int xpToHat = 0, xpToClothes = 0;
+			int xpToHat = 0, xpToClothes = 0, xpToSpecialSkin = 0, xpToAdd = 0;
 			
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
@@ -486,6 +486,8 @@ public class GameJdbcDao implements GameDao {
 
 				xpToHat = rs.getInt(7);
 				xpToClothes = rs.getInt(8);
+				xpToSpecialSkin = rs.getInt(10);
+				xpToAdd = rs.getInt(11);
 				
 				if (rs.getString(9).equals("T")) { // open level
 					li[7] = new ArrayList<Integer>();
@@ -551,6 +553,8 @@ public class GameJdbcDao implements GameDao {
 			res.put("missions", ret);
 			res.put("xpToHat", xpToHat);
 			res.put("xpToClothes", xpToClothes);
+			res.put("xpToSpecialSkin", xpToSpecialSkin);
+			res.put("xpToAdd", xpToAdd);
 
 		} finally {
 			if (bdCon != null)
