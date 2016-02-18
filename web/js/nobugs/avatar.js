@@ -837,6 +837,8 @@ AvatarEditor.init = function() {
 };
 
 AvatarEditor.cancelClick = function() {
+	$('#avatar-tabs').unbind('easytabs:after');
+	
 	$("#blocknotab-hats").remove();
 	$("#blocknotab-clothes").remove();
 	$("#blockskinSpecial").remove();
