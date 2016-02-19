@@ -1,0 +1,30 @@
+{namespace achievements}
+
+/**
+ * Translated messages for use in JavaScript.
+ */
+{template .msgsachievements}
+
+<div style="display: none">
+	<span id="Achievement_Title">{msg meaning="NoBugs.Achievements" desc="--"}Achievements{/msg}</span>
+	<span id="Achievement_FinishedBeforeFinalDate_Title">{msg meaning="Achievement.FinishedBeforeFinalDate_Title" desc="--"}NONONO{/msg}</span>
+	<span id="Achievement_FinishedBeforeFinalDate_Description">{msg meaning="Achievement.FinishedBeforeFinalDate_Description" desc="--"}NONONO{/msg}</span>
+</div>
+
+{/template}
+
+/**
+ * Achievement window.
+ */
+{template .body}
+
+<div id = "achievementWindow">
+	<div id = "achievementContentWindow">
+	</div>
+	<div class="nobugs_buttons">
+		<button id="achievementCloseButton" class="nobugs_button">{msg meaning="Apps.dialogOk" desc="---"}OK{/msg}</button>
+	</div>
+</div>
+
+{/template}
+

@@ -399,6 +399,7 @@ Game.logged = function() {
 	    
 	    BlocklyApps.bindClick('avatarEditorButton', Game.openAvatarEditor);
 	    BlocklyApps.bindClick('profileEditorButton', Game.openProfileEditor);
+	    BlocklyApps.bindClick('achievementsButton', Game.openAchievementList);
 	    BlocklyApps.bindClick('infotabButton', Game.openInfoTab);
 	    
 	    CityMap.init({onclick: Game.cityClick});
@@ -538,6 +539,13 @@ Game.openProfileEditor = function() {
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogEditProfile"), null, false, true, true, 
 			$("#profileEditorButton").html(), {width:"700px"}, function() {$("#profile_mail").attr("placeHolder", "");});
+	
+};
+
+Game.openAchievementList = function() {
+	
+	var achieveWindow = new AchievementWindow();
+	achieveWindow.show();
 	
 };
 

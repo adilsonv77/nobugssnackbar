@@ -12,6 +12,7 @@
   
   {call commonheader.start/}	
   {call importsjs.imports/}	
+  {call achievements.msgsachievements/}
   
   <div id="initialBackground" style="display: none;">
     <div style="width: 960px; height: 100%; position: relative; margin-right: auto; margin-left: auto;">
@@ -76,6 +77,7 @@
   </div>
 
   {call commonheader.messages /}
+  {call achievements.body/}
   
   <div id="selectMission" style="display: none">
      <div style="width: 960px; height: 100%; position: relative; margin-right: auto; margin-left: auto;">
@@ -119,6 +121,10 @@
       	
       	<button id="profileEditorButton"  class="nobugs_button" style="font-size: 14px; width: 100px" title="{msg meaning="NoBugs.profileTooltip" desc="--"}Change your profile.{/msg}">
       	{{msg meaning="NoBugs.Profile" desc="---"}}Profile{{/msg}}
+      	</button>
+      	
+      	<button id="achievementsButton" class="nobugs_button" style="font-size: 14px; width: 100px" title="{msg meaning="NoBugs.achievementTooltip" desc="--"}Consult your achievements.{/msg}">
+      	{{msg meaning="NoBugs.Achievements" desc="IBID"}}Achievements{{/msg}}
       	</button>
       	
       	<button id="snackBarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px" disabled="disabled" title="{msg meaning="NoBugs.yourSnackBarTooltip" desc="--"}Change the snack bar that you are the owner.{/msg}">

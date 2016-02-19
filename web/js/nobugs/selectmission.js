@@ -1,3 +1,5 @@
+'use strict';
+
 var SelectMission = {};
 
 SelectMission.generateBoard = function(evt) {

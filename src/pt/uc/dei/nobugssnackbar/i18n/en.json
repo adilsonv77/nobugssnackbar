@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-18 15:32:01.221000",
+		"lastupdated": "2016-02-19 12:01:38.435000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -269,6 +269,9 @@
 	"LeaderBoard.TabsContest": "Tabs Contest",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
+	"NoBugs.Achievements": "Achievements",
+	"Achievement.FinishedBeforeFinalDate_Title": "NONONO",
+	"Achievement.FinishedBeforeFinalDate_Description": "NONONO",
 	"Avatar.Body": "Body",
 	"Avatar.Hat": "Hat",
 	"Avatar.Clothes": "Clothes",
@@ -290,6 +293,7 @@
 	"NoBugs.avatarTooltip": "Change your avatar.",
 	"NoBugs.profileTooltip": "Change your profile.",
 	"NoBugs.Profile": "Profile",
+	"NoBugs.achievementTooltip": "Consult your achievements.",
 	"NoBugs.yourSnackBarTooltip": "Change the snack bar that you are the owner.",
 	"NoBugs.buyTooltip": "Buy some machines.",
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",

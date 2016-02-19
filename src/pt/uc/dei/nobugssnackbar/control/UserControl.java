@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.control;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
+import pt.uc.dei.nobugssnackbar.model.Achievement;
 import pt.uc.dei.nobugssnackbar.model.Language;
 import pt.uc.dei.nobugssnackbar.model.Message;
 import pt.uc.dei.nobugssnackbar.model.Questionnaire;
@@ -519,6 +521,38 @@ public class UserControl {
 	@RemoteMethod
 	public Object[] retrieveContest() throws Exception  {
 		return gameDao.retrieveContest(this.user.getId(), this.user.getName());
+	}
+	
+	@RemoteMethod
+	public List<Achievement> listAchievements() throws Exception  {
+		
+		List<Achievement> ret = new ArrayList<>();
+		
+	
+		Achievement a = new Achievement();
+		a.setId(1);
+		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
+		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
+		ret.add(a);
+		
+		a = new Achievement();
+		a.setId(1);
+		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
+		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
+		ret.add(a);
+		
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		ret.add(a);
+		
+		return ret ;
+		
 	}
 	
 }

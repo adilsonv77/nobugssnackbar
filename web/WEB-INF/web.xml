@@ -53,8 +53,11 @@
 			pt.uc.dei.nobugssnackbar.control.Image64,
 			pt.uc.dei.nobugssnackbar.control.QuestionnaireControl,
 			
+			
 			pt.uc.dei.nobugssnackbar.control.TeacherControl,
-			pt.uc.dei.nobugssnackbar.model.MissionStatus
+			pt.uc.dei.nobugssnackbar.model.MissionStatus,
+			
+			pt.uc.dei.nobugssnackbar.model.Achievement
 			</param-value>
     </init-param>
     <init-param>

@@ -1,3 +1,5 @@
+'use strict';
+
 PreloadImgs.put('mission_selected', 'images/mission-completed.png');
 PreloadImgs.put('mission_selected_high', 'images/mission-completed-hightlight.png');
 

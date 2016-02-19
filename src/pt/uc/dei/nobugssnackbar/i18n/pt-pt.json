@@ -85,6 +85,8 @@
 	
 	"NoBugs.order" : "pedido",
 	"NoBugs.Profile" : "Perfil",
+	"NoBugs.Achievements" : "Conquistas",
+	"NoBugs.achievementTooltip" : "Consulte suas conquistas",
 
 	"NoBugs.avatarTooltip"  : "Alterar o seu avatar.",
 	"NoBugs.profileTooltip" : "Alterar o seu perfil.",
@@ -350,5 +352,8 @@
 	"LeaderBoard.TabsPoints" : "A ordem nessa lista &#233; baseada pelos XP's conquistados nas miss&#245;es. Existem momentos no jogo que aparecem alguns testes que podem dar at&#233; 1000 XP's de b&#244;nus. Eles servem para acelerar no seu objetivo de abrir seu pr&#243;prio neg&#243;cio : 5000 XP's. E tamb&#233;m para melhorar seu avatar. Por&#233;m, n&#227;o s&#227;o considerados nessa lista.",
 	"LeaderBoard.TabsTime" : "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas e depois no tempo gasto para conclu&#237;-las. Se voc&#234; gastou 10 minutos para fazer 5 miss&#245;es, e seu amigo gastou 1 hora para fazer 6 miss&#245;es, ele fica na frente na lista pois tem mais miss&#245;es finalizadas.",
 	"LeaderBoard.TabsRuns" : "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas e depois na quantidade de tentativas (execu&#231;&#245;es ou depura&#231;&#245;es) para conclu&#237;-las. Se voc&#234; gastou 7 execu&#231;&#245;es para fazer 5 miss&#245;es, e seu amigo gastou 25 para fazer 6 miss&#245;es, ele fica na frente na lista pois tem mais miss&#245;es finalizadas.",
-	"LeaderBoard.TabsContest": "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas, depois na quantidade de tentativas e finalmente no tempo gasto para conclu&#237;-las. Entretanto, somente s&#227;o consideradas as miss&#245;es do torneio." 
+	"LeaderBoard.TabsContest": "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas, depois na quantidade de tentativas e finalmente no tempo gasto para conclu&#237;-las. Entretanto, somente s&#227;o consideradas as miss&#245;es do torneio.", 
+
+	"Achievement.FinishedBeforeFinalDate_Title" : "Finalizar fase dentro do prazo",
+	"Achievement.FinishedBeforeFinalDate_Description": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%]"
 }
