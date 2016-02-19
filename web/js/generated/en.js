@@ -127,7 +127,7 @@ achievements.msgsachievements = function(opt_data, opt_ignored, opt_ijData) {
 
 
 achievements.body = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id = "achievementWindow"><div id = "achievementContentWindow"></div><div class="nobugs_buttons"><button id="achievementCloseButton" class="nobugs_button">OK</button></div></div>';
+  return '<div id = "achievementWindow" style="display: none"><div id = "achievementContentWindow"></div><div class="nobugs_buttons"><button id="achievementCloseButton" class="nobugs_button">OK</button></div></div>';
 };
 
 ;

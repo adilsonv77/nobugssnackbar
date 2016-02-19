@@ -15,4 +15,5 @@ public interface AbstractFactoryDao {
 	HintDao getHintDao();
 	UserDao getUserDao();
 	LevelDao getLevelDao();
+	AchievementDao getAchievementDao();
 }

@@ -436,6 +436,7 @@ table.mainBodyClass td {border: none}
 
 .achievement {
 	height: 150px;
+	padding: 5px;
 }
 
 .achievement-table-col-position {

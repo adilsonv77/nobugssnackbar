@@ -533,15 +533,34 @@ public class UserControl {
 		a.setId(1);
 		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
 		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
+		a.getDescriptionFields().put("FASE", "2");
+		a.getDescriptionFields().put("FINISHDATE", "26/02/16");
+		a.getDescriptionFields().put("EVALUATION", "01");
+		a.setAchieved(false);
+		a.setRewardXP(100);
 		ret.add(a);
 		
 		a = new Achievement();
 		a.setId(1);
 		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
 		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
+		a.getDescriptionFields().put("FASE", "10");
+		a.getDescriptionFields().put("FINISHDATE", "01/03/16");
+		a.getDescriptionFields().put("EVALUATION", "02");
+		a.setAchieved(true);
 		ret.add(a);
 		
+		a = new Achievement();
+		a.setId(1);
+		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
+		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
+		a.getDescriptionFields().put("FASE", "13");
+		a.getDescriptionFields().put("FINISHDATE", "01/05/16");
+		a.getDescriptionFields().put("EVALUATION", "02");
+		a.setAchieved(false);
+		a.setRewardCoins(100);
 		ret.add(a);
+		
 		ret.add(a);
 		ret.add(a);
 		ret.add(a);

@@ -1,6 +1,7 @@
 package pt.uc.dei.nobugssnackbar.dao.jdbc;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.CommandDao;
 import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
@@ -129,5 +130,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (levelDao == null)
 			levelDao = new LevelJdbcDao();
 		return levelDao;
+	}
+	
+	private AchievementDao achievementDao;
+
+	@Override
+	public AchievementDao getAchievementDao() {
+		if (achievementDao == null)
+			achievementDao = new AchievementJdbcDao();
+		return achievementDao;
 	}
 }

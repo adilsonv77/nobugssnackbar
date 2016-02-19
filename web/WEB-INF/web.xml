@@ -78,6 +78,14 @@
     <servlet-class>pt.uc.dei.nobugssnackbar.servlets.HintImage</servlet-class>
   </servlet>
   <servlet-mapping>
+    <servlet-name>achievementBadge</servlet-name>
+    <url-pattern>/achievementBadge/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>achievementBadge</servlet-name>
+    <servlet-class>pt.uc.dei.nobugssnackbar.servlets.AchievementBadge</servlet-class>
+  </servlet>
+  <servlet-mapping>
     <servlet-name>hintImage</servlet-name>
     <url-pattern>/hintimg/*</url-pattern>
   </servlet-mapping>

@@ -2825,7 +2825,7 @@ Game.verifyVictory = function() {
 	    		if (reward.bonusCoins != reward.totalCoins) {
 
 	    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
-	    					                       "<img style='vertical-align: middle;' src='images/coin2.png'/>") + "<br/>";
+	    					                       "<img style='vertical-align: middle; padding-left: 3px' src='images/coin2.png'/>") + "<br/>";
 	    			
 	    			out2 = out2 + "<table border='2px' class='tableVictory' >";
 	    			

@@ -26,8 +26,8 @@ AchievementWindow = function() {
 
 			$("#achievementContentWindow .ingrid > div:nth-child(2)").addClass("mCustomScrollbar")
 			              .mCustomScrollbar({ theme:"nobug" });
-
-			//$("#achievementWindow").html(listAchievements[0].title);
+			$("#achievementContentWindow .mCSB_container").css({"margin-right":"0px"});
+			$("#achievementWindow .mCSB_scrollTools").css("width", "5px");
 		}
 	});
 };
@@ -48,7 +48,29 @@ AchievementWindow.prototype.populateTable = function(data) {
     	
     	var achiev = data[i];
     	var div = $("<div class='achievement'>");
-    	div.html(achiev.title);
+    	
+    	var achieved = (achiev.achieved?"":"-webkit-filter: grayscale(1); filter: gray; filter: grayscale(1);");
+    	div.append($("<img src='achievementBadge?id=" + achiev.id + "' style='width:128px; float: left; "+achieved+"'/>"));
+  
+    	var innerDiv = $("<div style='font-weight: bold; margin-bottom: 10px'/>");
+    	innerDiv.html(this.fillFields(BlocklyApps.getMsg(achiev.title), achiev.titleFields));
+    	div.append(innerDiv);
+    	
+    	innerDiv = $("<div/>");
+    	
+    	innerDiv.html(this.fillFields(BlocklyApps.getMsg(achiev.description), achiev.descriptionFields));
+    	div.append(innerDiv);
+    	
+    	if (achiev.rewardCoins) {
+    		innerDiv = $("<div style='float:right'/>");
+    		innerDiv.html(achiev.rewardCoins + "<img style='vertical-align: middle; padding-left: 3px' src='images/coin2.png'/>");
+    		div.append(innerDiv);
+    	} else 
+    		if (achiev.rewardXP) {
+        		innerDiv = $("<div style='float:right'/>");
+    			innerDiv.html(achiev.rewardXP + "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>");
+        		div.append(innerDiv);
+    		}
     	
     	tr.append($("<td>").html(div));
     };
@@ -70,7 +92,7 @@ AchievementWindow.prototype.populateTable = function(data) {
 };
 
 AchievementWindow.prototype.show = function() {
-	
+	$("#achievementWindow").css("display", "block");
 	var this_ = this;
 	MyBlocklyApps.showDialog(document.getElementById("achievementWindow"), null, false, true, true, 
 			BlocklyApps.getMsg("Achievement_Title"), {width: "800px", height: "600px"}, 
@@ -78,7 +100,25 @@ AchievementWindow.prototype.show = function() {
 			
 };
 
+AchievementWindow.prototype.fillFields = function(baseText, fields) {
+	if (fields == null)
+		return baseText;
+	
+	var regExp = new RegExp("\\[%([A-Z])\\w+%\\]");
+	
+	do {
+		
+		var f = regExp.exec(baseText);
+		if (f == null)
+			return baseText;
+		
+		baseText = baseText.replace(f[0], fields[f[0].substring(2, f[0].length-2)]);
+		
+	} while (true);
+};
+
 AchievementWindow.prototype.dispose = function() {
+	$("#achievementContentWindow .ingrid").remove();
 	$("#achievementContentWindow").empty();
 };
 

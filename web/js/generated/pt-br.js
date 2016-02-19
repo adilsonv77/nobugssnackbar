@@ -122,12 +122,12 @@ if (typeof achievements == 'undefined') { var achievements = {}; }
 
 
 achievements.msgsachievements = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Achievement_Title">Conquistas</span><span id="Achievement_FinishedBeforeFinalDate_Title">Finalizar fase dentro do prazo</span><span id="Achievement_FinishedBeforeFinalDate_Description">Finalize a fase [%FASE%] até [%FINISHDATE%]</span></div>';
+  return '<div style="display: none"><span id="Achievement_Title">Conquistas</span><span id="Achievement_FinishedBeforeFinalDate_Title">Finalizar fase dentro do prazo</span><span id="Achievement_FinishedBeforeFinalDate_Description">Finalize a fase [%FASE%] até [%FINISHDATE%] para receber pontos extra na Prova [%EVALUATION%]</span></div>';
 };
 
 
 achievements.body = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div id = "achievementWindow"><div id = "achievementContentWindow"></div><div class="nobugs_buttons"><button id="achievementCloseButton" class="nobugs_button">OK</button></div></div>';
+  return '<div id = "achievementWindow" style="display: none"><div id = "achievementContentWindow"></div><div class="nobugs_buttons"><button id="achievementCloseButton" class="nobugs_button">OK</button></div></div>';
 };
 
 ;

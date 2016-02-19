@@ -1,5 +1,8 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
@@ -11,16 +14,25 @@ public class Achievement {
 	
 	@RemoteProperty
 	private String title;
+
+	@RemoteProperty
+	private Map<String, String> titleFields;
 	
 	@RemoteProperty
 	private String description;
+
+	@RemoteProperty
+	private Map<String, String> descriptionFields;
 	
 	@RemoteProperty
 	private int rewardXP;
 	
 	@RemoteProperty
-	private int rewardIcon;
-
+	private int rewardCoins;
+	
+	@RemoteProperty
+	private boolean achieved;
+	
 	public int getId() {
 		return id;
 	}
@@ -53,14 +65,39 @@ public class Achievement {
 		this.rewardXP = rewardXP;
 	}
 
-	public int getRewardIcon() {
-		return rewardIcon;
+	public int getRewardCoins() {
+		return rewardCoins;
 	}
 
-	public void setRewardIcon(int rewardIcon) {
-		this.rewardIcon = rewardIcon;
+	public void setRewardCoins(int rewardCoins) {
+		this.rewardCoins = rewardCoins;
 	}
 
+	public Map<String, String> getDescriptionFields() {
+		if (descriptionFields == null)
+			descriptionFields = new HashMap<>();
+		return descriptionFields;
+	}
 	
+	public void setDescriptionFields(Map<String, String> descriptionFields) {
+		this.descriptionFields = descriptionFields;
+	}
 	
+	public Map<String, String> getTitleFields() {
+		if (titleFields == null)
+			titleFields = new HashMap<>();
+		return titleFields;
+	}
+	
+	public void setTitleFields(Map<String, String> titleFields) {
+		this.titleFields = titleFields;
+	}
+	
+	public boolean isAchieved() {
+		return achieved;
+	}
+	
+	public void setAchieved(boolean achieved) {
+		this.achieved = achieved;
+	}
 }
