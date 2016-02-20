@@ -2794,7 +2794,13 @@ Game.verifyVictory = function() {
 
     	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(achievements){
     		
-    		console.log(achievements);
+    		var achievementTitle = BlocklyApps.getMsg("Achievement_Title");
+    		achievements.forEach(function(achievement) {
+    			var title = AchievementWindow.fillFields(BlocklyApps.getMsg(achievement['TITLE']),
+    															achievement);
+    			$.growl($.extend({title:achievementTitle, style: "notice", duration: 5000}, 
+    					         {message : title}));	
+    		});
     		
     		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
     		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";

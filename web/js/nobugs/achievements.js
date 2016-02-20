@@ -53,12 +53,12 @@ AchievementWindow.prototype.populateTable = function(data) {
     	div.append($("<img src='achievementBadge?id=" + achiev.id + "' style='width:128px; float: left; "+achieved+"'/>"));
   
     	var innerDiv = $("<div style='font-weight: bold; margin-bottom: 10px'/>");
-    	innerDiv.html(this.fillFields(BlocklyApps.getMsg(achiev.title), achiev.titleFields));
+    	innerDiv.html(AchievementWindow.fillFields(BlocklyApps.getMsg(achiev.title), achiev.titleFields));
     	div.append(innerDiv);
     	
     	innerDiv = $("<div/>");
     	
-    	innerDiv.html(this.fillFields(BlocklyApps.getMsg(achiev.description), achiev.descriptionFields));
+    	innerDiv.html(AchievementWindow.fillFields(BlocklyApps.getMsg(achiev.description), achiev.descriptionFields));
     	div.append(innerDiv);
     	
     	if (achiev.rewardCoins) {
@@ -100,7 +100,7 @@ AchievementWindow.prototype.show = function() {
 			
 };
 
-AchievementWindow.prototype.fillFields = function(baseText, fields) {
+AchievementWindow.fillFields = function(baseText, fields) {
 	if (fields == null)
 		return baseText;
 	
