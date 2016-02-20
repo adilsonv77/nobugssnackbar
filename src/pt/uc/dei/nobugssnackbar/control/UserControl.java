@@ -237,11 +237,11 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void saveMission(int xp, int money, int timeSpend, long execution,
+	public List<Map<String, String>> saveMission(int xp, int money, int timeSpend, long execution,
 			boolean achieved, int typeRunning, float zoomLevel, String answer) throws Exception {
 
 		if (this.user == null)
-			return;
+			return null;
 
 		if (achieved)
 			log.info("saveMission " + timeSpend + " " + this.user.getId() + " "
@@ -253,7 +253,12 @@ public class UserControl {
 		gameDao.finishMission(this.user, this.mission, this.classid, xp, money,
 				timeSpend, execution, achieved, typeRunning, zoomLevel, answer);
 
+		List<Map<String, String>> ret = null; 
+		
 		if (achieved) {
+			
+			ret = achievDao.verifyAchievements(this.user.getId(), this.classid);
+			
 			// when saveMission is called with achieved = true, this means that
 			// finished the mission
 			this.classid = 0;
@@ -261,6 +266,8 @@ public class UserControl {
 			this.missionidx = 0;
 			this.mission = 0;
 		}
+		
+		return ret;
 
 	}
 

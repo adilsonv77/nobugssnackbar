@@ -101,7 +101,7 @@ MissionSelection.prototype.show = function() {
 	var raio = 6;
 	var esp = 18;
 	
-	for (var i = 0; i<15; i++) { // this.level[2]
+	for (var i = 0; i<this.level[2]; i++) {  
 		ctx.beginPath();
 		ctx.moveTo(ref+(i*esp)+raio, ref);
 		ctx.arc(ref+(i*esp), ref, raio, 0, circ);

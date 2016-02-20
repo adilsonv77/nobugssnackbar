@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 
 public class TestRegularExpression {
 
-	public static String EXAMPLE_TEST = "This is #{commmand} my small example string #{teste} which I'm going to use for pattern matching.";
+	public static String EXAMPLE_TEST = "This is [%FASE%] my small example string  [%FINISHDATE%] which I'm going to use for pattern matching.";
 	public static void main(String[] args) {
 		String[] replaces = new String[]{"AA", "BB"};
-		Pattern pattern = Pattern.compile("[#][{]([a-z])\\w+}");
+		Pattern pattern = Pattern.compile("\\[%([A-Z])\\w+%]");
 	    // in case you would like to ignore case sensitivity,
 	    // you could use this statement:
 	    // Pattern pattern = Pattern.compile("\\s+", Pattern.CASE_INSENSITIVE);
@@ -20,8 +20,8 @@ public class TestRegularExpression {
 	      System.out.print("Start index: " + matcher.start());
 	      System.out.print(" End index: " + matcher.end() + " ");
 	      System.out.println(matcher.group());
-	      x = matcher.replaceFirst(replaces[j]);
-	      matcher = pattern.matcher(x);
+	     // x = matcher.replaceFirst(replaces[j]);
+	 //     matcher = pattern.matcher(x);
 	      j++;
 	    }
 	    System.out.println(x);

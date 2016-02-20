@@ -697,8 +697,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   Game.lastErrorData.message = "";
   Game.lastErrorData.block = null;
   
-  var mid = BlocklyApps.getMsg("_mission") + " " + levelId + "/" + missionIdx;
-  $("#missionIdentification").html(mid.charAt(0).toUpperCase() + mid.slice(1));
+//  var mid = BlocklyApps.getMsg("_mission") + " " + levelId + "/" + missionIdx;
+  $("#missionIdentification").html(Game.loginData.missionHist[parseInt(levelId)-1][1]);
 
   Game.missionSelection = new MissionSelection(levelId);
   
@@ -2792,7 +2792,9 @@ Game.verifyVictory = function() {
 		}
 		
 
-    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(){
+    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(achievements){
+    		
+    		console.log(achievements);
     		
     		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
     		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
