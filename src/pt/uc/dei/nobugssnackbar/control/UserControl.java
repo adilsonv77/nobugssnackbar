@@ -3,7 +3,6 @@ package pt.uc.dei.nobugssnackbar.control;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -16,6 +15,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.annotations.ScriptScope;
 
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
+import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
@@ -38,12 +38,15 @@ public class UserControl {
 	private SendMail mail;
 	private AbstractFactoryDao factoryDao;
 	private String appFolder;
+	private AchievementDao achievDao;
 
 	public UserControl() {
 		WebContext ctx = WebContextFactory.get();
+		
 		this.factoryDao = (AbstractFactoryDao) ctx
 				.getServletContext().getAttribute("factoryDao");
 		this.gameDao = factoryDao.getGameDao();
+		this.achievDao = factoryDao.getAchievementDao();
 		
 		this.appFolder = ctx.getServletContext().getRealPath("/");
 		this.mail = new SendMail(this.appFolder);
@@ -54,6 +57,7 @@ public class UserControl {
 	public UserControl(AbstractFactoryDao factoryDao, String appFolder) {
 		this.factoryDao = factoryDao;
 		this.gameDao = factoryDao.getGameDao();
+		this.achievDao = factoryDao.getAchievementDao();
 		this.appFolder = appFolder;
 		
 		this.mail = new SendMail(appFolder);
@@ -526,51 +530,7 @@ public class UserControl {
 	@RemoteMethod
 	public List<Achievement> listAchievements() throws Exception  {
 		
-		List<Achievement> ret = new ArrayList<>();
-		
-	
-		Achievement a = new Achievement();
-		a.setId(1);
-		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
-		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
-		a.getDescriptionFields().put("FASE", "2");
-		a.getDescriptionFields().put("FINISHDATE", "26/02/16");
-		a.getDescriptionFields().put("EVALUATION", "01");
-		a.setAchieved(false);
-		a.setRewardXP(100);
-		ret.add(a);
-		
-		a = new Achievement();
-		a.setId(1);
-		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
-		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
-		a.getDescriptionFields().put("FASE", "10");
-		a.getDescriptionFields().put("FINISHDATE", "01/03/16");
-		a.getDescriptionFields().put("EVALUATION", "02");
-		a.setAchieved(true);
-		ret.add(a);
-		
-		a = new Achievement();
-		a.setId(1);
-		a.setTitle("Achievement_FinishedBeforeFinalDate_Title");
-		a.setDescription("Achievement_FinishedBeforeFinalDate_Description");
-		a.getDescriptionFields().put("FASE", "13");
-		a.getDescriptionFields().put("FINISHDATE", "01/05/16");
-		a.getDescriptionFields().put("EVALUATION", "02");
-		a.setAchieved(false);
-		a.setRewardCoins(100);
-		ret.add(a);
-		
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		ret.add(a);
-		
-		return ret ;
+		return achievDao.listAchievements(this.user.getId(), this.user.getClassId());
 		
 	}
 	
