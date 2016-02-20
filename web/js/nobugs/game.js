@@ -1232,6 +1232,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('instructionButton', Game.instructionButtonClick);
+	  BlocklyApps.bindClick('showBadgesButton', Game.openAchievementList);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  
 	  BlocklyApps.bindClick('wizardFreeButton', Game.wizardFreeButtonClick);
@@ -2056,7 +2057,7 @@ Game.runButtonClick = function() {
   Game.enableButton("resetButton");
   Game.disableButton("debugButton");
   Game.disableButton("buyButton");
-  Game.disableButton("wizardFreeButton");
+  Game.disableButton("wizardFreeButton", "");
   
   Game.closeBoxes();
   
@@ -2096,7 +2097,7 @@ Game.resetButtonClick = function() {
   Game.clickReseting = false;
 };
 
-Game.enableButton = function(buttonName) {
+Game.enableButton = function(buttonName, className) {
 	if (buttonName === "debugButton" && !Game.editor.hasDebug()) {
 		Game.disableButton(buttonName);
 		return;
@@ -2135,13 +2136,13 @@ Game.enableButton = function(buttonName) {
 	
    var button = document.getElementById(buttonName);
    button.disabled = "";
-   button.className = "buttonIDE";
+   button.className = (className != undefined?className:"buttonIDE");
 };
 
-Game.disableButton = function(buttonName) {
+Game.disableButton = function(buttonName, className) {
    var button = document.getElementById(buttonName);
    button.disabled = "disabled";
-   button.className = "buttonIDENotEnabled";
+   button.className = (className != undefined?className:"buttonIDENotEnabled");
 };
 
 Game.firstClick = true;
@@ -2160,7 +2161,7 @@ Game.debugButtonClick = function() {
 			Game.closeBoxes();
 			Game.variableBox.style.display = "inline";
 			Game.doResizeWindow();
-			Game.disableButton('wizardFreeButton');
+			Game.disableButton('wizardFreeButton', "");
 		}
 		
 		Game.editor.traceOn(true);
@@ -2237,7 +2238,7 @@ Game.resetButtons = function(hideVars) {
 	
 	Game.enableButton('buyButton');
 	
-	Game.enableButton('wizardFreeButton');
+	Game.enableButton('wizardFreeButton', "");
 	
 	if (Blockly.mainWorkspace != null)
 		Game.editor.traceOn(false);
@@ -2949,6 +2950,12 @@ Game.removeChangeListeners = function() {
 
 	  MyBlocklyApps.unbindClick('goalButton', Game.goalButtonClick);
 	  MyBlocklyApps.unbindClick('logoffButton', Game.goBackToDashboard);
+
+	  MyBlocklyApps.unbindClick('instructionButton', Game.instructionButtonClick);
+	  MyBlocklyApps.unbindClick('showBadgesButton', Game.openAchievementList);
+	  
+	  MyBlocklyApps.unbindClick('wizardFreeButton', Game.wizardFreeButtonClick);
+	  MyBlocklyApps.unbindClick('wizardPayButton', Game.wizardPayButtonClick);
 	  
   }
   
