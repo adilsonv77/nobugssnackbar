@@ -142,7 +142,17 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				rl.add(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), new HashMap<String, String>()});
+				rl.add(new Object[]{Long.parseLong(rs.getString(1)), rs.getString(2), rs.getString(3), new HashMap<String, String>()});
+			}
+			ps.close();
+			
+			sql = "insert into achievements (achievementtypeclasseid, userid, achieveddate) values (?, ?, now())";
+			ps = bdCon.prepareStatement(sql);
+			ps.setLong(2, userId);
+
+			for (int i=0; i<rl.size(); i++) {
+				ps.setLong(1, (Long)rl.get(i)[0]);
+				ps.executeUpdate();
 			}
 			ps.close();
 			
@@ -153,7 +163,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			for (int i=0; i<rl.size(); i++) {
 				
-				ps.setLong(1, Long.parseLong((String)rl.get(i)[0]) );
+				ps.setLong(1, (Long)rl.get(i)[0] );
 				String query = (String)rl.get(i)[2];
 				
 				Map<String, String> fieldsTitle = (Map<String, String>) rl.get(i)[3];

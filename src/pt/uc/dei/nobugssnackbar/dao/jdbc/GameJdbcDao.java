@@ -30,7 +30,7 @@ import pt.uc.dei.nobugssnackbar.model.User;
 public class GameJdbcDao implements GameDao {
 
 	private static Logger log = Logger.getGlobal();
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private Connection getConnection() throws SQLException {
 		return NoBugsConnection.getConnection().getDataSource().getConnection();
