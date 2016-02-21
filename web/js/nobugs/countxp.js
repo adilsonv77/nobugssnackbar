@@ -66,7 +66,7 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	CountXP.changeImgs();
 	
 	if ((CountXP.times < 3) && (CountXP.showPoints)) {
-		$("#xpPoints").html("X " + pointsPerStar);
+		$("#xpPoints").html("x" + pointsPerStar);
 		CountXP.draw();
 	}
 	CountXP.starting = false;
@@ -149,6 +149,8 @@ CountXP.draw = function() {
 		ctx.stroke();
 
 	} else {
+		
+		/*
 		// CountXP.aFraction could be 1, 2 or 3
 		
 		var sizeImg = 32;
@@ -156,10 +158,26 @@ CountXP.draw = function() {
 			case 2: sizeImg = 20; break;
 			case 3: sizeImg = 12; break;
 		}
+		*/
+		var sizeImg = 8;
 
-		var y = 16 - (sizeImg/2);
+		var y = 32 - sizeImg - 8;
+		
+		var cornerRadius = 10;
+		var halfCornerRadius = cornerRadius/2;
+		ctx.fillStyle = "#fff7eb";
+		ctx.lineJoin = "round";
+		ctx.lineWidth = cornerRadius;
+		ctx.strokeStyle =  "#fff7eb";
+		
+		var rectX = 2, rectY = y, rectWidth = 4+(3*(2+sizeImg)), rectHeight = sizeImg+8;
+		ctx.strokeRect(rectX+halfCornerRadius, rectY+halfCornerRadius, rectWidth-cornerRadius, rectHeight-cornerRadius);
+		ctx.fillRect(rectX+halfCornerRadius, rectY+halfCornerRadius, rectWidth-cornerRadius, rectHeight-cornerRadius);
+		
+
+		y+=4;
 		for (var i = 0; i < CountXP.aFraction; i++) {
-			ctx.drawImage((i<CountXP.current?CountXP.runOutImg:CountXP.runImg), (i%3)*sizeImg, y, sizeImg, sizeImg);
+			ctx.drawImage((i<(CountXP.aFraction - CountXP.current)?CountXP.runImg:CountXP.runOutImg), 6+((i%3)*(2+sizeImg)), y, sizeImg, sizeImg);
 		}
 		
 		
@@ -175,7 +193,7 @@ CountXP.changeImgs = function() {
 		
 	
 	for (var x = 0; x < 3; x++) {
-		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(CountXP.times >= (x+1)?"xp_disabled.png":"xp.png") + ")";
+		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(3-CountXP.times >= (x+1)?"xp.png":"xp_disabled.png") + ")";
 	}
 	
 	if (CountXP.eventChangeStars)
@@ -201,7 +219,7 @@ CountXP.setConsumedMaxStars = function() {
 CountXP.clearTheWatch = function() {
 	
 	CountXP.ctx.clearRect(0, 0, 40, 40);
-	$("#xpPoints").html("+ " + CountXP.pointsFinal);
+	$("#xpPoints").html("+" + CountXP.pointsFinal);
 	CountXP.stop(true);
 	
 };

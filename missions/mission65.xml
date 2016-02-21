@@ -1,0 +1,163 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+		]]>
+		</page>
+
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="fixbugs" variableWindow="true"
+				xpIndividual="20" xpFinal="10" xpTotalRun="9">
+				
+		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		
+	</objectives>	
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="variables_set" deletable="false" x="50" y="15">
+			<field name="VAR">qtaComida1</field>
+			<value name="VALUE">
+				<block type="math_number" deletable="false">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set" deletable="false">
+					<field name="VAR">qtaComida2</field>
+					<value name="VALUE">
+						<block type="math_number" deletable="false">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block type="move_goToBarCounter" deletable="false">
+							<value name="VALUE">
+								<block type="math_number" deletable="false">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<next>
+								<block type="variables_set" deletable="false">
+									<field name="VAR">qtaComida1</field>
+										<value name="VALUE">
+											<block type="ask_askWantHowManyFoods" deletable="false"></block>
+										</value>
+										<next>
+											<block type="move_goToBarCounter" deletable="false">
+												<value name="VALUE">
+													<block type="math_number" deletable="false">
+														<field name="NUM">3</field>
+													</block>
+												</value>
+												<next>
+													<block type="variables_set" deletable="false">
+														<field name="VAR">qtaComida1</field>
+														<value name="VALUE">
+															<block type="ask_askWantHowManyFoods" deletable="false"></block>
+														</value>
+														<next>
+															<block type="variables_set" deletable="false">
+																<field name="VAR">totalComida</field>
+																<value name="VALUE">
+																	<block type="math_arithmetic" deletable="false">
+																		<field name="OP">ADD</field>
+																		<value name="A">
+																			<block type="variables_get" deletable="false">
+																				<field name="VAR">qtaComida1</field>
+																			</block>
+																		</value>
+																		<value name="B">
+																			<block type="variables_get" deletable="false">
+																				<field name="VAR">qtaComida2</field>
+																			</block>
+																		</value>
+																	</block>
+																</value>
+																<next>
+																	<block type="do_talk" deletable="false">
+																		<value name="VALUE">
+																			<block type="variables_get" deletable="false">
+																				<field name="VAR">totalComida</field>
+																			</block>
+																		</value>
+																	</block>
+																</next>
+															</block>
+														</next>
+													</block>
+												</next>
+											</block>
+										</next>
+									</block>
+								</next>
+							</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>

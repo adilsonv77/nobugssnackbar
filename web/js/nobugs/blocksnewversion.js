@@ -26,10 +26,13 @@ Blockly.Blocks['variables_get'].init = function() {
     if (Game.toolbox) {
     	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
         	// changes the context menu of the variable name
-    	    this.inputList[0].fieldRow[0].menuGenerator_ = function() {
-    	    	return [[this.getText(), this.getText()]];
+    		this.showNewVar = false;
+    		//this.prevMenuGenerator = this.inputList[0].fieldRow[0].menuGenerator_;
+    	    /*
+    		this.inputList[0].fieldRow[0].menuGenerator_ = function() {
+    	    //	return [[this.getText(), this.getText()]];
     	    };
-  		
+  			*/
     	    this.contextMenuMsg_ = null;
     	    this.contextMenuType_ = null;
     	    
@@ -69,9 +72,12 @@ Blockly.Blocks['variables_set'].init = function() {
     }
     if (!useContextMenu) {
     	// changes the context menu of the variable name
-	    this.inputList[1].fieldRow[1].menuGenerator_ = function() {
+    	this.showNewVar = false;
+    	/*
+    	this.inputList[1].fieldRow[1].menuGenerator_ = function() {
 	    	return [[this.getText(), this.getText()]];
 	    };
+	    */
 	    this.customContextMenu = null;
     };
     
@@ -374,6 +380,8 @@ Blockly.FieldVariable.getVars = function(block) {
 
 Blockly.FieldVariable.dropdownCreate = function() {
 	
+  var showNewVar = (this.sourceBlock_ == null?true:this.sourceBlock_.showNewVar);
+  
   var variableList = [];
   if (this.sourceBlock_ && this.sourceBlock_.workspace) {
 
@@ -387,8 +395,12 @@ Blockly.FieldVariable.dropdownCreate = function() {
     variableList.push(name);
   }
   variableList.sort(goog.string.caseInsensitiveCompare);
-  variableList.push(Blockly.Msg.RENAME_VARIABLE);
-  variableList.push(Blockly.Msg.NEW_VARIABLE);
+  if (showNewVar == undefined || showNewVar) {
+	  
+	  variableList.push(Blockly.Msg.RENAME_VARIABLE);
+	  variableList.push(Blockly.Msg.NEW_VARIABLE);
+	  
+  }
   // Variables are not language-specific, use the name as both the user-facing
   // text and the internal representation.
   var options = [];

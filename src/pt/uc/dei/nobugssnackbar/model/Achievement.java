@@ -1,13 +1,15 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
+@SuppressWarnings("serial")
 @DataTransferObject()
-public class Achievement {
+public class Achievement implements Serializable {
 	
 	@RemoteProperty
 	private int id;

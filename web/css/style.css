@@ -355,6 +355,9 @@ table.tableVictory td  {
 
 #xpPoints {
 	padding-left: 10px;
+	position: relative;
+	font-size: 12px;
+	top: 5px;
 }
 
 .ExplainGameInstance {

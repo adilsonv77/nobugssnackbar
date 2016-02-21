@@ -917,4 +917,3 @@ Blockly.Variables.procVariables = function(block) {
     
     return variableList;
 };
-	
