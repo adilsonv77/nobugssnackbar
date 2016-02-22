@@ -106,19 +106,23 @@ CountXP.tick = function() {
 	
 	CountXP.draw();
 	
+	CountXP.sumCurrent();
+	
+};
+
+CountXP.sumCurrent = function() {
 	if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
 		CountXP.stop(false);
 	}
 	
 	CountXP.current++;
-	if (CountXP.current > CountXP.aFraction) {
+	if (CountXP.current >= CountXP.aFraction) {
 		CountXP.times++;
 		
 		CountXP.changeImgs();
-
+	
 		CountXP.current = 0;
 	}
-	
 };
 
 CountXP.draw = function() {
@@ -227,19 +231,13 @@ CountXP.clearTheWatch = function() {
 CountXP.newRun = function() {
 	if (CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.times < 3) {
 		
-		CountXP.lastHowManyRuns = Game.howManyRuns;
-		var added = false;
-		if (Game.howManyRuns % CountXP.aFraction == 1)
-			CountXP.current = 1;
-		else {
-			CountXP.current++;
-			added = true;
-		}
-			
+		CountXP.lastHowManyRuns = Game.howManyRuns; // security to avoid enter into this "if" when it's not time do to this
 		
-		CountXP.tick();
-		if (added && CountXP.current > 0)
-			CountXP.current--;
+		CountXP.sumCurrent();
+		
+		if (CountXP.times < 3)
+		  CountXP.draw();
+		
 	}
 		
 };

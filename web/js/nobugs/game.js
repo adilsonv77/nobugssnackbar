@@ -870,7 +870,7 @@ Game.missionLoaded = function(ret){
   Game.noXP = objectives.getAttribute("noXP") !== null;
   Game.mission = mission;
 
-//  Game.assignIngrid();
+  Game.assignIngrid(); // I mustn't remove this line. The variable window seems ugly
   
   Game.installMachines(toolbox);
 };
@@ -898,7 +898,7 @@ Game.blinkPlayerReward = function() {
 	var stop = Game.blinkPlayerStop;
 	
 	if (!stop && Game.blinkPlayerRewardTimes % 2 === 0)
-		$("#playerRewardMission").css("box-shadow", "inset 0 0 100px 100px rgba(255, 255, 255, 0.4)");
+		$("#playerRewardMission").css("box-shadow", "inset 0 0 100px 100px #ffd89d");
 	else
 		$("#playerRewardMission").css("box-shadow","");
 	
