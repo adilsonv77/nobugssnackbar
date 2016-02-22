@@ -19,6 +19,8 @@ CountXP.init = function(canvasId, showCanvas) {
 //cfg: {aFraction, current}
 CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime, noXP) {
 	
+	CountXP.starting = true;
+
 	$("#missionXP2").css("display", (noXP?"none":"inline"));
 	$("#missionXP3").css("display", (noXP?"none":"inline"));
 	$("#stopWatch").css("display", (noXP?"none":"inline"));
@@ -62,7 +64,6 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	}
 	
 	CountXP.pointsFinal = pointsFinal;
-	CountXP.starting = true;
 	CountXP.changeImgs();
 	
 	if ((CountXP.times < 3) && (CountXP.showPoints)) {
@@ -174,14 +175,14 @@ CountXP.draw = function() {
 		ctx.lineWidth = cornerRadius;
 		ctx.strokeStyle =  "#fff7eb";
 		
-		var rectX = 2, rectY = y, rectWidth = 4+(3*(2+sizeImg)), rectHeight = sizeImg+8;
+		var rectX = 2, rectY = y, rectWidth = 4+(CountXP.aFraction*(2+sizeImg)), rectHeight = sizeImg+8;
 		ctx.strokeRect(rectX+halfCornerRadius, rectY+halfCornerRadius, rectWidth-cornerRadius, rectHeight-cornerRadius);
 		ctx.fillRect(rectX+halfCornerRadius, rectY+halfCornerRadius, rectWidth-cornerRadius, rectHeight-cornerRadius);
 		
 
 		y+=4;
 		for (var i = 0; i < CountXP.aFraction; i++) {
-			ctx.drawImage((i<(CountXP.aFraction - CountXP.current)?CountXP.runImg:CountXP.runOutImg), 6+((i%3)*(2+sizeImg)), y, sizeImg, sizeImg);
+			ctx.drawImage((i<(CountXP.aFraction - CountXP.current)?CountXP.runImg:CountXP.runOutImg), 6+(i*(2+sizeImg)), y, sizeImg, sizeImg);
 		}
 		
 		
