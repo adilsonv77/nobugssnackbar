@@ -63,6 +63,7 @@
 	"NoBugs.goalsTooltip": "Consultar os objetivos da miss&#227;o",
 	"NoBugs.buyTooltip":"Comprar equipamentos",
 	"NoBugs.instructionTooltip":"Consultar conte&#250;do de aprendizagem relacionado &#224; miss&#227;o",
+	"NoBugs.restartBlocksTooltip":"Recarregue e substitua com os blocos originais",
 	"NoBugs.requiredField" : "Campo obrigat&#243;rio.",
 	"NoBugs.EnableMusic": "Habilitar m&#250;sica.",
 	"NoBugs.DisableMusic": "Desabilitar m&#250;sica.",
@@ -359,6 +360,8 @@
 	"LeaderBoard.TabsContest": "A ordem nessa lista &#233; baseada na quantidade de miss&#245;es finalizadas, depois na quantidade de tentativas e finalmente no tempo gasto para conclu&#237;-las. Entretanto, somente s&#227;o consideradas as miss&#245;es do torneio.",
 	
 	"Achievement.FinishedBeforeFinalDate_Title" : "Finalizar fase dentro do prazo",
-	"Achievement.FinishedBeforeFinalDate_Description": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%] para receber pontos extra na Prova [%EVALUATION%]"
+	"Achievement.FinishedBeforeFinalDate_Description": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%] para receber pontos extra na Prova [%EVALUATION%]",
+	
+	"Confirm.Reloadblocks" : "Todo o progresso na sua solu&#231;&#227;o ser&#225; perdida. Confirma recarregar com os blocos iniciais ?"
 	 
 }

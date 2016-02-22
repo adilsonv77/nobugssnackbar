@@ -32,8 +32,11 @@ BlocklyEditor.prototype.show = function() {
 	showOneEditArea(this.id);
 };
 
+BlocklyEditor.prototype.cleanCode = function() {
+	Blockly.getMainWorkspace().clear();
+};
+
 BlocklyEditor.prototype.initialize = function(cfg, i) {
-	
 	this.editArea.innerHTML = ""; // clean the editor
 	this.ws = Blockly.inject(this.editArea, cfg);
 	this.ws.id = this.id;
@@ -270,6 +273,11 @@ MultiBlockEditor = function() {
 	  
 inherits(BlocklyEditor, MultiBlockEditor);
 
+MultiBlockEditor.prototype.cleanCode = function() {
+	for (var i = 0; i < this.blocklys.length; i++)
+		this.blocklys[i].cleanCode();
+};
+
 MultiBlockEditor.prototype.initialize = function(cfg) {
 
 	for (var i = 0; i < this.blocklys.length; i++) {
@@ -425,6 +433,11 @@ CodeEditor = function() {
 
 CodeEditor.prototype.show = function() {
 	showOneEditArea(this.id);
+};
+
+CodeEditor.prototype.cleanCode = function() {
+	
+	
 };
 
 CodeEditor.prototype.initialize = function() {

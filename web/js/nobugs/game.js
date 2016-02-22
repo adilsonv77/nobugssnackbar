@@ -549,6 +549,32 @@ Game.openAchievementList = function() {
 	
 };
 
+Game.reloadInitialBlocksClick = function() {
+	
+	var fReloadBlocks = function() {
+		
+		var mission = Game.mission ; 
+		var sourceXML = mission.childNodes[0].getElementsByTagName("answers")[0];
+		if (sourceXML == null) {
+		  sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
+		} 
+		
+		var outerHTML = sourceXML.outerHTML || (new XMLSerializer()).serializeToString(sourceXML);
+		Game.editor.cleanCode();
+		Game.loadCode(outerHTML);
+		
+	};
+	
+	Hints.stopHints();
+	confirm(BlocklyApps.getMsg("confirm_reloadblocks"), 
+			function () { fReloadBlocks(); },
+			function () { Hints.startHints(); },
+			{"height": "180px"}
+	);
+	
+	
+};
+
 Game.enablePasswordFields = function() {
 	
 	if ($("#profile_user_checkbox").is(':checked')) {
@@ -1171,32 +1197,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   var loginLoaded = function(data) {
 	  
-	  var xml_ = transformStrToXml(answer);
-	  
-	  var root = xml_.firstElementChild;
-	  
-	  if (root.localName === "xml") {
-		// the old version
-		  // in march delete this if block
-		  
-		  Game.editor.loadCode(answer);
-		  /*
-		  var xml = Blockly.Xml.textToDom(answer);
-		  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-		  Game.moveBlocks();
-		  */
-	  } else {
-		  
-		  var c = root.firstElementChild;
-		  while (c != null) {
-			  
-			  var id = parseInt(c.getAttribute("id"));
-			  Game.editor.loadCode(c.innerHTML, id);
-			  
-			  c = c.nextElementSibling;
-		  };
-		  
-	  }
+	  Game.loadCode(answer);
 	  
 	  Game.tests = data.childNodes[0].getElementsByTagName("tests");
 	  if (Game.tests.length == 0) {
@@ -1241,17 +1242,21 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  // BlocklyApps.bindClick('buyButton', Game.buyButtonClick);
 	  BlocklyApps.bindClick('goalButton', Game.goalButtonClick);
 	  BlocklyApps.bindClick('instructionButton', Game.instructionButtonClick);
+	  BlocklyApps.bindClick('restartBlocksButton', Game.reloadInitialBlocksClick);
 	  BlocklyApps.bindClick('showBadgesButton', Game.openAchievementList);
 	  BlocklyApps.bindClick('logoffButton', Game.goBackToDashboard);
 	  
 	  BlocklyApps.bindClick('wizardFreeButton', Game.wizardFreeButtonClick);
 	  BlocklyApps.bindClick('wizardPayButton', Game.wizardPayButtonClick);
-	  
-	  //BlocklyApps.bindClick('xmlButton', Game.xmlButtonClick);
 
-	  // BlocklyApps.bindClick('moveDown', Game.moveDownButtonClick);
 	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  BlocklyApps.bindClick('moveRightTipBox', Game.moveRightTipBoxButtonClick);
+
+	  if (Game.missionType === "fixBugs") {
+		  $("#restartBlocksButton").css("display", "inline");
+	  } else
+		  $("#restartBlocksButton").css("display", "none");
+	  
 	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
@@ -1284,6 +1289,32 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  
 	  
 }; 
+
+Game.loadCode = function(answer) {
+	
+  var xml_ = transformStrToXml(answer);
+  
+  var root = xml_.firstElementChild;
+  
+  if (root.localName === "xml") {
+   	  // the old version
+	  
+	  Game.editor.loadCode(answer);
+
+  } else {
+	  
+	  var c = root.firstElementChild;
+	  while (c != null) {
+		  
+		  var id = parseInt(c.getAttribute("id"));
+		  Game.editor.loadCode(c.innerHTML, id);
+		  
+		  c = c.nextElementSibling;
+	  };
+	  
+  }
+  
+};
 
 /* This procedure is necessary for two reasons: 
  *    1 - depends on the viewport when the user finished his session
@@ -2263,7 +2294,7 @@ Game.resetButtons = function(hideVars) {
 Game.finishedRun = function() {
 	
 	// if it's in a fix bugs mission, start to count the attempts after the second run
-	if (Game.missionType === "fixBugs" && Game.howManyRuns > 1)
+	if ((Game.missionType !== "fixBugs") || (Game.missionType === "fixBugs" && Game.howManyRuns > 1))
 	
 		CountXP.newRun(); // after run, or after an error, then count the runs
 	
@@ -2964,6 +2995,7 @@ Game.removeChangeListeners = function() {
 	  MyBlocklyApps.unbindClick('logoffButton', Game.goBackToDashboard);
 
 	  MyBlocklyApps.unbindClick('instructionButton', Game.instructionButtonClick);
+	  MyBlocklyApps.unbindClick('restartBlocksButton', Game.reloadInitialBlocksClick);
 	  MyBlocklyApps.unbindClick('showBadgesButton', Game.openAchievementList);
 	  
 	  MyBlocklyApps.unbindClick('wizardFreeButton', Game.wizardFreeButtonClick);

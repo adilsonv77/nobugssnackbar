@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-20 17:07:34.294000",
+		"lastupdated": "2016-02-22 16:25:17.973000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -267,6 +267,7 @@
 	"LeaderBoard.TabsTime": "Tabs Time",
 	"LeaderBoard.TabsRuns": "Tabs Run",
 	"LeaderBoard.TabsContest": "Tabs Contest",
+	"Confirm.Reloadblocks": "All progress in program will be losed. Are you sure to confirm this action?",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"NoBugs.Achievements": "Achievements",
@@ -299,6 +300,7 @@
 	"NoBugs.helpFreeTooltip": "Shows a solution explanation. If your three stars are gone, you don't have any cust. Otherwise consumes all stars.",
 	"NoBugs.helpPayTooltip": "Deletes all the current blocks and gives the mission solution. The cust is showed in a confirm dialog after you click this button.",
 	"NoBugs.instructionTooltip": "Show learning content related to this mission.",
+	"NoBugs.restartBlocksTooltip": "Reinitialize by loading the initial blocks.",
 	"NoBugs.goalsTooltip": "See the objectives of this mission.",
 	"NoBugs.returnDashboardTooltip": "Return to the dashboard.",
 	"NoBugs.runTooltip": "Makes the snack man do what the blocks say [F10].",

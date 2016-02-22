@@ -79,28 +79,23 @@
   {call commonheader.messages /}
   {call achievements.body/}
   
-  <div id="selectMission" style="display: none">
+  <div id="selectMission" style="display: none;  position: absolute; width: 100%">
+     <div class="nobugs_background" style="width:  100%; height: 56px; position: fixed;">
+	</div> 
+     
      <div style="width: 960px; height: 100%; position: relative; margin-right: auto; margin-left: auto;">
-  	  <table width="100%" class="nobugs_background" id="topInfoTable">
+
+	  <table width="100%" class="mainBodyClass" id="topInfoTable">
 	    <tr>
-	      <td rowspan="2" style="width: 200px">
+	      <td style="width: 300px">
 	          <span id="selectMissionTitle">
-	           <img src="images/logotipo.png" height="60px" width="185px"/>
+	           <img src="images/logotipo.png" height="50px"/>
 	          </span>
 	      </td>
-	      <td id="playerName" class="nobugs_font" style="width:80%">
-	      </td>
-	      <td rowspan="2" class="farSide">
-	         <div>
-	  	     	 <button id="selectMissionLogoffButton" style="background-color: transparent; border: 0px" title="{msg meaning="NoBugs.logoffTooltip" desc="--"}Logoff the game.{/msg}">
-		        	<img id="logoffGame" src="images/logoff.png" style="width:32px; height:32px"/>
-		         </button>
-	         </div>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>
-	      	<div class="playerReward">
+	      <td id="playerName" class="nobugs_font" style="width:250px; font-size: 16px"></td>
+	      <td style="width: 50px"></td>
+	      <td colspan="2" style="width: 320px">
+      		<div class="playerReward">
 	      		<div class="playerRewardIcon" style="background-image: url('images/xp.png');"></div>
   				<span id="yourXP"></span>
 	      	</div>
@@ -109,10 +104,17 @@
 	      		<span id="yourCash"></span>
 	      	</div>
 	      </td>
-	    </tr>
+	      <td style="width: 40px; text-align: center">
+	      	<div>
+	  	     	 <button id="selectMissionLogoffButton" style="background-color: transparent; border: 0px" title="{msg meaning="NoBugs.logoffTooltip" desc="--"}Logoff the game.{/msg}">
+		        	<img id="logoffGame" src="images/logoff.png" style="width:32px; height:32px"/>
+		         </button>
+	         </div>
+	      </td>
+	     </tr>
 	  </table>
-  
-  	  <div id="playerInfo" style="text-align: center">
+	  
+   	  <div id="playerInfo" style="text-align: center">
   	  
       	<canvas id="avatarPlayer" width="288" height="464" style="width:100%"></canvas>
       	<button id="avatarEditorButton" class="nobugs_button" style="font-size: 14px; width: 100px"  title="{msg meaning="NoBugs.avatarTooltip" desc="--"}Change your avatar.{/msg}">
@@ -262,6 +264,10 @@
 	
 			        <button id="instructionButton" class="primary" style="display: none; margin:5px" title="{msg meaning="NoBugs.instructionTooltip" desc="--"}Show learning content related to this mission.{/msg}">
 			          <img src="images/instruction.png"/>
+			        </button>
+	
+			        <button id="restartBlocksButton" style="display: none; background-color: transparent; border: 0px; margin:5px" title="{msg meaning="NoBugs.restartBlocksTooltip" desc="--"}Reinitialize by loading the initial blocks.{/msg}">
+			          <img src="images/iconshowbadges.png"/>
 			        </button>
 	
 			        <button id="showBadgesButton" style="background-color: transparent; border: 0px; margin:5px" title="{msg meaning="NoBugs.Achievements" desc="--"}Achievements{/msg}">
