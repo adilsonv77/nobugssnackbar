@@ -453,13 +453,13 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen, c.xptospecialskin, c.xptoadd from classeslevels cl join classes c on (cl.classid = c.classid) join ("
+			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen, c.xptospecialskin, c.xptoadd, liberacaodt from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
 					+ " select classid, classlevelid, count(*) qtasresolvidas from missionsaccomplished ma join missions using (missionid) join classesmissions cm using (missionid, classid)"
 					+ "   where ma.userid = ? and ma.achieved = 'T' and missions.missionrepeatable = 0 group by classid, classlevelid) maz "
 					+ "  on cl.classid = maz.classid and cl.classlevelorder = maz.classlevelid "
-					+ " where liberacaodt <= now() "
+			//		+ " where liberacaodt <= now() " // it was removed because the game shows when this level will be available
 					+ " order by c.classname, classlevelid";
 
 			ps = bdCon.prepareStatement(s);
@@ -479,7 +479,8 @@ public class GameJdbcDao implements GameDao {
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
 						rs.getLong(3), rs.getLong(4), rs.getLong(5),
-						rs.getLong(6), new ArrayList<Integer[]>(), null };
+						rs.getLong(6), new ArrayList<Integer[]>(), null,
+						rs.getString(12)};
 
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));

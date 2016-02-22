@@ -233,6 +233,8 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 *   4 - class id
 	 *   5 - level id
 	 *   6 - missions that can be replayed []
+	 *   7 - 
+	 *   8 - liberation data
 	 */
 	/*
 	 * leaderBoard [...][n], where n are
@@ -459,7 +461,8 @@ Game.cityClick = function() {
 	if (Game.loginData.userLogged.lastTime == null) {
 		IntroGame.closeBeforeCity();
 	}
-	SelectMission.generateBoard();	
+	SelectLevel.generateBoard();
+	//SelectMission.generateBoard();	
 };
 
 
