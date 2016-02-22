@@ -17,28 +17,43 @@ Blockly.Blocks['controls_if'].init = function() {
 	
 };
 
+function initBasedOnMissionConfig(obj){
+	
+	var disableContextMenu = true;
+	var this_ = obj;
+    if (Game.toolbox) {
+    	if (Game.missionType === "fixBugs")
+    		this_.showNewVar = false;
+    	else {
+        	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+            	
+        		if (this_.inputList[0].fieldRow.length > 0)
+	        		// changes the context menu of the variable name
+	        		this_.inputList[0].fieldRow[0].menuGenerator_ = function() {
+	        	    	return [[this.getText(), this.getText()]];
+	        	    };
+        	} else
+        		disableContextMenu = false;
+    		
+    	}
+    	if (disableContextMenu) {
+    		this_.contextMenuMsg_ = null;
+    		this_.contextMenuType_ = null;
+    	    
+    		this_.customContextMenu = null;
+    		
+    	}
+	}
+    
+    return !disableContextMenu;
+}
+
 Blockly.Blocks['variables_get'].oldVariablesGetInit = Blockly.Blocks['variables_get'].init;
 Blockly.Blocks['variables_get'].init = function() {
 	
 
 	this.oldVariablesGetInit();
-    
-    if (Game.toolbox) {
-    	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
-        	// changes the context menu of the variable name
-    		this.showNewVar = false;
-    		//this.prevMenuGenerator = this.inputList[0].fieldRow[0].menuGenerator_;
-    	    /*
-    		this.inputList[0].fieldRow[0].menuGenerator_ = function() {
-    	    //	return [[this.getText(), this.getText()]];
-    	    };
-  			*/
-    	    this.contextMenuMsg_ = null;
-    	    this.contextMenuType_ = null;
-    	    
-    	    this.customContextMenu = null;
-    	}
-    }
+	initBasedOnMissionConfig(this);
     
 };
 
@@ -66,20 +81,7 @@ Blockly.Blocks['variables_set'].init = function() {
     this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
     
     // if it's a mission that does not accept adding new blocks, then is not allowed to change the variables
-    var useContextMenu = true;
-    if (Game.toolbox) {
-    	useContextMenu = Game.toolbox !== '<xml id="toolbox" style="display: none"></xml>';
-    }
-    if (!useContextMenu) {
-    	// changes the context menu of the variable name
-    	this.showNewVar = false;
-    	/*
-    	this.inputList[1].fieldRow[1].menuGenerator_ = function() {
-	    	return [[this.getText(), this.getText()]];
-	    };
-	    */
-	    this.customContextMenu = null;
-    };
+    var useContextMenu = initBasedOnMissionConfig(this);
     
     this.contextMenuMsg_ = (useContextMenu?Blockly.Msg.VARIABLES_SET_CREATE_GET:null);
     this.contextMenuType_ = (useContextMenu?'variables_get':null);
@@ -133,7 +135,7 @@ Blockly.Blocks['controls_whileUntil'].init = function() {
 Blockly.FieldTextInput.prototype.oldShowEditor_ = Blockly.FieldTextInput.prototype.showEditor_;
 
 Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>')
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs")
 		return;
 	
 	this.oldShowEditor_(opt_quietInput);
@@ -187,7 +189,7 @@ Blockly.Blocks['math_arithmetic'].init = function() {
       return TOOLTIPS[mode];
     });
 	  	
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
 		this.inputList[1].fieldRow[0].menuGenerator_ = function() {
@@ -243,7 +245,7 @@ Blockly.Blocks['logic_compare'].init = function() {
 
 	this.oldInit();
 	
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
+	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
 		this.inputList[1].fieldRow[0].menuGenerator_ = function() {

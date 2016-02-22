@@ -70,7 +70,7 @@
 		</customer>
 
 	</customers>
-	<objectives missionType="fixbugs" variableWindow="true"
+	<objectives missionType="fixBugs" variableWindow="true"
 				xpIndividual="20" xpFinal="10" xpTotalRun="9">
 				
 		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>

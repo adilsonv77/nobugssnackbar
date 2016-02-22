@@ -763,6 +763,10 @@ Game.missionLoaded = function(ret){
   var xml = ret[1];
   var mission = transformStrToXml(xml);
   
+  Game.missionType = mission.getElementsByTagName("objectives")[0].getAttribute("missionType");
+  if (Game.missionType == null)
+	  Game.missionType = "createsFromScracth";
+  
   Blockly.Blocks['controls_if'].useMutator = !(mission.childNodes[0].getAttribute("useIfMutator") === "false"); 
 	  
   var t = BlocklyApps.getMsg("_mission");
