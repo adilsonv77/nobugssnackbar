@@ -192,6 +192,7 @@
 	"Single.Equipments" : "Equipamentos",
 	"Single.NotEnabledToSeeLeaderBoard" : "Voc&#234; somente conseguir&#225; aceder essas informa&#231;&#245;es ap&#243;s concluir a miss&#227;o %0.",
 	"Single.SelectMission" : "Clique num quadro para selecionar a miss&#227;o.",
+	"Single.SelectLevel" : "Clique em um n&#250;mero para selecionar a fase que vai jogar.", 
 	"Single.Total" : "Total",
 	"Single.Coins" : "moedas",
 	"Single.BankNotes" : "notas",
@@ -309,8 +310,8 @@
 	"Avatar.EditorTitle"	: "Editor de Avatar",
 	"Avatar.EnableByXp" 	: "Para habilitar, conquiste ",
 	
-	"Intro.Dlg1" 			: "Ent&#227;o Manuel... \nn \nn J&#225; tens 20 anos e andas a fazer nada al&#233;m de comer e dormir.",
-	"Intro.Dlg2" 			: "Deixa ele Jo&#227;o. \nn \nn Em casa ele est&#225; a me ajudar imenso na cozinha.",
+	"Intro.Dlg1" 			: "Ent&#227;o %0... \nn \nn J&#225; tens 20 anos e andas a fazer nada al&#233;m de comer e dormir.",
+	"Intro.Dlg2" 			: "Deixa ele Jo&#227;o. \nn \nn Em casa est&#225; a me ajudar imenso na cozinha.",
 	"Intro.Dlg3" 			: "Cozinhar &#233; a segunda tarefa que mais gosto de fazer. A primeira &#233; comer.",
 	"Intro.Dlg4" 			: "Pois... mas j&#225; &#233; hora de te arranjares um trabalho.",
 	"Intro.Dlg5" 			: "Ent&#227;o meu neto. Que tal procurares um trabalho na &#225;rea de restaura&#231;&#227;o ?",

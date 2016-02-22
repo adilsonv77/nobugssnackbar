@@ -30,7 +30,7 @@ SelectLevel.generateBoard = function(evt) {
 	$("#selectLevel .levels").unbind('click').click(SelectLevel.levelSelected);
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogSelecLevel"), null, false, true, true, 
-			BlocklyApps.getMsg("Text_SelectMission"), {width: "750px", height: "530px"}, null, fClose);
+			BlocklyApps.getMsg("Text_SelectLevel"), {width: "750px", height: "530px"}, null, fClose);
 	
 	
 };

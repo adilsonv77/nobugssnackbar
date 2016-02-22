@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-22 16:49:06.762000",
+		"lastupdated": "2016-02-22 21:14:08.452000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -225,13 +225,14 @@
 	"Single.Queen": "Queen",
 	"Single.YourProgress": "Your progress",
 	"Single.SelectMission": "Click a square to select the mission",
+	"Single.SelectLevel": "Click a number to select a level to play",
 	"Single.Equipments": "Equipments",
 	"Single.AddNewEquipment": "Add new equipments in your snackbar.",
 	"Single.NotEnabledToSeeLeaderBoard": "We only can see these values after accomplish mission %0.",
 	"Tooltip.TabMoney": "Players ordered by their won XP .",
 	"Tooltip.TabTime": "Players ordered by their level and time spent.",
 	"Tooltip.TabRun": "Players ordered by their level and amount of attempts.",
-	"Intro.Dlg1": "Manuel...  &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; you are 20 years old and are doing nothing, only eat and drink.",
+	"Intro.Dlg1": "%0...  &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; you are 20 years old and are doing nothing, only eat and drink.",
 	"Intro.Dlg2": "Let him John  &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; He has helped me a lot in the kitchen.",
 	"Intro.Dlg3": "Cooking is the second thing I like to do. &amp;#60;br/&amp;#62;&amp;#60;br/&amp;#62; The first is to eat.",
 	"Intro.Dlg4": "Well... it is time to find work.",

@@ -1,0 +1,55 @@
+.levels, .levels_disabled {position: absolute; width: 34px; height: 25px; background-repeat: no-repeat; }
+
+#level_1 {top: 277px; left: 70px }
+#level_2 {top: 277px; left: 175px }
+#level_3 {top: 215px; left: 230px }
+#level_4 {top: 335px; left: 230px }
+#level_5 {top: 277px; left: 285px }
+#level_6 {top: 215px; left: 340px }
+#level_7 {top: 335px; left: 340px }
+#level_8 {top: 277px; left: 393px }
+#level_9 {top: 277px; left: 505px }
+#level_10 {top: 277px; left: 610px }
+#level_11 {top: 215px; left: 675px }
+#level_12 {top: 335px; left: 675px }
+
+#level_1.levels{background-image: url('../images/niveis_01.png')} 
+#level_2.levels{background-image: url('../images/niveis_02.png')} 
+#level_3.levels{background-image: url('../images/niveis_03.png')} 
+#level_4.levels{background-image: url('../images/niveis_04.png')} 
+#level_5.levels{background-image: url('../images/niveis_05.png')}
+#level_6.levels{background-image: url('../images/niveis_06.png')}  
+#level_7.levels{background-image: url('../images/niveis_07.png')} 
+#level_8.levels{background-image: url('../images/niveis_08.png')}
+#level_9.levels{background-image: url('../images/niveis_09.png')} 
+#level_10.levels{background-image: url('../images/niveis_10.png')} 
+#level_11.levels{background-image: url('../images/niveis_11.png')} 
+#level_12.levels{background-image: url('../images/niveis_12.png')} 
+
+#level_1.levels_disabled{background-image: url('../images/niveis_01_disabled.png')} 
+#level_2.levels_disabled{background-image: url('../images/niveis_02_disabled.png')} 
+#level_3.levels_disabled{background-image: url('../images/niveis_03_disabled.png')} 
+#level_4.levels_disabled{background-image: url('../images/niveis_04_disabled.png')} 
+#level_5.levels_disabled{background-image: url('../images/niveis_05_disabled.png')}
+#level_6.levels_disabled{background-image: url('../images/niveis_06_disabled.png')}  
+#level_7.levels_disabled{background-image: url('../images/niveis_07_disabled.png')} 
+#level_8.levels_disabled{background-image: url('../images/niveis_08_disabled.png')}
+#level_9.levels_disabled{background-image: url('../images/niveis_09_disabled.png')} 
+#level_10.levels_disabled{background-image: url('../images/niveis_10_disabled.png')} 
+#level_11.levels_disabled{background-image: url('../images/niveis_11_disabled.png')} 
+#level_12.levels_disabled{background-image: url('../images/niveis_12_disabled.png')} 
+
+#level_1.levels:hover {background-image: url('../images/niveis_01_hover.png'); cursor: pointer; }
+#level_2.levels:hover {background-image: url('../images/niveis_02_hover.png'); cursor: pointer; }
+#level_3.levels:hover {background-image: url('../images/niveis_03_hover.png'); cursor: pointer; }
+#level_4.levels:hover {background-image: url('../images/niveis_04_hover.png'); cursor: pointer; }
+#level_5.levels:hover {background-image: url('../images/niveis_05_hover.png'); cursor: pointer; }
+#level_6.levels:hover {background-image: url('../images/niveis_06_hover.png'); cursor: pointer; }
+#level_7.levels:hover {background-image: url('../images/niveis_07_hover.png'); cursor: pointer; }
+#level_8.levels:hover {background-image: url('../images/niveis_08_hover.png'); cursor: pointer; }
+#level_9.levels:hover {background-image: url('../images/niveis_09_hover.png'); cursor: pointer; }
+#level_10.levels:hover {background-image: url('../images/niveis_10_hover.png'); cursor: pointer; }
+#level_11.levels:hover {background-image: url('../images/niveis_11_hover.png'); cursor: pointer; }
+#level_12.levels:hover {background-image: url('../images/niveis_12_hover.png'); cursor: pointer; }
+
+.levelok {position:absolute; top:20px; left:8px; width:15px; height: 15px; background-image: url('../images/level-finished.png')}

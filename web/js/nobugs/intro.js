@@ -26,7 +26,8 @@
 
 'use strict';
 
-PreloadImgs.put("intro-background", "images/family_dinner.png", false);
+PreloadImgs.put("intro-background-f", "images/mesafamilia-f.png", false);
+PreloadImgs.put("intro-background-m", "images/mesafamilia-m.png", false);
 
 var IntroGame = {};
 
@@ -34,8 +35,10 @@ IntroGame.start = function () {
 	
 	IntroGame.track = new PlayAudio(["music/DailyBeetle.mp3"]);
 	
+	var gender = Game.loginData.userLogged.sex.toLowerCase();
+	
 	$("<div>").attr("id", "introback").append(
-		   $("<img>").css("width", "700px").attr("src", "images/family_dinner.png")
+		   $("<img>").css("width", "700px").attr("src", "images/mesafamilia-"+gender+".png")
 		).appendTo("body");
 	
 	$("<img>").attr("id", "dadTalk").attr("src", "images/father.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
@@ -50,7 +53,7 @@ IntroGame.start = function () {
 	
 	var dlg = new CharacterDialog(d.offsetLeft - 50 , (d.offsetTop + 340) , false, 
 			IntroGame.finish,
-			[{character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg1")}, 
+			[{character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg1").format(Game.loginData.userLogged.name.split(" ")[0])}, 
 			 {character: "momTalk", msg: BlocklyApps.getMsg("Intro_Dlg2")}, 
 			 {character: "youTalk", msg: BlocklyApps.getMsg("Intro_Dlg3")},
 			 {character: "dadTalk", msg: BlocklyApps.getMsg("Intro_Dlg4")},
@@ -117,24 +120,25 @@ IntroGame.focusAvatar = function() {
 	
 	var div = IntroGame.createDiv("focusAvatar"); 
 	
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_point_hand.png").css("width", "30%")
-						.css("position", "absolute").css("z-index", "2001").css("left", "100px").css("top", "50px");
+	var p = BlocklyApps.getBBox_(document.getElementById("avatarEditorButton"));
+	
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_point_hand.png").css("width", "410px")
+						.css("position", "absolute").css("z-index", "2001").css("left", (p.x+80) + "px").css("top", "50px");
 	img.prependTo("body");
 
-	var p = $("#avatarEditorButton").position();
-	
 	var focusButton = $("<button>").addClass("nobugs_button")
 										.attr("id", "focusButton")
 										.css("font-size", "14px")
-										.css("width", "80px")
+										.css("width", p.width+"px")
+										.css("height", p.height+"px")
 										.css("position", "relative")
-										.css("top", p.top)
-										.css("left", "10px")
+										.css("top", (p.y-5)+ "px")
+										.css("left", (p.x-13) + "px")
 										.html("Avatar");
 		
 	focusButton.click(IntroGame.closeFocusAvatar);
 	div.append(focusButton);
-	var cdialog = new CharacterDialog(375, 200, false, null, 
+	var cdialog = new CharacterDialog(p.x+350, p.y, false, null, 
 			[{character: null, msg: BlocklyApps.getMsg("Intro_AvatarEditor"), nextButton:null}]);
 
 	$("#talkDlg").css("z-index", "2000");
@@ -154,20 +158,22 @@ IntroGame.closeFocusAvatar = function() {
 
 IntroGame.closeAvatarEditor = function() {
 	
-	IntroGame.createDiv("closeAvatarEditor1").css("left", "526px");
-	IntroGame.createDiv("closeAvatarEditor2").css("height", "100px").css("width", "518px");
-	IntroGame.createDiv("closeAvatarEditor3").css("width", "110px").css("height", "305px").css("top", "100px");
-	IntroGame.createDiv("closeAvatarEditor4").css("top", "405px").css("width", "518px");
+	var b = BlocklyApps.getBBox_(document.getElementById("city_map"));
+
+	IntroGame.createDiv("closeAvatarEditor1").css("left", (b.x+b.width)+"px").css("height", "305px").css("top", "100px");
+	IntroGame.createDiv("closeAvatarEditor2").css("height", "100px").css("width", "100%");
+	IntroGame.createDiv("closeAvatarEditor3").css("width", (b.x-10)+"px").css("height", "305px").css("top", "100px");
+	IntroGame.createDiv("closeAvatarEditor4").css("top", "405px").css("width", "100%");
 	
 	var img = $("<img>").attr("id", "imgTeacher-hand").attr("src", "images/teacher_attention_hand-hand.png").css("width", "105px%")
-						.css("position", "absolute").css("z-index", "2001").css("left", "291px").css("top", "347px").css("height", "135px");
+						.css("position", "absolute").css("z-index", "2001").css("left", (b.x+130)+"px").css("top", "347px").css("height", "135px");
 	
 	img.prependTo("body");
 	img = $("<img>").attr("id", "imgTeacher-body").attr("src", "images/teacher_attention_hand-body.png").css("width", "296px")
-			.css("position", "absolute").css("z-index", "2001").css("left", "396px").css("top", "250px");
+			.css("position", "absolute").css("z-index", "2001").css("left", (b.x+130+105)+"px").css("top", "250px");
 	img.prependTo("body");
 	
-	var cdialog = new CharacterDialog(400, 200, false, IntroGame.closePresentTeacher, 
+	var cdialog = new CharacterDialog(b.x+300, 200, false, IntroGame.closePresentTeacher, 
 								[{character: null, msg: BlocklyApps.getMsg("Intro_ClickSchool"), nextButton:null}]);
 	
 	$("#talkDlg").css("z-index", "2000");
