@@ -1515,7 +1515,7 @@ Game.alertStarsByAttempt = function(finishFunction) {
 		
 	var talk = Game.loginData.userLogged.flags.TALK_STARSBYATTEMPT;
 	if (talk === undefined || talk === "false") {
-		var bbBox = BlocklyApps.getBBox_(document.getElementById("playerRewardMission"));
+		var bbBox = BlocklyApps.getBBox_(document.getElementById("missionIdentification"));
 		
 		var msgs = [];
 		msgs.push(BlocklyApps.getMsg("Intro_StarsByRun1"));

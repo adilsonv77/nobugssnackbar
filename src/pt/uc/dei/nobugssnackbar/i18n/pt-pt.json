@@ -338,7 +338,7 @@
 
 	"Intro.StarsByRun1"     : "A partir de agora algumas miss&#245;es ter&#227;o uma nova forma de ganhares estrelas: pelas tentativas.",
 	"Intro.StarsByRun2"     : "As miss&#245;es variam de 1 a 3 tentativas por estrela. Voc&#234; pode observar pr&#243;ximo ao contador de estrelas quantas tentativas ainda tens antes de perder uma estrela.",
-	"Intro.StarsByRun3"     : "Cada vez que voc&#234; inicia uma execu&#231;&#227;o ou depura&#231;&#227;o e n&#227;o consegue vencer a miss&#227;o, isso implica em consumir uma tentativa.",
+	"Intro.StarsByRun3"     : "Cada vez que voc&#234; inicia uma execu&#231;&#227;o ou depura&#231;&#227;o, isso implica em consumir uma tentativa.",
 	
 	"Profile.mail" 			: "E-mail",
 	"Profile.resetPassword" : "Refazer a senha",
