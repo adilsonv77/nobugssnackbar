@@ -857,6 +857,10 @@ Game.missionLoaded = function(ret){
 		  byTime = false;
 		  cfg = {aFraction: hero.objective.xpTotalRun/3, current: Game.howManyRuns };
 	  }
+	  
+	  if (Game.missionType === "fixBugs")
+		  cfg.current--;
+	  
 	  xpIndiv = hero.objective.xpIndividual;
   } else {
 	  byTime = false;
@@ -1155,6 +1159,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 
   Game.selectedTab = "";
   Game.editor.initialize(cfg); 
+  Game.editor.backgroundColor(Game.missionType === "fixBugs"?"#F5DAD4":"#FFF");
   Game.editor.addCommands(toolbox);
 
   Game.editor.zoom();
@@ -2257,7 +2262,10 @@ Game.resetButtons = function(hideVars) {
 
 Game.finishedRun = function() {
 	
-	CountXP.newRun(); // after run, or after an error, then count the runs
+	// if it's in a fix bugs mission, start to count the attempts after the second run
+	if (Game.missionType === "fixBugs" && Game.howManyRuns > 1)
+	
+		CountXP.newRun(); // after run, or after an error, then count the runs
 	
 };
 

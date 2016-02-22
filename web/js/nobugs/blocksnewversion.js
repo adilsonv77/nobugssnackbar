@@ -4,6 +4,8 @@
  */
 'use strict';
 
+Blockly.genUid.soup_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 Blockly.Blocks['controls_if'].oldControlsIfInit = Blockly.Blocks['controls_if'].init;
 
 Blockly.Blocks['controls_if'].init = function() {
@@ -570,4 +572,4 @@ Blockly.Block.prototype.setColour = function(colour) {
 	    this.updateColour();
 	  }
 
-}
+};

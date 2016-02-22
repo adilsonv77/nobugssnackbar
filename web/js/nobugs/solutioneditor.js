@@ -42,6 +42,10 @@ BlocklyEditor.prototype.initialize = function(cfg, i) {
 };
 
 
+BlocklyEditor.prototype.backgroundColor = function(color) {
+	$("#blockly .blocklySvg").css("background-color", color);
+};
+
 BlocklyEditor.prototype.showCountInstructions = function() { return true; };
 BlocklyEditor.prototype.hasDebug = function() { return true; };
 
@@ -476,6 +480,11 @@ CodeEditor.prototype.initialize = function() {
 	
     
 };
+
+CodeEditor.prototype.backgroundColor = function(color) {
+	
+};
+
 
 CodeEditor.prototype.addCommands = function(toolbox) {
 	
