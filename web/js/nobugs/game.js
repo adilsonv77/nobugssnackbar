@@ -817,6 +817,10 @@ Game.missionLoaded = function(ret){
   Game.missionType = mission.getElementsByTagName("objectives")[0].getAttribute("missionType");
   if (Game.missionType == null)
 	  Game.missionType = "createsFromScracth";
+  else
+	  if (Game.missionType == "fixBugs") {
+		  Game.allowsCreateVars = mission.getElementsByTagName("objectives")[0].getAttribute("allowsCreateVars");
+	  }
   
   Blockly.Blocks['controls_if'].useMutator = !(mission.childNodes[0].getAttribute("useIfMutator") === "false"); 
 	  
@@ -1558,15 +1562,15 @@ Game.verifyTestsInMission = function(finishFunction) {
 		var bbBox = BlocklyApps.getBBox_(document.getElementById("tests_qtd"));
 		
 		var msgs = [];
-		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest1") + " <img src='images/run.png' width='30'/> "
-			 + BlocklyApps.getMsg("Intro_RepeatTest2") + " <img src='images/tests.jpg' width='30'/> " + BlocklyApps.getMsg("Intro_RepeatTest3"));
+		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest1") + " <img src='images/iconplay.png'/> "
+			 + BlocklyApps.getMsg("Intro_RepeatTest2") + " <img src='images/tests.png' width='32'/> " + BlocklyApps.getMsg("Intro_RepeatTest3"));
 		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest4"));
 		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest5"));
 		msgs.push(BlocklyApps.getMsg("Intro_RepeatTest6") + "<img src='images/tests_finished.png'/>"  + BlocklyApps.getMsg("Intro_RepeatTest7"));
 		
 		Game.showShadow();
 
-		CharacterDialog.creates(bbBox.x+30, bbBox.y-120, fAfterThisTest, msgs) ;
+		CharacterDialog.creates(bbBox.x+30, bbBox.y-140, fAfterThisTest, msgs) ;
 		
 		Game.changeFlag("TALK_RUNTESTS", "true");
 	} else

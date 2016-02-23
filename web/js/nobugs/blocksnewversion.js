@@ -25,7 +25,7 @@ function initBasedOnMissionConfig(obj){
 	var this_ = obj;
     if (Game.toolbox) {
     	if (Game.missionType === "fixBugs")
-    		this_.showNewVar = false;
+    		this_.showNewVar = Game.allowsCreateVars === "true";
     	else {
         	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
             	

@@ -136,9 +136,11 @@ public class AchievementJdbcDao implements AchievementDao {
 			bdCon = getConnection();
 			List<Object[]> rl = new ArrayList<>();
 			
-			String sql = "select achievementtypeclasseid, title, query from achievementtypes join achievementtypesclasses using (achievementtypeid) left outer join achievements using (achievementtypeclasseid) where classid = ? and userid is null";
+			String sql = "select achievementtypeclasseid, title, query from achievementtypes join achievementtypesclasses using (achievementtypeid) "
+								+ "left outer join (select * from achievements where userid=?) achieveusers using (achievementtypeclasseid) where classid = ? and userid is null";
 			PreparedStatement ps = bdCon.prepareStatement(sql);
-			ps.setLong(1, classId);
+			ps.setLong(1, userId);
+			ps.setLong(2, classId);
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
