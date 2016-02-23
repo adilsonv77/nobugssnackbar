@@ -2208,65 +2208,67 @@ public class GameJdbcDao implements GameDao {
 							+ " from torneios left outer join (select torneiouser, torneioid from torneiosusers where torneiouser = ?) tu using (torneioid)");
 			ps.setLong(1, userId);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
-			
-			// TODO: at this moment it works only with one contest
-			
-			boolean jaIniciouTorneio = rs.getBoolean(4);
-			boolean finalizouTorneio = rs.getBoolean(5);
-
-			HashMap<String, String> m = new HashMap<String, String>();
-			if (rs.getLong(3) > 0 && jaIniciouTorneio && !finalizouTorneio) {
-				ret[0] = true;
+			if (rs.next()) {
 				
-				ret[1] = m;
-				// jaIniciouTorneio
-				if (rs.getBoolean(6)) {
-					
-					m.put("id", "-1");
-					m.put("name", "O torneio já iniciou mas na primeira hora não é exibido o ranking.");
-					
-				} else {
-					if (rs.getBoolean(7)) {
-						m.put("id", "-1");
-						m.put("name", "Faltam menos de duas horas para finalizar o torneio. O ranking volta a ser exibido meia hora após o término do torneio.");
-					} else {
-						ps.close();
-						m.put("id", userId+"");
-						m.put("name", userName);
-						m.put("pos", positionContest(bdCon, userId));
-						
-					}
-				}
-			} else {
-				if (rs.getLong(3) > 0) {
-					
-					ret[0] = true;
-					ret[1] = m;
-					
-					if (!jaIniciouTorneio) {
-						
-						m.put("id", "-1");
-						m.put("name", "O torneio inicia às " + rs.getString(1));
-						
-					} else {
+				// TODO: at this moment it works only with one contest
+				
+				boolean jaIniciouTorneio = rs.getBoolean(4);
+				boolean finalizouTorneio = rs.getBoolean(5);
 
-						if (rs.getBoolean(8)) {
-							
-							m.put("id", "-1");
-							m.put("name", "O torneio já terminou. Entretanto, o ranking só será exibido meia hora após o término.");
-							
+				HashMap<String, String> m = new HashMap<String, String>();
+				if (rs.getLong(3) > 0 && jaIniciouTorneio && !finalizouTorneio) {
+					ret[0] = true;
+					
+					ret[1] = m;
+					// jaIniciouTorneio
+					if (rs.getBoolean(6)) {
+						
+						m.put("id", "-1");
+						m.put("name", "O torneio já iniciou mas na primeira hora não é exibido o ranking.");
+						
 					} else {
+						if (rs.getBoolean(7)) {
+							m.put("id", "-1");
+							m.put("name", "Faltam menos de duas horas para finalizar o torneio. O ranking volta a ser exibido meia hora após o término do torneio.");
+						} else {
 							ps.close();
 							m.put("id", userId+"");
 							m.put("name", userName);
 							m.put("pos", positionContest(bdCon, userId));
 							
 						}
-					
+					}
+				} else {
+					if (rs.getLong(3) > 0) {
+						
+						ret[0] = true;
+						ret[1] = m;
+						
+						if (!jaIniciouTorneio) {
+							
+							m.put("id", "-1");
+							m.put("name", "O torneio inicia às " + rs.getString(1));
+							
+						} else {
+
+							if (rs.getBoolean(8)) {
+								
+								m.put("id", "-1");
+								m.put("name", "O torneio já terminou. Entretanto, o ranking só será exibido meia hora após o término.");
+								
+						} else {
+								ps.close();
+								m.put("id", userId+"");
+								m.put("name", userName);
+								m.put("pos", positionContest(bdCon, userId));
+								
+							}
+						
+						}
 					}
 				}
 			}
+			
 			ps.close();
 			
 		} finally {
