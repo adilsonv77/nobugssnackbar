@@ -184,7 +184,7 @@
 			<arg line="${js.home}/window_prompt.js" />
 			<arg line="${js.home}/missionsselection.js" />
 			<arg line="${js.home}/solutioneditor.js" />
-			<arg line="${js.home}/achievement.js" />
+			<arg line="${js.home}/achievements.js" />
 			
 			<classpath>
 				<path refid="lib.base" />

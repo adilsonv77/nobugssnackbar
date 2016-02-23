@@ -584,6 +584,7 @@ Objective.CustomDeliver.prototype.init = function(elem) {
 	p.place = elem.getAttribute("place");
 	p.value = elem.getAttribute("value");
 	p.text = elem.getAttribute("text");
+	p.fullText = elem.getAttribute("fullText");
 	
 	return p;
 };
@@ -633,6 +634,9 @@ Objective.CustomDeliver.prototype.checkObjective = function(options, objective) 
 };
 
 Objective.CustomDeliver.prototype.createExplanationItem = function(objective) {
+	if (objective.fullText === "true")
+		return objective.text;
+	
 	return Objective.createExplanationItemPlacePos("explanation_customdeliver", objective, objective.text);
 };
 
