@@ -639,33 +639,34 @@
   </div>
 
   <div id="dialogEditProfile" class="dialogHiddenContent">
-    <table>
+    <table style="width:100%">
     	<tr>
-    		<td colspan="3"><div style="border: 1px solid gray; padding: 10px"><span id="profile_user_nick"></span> (<span id="profile_user_name"></span>)</div></td>
+    		<td colspan="3"><div style="background-color: #fff7eb; padding: 10px"><span id="profile_user_nick"></span> (<span id="profile_user_name"></span>)</div></td>
     	</tr>
     	<tr>
-    		<td>{msg meaning="Profile.mail" desc="--"}E-mail{/msg}:</td>
-    		<td colspan="2"><input id="profile_mail" name="profile_user_mail" type="text" class="nobugs_inputs" value="" style="width:550px"/></td>
+    		<td colspan="2">{msg meaning="Profile.mail" desc="--"}E-mail{/msg} : &nbsp;
+    		   <input id="profile_mail" name="profile_user_mail" type="text" class="nobugs_inputs" value="" style="width:521px"/></td>
     	</tr>
     	
     	<tr>
-    		<td colspan="3" style="text-align:left">
+    		<td colspan="2" style="text-align:left">
     			<input name="profile_user_resetpassword" id="profile_user_checkbox" type="checkbox" onclick="Game.enablePasswordFields()"/><label for="profile_user_checkbox">{msg meaning="Profile.resetPassword" desc="--"}Reset the password{/msg}</label>
     		</td>
     	</tr>
     	<tr>
-    		<td>{msg meaning="Profile.password" desc="--"}Password{/msg}:</td>
-    		<td><input name="profile_user_password" type="password" class="nobugs_inputs" disabled="disabled" maxlength="10" onkeyup="Game.verifyRetypePassword()"/></td>
-    		<td></td>
+    		<td>{msg meaning="Profile.password" desc="--"}Password{/msg} :</td>
+    		<td>{msg meaning="Profile.retypePassword" desc="--"}Retype Password{/msg} :</td>
     	</tr>
     	<tr>
-    		<td>{msg meaning="Profile.retypePassword" desc="--"}Retype Password{/msg}:</td>
+    		<td><input name="profile_user_password" type="password" class="nobugs_inputs" disabled="disabled" maxlength="10" onkeyup="Game.verifyRetypePassword()"/></td>
     		<td><input name="profile_user_retypepassword" type="password" class="nobugs_inputs" disabled="disabled" maxlength="10" onkeyup="Game.verifyRetypePassword()"/></td>
-    		<td style="height: 40px; width: 350px"><span id="profileErrorRetypePassw" style="color: red;"></span></td>
+    	</tr>
+    	<tr>
+    		<td colspan="2" style="height: 40px;"><span id="profileErrorRetypePassw" style="color: red;"></span></td>
     	</tr>
     	
     	<tr>
-    		<td colspan="3" style="text-align: right">
+    		<td colspan="2" style="text-align: right">
     			<button id="profile_user_save" class="nobugs_button" onclick="Game.saveProfile()">{msg meaning="Profile.save" desc="--"}Save{/msg}</button>
     			<button class="nobugs_button" onclick="MyBlocklyApps.hideDialog(false)">{msg meaning="Profile.cancel" desc="--"}Cancel{/msg}</button>
     		</td>

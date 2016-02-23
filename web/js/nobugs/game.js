@@ -543,7 +543,7 @@ Game.openProfileEditor = function() {
 	$("#popenMissionrofileErrorRetypePassw").html("");
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogEditProfile"), null, false, true, true, 
-			$("#profileEditorButton").html(), {width:"700px"}, function() {$("#profile_mail").attr("placeHolder", "");});
+			$("#profileEditorButton").html(), {width:"600px"}, function() {$("#profile_mail").attr("placeHolder", "");});
 	
 };
 
