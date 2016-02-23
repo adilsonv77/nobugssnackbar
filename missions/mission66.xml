@@ -4,12 +4,25 @@
 
 		<page type="goal">
 		<![CDATA[
+Observe que a cor de fundo do ambiente mudou para vermelho. Isso indica que esta 
+ &#233; uma miss&#227;o em que &#233; fornecida uma solu&#231;&#227;o para o problema, mas essa solu&#231;&#227;o
+ tem um ou mais erros. Precisas descobrir e consertar o erro. Para corrigir o erro pode ser incluir, remover ou 
+ trocar a posi&#231;&#227;o de blocos, ou alterar os par&#226;metros dos blocos.<br/><br/>
+Nesse tipo de miss&#227;o a primeira execu&#231;&#227;o n&#227;o conta na quantidade de tentativas para ganhar pontos. Aproveite bem essa execu&#231;&#227;o
+ para descobrir a maior quantidade poss&#237;vel de erros.<br/><br/>
+Podes chegar num ponto que &#233; melhor recome&#231;ar com a solu&#231;&#227;o original. Utilize o
+ bot&#227;o <img src="images/iconreloadcode.png"/> para apagar tudo que j&#225; fizestes e recarregar a solu&#231;&#227;o inicial.
 		]]>
 		</page>
-
 		
 		<page type="goal">
-		<![CDATA[
+		<![CDATA[ 
+A solu&#231;&#227;o est&#225; pronta na &#225;rea de edi&#231;&#227;o, mas com UM problema.  
+		<br/><br/>
+Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o ser&#225; contada para receber pontos.
+  Aproveite para usar essa execu&#231;&#227;o para descobrir o que falta no programa para atender os objetivos. <br/><br/>
+A execu&#231;&#227;o &#233; considerada desde o primeiro momento que clicas no bot&#227;o de depura&#231;&#227;o e termina 
+  quando clicas em <img src="images/iconstop.png"/> ou o programa encerrar por algum erro.
 		]]>
 		</page>
 		
@@ -24,6 +37,11 @@
 	</hints>
 
 	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="goToCooler" show="true" />
 	</commands>
 
 	<cooker>initial</cooker>
@@ -71,12 +89,56 @@
 		</customer>
 
 	</customers>
-	<objectives buttonDebug="false" buttonRun="false"
-		xpFinal="10" xpIndividual="20" xpTotalRun="6" variableWindow="false">
-		<objective status="off">music</objective>
-		<objective status="on">music</objective>
+	<objectives buttonDebug="true" buttonRun="false"
+		ordered="true"
+		missionType="fixBugs"
+		xpFinal="2" xpIndividual="3" xpTotalRun="6" variableWindow="false">
+		
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective>goesToCooler</objective>
+		<objective pos="2" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+		
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="move_goToBarCounter"  x="10" y="150">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<next>
+				<block type="move_goToDisplay" >
+					<next>
+						<block type="move_goToBarCounter" >
+							<value name="VALUE">
+								<block type="math_number">
+									<field name="NUM">2</field>
+								</block>
+							</value>
+							<next>
+								<block type="move_goToDisplay" >
+									<next>
+										<block type="move_goToBarCounter" >
+											<value name="VALUE">
+												<block type="math_number">
+													<field name="NUM">3</field>
+												</block>
+											</value>
+											<next>
+												<block type="move_goToDisplay" ></block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
 	</xml>
 </mission>

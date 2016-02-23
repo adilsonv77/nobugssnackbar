@@ -173,7 +173,7 @@ Tests.performQuestion = function(blankValue, finished) {
 	if (valueAnswer == -1)
 		timeSpent = CountXP.aFraction; // blank option always consider using the total time
 	else
-		timeSpent = (CountXP.times*CountXP.aFraction) + CountXP.current;
+		timeSpent = (CountXP.getTimes()*CountXP.aFraction) + CountXP.getCurrent();
 	
 	UserControl.saveTestQuestionAnswer(
 			parseInt(answer.testId),

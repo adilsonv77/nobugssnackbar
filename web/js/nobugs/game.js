@@ -671,6 +671,7 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 
 Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	
+  Blockly.clipboard_ = [];
   Game.loadingMission = true;
   
   Game.loginData.clazzId = parseInt(clazzId);
@@ -689,7 +690,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   if (Game.loginData.userLogged.showSound) {
 
 	  $("#musicControl").css("display", "inline");
-      CountXP.times = undefined; // reset this attribute
+      CountXP.resetTimes();
 	  Game.changeMusicControlButton( !(Game.loginData.userLogged.flags.MUSIC_DISABLED === "true") );
  
   } else
@@ -888,7 +889,9 @@ Game.missionLoaded = function(ret){
 	  }
 	  
 	  if (Game.missionType === "fixBugs")
-		  cfg.current--;
+		  cfg.dif = -1;
+	  else
+		  cfg.dif = 0;
 	  
 	  xpIndiv = hero.objective.xpIndividual;
   } else {
@@ -1188,7 +1191,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 
   Game.selectedTab = "";
   Game.editor.initialize(cfg); 
-  Game.editor.backgroundColor(Game.missionType === "fixBugs"?"#F5DAD4":"#FFF");
+  Game.editor.backgroundColor(Game.missionType === "fixBugs"?"#F5DAD4":(Game.missionType === "sort"?"#AFD8C1":"#FFF"));
   Game.editor.addCommands(toolbox);
 
   Game.editor.zoom();
@@ -1930,8 +1933,8 @@ Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
 	Game.editor.hideChaff();
     Blockly.WidgetDiv.hide();
     
-    if (CountXP.times !== undefined)
-    	Game.tracks[CountXP.times].stop();
+    if (CountXP.getTimes() !== undefined)
+    	Game.tracks[CountXP.getTimes()].stop();
     
     var ret = Game.closeBlockEditorStuffs();
     
@@ -2250,8 +2253,8 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		$("#musicOff").css("display", "none");
 		$("#musicOn").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_enableMusic") );
-		if (CountXP.times != undefined)
-			Game.tracks[CountXP.times].stop();
+		if (CountXP.getTimes() != undefined)
+			Game.tracks[CountXP.getTimes()].stop();
 		
 	} else {
 	
@@ -2264,8 +2267,8 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		$("#musicOn").css("display", "none");
 		$("#musicOff").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_disableMusic") );
-		if (CountXP.times != undefined)
-			Game.tracks[CountXP.times].play();
+		if (CountXP.getTimes() != undefined)
+			Game.tracks[CountXP.getTimes()].play();
 		
 	}
 	
@@ -2296,9 +2299,9 @@ Game.resetButtons = function(hideVars) {
 
 Game.finishedRun = function() {
 	
-	// if it's in a fix bugs mission, start to count the attempts after the second run
+/*	// if it's in a fix bugs mission, start to count the attempts after the second run
 	if ((Game.missionType !== "fixBugs") || (Game.missionType === "fixBugs" && Game.howManyRuns > 1))
-	
+*/	
 		CountXP.newRun(); // after run, or after an error, then count the runs
 	
 };

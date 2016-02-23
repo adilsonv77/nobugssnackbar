@@ -42,8 +42,8 @@ IntroGame.start = function () {
 		).appendTo("body");
 	
 	$("<img>").attr("id", "dadTalk").attr("src", "images/father.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
-	$("<img>").attr("id", "youTalk").attr("src", "images/you.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
-	$("<img>").attr("id", "momTalk").attr("src", "images/mother.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
+	$("<img>").attr("id", "youTalk").attr("src", "images/you-"+gender+".png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
+	$("<img>").attr("id", "momTalk").attr("src", "images/mother_.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
 	$("<img>").attr("id", "grandmomTalk").attr("src", "images/grandmother.png").addClass("dlgCharPhoto").css("display", "none").appendTo("body");
 	
 	MyBlocklyApps.showDialog(document.getElementById("introback"), 
@@ -97,7 +97,7 @@ IntroGame.createDiv = function(id) {
 
 IntroGame.presentTeacher = function(fret) {
 	IntroGame.createDiv("presentTeacher");
-	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_info.png").css("width", "25%")
+	var img = $("<img>").attr("id", "imgTeacher").attr("src", "images/teacher_info.png").css("width", "300px")
 						.css("position", "absolute").css("z-index", "2001").css("left", "150px").css("top", "50px");
 	img.prependTo("body");
 	

@@ -39,18 +39,6 @@ Tamb&#233;m j&#225; vais aprender a falar. Utilize o bloco <imghex id="talk">895
 
 		<page type="goal">
 		<![CDATA[
-Observe que a cor de fundo do ambiente mudou para vermelho. Isso indica que esta 
- &#233; uma miss&#227;o em que &#233; fornecida uma solu&#231;&#227;o para o problema, mas essa solu&#231;&#227;o
- tem um ou mais erros. Precisas descobrir e consertar o erro.<br/><br/>
-Nesse tipo de miss&#227;o a primeira execu&#231;&#227;o &#233; um brinde. Aproveite bem essa execu&#231;&#227;o
- para descobrir a maior quantidade poss&#231;vel de erros.<br/><br/>
-Podes chegar num ponto que &#233; melhor recome&#231;ar com a solu&#231;&#227;o original. Utilize o
- bot&#227;o <img src="images/iconreloadcode.png"/> para apagar tudo que j&#225; fizestes e recarregar a solu&#231;&#227;o inicial.
-		]]>
-		</page>
-		
-		<page type="goal">
-		<![CDATA[
 Existe apenas um erro nessa solu&#231;&#227;o. Execute passo-a-passo (com o bot&#227;o <img src="images/icondebug.png"/> ) para aprender 
  o que os novos blocos fazem e descobrir o erro no programa. <br/><br/>
 Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o ser&#225; contada para receber pontos. 

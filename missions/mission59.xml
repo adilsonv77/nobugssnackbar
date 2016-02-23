@@ -65,7 +65,7 @@
 		</customer>
 
 	</customers>
-	<objectives ordered="true" buttonDebug="false" xpFinal="10" noXP="true">
+	<objectives missionType="sort" ordered="true" buttonDebug="false" xpFinal="10" noXP="true">
 		<objective pos="1" place="counter">goesTo</objective>
 		<objective pos="3" place="counter">goesTo</objective>
 	</objectives>

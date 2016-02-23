@@ -7,6 +7,8 @@ var CountXP = {};
 
 CountXP.init = function(canvasId, showCanvas) {
 	
+	CountXP.timeReset = true;
+
 	if (CountXP.ctx != null)
 		CountXP.stop(true);
 	
@@ -16,17 +18,19 @@ CountXP.init = function(canvasId, showCanvas) {
 	
 };
 
-//cfg: {aFraction, current}
+//cfg: {aFraction, current, dif}
 CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime, noXP) {
 	
 	CountXP.starting = true;
 
+	CountXP.dif = 0;
+	
 	$("#missionXP2").css("display", (noXP?"none":"inline"));
 	$("#missionXP3").css("display", (noXP?"none":"inline"));
 	$("#stopWatch").css("display", (noXP?"none":"inline"));
 
 	if (noXP) {
-		CountXP.times = 0;
+		CountXP.current = 0;
 		$("#xpPoints").html(pointsPerStar);
 		if (eventChangeStars)
 			eventChangeStars(0);
@@ -34,6 +38,9 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	
 	if (noXP || !this.showCanvas)
 		return;
+	
+	if (cfg.dif == undefined)
+		cfg.dif = 0;
 	
 	CountXP.byTime = byTime;
 	if (byTime)
@@ -43,6 +50,7 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 		CountXP.lastHowManyRuns = Game.howManyRuns;
 	}
 		
+	CountXP.dif = cfg.dif;
 	
 	CountXP.runImg = PreloadImgs.get("run");
 	CountXP.runOutImg = PreloadImgs.get("runout");
@@ -52,21 +60,16 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	CountXP.showPoints = showPoints;
 	
 	CountXP.aFraction = cfg.aFraction;
-	CountXP.current = cfg.current % cfg.aFraction;
+	CountXP.current = cfg.current;
+	CountXP.freeWizardConsumed = cfg.freeWizardConsumed;
 	
-	if (cfg.freeWizardConsumed) {
-		CountXP.times = 3;
-	} else {
-		
-		CountXP.times = Math.floor(cfg.current / cfg.aFraction);
-		CountXP.times = (CountXP.times > 3?3:CountXP.times);
-		
-	}
+	CountXP.timeReset = false;
 	
 	CountXP.pointsFinal = pointsFinal;
 	CountXP.changeImgs();
 	
-	if ((CountXP.times < 3) && (CountXP.showPoints)) {
+	
+	if ((CountXP.getTimes() < 3) && (CountXP.showPoints)) {
 		$("#xpPoints").html("x" + pointsPerStar);
 		CountXP.draw();
 	}
@@ -83,7 +86,7 @@ CountXP.start = function() {
 	if (!CountXP.byTime)
 		return;
 	
-	if (CountXP.times < 3) {
+	if (CountXP.getTimes() < 3) {
 		CountXP.tick();
 		CountXP.handler = setInterval(CountXP.tick, 1000);
 	}
@@ -112,17 +115,15 @@ CountXP.tick = function() {
 };
 
 CountXP.sumCurrent = function() {
-	if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
+	if (CountXP.stopShowingWhenReachTheTime && CountXP.getTimes() > 0) {
 		CountXP.stop(false);
 	}
 	
 	CountXP.current++;
-	if (CountXP.current >= CountXP.aFraction) {
-		CountXP.times++;
+	if (CountXP.getCurrent() > 0 && CountXP.getCurrent()%CountXP.aFraction == 0) {
 		
 		CountXP.changeImgs();
 	
-		CountXP.current = 0;
 	}
 };
 
@@ -143,8 +144,8 @@ CountXP.draw = function() {
 		
 		ctx.stroke();
 
-		var clockPointer = CountXP.current/CountXP.aFraction;
-		if (CountXP.stopShowingWhenReachTheTime && CountXP.times > 0) {
+		var clockPointer = CountXP.getCurrent()/CountXP.aFraction; // isso precisa ser revisto pois foi depois de umas mudancas drasticas 
+		if (CountXP.stopShowingWhenReachTheTime && CountXP.getTimes() > 0) {
 			clockPointer = 1;
 		} 
 		ctx.beginPath();
@@ -181,8 +182,9 @@ CountXP.draw = function() {
 		
 
 		y+=4;
-		for (var i = 0; i < CountXP.aFraction; i++) {
-			ctx.drawImage((i<(CountXP.aFraction - CountXP.current)?CountXP.runImg:CountXP.runOutImg), 6+(i*(2+sizeImg)), y, sizeImg, sizeImg);
+		var yy = CountXP.aFraction - (CountXP.getCurrent()%CountXP.aFraction);
+		for (var i = 0; i < CountXP.aFraction;  i++) {
+			ctx.drawImage((i>=yy?CountXP.runOutImg:CountXP.runImg), 6+(i*(2+sizeImg)), y, sizeImg, sizeImg);
 		}
 		
 		
@@ -198,13 +200,13 @@ CountXP.changeImgs = function() {
 		
 	
 	for (var x = 0; x < 3; x++) {
-		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(3-CountXP.times >= (x+1)?"xp.png":"xp_disabled.png") + ")";
+		document.getElementById("missionXP" + (x+1)).style.backgroundImage = "url(images/"+(3-CountXP.getTimes() >= (x+1)?"xp.png":"xp_disabled.png") + ")";
 	}
 	
 	if (CountXP.eventChangeStars)
-		CountXP.eventChangeStars(CountXP.times);
+		CountXP.eventChangeStars(CountXP.getTimes());
 
-	if (CountXP.times >= 3) {
+	if (CountXP.getTimes() >= 3) {
 		
 		CountXP.clearTheWatch();
 		
@@ -212,12 +214,12 @@ CountXP.changeImgs = function() {
 };
 
 CountXP.getEnabledStars = function() {
-	return 3 - CountXP.times;
+	return 3 - CountXP.getTimes();
 };
 
 CountXP.setConsumedMaxStars = function() {
 	CountXP.stop();
-	CountXP.times = 3; 
+	CountXP.consumedMaxStars = true;
 	CountXP.changeImgs();
 };
 
@@ -229,14 +231,40 @@ CountXP.clearTheWatch = function() {
 	
 };
 
+CountXP.resetTimes = function() {
+	CountXP.timeReset = true;
+};
+
+CountXP.getTimes = function() {
+	if (CountXP.timeReset)
+		return undefined;
+	
+	var ret = 0;
+	if (CountXP.freeWizardConsumed || CountXP.consumedMaxStars) {
+		ret = 3;
+	} else {
+		
+		ret = Math.floor(CountXP.getCurrent() / CountXP.aFraction);
+		ret = (ret > 3?3:ret);
+		
+	}
+	return ret;
+};
+
+CountXP.getCurrent = function() {
+	var ret = CountXP.current + CountXP.dif;
+	ret = (ret < 0?0:ret);
+	return ret;
+};
+
 CountXP.newRun = function() {
-	if (CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.times < 3) {
+	if (CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.getTimes() < 3) {
 		
 		CountXP.lastHowManyRuns = Game.howManyRuns; // security to avoid enter into this "if" when it's not time do to this
 		
 		CountXP.sumCurrent();
 		
-		if (CountXP.times < 3)
+		if (CountXP.getTimes() < 3)
 		  CountXP.draw();
 		
 	}
@@ -248,7 +276,7 @@ CountXP.updateStars = function() {
 	if (CountXP.byTime) 
 		return;
 	
-	if (CountXP.times >= 3)
+	if (CountXP.getTimes() >= 3)
 		CountXP.clearTheWatch();
 	else
 		CountXP.draw();

@@ -97,7 +97,7 @@
 		</customer>
 
 	</customers>
-	<objectives ordered="true" buttonDebug="true" buttonRun="false"
+	<objectives missionType="sort" ordered="true" buttonDebug="true" buttonRun="false"
 		xpFinal="10" noXP="true" variableWindow="false">
 		<objective pos="1" place="counter">goesTo</objective>
 		<objective>goesToDisplay</objective>
