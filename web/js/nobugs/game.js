@@ -903,7 +903,6 @@ Game.missionLoaded = function(ret){
   var byTime = true;
   var cfg = {};
   var xpIndiv;
-  cfg.freeWizardConsumed = ret[7] === "T";
   if (objectives.getAttribute("noXP") == null) {
 	  
 	  if (hero.objective.xpTotalRun == null) {
@@ -918,6 +917,7 @@ Game.missionLoaded = function(ret){
 	  else
 		  cfg.dif = 0;
 	  
+	  cfg.freeWizardConsumed = ret[7] === "T";
 	  xpIndiv = hero.objective.xpIndividual;
   } else {
 	  byTime = false;
@@ -1521,12 +1521,14 @@ Game.alertWizardFree = function(finishFunction) {
 	var talk = Game.loginData.userLogged.flags.TALK_WIZARDFREE;
 	if (!Game.missionView && Game.wizardFreeContent.length > 0 && (talk === undefined || talk === "false")) {
 		
-		var content = $("<div/>")
-							.append("Observe quando esse bot&#227;o for visivel, indica que podes obter uma ajuda do jogo, consumindo todas as estrelas dessa miss&#227;o.");
+		var content = 
+			$("<div/>")
+			    .append("<img src='images/help_free.png' style='float:left;padding-right: 15px'/>")
+				.append(BlocklyApps.getMsg("explanation_wizard")); 
 		Hints.stopHints();
 		var bbBox = BlocklyApps.getBBox_(document.getElementById("wizardFreeButton"));
-		var bY = 0;
-		var bX = bbBox.x+35;
+		var bY = 100;
+		var bX = bbBox.x-450;
 	
 		MyBlocklyApps.showDialog(content[0], null, true, true, false, "", 
 				{width: "500px", left: bX + "px", top: bY + "px"}, function(){finishFunction();}, 

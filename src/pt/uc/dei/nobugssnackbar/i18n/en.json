@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-02-23 17:37:25.746000",
+		"lastupdated": "2016-02-23 18:56:14.172000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -196,6 +196,7 @@
 	"Explane.SellObjective": "Sell at least $ %0 (it will computed based on charging)",
 	"Explane.CallTimesObjective": "The block %0 is not called more than %1 time(s).",
 	"Explane.Ordered": "The commands above must accomplish exactly in this order.",
+	"Explane.Wizard": "TODO",
 	"Descr.LogicOperation": "Logic operator",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",

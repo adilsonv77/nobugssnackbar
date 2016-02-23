@@ -234,6 +234,7 @@
 	"Explane.SellObjective":"Venda pelo menos $%0 (&#233; computado com base nas cobran&#231;as)",
 	"Explane.CallTimesObjective":"N&#227;o use o bloco %0 mais do que %1 vez(es).",
 	"Explane.Ordered" : "Precisa cumprir os objetivos exatamente nessa ordem.",
+	"Explane.Wizard" : "Quando esse bot&#227;o for vis&#237;vel, indica que o jogo pode lhe mostrar praticamente a solu&#231;&#227;o. Entretanto, isso consumir&#225; todas as estrelas dessa miss&#227;o.",
 	
 	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
 	
