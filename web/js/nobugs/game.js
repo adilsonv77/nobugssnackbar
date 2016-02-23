@@ -236,6 +236,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 *   6 - missions that can be replayed []
 	 *   7 - 
 	 *   8 - liberation data
+	 *   9 - pre-requisite level
 	 */
 	/*
 	 * leaderBoard [...][n], where n are

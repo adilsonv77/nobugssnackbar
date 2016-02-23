@@ -13,18 +13,34 @@ SelectLevel.generateBoard = function(evt) {
 		
 		$("#level_"+(i+1)).removeClass();
 		if (Date.now() >= date) {
-			$("#level_"+(i+1)).addClass("levels");
 			
 			if (levelInfo[2] == levelInfo[3]) {
+				$("#level_"+(i+1)).addClass("levels");
 				var levelOk = $("<div class='levelok' id='levelok_" + (i+1) + "'/>");
 				$("#level_"+(i+1)).append(levelOk);
+			} else {
+				if (levelInfo[9] == 0)
+					$("#level_"+(i+1)).addClass("levels");
+				else {
+					
+					var preReq = Game.loginData.missionHist[levelInfo[9]-1];
+					if (preReq[2] ==  preReq[3])
+						$("#level_"+(i+1)).addClass("levels");
+					else
+						$("#level_"+(i+1)).addClass("levels_disabled");
+				}
 			}
+			
+			
 		} else
 			$("#level_"+(i+1)).addClass("levels_disabled");
 		
 	}
 	
 	var fClose = function() {
+
+		$("div").remove(".levelok");
+		
 	};
 	
 	$("#selectLevel .levels").unbind('click').click(SelectLevel.levelSelected);
@@ -49,8 +65,6 @@ SelectLevel.levelSelected = function(evt) {
 		missionView = true;
 		loadMission = 1;
 	}
-	
-	$("div").remove(".levelok");
 	
 	Game.missionSelected(levelInfo[4], levelInfo[5], loadMission, missionView);
 };
