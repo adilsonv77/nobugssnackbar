@@ -21,7 +21,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		<sequence>
 		
 			<hint category="TestBlock" time="0" condition="Hints.showedHint() == false &amp;&amp; Hints.typeActiveBlock() == 'prepare_pickUpHotDog' &amp;&amp; Hints.countTopInstructions() == 6">
-			<![CDATA[Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando estiver em frente ao mostrador.]]>
+			<![CDATA[Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando a sua personagem estiver em frente ao mostrador.]]>
 			</hint>
 		
 			<hint category="LastBlockInserted">
@@ -40,7 +40,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			tente resolver o pr&#243;ximo. Repita esse processo com calma, at&#233; atingir todos os objetivos da miss&#227;o.]]>
 			</hint>
 
-			<hint time="3000" category="Iddle" condition = "Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countTopInstructions() > 5">
+			<hint time="3000" category="Iddle" condition = "Hints.showedHint() == false &amp;&amp; Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countTopInstructions() > 5">
 			<![CDATA[Organize os blocos disponibilizados pelo jogo. Encaixe-os na ordem para atender os objetivos da miss&#227;o. Todos os 
 			blocos necess&#225;rios est&#227;o a sua disposi&#231;&#227;o. Logo, voc&#234; n&#227;o precisa nem adicionar, e nem 
 			remover blocos.]]>
@@ -79,6 +79,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="0">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
@@ -86,7 +87,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			</orders>
 		</customer>
 	</customers>
-	<objectives missionType="sort" xpIndividual="20" xpFinal="10" xpTotalRun="9">
+	<objectives missionType="sort" xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRun="false">
 		<objective pos="2" place="counter">askForFood</objective>
 		<objective pos="2" place="counter">pickUpFood</objective>
 		<objective pos="2" place="counter">deliver</objective>

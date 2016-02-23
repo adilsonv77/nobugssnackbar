@@ -380,8 +380,7 @@ CreateItems.body = function(id, colorBody) {
 };	
 
 CreateItems.platter = function(id) {
-	return {img: PreloadImgs.get(id), x: 0, y: 0, width: ae_Width, height: ae_Height,
-		 baseColor: {r:255, g: 0, b: 0}, color: {r:255, g: 0, b: 0}};
+	return {img: PreloadImgs.get(id), x: 0, y: 0, width: ae_Width, height: ae_Height };
 	
 };
 
