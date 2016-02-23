@@ -22,22 +22,28 @@ CountXP.init = function(canvasId, showCanvas) {
 CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeStars, showPoints, stopShowingWhenReachTheTime, noXP) {
 	
 	CountXP.starting = true;
-
+	CountXP.consumedMaxStars = false;
 	CountXP.dif = 0;
+	CountXP.current = 0;
+	CountXP.aFraction = 1;
+	CountXP.timeReset = false;
 	
 	$("#missionXP2").css("display", (noXP?"none":"inline"));
 	$("#missionXP3").css("display", (noXP?"none":"inline"));
 	$("#stopWatch").css("display", (noXP?"none":"inline"));
 
 	if (noXP) {
-		CountXP.current = 0;
 		$("#xpPoints").html(pointsPerStar);
 		if (eventChangeStars)
 			eventChangeStars(0);
+		return;
 	}
 	
-	if (noXP || !this.showCanvas)
+	if (!this.showCanvas) {
+		if (eventChangeStars)
+			eventChangeStars(3);
 		return;
+	}
 	
 	if (cfg.dif == undefined)
 		cfg.dif = 0;
@@ -62,8 +68,6 @@ CountXP.config = function(byTime, cfg, pointsPerStar, pointsFinal, eventChangeSt
 	CountXP.aFraction = cfg.aFraction;
 	CountXP.current = cfg.current;
 	CountXP.freeWizardConsumed = cfg.freeWizardConsumed;
-	
-	CountXP.timeReset = false;
 	
 	CountXP.pointsFinal = pointsFinal;
 	CountXP.changeImgs();

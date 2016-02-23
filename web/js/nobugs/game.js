@@ -96,6 +96,7 @@ Game.generalInit = function() {
 	  BlocklyApps.bindClick('selectMissionLogoffButton', Game.logoffButtonClick);
 	  BlocklyApps.bindClick('selectMissionLogoffButtonIntoMission', Game.intoTheMissionLogoffButtonClick);
 
+	  Game.playingTrack = -1;
 	  Game.tracks = [];
 	  Game.tracks[0] = new PlayAudio(["music/bensound-buddy.mp3"]);
 	  Game.tracks[1] = new PlayAudio(["music/bensound-energy.mp3"]);
@@ -637,6 +638,23 @@ Game.moveBlocksToZero = function() {
 	
 };
 
+Game.startPlaying = function(track) {
+	
+	Game.tracks[track].play();
+	Game.playingTrack = track;
+	
+};
+
+Game.stopPlaying = function() {
+	
+	if (Game.playingTrack == -1)
+		return;
+	
+	Game.tracks[Game.playingTrack].stop();
+	Game.playingTrack = -1;
+};
+
+
 Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 	var finishedMission = clazzId == undefined;
 	if (finishedMission) {
@@ -657,6 +675,8 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 		Game.loginData.missionHist[levelId-1][3]++;
 	}
 	
+    Game.stopPlaying();
+    
 	Game.missionSelection.dispose();
 	
 	var ret = Game.closeBlockEditorStuffs();
@@ -965,10 +985,9 @@ Game.changeStars = function(starNumber) {
 	if (Game.loginData.userLogged.flags.MUSIC_DISABLED === "true" || Game.loginData.userLogged.showSound == false)
 		return;
 
- 	if (starNumber > 0)
- 		Game.tracks[starNumber-1].stop();
- 
- 	Game.tracks[starNumber].play();
+	Game.stopPlaying();
+	
+	Game.startPlaying(starNumber);
 };
 
 Game.afterInstallMachines = function(toolbox) {
@@ -1258,7 +1277,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  BlocklyApps.bindClick('moveRightTipBox', Game.moveRightTipBoxButtonClick);
 
-	  if (Game.missionType === "fixBugs") {
+	  if (Game.missionType === "fixBugs" && !Game.missionView) {
 		  $("#restartBlocksButton").css("display", "inline");
 	  } else
 		  $("#restartBlocksButton").css("display", "none");
@@ -1933,8 +1952,7 @@ Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
 	Game.editor.hideChaff();
     Blockly.WidgetDiv.hide();
     
-    if (CountXP.getTimes() !== undefined)
-    	Game.tracks[CountXP.getTimes()].stop();
+    Game.stopPlaying();
     
     var ret = Game.closeBlockEditorStuffs();
     
@@ -2253,9 +2271,8 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		$("#musicOff").css("display", "none");
 		$("#musicOn").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_enableMusic") );
-		if (CountXP.getTimes() != undefined)
-			Game.tracks[CountXP.getTimes()].stop();
-		
+
+		Game.stopPlaying();
 	} else {
 	
 		if (!Game.loadingMission && hero) {
@@ -2268,7 +2285,7 @@ Game.changeMusicControlButton = function(musicDisabled) {
 		$("#musicOff").css("display", "inline");
 		$("#musicControl").attr("title", BlocklyApps.getMsg("NoBugs_disableMusic") );
 		if (CountXP.getTimes() != undefined)
-			Game.tracks[CountXP.getTimes()].play();
+			Game.startPlaying(CountXP.getTimes());
 		
 	}
 	
