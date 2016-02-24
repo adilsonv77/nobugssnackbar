@@ -16,16 +16,14 @@ SelectLevel.generateBoard = function(evt) {
 			
 			if (levelInfo[2] == levelInfo[3]) {
 				$("#level_"+(i+1)).addClass("levels");
-				var levelOk = $("<div class='levelok' id='levelok_" + (i+1) + "'/>");
-				$("#level_"+(i+1)).append(levelOk);
 			} else {
 				if (levelInfo[9] == 0)
-					$("#level_"+(i+1)).addClass("levels");
+					$("#level_"+(i+1)).addClass("levels").addClass("level_notcompleted");
 				else {
 					
 					var preReq = Game.loginData.missionHist[levelInfo[9]-1];
 					if (preReq[2] ==  preReq[3])
-						$("#level_"+(i+1)).addClass("levels");
+						$("#level_"+(i+1)).addClass("levels").addClass("level_notcompleted");
 					else
 						$("#level_"+(i+1)).addClass("levels_disabled");
 				}
@@ -39,7 +37,7 @@ SelectLevel.generateBoard = function(evt) {
 	
 	var fClose = function() {
 
-		$("div").remove(".levelok");
+		
 		
 	};
 	

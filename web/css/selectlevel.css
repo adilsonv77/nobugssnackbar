@@ -52,4 +52,18 @@
 #level_11.levels:hover {background-image: url('../images/niveis_11_hover.png'); cursor: pointer; }
 #level_12.levels:hover {background-image: url('../images/niveis_12_hover.png'); cursor: pointer; }
 
-.levelok {position:absolute; top:20px; left:8px; width:15px; height: 15px; background-image: url('../images/level-finished.png')}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.level_notcompleted {
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+}
