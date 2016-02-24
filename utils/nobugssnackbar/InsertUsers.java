@@ -19,9 +19,10 @@ public class InsertUsers {
 		
 		GameDao dao = new GameJdbcDao();
 		
-		BufferedReader arq = new BufferedReader(new FileReader(new File("D:\\doutoramento\\drive\\tese\\iteracoes\\secao17\\tp2_3-faltaramalunos.csv")));
+		BufferedReader arq = new BufferedReader(new FileReader(new File("D:\\doutoramento\\drive\\tese\\iteracoes\\secao19\\alunos.txt")));
 		
-		long [] clazz = new long[1];
+		long [] clazz = new long[]{1};
+		
 		do {
 			String aluno = arq.readLine();
 			if (aluno == null)
@@ -29,15 +30,8 @@ public class InsertUsers {
 			
 			String[] a = aluno.split(";");
 			
-			if (a.length == 3 || a[3].equals("TP1"))
-				clazz[0] = 10;
-			else
-				if (a[3].equals("TP2"))
-					clazz[0] = 8;
-				else
-					clazz[0] = 9;
 			
-			dao.insertUser(a[2], UserControl.encrypt(a[2]), a[1], a[0], null, "pt-PT", clazz);
+			dao.insertUser(a[0], UserControl.encrypt(a[0]), a[1], a[2], null, "pt-BR", clazz);
 			
 		} while(true);
 		

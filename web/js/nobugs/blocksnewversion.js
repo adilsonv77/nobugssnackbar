@@ -5,6 +5,7 @@
 'use strict';
 
 Blockly.genUid.soup_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+Blockly.Msg.VARIABLES_SET_TOOLTIP = Blockly.Msg.VARIABLES_SET_TOOLTIP + "[Ctrl+Shift+3]";
 
 Blockly.Blocks['controls_if'].oldControlsIfInit = Blockly.Blocks['controls_if'].init;
 

@@ -1,0 +1,89 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+J&#225; que consegues anotar tudo e ainda entregar comida ao cliente, ent&#227;o vou te desafiar a 
+  entregar bebida. No menu existe um novo bloco para perguntar o que deseja beber e para pegar a 
+  bebida na geladeira. Esse
+  bloco segue o mesmo princ&#237;pio para pegar o cachorro-quente no mostrador. Vejamos se 
+  consegues desenrascar desse problema. <br/><br/>
+Tens um &#250;nico cliente com fome e com sede. Pergunte o que ele deseja. V&#225; aos locais para
+  pegar o pedido. Volte ao cliente para fazer <b>as duas entregas</b>: da comida e da bebida.  
+		]]>
+		</page>
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<help>
+		<line>V&#225; at&#233; o cliente2</line>
+		<line>Pergunte o que ele deseja comer e guarde na vari&#225;vel [com]</line>
+		<line>Pergunte o que ele deseja beber e guarde na vari&#225;vel [beb]</line>
+
+		<line>V&#225; at&#233; o mostrador</line>
+		<line>Pegue a comida informada em [com] e guarde na vari&#225;vel [com]</line>
+		
+		<line>V&#225; at&#233; a geladeira</line>
+		<line>Pegue a bebida informada em [beb] e guarde na vari&#225;vel [beb]</line>
+
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Entregue [com]</line>
+		<line>Entregue [beb]</line>
+	</help>
+	
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="pickUpDrink" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="6" >
+		<objective pos="2" place="counter">askForFood</objective>
+		<objective pos="2" place="counter">askForDrink</objective>
+
+		<objective pos="2" place="counter">pickUpFood</objective>
+		<objective pos="2" place="counter">pickUpDrink</objective>
+
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+	</xml>
+</mission>

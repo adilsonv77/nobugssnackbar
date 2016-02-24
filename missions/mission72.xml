@@ -1,0 +1,161 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+O &#250;ltimo desafio antes de fechar essa fase. O problema &#233; exatamente o mesmo da miss&#227;o anterior. Tanto que at&#233;
+  trago a tua solu&#231;&#227;o da miss&#227;o anterior.<br/><br/>
+Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;ximo duas vari&#225;veis na solu&#231;&#227;o inteira. 
+  Reveja o seu c&#243;digo para verificar onde podes enxugar para t&#227;o poucas vari&#225;veis.<br/><br/>
+<span style="color:red">Dica: o que perguntares ao cliente j&#225; pode colocar diretamente dentro de uma soma.</span>  
+		]]>
+		</page>
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [beb1]</line>
+		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [com1]</line>
+		
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
+		<line>Some [com1] com [Pergunte quanta comida ele deseja] e guarde na vari&#225;vel [com1]</line>
+
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
+		<line>Some [com1] com [Pergunte quanta comida ele deseja] e guarde na vari&#225;vel [com1]</line>
+		
+		<line>Fale [com1]</line>
+		<line>Fale [beb1]</line>
+	</help>
+	
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+	
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+	</commands>
+
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+		
+	<objectives xpIndividual="40" xpFinal="10" xpTotalRun="9" varQtd="2" >
+		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective text="a quantidade de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
+	</objectives>
+
+	<xml preload="13">
+	</xml>
+</mission>

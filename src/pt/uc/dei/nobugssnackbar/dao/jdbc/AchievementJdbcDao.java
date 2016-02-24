@@ -58,7 +58,8 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			String sql = "select achievementtypeid, achievementtypeclasseid, achieveddate, title, description, rewardxp, rewardcoins from achievementtypes " + 
 										"join (select * from achievementtypesclasses where classid = ?) achievtypesclass using (achievementtypeid) "+ 
-										"left outer join (select * from achievements join users using (userid) where userid = ?) achievusers using (achievementtypeclasseid) ";
+										"left outer join (select * from achievements join users using (userid) where userid = ?) achievusers using (achievementtypeclasseid) "+
+										"order by achievtypesclass.order";
 			PreparedStatement ps = bdCon.prepareStatement(sql);
 			
 			ps.setLong(1, classId);
@@ -148,16 +149,6 @@ public class AchievementJdbcDao implements AchievementDao {
 			}
 			ps.close();
 			
-			sql = "insert into achievements (achievementtypeclasseid, userid, achieveddate) values (?, ?, now())";
-			ps = bdCon.prepareStatement(sql);
-			ps.setLong(2, userId);
-
-			for (int i=0; i<rl.size(); i++) {
-				ps.setLong(1, (Long)rl.get(i)[0]);
-				ps.executeUpdate();
-			}
-			ps.close();
-			
 			sql = "select fieldname, fieldvalue, fieldtype from achievementtypesclassesfields where achievementtypeclasseid = ? and fieldtype in ('Q', 'T')";
 			ps = bdCon.prepareStatement(sql);
 			
@@ -198,13 +189,30 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			Statement st = bdCon.createStatement();
 			
+			List<Long> achievs = new ArrayList<>();
+			
 			for (int i=0; i<rl.size(); i++) {
 				rs = st.executeQuery((String)rl.get(i)[2]);
 				if (rs.next()) {
 					res.add((Map<String, String>) rl.get(i)[3]);
+					achievs.add((Long) rl.get(i)[0]);
 				}
 				rs.close();
 			}
+			
+			st.close();
+			
+			sql = "insert into achievements (achievementtypeclasseid, userid, achieveddate) values (?, ?, now())";
+			ps = bdCon.prepareStatement(sql);
+			ps.setLong(2, userId);
+
+			for (int i=0; i<achievs.size(); i++) {
+				ps.setLong(1, achievs.get(i));
+				ps.executeUpdate();
+			}
+			ps.close();
+
+
 			
 		} finally {
 			if (bdCon != null)

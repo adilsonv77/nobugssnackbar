@@ -3,6 +3,8 @@ package nobugssnackbar;
 import java.util.Random;
 
 import pt.uc.dei.nobugssnackbar.control.UserControl;
+import pt.uc.dei.nobugssnackbar.dao.GameDao;
+import pt.uc.dei.nobugssnackbar.dao.jdbc.GameJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class GenerateUsers {
@@ -17,22 +19,23 @@ public class GenerateUsers {
 	}
 	
 	public static void main(String[] args) throws Exception {
-	/*	
+		
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
-		*/
+		GameDao dao = new GameJdbcDao();
+		
 		r = new Random();
 		s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	//	NoBugsConnection nobugs = NoBugsConnection.getConnection();
-		for (int i = 1; i <= 4; i++) {
+		
+		for (int i = 1; i <= 10; i++) {
 			
 			
-			//String s1 = "TP" + extractChar() + extractChar() + extractChar() + extractChar();
-			String s1 = "UFSC" + i;
-			System.out.println("{\""+s1+"\", \"Ufsc "+i+"\", \"M\"},");
-			/*
-			nobugs.insertUser(s1, UserControl.encrypt(s1), s1, "M", new int[]{});
-			*/
+			String s1 = extractChar() + extractChar() + extractChar() + extractChar() + extractChar() + extractChar();
+			
+			System.out.println("{\""+s1+"\", \"UDESC "+i+"\", \"M\"},");
+			
+			dao.insertUser(s1, UserControl.encrypt(s1), s1, "M", null, "pt-BR", new long[]{1});
+			
 		}
 		
 		

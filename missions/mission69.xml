@@ -13,7 +13,7 @@ Existe um
 		<page type="goal">
 		<![CDATA[
 Existem dois clientes sempre com fome, mas &#224;s vezes com sede. Atenda a fome deles, entregando-lhes o
- cachorro-quente pedido. Anote, some e fale a quantidade total de bebidas dos clientes. 
+ cachorro-quente pedido. Anote, some e fale a quantidade total de bebidas desejadas pelos clientes. 
 J&#225; existem uns blocos na &#225;rea de trabalho que com certeza vais usar. Mas a sua tarefa &#233; construir o
  resto da solu&#231;&#227;o. 
 		]]>
@@ -44,7 +44,7 @@ J&#225; existem uns blocos na &#225;rea de trabalho que com certeza vais usar. M
 		<line>V&#225; at&#233; o cliente 1</line>
 		<line>Entregue [com1]</line>
 		
-		<line>V&#225; at&#233; o cliente 1</line>
+		<line>V&#225; at&#233; o cliente 2</line>
 		<line>Entregue [com2]</line>
 		
 		<line>Some [beb1] com [beb2] e guarde na vari&#225;vel [totalBeb]</line>
