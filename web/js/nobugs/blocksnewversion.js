@@ -19,7 +19,7 @@ Blockly.Blocks['controls_if'].init = function() {
 	
 };
 
-function initBasedOnMissionConfig(obj){
+function initBasedOnMissionConfig(obj, idx){
 	
 	var disableContextMenu = true;
 	var this_ = obj;
@@ -29,9 +29,9 @@ function initBasedOnMissionConfig(obj){
     	else {
         	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>') {
             	
-        		if (this_.inputList[0].fieldRow.length > 0)
+        		if (this_.inputList[idx].fieldRow.length > 0)
 	        		// changes the context menu of the variable name
-	        		this_.inputList[0].fieldRow[0].menuGenerator_ = function() {
+	        		this_.inputList[idx].fieldRow[idx].menuGenerator_ = function() {
 	        	    	return [[this.getText(), this.getText()]];
 	        	    };
         	} else
@@ -55,7 +55,7 @@ Blockly.Blocks['variables_get'].init = function() {
 	
 
 	this.oldVariablesGetInit();
-	initBasedOnMissionConfig(this);
+	initBasedOnMissionConfig(this, 0);
     
 };
 
@@ -83,7 +83,7 @@ Blockly.Blocks['variables_set'].init = function() {
     this.setTooltip(Blockly.Msg.VARIABLES_SET_TOOLTIP);
     
     // if it's a mission that does not accept adding new blocks, then is not allowed to change the variables
-    var useContextMenu = initBasedOnMissionConfig(this);
+    var useContextMenu = initBasedOnMissionConfig(this, 1);
     
     this.contextMenuMsg_ = (useContextMenu?Blockly.Msg.VARIABLES_SET_CREATE_GET:null);
     this.contextMenuType_ = (useContextMenu?'variables_get':null);

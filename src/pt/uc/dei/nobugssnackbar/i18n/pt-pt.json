@@ -335,7 +335,7 @@
 	"Tests.play"			: "Jogar",
 	"Tests.continueAnotherDay": "Interromper agora, e continuar o teste em outro momento",
 	
-	"Intro.RepeatTest1"     : "A partir de agora aparecer&#227;o algumas miss&#245;es em que ser&#225; exibido ao lado do bot&#227;o ",
+	"Intro.RepeatTest1"     : "A partir de agora aparecer&#227;o algumas miss&#245;es em que ser&#225; exibido ao lado do ",
 	"Intro.RepeatTest2"     : "o s&#237;mbolo ",
 	"Intro.RepeatTest3"     : " com um n&#250;mero interior.",
 	"Intro.RepeatTest4"     : "Sempre que aparecer esse s&#237;mbolo indica que o seu programa ser&#225; executado pelo jogo seguidamente essa quantidade de vezes.",
