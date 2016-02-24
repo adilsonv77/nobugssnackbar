@@ -220,19 +220,9 @@ Explanation.finishStatement = function() {
 		Hints.startHints();
 		return;
 	}
+
+	Game.verificationsBeforePlaying(true);
 	
-	var f = function() {
-		
-		Game.verifyTestsInMission( function() {
-			
-			Hints.init(Game.mission.getElementsByTagName("hints")[0], true);
-	
-			Game.initTime();
-		});
-		
-	};
-	
-	Game.alertWizardFree(f);
 };
 
 Explanation.parseUserLogged = function(explanations) {
