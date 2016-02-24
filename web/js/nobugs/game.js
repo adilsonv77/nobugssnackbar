@@ -550,6 +550,10 @@ Game.openProfileEditor = function() {
 
 Game.openAchievementList = function() {
 	
+	Hints.stopHints();
+	Blockly.WidgetDiv.hide();
+	Game.stopAlertGoalButton();
+
 	var achieveWindow = new AchievementWindow();
 	achieveWindow.show();
 	

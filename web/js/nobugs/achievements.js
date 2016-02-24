@@ -96,7 +96,7 @@ AchievementWindow.prototype.show = function() {
 	var this_ = this;
 	MyBlocklyApps.showDialog(document.getElementById("achievementWindow"), null, false, true, true, 
 			BlocklyApps.getMsg("Achievement_Title"), {width: "800px", height: "600px"}, 
-			function() {this_.dispose();});
+			function() {this_.dispose(); Hints.startHints();});
 			
 };
 
