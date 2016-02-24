@@ -39,7 +39,7 @@ Tamb&#233;m j&#225; vais aprender a falar. Utilize o bloco <imghex id="talk">895
 
 		<page type="goal">
 		<![CDATA[
-Esta &#233; uma missão para corrigir erros. Existe apenas um erro nessa solu&#231;&#227;o.<br/><br/>
+Esta &#233; uma miss&#227;o para corrigir erros. Existe apenas um erro nessa solu&#231;&#227;o.<br/><br/>
  Execute passo-a-passo (com o bot&#227;o <img src="images/icondebug.png"/> ) para aprender 
  o que os novos blocos fazem e descobrir o erro no programa. <br/><br/>
 Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o ser&#225; contada para receber pontos. 
@@ -51,7 +51,7 @@ Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o se
 
 	<hints>
 		<sequence>
-			<hint category="VariableWindow"/>
+			<hint category="VariableWindow" condition = "Hints.showedHint() == false"/>
 		</sequence>
 
 		<errors>

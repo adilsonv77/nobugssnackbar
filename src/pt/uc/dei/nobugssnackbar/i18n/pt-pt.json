@@ -206,6 +206,10 @@
 	"Explane.On":"Ligar",
 	"Explane.Off":"Desligar",
 	"Explane.ClickMission":"Clique na miss&#227;o %0.",
+	
+	"Explane.ClickInfo1":"Clique no bot&#227;o do menu superior para acessar os objetivos.",
+	"Explane.ClickInfo2":"Clique no bot&#227;o (+i) para acessar os objetivos.",
+	
 	"Explane.GoesToDisplay":"V&#225; para o mostrador.",
 	"Explane.GoesToCooler":"V&#225; para o refrigerador.",
 	"Explane.MustNot":"N&#227;o deve",

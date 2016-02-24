@@ -38,6 +38,7 @@ var hero;
 Game.mission = null;
 
 Game.hideHints = true;
+Game.previousGoalsAccomplishedWindowPos = undefined;
 
 /**
  * PID of animation task currently executing.
@@ -691,6 +692,12 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 };
 
 Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
+	
+  Game.closeGoalsButtonClick();
+  if (Game.previousGoalsAccomplishedWindowPos != undefined) {
+	  $("#goalsAccomplishedWindow").css("top", Game.previousGoalsAccomplishedWindowPos.y + "px");
+	  $("#goalsAccomplishedWindow").css("left", Game.previousGoalsAccomplishedWindowPos.x + "px");
+  }
 	
   Blockly.clipboard_ = [];
   Game.loadingMission = true;
@@ -1861,8 +1868,17 @@ Game.countInstructions = function(c, f) {
 };
 
 Game.openGoalsButtonClick = function() {
+
+	hero.verifyObjectives("clickInfo2", null);
+	if (hero.allObjectivesAchieved)
+		if (Game.verifyVictory()) return;
+	
 	$("#goalsAccomplished").css("display", "none");
 	$("#goalsAccomplishedWindow").css("display", "inline");
+	
+	
+	if (Game.previousGoalsAccomplishedWindowPos == undefined)
+		Game.previousGoalsAccomplishedWindowPos = BlocklyApps.getBBox_(document.getElementById("goalsAccomplishedWindow"));
 	
 	if (Game.dialogMouseDownWrapper_) {
 	   Blockly.unbindEvent_(Game.dialogMouseDownWrapper_);
@@ -1931,6 +1947,10 @@ Game.closeGoalsButtonClick = function() {
 };
 
 Game.goalButtonClick = function() {
+	
+	hero.verifyObjectives("clickInfo1", null);
+	if (hero.allObjectivesAchieved)
+		if (Game.verifyVictory()) return;
 	
 	Hints.stopHints();
 	Blockly.WidgetDiv.hide();
@@ -2796,7 +2816,7 @@ Game.verifyVictory = function() {
 		BlocklyApps.log.push(['nextStep']);
 		
 		Game.pidList.push( window.setTimeout(function(){Game.animate();},10) ); // nothing in callstack 
-		return;
+		return false;
 	}
 	
 	var debugging = Game.runningStatus == 2;
@@ -2816,6 +2836,9 @@ Game.verifyVictory = function() {
     hero.verifyObjectives("ordered", null);
     
     Game.lastErrorData.block = null;
+    
+    var ret = true;
+    
     if (hero.allObjectivesAchieved) {
     	
     	if (Game.tests > 0) {
@@ -2829,7 +2852,7 @@ Game.verifyVictory = function() {
     			Game.jsInterpreter = new NoBugsInterpreter(Game.code, Game.initApi);
     			
     			Game.pidList.push( window.setTimeout(function(){Game.nextStep();},2 )); // nothing in callstack
-    			return;
+    			return true;
     		}
 			
     	}
@@ -2843,7 +2866,7 @@ Game.verifyVictory = function() {
     	
 		if (Game.missionView) { // it's when the user achieved this mission, but came back to test or see something. 
 			Game.alertSuccessMissionView();
-			return;
+			return true;
 		}
 			
 		var reward;
@@ -2928,6 +2951,7 @@ Game.verifyVictory = function() {
     	});
     	
     } else {
+    	ret = false;
     	
     	Game.finishedRun();
 		// if there isn't more lines to evaluate
@@ -2963,6 +2987,7 @@ Game.verifyVictory = function() {
     
     Game.unlockBlockly();
     
+    return ret;
 };
 
 /**********************************************************************

@@ -238,6 +238,14 @@ Objective.factory = function(key) {
 	case "clickMission" : 
 		this.factories[key] = new Objective.ClickMission();
 		break;
+
+	case "clickInfo1" : 
+		this.factories[key] = new Objective.ClickInfo(1);
+		break;
+
+	case "clickInfo2" : 
+		this.factories[key] = new Objective.ClickInfo(2);
+		break;
 	}
 	
 	
@@ -1107,4 +1115,25 @@ Objective.ClickMission.prototype.createExplanationItem = function(objective) {
 
 Objective.ClickMission.prototype.checkObjective = function(options, objective)  {
 	return options.missionId === objective.missionId;
+};
+
+/******************************************************************************
+ *                                  Click Info 
+ ******************************************************************************/
+
+Objective.ClickInfo = function(infoId) { this.infoId = infoId; };
+Objective.ClickInfo.prototype.init = function(elem) {
+	
+	var p = {objective:"clickInfo"+this.infoId, achieved:false, trata:this, achievedOrder: 0};
+	
+	return p;
+};
+
+Objective.ClickInfo.prototype.createExplanationItem = function(objective) {
+	var text = BlocklyApps.getMsg("explanation_"+objective.objective);
+	return text;
+};
+
+Objective.ClickInfo.prototype.checkObjective = function(options, objective)  {
+	return true;
 };
