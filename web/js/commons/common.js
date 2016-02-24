@@ -104,6 +104,9 @@ BlocklyApps.getNumberParamFromUrl = function(name, minValue, maxValue) {
  * @throws {string} If no languages exist in this app.
  */
 BlocklyApps.getLang = function() {
+	
+  return 'pt-br';
+  /*
   // First choice: The URL specified language.
   var lang = BlocklyApps.getStringParamFromUrl('lang', '').toLowerCase();
   if (BlocklyApps.LANGUAGES.indexOf(lang) != -1) {
@@ -139,6 +142,7 @@ BlocklyApps.getLang = function() {
   }
   // Sixth choice: Die.
   throw 'No languages available.';
+  */
 };
 
 /**
