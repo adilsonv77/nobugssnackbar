@@ -123,7 +123,6 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "GoalButton";
 	
 	Hints.hints.whenError.push(hint);
-	*/
 	hint = new Object();
 	
 	hint.category = "TestBlock";
@@ -133,6 +132,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.condition = "Hints.hasEmptyInputs()";
 	
 	Hints.hints.sequence.push(hint);
+	*/
 	
 };
 
