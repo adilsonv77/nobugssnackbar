@@ -44,6 +44,7 @@ MyBlocklyApps.showDialog = function(content, origin, animate, modal, centered, t
 	    	bClose.id = "closeDialog";
 	    	bClose.style.padding = "0px";
 	    	bClose.style.margin = "0px";
+	    	bClose.style.marginRight = "5px";
 	    	bClose.style.minWidth = "0px";
 	    	bClose.style.backgroundColor = "transparent";
 	    	bClose.style.border = "none";

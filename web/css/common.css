@@ -102,6 +102,8 @@ button.notext {
   z-index: -1;
 }
 #dialogHeader, .dialogheader {
+  vertical-align: middle;
+  line-height: 25px;
   height: 25px;
   margin: -10px -10px 15px;
   background-color: #ffd89d;
