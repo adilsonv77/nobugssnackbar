@@ -2534,10 +2534,12 @@ Game.convertWaits = function(code) {
 
 Game.semanticAnalysis  = function(block) {
 	
+	block.setWarningText(null);
 	if (Game.hasEmptyInputs(block)) {
 		
 		Game.selectTab(block.workspace.id);
 		Blockly.selected = Game.blockWithEmptyInputs;
+		Blockly.selected.setWarningText(BlocklyApps.getMsg("Hints_EmptyInputError"));
 
 		throw {isNoBugs: true, msg : "Hints_EmptyInputError"};
 		

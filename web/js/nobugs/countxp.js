@@ -262,7 +262,7 @@ CountXP.getCurrent = function() {
 };
 
 CountXP.newRun = function() {
-	if (!Game.noXP && CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.getTimes() < 3) {
+	if (!Game.noXP && !Game.missionView && CountXP.lastHowManyRuns != Game.howManyRuns && !CountXP.byTime && CountXP.getTimes() < 3) {
 		
 		CountXP.lastHowManyRuns = Game.howManyRuns; // security to avoid enter into this "if" when it's not time do to this
 		

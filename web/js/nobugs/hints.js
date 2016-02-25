@@ -123,6 +123,8 @@ Hints.addDefaultErrorHints = function() {
 	hint.category = "GoalButton";
 	
 	Hints.hints.whenError.push(hint);
+	*/
+	
 	hint = new Object();
 	
 	hint.category = "TestBlock";
@@ -132,7 +134,7 @@ Hints.addDefaultErrorHints = function() {
 	hint.condition = "Hints.hasEmptyInputs()";
 	
 	Hints.hints.sequence.push(hint);
-	*/
+	
 	
 };
 
@@ -298,7 +300,7 @@ Hints.timeIsUp = function() {
 	Game.hideHints = false;
 	
 	 // variables used into conditions
-	countInstructions = Game.editor.countInstructions();
+	countInstructions = Game.editor.countInstructions(Hints.clearWarnings);
 	countTopInstructions = Game.editor.lengthTopBlocks();
 	if (Blockly.mainWorkspace && Blockly.mainWorkspace.toolbox_ != undefined) {
 		menuSelected = Blockly.mainWorkspace.toolbox_.tree_.selectedItem_;
@@ -391,6 +393,11 @@ Hints.showOnMenu = function(category) {
 	
 	return !hideOnMenu;
 	
+};
+
+Hints.clearWarnings = function(block) {
+	block.setWarningText(null);
+	return true;
 };
 
 Hints.visitBlocks = function(block) {
@@ -743,7 +750,13 @@ Hints.hasEmptyInputs  = function() {
 	if (Hints.activeBlock == Hints.lastInsertedBlock) // dont test the block is just inserted
 		return false;
 	
-	return Game.hasEmptyInputs(Hints.activeBlock);
+	 
+	if (Game.hasEmptyInputs(Hints.activeBlock)) {
+		Hints.activeBlock = Game.blockWithEmptyInputs;
+		return true;
+	}
+	
+	return false;
 };
 
 Hints.hasEmptyInputsEx = function() {
@@ -1055,8 +1068,11 @@ Hints.Categories["TestBlock"] = {
 			    Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(Hints.activeBlock.id);
 				
+				Hints.activeBlock.setWarningText(Hints.hintSelected.content);
+				/*
 				var bbBox = BlocklyApps.getBBox_(Hints.activeBlock.getSvgRoot());
 				createRightDlg(bbBox.x, bbBox.y, Hints.hintSelected.content, Hints.hintSelected.modal);
+				*/
 			},
 		
 		
