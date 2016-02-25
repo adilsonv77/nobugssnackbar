@@ -677,7 +677,7 @@ public class GameJdbcDao implements GameDao {
 						}
 					}
 
-				if (rs.getLong(11) == finishedMission) {
+				if (finishedMission >= rs.getLong(11)) { // changed in 25/02/16: if I added a questionnaire after the player passed this mission, the questionnaire is showed
 
 					quest = new Questionnaire();
 					quest.setId(lastQuestionnaireId);
