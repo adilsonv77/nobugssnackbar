@@ -35,6 +35,11 @@ PreloadImgs.put('mesa', 'images/mesa.png');
 PreloadImgs.put('chair1', 'images/cadeira1.png');
 PreloadImgs.put('chair2', 'images/cadeira2.png');
 
+PreloadImgs.put('menu', 'images/menu.png');
+PreloadImgs.put('menu$1', 'images/menu_1.png');
+PreloadImgs.put('menu$2', 'images/menu_2.png');
+PreloadImgs.put('menu$3', 'images/menu_3.png');
+
 SnackMan = function(hasTable, objectives, mission, avatar) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
 	/*
@@ -262,6 +267,35 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	
 	this.talkText = null;
 	this.listeners = [];
+	
+	this.menu = null;
+	this.priceHotDog = null;
+	this.priceCoke = null;
+	this.priceJuice = null;
+	this.priceIceCream = null;
+	
+	var menu = mission.getElementsByTagName("menu")[0];
+	if (menu != undefined) {
+		this.menu = PreloadImgs.get("menu");
+		
+		var s = menu.getAttribute("hotdog");
+		if (s)
+			this.priceHotDog = PreloadImgs.get("menu$" + s);
+		
+		s = menu.getAttribute("coke");
+		if (s)
+			this.priceCoke =  PreloadImgs.get("menu$" + s);
+		
+		s = menu.getAttribute("juice");
+		if (s)
+			this.priceJuice =  PreloadImgs.get("menu$" + s);
+		
+		s = menu.getAttribute("icecream");
+		if (s)
+			this.priceIceCream =  PreloadImgs.get("menu$" + s);
+	} else
+		this.menu = null;
+	
 };
 
 SnackMan.prototype.createObjective = function(key, elem) {
@@ -413,6 +447,39 @@ SnackMan.prototype.draw = function(ctx) {
 		
 		this.speechBubble(ctx, this.talkText, this.img.x, this.img.y);
 		
+	}
+	
+	if (this.menu != null) {
+		this.drawMenu(ctx);
+	}
+};
+
+SnackMan.prototype.drawMenu = function(ctx) {
+	ctx.drawImage(this.menu, 120, 7);
+	
+	var y = 30;
+	if (this.priceHotDog) {
+		ctx.drawImage(PreloadImgs.get("$hotdog"), 130, y-4, 18, 18);
+		ctx.drawImage(this.priceHotDog, 160, y);
+		y+=20;
+	}
+	
+	if (this.priceCoke) {
+		ctx.drawImage(PreloadImgs.get("$coke"), 130, y-5, 18, 18);
+		ctx.drawImage(this.priceCoke, 160, y);
+		y+=20;
+	}
+	
+	if (this.priceJuice) {
+		ctx.drawImage(PreloadImgs.get("$juiceoforange"), 130, y-5, 18, 18);
+		ctx.drawImage(this.priceJuice, 160, y);
+		y+=20;
+	}
+	
+	if (this.priceIceCream) {
+		ctx.drawImage(PreloadImgs.get("$icecreamofchocolate"), 130, y-5, 18, 18);
+		ctx.drawImage(this.priceIceCream, 160, y);
+		y+=20;
 	}
 };
 

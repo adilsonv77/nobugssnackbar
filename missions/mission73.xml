@@ -1,0 +1,248 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Al&#233;m de nos preocuparmos com a quantidade de comida a ser entregue, 
+  tamb&#233;m precisamos aprender quanto ser&#225; o total das vendas, que &#233; a quantidade vendida multiplicada
+  pelo pre&#231;o do produto.
+  O pre&#231;o unit&#225;rio do cachorro &#233; 2 <img style='vertical-align: middle;' src="images/coin2.png"/>.<br/>
+<br/>
+Pergunte a cada cliente quanto ele quer comer e no final fale o valor total das vendas.<br/>
+<br/>
+Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&#227;o fornecida na miss&#227;o.
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<errors>
+		   <!-- selected iddle because the type of dialog -->
+ 	 	   <hint category="Iddle" time="0" condition="Hints.lastTalkText() === undefined  &amp;&amp; (Hints.isGoalNotAchieved(7)) ">
+		 	<![CDATA[
+		 	Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Resolva isso adicionando logo no come&#231;o do teu programa
+		 	um bloco de vari&#225;vel atribuindo um valor zero a essa vari&#225;vel em que ele falou "undefined".
+		 	]]>
+		   </hint>
+		   <hint category="Iddle" time="0" condition="Hints.isGoalNotAchieved(7)">
+		   No bloco [talk] precisa falar a SOMA das vendas dos lanches e das bebidas. Ou seja, some todos os lanches e multiplique pelo seu pre&#231;o. 
+		   Guarde esse total das vendas de lanches numa vari&#225;vel. Fa&#231;a o mesmo com as bebidas. Ao final SOME os dois totais para alcan&#231;ar o 
+		   total das vendas.
+		   </hint>
+		</errors>
+	</hints>
+	<commands>
+	</commands>
+	<cooker>initial</cooker>
+	<menu hotdog="2" />
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order randomType="random" randomMin="0" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="20" xpFinal="10">
+		
+		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
+		
+	</objectives>
+	<xml>
+	<block type="move_goToBarCounter" x="74" y="28" deletable="false">
+		<value name="VALUE">
+			<block type="math_number" deletable="false">
+				<field name="NUM">1</field>
+			</block>
+		</value>
+		<next>
+			<block type="variables_set" deletable="false">
+				<field name="VAR">qtaComida</field>
+				<value name="VALUE">
+					<block type="ask_askWantHowManyFoods" deletable="false"></block>
+				</value>
+				<next>
+					<block type="move_goToBarCounter" deletable="false">
+						<value name="VALUE">
+							<block type="math_number" deletable="false">
+								<field name="NUM">2</field>
+							</block>
+						</value>
+						<next>
+							<block type="variables_set" deletable="false">
+								<field name="VAR">qtaComida</field>
+								<value name="VALUE">
+									<block type="math_arithmetic" deletable="false">
+										<field name="OP">ADD</field>
+										<value name="A">
+											<block type="ask_askWantHowManyFoods" deletable="false"></block>
+										</value>
+										<value name="B">
+											<block type="variables_get" deletable="false">
+												<field name="VAR">qtaComida</field>
+											</block>
+										</value>
+									</block>
+								</value>
+								<next>
+									<block type="move_goToBarCounter" deletable="false">
+										<value name="VALUE">
+											<block type="math_number" deletable="false">
+												<field name="NUM">3</field>
+											</block>
+										</value>
+										<next>
+											<block type="variables_set" deletable="false">
+												<field name="VAR">qtaComida</field>
+												<value name="VALUE">
+													<block type="math_arithmetic" deletable="false">
+														<field name="OP">ADD</field>
+														<value name="A">
+															<block type="ask_askWantHowManyFoods" deletable="false"></block>
+														</value>
+														<value name="B">
+															<block type="variables_get" deletable="false">
+																<field name="VAR">qtaComida</field>
+															</block>
+														</value>
+													</block>
+												</value>
+												<next>
+													<block type="variables_set" deletable="false">
+														<field name="VAR">totalVendas</field>
+														<value name="VALUE">
+															<block type="math_arithmetic" deletable="false">
+																<field name="OP">MULTIPLY</field>
+																<value name="A">
+																	<block type="variables_get" deletable="false">
+																		<field name="VAR">qtaComida</field>
+																	</block>
+																</value>
+																<value name="B">
+																	<block type="math_number" deletable="false">
+																		<field name="NUM">2</field>
+																	</block>
+																</value>
+															</block>
+														</value>
+														<next>
+															<block type="do_talk" deletable="false">
+																<value name="VALUE">
+																	<block type="variables_get" deletable="false">
+																		<field name="VAR">qtaComida</field>
+																	</block>
+																</value>
+															</block>
+														</next>
+													</block>
+												</next>
+											</block>
+										</next>
+									</block>
+								</next>
+							</block>
+						</next>
+					</block>
+				</next>
+			</block>
+		</next>
+	</block>
+	</xml>
+</mission>

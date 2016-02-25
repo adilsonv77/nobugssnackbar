@@ -500,15 +500,13 @@ Customer.prototype.draw = function(ctx) {
 		}
 	}
 		
-	if (this.showCoin) {
-		this.coin.draw(ctx, 22, 20); 
+	if (this.showCoin || this.showLove) {
+		this.heart.draw(ctx);
+		//this.coin.draw(ctx, 22, 20); 
 	} else {
 		if (this.showFire) {
 			this.fire.draw(ctx);
-		} else {
-			if (this.showLove)
-				this.heart.draw(ctx);
-		}
+		} 
 	}
 		
 };
