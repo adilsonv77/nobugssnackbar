@@ -1203,7 +1203,7 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
-  Game.resizeWindow(); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
+  Game.resizeWindow("exception"); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
  
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
@@ -1710,6 +1710,9 @@ Game.scrollEvent =  function() {
   
 Game.resizeWindow = function(e) {
 	
+	if (e !== "exception")
+		Blockly.svgResize(Blockly.getMainWorkspace());
+	
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
 
@@ -1739,11 +1742,11 @@ Game.resizeWindow = function(e) {
         
         if (Game.tipBox.style.display !== "none") {
         	var th = $("#tipBox .move-header")[0].clientHeight;
-        	$("#tips_content").css("height", (box.clientHeight-th) + "px");
+        	$("#tips_content").css("height", ($("#blockly .blocklySvg").height()-th) + "px");
         } else {
         	var th = $("#variableBox .move-header")[0].clientHeight;
         	
-        	var h = (box.clientHeight-th) + "px";
+        	var h = ($("#blockly .blocklySvg").height()-th) + "px";
         	$("#var_content").css("height", h);
         	var dv = $("#var_content .basevarsgrid div:nth(2)");
         	if (dv.length > 0)
