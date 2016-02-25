@@ -166,7 +166,7 @@ IntroGame.closeAvatarEditor = function() {
 	IntroGame.createDiv("closeAvatarEditor4").css("top", "405px").css("width", "100%");
 	
 	var img = $("<img>").attr("id", "imgTeacher-hand").attr("src", "images/teacher_attention_hand-hand.png").css("width", "105px%")
-						.css("position", "absolute").css("z-index", "2001").css("left", (b.x+130)+"px").css("top", "347px").css("height", "135px");
+						.css("position", "absolute").css("z-index", "2001").css("left", (b.x+130)+"px").css("top", "347px").css("height", "159px");
 	
 	img.prependTo("body");
 	img = $("<img>").attr("id", "imgTeacher-body").attr("src", "images/teacher_attention_hand-body.png").css("width", "296px")

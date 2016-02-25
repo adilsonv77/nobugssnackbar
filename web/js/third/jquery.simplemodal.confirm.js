@@ -23,7 +23,7 @@ jQuery(function ($) {
 function confirm(message, callbackYes, callbackNo, options) {
 	
 	$('#confirm').modal({
-		closeHTML: "<button style='padding:0px;margin:0px;min-width:0px;background-color:transparent;position:absolute; right:10px; top:2px;'><img src='images/closedialog.png' style='width:16px;height:16px'/></button>",
+    	closeHTML: "<button style='border:none;position:absolute;right:0px;padding:0px;margin:0px;margin-right:5px;min-width:0px;background-color:transparent;'><img src='images/closedialog.png' style='width:16px;height:16px'/></button>",
 		position: ["20%",],
 		overlayId: 'confirm-overlay',
 		containerId: 'confirm-container', 

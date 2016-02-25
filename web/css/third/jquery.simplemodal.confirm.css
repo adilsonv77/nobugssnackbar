@@ -14,8 +14,8 @@
 #confirm-overlay {background-color:#eee;}
 
 /* Container */
-#confirm-container {height:140px; width:420px; font: 16px/22px 'Trebuchet MS', Verdana, Arial; text-align:left; background:#fff; border:2px solid #336699;}
-#confirm-container .header {height:30px; line-height:30px; width:100%; color:#000; font-weight:bold; background-color: #ddd}
+#confirm-container {height:140px; width:420px; font: 16px/22px 'Montserrat', sans-serif; text-align:left; background:#fff; border:1px solid #ed6d54;}
+#confirm-container .header {height:25px; line-height:25px; width:100%; color:#000; font-weight:bold; background-color: #ffd89d}
 #confirm-container .header span {padding-left:8px;}
 #confirm-container .message {color:#333; font-size:14px; margin:0; padding:12px 4px 12px 8px;}
 #confirm-container .buttons {line-height:26px; width:160px; float:right; padding:10px 8px 0;} 

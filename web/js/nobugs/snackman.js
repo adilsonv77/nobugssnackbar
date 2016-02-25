@@ -457,29 +457,29 @@ SnackMan.prototype.draw = function(ctx) {
 SnackMan.prototype.drawMenu = function(ctx) {
 	ctx.drawImage(this.menu, 120, 7);
 	
-	var y = 30;
+	var y = 26;
 	if (this.priceHotDog) {
-		ctx.drawImage(PreloadImgs.get("$hotdog"), 130, y-4, 18, 18);
-		ctx.drawImage(this.priceHotDog, 160, y);
-		y+=20;
+		ctx.drawImage(PreloadImgs.get("$hotdog"), 130, y, 14, 14);
+		ctx.drawImage(this.priceHotDog, 165, y, 14, 14);
+		y+=16;
 	}
 	
 	if (this.priceCoke) {
-		ctx.drawImage(PreloadImgs.get("$coke"), 130, y-5, 18, 18);
-		ctx.drawImage(this.priceCoke, 160, y);
-		y+=20;
+		ctx.drawImage(PreloadImgs.get("$coke"), 130, y, 14, 14);
+		ctx.drawImage(this.priceCoke, 165, y, 14, 14);
+		y+=16;
 	}
 	
 	if (this.priceJuice) {
-		ctx.drawImage(PreloadImgs.get("$juiceoforange"), 130, y-5, 18, 18);
-		ctx.drawImage(this.priceJuice, 160, y);
-		y+=20;
+		ctx.drawImage(PreloadImgs.get("$juiceoforange"), 130, y, 14, 14);
+		ctx.drawImage(this.priceJuice, 165, y, 14, 14);
+		y+=16;
 	}
 	
 	if (this.priceIceCream) {
-		ctx.drawImage(PreloadImgs.get("$icecreamofchocolate"), 130, y-5, 18, 18);
-		ctx.drawImage(this.priceIceCream, 160, y);
-		y+=20;
+		ctx.drawImage(PreloadImgs.get("$icecreamofchocolate"), 130, y, 14, 14);
+		ctx.drawImage(this.priceIceCream, 165, y, 14, 14);
+		y+=16;
 	}
 };
 

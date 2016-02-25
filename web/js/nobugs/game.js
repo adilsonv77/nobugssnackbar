@@ -579,7 +579,7 @@ Game.reloadInitialBlocksClick = function() {
 	confirm(BlocklyApps.getMsg("confirm_reloadblocks"), 
 			function () { fReloadBlocks(); },
 			function () { Hints.startHints(); },
-			{"height": "180px"}
+			{"height": "160px"}
 	);
 	
 	
@@ -2065,7 +2065,7 @@ Game.wizardFreeButtonClick = function() {
 				"Ao confirmar ser&#227;o consumidas todas as estrelas.", 
 				function () { fShowTips(1); },
 				function () { Hints.startHints(); },
-				{"height": "180px"}
+				{"height": "160px"}
 		);
 	} else
 		fShowTips(0);
