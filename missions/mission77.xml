@@ -129,7 +129,7 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 				  value="(CustomerManager.totalOfFood()+CustomerManager.totalOfDrink())*3">talk</objective>
 		
 		<objective text="o lucro" 
-				  value="(CustomerManager.totalOfFood()*2)+CustomerManager.totalOfDrink()">talk</objective>
+				  value="CustomerManager.totalOfFood()+(CustomerManager.totalOfDrink()*2)">talk</objective>
 		
 	</objectives>
 	<xml>

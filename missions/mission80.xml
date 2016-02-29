@@ -100,7 +100,7 @@ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
 		<objective pos="2" place="counter" type='$$$money2' 
 			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">giveSomeChange</objective>
 		<objective text="a gorjeta" 
-				  value="(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))-Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">talk</objective>
+				  value="(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))-(Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)*2)">talk</objective>
 		
 	</objectives>
 	<xml>
