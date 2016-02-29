@@ -1724,6 +1724,8 @@ Game.resizeWindow = function(e) {
     	
     } else {
     	
+    	/// the button only is showed when something wrong happens... then in the except part of try it will shop the button
+    	// TODO: we have a problem: while is debugging, if it resize the window, then this button is hided
     	document.getElementById("moveRight").style.display = 'none';
     	
     	Game.redimDiv.style.height = Game.optResize.blocklyDivH;

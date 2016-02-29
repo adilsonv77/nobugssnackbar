@@ -139,7 +139,7 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 			</orders>			
 		</customer>
 	</customers>
-	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="20" xpFinal="10">
+	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="10" xpFinal="5">
 		
 		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 		

@@ -151,7 +151,7 @@ Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;xim
 		</customer>
 	</customers>
 		
-	<objectives xpIndividual="40" xpFinal="10" xpTotalRun="9" varQtd="2" >
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" varQtd="2" >
 		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
 		<objective text="a quantidade de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
 	</objectives>

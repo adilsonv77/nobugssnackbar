@@ -94,7 +94,7 @@ Basta organizares os blocos para resolver o problema.
 		</customer>
 		
 	</customers>
-	<objectives xpTotalRun="6" ordered="false" buttonRunQtdAttempts="5" xpIndividual="30" xpFinal="10" missionType="sort">
+	<objectives xpTotalRun="3" ordered="false" buttonRunQtdAttempts="5" xpIndividual="10" xpFinal="5" missionType="sort">
 		
 		<objective pos="1" place="counter">cashIn</objective>
 		

@@ -1,0 +1,139 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Os clientes tem fome e sede. Aumentamos um pouco o pre&#231;o de venda do cachorro: agora &#233; $3. Do
+  refrigerante continua o mesmo: tamb&#233;m $3. O custo dos produtos &#233; o seguinte: cachorro &#233; $2 e 
+  refrigerante &#233; $1.<br/><br/>
+Nessa miss&#227;o vais perguntar aos clientes quantas bebidas e lanches ele desejam, e no final
+  vais falar o faturamento (total das vendas) e o lucro (total das vendas - total dos custos).<br/><br/>
+Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fase, vou te restringir o que podes
+  usar de recursos. No teu programa s&#243; podes usar 4 vari&#225;veis e somente duas vezes cada um dos blocos 
+   <span style="color:white; background-color: rgb(91,165,140); padding: 3px">askWantHowManyFoods</span> 
+   e 
+   <span style="color:white; background-color: rgb(91,165,140); padding: 3px">askWantHowManyDrinks</span>.
+ 		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [totalC]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [totalB]</line>
+		<line>Multiplique [Some [totalC] com [totalB]] por [3] e guarde na vari&#225;vel [faturamento]</line>
+		<line>Some [totalB] com [Multiplique [totalC] por [2]] e guarde na vari&#225;vel [lucro]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [totalC]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [totalB]</line>
+		<line>Some [faturamento] com [Multiplique [Some [totalC] com [totalB]] por [3]] e guarde na vari&#225;vel [faturamento]</line>
+		<line>Some [lucro] com [Some [totalB] com [Multiplique [totalC] por [2]]] e guarde na vari&#225;vel [lucro]</line>
+		<line>Fale [faturamento]</line>
+		<line>Fale [lucro]</line>
+	</help>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+	</commands>
+	<cooker>initial</cooker>
+	<menu hotdog="3" coke="3"/>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="30" xpFinal="10" varQtd="4" >
+		
+		<objective block="askWantHowManyFoods" times="2">callTimes</objective>
+		<objective block="askWantHowManyDrinks" times="2">callTimes</objective>
+
+		<objective text="o faturamento" 
+				  value="(CustomerManager.totalOfFood()+CustomerManager.totalOfDrink())*3">talk</objective>
+		
+		<objective text="o lucro" 
+				  value="(CustomerManager.totalOfFood()*2)+CustomerManager.totalOfDrink()">talk</objective>
+		
+	</objectives>
+	<xml>
+	
+		
+	</xml>
+</mission>

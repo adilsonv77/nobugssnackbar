@@ -1,17 +1,31 @@
 .levels, .levels_disabled {position: absolute; width: 34px; height: 25px; background-repeat: no-repeat; }
+.levels_explain {position: absolute; background-repeat: no-repeat; display: none}
 
-#level_1 {top: 277px; left: 70px }
-#level_2 {top: 277px; left: 175px }
-#level_3 {top: 215px; left: 230px }
-#level_4 {top: 335px; left: 230px }
-#level_5 {top: 277px; left: 285px }
-#level_6 {top: 215px; left: 340px }
-#level_7 {top: 335px; left: 340px }
-#level_8 {top: 277px; left: 393px }
-#level_9 {top: 277px; left: 505px }
-#level_10 {top: 277px; left: 610px }
-#level_11 {top: 215px; left: 675px }
-#level_12 {top: 335px; left: 675px }
+#level_1 {top: 267px; left: 70px }
+#level_2 {top: 267px; left: 175px }
+#level_3 {top: 205px; left: 230px }
+#level_4 {top: 325px; left: 230px }
+#level_5 {top: 267px; left: 285px }
+#level_6 {top: 205px; left: 340px }
+#level_7 {top: 325px; left: 340px }
+#level_8 {top: 267px; left: 393px }
+#level_9 {top: 267px; left: 505px }
+#level_10 {top: 267px; left: 610px }
+#level_11 {top: 205px; left: 675px }
+#level_12 {top: 325px; left: 675px }
+
+#nome_level_1.levels_explain{left:50px; top:130px} 
+#nome_level_2.levels_explain{left:60px; top:300px} 
+#nome_level_3.levels_explain{left:210px; top:105px} 
+#nome_level_4.levels_explain{left:180px; top:350px} 
+#nome_level_5.levels_explain{left:270px; top:300px}
+#nome_level_6.levels_explain{left:345px; top:105px}  
+#nome_level_7.levels_explain{left:360px; top:330px} 
+#nome_level_8.levels_explain{left:380px; top:200px}
+#nome_level_9.levels_explain{left:500px; top:300px} 
+#nome_level_10.levels_explain{left:480px; top:140px} 
+#nome_level_11.levels_explain{left:600px; top:100px} 
+#nome_level_12.levels_explain{left:590px; top:340px} 
 
 #level_1.levels{background-image: url('../images/niveis_01.png')} 
 #level_2.levels{background-image: url('../images/niveis_02.png')} 

@@ -128,7 +128,7 @@ Essa &#233; mais uma miss&#227;o para corrigir erros. Falta o conjunto de blocos
 	</customers>
 	
 	<objectives missionType="fixBugs" variableWindow="true" buttonRun="false"
-				xpIndividual="20" xpFinal="10" xpTotalRun="9">
+				xpIndividual="10" xpFinal="5" xpTotalRun="9">
 				
 		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
 		

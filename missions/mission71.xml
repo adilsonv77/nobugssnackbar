@@ -152,8 +152,8 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 	</customers>
 		
 	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" >
-		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
-		<objective text="a quantidade de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
+		<objective text="a quantidade total de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective text="a quantidade total de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">

@@ -21,7 +21,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		<sequence>
 		
 			<hint category="TestBlock" time="0" condition="Hints.showedHint() == false &amp;&amp; Hints.typeActiveBlock() == 'prepare_pickUpHotDog' &amp;&amp; Hints.countTopInstructions() == 6">
-			<![CDATA[Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando a sua personagem estiver em frente ao mostrador.]]>
+			Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando a sua personagem estiver em frente ao mostrador.
 			</hint>
 		
 			<hint category="LastBlockInserted">
@@ -87,7 +87,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			</orders>
 		</customer>
 	</customers>
-	<objectives missionType="sort" xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRun="false">
+	<objectives missionType="sort" xpIndividual="10" xpFinal="5" xpTotalRun="6" buttonRun="false">
 		<objective pos="2" place="counter">askForFood</objective>
 		<objective pos="2" place="counter">pickUpFood</objective>
 		<objective pos="2" place="counter">deliver</objective>

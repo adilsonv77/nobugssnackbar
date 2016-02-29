@@ -1,0 +1,108 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Temos um problema: somente temos no nosso caixa moedas de $2. Logo, conseguimos dar o troco para o cliente em moedas de $2
+		e o que sobrar ficamos como gorjeta.<br/><br/>
+		Pergunte aos clientes quanto eles querem de cachorro e refrigerantes, calcule o valor do pedido, receba o dinheiro, 
+		forne&#231;a o troco em moedas de $2 e fale quanto sobrou como gorjeta.<br/><br/>
+O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
+		N&#227;o esque&#231;a que, no jogo, as divis&#245;es sempre resultam com a parte inteira. Por exemplo, se 5 / 2 resulta em 2.5, no jogo vai resultar em 2.<br/><br/>
+		<span style="color:red">Tens somente tr&#234;s tentativas para ganhar pontos. Estais limitado em sete blocos.</span>
+		
+ 		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		
+		</sequence>
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="money" show="true"/>
+
+		<category name="cashIn" show="true" />
+		<category name="money2" show="true"/>
+
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+	</commands>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<menu hotdog="2" coke="3"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="3" commQtd="7" >
+		
+		<objective pos="2" place="counter" type='$$$money2' 
+			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">giveSomeChange</objective>
+		<objective text="a gorjeta" 
+				  value="(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))-Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">talk</objective>
+		
+	</objectives>
+	<xml>
+	</xml>
+</mission>

@@ -40,13 +40,27 @@ SelectLevel.generateBoard = function(evt) {
 		
 		
 	};
-	
+	SelectLevel.levelBefore = null;
+	$("#selectLevel .levels").hover(SelectLevel.hoverLevelIn, SelectLevel.hoverLevelOut);
+	$("#selectLevel .levels_disabled").hover(SelectLevel.hoverLevelIn, SelectLevel.hoverLevelOut);
 	$("#selectLevel .levels").unbind('click').click(SelectLevel.levelSelected);
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogSelecLevel"), null, false, true, true, 
 			BlocklyApps.getMsg("Text_SelectLevel"), {width: "750px", height: "530px"}, null, fClose);
 	
 	
+};
+
+SelectLevel.hoverLevelOut = function() {
+	if (SelectLevel.levelBefore !== null)
+		SelectLevel.levelBefore.css("display", "none");
+	SelectLevel.levelBefore = null;
+};
+
+SelectLevel.hoverLevelIn = function() {	
+	var id = $( this ).attr("id");
+	SelectLevel.levelBefore = $ ("#nome_" + id);
+	SelectLevel.levelBefore.css("display", "inline");
 };
 
 SelectLevel.levelSelected = function(evt) {

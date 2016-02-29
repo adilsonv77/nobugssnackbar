@@ -1,0 +1,161 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Supondo que tenhas um estoque de 10 cachorros. Pergunte aos clientes quantos 
+cachorros eles desejam e no final fale quantos cachorros sobrariam no estoque
+  ap&#243;s atend&#234;-los.<br/><br/> 
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+			<hint category="Iddle" time="10000" modal="true" condition="Game.missionView == false &amp;&amp; Hints.showedHint() == false">
+			Leia com aten&#231;&#227;o a p&#225;gina dos objetivos. Depure e observe a lista de vari&#225;veis.<br/><br/>
+			N&#227;o tenha medo de experimentar. &#201; preciso tentar e testar para evoluir.
+			</hint>
+		
+		</sequence>
+
+		<errors>
+		 	<hint category="Iddle" time="0" condition="Hints.lastTalkText() === undefined  &amp;&amp; (Hints.isGoalNotAchieved(4)) ">
+		 	<![CDATA[
+		 	Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Resolva isso adicionando logo no come&#231;o do teu programa
+		 	um bloco de vari&#225;vel atribuindo um valor zero a essa vari&#225;vel em que ele falou "undefined".
+		 	]]>
+		 	</hint>
+		</errors>
+	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos1]</line>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos2]</line>
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [qtos3]</line>
+		<line>Some [qtos1], [qtos2] e [qtos3] e guarde na vari&#225;vel [qtos]</line>
+		<line>Subtraia [qtos] de [10] e guarde na vari&#225;vel [qtos]</line>
+		<line>Fale [qtos]</line>
+	</help>
+	<commands>
+		<category name="snackMan" show="true"/>
+		
+		<category name="goToBarCounter" show="true"/>
+		
+		<category name="askWantHowManyFoods" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+	</commands>
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="6" ordered="false" xpIndividual="20" xpFinal="10">
+		
+		<objective pos="1" place="counter">askWantHowManyFoods</objective>
+		
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+
+		<objective pos="3" place="counter">askWantHowManyFoods</objective>
+		
+		<objective text="a quantidade de comida que sobrar&#225; em estoque se for atender esses clientes" value="10-CustomerManager.totalOfFood()">talk</objective>
+		
+	</objectives>
+	<xml>
+	
+		
+	</xml>
+</mission>
