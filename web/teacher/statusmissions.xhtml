@@ -23,12 +23,12 @@
 				<h:outputText value="Após selecionar uma classe, clique num retângulo para obter mais informações sobre a missão"/>
 			</p:panelGrid>
 
-			<iframe id="myDiagram" style="border:0px"></iframe>
+			<iframe id="myDiagram" style="border:0px; width: 100%"></iframe>
 		
 		
 			<p:remoteCommand name="updateMission" action="#{statusMissions.loadUsersFromMission}" update="usersFromMission"/>
 			
-			<p:dataTable id="usersFromMission" value="#{statusMissions.usersFromMission}"  var="user">
+			<p:dataTable id="usersFromMission" value="#{statusMissions.usersFromMission}" var="user">
 		        <p:column headerText="#{msg.name}">
 		            <h:outputText value="#{user.name}"/>
 		        </p:column>
@@ -45,7 +45,8 @@
 		        	<p:commandButton icon="ui-icon-search" title="#{msg.view}" rendered="#{user.executions != null}" 
 								actionListener="#{statusMissions.loadUserAttempts()}"
 								oncomplete="PF('userStatus').show()"
-								update="frmStatusMissions:dlgUserStatus">
+								update="frmStatusMissions:dlgUserStatus"
+								process="@this">
 						<f:param name="userId" value="#{user.id}" />
 						<f:param name="userName" value="#{user.name}" />
                    </p:commandButton>
@@ -77,8 +78,9 @@
 			        	<p:commandButton icon="ui-icon-search" title="#{msg.view}"
 			        				rendered="#{ua.answer != null}"
 									actionListener="#{statusMissions.loadAnswer(row)}"
-									oncomplete="foi(); showAnswer('#{ua.answer}');"
+									oncomplete="showAnswer('#{ua.answer}');"
 									update="frmStatusMissions:dlgUserAnswer"
+									process="@this"
 									>
 	                   </p:commandButton>
 					</p:column>
@@ -89,20 +91,16 @@
 			</p:dialog>
 			
 			<p:dialog id="dlgUserAnswer" widgetVar="userAnswer" modal="true" 
-					width="800"
+					width="800" height="500"
 					maximizable="true"
 					>
 				<iframe id="editorBlockly" src="#{facesContext.externalContext.requestContextPath}/editor.html"
-					 style="width:100% !important; height:500px !important;">
+					 style="width:100% !important; height:100% !important;">
 				</iframe>
 			</p:dialog>
 			
 			<script>
 
-			function foi() {
-				console.log("foi");	
-			}
-			
 			function showAnswer(answer) {
 				document.getElementById('editorBlockly').onload = function() {
 					

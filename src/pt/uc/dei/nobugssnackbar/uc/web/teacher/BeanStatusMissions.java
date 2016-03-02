@@ -72,8 +72,8 @@ public class BeanStatusMissions implements Serializable {
 		this.selectedUser = params.get("userName");
 		
 		this.userAttempts = reportsMissions.loadAttemptsFromUser(Long.parseLong(userId), missionId);
-
-	}
+		
+ 	}
 	
 	public void loadAnswer(int row) {
 

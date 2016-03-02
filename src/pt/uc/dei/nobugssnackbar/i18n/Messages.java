@@ -15,7 +15,7 @@ import com.eclipsesource.json.JsonObject.Member;
 public class Messages extends ListResourceBundle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	protected String fileName = "pt-pt";
+	protected String fileName = "pt-br";
 	
 	private Object[][] contents;
 
