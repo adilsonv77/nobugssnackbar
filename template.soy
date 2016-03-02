@@ -35,8 +35,11 @@
 	  			</label>
 	  			<label class="password">
 	  			    <input type="password" class="nobugs_inputs" id="loginpassw" placeHolder="{msg meaning="NoBugs.password" desc="--"}Password{/msg}"
-	  			          style="margin-bottom: 30px;"/>
+	  			          style="margin-bottom: 0px;"/>
 	  			</label>
+	  			<div style="width: 100%; text-align: right; margin-bottom: 30px;">
+	  				<a href="javascript:void(0)" id="forgotPassw" style="font-size: 10px; color: red">{msg meaning="NoBugs.forgetPassword" desc="--"}forgot your password?{/msg}</a>
+	  			</div>
 	  			<button id="ButtonLogin" class="nobugs_button" onclick="Game.login()" style="font-size: 16px; margin: 0px 0px 5px; width: 100%; padding: 5px 10px 5px">
 	      			{{msg meaning="Apps.dialogLogin" desc="---"}}Login{{/msg}}
 	    		</button> 
@@ -746,6 +749,17 @@
     </table>
   </div>
 
+  <div id="dialogForgetPassword" class="dialogHiddenContent">
+  		{msg meaning="ForgetPassword.willSendANew" desc="--"}We will send you a new password. Please, inform that same e-mail registered in the game{/msg}
+  		
+  		<input id="forget_mail" name="forget_user_mail" type="text" class="nobugs_inputs" value="" style="width:521px" placeHolder="{msg meaning="Profile.mail" desc="--"}E-mail{/msg}"/><br/>
+ 		<div style="text-align: center">
+	  		<div id="forget_error_mail" style="color: red; position: relative"></div>
+  		</div>
+
+ 		<button id="forget_send" class="nobugs_button" onclick="Game.sendNewPassword()" disabled="disabled">{msg meaning="ForgetPassword.send" desc="--"}Send new password{/msg}</button>
+  </div>
+  
 {/template}
 
 /**

@@ -19,6 +19,7 @@ import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
+import pt.uc.dei.nobugssnackbar.dao.UserDao;
 import pt.uc.dei.nobugssnackbar.model.Achievement;
 import pt.uc.dei.nobugssnackbar.model.Language;
 import pt.uc.dei.nobugssnackbar.model.Message;
@@ -427,6 +428,18 @@ public class UserControl {
 
 		// send a welcome email
 		mail.sendRegisterMail(userMail, encrypt(userNick + userName + userMail), lang);
+	}
+	
+	@RemoteMethod
+	public boolean sendNewPassword(String mail) throws Exception {
+		UserDao uDao = factoryDao.getUserDao();
+		User user = uDao.findByMail(mail);
+		if (user == null)
+			return false;
+		
+		String newPassw = uDao.createNewPassword(user);
+		this.mail.sendOneMail(mail, "nova senha", newPassw);
+		return true;
 	}
 	
 	@RemoteMethod

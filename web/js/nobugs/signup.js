@@ -1,4 +1,8 @@
 $(function() {
+	$('#forgotPassw').click(function() {
+		alert("Maluco");
+	});
+	
 	/*
 	$('#sign').tooltip({
 		content : $('<div></div>'),

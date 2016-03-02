@@ -99,6 +99,7 @@
 	"Apps.dialogLogin": "Entrar",
 	"NoBugs.user": "Usu&#225;rio",
 	"NoBugs.password" : "Palavra-passe",
+	"NoBugs.forgetPassword" : "esqueceu sua palavra-passe?",
 	
 	"NoBugs.amountCharged" : "valorPedido",
 	"NoBugs.numberBankNotes" : "quantas",
@@ -132,7 +133,7 @@
 	"SnackMan.pickUpIceCreamTooltip" : "Pega o gelado da m&#225;quina.",
 	
 	"Error.error" : "Erro",
-	"Error.login" : "Usu&#225;rio n&#227;o encontrado",
+	"Error.login" : "Usu&#225;rio n&#227;o encontrado ou palavra-passe incorreta",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida.",
 	"Error.doesntExistTable": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 2.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente. Antes de executar esse bloco, caminhe at&#233; onde est&#225; o cliente.",
@@ -364,5 +365,9 @@
 	"Achievement.FinishedBeforeFinalDate_Title" : "Finalizar fase dentro do prazo",
 	"Achievement.FinishedBeforeFinalDate_Description": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%] para receber pontos extras na Prova [%EVALUATION%]",
 
-	"Confirm.Reloadblocks" : "Todo o progresso na sua solu&#231;&#227;o ser&#225; perdida. Confirma recarregar com os blocos iniciais ?"
+	"Confirm.Reloadblocks" : "Todo o progresso na sua solu&#231;&#227;o ser&#225; perdida. Confirma recarregar com os blocos iniciais ?",
+
+	"ForgetPassword.willSendANew" : "Enviaremos uma nova palavra-passe. Informe o mesmo e-mail registado no jogo.",
+	"ForgetPassword.send" : "Enviar nova palavra-passe",
+	"ForgetPassword.wrongMail" : "O e-mail informado n&#227;o foi encontrado."
 }

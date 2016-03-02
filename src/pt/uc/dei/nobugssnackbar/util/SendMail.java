@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -125,6 +126,14 @@ public class SendMail {
 
 		msg.setSubject(subjMsgText);
 		Transport.send(msg);
+	}
+
+	public void sendOneMail(String mail, String subject, String content) throws Exception {
+		
+		List<String> dest = new ArrayList<>();
+		dest.add(mail);
+		send(dest, subject, content);
+		
 	}
 
 }

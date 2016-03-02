@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
 import pt.uc.dei.nobugssnackbar.model.User;
@@ -80,6 +81,76 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public User findByMail(String mail) throws Exception {
+		String query = "select userid, usermail from users  where usermail = ?";
+
+		User ret = null;
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement(query);
+			ps.setString(1, mail);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				ret = new User();
+				ret.setId(rs.getLong(1));
+				ret.setMail(mail);
+			}
+			
+			ps.close();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
+	}
+
+	@Override
+	public String createNewPassword(User user) throws Exception {
+		
+		Random r = new Random();
+		String query = "update users set userpassw=md5(?) where userid = ?";
+
+		String ret = null;
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			ret = extractChar(r) + extractChar(r) + extractChar(r) + extractChar(r) + extractChar(r) + extractChar(r) + extractChar(r) + extractChar(r); 
+			
+			PreparedStatement ps = bdCon.prepareStatement(query);
+			ps.setString(1, ret);
+			ps.setLong(2, user.getId());
+			ps.executeUpdate();
+			
+	
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
+		
+	}
+	
+	private static final String SEED = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	
+	private String extractChar(Random r) {
+		
+		int x = r.nextInt(SEED.length()-1) + 1;
+		return SEED.substring(x, x+1);
 	}
 
 

@@ -636,6 +636,25 @@ Game.saveProfile = function() {
 	
 };
 
+Game.verifyRetypeMail = function() {
+	if ($("input[name=forget_user_mail]").val().trim() === "")
+		$("#forget_send").attr("disabled", "disabled");
+	else
+		$("#forget_send").removeAttr("disabled");
+};
+
+Game.sendNewPassword = function() {
+	var mail = $("input[name=forget_user_mail]").val();
+	
+	UserControl.sendNewMail(mail, {async:false, 
+		callback:function(ok) {
+			if (!ok)
+				$("#forget_error_mail").html(BlocklyApps.getMsg("ForgetPassword_WrongMail"));
+				
+		}});
+
+};
+
 Game.moveBlocksToZero = function() {
 	
 	var blocks = Blockly.mainWorkspace.getTopBlocks();

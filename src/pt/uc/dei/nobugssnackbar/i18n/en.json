@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-03-02 16:43:41.140000",
+		"lastupdated": "2016-03-02 18:21:05.624000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -289,6 +289,7 @@
 	"Avatar.Scarf": "Scarf",
 	"NoBugs.user": "User",
 	"NoBugs.password": "Password",
+	"NoBugs.forgetPassword": "forgot your password?",
 	"Apps.dialogLogin": "Login",
 	"Apps.dialogSignUp": "Sign Up",
 	"NoBugs.support": "In case of technical problems, or reset password, please contact ",
