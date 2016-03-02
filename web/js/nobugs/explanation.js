@@ -59,10 +59,14 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 	Explanation.explanation = explanation;
 
 	if (withHint || instruction) {
+		Explanation.showCloseButton = false;
+		
 		Explanation.pageNumber = Explanation.firstStatement;
 		Explanation.createDialog(Explanation.firstStatement, afterclosed);
 	}
 	else {
+		Explanation.showCloseButton = true;
+		
 		Explanation.pageNumber = Explanation.lastStatement;
 		Explanation.createDialog(Explanation.lastStatement, afterclosed);
 	}
@@ -111,8 +115,12 @@ Explanation.createDialog = function(nrPage, afterclosed) {
 	if (!Explanation.instruction)
 		Explanation.evaluateObjectives(nrPage, container);
 	
-	MyBlocklyApps.showDialog(content, null,
-							 false, true, true, Game.missionTitle, Explanation.style, afterclosed);
+    var buttonClose = null;
+	if (Explanation.showCloseButton && nrPage < Explanation.lastStatement)
+		buttonClose = function() {Explanation.finishStatement();};
+		
+    MyBlocklyApps.showDialog(content, null,
+							 false, true, true, Game.missionTitle, Explanation.style, afterclosed, buttonClose);
 	
 };
 
@@ -210,7 +218,7 @@ Explanation.createGoals = function(container) {
 		ul.appendChild(obj);
 		
 	}
-}
+};
 
 
 Explanation.finishStatement = function() {

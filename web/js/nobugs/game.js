@@ -39,6 +39,7 @@ Game.mission = null;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
+Game.showMoveRight = false;
 
 /**
  * PID of animation task currently executing.
@@ -1726,7 +1727,8 @@ Game.resizeWindow = function(e) {
     	
     	/// the button only is showed when something wrong happens... then in the except part of try it will shop the button
     	// TODO: we have a problem: while is debugging, if it resize the window, then this button is hided
-    	document.getElementById("moveRight").style.display = 'none';
+    	if (!Game.showMoveRight)
+    		document.getElementById("moveRight").style.display = 'none';
     	
     	Game.redimDiv.style.height = Game.optResize.blocklyDivH;
         w -= Game.optResize.blocklyDivW;
@@ -2185,6 +2187,7 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 	
+    Game.showMoveRight = false;
 	Game.clickReseting = true;
 	Game.finishedRun();
 	
@@ -2427,6 +2430,7 @@ Game.verifyFunctionTabs = function() {
  */
 Game.execute = function(debug) {
 	
+  Game.showMoveRight = false;
   if (Game.runningStatus === 0) {
 	
 	  try {
@@ -2816,6 +2820,7 @@ Game.nextStep = function() {
 			  console.log(ex);
 
 			  if (Game.runningStatus == 2) {
+				  Game.showMoveRight = true;
 				  document.getElementById("moveRight").style.display = 'inline-block';
 			  }
 			  // when was something wrong in the command execution, as wrong parameter value, or invalid moment of the command use
@@ -2992,6 +2997,7 @@ Game.verifyVictory = function() {
 			UserControl.missionFail(Game.howManyRuns, CustomerManager.currentTest+1, objs);
 
 	    if (debugging) {
+		  Game.showMoveRight = true;
 		  document.getElementById("moveRight").style.display = 'inline-block';
 	    }
     	

@@ -9,7 +9,7 @@ SelectLevel.generateBoard = function(evt) {
 		var levelInfo = Game.loginData.missionHist[i];
 		
 		var sDate = levelInfo[8].split("-");
-		var date = new Date(sDate[0], sDate[1], sDate[2]);
+		var date = new Date(sDate[0], sDate[1]-1, sDate[2]); // month zero based
 		
 		
 		$("#level_"+(i+1)).removeClass();

@@ -135,23 +135,24 @@ J&#225; existem uns blocos na &#225;rea de trabalho que com certeza vais usar. M
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
-		<block type="move_goToBarCounter" x="129" y="51" deletable="false">
+	<!-- retirei o deletable="false" porque tem algum bug q nao consegui reproduzir -->
+		<block type="move_goToBarCounter" x="129" y="51" >
 			<value name="VALUE">
-				<block type="math_number" deletable="false">
+				<block type="math_number" >
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<next>
-				<block type="variables_set" deletable="false">
+				<block type="variables_set" >
 					<field name="VAR">beb1</field>
 					<value name="VALUE">
-						<block type="ask_askWantHowManyDrinks" deletable="false"></block>
+						<block type="ask_askWantHowManyDrinks" ></block>
 					</value>
 					<next>
-						<block type="variables_set" deletable="false">
+						<block type="variables_set" >
 							<field name="VAR">com1</field>
 							<value name="VALUE">
-								<block type="ask_askForFood" deletable="false"></block>
+								<block type="ask_askForFood" ></block>
 							</value>
 						</block>
 					</next>
