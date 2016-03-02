@@ -15,7 +15,7 @@ import pt.uc.dei.nobugssnackbar.model.User;
 
 @ManagedBean(name = "ucreportsmissions")
 @ApplicationScoped
-public class UCReportsMissions  implements Serializable {
+public class UCReportsMissions implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -151,7 +151,7 @@ Essa &#233; mais uma miss&#227;o para corrigir erros. Falta o conjunto de blocos
 						</block>
 					</value>
 					<next>
-						<block type="variables_set">
+						<block type="variables_set" deletable = "false" >
 							<field name="VAR">qtaComida3</field>
 							<value name="VALUE">
 								<block type="math_number" deletable="false">
@@ -159,7 +159,7 @@ Essa &#233; mais uma miss&#227;o para corrigir erros. Falta o conjunto de blocos
 								</block>
 							</value>
 							<next>
-								<block type="variables_set">
+								<block type="variables_set" deletable = "false" >
 									<field name="VAR">totalComida</field>
 									<value name="VALUE">
 										<block type="math_number" deletable="false">
@@ -180,12 +180,12 @@ Essa &#233; mais uma miss&#227;o para corrigir erros. Falta o conjunto de blocos
 														<block type="ask_askWantHowManyFoods" deletable="false"></block>
 													</value>
 													<next>
-														<block type="move_goToBarCounter">
+														<block type="move_goToBarCounter" deletable = "false" >
 															<value name="VALUE">
-																<block type="math_number"><field name="NUM">2</field></block>
+																<block type="math_number" deletable = "false" ><field name="NUM">2</field></block>
 															</value>
 															<next>
-																<block type="variables_set">
+																<block type="variables_set" deletable = "false" >
 																	<field name="VAR">qtaComida2</field>
 																	<value name="VALUE">
 																		<block type="ask_askWantHowManyFoods" deletable="false"></block>

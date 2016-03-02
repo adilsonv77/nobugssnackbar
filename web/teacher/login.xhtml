@@ -6,7 +6,7 @@
                 
 	<ui:define name="body">
 	
-	    <p:panel rendered="#{login.userLogged == null}">
+	    <p:panel rendered="#{login.userLogged == null}" style="width: 500px; position: relative; margin-left: auto; margin-right: auto">
 		    <h:form id="frmLogin">
 		        <h:panelGrid columns="2" id="panelLoginUser">
 		            <h:outputText value="#{msg.user_nick}: "/>

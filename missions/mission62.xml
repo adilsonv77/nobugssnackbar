@@ -90,7 +90,7 @@
 	<xml xmlns="http://www.w3.org/1999/xhtml">
 		<block type="move_goToBarCounter" deletable="false" x="10" y="150">
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable = "false" >
 					<field name="NUM">1</field>
 				</block>
 			</value>
@@ -99,7 +99,7 @@
 					<next>
 						<block type="move_goToBarCounter" deletable="false">
 							<value name="VALUE">
-								<block type="math_number">
+								<block type="math_number" deletable = "false" >
 									<field name="NUM">2</field>
 								</block>
 							</value>
@@ -108,7 +108,7 @@
 									<next>
 										<block type="move_goToBarCounter" deletable="false">
 											<value name="VALUE">
-												<block type="math_number">
+												<block type="math_number" deletable = "false" >
 													<field name="NUM">3</field>
 												</block>
 											</value>

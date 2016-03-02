@@ -12,9 +12,11 @@
 	<p:panel rendered="#{login.userLogged != null}">
 		<h:form>
 	       <p:menubar autoDisplay="false" styleClass="menu-sistema">
+
 	            <p:menuitem ajax="false" 
 	                        value="#{msg.releaseLevel}" 
 	                        action="releaselevel"
+	                        rendered="false"
 	                        />
 
 	            <p:menuitem ajax="false" 
@@ -23,8 +25,14 @@
 	                        />
 
 	            <p:menuitem ajax="false" 
+	                        value="#{msg.achievements}" 
+	                        action="statusachievements"
+	                        />
+
+	            <p:menuitem ajax="false" 
 	                        value="#{msg.statusStudents}" 
 	                        action="statusstudents"
+	                        rendered="false"
 	                        />
 	       </p:menubar>
 	 

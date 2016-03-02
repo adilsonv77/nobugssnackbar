@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,8 @@ public class AchievementJdbcDao implements AchievementDao {
 	private Connection getConnection() throws SQLException {
 		return NoBugsConnection.getConnection().getDataSource().getConnection();
 	}
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
 	public byte[] getAchievementTypeImage(long achievementTypeId) throws SQLException {
@@ -224,6 +227,68 @@ public class AchievementJdbcDao implements AchievementDao {
 		}
 		
 		return res;
+	}
+
+	@Override
+	public List<String[]> loadUsersAchievements(Integer clazzId)
+			throws SQLException {
+
+		Connection bdCon = null;
+		List<String[]> ret = new ArrayList<>();
+		try {
+			bdCon = getConnection();
+			String sql = "select achievementtypeclasseid, achievementtypeid, fieldvalue from achievementtypesclasses ac join achievementtypesclassesfields using (achievementtypeclasseid) where classid = ?  and fieldname = 'FASE' order by ac.order";
+			
+			List<Long> cods = new ArrayList<>();
+			List<Long> cods2 = new ArrayList<>();
+			List<String> fases = new ArrayList<>();
+			PreparedStatement ps = bdCon.prepareStatement(sql);
+			ps.setInt(1, clazzId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				cods.add(rs.getLong(1));
+				cods2.add(rs.getLong(2));
+				fases.add(rs.getString(3));
+			}
+			ps.close();
+						
+			String[] l = new String[cods.size()+1];
+			for (int i=0; i<cods.size(); i++)
+				l[i+1] = cods.get(i).toString()+ ";" + cods2.get(i).toString() + ";" + fases.get(i);
+			ret.add(l);
+			
+			sql = "select username, achievementtypeclasseid, achieveddate from users join classesusers using (userid) left outer join achievements using (userid) where classid = ? and userenabled = 'T' order by username";
+			
+			ps = bdCon.prepareStatement(sql);
+			ps.setInt(1, clazzId);
+			
+			String lastName = "";
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				if (!lastName.equals(rs.getString(1))) {
+					lastName = rs.getString(1);
+					l = new String[cods.size()+1];
+					l[0] = lastName;
+					ret.add(l);
+				}
+				
+				Long achievId = rs.getLong(2);
+				if (!rs.wasNull())
+					l[cods.indexOf(achievId)+1] = sdf.format( rs.getDate(3) );
+			}
+		
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+			
+		}
+		
+		return ret;
 	}
 
 }

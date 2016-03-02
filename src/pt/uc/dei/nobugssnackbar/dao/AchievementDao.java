@@ -14,4 +14,6 @@ public interface AchievementDao {
 
 	List<Map<String, String>> verifyAchievements(long userId, long classId) throws SQLException;
 
+	List<String[]> loadUsersAchievements(Integer clazzId) throws SQLException;
+
 }

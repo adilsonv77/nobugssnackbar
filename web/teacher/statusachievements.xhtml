@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="body">
+	
+		<h:form id="frmStatusAchievements">
+			<p:panelGrid columns="2"  styleClass="ui-noborder" style="width: 100%" >
+				<p:selectOneMenu value="#{statusAchievements.clazz}" widgetVar="clazzTeacher">
+	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+	 				<f:selectItems value="#{statusAchievements.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+					<p:ajax event="change" update="usersFromClazz"/>
+					<f:attribute name="dataProvider" value="statusAchievements.clazzes"/>
+				</p:selectOneMenu>
+				
+				<h:outputText/>
+			</p:panelGrid>
+	
+			<p:dataTable id="usersFromClazz" var="u" value="#{statusAchievements.students}">
+			    <p:columns value="#{statusAchievements.colStudents}" var="col" columnIndexVar="colIndex">
+			    	
+			    	<f:facet name="header" >
+			    		<p:graphicImage id="badge" value="#{images.badge}" rendered="${colIndex &gt; 0}" width="100%">
+			    		 	<f:param name="typeId" value="#{col.typeId}" />
+			    		</p:graphicImage>
+			    		<h:outputText value="Fase #{col.level}" rendered="${colIndex &gt; 0}" />
+			    	</f:facet> 
+			    	
+			    	<h:outputText value="#{u[colIndex]}" />
+			    </p:columns>
+		    </p:dataTable>
+		  </h:form>
+	</ui:define>
+
+</ui:composition>
+

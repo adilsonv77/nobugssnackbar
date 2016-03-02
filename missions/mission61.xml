@@ -114,12 +114,12 @@
 
 		<block type="move_goToBarCounter" x="10" y = "150" deletable = "false" >
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable = "false" >
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<next>
-				<block type="move_goToDisplay">
+				<block type="move_goToDisplay" deletable = "false" >
 				</block>
 			</next>
 		</block>

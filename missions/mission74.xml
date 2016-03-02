@@ -141,14 +141,14 @@ Basta organizares os blocos para resolver o problema.
 		</block>
 		<block type="move_goToBarCounter" x="7" y="71" deletable="false">
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable="false">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>
 		<block type="move_goToBarCounter" x="11" y="123" deletable="false">
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable="false">
 					<field name="NUM">3</field>
 				</block>
 			</value>
