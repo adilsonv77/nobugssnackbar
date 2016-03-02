@@ -257,12 +257,14 @@ public class AchievementJdbcDao implements AchievementDao {
 				l[i+1] = cods.get(i).toString()+ ";" + cods2.get(i).toString() + ";" + fases.get(i);
 			ret.add(l);
 			
-			sql = "select username, achievementtypeclasseid, achieveddate from users join classesusers using (userid) left outer join achievements using (userid) where classid = ? and userenabled = 'T' order by username";
+			sql = "select username, achievementtypeclasseid, achieveddate, userid from users join classesusers using (userid) left outer join achievements using (userid) where classid = ? and userenabled = 'T' order by username";
 			
 			ps = bdCon.prepareStatement(sql);
 			ps.setInt(1, clazzId);
 			
 			String lastName = "";
+			
+			Map<Long, Integer> usersData = new HashMap<>();
 			
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -271,6 +273,7 @@ public class AchievementJdbcDao implements AchievementDao {
 					lastName = rs.getString(1);
 					l = new String[cods.size()+1];
 					l[0] = lastName;
+					usersData.put(rs.getLong(4), ret.size());
 					ret.add(l);
 				}
 				
@@ -278,7 +281,27 @@ public class AchievementJdbcDao implements AchievementDao {
 				if (!rs.wasNull())
 					l[cods.indexOf(achievId)+1] = sdf.format( rs.getDate(3) );
 			}
-		
+			
+			ps.close();
+			
+			sql = "select userid, classlevelid ci, count(*) c, (select count(*) from classesmissions where classlevelid = ci and classid = ?) q  from missionsaccomplished  join classesmissions cm using (missionid, classid) where classid = ? group by userid, classlevelid having c < q" ;
+			
+			ps = bdCon.prepareStatement(sql);
+			ps.setInt(1, clazzId);
+			ps.setInt(2, clazzId);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Integer idx = usersData.get(rs.getLong(1));
+				if (idx != null && idx > 1) {
+					l = ret.get(idx);
+					if (l[rs.getInt(2)-1] == null) 
+						l[rs.getInt(2)-1] = Double.toString(Math.floor((rs.getDouble(3)/rs.getDouble(4))*100)) + " %";
+				}
+			}
+			
+			ps.close();
 		} finally {
 			if (bdCon != null)
 				try {

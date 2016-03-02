@@ -90,10 +90,12 @@
 			
 			</p:dialog>
 			
+			<!-- foi corrigido recentemente o maximize dos dialogs mas nao atualizado no primefaces --> 
 			<p:dialog id="dlgUserAnswer" widgetVar="userAnswer" modal="true" 
 					width="800" height="500"
-					maximizable="true"
+					maximizable="true" 
 					>
+					
 				<iframe id="editorBlockly" src="#{facesContext.externalContext.requestContextPath}/editor.html"
 					 style="width:100% !important; height:100% !important;">
 				</iframe>
