@@ -944,6 +944,12 @@
           	 </value>
         </block>
   		
+  		{if $ij.enabled['text_text']}
+  		<block type="text">
+    		<field name="TEXT">Hello</field>
+    	</block>
+  		{/if}
+  		
   		{if $ij.enabled['textjoin']}
     	<block type="text_join">
     		<mutation items="2"></mutation>

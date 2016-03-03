@@ -866,7 +866,7 @@ Game.missionLoaded = function(ret){
   
   Game.missionType = mission.getElementsByTagName("objectives")[0].getAttribute("missionType");
   if (Game.missionType == null)
-	  Game.missionType = "createsFromScracth";
+	  Game.missionType = "createsFromScratch";
   else
 	  if (Game.missionType == "fixBugs") {
 		  Game.allowsCreateVars = mission.getElementsByTagName("objectives")[0].getAttribute("allowsCreateVars");
@@ -1247,9 +1247,11 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
     
+  
+  
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
-	       trashcan: true,
+	       trashcan: (Game.missionType == "createsFromScratch"),  // TODO: o blockly permite excluir objetos não-deletaveis que estao dentro de blocos deletaveis 
 	       comments: false,
 	       scrollbars: true,
 	       toolbox: toolbox,

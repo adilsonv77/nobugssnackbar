@@ -5,6 +5,8 @@
  *                    Patrice Blanchardie (http://www.inisos.fr)
  */
 
+/*** adilson alterou ***/
+
 jQuery.fn.ingrid = function(o){
 
 	var cfg = {

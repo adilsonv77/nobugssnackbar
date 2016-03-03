@@ -197,6 +197,46 @@ var afterMyMouseMove = Blockly.onMouseMove_;
 
 var myIsTargetSvg = false;
 
+// this method avoid to remove children blocks that mustn't removed it
+MyBlocklyApps.removeBlock = function(root, remove) {
+	
+	remove = remove || remove == undefined;
+	
+	if (root.inputList && root.inputList.length > 0) {
+		
+		for (var i = 0; i<root.inputList.length; i++)
+			if (root.inputList[i].name.indexOf("DO") == 0) {
+				
+				var next = root.inputList[i].connection.targetConnection.sourceBlock_;
+				var previous = null;
+				while (next != null) {
+					var backupNext = next.nextConnection.targetConnection;
+					if (backupNext)
+						backupNext = backupNext.sourceBlock_;
+					var deletable = next.isDeletable();
+					if (!deletable) {
+						next.unplug(false, false);
+					} 
+
+					if (next.type === "controls_if" || next.type === "controls_whileUntil" || next.type === "controls_for")
+						MyBlocklyApps.removeBlock(next, deletable);
+					
+					if (previous != null && !deletable)
+						previous.nextConnection.connect(next.previousConnection);
+					
+					previous = (deletable?previous:next);
+					next = backupNext;
+					
+				}
+			}
+		
+	}
+	
+	if (root.childBlocks_.length > 0) {
+	}
+	if (remove)
+		root.dispose(true, true);
+};
 
 MyBlocklyApps.onKeyDown_ = function(e) {
 	  if (Blockly.isTargetInput_(e)) {
@@ -217,14 +257,15 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	        
 	        if (Game.blocksSelected.length == 0) {
 	        	
-	        	if (Blockly.selected.isDeletable())
-	        		Blockly.selected.dispose(true, true);
+	        	if (Blockly.selected.isDeletable()) {
+	        		MyBlocklyApps.removeBlock(Blockly.selected);
+	        	}
 	        	
 	        } else {
 	        	
 		  		Game.blocksSelected.forEach(function(block) {
 					if (block.isDeletable())
-						block.dispose(true, true);
+						MyBlocklyApps.removeBlock(block);
 				});
 		  		Game.blocksSelected = [];
 	        }
@@ -261,11 +302,13 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					    	
 					    	Blockly.copy_(Blockly.selected);
 					    	if (Game.blocksSelected.length == 0) {
-					    		Blockly.selected.dispose(true, true);
+					    		if (Blockly.selected.isDeletable() && Blockly.selected.isMovable())
+					    			MyBlocklyApps.removeBlock(Blockly.selected);
+					    		
 					    	} else {
 						  		Game.blocksSelected.forEach(function(block) {
 									if (block.isDeletable() && block.isMovable())
-										block.dispose(true, true);
+						    			MyBlocklyApps.removeBlock(block);
 								});
 						  		Game.blocksSelected = [];
 					    	}
