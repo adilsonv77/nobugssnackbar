@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-03-02 18:21:05.624000",
+		"lastupdated": "2016-03-03 10:46:31.045000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -272,6 +272,9 @@
 	"LeaderBoard.TabsRuns": "Tabs Run",
 	"LeaderBoard.TabsContest": "Tabs Contest",
 	"Confirm.Reloadblocks": "All progress in program will be losed. Are you sure to confirm this action?",
+	"ForgetPassword.wrongMail": "This e-mail did not find as a registered user.",
+	"ForgetPassword.forget": "Forgot the password",
+	"ForgetPassword.newPasswordSent": "New password sent... verify your e-mail",
 	"Apps.save": "Save",
 	"Apps.generate": "JavaScript",
 	"NoBugs.Achievements": "Achievements",
@@ -330,6 +333,8 @@
 	"Profile.retypePassword": "Retype Password",
 	"Profile.save": "Save",
 	"Profile.cancel": "Cancel",
+	"ForgetPassword.willSendANew": "We will send you a new password. Please, inform that same e-mail registered in the game",
+	"ForgetPassword.send": "Send new password",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",
 	"SnackMan.catMoney": "Money",

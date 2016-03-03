@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import org.directwebremoting.WebContext;
@@ -20,6 +21,7 @@ import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
+import pt.uc.dei.nobugssnackbar.i18n.ApplicationMessages;
 import pt.uc.dei.nobugssnackbar.model.Achievement;
 import pt.uc.dei.nobugssnackbar.model.Language;
 import pt.uc.dei.nobugssnackbar.model.Message;
@@ -433,12 +435,19 @@ public class UserControl {
 	@RemoteMethod
 	public boolean sendNewPassword(String mail) throws Exception {
 		UserDao uDao = factoryDao.getUserDao();
-		User user = uDao.findByMail(mail);
-		if (user == null)
+		Long userId = uDao.findByMail(mail);
+		if (userId == null)
 			return false;
 		
+		User user = uDao.read(userId);
+		ResourceBundle m = ApplicationMessages.getMessage(user.getLang());
+		
 		String newPassw = uDao.createNewPassword(user);
-		this.mail.sendOneMail(mail, "nova senha", newPassw);
+		String content = String.format(m.getString("forgetPasswordContent"), 
+				user.getNick(), newPassw, "<a href='http://nobugssnackbar.dei.uc.pt'>", "</a>");
+		content = content + "<br/>"+
+				"<img src='http://nobugssnackbar.dei.uc.pt/images/logotipo-home.png'/>"; 
+		this.mail.sendOneMail(mail, m.getString("forgetPasswordSubject"), content);
 		return true;
 	}
 	

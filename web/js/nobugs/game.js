@@ -163,7 +163,13 @@ Game.init = function() {
   		    document.getElementById("mainBody").style.display = "none";
   		    document.getElementById("selectMission").style.display = "none";
   		    
-		    document.getElementById("initialBackground").style.display = "inline";
+
+  		    document.getElementById("initialBackground").style.display = "inline";
+			
+  		    $('#forgotPassw').click(function() {
+				Game.startForgetPassw();
+			});
+
 		    Game.resizeMainWindow();
 		    
 		}
@@ -636,6 +642,12 @@ Game.saveProfile = function() {
 	
 };
 
+Game.startForgetPassw = function() {
+	MyBlocklyApps.showDialog(document.getElementById("dialogForgetPassword"), null, false, true, true, 
+			BlocklyApps.getMsg("ForgetPassword_Forget"), {width:"600px"}, null, function(){});
+	
+};
+
 Game.verifyRetypeMail = function() {
 	if ($("input[name=forget_user_mail]").val().trim() === "")
 		$("#forget_send").attr("disabled", "disabled");
@@ -646,10 +658,17 @@ Game.verifyRetypeMail = function() {
 Game.sendNewPassword = function() {
 	var mail = $("input[name=forget_user_mail]").val();
 	
-	UserControl.sendNewMail(mail, {async:false, 
+	$("body").css("cursor", "wait");
+	UserControl.sendNewPassword(mail, {async:false, 
 		callback:function(ok) {
+			$("body").css("cursor", "default");
 			if (!ok)
 				$("#forget_error_mail").html(BlocklyApps.getMsg("ForgetPassword_WrongMail"));
+			else {
+				alert(BlocklyApps.getMsg("ForgetPassword_NewPasswordSent"));
+				MyBlocklyApps.hideDialog();
+			}
+				
 				
 		}});
 

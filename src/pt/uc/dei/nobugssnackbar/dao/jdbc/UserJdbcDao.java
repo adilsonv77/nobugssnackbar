@@ -84,10 +84,10 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 	}
 
 	@Override
-	public User findByMail(String mail) throws Exception {
-		String query = "select userid, usermail from users  where usermail = ?";
+	public Long findByMail(String mail) throws Exception {
+		String query = "select userid from users  where usermail = ?";
 
-		User ret = null;
+		Long ret = null;
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
@@ -96,9 +96,7 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 			ps.setString(1, mail);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				ret = new User();
-				ret.setId(rs.getLong(1));
-				ret.setMail(mail);
+				ret = rs.getLong(1);
 			}
 			
 			ps.close();

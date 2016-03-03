@@ -369,5 +369,7 @@
 
 	"ForgetPassword.willSendANew" : "Enviaremos uma nova palavra-passe. Informe o mesmo e-mail registado no jogo.",
 	"ForgetPassword.send" : "Enviar nova palavra-passe",
-	"ForgetPassword.wrongMail" : "O e-mail informado n&#227;o foi encontrado."
+	"ForgetPassword.wrongMail" : "O e-mail informado n&#227;o foi encontrado.",
+	"ForgetPassword.forget" : "Esqueci a palavra-passe",
+	"ForgetPassword.newPasswordSent" : "Nova palavra-passe enviada... verifique seu e-mail"
 }

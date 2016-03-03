@@ -51,6 +51,9 @@ public class User {
 
 	private long xp;
 	
+	@JdbcField(name="userlang")
+	private String lang;
+	
 	@JdbcField(name="usermail")
 	@RemoteProperty
 	private String mail;
@@ -182,5 +185,13 @@ public class User {
 	
 	public void setShowSound(boolean showSound) {
 		this.showSound = showSound;
+	}
+	
+	public String getLang() {
+		return lang;
+	}
+	
+	public void setLang(String lang) {
+		this.lang = lang;
 	}
 }

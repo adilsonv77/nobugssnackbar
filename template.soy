@@ -752,7 +752,7 @@
   <div id="dialogForgetPassword" class="dialogHiddenContent">
   		{msg meaning="ForgetPassword.willSendANew" desc="--"}We will send you a new password. Please, inform that same e-mail registered in the game{/msg}
   		
-  		<input id="forget_mail" name="forget_user_mail" type="text" class="nobugs_inputs" value="" style="width:521px" placeHolder="{msg meaning="Profile.mail" desc="--"}E-mail{/msg}"/><br/>
+  		<input id="forget_mail" name="forget_user_mail" type="text" class="nobugs_inputs" value="" style="width:521px" placeHolder="{msg meaning="Profile.mail" desc="--"}E-mail{/msg}" onkeyup="Game.verifyRetypeMail()"/><br/>
  		<div style="text-align: center">
 	  		<div id="forget_error_mail" style="color: red; position: relative"></div>
   		</div>

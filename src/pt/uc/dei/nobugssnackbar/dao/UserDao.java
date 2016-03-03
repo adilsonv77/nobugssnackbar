@@ -12,7 +12,7 @@ public interface UserDao extends Dao<User> {
 
 	List<User> listByClass(Integer classId) throws Exception;
 
-	User findByMail(String mail) throws Exception;
+	Long findByMail(String mail) throws Exception;
 
 	String createNewPassword(User user) throws Exception;
 	
