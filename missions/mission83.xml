@@ -1,0 +1,180 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+			Assim como existe um bloco para perguntar se o cliente tem sede, tamb&#233;m existe outro para perguntar
+			se tem fome: <span style="color:white; background-color: rgb(91,165,140); padding: 3px"> askHasHunger </span>.
+			]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
+			Existe somente um cliente que &#224;s vezes tem somente fome, &#224;s vezes tem somente sede, e ainda &#224;s vezes tem fome e sede.
+			<br />
+			<br />
+			Precisas corrigir erros nessa miss&#227;o: faltam blocos. N&#227;o esque&#231;a que a primeira execu&#231;&#227;o n&#227;o conta
+			para ganhar estrelas.
+			]]>
+		</page>
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+	</hints>
+	<commands>
+		<category name="snackMan" show="true" />
+		<category name="askHasThirsty" show="true" />
+		<category name="askHasHunger" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		
+		
+	</commands>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType="fixBugs" ordered="false" buttonRun="false"
+	      xpIndividual="10" xpFinal="5" xpTotalRun="3" >
+	      
+		<objective pos="2" place="counter">askHasThirsty</objective>
+		<objective pos="2" place="counter">askHasHunger</objective>
+
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+	<xml>
+		<block type="move_goToBarCounter" deletable="false" x="25" y="21">
+			<value name="VALUE">
+				<block type="math_number" deletable="false">
+					<field name="NUM">2</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set" inline="true" deletable="false">
+					<field name="VAR">bebida</field>
+					<value name="VALUE">
+						<block type="ask_askForDrink" deletable="false"></block>
+					</value>
+					<next>
+						<block type="move_goToCooler" deletable="false">
+							<next>
+								<block type="variables_set" deletable="false">
+									<field name="VAR">bebida</field>
+									<value name="VALUE">
+										<block type="prepare_pickUpDrink" deletable="false">
+											<value name="VALUE">
+												<block type="variables_get" deletable="false">
+													<field name="VAR">bebida</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<next>
+										<block type="move_goToBarCounter" deletable="false">
+											<value name="VALUE">
+												<block type="math_number" deletable="false">
+													<field name="NUM">2</field>
+												</block>
+											</value>
+											<next>
+												<block type="do_deliver" deletable="false">
+													<value name="VALUE">
+														<block type="variables_get" deletable="false">
+															<field name="VAR">bebida</field>
+														</block>
+													</value>
+													<next>
+														<block type="variables_set" deletable="false">
+															<field name="VAR">comida</field>
+															<value name="VALUE">
+																<block type="ask_askForFood" deletable="false"></block>
+															</value>
+															<next>
+																<block type="move_goToDisplay" deletable="false">
+																	<next>
+																		<block type="variables_set" deletable="false">
+																			<field name="VAR">comida</field>
+																			<value name="VALUE">
+																				<block type="prepare_pickUpHotDog" deletable="false">
+																					<value name="VALUE">
+																						<block type="variables_get" deletable="false">
+																							<field name="VAR">comida</field>
+																						</block>
+																					</value>
+																				</block>
+																			</value>
+																			<next>
+																				<block type="move_goToBarCounter" deletable="false">
+																					<value name="VALUE">
+																						<block type="math_number" deletable="false">
+																							<field name="NUM">2</field>
+																						</block>
+																					</value>
+																					<next>
+																						<block type="do_deliver" deletable="false">
+																							<value name="VALUE">
+																								<block type="variables_get" deletable="false">
+																									<field name="VAR">comida</field>
+																								</block>
+																							</value>
+																						</block>
+																					</next>
+																				</block>
+																			</next>
+																		</block>
+																	</next>
+																</block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>
+

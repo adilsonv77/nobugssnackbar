@@ -51,7 +51,7 @@ MissionSelection.prototype.click = function(evt) {
 
     if (found > -1) {
     	
-    	LogClick.store(found+1);
+    	LogClick.store("mission_level_"+(found+1));
     	var nextMission = true;
     	if (hero.verifyObjectives("clickMission", {missionId: found+1})) {
     		if (hero.allObjectivesAchieved) {
