@@ -257,7 +257,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	        
 	        if (Game.blocksSelected.length == 0) {
 	        	
-	        	if (Blockly.selected.isDeletable()) {
+	        	if (Blockly.selected && Blockly.selected.isDeletable()) {
 	        		MyBlocklyApps.removeBlock(Blockly.selected);
 	        	}
 	        	
@@ -582,12 +582,26 @@ Blockly.copy_ = function(block) {
 
 };
 
+
+Blockly.removeAttributeInAllChilds = function(xmlBlock, attributeName) {
+	
+	xmlBlock.removeAttribute(attributeName);
+	
+	xmlBlock = xmlBlock.firstElementChild;
+	while (xmlBlock != null) {
+	
+		Blockly.removeAttributeInAllChilds(xmlBlock, attributeName);
+		xmlBlock = xmlBlock.nextElementSibling;
+	}
+};
+
+
 Blockly.littleCopy_ = function(block) {
 	
 	var xmlBlock = Blockly.Xml.blockToDom_(block);
-	xmlBlock.removeAttribute("deletable");
-	
 	Blockly.Xml.deleteNext(xmlBlock);
+	Blockly.removeAttributeInAllChilds(xmlBlock, "deletable");
+	
 	// Encode start position in XML.
 	var xy = block.getRelativeToSurfaceXY();
 	xmlBlock.setAttribute('x', Blockly.RTL ? -xy.x : xy.x);
