@@ -1309,8 +1309,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  Game.bonusTime = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTime");
 	  Game.bonusTimeReward = data.childNodes[0].getElementsByTagName("objectives")[0].getAttribute("bonusTimeReward");
 		  
-	  Game.addCronometro( Game.bonusTime , timeSpent );
-	  
 	  Game.showCountInstructions();
 	  
 	  BlocklyApps.bindClick('musicControl', Game.musicControlClick);
@@ -1460,46 +1458,6 @@ Game.verifyButtons = function(objectives) {
 	Game.resetButtons();
 };
 
-Game.timesUp = function (m, s) {
-	if (((m*60 + s)+30) == Game.bonusTime) {
-		
-		Game.changeCSSAlertCronometro();
-		
-	} else {
-		if (((m*60 + s)) == Game.bonusTime) {
-			
-			Game.changeCSSOverCronometro();
-			
-		} 
-	}
-};
-
-Game.changeCSSAlertCronometro = function() {
-
-	var o = $('.digit');
-	o.removeClass('static');
-	o.addClass('alert');
-
-
-	o.css('background-color', 'rgba(230,9,40,1)');
-
-	Game.cronometro.options.cssDigit = 'alert';
-	
-};
-
-Game.changeCSSOverCronometro = function() {
-
-	var o = $('.digit');
-	o.removeClass('alert');
-	o.addClass('over');
-	
-	o.css('background-color', '#CFCFC4');
-	
-	Game.cronometro.options.cssDigit = 'over';
-	Game.cronometro.options.callback =  function(){}; // it's not still necessary call this method
-	
-};
-
 Game.beforeFinishMission = function() {
 	Game.victory = true;
 	
@@ -1507,7 +1465,6 @@ Game.beforeFinishMission = function() {
     Game.lastErrorData.message = "";
 	
 	Hints.stopHints();
-    Game.stopCronometro();
     Game.stopAlertGoalButton();
     
 	//TODO animar o cooker no final da missao
@@ -1537,33 +1494,6 @@ Game.showDialogVictory = function(out) {
 				*/
 		});
 
-};
-
-Game.addCronometro = function(bonusTime, timeSpent) {
-
-	$('#timerCountUp').empty();
-	Game.cronometro = null;
-	
-	if (Game.missionView || !Game.pointsInThisMission) return;
-	
-	if (bonusTime != null) {
-		timeSpent = parseInt(timeSpent);
-		$('#timerCountUp').append("<span></span>");;
-		Game.cronometro = CountUp($('#timerCountUp span'), {start:timeSpent, stopped: true, callback:Game.timesUp});
-		
-		$('#timerCountUp').css("right", $('#logoffButton').width()); 
-		$('#timerCountUp').css("right", $('#timerCountUp').width()); 
-		var logoff = document.getElementById("logoffButton");
-		var newTop = logoff.offsetTop + ((logoff.clientHeight - $('.countdownHolder').height())/2);
-		$('#timerCountUp').css("top", newTop + "px");
-		if (timeSpent > Game.bonusTime) {
-			Game.changeCSSOverCronometro();
-		}
-		else
-			if (timeSpent+30 >= Game.bonusTime)
-				Game.changeCSSAlertCronometro();
-	}
-	
 };
 
 Game.showShadow = function() {
@@ -1710,30 +1640,8 @@ Game.initTime = function() {
 	
 	CountXP.start();
 	Game.currTime = new Date().getTime();
-	Game.initCronometro();
 	Game.startSaveUserProgress();
 
-};
-
-Game.initCronometro = function() {
-	if (Game.cronometro != null)
-		Game.cronometro.restart();
-};
-
-Game.cleanCronometro = function() {
-	if (Game.cronometro != null) {
-		Game.cronometro.stop();
-		
-		$('#timerCountUp').empty();
-		Game.cronometro = null;
-		
-	}
-};
-
-Game.stopCronometro = function() {
-	if (Game.cronometro != null) {
-		Game.cronometro.stop();
-	}
 };
 
 Game.doResizeWindow = function(style) {
@@ -2141,7 +2049,6 @@ Game.closeBlockEditorStuffs = function() {
 	window.removeEventListener('beforeunload', Game.unload);
 	
 	var now = new Date().getTime();
-	Game.cleanCronometro();
     CountXP.stop(true);
 	
 	Game.emptyLines();
@@ -2948,7 +2855,7 @@ Game.verifyVictory = function() {
 			} else {
 				
 		    	var count = Game.editor.countInstructions();
-		    	reward = hero.addReward(count, (Game.cronometro == null?0:Game.cronometro.passed), Game.bonusTime, Game.bonusTimeReward);
+		    	reward = hero.addReward(count, 0, Game.bonusTime, Game.bonusTimeReward);
 		    	
 			}
 

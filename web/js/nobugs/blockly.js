@@ -207,8 +207,10 @@ MyBlocklyApps.removeBlock = function(root, remove) {
 		for (var i = 0; i<root.inputList.length; i++)
 			if (root.inputList[i].name.indexOf("DO") == 0) {
 				
-				var next = root.inputList[i].connection.targetConnection.sourceBlock_;
+				var next = root.inputList[i].connection.targetConnection;
 				var previous = null;
+				if (next != null)
+					next = next.sourceBlock_;
 				while (next != null) {
 					var backupNext = next.nextConnection.targetConnection;
 					if (backupNext)

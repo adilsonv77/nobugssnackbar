@@ -1065,9 +1065,9 @@ Hints.Categories["TestBlock"] = {
 		
 		show:
 			function (param) {
-			    Blockly.mainWorkspace.traceOn(true);
+/*			    Blockly.mainWorkspace.traceOn(true);
 				Blockly.mainWorkspace.highlightBlock(Hints.activeBlock.id);
-				
+			*/	
 				Hints.activeBlock.setWarningText(Hints.hintSelected.content);
 				/*
 				var bbBox = BlocklyApps.getBBox_(Hints.activeBlock.getSvgRoot());

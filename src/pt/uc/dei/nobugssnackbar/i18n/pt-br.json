@@ -157,6 +157,8 @@
 	"Error.variableHaventContentToDeliver" : "N&#227;o h&#225; nada a ser entregue.",
 	"Error.deliveredWrongRequest" : "A entrega n&#227;o corresponde ao que o cliente pediu.",
 	"Error.doesntMatchPosition" : "A entrega n&#227;o corresponde &#224; mesma posi&#231;&#227;o do cliente.",
+	"Error.doesntHaveMeritForTheGift":"O cliente n&#227;o merece esse presente.",
+	"Error.expectedAnotherGift" : "O cliente esperava outro presente.",
 	"Error.variableName" : "O nome da vari&#225;vel est&#225; incorreto:\nn \nn- N&#227;o use nome de vari&#225;vel repetido.\n- Use somente caracteres alfab&#233;ticos e n&#250;meros.\nn \nn",
 	"Error.showPrompt": "Voc&#234; marcou a caixa \"Prevenir esta p&#225;gina de criar di&#225;logos adicionais\". Com isso voc&#234; desabilitou novas janelas de lhe pedirem informa&#231;&#245;es. Pressione [F5] e tente novamente atribuir o nome de uma vari&#225;vel.",
 	"Error.navigatorNotSupported": "Desculpe o transtorno. Este jogo n&#227;o &#233; suportado por este navegador. &#201; recomendado que seja feito o download e a instala&#231;&#227;o de algum dos navegadores abaixo:",

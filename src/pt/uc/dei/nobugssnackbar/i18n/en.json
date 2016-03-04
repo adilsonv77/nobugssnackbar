@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-03-03 13:08:17.831000",
+		"lastupdated": "2016-03-04 12:03:06.610000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -119,6 +119,8 @@
 	"Error.onlyPutFruits": "The juicer only accepts fruits.",
 	"Error.onlyHotDog": "Here only has hotdogs. The customer didn't order hotdog.",
 	"Error.wrongPlaceForDrink": "There isn't here the drink that customer orders.",
+	"Error.doesntHaveMeritForTheGift": "I don't have merit to receive this gift.",
+	"Error.expectedAnotherGift": "I expected another gift.",
 	"Error.doesntHaveOrder": "The cooker forget to request the order.",
 	"Error.isntHunger": "The customer doesn't have hunger.",
 	"Error.doesntOrderDrink": "There isn't any drink in the order.",

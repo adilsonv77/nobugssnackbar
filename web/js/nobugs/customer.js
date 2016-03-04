@@ -112,6 +112,7 @@ Customer = function(options) {
 	
 	this.place = options.place.id;
 	this.placeType = options.place.type;
+	this.placeIdx = (this.placeType === "counter"?CustOpt.counter.indexOf(this.place):CustOpt.table.indexOf(this.place))+1;
 	
 	this.goOutIfPayed = options.goOutIfPayed;
 
@@ -611,12 +612,22 @@ Customer.prototype.deliver = function(item) {
 	
 	if (item.source == null) { // it is a gift
 		
-		happy = Customer.DELIVERED_THANK_YOU;
-		this.showLove = true;
-		this.heart.x = this.img.x+5;
-		this.heart.y = this.img.y-20;
+		var ret = this.hasMerit(item);
+		if (ret == 2) {
+			
+			happy = Customer.DELIVERED_THANK_YOU;
+			this.showLove = true;
+			this.heart.x = this.img.x+5;
+			this.heart.y = this.img.y-20;
+			
+			this.state = 39;
+		} else {
+			
+			this.iAmHunger();
+			reason = (ret == 0?"Error_doesntHaveMeritForTheGift":"Error_expectedAnotherGift");
+			
+		}
 		
-		this.state = 39;
 		
 	} else {
 		
@@ -675,10 +686,7 @@ Customer.prototype.deliver = function(item) {
 		} else 
 			if (happy == Customer.DELIVERED_BAD){
 				
-				this.showFire = true;
-				this.fire.x = this.img.x+8;
-				this.fire.y = this.img.y-32;
-				this.state = 21;
+				this.iAmHunger();
 				
 			} 
 		
@@ -688,6 +696,33 @@ Customer.prototype.deliver = function(item) {
 		this.deliveredItems.push(item); // i dont know how it is possible this situation : (item.descr == undefined?item:item.descr));
 	
 	return {money: money, happy: happy, reason: reason};
+};
+
+Customer.prototype.hasMerit = function(item) {
+
+	var ret = 0;
+	
+	var obj = Objective.search("deliverGifts", [{field: "pos", value: this.placeIdx}, {field: "place", value: this.placeType}]);
+	if (obj != null) { // i dont have the merit
+		var value = eval(obj.value);
+		if (value !== "") 
+			if (value !== item.descr)
+				ret = 1; // i expected a diferent gift
+			else
+				ret = 2;
+				
+	}
+	
+	return ret;
+	
+};
+
+Customer.prototype.iAmHunger = function() {
+	
+	this.showFire = true;
+	this.fire.x = this.img.x+8;
+	this.fire.y = this.img.y-32;
+	this.state = 21;
 };
 
 Customer.prototype.howManyHotDogs = function() {

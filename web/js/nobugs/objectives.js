@@ -84,6 +84,23 @@ Objective.verifyObjectives = function(key, options) {
 	return ret;
 };
 
+Objective.search = function(key, searchParams) {
+	for (var i = 0; i < hero.objective.objectives.length; i++) {
+		if (hero.objective.objectives[i].objective === key) {
+			var found = true;
+			for (var param in searchParams) {
+				if (hero.objective.objectives[i][param.field] !== param.value) {
+					found = false;
+					break;
+				}
+			}
+			if (found)
+				return hero.objective.objectives[i];
+		}
+	}
+	return null;
+};
+
 Objective.notExists = function() {
 	
 	for (var i = 0; i < hero.objective.objectives.length; i++) {

@@ -201,13 +201,13 @@ public class GenerateSnackManPath {
 		
 		int nJuiceMachine = contaN+1;
 		k.append("'n"+nJuiceMachine+"', ");
-		createNode(n, nJuiceMachine, 300, 240);
+		createNode(n, nJuiceMachine, 290, 245);
 		contaN++;
 
-		// da maquina de sumos ao ponto de origem   (300, 240) -> (260, 356)
+		// da maquina de sumos ao ponto de origem   (290, 245) -> (260, 356)
 		int nJuiceMachine_Origem = contaN+1;
-		x = 300; y = 240;
-		xd = -4; yd = 11;
+		x = 290; y = 245;
+		xd = -3; yd = 11;
 		for (int i=1; i<=10; i++) {
 			createNode(n, contaN+1, x+(xd*i), y+(yd*i));
 			if (i == 1) {
