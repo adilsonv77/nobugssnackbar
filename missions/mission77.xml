@@ -30,14 +30,14 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [totalC]</line>
 		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [totalB]</line>
 		<line>Multiplique [Some [totalC] com [totalB]] por [3] e guarde na vari&#225;vel [faturamento]</line>
-		<line>Some [totalB] com [Multiplique [totalC] por [2]] e guarde na vari&#225;vel [lucro]</line>
+		<line>Some [totalB] com [Multiplique [totalC] por [2]] e guarde na vari&#225;vel [custo]</line>
 		<line>V&#225; at&#233; o cliente 3</line>
 		<line>Pergunte quantos lanches ele deseja e guarde na vari&#225;vel [totalC]</line>
 		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [totalB]</line>
 		<line>Some [faturamento] com [Multiplique [Some [totalC] com [totalB]] por [3]] e guarde na vari&#225;vel [faturamento]</line>
-		<line>Some [lucro] com [Some [totalB] com [Multiplique [totalC] por [2]]] e guarde na vari&#225;vel [lucro]</line>
+		<line>Some [custo] com [Some [totalB] com [Multiplique [totalC] por [2]]] e guarde na vari&#225;vel [custo]</line>
 		<line>Fale [faturamento]</line>
-		<line>Fale [lucro]</line>
+		<line>Fale [faturamento - custo]</line>
 	</help>
 	<commands>
 		<category name="snackMan" show="true"/>

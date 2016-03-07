@@ -284,7 +284,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			ps.close();
 			
-			sql = "select userid, classlevelid ci, count(*) c, (select count(*) from classesmissions where classlevelid = ci and classid = ?) q  from missionsaccomplished  join classesmissions cm using (missionid, classid) where classid = ? group by userid, classlevelid having c < q" ;
+			sql = "select userid, classlevelid ci, count(*) c, (select count(*) from classesmissions where classlevelid = ci and classid = ?) q  from missionsaccomplished  join classesmissions cm using (missionid, classid) where classid = ? and achieved = 'T' group by userid, classlevelid" ;
 			
 			ps = bdCon.prepareStatement(sql);
 			ps.setInt(1, clazzId);
