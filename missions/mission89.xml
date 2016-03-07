@@ -1,0 +1,402 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Compramos um novo equipamento para a nossa lanchonete: agora servimos sorvetes de chocolate. 
+Por enquanto, o que precisas saber s&#227;o dois comandos:
+<table>
+<tr>
+<td>Vai at&#233; a m&#225;quina de sorvetes</td>
+<td><imghex id="gotoicecreammachine">89504E470D0A1A0A0000000D49484452000000B300000025080200000086494FFA000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA8640000067C49444154785EED5AED6FDB4418E7DF830F7C9910A00A31F808828E57512104886CD3B6C006136BC9D669ED08CBBA8E8694D4ACC9A285AA1651231AB192A099465124A3BC90C4524C8C9548E6B93BC789CF774ED717D464F7E8F7C13EFF9EC777F7FCFCDC5DDAA72C61C2582694218C6D4219C2D82694218C6D5C65141BD52B9B6BA7934BE75277830F5698F8C7FCD766F30D389497C031C4BBABD7ED84F58DAD8CD9CDB533C9A53757BE3919B9F8D2779F4F85835EBC7E77162246777EB17D58B656C802079894AFC031C4D3815376DAB03194F1F1BDF0FB3FDEA0DC78F850BA091AF2160F522AE029C51738B618A18C5979EDD44A88F2F187B7788852318EF053C69F7FFFF591F42DE5B04740790035108852318EF053C6D79BF153D1AB9483C013023F659CBD7FE7D5DB5F520E024F08FC94F14E6C9E621F0469CD0E4B9B595EF4901D202FED21D5B85744D7939586DEB3DFA377AA726681E61C2152F98ED16A166332D51E9A2FA935B3ABEE52ED23F150B52C9617AFFD40F053066C1128F6E1205BD62D239FF5B4B3B07F6524328A69999D72528E4C8783D3092959372CF4DEC7DB501F00A9BC69E9A6A1D7D3AEF644A1D6D15BFBC9E591288087495546486A76AD4E71CED5B8BCD5B6AC8E72D9D57874C0CAA894D59E1A1B6A0F94B4965ADC578EC74819A99CD2E9626EB756A90EBE83F8BAAC19267E60998DAD6D770D672A83E3E252463CBDA5C1774F385A8E705C8E5ABEB08C1AA36412E9F2309D58F922411A8160942A0DECA8C93F71E2848333DB8A6A92318219AD7AEE9CED6ED52AC59AEDA0E777D6A58A46EECC7671310A1CA28C8CDCEE960A2814C66AAEA3E7E4418E39F19983C52FAD039FB41A6A691DCAE1906230412D0C08E514267047E7838328038DDCD40A737198F10C5C83E1FE49B90EBC5E95364253D148ACA2E31A3EE4C85006D76548198863768A31482DE2C0AC35D209DCD8561651BE17E676AB7664F28A8C13DF0B3489F0C65BF1E0CCC66A8004F7C649205A4B4D0520D3D1C862197A63E13463F75E439617A6A2AB329422A0D5B397A3C1E90DA506E92947FACA484191309B393B4372B185F655FD5C72E333074B5EAA6D65617D5C98576196F4DC86DD1947198880B6530BF3281A21704637980D060EA08C42157D6D89FE2D4A06EE1F9D78DCAD7AA67FCB5206DF65A00CC481AFCDE160ECC0E7A16D397D088710BF99C5E446DAA131802611D266DFF2E2D8B77D440B907527072D7595B44F97502F65542700B6200617B0B1E85593F8E962C5C08F9C5CBAE1C4670E96EAB3BB33CE0583B0C7D1B9B17F65C020DDC78A7EFF761B48E083F660ACDE75ED15BCCAE0BB0C94E1E10002F823A3ADAD04BCAFA0E1CA0D370E3C854FF991926F36D4B661E2638E3B1918AEBE7994118EC0FE062F6D69A5477A35E4CE8CCF1A2CFDD2C1ADF7C245F01B1D1FFF8732A4A6B32260EC41198E8BBF322EA38A5A95DC8D18D912EA0CD9520C61BB5C6B1725D855B827911B278AB26BF574B55E947733F3A9023B0723948173D32E04E0DBB567ACEFCE8B7FA8CAE0CF921F0E6F35811594748B4EFC51AE26A80F5D65DBDD88104255873E9BE0034B4FBD85AEDD93C88B8332E42C13A42CB372304A195309D87C349466D7BE75DC79F19983E5249E75E1267067C90F87B703852DA4DD2D94D7A3DA813ADBA847B08D82D1E26FCE5493B0130C870259A5D683E55F427CD8AFF5867FCF48A59B242C2924D42472E2A03935941D88008DF69E9F918391CA4047127075D2339C33667CE6603989675C5004FE2CF1E1A78C73A9BBBCFFC6B091CA95EC1357B7A696FB1B22D719C97CFC53EBB0CB9032E8835CBEB08A36FCB891385A3D4355B3F6A90F3D5A979B3AC88198FB37506A127971969DB3A865EAA5D24305D4868A99DB7DB4327049B7CB15C071E7C5670E969778EF0545F09D250EFC94713AB17432728972E002154C4FBE05C6167ECAB8B2199F8E7A36710EF0EA55DA9566E03A2EA56109F7FD0B88C078C14F19A566EDECFD3B94C310962575E8EF55EDB294A20802630C3F65807DF573ECAD1FAE513E024F02462803EC8DE5D9976F5DA4DC04261EA39501F6CA8D0B949BC0C4634FCA00BB242D9DB8F2C9F3D7CF52FE02938ABD2A03ACA235E6EE7DFF5AE83CF85078E6CCDBCF5DFD8C0ACD04D0804CB90B1C4FD889C7E6A70C7F6B1B9DF76ECFBE78F33C250507F0E8D98B33F0BE4F97AE01D976133626B67F65107BF0FBAF2FCC9FA6340120A5E2C4850FE43F7EB3A9C2C6CA0EAA0C30AA78885231197608CA2006B5012A0459AE44A998003B3465089B3013CA10C636A10C612CB3ACFF0048FEFCC714F7B7E50000000049454E44AE426082</imghex></td>
+</tr>
+<tr>
+<td>Prepara um sorvete de chocolate</td>
+<td><imghex id="preparepickupicecreamchoco">89504E470D0A1A0A0000000D49484452000001220000002008020000003963E25E000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA8640000092D49444154785EED5BFF6F1A4716BF7F2F552EFD213DA93D37F24FD73B553AD1A4EEF5B8F30FFD82481DD3E4245F12E2C8ED198BDABD380D0775680DC1A59657B64032721CB08CE010D24A18C4971A0CEC1969EFCDCC7E67673D768292D4F3F4F961F7EDDB999D37EFB3EFCD2CFC46E6C285CB8885D38C0B97910BA719172E2317269A5D7FF2C0F7D3230E0E164C44BE829879B272FDA71F7CE713916F2708713461A219F86E2CE8E3E060C405CF07106DC17B63E7169EBF5D50C88385D38CE3C583D38CD38C63E4E034E334E3183938CD38CD38460E4E33279A1D49FD3FFC7B06B0904EC0B1A6E434E3B0C53B0B37DEFCE2EAD777DFFDDA7FE5F339D778708A282F795D9C66843E444C340BA4131391AF8807C7BFB9B95E7C06CA6461F7F5A459222B9161E9224975616B1E5F7D2ACAB25830DA1B617B1535D8A924CC4A5FB225CBADA716A5052C36548456E3957A67A00CA1D33D5087F0F271F9CE27F716FE1EF97682C4D6BC7F6CE25FEEB7FC9F5DFBC79F9968169CDB1745E958199A74542AFDEC56AF629FED198C5F244E6E3C148F9676662C4A7638D16C2AB1FCFEC3BB463FFEE9C13F8DA7AF158658118A446B3D59AE27639A0D0DAF0CCD625B794996BAE5B8B0E40AFA5CB1681C0DA1974DCF5A2D5F062EF93E7E1CFAEC61E07D6384DDBFFDAEF1948A70B8D6970747D9FD354F08C23AECDFAF74E03552D9706183974BB340A52F4B626048CF0A279A799F3C185FBC6971E56B0B3B56847255A724A6E115A1D96CB4712C778B7E937239D596E56E7EC6A47C39B878E3A3D58867F1FEB825C818E0CAD524F92823989453E54358A5A4D6D1F1AF9766D36BDF59FCC8061494D54AB14A0A9B4127BFBFACEA7BA54A1DD76E2DE107DFD8CAAAD0EA29A59CD4CAE63433DBDB7DEEEDBC5E52C8BD662D33758A669D696620D24A32D58214A1DC9ED98692CC70359129413E69E7E74227D28C3A1013CD6CBAA30C21441EC39AB85CB147376344C9E80A074FE207566EE8647757A395163993DAC54048E991860B9E0FD6A2D39608634290043A495C3A42E19BC9B09ECDDA95544BD922E8B4600688D9F25CA9A916D17DB1BCA9D699CB8BE526E443A2AF8A446F6FACD36C6513BA50C68F4AF24A3C8139A6483F9BB63652ADEC4C293DD241A559FFF87F538987163FB201CD164C5E3E177105E7FD259875A86A54BD242EAEF8DCEB114F309AE9A2780DA01099F7170E3A46B3E1DB6348DF14131E98ECD052A00C9E914B39F666ADAC808A2BD9E8C98383288A1ED4082612BEBD5B0CC3EDA1A570855495EA559D63360D12586866E707A38D6D779421A4CBE8604BE9C80E6CAE70F6E4A02E08F350510B9024C1AC969E09F95CEB79781F55CB4B433D9AF0A6F76AE2F1C93167830DECCB9F87F43A90CFE4E36A79034A4AF756B989461007BD5F3C8260CDE7E2AE60D0B32B821EEA4C453F38CAEC024B911EF82616C2346395666174D02D07624160BE27FD5F18B4DCD801036336C32D1FA6D288FF6E610F228234E2042ACD7EE91D4D46172C7E64039A2DA9B6A59E2EA1AAA691267A3D2E7745496EA5F475D12C1AA26A6677BB6689614E440CCD225698E518EF1F687900B78642B99311B4DB09F0D532E6582B076187954C34B31D886E63DB1D6D08C8B89ED4CC6CC0E80A4D8361F664538C10BDAB849E52701CAC05BF9BBA167D3869893026209A89058BD204F4EC7AD916442F01440CC24F3DCA31072A61AC6F8A6B9A1E83666CC8662668BD1869B69D1FC00B27AC99B90AC0D65A543DB5C7A8B2199E36050178494BE58059EFC12F51ABB4F31EEAEDF8D5BB9FCF36EA62BB27E19CAD050743B3CE81A23652A8A37C62779508B4E052944C34B31D886E63D71D7508249BE17C4801A32B983C697E36269A3D6F3673CA091626A8A77BF89175B3B1DD0AF02B39AC47A0191B1B8724F62C55A989ADC3CE0097D5169AC5708AB3CA612A66687618A35A9B0D87D79C593F83F2F84154B53180723B5E0BC10A47AC1585C2D65C22A79A3136FBBC34935A4FE750E042A0930488B2D350834625652027D18C3E84740935487A3760BB5C6D17A3B0126374059B27CF40B3B3AFCDEE451B28A0AD6BB3E066B67D98C93D8263569AE56A90915969A6186BAD05F132ECB8D9AA644A7BE1AD1541ED54A7D93AAA574B3943232C70A299377EB69D46345B862931158DFA2CE60E6040F96DF55407E57634EB5A0D432A22D21A63B36C3473281A511768B5A3A4D6A02F5C3B96BB79BC79A022940126544B640D4319C88945237508B3B847CB4E23DE7E1C888BE898CD158C9E3C3DCD2EDEF828FEBDF76C3B8D28B158771AF1F6238C001D5368F6628B46C4C36A091666C400D587A4D319B0548AC61D9861A9B6A9DAB0C18966C3DFCDDE9E47DFF54F029A2DF4D6DF5D82A53F6400E316883E8B78E6E0D9E3B0E00ECE7AD2F9EA001C13A5DE8E82A697474A30CEA1D0B00D0E6AB36C34B36C1BEC1F74D03C1BBA40C450DB118A68255ECBF857D025772229B47059A844306520A6C2D2B63BDA10F0EEC5C0F8DD2C916CC0E3680996CD158C9E3C3DCD2EF93E8E7DEFB57C379BBFFDB6F1948A70B205AF0BFDBB59A050235B14B6DFCDB4534415EA1688B651F10C2DAB6B9B3463B53544A14E6D1B1EC015DB10C8AE26E9142FC0E2A1A02B44361EFBF9FD3537BC08621BA936BCFACA7EF5C1ECE14433E3AF40D04F666EB9A12AB832EBD5DC4A019AAD66A3AC6C644BF514D9A4B60681B2978D67196A989E28A6B56D65BBDB97B5CD6559EA944A4FE155833718189B65A49975873D8BF6094D5DA0DA4F4D41EEAD5CA9AB1ACBC79D56319A50CCE80331D2CCB63BDA1088FDAAD0E800B788987F05C2E80A364F9E9E6697EF7C9288FBB55F812CDC7DE796E71244D8ECAD2B5AC0396179AE546B2A0F068FE6F42B10C3A9617B7D40DFD0AFECCCA00F00F6C65A6B533951992EB9DF6CE493503DE0743796D883F71B08AE3971CB8A19CC79399A203DD2E144B323A90F4523100CDCF786F7DAE5E9BF0A7B3BA0FC303C67F1AF1943937D3A3CE7EDAF0E7E350361C5EF0337EE3C5EFCE6FE3810ECCEF465EFE41B9F4E5EFCE3EDBF7CF99FF9F0D28796C83B5770A21948BBD7057601FC3F7E07C74479D26F1A39CD08CE1DCD08AE2C5CFF7CF2B740B0AB5FBE07C7A0796BDACD7F3A4CB843C44A335BE13463C339A5D930F81F614641330E0E1338CD38CD38460E4E334E338E9183D3EC2C343B69A79183C304A019DF6954C88385896620E0380E0E7640CC40A89D6710E21061A519172E5CCE2C9C665CB88C5C38CDB87019B1C8F2FF01579C68268F423CFA0000000049454E44AE426082</imghex></td>
+</tr>
+</table>
+]]>
+		</page>
+		<page type="goal">
+		<![CDATA[
+
+ Para divulgar o novo produto (sorvete de chocolate), estamos com uma nova promo&#231;&#227;o: na compra de dois cachorros e uma bebida, o cliente
+ recebe um sorvete de chocolate. <br/><br/>
+
+ No final, fale quantos sorvetes voc&#234; entregou.<br/><br/>
+
+			Precisas corrigir erros nessa miss&#227;o. N&#227;o esque&#231;a que a primeira execu&#231;&#227;o n&#227;o conta
+			para ganhar estrelas.
+]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<errors>
+		</errors>
+	</hints>
+	
+	<commands>
+	</commands>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<testsvars>
+		<test>
+			<var name="qtdIceCream">0</var>
+			<var name="iceGift1"></var>
+			<var name="iceGift2"></var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+			<var name="iceGift1"></var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+			<var name="iceGift1"></var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="qtdIceCream">1</var>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2"></var>
+		</test>
+		<test>
+			<var name="qtdIceCream">2</var>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives missionType="fixBugs"  xpIndividual="10" xpFinal="5"
+		xpTotalRun="3" buttonRun="false">
+
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceGift1')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceGift2')" gift="o sorvete, se merecer">deliverGifts</objective>
+		
+		<objective text="a quantidade de sorvetes entregues"
+			value="parseInt(Game.readVariableTest('qtdIceCream'))">talk</objective>
+
+	</objectives>
+
+	<xml>
+
+		<block deletable="false"  type="variables_set" x="0" y="0">
+			<field name="VAR">presentesEntregues</field>
+			<value name="VALUE">
+				<block deletable="false"  type="math_number">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<next>
+				<block deletable="false"  type="move_goToBarCounter">
+					<value name="VALUE">
+						<block deletable="false"  type="math_number">
+							<field name="NUM">1</field>
+						</block>
+					</value>
+					<next>
+						<block deletable="false"  type="controls_if">
+							<value name="IF0">
+								<block deletable="false"  type="logic_operation">
+									<field name="OP">OR</field>
+									<value name="A">
+										<block deletable="false"  type="logic_compare">
+											<field name="OP">EQ</field>
+											<value name="A">
+												<block deletable="false"  type="ask_askWantHowManyFoods"></block>
+											</value>
+											<value name="B">
+												<block deletable="false"  type="math_number">
+													<field name="NUM">1</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<value name="B">
+										<block deletable="false"  type="logic_compare">
+											<field name="OP">EQ</field>
+											<value name="A">
+												<block deletable="false"  type="ask_askWantHowManyDrinks"></block>
+											</value>
+											<value name="B">
+												<block deletable="false"  type="math_number">
+													<field name="NUM">2</field>
+												</block>
+											</value>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO0">
+								<block deletable="false"  type="variables_set">
+									<field name="VAR">presentesEntregues</field>
+									<value name="VALUE">
+										<block deletable="false"  type="math_arithmetic">
+											<field name="OP">ADD</field>
+											<value name="A">
+												<block deletable="false"  type="variables_get">
+													<field name="VAR">presentesEntregues</field>
+												</block>
+											</value>
+											<value name="B">
+												<block deletable="false"  type="math_number">
+													<field name="NUM">1</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<next>
+										<block deletable="false"  type="move_goToIceCreamMachine">
+											<next>
+												<block deletable="false"  type="variables_set">
+													<field name="VAR">presente</field>
+													<value name="VALUE">
+														<block deletable="false"  type="prepare_pickUpIceCream">
+															<value name="VALUE">
+																<block deletable="false"  type="const_chocolate"></block>
+															</value>
+														</block>
+													</value>
+													<next>
+														<block deletable="false"  type="move_goToBarCounter">
+															<value name="VALUE">
+																<block deletable="false"  type="math_number">
+																	<field name="NUM">1</field>
+																</block>
+															</value>
+															<next>
+																<block deletable="false"  type="do_deliver">
+																	<value name="VALUE">
+																		<block deletable="false"  type="variables_get">
+																			<field name="VAR">presente</field>
+																		</block>
+																	</value>
+																</block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</statement>
+							<next>
+								<block deletable="false"  type="move_goToBarCounter">
+									<value name="VALUE">
+										<block deletable="false"  type="math_number">
+											<field name="NUM">3</field>
+										</block>
+									</value>
+									<next>
+										<block deletable="false"  type="controls_if">
+											<value name="IF0">
+												<block deletable="false"  type="logic_operation">
+													<field name="OP">OR</field>
+													<value name="A">
+														<block deletable="false"  type="logic_compare">
+															<field name="OP">EQ</field>
+															<value name="A">
+																<block deletable="false"  type="ask_askWantHowManyFoods"></block>
+															</value>
+															<value name="B">
+																<block deletable="false"  type="math_number">
+																	<field name="NUM">1</field>
+																</block>
+															</value>
+														</block>
+													</value>
+													<value name="B">
+														<block deletable="false"  type="logic_compare">
+															<field name="OP">EQ</field>
+															<value name="A">
+																<block deletable="false"  type="ask_askWantHowManyDrinks"></block>
+															</value>
+															<value name="B">
+																<block deletable="false"  type="math_number">
+																	<field name="NUM">2</field>
+																</block>
+															</value>
+														</block>
+													</value>
+												</block>
+											</value>
+											<statement name="DO0">
+												<block deletable="false"  type="variables_set">
+													<field name="VAR">presentesEntregues</field>
+													<value name="VALUE">
+														<block deletable="false"  type="math_arithmetic">
+															<field name="OP">ADD</field>
+															<value name="A">
+																<block deletable="false"  type="variables_get">
+																	<field name="VAR">presentesEntregues</field>
+																</block>
+															</value>
+															<value name="B">
+																<block deletable="false"  type="math_number">
+																	<field name="NUM">1</field>
+																</block>
+															</value>
+														</block>
+													</value>
+													<next>
+														<block deletable="false"  type="move_goToIceCreamMachine">
+															<next>
+																<block deletable="false"  type="variables_set">
+																	<field name="VAR">presente</field>
+																	<value name="VALUE">
+																		<block deletable="false"  type="prepare_pickUpIceCream">
+																			<value name="VALUE">
+																				<block deletable="false"  type="const_chocolate"></block>
+																			</value>
+																		</block>
+																	</value>
+																	<next>
+																		<block deletable="false"  type="move_goToBarCounter">
+																			<value name="VALUE">
+																				<block deletable="false"  type="math_number">
+																					<field name="NUM">3</field>
+																				</block>
+																			</value>
+																			<next>
+																				<block deletable="false"  type="do_deliver">
+																					<value name="VALUE">
+																						<block deletable="false"  type="variables_get">
+																							<field name="VAR">presente</field>
+																						</block>
+																					</value>
+																				</block>
+																			</next>
+																		</block>
+																	</next>
+																</block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</statement>
+											<next>
+												<block deletable="false"  type="do_talk">
+													<value name="VALUE">
+														<block deletable="false"  type="variables_get">
+															<field name="VAR">presentesEntregues</field>
+														</block>
+													</value>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+
+</mission>
+

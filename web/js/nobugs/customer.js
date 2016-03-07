@@ -702,7 +702,7 @@ Customer.prototype.hasMerit = function(item) {
 
 	var ret = 0;
 	
-	var obj = Objective.search("deliverGifts", [{field: "pos", value: this.placeIdx}, {field: "place", value: this.placeType}]);
+	var obj = Objective.search("deliverGifts", [{field: "pos", value: this.placeIdx+""}, {field: "place", value: this.placeType}]);
 	if (obj != null) { // i dont have the merit
 		var value = eval(obj.value);
 		if (value !== "") 

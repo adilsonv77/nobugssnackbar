@@ -70,7 +70,10 @@ Objective.verifyObjectives = function(key, options) {
 						dest.checkObjective(options, hero.objective.objectives[i])) {
 					
 					Objective.markAchieved(hero.objective.objectives[i]);
-					if ((key === "deliver" || key === "giveTheWholeChange" || key === "giveSomeChange" || key === "conditional" || key == "customDeliver" || key === "callTimes")
+					if ((key === "deliver" || key === "giveTheWholeChange" || 
+							key === "giveSomeChange" || key === "conditional" || 
+							key === "customDeliver" || key === "callTimes" || 
+							key === "deliverGifts")
 							&& options.allCustomers) {
 						ret = true;
 					} else
@@ -88,7 +91,9 @@ Objective.search = function(key, searchParams) {
 	for (var i = 0; i < hero.objective.objectives.length; i++) {
 		if (hero.objective.objectives[i].objective === key) {
 			var found = true;
-			for (var param in searchParams) {
+			
+			for (var j=0;j<searchParams.length;j++) {
+				var param = searchParams[j];
 				if (hero.objective.objectives[i][param.field] !== param.value) {
 					found = false;
 					break;
