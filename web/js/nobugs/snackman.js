@@ -152,6 +152,11 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	
 	var juice = mission.evaluate("count(//mission/commands/category[@name='goToBoxOfFruits'])", mission, null,  XPathResult.ANY_TYPE, null);
 	this.showJuice = juice.numberValue > 0; 
+	if (!this.showJuice) {
+		juice = mission.evaluate("count(//mission/xml//block[@type='move_goToJuiceMachine'])", mission, null,  XPathResult.ANY_TYPE, null);
+		this.showJuice = juice.numberValue > 0; 
+	}
+	
 	if (this.showJuice) {
 		this.boxOfFruits = new Sprite({
 			ticksPerFrame: 0,
@@ -182,6 +187,11 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	
 	var icecream = mission.evaluate("count(//mission/commands/category[@name='icecream'])", mission, null,  XPathResult.ANY_TYPE, null);
 	this.showIceCream = icecream.numberValue > 0; 
+	if (!this.showIceCream) {
+		icecream = mission.evaluate("count(//mission/xml//block[@type='move_goToIceCreamMachine'])", mission, null,  XPathResult.ANY_TYPE, null);
+		this.showIceCream = icecream.numberValue > 0; 
+	}
+	
 	if (this.showIceCream) {
 		this.iceCreamMachine = new Sprite({
 			ticksPerFrame: 0,
