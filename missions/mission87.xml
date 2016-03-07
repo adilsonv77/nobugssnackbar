@@ -58,6 +58,8 @@
 
 		<category name="vars" show="true" />
 		
+		<category name="math" show="true" />
+		
 		<category name="const" show="true" />
 		<category name="const.juiceOfOrange" show="true" />
 

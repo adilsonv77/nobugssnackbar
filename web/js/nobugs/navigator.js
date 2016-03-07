@@ -3,7 +3,7 @@ var nav = {};
 
 nav.onload = function(e) {
 	
-	if (validateChrome() || validateFirefox()) {
+	if (validateChrome()) {
 		return;
 	}
 	window.location.href = "error.html";
@@ -17,7 +17,7 @@ nav.onload = function(e) {
 		return navigator.appVersion.indexOf("MSIE") > -1 || navigator.userAgent.indexOf("Trident") > -1;
 	}
 	function validateChrome() {
-		return navigator.appVersion.indexOf("Chrome") > -1;
+		return (navigator.appVersion.indexOf("Chrome") > -1) && (navigator.appVersion.indexOf("Edge") == -1);
 	}
 	function validateFirefox() {
 		return navigator.userAgent.indexOf("Firefox") > -1;
