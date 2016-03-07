@@ -29,8 +29,6 @@
 
 		<category name="logic" show="true" />
 		<category name="logic_trueFalse" show="true" />
-		
-		
 	</commands>
 	<cooker>initial</cooker>
 	<tests>4</tests>

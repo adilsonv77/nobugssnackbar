@@ -1,0 +1,138 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Agora vais entregar cachorro ou sorvete. O cliente tem sempre fome de um ou dois produtos. 
+  Às vezes ele pode querer um ou dois cachorros, um ou dois sorvetes, ou um cachorro e um sorvete. 
+  Mas ele sempre deixa a sobremesa para o final, ou seja, pede primeiro o cachorro. <br/><br/>
+
+Nessa missão tua preocupação é entregar SOMENTE o primeiro produto que ele pedir. Porém, as combinações
+  de pedido e a regra é como te expliquei acima. <br/><br/>
+
+Já deixei o começo da solução pronta na área de trabalho. Mas podes excluí-la se quiseres. É só uma sugestão.<br/><br/>
+Lembre-se que você sempre tem como último recurso o botão que mostra a solução : <img src="images/help_free.png"/>
+]]>
+		</page>
+
+	</explanation>
+	<help>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [c]</line>
+		<line>Pergunte quantos gelados ele deseja e guarde na vari&#225;vel [g]</line>
+		<line>Fa&#231;a a diferen&#231;a entre [c] e [g] e guarde na vari&#225;vel [c]</line>
+		<line>se [g] for maior ou igual a 1</line>
+		<line indent="1">se [c] for igual a 2</line>
+		<line indent="2">Guarde o valor [verdadeiro] na vari&#225;vel [entregarGelado]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">Guarde o valor [falso] na vari&#225;vel [entregarGelado]</line>
+		<line indent="1">Pergunte qual gelado ele deseja e guarde na vari&#225;vel [ic]</line>
+		<line indent="1">V&#225; at&#233; a m&#225;quina de gelados</line>
+		<line indent="1">Prepare e pegue um gelado de [ic] e guarde na vari&#225;vel [ic]</line>
+		<line indent="1">se [entregarGelado]</line>		
+		<line indent="2">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [oferta]</line>
+		<line indent="1">V&#225; at&#233; o cliente 2</line>
+		<line indent="1">Entregue [ic]</line>
+		<line indent="1">se [entregarGelado]</line>		
+		<line indent="2">Entregue [oferta]</line>
+	</help>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		<category name="icecream" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+		
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		
+		<category name="math" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<testsvars>
+		<test>
+			<var name="deliverCust1">food#hotdog</var>
+		</test>
+		<test>
+			<var name="deliverCust1">food#hotdog</var>
+		</test>
+		<test>
+			<var name="deliverCust1">food#icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="deliverCust1">food#hotdog</var>
+		</test>
+		<test>
+			<var name="deliverCust1">food#icecreamofchocolate</var>
+		</test>
+	</testsvars>
+	
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofstrawberry</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives ordered="false" xpIndividual="30" xpFinal="20" xpTotalRun="6">
+
+		<objective pos="2" place="counter" value="Game.readVariableTest('deliverCust1')" text="a primeira comida">customDeliver</objective>
+		
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+
