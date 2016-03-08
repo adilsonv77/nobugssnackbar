@@ -317,8 +317,6 @@ Blockly.Blocks['ask_askForFood'] = {
 		};
 
 Blockly.JavaScript['ask_askForFood'] = function(block) {
-	  if (Game !== undefined)
-		  Game.addCallTimes("askForFood");
 	  return ['askForFood()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 
@@ -363,8 +361,6 @@ Blockly.Blocks['ask_askWantHowManyFoods'] = {
 		};
 
 Blockly.JavaScript['ask_askWantHowManyFoods'] = function(block) {
-	  if (Game !== undefined)
-		  Game.addCallTimes("askWantHowManyFoods");
 	  return ['askWantHowManyFoods()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 	
@@ -480,8 +476,6 @@ Blockly.Blocks['ask_askForDrink'] = {
 		};
 
 Blockly.JavaScript['ask_askForDrink'] = function(block) {
-	  if (Game !== undefined)
-		  Game.addCallTimes("askForDrink");
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
@@ -527,8 +521,6 @@ Blockly.Blocks['ask_askWantHowManyDrinks'] = {
 		};
 
 Blockly.JavaScript['ask_askWantHowManyDrinks'] = function(block) {
-	  if (Game !== undefined)
-		  Game.addCallTimes("askWantHowManyDrinks");
 	  return ['askWantHowManyDrinks()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 	
@@ -669,8 +661,6 @@ Blockly.Blocks['ask_askWantHowManyIceCream'] = {
 		};
 
 Blockly.JavaScript['ask_askWantHowManyIceCream'] = function(block) {
-	  if (Game !== undefined)
-		  Game.addCallTimes("askWantHowManyIceCream");
 	  return ['askWantHowManyIceCream()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 	};
 		

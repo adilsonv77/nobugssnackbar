@@ -1034,6 +1034,7 @@ Objective.CallTimes.prototype.init = function(elem) {
 	
 	p.block = elem.getAttribute("block");
 	p.times = parseInt(elem.getAttribute("times"));
+	p.blockType = elem.getAttribute("type");
 	
 	return p;
 };
@@ -1044,7 +1045,7 @@ Objective.CallTimes.prototype.reset = function(objective) {
 
 Objective.CallTimes.prototype.checkObjective = function(options, objective)  {
 	
-	var times = Game.callTimes[objective.block];
+	var times = Game.callTimes[objective.blockType];
 	times = (times === undefined?0:times);
 	
 	return (times <= objective.times);

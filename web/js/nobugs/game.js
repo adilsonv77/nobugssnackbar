@@ -2499,6 +2499,12 @@ Game.semanticAnalysis  = function(block) {
 
 		throw {isNoBugs: true, msg : "Hints_EmptyInputError"};
 		
+	} else {
+		var t = block.type;
+		if (t === "logic_operation") {
+			t = t + "_" + block.getFieldValue("OP");
+		}
+		Game.addCallTimes(t);
 	}
 	return true;
 };
