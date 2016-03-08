@@ -39,6 +39,9 @@ PreloadImgs.put('menu', 'images/menu.png');
 PreloadImgs.put('menu$1', 'images/menu_1.png');
 PreloadImgs.put('menu$2', 'images/menu_2.png');
 PreloadImgs.put('menu$3', 'images/menu_3.png');
+PreloadImgs.put('menu$4', 'images/menu_4.png');
+PreloadImgs.put('menu$5', 'images/menu_5.png');
+PreloadImgs.put('menu$6', 'images/menu_6.png');
 
 SnackMan = function(hasTable, objectives, mission, avatar) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
