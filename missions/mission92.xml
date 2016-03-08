@@ -1,40 +1,48 @@
 <?xml version='1.0'?>
 <mission>
 	<explanation>
+
+		<page type="goal">
+		<![CDATA[
+V&#225;rias vezes j&#225; usaste o comando <span style="color:white; background-color: rgb(91,165,140); padding: 3px">askForFood</span> 
+  para perguntar o que o cliente deseja comer. At&#233; agora ele sempre respondeu cachorro-quente. <br/><br/>
+Na verdade, sempre que fizeres esta pergunta, ele vai responder a primeira coisa que ele tem vontade de comer, que podem
+  ser cachorros ou sorvetes. Observe o bal&#227;o do cliente: o primeiro item que n&#227;o seja uma bebida &#233; o que vai resultar 
+  no <span style="color:white; background-color: rgb(91,165,140); padding: 3px">askForFood</span>.   		
+		]]>
+		</page>
+		
 		<page type="goal">
 		<![CDATA[
 Agora vais entregar cachorro ou sorvete. O cliente tem sempre fome de um ou dois produtos. 
-  Às vezes ele pode querer um ou dois cachorros, um ou dois sorvetes, ou um cachorro e um sorvete. 
+  &#192;s vezes ele pode querer um ou dois cachorros, um ou dois sorvetes, ou um cachorro e um sorvete. 
   Mas ele sempre deixa a sobremesa para o final, ou seja, pede primeiro o cachorro. <br/><br/>
 
-Nessa missão tua preocupação é entregar SOMENTE o primeiro produto que ele pedir. Porém, as combinações
-  de pedido e a regra é como te expliquei acima. <br/><br/>
+Nessa miss&#227;o tua preocupa&#231;&#227;o &#233; entregar SOMENTE o primeiro produto que ele pedir. Por&#233;m, as combina&#231;&#245;es
+  de pedido e a regra &#233; como te expliquei acima. <br/><br/>
 
-Já deixei o começo da solução pronta na área de trabalho. Mas podes excluí-la se quiseres. É só uma sugestão.<br/><br/>
-Lembre-se que você sempre tem como último recurso o botão que mostra a solução : <img src="images/help_free.png"/>
+J&#225; deixei o come&#231;o e o fim da solu&#231;&#227;o pronta na &#225;rea de trabalho. Falta colocar entre esses dois 
+   conjuntos de blocos, o bloco condicional e os blocos que devem ser executados caso aconte&#231;a uma situa&#231;&#227;o ou outra.<br/><br/>
+Aten&#231;&#227;o: esses blocos iniciais podem ser exclu&#237;dos e voc&#234; pode criar sua solu&#231;&#227;o inovadora.<br/><br/>
+Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mostra a solu&#231;&#227;o : <img src="images/help_free.png"/>
 ]]>
 		</page>
 
 	</explanation>
 	<help>
 		<line>V&#225; at&#233; o cliente 2</line>
-		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [c]</line>
-		<line>Pergunte quantos gelados ele deseja e guarde na vari&#225;vel [g]</line>
-		<line>Fa&#231;a a diferen&#231;a entre [c] e [g] e guarde na vari&#225;vel [c]</line>
-		<line>se [g] for maior ou igual a 1</line>
-		<line indent="1">se [c] for igual a 2</line>
-		<line indent="2">Guarde o valor [verdadeiro] na vari&#225;vel [entregarGelado]</line>
-		<line indent="1">sen&#227;o</line>
-		<line indent="2">Guarde o valor [falso] na vari&#225;vel [entregarGelado]</line>
-		<line indent="1">Pergunte qual gelado ele deseja e guarde na vari&#225;vel [ic]</line>
-		<line indent="1">V&#225; at&#233; a m&#225;quina de gelados</line>
-		<line indent="1">Prepare e pegue um gelado de [ic] e guarde na vari&#225;vel [ic]</line>
-		<line indent="1">se [entregarGelado]</line>		
-		<line indent="2">Prepare e pegue um gelado de [chocolate] e guarde na vari&#225;vel [oferta]</line>
-		<line indent="1">V&#225; at&#233; o cliente 2</line>
-		<line indent="1">Entregue [ic]</line>
-		<line indent="1">se [entregarGelado]</line>		
-		<line indent="2">Entregue [oferta]</line>
+		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [f]</line>
+		<line>Pergunte quantos sorvetes ele deseja e guarde na vari&#225;vel [ic]</line>
+		<line>Fa&#231;a a diferen&#231;a entre [f] e [ic] e guarde na vari&#225;vel [f]</line>
+		<line>Pergunte o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line>se [f] for igual a [0]</line>
+		<line indent="1">V&#225; at&#233; a m&#225;quina de sorvetes</line>
+		<line indent="1">Prepare e pegue um sorvete de [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue a comida informada em [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line>V&#225; at&#233; o cliente 2</line>
+		<line>Entregue [pedido]</line>
 	</help>
 	<commands>
 		<category name="snackMan" show="true" />
@@ -126,12 +134,79 @@ Lembre-se que você sempre tem como último recurso o botão que mostra a soluç
 			</orders>						
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="20" xpTotalRun="6">
+	<objectives ordered="false" xpIndividual="30" xpFinal="20" xpTotalRun="9">
 
 		<objective pos="2" place="counter" value="Game.readVariableTest('deliverCust1')" text="a primeira comida">customDeliver</objective>
 		
 	</objectives>
 	<xml>
+		<block type="move_goToBarCounter" x="66" y="20">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">2</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set">
+					<field name="VAR">f</field>
+					<value name="VALUE">
+						<block type="ask_askWantHowManyFoods"></block>
+					</value>
+					<next>
+						<block type="variables_set">
+							<field name="VAR">ic</field>
+							<value name="VALUE">
+								<block type="ask_askWantHowManyIceCream"></block>
+							</value>
+							<next>
+								<block type="variables_set">
+									<field name="VAR">f</field>
+									<value name="VALUE">
+										<block type="math_arithmetic">
+											<field name="OP">MINUS</field>
+											<value name="A">
+												<block type="variables_get">
+													<field name="VAR">f</field>
+												</block>
+											</value>
+											<value name="B">
+												<block type="variables_get">
+													<field name="VAR">ic</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<next>
+										<block type="variables_set">
+											<field name="VAR">pedido</field>
+											<value name="VALUE">
+												<block type="ask_askForFood"></block>
+											</value>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+		<block type="move_goToBarCounter" x="66" y="231">
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">2</field>
+				</block>
+			</value>
+			<next>
+				<block type="do_deliver">
+					<value name="VALUE">
+						<block type="variables_get">
+							<field name="VAR">pedido</field>
+						</block>
+					</value>
+				</block>
+			</next>
+		</block>
 	</xml>
 
 </mission>

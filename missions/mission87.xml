@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation hasInstruction="true">
+	<explanation>
 		<page type="goal">
 		<![CDATA[
 		Na miss&#227;o anterior vimos o operador E. Nessa miss&#227;o, usando o mesmo bloco, vamos praticar o OU.<br/><br/>

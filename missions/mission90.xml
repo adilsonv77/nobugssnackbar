@@ -149,7 +149,7 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 			</orders>						
 		</customer>
 	</customers>
-	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3">
+	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3"  buttonRun="false">
 		<objective pos="2" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="o sorvete">deliverGifts</objective>
 	</objectives>
 	<xml>
@@ -175,7 +175,7 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 								<block deletable="false" type="variables_set">
 									<field name="VAR">sabor</field>
 									<value name="VALUE">
-										<block deletable="false" type="const_vanilla"></block>
+										<block deletable="false" type="const_strawberry"></block>
 									</value>
 									<next>
 										<block deletable="false" type="variables_set">
@@ -187,7 +187,7 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 												<block deletable="false" type="variables_set">
 													<field name="VAR">sabor</field>
 													<value name="VALUE">
-														<block deletable="false" type="const_strawberry"></block>
+														<block deletable="false" type="const_vanilla"></block>
 													</value>
 													<next>
 														<block deletable="false" type="move_goToIceCreamMachine">

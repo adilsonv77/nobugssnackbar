@@ -1,0 +1,251 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Dois clientes que podem ter somente fome, somente sede ou fome e sede. <br/><br/>
+Conte quantos clientes tem SOMENTE fome e quantos tem SOMENTE sede. <br/><br/>
+No final fale essas quantidades.
+		]]>
+		</page>
+	</explanation>
+	<help>
+	
+		<line>[0] e guarde na vari&#225;vel [contaFome]</line>
+		<line>[0] e guarde na vari&#225;vel [contaSede]</line>
+
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>se [tem fome &#233; verdadeiro] E [tem sede &#233; falso]</line>
+		<line indent="1">Some [contaFome] com [1] e guarde na vari&#225;vel [contaFome]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">se [tem fome &#233; falso] E [tem sede &#233; verdadeiro]</line>
+		<line indent="2">Some [contaSede] com [1] e guarde na vari&#225;vel [contaSede]</line>
+		
+		<line>V&#225; at&#233; o cliente 3</line>
+		<line>se [tem fome &#233; verdadeiro] E [tem sede &#233; falso]</line>
+		<line indent="1">Some [contaFome] com [1] e guarde na vari&#225;vel [contaFome]</line>
+		<line>sen&#227;o</line>
+		<line indent="1">se [tem fome &#233; falso] E [tem sede &#233; verdadeiro]</line>
+		<line indent="2">Some [contaSede] com [1] e guarde na vari&#225;vel [contaSede]</line>
+		
+		<line>Fale [contaFome]</line>
+		<line>Fale [contaSede]</line>
+
+	</help>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		
+		<category name="askHasThirsty" show="true" />
+		<category name="askHasHunger" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>9</tests>
+	<testsvars>
+		<test>
+			<var name="fome">2</var>
+			<var name="sede">0</var>
+		</test>
+		<test>
+			<var name="fome">1</var>
+			<var name="sede">1</var>
+		</test>
+		<test>
+			<var name="fome">1</var>
+			<var name="sede">0</var>
+		</test>
+		<test>
+			<var name="fome">1</var>
+			<var name="sede">1</var>
+		</test>
+		<test>
+			<var name="fome">0</var>
+			<var name="sede">2</var>
+		</test>
+		<test>
+			<var name="fome">0</var>
+			<var name="sede">1</var>
+		</test>
+		<test>
+			<var name="fome">1</var>
+			<var name="sede">0</var>
+		</test>
+		<test>
+			<var name="fome">0</var>
+			<var name="sede">1</var>
+		</test>
+		<test>
+			<var name="fome">0</var>
+			<var name="sede">0</var>
+		</test>
+	</testsvars>
+	
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofstrawberry</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofstrawberry</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofvanilla</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofstrawberry</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofvanilla</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+	</customers>
+	<objectives ordered="true" xpIndividual="30" xpFinal="15" xpTotalRun="6">
+		<objective value="parseInt(Game.readVariableTest('fome'))" text="quantos tem SOMENTE fome">talk</objective>
+		<objective value="parseInt(Game.readVariableTest('sede'))" text="quantos tem SOMENTE sede">talk</objective>
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+

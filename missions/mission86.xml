@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <mission>
-	<explanation hasInstruction="true">
+	<explanation>
 		<page type="goal">
 		<![CDATA[
 		As tomadas de decis&#245;es est&#227;o cada vez ficando mais poderosas. E com isso vem a complexidade. Nessa miss&#227;o vais precisar comparar
@@ -42,7 +42,7 @@ No final fale o valor total do faturamento com os dois clientes.
 		<line indent="1">Guarde o valor 4 na vari&#225;vel [v2]</line>
 		<line>sen&#227;o</line>
 		<line indent="1">Guarde o valor 3 na vari&#225;vel [v2]</line>
-		<line>Cobre do cliente o valor [v1] e guarde na vari&#225;vel [d1]</line>
+		<line>Cobre do cliente o valor [v2] e guarde na vari&#225;vel [d1]</line>
 
 		<line>Some [v1] com [v2] e guarde na vari&#225;vel [total]</line>
 		<line>Fale [total]</line>

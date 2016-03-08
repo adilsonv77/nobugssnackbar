@@ -122,8 +122,8 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 	</customers>
 	<objectives xpTotalRun="9" ordered="false" xpIndividual="30" xpFinal="10" varQtd="4" >
 		
-		<objective block="askWantHowManyFoods" times="2">callTimes</objective>
-		<objective block="askWantHowManyDrinks" times="2">callTimes</objective>
+		<objective block="askWantHowManyFoods" type="ask_askWantHowManyFoods" times="2">callTimes</objective>
+		<objective block="askWantHowManyDrinks" type="ask_askWantHowManyDrinks"  times="2">callTimes</objective>
 
 		<objective text="o faturamento" 
 				  value="(CustomerManager.totalOfFood()+CustomerManager.totalOfDrink())*3">talk</objective>
