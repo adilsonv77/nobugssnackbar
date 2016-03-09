@@ -583,7 +583,9 @@ Objective.DeliverGifts.prototype.checkObjective = function(options, objective)  
 		}
 	}
 	if (cust == null)
-		return false;
+		return true; // change on 09-03-2016: there is some missions that sometimes
+	 	            ////  dont have customers. 
+	                ///  I change this if from avoid error to satisfy the objective 
 	
 	var typeOfGift = eval(objective.value);
 	if (typeOfGift === "") { // if he must not receive a gift
