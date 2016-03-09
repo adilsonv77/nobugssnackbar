@@ -133,6 +133,7 @@ Game.generalInit = function() {
  * Initialize Blockly and SnackBar. Called on page load.
  */
 Game.init = function() {
+	$("#gameVersion").html(Game.version);
 	
 	Game.currTime = 0;
 
