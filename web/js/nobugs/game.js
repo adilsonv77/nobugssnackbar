@@ -37,6 +37,8 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
+Game.version = 20160309;
+
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
 Game.showMoveRight = false;
@@ -863,6 +865,16 @@ Game.missionLoaded = function(ret){
 	
   var xml = ret[1];
   var mission = transformStrToXml(xml);
+  
+  var gameVersion = mission.childNodes[0].getAttribute("gameVersion");
+  
+  if (gameVersion !== undefined && Game.version < parseInt(gameVersion)) {
+	  
+	  alert(BlocklyApps.getMsg("Game_VersionObsolete"), Game.logoffButtonClick, {height: "180px"});
+	  
+	  
+	  return;
+  }
   
   Game.missionType = mission.getElementsByTagName("objectives")[0].getAttribute("missionType");
   if (Game.missionType == null)

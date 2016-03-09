@@ -114,15 +114,17 @@ function alert(message, callback, options) {
 
 			$('.message', dialog.data[0]).append(message);
 
-			// if the user clicks "yes"
-			$('.yes', dialog.data[0]).click(function () {
+			var fClose = function () {
 				// call the callback
 				if ($.isFunction(callback)) {
 					callback.apply();
 				}
+				$('.simplemodal-close').unbind('click');
 				// close the dialog
 				modal.close(); // or $.modal.close();
-			});
+			};
+			
+			$('.simplemodal-close').click(fClose);
 			
 			
 		}

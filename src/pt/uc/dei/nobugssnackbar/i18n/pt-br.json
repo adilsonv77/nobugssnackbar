@@ -378,6 +378,8 @@
 	"ForgetPassword.send" : "Enviar nova senha",
 	"ForgetPassword.wrongMail" : "O e-mail informado n&#227;o foi encontrado.",
 	"ForgetPassword.forget" : "Esqueci a senha",
-	"ForgetPassword.newPasswordSent" : "Nova senha enviada... verifique seu e-mail"
+	"ForgetPassword.newPasswordSent" : "Nova senha enviada... verifique seu e-mail",
+	
+	"Game.versionObsolete" : "A vers&#227;o do jogo n&#227;o &#233; compat&#237;vel com a miss&#227;o. Ser&#225; feito o logoff automaticamente. Em seguida, voc&#234; deve pressionar a tecla [F5] para recarregar o jogo."
 	 
 }
