@@ -123,12 +123,13 @@ CountXP.sumCurrent = function() {
 		CountXP.stop(false);
 	}
 	
-	CountXP.current++;
 	if (CountXP.getCurrent() > 0 && CountXP.getCurrent()%CountXP.aFraction == 0) {
 		
 		CountXP.changeImgs();
 	
 	}
+
+	CountXP.current++;
 };
 
 CountXP.draw = function() {
@@ -142,13 +143,14 @@ CountXP.draw = function() {
 		ctx.beginPath();
 		ctx.arc(16,18,10,0,2*Math.PI);
 		ctx.lineWidth = 2;
-		ctx.strokeStyle = '#000000';		
+		ctx.strokeStyle = '#FFFFFF';		
 		ctx.rect(15, 4, 2, 2);
 		ctx.rect(13, 2, 6, 2);
 		
 		ctx.stroke();
 
-		var clockPointer = CountXP.getCurrent()/CountXP.aFraction; // isso precisa ser revisto pois foi depois de umas mudancas drasticas 
+		var d = CountXP.getCurrent()/CountXP.aFraction;
+		var clockPointer = d - Math.floor(d);  
 		if (CountXP.stopShowingWhenReachTheTime && CountXP.getTimes() > 0) {
 			clockPointer = 1;
 		} 
