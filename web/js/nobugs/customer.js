@@ -197,6 +197,7 @@ Customer = function(options) {
 	this.changeReceived = [];
 	
 	this.deliveredItems = [];
+	this.visibleTest = options.visibleTest;
 	/*
 	if (this.randomType != null) // I transfered this task to customerman.js
 		this.randomizeFoodAndDrink();

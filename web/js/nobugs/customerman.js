@@ -131,6 +131,12 @@ CustomerManager.reset = function() {
 		
 		for (var i = 0; i < orders.length; i++) {
 
+			var visible = orders[i].getAttribute("visible");
+			if (visible == undefined)
+				visible = true;
+			else
+				visible = visible === "true";
+			
 			var randomType = orders[i].getAttribute("randomType");
 			var _foods = orders[i].getElementsByTagName("foods")[0];
 			var _drinks = orders[i].getElementsByTagName("drinks")[0];
@@ -162,6 +168,7 @@ CustomerManager.reset = function() {
 			
 			custPattern.push({ hasRandom: randomType != null || (fRMin !== null) || (dRMin !== null) , 
 				                   randomType: randomType, place: orderDest,
+				                   visible: visible,
 								   foods: foods, drinks: drinks});
 		}
 		
@@ -238,13 +245,14 @@ CustomerManager.createCustomersBasedOnPattern = function() {
 	for (var i = 0; i < this.patterns.length; i++) {
 		var place = this.patterns[i].place;
 		var found = false;
-		for (var i = 0; i < customers.length; i++)
-			if (customers[i].id === place.id && customers[i].type === place.type) {
+		
+		for (var j = 0; j < customers.length; j++)
+			if (customers[j].id === place.id && customers[j].type === place.type) {
 				found = true;
 				break;
 			}
 		
-		if (!found) {
+		if (!found && this.patterns[i].pattern[this.currentTest].visible) {
 			
 			CustomerManager.createCustomerByPattern(i, this.patterns[i].init);
 		}
@@ -276,7 +284,8 @@ CustomerManager.createCustomerByPattern = function(idxPattern, initPlace) {
 							              (dest.type === "table" && dest.id === CustOpt.table[0])),
 							pay: this.patterns[i].pay,
 							limitedChanges: this.patterns[i].limitedChanges,
-							goOutIfPayed: this.patterns[i].goOutIfPayed});
+							goOutIfPayed: this.patterns[i].goOutIfPayed,
+							visibleTest: custPattern.visibleTest});
 	
 	if (this.randomization.length == 0)
 		cust.afterConstruct();
