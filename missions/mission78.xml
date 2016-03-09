@@ -118,7 +118,7 @@ No canto superior direito existe um contador de blocos. Agora o seu valor &#233;
 		<objective pos="3" place="counter">pickUpFood</objective>
 		<objective pos="3" place="counter">deliver</objective>
 	</objectives>
-	<xml preload="6">
+	<xml>
 
 	</xml>
 </mission>

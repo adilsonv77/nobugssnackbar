@@ -1,0 +1,239 @@
+<?xml version='1.0'?>
+<mission gameVersion="20160309">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Chegamos a missão com temporizador.
+Explicar o temporizador. A relacao da musica. Sugerir o que fazer.
+		]]>
+		</page>
+		<page type="goal">
+		<![CDATA[
+Ainda vou ser bonzinho. Tens 2 minutos para cada estrela. 
+		]]>
+		</page>
+	</explanation>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		
+		<category name="isThereACustomer" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+		
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>8</tests>
+	<testsvars>
+		<test>
+			<var name="valor">2</var>
+		</test>
+		<test>
+			<var name="valor">1</var>
+		</test>
+		<test>
+			<var name="valor">1</var>
+		</test>
+		<test>
+			<var name="valor">0</var>
+		</test>
+		<test>
+			<var name="valor">1</var>
+		</test>
+		<test>
+			<var name="valor">2</var>
+		</test>
+		<test>
+			<var name="valor">2</var>
+		</test>
+		<test>
+			<var name="valor">3</var>
+		</test>
+	</testsvars>
+	<menu hotdog="2" coke="3"/>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+		<customer>
+			<id>01</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="50" xpFinal="10" xpTotalTime="30">
+		<objective value="parseInt(Game.readVariableTest('valor'))" text="a m&#233;dia de cachorros pedidos">talk</objective>
+	</objectives>
+	<xml preload="38">
+	</xml>
+
+</mission>
+
