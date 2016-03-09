@@ -252,10 +252,14 @@ CustomerManager.createCustomersBasedOnPattern = function() {
 				break;
 			}
 		
-		if (!found && this.patterns[i].pattern[this.currentTest].visible) {
+		if (!found) 
+			if (this.patterns[i].pattern[this.currentTest].visible) {
 			
-			CustomerManager.createCustomerByPattern(i, this.patterns[i].init);
-		}
+				CustomerManager.createCustomerByPattern(i, this.patterns[i].init);
+			} else
+				
+				this.patterns[i].idxCustPattern = (this.patterns[i].idxCustPattern + 1) %  this.patterns[i].pattern.length;
+
 	}
 	
 };
