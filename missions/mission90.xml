@@ -161,13 +161,13 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 			</value>
 			<next>
 				<block deletable="false" type="variables_set">
-					<field name="VAR">f</field>
+					<field name="VAR">comida</field>
 					<value name="VALUE">
 						<block deletable="false" type="ask_askWantHowManyFoods"></block>
 					</value>
 					<next>
 						<block deletable="false" type="variables_set">
-							<field name="VAR">d</field>
+							<field name="VAR">bebida</field>
 							<value name="VALUE">
 								<block deletable="false" type="ask_askWantHowManyDrinks"></block>
 							</value>

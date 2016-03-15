@@ -1,0 +1,168 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Pergunte a cada cliente quantos cachorros ele deseja. No final fale a m&#233;dia de cachorros pedidos 
+  com base naqueles que pediram cachorros. Ou seja, descarte do c&#225;lculo os clientes que n&#227;o
+  querem cachorros. <br/><br/>
+	
+N&#227;o esque&#231;a que a divis&#227;o de um n&#250;mero por zero (X / 0) n&#227;o resulta em zero, mas em um erro.
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[0] e guarde na vari&#225;vel [totalCliente]</line>
+		<line>[0] e guarde na vari&#225;vel [totalCachorros]</line>
+		<line>para [i] de 1 at&#233; 3 com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line indent="1">se [qtosCachorros] for maior que zero ent&#227;o</line>
+		<line indent="2">Some [totalCachorros] com [qtosCachorros] e guarde na vari&#225;vel [totalCachorros]</line>
+		<line indent="2">Some [totalCliente] com [1] e guarde na vari&#225;vel [totalCliente]</line>
+		<line>[0] e guarde na vari&#225;vel [mediaCachorros]</line>
+		<line>se [totalCliente] for maior que zero ent&#227;o</line>
+		<line indent="1">Divida [totalCachorros] por [totalCliente] e guarde na vari&#225;vel [mediaCachorros]</line>
+		<line>Fale [mediaCachorros]</line>
+	</help>
+	<commands>
+		
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		<category name="text" show="true" />
+		<category name="math" show="true" />
+		 
+	</commands>
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="averageFood">2</var>
+		</test>
+		<test>
+			<var name="averageFood">0</var>
+		</test>
+		<test>
+			<var name="averageFood">1</var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" commQtd="14">
+		<objective text="a m&#233;dia da quantidade de comida desejada, considerando somente &#224;queles com fome" value="parseInt(Game.readVariableTest('averageFood'))">talk</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

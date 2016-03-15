@@ -1,0 +1,153 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+Pergunte a cada cliente quantos lanches ele deseja. Ao final fale qual foi a 
+  maior quantidade pedida e qual a posi&#231;&#227;o do cliente (1 a 3) que fez esse
+  pedido. &#201; garantido que n&#227;o existam dois clientes com a mesma 
+  maior quantidade.		
+		]]> 
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+		
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="text" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		<category name="math" show="true" />
+	</commands>
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="maiorQ">3</var>
+			<var name="maiorC">2</var>
+		</test>
+		<test>
+			<var name="maiorQ">2</var>
+			<var name="maiorC">1</var>
+		</test>
+		<test>
+			<var name="maiorQ">2</var>
+			<var name="maiorC">3</var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	
+	<objectives xpIndividual="50" xpFinal="20" commQtd="14" xpTotalRun="9" varQtd="4">
+	
+		<objective text="a maior quantidade de lanches desejada" value="parseInt(Game.readVariableTest('maiorQ'))">talk</objective>
+		<objective text="a posi&#231;&#227;o do cliente que desejou a maior quantidade" value="parseInt(Game.readVariableTest('maiorC'))">talk</objective>
+		
+	</objectives>
+	<xml>
+	</xml>
+</mission>

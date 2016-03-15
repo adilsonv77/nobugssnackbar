@@ -130,30 +130,30 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 			</value>
 			<next>
 				<block deletable="false" type="variables_set">
-					<field name="VAR">f</field>
+					<field name="VAR">comida</field>
 					<value name="VALUE">
 						<block deletable="false" type="ask_askWantHowManyFoods"></block>
 					</value>
 					<next>
 						<block deletable="false" type="variables_set">
-							<field name="VAR">ic</field>
+							<field name="VAR">sorvete</field>
 							<value name="VALUE">
 								<block deletable="false" type="ask_askWantHowManyIceCream"></block>
 							</value>
 							<next>
 								<block deletable="false" type="variables_set">
-									<field name="VAR">f</field>
+									<field name="VAR">cachorros</field>
 									<value name="VALUE">
 										<block deletable="false" type="math_arithmetic">
 											<field name="OP">MINUS</field>
 											<value name="A">
 												<block deletable="false" type="variables_get">
-													<field name="VAR">f</field>
+													<field name="VAR">comida</field>
 												</block>
 											</value>
 											<value name="B">
 												<block deletable="false" type="variables_get">
-													<field name="VAR">ic</field>
+													<field name="VAR">sorvete</field>
 												</block>
 											</value>
 										</block>
@@ -166,12 +166,12 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 													<field name="OP">EQ</field>
 													<value name="A">
 														<block deletable="false" type="variables_get">
-															<field name="VAR">f</field>
+															<field name="VAR">cachorros</field>
 														</block>
 													</value>
 													<value name="B">
 														<block deletable="false" type="variables_get">
-															<field name="VAR">ic</field>
+															<field name="VAR">sorvete</field>
 														</block>
 													</value>
 												</block>

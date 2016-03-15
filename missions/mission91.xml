@@ -198,7 +198,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="206" y="1">
-			<field name="VAR">b</field>
+			<field name="VAR">bebida</field>
 			<value name="VALUE">
 				<block deletable="false" type="ask_askWantHowManyDrinks"></block>
 			</value>
@@ -216,7 +216,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 									<field name="OP">MULTIPLY</field>
 									<value name="A">
 										<block deletable="false" type="variables_get">
-											<field name="VAR">c</field>
+											<field name="VAR">cachorros</field>
 										</block>
 									</value>
 									<value name="B">
@@ -231,7 +231,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 									<field name="OP">MULTIPLY</field>
 									<value name="A">
 										<block deletable="false" type="variables_get">
-											<field name="VAR">b</field>
+											<field name="VAR">bebida</field>
 										</block>
 									</value>
 									<value name="B">
@@ -245,38 +245,38 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 					</value>
 					<value name="B">
 						<block deletable="false" type="variables_get">
-							<field name="VAR">s</field>
+							<field name="VAR">sorvetes</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="7" y="144">
-			<field name="VAR">f</field>
+			<field name="VAR">comida</field>
 			<value name="VALUE">
 				<block deletable="false" type="ask_askWantHowManyFoods"></block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="370" y="139">
-			<field name="VAR">c</field>
+			<field name="VAR">cachorros</field>
 			<value name="VALUE">
 				<block deletable="false" type="math_arithmetic">
 					<field name="OP">MINUS</field>
 					<value name="A">
 						<block deletable="false" type="variables_get">
-							<field name="VAR">f</field>
+							<field name="VAR">comida</field>
 						</block>
 					</value>
 					<value name="B">
 						<block deletable="false" type="variables_get">
-							<field name="VAR">s</field>
+							<field name="VAR">sorvetes</field>
 						</block>
 					</value>
 				</block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="2" y="202">
-			<field name="VAR">s</field>
+			<field name="VAR">sorvetes</field>
 			<value name="VALUE">
 				<block deletable="false" type="ask_askWantHowManyIceCream"></block>
 			</value>
@@ -309,7 +309,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 			<field name="OP">EQ</field>
 			<value name="A">
 				<block deletable="false" type="variables_get">
-					<field name="VAR">f</field>
+					<field name="VAR">comida</field>
 				</block>
 			</value>
 			<value name="B">
@@ -322,7 +322,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 			<field name="OP">EQ</field>
 			<value name="A">
 				<block deletable="false" type="variables_get">
-					<field name="VAR">c</field>
+					<field name="VAR">cachorros</field>
 				</block>
 			</value>
 			<value name="B">
@@ -335,7 +335,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 			<field name="OP">EQ</field>
 			<value name="A">
 				<block deletable="false" type="variables_get">
-					<field name="VAR">b</field>
+					<field name="VAR">bebida</field>
 				</block>
 			</value>
 			<value name="B">

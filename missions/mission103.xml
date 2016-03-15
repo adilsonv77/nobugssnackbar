@@ -1,0 +1,149 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+
+		<page type="goal">
+		<![CDATA[
+		
+Voltemos a cobrar o valor do pedido do cliente. Os clientes tem somente fome e o pre&#231;o do cachorro &#233; $2.
+  Pergunte a cada cliente quantos cachorros ele deseja e j&#225; cobre o valor dele. Como sabes, ele te d&#225; 
+  sempre valor a mais. A sobra fica como gorjeta. No final fale a soma total de gorjetas do dia. J&#225;
+  vou te deixar uns blocos pronto na &#225;rea de trabalho em rela&#231;&#227;o &#224; essa cobran&#231;a.
+<br/><br/>
+A combina&#231;&#227;o de teclas [CTRL+SHIFT+5] permite inserir um bloco <i>para</i>.		
+<br/><br/>	
+Em todas as miss&#245;es envolvendo ciclos, eu tenho que limitar a quantidade de blocos por uma quest&#227;o 
+  de conveni&#234;ncia. Teoricamente, tu podes resolver qualquer miss&#227;o bastando duplicar (copiar 
+  e colar) os blocos. Entretanto, como estamos aprendendo ciclos, isso vai te for&#231;ar a resolver com os 
+  blocos de repeti&#231;&#227;o.	
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[0] e guarde na vari&#225;vel [totalGorjetas]</line>
+		<line>para [i] de 1 at&#233; 3 com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line indent="1">Multiplique [qtosCachorros] por [2] e guarde na vari&#225;vel [valorPedido]</line>
+		<line indent="1">Cobre do cliente o [valorPedido] e o resultado guarde na vari&#225;vel [valorRecebido]</line>
+		<line indent="1">Subtraia [valorPedido] de [valorRecebido] e guarde na vari&#225;vel [gorjeta]</line>
+		<line indent="1">Some [gorjeta] com [totalGorjetas] e guarde na vari&#225;vel [totalGorjetas]</line>
+		<line>Fale [totalGorjetas]</line>
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="cashIn" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="money" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		<category name="text" show="true" />
+		<category name="math" show="true" />
+
+
+	</commands>
+	<menu hotdog="2" />
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" commQtd="9"
+		xpTotalRun="9">
+		<objective text="o total de gorjetas do dia"
+			value="((CustomerManager.customerMoneyGave(1)-CustomerManager.customerMoneyIfSell(1))+(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))+(CustomerManager.customerMoneyGave(3)-CustomerManager.customerMoneyIfSell(3)))">talk</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set">
+			<field name="VAR">valorRecebido</field>
+			<value name="VALUE">
+				<block type="money_cashIn">
+					<value name="VALUE">
+						<block type="variables_get">
+							<field name="VAR">valorPedido</field>
+						</block>
+					</value>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set">
+					<field name="VAR">gorjeta</field>
+					<value name="VALUE">
+						<block type="math_arithmetic">
+							<field name="OP">MINUS</field>
+							<value name="A">
+								<block type="variables_get">
+									<field name="VAR">valorRecebido</field>
+								</block>
+							</value>
+							<value name="B">
+								<block type="variables_get">
+									<field name="VAR">valorPedido</field>
+								</block>
+							</value>
+						</block>
+					</value>
+				</block>
+			</next>
+		</block>
+
+	</xml>
+</mission>
