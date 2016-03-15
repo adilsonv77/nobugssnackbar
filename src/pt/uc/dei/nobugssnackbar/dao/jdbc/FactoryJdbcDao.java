@@ -3,12 +3,7 @@ package pt.uc.dei.nobugssnackbar.dao.jdbc;
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
-import pt.uc.dei.nobugssnackbar.dao.CommandDao;
-import pt.uc.dei.nobugssnackbar.dao.FunctionProviderDao;
-import pt.uc.dei.nobugssnackbar.dao.FunctionProviderValueDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
-import pt.uc.dei.nobugssnackbar.dao.HintCategoryDao;
-import pt.uc.dei.nobugssnackbar.dao.HintDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.LevelDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
@@ -30,36 +25,6 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		return missionDao;
 	}
 
-	private HintCategoryDao hintCategoryDao;
-	
-	@Override
-	public HintCategoryDao getHintCategoryDao() {		
-		if (hintCategoryDao == null)
-			hintCategoryDao = new HintCategoryJdbcDao();
-		
-		return hintCategoryDao;
-	}
-	
-	private FunctionProviderDao functionProviderDao;
-
-	@Override
-	public FunctionProviderDao getFunctionProviderDao() {
-		if (functionProviderDao == null)
-			functionProviderDao = new FunctionProviderJdbcDao();
-		
-		return functionProviderDao;	
-	}
-
-	private CommandDao commandDao;
-
-	@Override
-	public CommandDao getCommandDao() {
-		if (commandDao == null)
-			commandDao = new CommandJdbcDao();
-		
-		return commandDao;	
-	}
-	
 	private GameDao gameDao;
 
 	@Override
@@ -94,24 +59,6 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (messageDao == null)
 			messageDao = new MessageJdbcDao();
 		return messageDao;
-	}
-
-	private HintDao hintDao;
-	@Override
-	public HintDao getHintDao() {
-		if (hintDao == null)
-			hintDao = new  HintJdbcDao();
-		return hintDao;
-	}
-	
-	private FunctionProviderValueDao functionProviderValueDao;
-
-	@Override
-	public FunctionProviderValueDao getFunctionProviderValueDao() {
-		if (functionProviderValueDao == null)
-			functionProviderValueDao = new FunctionProviderValueJdbcDao();
-		
-		return functionProviderValueDao;	
 	}
 
 	private UserDao userDao;

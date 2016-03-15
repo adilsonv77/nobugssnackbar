@@ -6,6 +6,11 @@
 
 Blockly.genUid.soup_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 Blockly.Msg.VARIABLES_SET_TOOLTIP = Blockly.Msg.VARIABLES_SET_TOOLTIP + "[Ctrl+Shift+3]";
+Blockly.Msg.CONTROLS_IF_TOOLTIP_1 = Blockly.Msg.CONTROLS_IF_TOOLTIP_1 + "[Ctrl+Shift+4]";
+Blockly.Msg.CONTROLS_IF_TOOLTIP_2 = Blockly.Msg.CONTROLS_IF_TOOLTIP_2 + "[Ctrl+Shift+4]";
+Blockly.Msg.CONTROLS_IF_TOOLTIP_3 = Blockly.Msg.CONTROLS_IF_TOOLTIP_3 + "[Ctrl+Shift+4]";
+Blockly.Msg.CONTROLS_IF_TOOLTIP_4 = Blockly.Msg.CONTROLS_IF_TOOLTIP_4 + "[Ctrl+Shift+4]";
+Blockly.Msg.CONTROLS_FOR_TOOLTIP = Blockly.Msg.CONTROLS_FOR_TOOLTIP + "[Ctrl+Shift+5]";
 
 Blockly.Blocks['controls_if'].oldControlsIfInit = Blockly.Blocks['controls_if'].init;
 

@@ -1,21 +1,13 @@
 package nobugssnackbar;
 
-import java.util.List;
-
-import pt.uc.dei.nobugssnackbar.dao.jdbc.CommandJdbcDao;
-import pt.uc.dei.nobugssnackbar.dao.jdbc.FunctionProviderJdbcDao;
-import pt.uc.dei.nobugssnackbar.dao.jdbc.MissionJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
-import pt.uc.dei.nobugssnackbar.model.Command;
-import pt.uc.dei.nobugssnackbar.model.Function;
-import pt.uc.dei.nobugssnackbar.model.Mission;
 
 public class TestJdbcDao {
 
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
-		
+		/*
 		
 		CommandJdbcDao cDao = new CommandJdbcDao();
 		

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
