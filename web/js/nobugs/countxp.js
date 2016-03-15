@@ -123,13 +123,13 @@ CountXP.sumCurrent = function() {
 		CountXP.stop(false);
 	}
 	
+	CountXP.current++;
 	if (CountXP.getCurrent() > 0 && CountXP.getCurrent()%CountXP.aFraction == 0) {
 		
 		CountXP.changeImgs();
 	
 	}
 
-	CountXP.current++;
 };
 
 CountXP.draw = function() {
