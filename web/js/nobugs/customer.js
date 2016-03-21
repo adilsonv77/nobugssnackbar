@@ -63,6 +63,7 @@ PreloadImgs.put('$orange', 'images/$$orange.png');
 PreloadImgs.put('$icecreamofchocolate', 'images/$$icecreamofchocolate.png');
 PreloadImgs.put('$icecreamofvanilla', 'images/$$icecreamofvanilla.png');
 PreloadImgs.put('$icecreamofstrawberry', 'images/$$icecreamofstrawberry.png');
+PreloadImgs.put('$coffee', 'images/$$coffee.png');
 
 //Balloons
 PreloadImgs.put('baloon_1', 'images/baloon_1.png');

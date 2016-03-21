@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160309;
+Game.version = 20160321;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -67,6 +67,7 @@ Game.counterInstruction = null;
 Game.callTimes = {};
 
 PreloadImgs.put('fundo', 'images/fundo_new.png');
+PreloadImgs.put('fundo2', 'images/fundo_new2.png');
 PreloadImgs.put('doors', 'images/door_new.png');
 
 Game.useCodeEditor = false;
@@ -958,6 +959,11 @@ Game.missionLoaded = function(ret){
   Game.verifyButtons(objectives);
   
   hero = new SnackMan(hasTable, objectives, mission, Game.loginData.avatar);
+  if (hero.showCoffee) {
+	  Game.imgBackground = PreloadImgs.get("fundo2");
+  } else {
+	  Game.imgBackground = PreloadImgs.get("fundo");
+  }
   
   Game.onObjectiveAccomplished([0, hero.objective.objectives.length]);
   
@@ -3319,6 +3325,28 @@ Game.initApi = function(interpreter, scope) {
 	    
 	interpreter.setProperty(scope, 'giveChange',
 		interpreter.createNativeFunction(wrapper));
+
+	// about coffee machine
+	wrapper = function(n) {
+	      return interpreter.createPrimitive(hero.goToCoffeeMachine());
+	    };
+	    
+    interpreter.setProperty(scope, 'goToCoffeeMachine',
+        interpreter.createNativeFunction(wrapper));
+
+	wrapper = function(n) {
+	      return interpreter.createPrimitive(hero.prepareCoffee());
+	    };
+	    
+	interpreter.setProperty(scope, 'prepareCoffee',
+      interpreter.createNativeFunction(wrapper));
+  
+	wrapper = function(o) {
+	      return interpreter.createPrimitive(hero.pickUpCoffee(o));
+	    };
+	    
+	interpreter.setProperty(scope, 'pickUpCoffee',
+			interpreter.createNativeFunction(wrapper));
 
 	// array functions
 	wrapper = function(s) {

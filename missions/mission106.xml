@@ -12,6 +12,18 @@ Pergunte a cada cliente quantos lanches ele deseja. Ao final fale qual foi a
 		</page>
 
 	</explanation>
+	<help>
+		<line>[0] e guarde na vari&#225;vel [maiorQuant]</line>
+		<line>[0] e guarde na vari&#225;vel [maiorCliente]</line>
+		<line>para [i] de 1 at&#233; 3 com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line indent="1">se [qtosCachorros] for maior que [maiorQuant] ent&#227;o</line>
+		<line indent="2">[qtosCachorros] e guarde na vari&#225;vel [maiorQuant]</line>
+		<line indent="2">[i] e guarde na vari&#225;vel [maiorCliente]</line>
+		<line>Fale [i]</line>
+		<line>Fale [maiorCliente]</line>
+	</help>
 	<hints>
 		<sequence>
 		</sequence>

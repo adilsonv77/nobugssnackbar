@@ -687,6 +687,56 @@ Blockly.JavaScript['ask_askForIceCream'] = function(block) {
 	return ['askForIceCream( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+/******************************************************************************
+ *                              Coffee Machine
+ ******************************************************************************/	
+
+Blockly.Blocks['move_goToCoffeeMachine'] = {
+		 init: function() {
+			this.setColour(160);
+			this.appendDummyInput().appendField('goToCoffeeMachine');
+			this.setPreviousStatement(true);
+			this.setNextStatement(true);
+			this.setTooltip(BlocklyApps.getMsg('SnackMan_goToCoffeeMachineTooltip'));
+		 }
+};
+
+Blockly.JavaScript['move_goToCoffeeMachine'] = function(block) {
+	return "goToCoffeeMachine(); \n";
+};
+
+Blockly.Blocks['prepare_coffee'] = {
+		 init: function() {
+		   this.setColour(160); 
+		   
+		   this.appendDummyInput().appendField('prepareCoffee');
+		   this.setPreviousStatement(true);
+		   this.setNextStatement(true);
+		   
+		   this.setTooltip(BlocklyApps.getMsg('SnackMan_prepareCoffeeTooltip'));
+		 }
+};
+
+Blockly.JavaScript['prepare_coffee'] = function(block) {
+	return "prepareCoffee(); \n";
+};
+
+Blockly.Blocks['prepare_pickUpCoffee'] = {
+		 init: function() {
+		   this.setColour(160); 
+		   this.setOutput(true, "Drink");
+		   this.appendValueInput("VALUE").setCheck("DrinkOrder").appendField('pickUpCoffee');
+		   this.setTooltip(BlocklyApps.getMsg('SnackMan_pickUpCoffeeTooltip'));
+		 }
+};
+
+Blockly.JavaScript['prepare_pickUpCoffee'] = function(block) {
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null'; 
+	return ['pickUpCoffee( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+
+
 /**********************************************************************************/
 /**        Snippets for common blocks
 /**********************************************************************************/

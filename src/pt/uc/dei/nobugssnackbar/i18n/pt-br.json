@@ -132,7 +132,11 @@
 	"SnackMan.giveChangeTooltip" : "Devolve parte do troco: a quantidade de um tipo de moeda ou nota.",
 	"SnackMan.goToIceCreamMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de sorvetes.",
 	"SnackMan.pickUpIceCreamTooltip" : "Pega o sorvete da m&#225;quina.",
-	
+	"SnackMan.askForIceCreamTooltip" : "Pergunto ao cliente qual sabor do sorvete que deseja.",
+	"SnackMan.goToCoffeeMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de caf&#233;s.",
+	"SnackMan.prepareCoffeeTooltip" : "Prepara dois caf&#233;s.",
+	"SnackMan.pickUpCoffeeTooltip" : "Pega um caf&#233;.",
+
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado ou senha incorreta",
 	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 3.",
@@ -183,6 +187,11 @@
 	"Error.noValueInParameter" : "O par&#226;metro n&#227;o possui qualquer valor. Parece que voc&#234; esqueceu de atribuir o seu valor uns blocos anteriores.",
 
 	"Error.tabOnlyWithFunctions" : "Esta guia deve conter somente fun&#231;&#245;es.",
+	
+	"Error.isntFrontCoffeeMachine" : "O cozinheiro n&#227;o est&#225; em frente &#224; m&#225;quina de caf&#233;s.",
+	"Error.stillHaveCoffee" : "Ainda existe caf&#233; na m&#225;quina. Por isso, n&#227;o &#233; poss&#237;vel fazer novo caf&#233;.",
+	"Error.doesntHaveCoffee" : "N&#227;o existe caf&#233; pronto na m&#225;quina.",
+	"Error.onlyPickUpCoffee" : "Aqui o cozinheiro somente consegue obter caf&#233;.",
 	
 	"Single.Counter" : "do balc&#227;o",
 	"Single.counter" : "Balc&#227;o",

@@ -16,7 +16,7 @@
   
   <div id="initialBackground" style="display: none;">
     <div style="width: 960px; height: 100%; position: relative; margin-right: auto; margin-left: auto;">
-  	<div style="position: fixed; width: 960px; height: 100%; background: url('images/fundobug.png') no-repeat"></div>
+  	<div style="position: fixed; width: 960px; height: 100%; background: url('images/bichos.gif') repeat"></div>
   	<div>
   		<div class="farSide" style="display:none">
 	  		<a href="#"onclick="changeLanguageToPt()" style="position: absolute; left: 8px"><img src="images/pt.png" alt="Portuguese Language" height="30" width="30"></a>
@@ -152,7 +152,7 @@
 				</div>
   			</td>
   			
-  			<td style="height: 342px">
+  			<td style="height: 300px">
 				<div id="leaderboard">
 					<ul id='leaderboard_tabs'>
 						<li id="leaderpoints" class='leaderboard_tab' data-tooltip-position="top center"><a href="#tabs-points"><img src="images/badge_points_gold.png"/></a></li>
@@ -180,7 +180,7 @@
 		<tr>
 			<td/>
 			<td class="farSide">
-				<button id="infotabButton" style="background-color: transparent; border: 0px">
+				<button id="infotabButton" style="background-color: transparent; border: 0px; padding:0px; margin:0px">
 					<img id="imgInfoTab" src="images/iconmoreinfo.png" style="width:16px; height:16px"/>
 				</button>
   	  		</td>			
@@ -879,8 +879,22 @@
 	            <field name="NUM">5</field>
 	          </block>
 			</value>
-	      </block>{/if}
+	      </block>
+	      {/if}
 	      
+	      
+	      {if $ij.enabled['coffee']}
+	      <block type="move_goToCoffeeMachine"> </block>
+	      <block type="prepare_coffee"> </block>
+	      <block type="prepare_pickUpCoffee">
+		      <value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{{msg meaning="NoBugs.order" desc="---"}}order{{/msg}}</field>
+				</block>
+		      </value>
+		   </block>
+		   
+	      {/if}
 	    </category>
     {/if}
     

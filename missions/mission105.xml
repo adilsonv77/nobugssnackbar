@@ -23,6 +23,23 @@ Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cl
 		<errors>
 		</errors>
 	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente 1</line>
+		<line>Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line>para [i] de 1 at&#233; [qtosCachorros] com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">se [i] for igual a [1] ent&#227;o</line>
+		<line indent="2">[Chocolate] e guarde na vari&#225;vel [sabor]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">se [i] for igual a [2] ent&#227;o</line>
+		<line indent="3">[Morango] e guarde na vari&#225;vel [sabor]</line>
+		<line indent="2">sen&#227;o</line>
+		<line indent="3">[Baunilha] e guarde na vari&#225;vel [sabor]</line>
+		<line indent="1">V&#225; para a m&#225;quina de sorvetes</line>
+		<line indent="1">Prepare e pegue um sorvete de [sabor] e guarde na vari&#225;vel [presente] </line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">Entregue o [presente]</line>
+	</help>
 	<commands>
 		
 		<category name="snackMan" show="true" />
