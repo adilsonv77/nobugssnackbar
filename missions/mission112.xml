@@ -1,0 +1,175 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" >
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Os clientes vem com vontade de suco. Entregue o pedido completo aos clientes.<br/><br/>
+O enunciado &#233; muito simples. Mas voc&#234; tem uma restri&#231;&#227;o: somente pode usar o 
+   <i>repita-enquanto</i> uma vez. J&#225; te disponibilizei uns blocos na &#225;rea de trabalho
+   para te inspirares. 
+
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[1] e guarde na vari&#225;vel [cliente]</line>
+		<line>repita enquanto [cliente &lt;= 3] fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="1">se [tem sede for verdadeiro] ent&#227;o</line>
+		<line indent="2">Pergunte o que deseja beber e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">V&#225; at&#233; a caixa de frutas</line>
+		<line indent="2">Pegue a fruta [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">V&#225; at&#233; a m&#225;quina de sucos</line>
+		<line indent="2">Prepare e pegue o suco [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="2">Entregue [pedido]</line>
+		<line indent="1">sen&#227;o</line> 
+		<line indent="2">Some [1] com [cliente] e guarde na vari&#225;vel [cliente]</line>
+	
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		
+		<category name="askForDrink" show="true" />
+		<category name="askHasThirsty" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+		
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		<category name="whileUntil" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" commQtd="20" maxCommands="12" maxCommandsRewardCoins="1">
+		<objective pos="1" place="counter">deliver</objective>
+		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
+		<objective block="repita-enquanto" type="controls_whileUntil" times="1">callTimes</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set" x="51" y="41">
+			<field name="VAR">cliente</field>
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+		</block>
+		<block type="move_goToBarCounter" x="45" y="135">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">cliente</field>
+				</block>
+			</value>
+			<next>
+				<block type="controls_if">
+					<mutation else="1"></mutation>
+					<value name="IF0">
+						<block type="logic_compare">
+							<field name="OP">EQ</field>
+							<value name="A">
+								<block type="ask_askHasThirsty"></block>
+							</value>
+							<value name="B">
+								<block type="logic_boolean">
+									<field name="BOOL">TRUE</field>
+								</block>
+							</value>
+						</block>
+					</value>
+					<statement name="ELSE">
+						<block type="variables_set">
+							<field name="VAR">cliente</field>
+							<value name="VALUE">
+								<block type="math_arithmetic">
+									<field name="OP">ADD</field>
+									<value name="A">
+										<block type="math_number">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<value name="B">
+										<block type="variables_get">
+											<field name="VAR">cliente</field>
+										</block>
+									</value>
+								</block>
+							</value>
+						</block>
+					</statement>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>

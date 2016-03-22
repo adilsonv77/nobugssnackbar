@@ -1,0 +1,192 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Os clientes vem com vontade de sorvetes e refrigerantes. Podem querer mais de uma 
+   unidade de cada tipo.<br/><br/>   
+Entregue os pedidos at&#233; quando o total de vendas tiver alcan&#231;ado $12. 
+  Nem um produto a mais pode ser entregue. Com isso, se estavas atendendo um cliente 
+  e no meio do atendimento atingiu o total de vendas de $12, deve ser interrompido o 
+  atendimento, e o cliente vai ficar na vontade. Por isso, nessa miss&#227;o, quando 
+  atingir $12, vai existir um cliente atendido parcialmente. 
+Atenda primeiro a fome depois a sede.<br/><br/>
+A miss&#227;o somente &#233; satisfeita quando for vendido EXATAMENTE $12.<br/><br/>
+O pre&#231;o do sorvete &#233; $1 e refrigerante &#233; $3. 
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[1] e guarde na vari&#225;vel [cliente]</line>
+		<line>[0] e guarde na vari&#225;vel [totalPedido]</line>
+		<line>repita enquanto [totalPedido != 12] fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="1">se [tem fome for verdadeiro] ent&#227;o</line>
+		<line indent="2">Pergunte o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">V&#225; at&#233; a m&#225;quina de sorvetes</line>
+		<line indent="2">Prepare e pegue um sorvete do sabor [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="2">Entregue [pedido]</line>
+		<line indent="2">Some [1] com [totalPedido] e guarde na vari&#225;vel [totalPedido]</line>
+		<line indent="1">sen&#227;o</line>
+		<line indent="2">se [tem sede for verdadeiro] ent&#227;o</line>
+		<line indent="3">Pergunte o que deseja beber e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">V&#225; at&#233; a geladeira</line>
+		<line indent="3">Pegue a bebida [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="3">Entregue [pedido]</line>
+		<line indent="3">Some [3] com [totalPedido] e guarde na vari&#225;vel [totalPedido]</line>
+		<line indent="2">sen&#227;o</line> 
+		<line indent="3">Some [1] com [cliente] e guarde na vari&#225;vel [cliente]</line>
+	
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askForFood" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="icecream" show="true" />
+		
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+		
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="logic_trueFalse" show="true"/>
+		<category name="whileUntil" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<menu coke="3" icecream="1"/>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives xpIndividual="40" xpFinal="15" xpTotalRun="9" commQtd="30" maxCommands="20" maxCommandsRewardCoins="3">
+		<objective condition="CustomerManager.totalOfMoneyDelivered() == 12" 
+		text="Entregar EXATAMENTE $12 em vendas">conditional</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

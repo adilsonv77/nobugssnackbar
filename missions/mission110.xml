@@ -1,0 +1,192 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false" gameVersion="20160323">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Essa ser&#225; sua primeira chance de come&#231;ar a colecionar moedas <img style='vertical-align: middle; padding-left: 3px;' src='images/coin2.png'/>. 
+Se conseguires concluir essa miss&#227;o com
+  8 blocos ou menos, ganhar&#225;s algumas moedas. Mas aten&#231;&#227;o: isso n&#227;o &#233; uma restri&#231;&#227;o, mas um b&#244;nus. <br/><br/>
+As moedas s&#227;o um recurso muito exclusivo que te diferenciar&#225; no ranking.
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+Nessa miss&#227;o vais falar o valor total das vendas.<br/><br/>
+A sua tarefa ser&#225; muito parecida com a miss&#227;o anterior.		 
+  Quando o total das vendas tiver pelo menos atingido $7, n&#227;o 
+  deves ir perguntar mais nada a cliente algum. Logo, quando chegar a um cliente, fazes todas as perguntas necess&#225;rias, e 
+  calculas o total, como vinhas fazendo. Entretanto, s&#243; vais ao pr&#243;ximo cliente, se o total das vendas ainda n&#227;o tiver atingido $7.
+  &#201; garantido que a soma dos pedidos entre os tr&#234;s clientes sempre atingir&#225; no m&#237;nimo $7.<br/><br/>
+J&#225; deixo um peda&#231;o da solu&#231;&#227;o na &#225;rea de trabalho para te dar uma inspira&#231;&#227;o.<br/><br/>
+Entretanto, como estamos aprendendo ciclos, vou te for&#231;ar a resolver com os 
+  blocos de repeti&#231;&#227;o, limitando a quantidade de blocos usados na solu&#231;&#227;o.	
+ 
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[1] e guarde na vari&#225;vel [cliente]</line>
+		<line>[0] e guarde na vari&#225;vel [totalPedido]</line>
+		<line>repita enquanto [totalPedido &lt; 7] fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="1">Pergunte quantos sorvetes ele deseja e guarde na vari&#225;vel [sorvetes]</line>
+		<line indent="1">Some [sorvetes] com [Some [Multiplique [Pergunte quantas bebidas ele deseja] por [3]] com [Multiplique [Subtraia [sorvetes] de [Pergunte quantos cachorros ele deseja]] por [2]] e guarde na vari&#225;vel [totalCliente]</line>
+		<line indent="1">Some [totalCliente] com [totalPedido] e guarde na vari&#225;vel [totalPedido]</line>
+		<line indent="1">Some [1] com [cliente] e guarde na vari&#225;vel [cliente]</line>
+		<line>Fale [totalPedido]</line>
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="hide_if" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+
+		<category name="text" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="total">8</var>
+		</test>
+		<test>
+			<var name="total">13</var>
+		</test>
+		<test>
+			<var name="total">7</var>
+		</test>
+	</testsvars>
+	<menu hotdog="2" icecream="1" coke="3"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="15" xpFinal="5" xpTotalRun="6" commQtd="13" maxCommands="8" maxCommandsRewardCoins="2" >
+		<objective text="o total das vendas at&#233; atingir pelo menos $7" value="parseInt(Game.readVariableTest('total'))">talk</objective>
+		<objective type="controls_whileUntil">useBlock</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set" x="2" y="2"><field name="VAR">cliente</field><value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value><next><block type="variables_set"><field name="VAR">totalPedido</field><value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value><next><block type="controls_whileUntil"><value name="BOOL"><block type="logic_compare"><field name="OP">LT</field><value name="A"><block type="variables_get"><field name="VAR">totalPedido</field></block></value><value name="B"><block type="math_number"><field name="NUM">7</field></block></value></block></value><statement name="DO"><block type="move_goToBarCounter"><value name="VALUE"><block type="variables_get"><field name="VAR">cliente</field></block></value><next><block type="variables_set"><field name="VAR">cliente</field><value name="VALUE"><block type="math_arithmetic"><field name="OP">ADD</field><value name="A"><block type="math_number"><field name="NUM">1</field></block></value><value name="B"><block type="variables_get"><field name="VAR">cliente</field></block></value></block></value></block></next></block></statement><next><block type="do_talk"><value name="VALUE"><block type="variables_get"><field name="VAR">totalPedido</field></block></value></block></next></block></next></block></next></block>
+	</xml>
+</mission>

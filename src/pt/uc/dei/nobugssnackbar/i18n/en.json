@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-03-21 20:59:51.349000",
+		"lastupdated": "2016-03-22 18:53:02.125000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -210,6 +210,7 @@
 	"Explane.Ordered": "The commands above must accomplish exactly in this order.",
 	"Explane.Wizard": "TODO",
 	"Descr.LogicOperation": "Logic operator",
+	"Descr.WhileUntil": "While",
 	"Single.Counter": "in the counter",
 	"Single.counter": "Counter",
 	"Single.table": "Table",

@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission useIfMutator="false">
+<mission useIfMutator="false" gameVersion="20160323">
 	<explanation hasInstruction="false">
 
 		<page type="goal">
@@ -96,7 +96,7 @@ O objeto &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225;
 
 	</customers>
 	
-	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3">
+	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3" buttonRun="false">
 	
 		<objective pos="2" place="counter">deliver</objective>
 		

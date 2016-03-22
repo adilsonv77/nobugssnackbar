@@ -1,0 +1,193 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false" >
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Pergunte a cada cliente quantos lanches ele deseja. Em seguida, entregue o 
+  pedido completo daquele que mais pediu lanches. &#201; garantido que 
+  n&#227;o existam dois clientes com a mesma maior quantidade.		
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[1] e guarde na vari&#225;vel [cliente]</line>
+		<line>[0] e guarde na vari&#225;vel [maiorQuant]</line>
+		<line>[0] e guarde na vari&#225;vel [maiorCliente]</line>
+		<line>repita enquanto [cliente &lt;= 3] fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="1">Pergunte quantos lanches eles deseja e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">se [pedido] for maior que [maiorQuant] ent&#227;o</line>
+		<line indent="2">[pedido] e guarde na vari&#225;vel [maiorQuant]</line>
+		<line indent="2">[cliente] e guarde na vari&#225;vel [maiorCliente]</line>
+		<line indent="1">Some [1] com [cliente] e guarde na vari&#225;vel [cliente]</line>
+		
+		<line>V&#225; at&#233; o cliente [maiorCliente]</line>
+		<line>repita enquanto [tem fome for verdadeiro] fa&#231;a</line>
+		<line indent="1">Pergunte o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue o cachorro [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; o cliente [maiorCliente]</line>
+		<line indent="1">Entregue [pedido]</line>
+	
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="askHasHunger" show="true" />
+		
+		
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		<category name="whileUntil" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<menu hotdog="2"/>
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="totalDelivered1">2</var>
+			<var name="totalDelivered2">0</var>
+			<var name="totalDelivered3">0</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">0</var>
+			<var name="totalDelivered2">3</var>
+			<var name="totalDelivered3">0</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">0</var>
+			<var name="totalDelivered2">0</var>
+			<var name="totalDelivered3">3</var>
+		</test>
+	</testsvars>
+		
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives xpIndividual="40" xpFinal="20" xpTotalRun="3" commQtd="25" varQtd="4" maxCommands="17" maxCommandsRewardCoins="3">
+		<objective condition="CustomerManager.totalOfFoodDeliveredCustomer(1) == Game.readVariableTest('totalDelivered1') &amp;&amp; CustomerManager.totalOfFoodDeliveredCustomer(2) == Game.readVariableTest('totalDelivered2') &amp;&amp; CustomerManager.totalOfFoodDeliveredCustomer(3) == Game.readVariableTest('totalDelivered3')" 
+		text="Entregar somente para o cliente que pediu a maior quantidade">conditional</objective>
+
+		<objective block="repita-enquanto" type="controls_whileUntil" times="2">callTimes</objective>
+	</objectives>
+	<xml>
+
+	</xml>
+</mission>

@@ -565,6 +565,20 @@ Blockly.JavaScript['const_softDrink'] = function(block) {
 	return ['\"\\\"$$$coke\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['const_coffee'] = {
+		  init: function() {
+		    this.setColour(50);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('coffee');
+		    
+		  }
+		};
+
+Blockly.JavaScript['const_coffee'] = function(block) {
+	return ['\"\\\"$$$coffee\\\"\"', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 Blockly.Blocks['const_hotdog'] = {
 		  init: function() {
 		    this.setColour(50);

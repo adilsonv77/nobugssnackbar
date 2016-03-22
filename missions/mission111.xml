@@ -1,0 +1,141 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" gameVersion="20160323">
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+Entregue o pedido do cliente.
+   Ele pode ter sede de um ou mais refrigerantes, sucos ou caf&#233;s.<br/><br/>
+&#201; um pequeno enunciado para usares todos os comandos de atendimento de bebidas.
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>V&#225; at&#233; o cliente [2]</line>
+		<line>[0] e guarde na vari&#225;vel [totalCafe]</line>
+		<line>repita enquanto [tem sede for verdadeiro] fa&#231;a</line>
+		<line indent="1">Pergunte o que deseja beber e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">se [pedido] for igual a [softDrink] ent&#227;o</line>
+		<line indent="2">V&#225; at&#233; a geladeira</line>
+		<line indent="2">Pegue a bebida [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">sen&#227;o</line> 
+		<line indent="2">se [pedido] for igual a [juiceOfOrange] ent&#227;o</line>
+		<line indent="3">V&#225; at&#233; a caixa de frutas</line>
+		<line indent="3">Pegue a fruta [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">V&#225; at&#233; a m&#225;quina de sucos</line>
+		<line indent="3">Prepare e pegue o suco [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">sen&#227;o</line> 
+		<line indent="3">V&#225; at&#233; a m&#225;quina de caf&#233;</line>
+		<line indent="3">se [totalCafe] for igual a [0] ent&#227;o</line>
+		<line indent="4">Prepare o caf&#233;</line>
+		<line indent="4">[1] e guarde na vari&#225;vel [totalCafe]</line>
+		<line indent="3">sen&#227;o</line> 
+		<line indent="4">[0] e guarde na vari&#225;vel [totalCafe]</line>
+		<line indent="3">Pegue o caf&#233; [pedido] e guarde na vari&#225;vel [pedido]</line> 
+		<line indent="1">V&#225; at&#233; o cliente [2]</line>
+		<line indent="1">Entregue [pedido]</line>
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askHasThirsty" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="pickUpFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+		<category name="prepareAndPickUpJuice" show="true" />
+
+		<category name="coffee" show="true" />
+
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.juiceOfOrange" show="true" />
+		<category name="const.softDrink" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	
+	<tests>5</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" commQtd="30" maxCommands="20" maxCommandsRewardCoins="4" >
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

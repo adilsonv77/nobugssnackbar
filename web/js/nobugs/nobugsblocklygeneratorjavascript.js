@@ -3,6 +3,7 @@ var NoBugsJavaScript = {};
 
 NoBugsJavaScript.oldVarSet = null;
 NoBugsJavaScript.oldLogicCompare = null;
+NoBugsJavaScript.oldWhileUntil = null;
 NoBugsJavaScript.varName= null;
 
 NoBugsJavaScript.oldMathArith = null;
@@ -32,6 +33,13 @@ NoBugsJavaScript.redefine = function() {
     	
     	NoBugsJavaScript.oldLogicCompare = Blockly.JavaScript['logic_compare'];
     	Blockly.JavaScript['logic_compare'] = NoBugsJavaScript.newLogicCompare;
+        
+    }
+    
+    if (NoBugsJavaScript.oldWhileUntil == null) {
+    	
+    	NoBugsJavaScript.oldWhileUntil = Blockly.JavaScript['controls_whileUntil'];
+    	Blockly.JavaScript['controls_whileUntil'] = NoBugsJavaScript.newWhileUntil;
         
     }
     
@@ -200,6 +208,25 @@ NoBugsJavaScript.newLogicOperation = function(block) {
 	
 };
 
+function nobugsVerifyWhile() {
+	
+	if (hero !== null && hero !== undefined)
+		hero.verifyObjectives("useBlock", {type:"controls_whileUntil"});
+	
+	return true;
+	
+}
+
+NoBugsJavaScript.newWhileUntil = function(block) {
+	
+	var r = NoBugsJavaScript.oldWhileUntil(block);
+	
+	r = r.substr(0, 7) + "nobugsVerifyWhile() &&"+ r.substr(7);
+	
+	return r;
+	
+};
+
 NoBugsJavaScript.arrayCreate = function(size) {
 	
 	size = size.data;
@@ -213,7 +240,7 @@ NoBugsJavaScript.arrayCreate = function(size) {
 		BlocklyApps.log.push(["fail", "Error_parameterMustBeGreaterThanZero"]);
 		throw false;
 	}
-	var r = new Array(size)
+	var r = new Array(size);
 	for (var k=0; k<r.length; k++)
 		r[k] = 0;
 	

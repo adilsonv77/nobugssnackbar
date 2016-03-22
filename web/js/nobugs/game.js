@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160321;
+Game.version = 20160323;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -2907,7 +2907,9 @@ Game.verifyVictory = function() {
     			msg = msg.substring(0, msg.indexOf("<br/>"));
     		}
     		
-    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2+ "<br/>"));
+    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2));
+    		if (reward.totalXP > 0)
+    			out = out + "<br/>";
     		
     		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
     			
@@ -3127,7 +3129,14 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'verifyLogicOperation',
           interpreter.createNativeFunction(wrapper));
 
-   wrapper = function(f, t) {
+	wrapper = function(a0, a1, op) {
+        return interpreter.createPrimitive(nobugsVerifyWhile());
+      };
+    
+    interpreter.setProperty(scope, 'nobugsVerifyWhile',
+          interpreter.createNativeFunction(wrapper));
+    
+     wrapper = function(f, t) {
         return interpreter.createPrimitive(Game.setTimeout(f.data, t.data));
       };
       
