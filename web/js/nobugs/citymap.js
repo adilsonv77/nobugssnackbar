@@ -1,6 +1,7 @@
 PreloadImgs.put('bus', 'images/bus.png');
 
 PreloadImgs.put('city_map1', 'images/city_map.png');
+PreloadImgs.put('managedSnackBar', 'images/city_map-buildings.png');
 
 PreloadImgs.put('busback', 'images/bus_back.png');
 PreloadImgs.put('middleBuildings', 'images/middleBuildings.png');
@@ -110,6 +111,8 @@ CityMap.init = function(options) {
 	
 	CityMap.middleBuildings = PreloadImgs.get("middleBuildings");
 	
+	CityMap.managedSnackBar = PreloadImgs.get("managedSnackBar");
+	
 	CityMap.signs = PreloadImgs.get( "signs");
 	
 	CityMap.school_hoover = PreloadImgs.get( "blinkSchool");
@@ -189,6 +192,7 @@ CityMap.animateMap = function() {
 	CityMap.canvasCtx.drawImage((CityMap.signs), 0, 0, 400, 300);
 	CityMap.canvasCtx.drawImage((CityMap.middleBuildings), 0, 0, 400, 300);
 	CityMap.canvasCtx.drawImage((CityMap.trees), 0, 0, 400, 300);
+	CityMap.canvasCtx.drawImage((CityMap.managedSnackBar), 0, 0, 400, 300);
 	
 	CityMap.canvasCtx.drawImage((CityMap.blinkSchool?CityMap.school_hoover:CityMap.school), 0, 0, 400, 300);
 
@@ -196,7 +200,15 @@ CityMap.animateMap = function() {
 };
 
 CityMap.animateBus = function() {
-   if (!CityMap.flagBusDir) {
+	
+	  CityMap.bus.img.draw(CityMap.canvasCtx);	
+	  CityMap.bus.img.update();
+	  CityMap.bus.img.x -= 1.00 + Math.cos(60 * Math.PI/180);
+	  CityMap.bus.img.y += Math.sin(60 * Math.PI/180);
+	  CityMap.busBack.img.x = 400;
+	  CityMap.busBack.img.y = 212;	  
+
+	  /*  if (!CityMap.flagBusDir) {
 	   
 	  CityMap.bus.img.draw(CityMap.canvasCtx);	
 	  CityMap.bus.img.update();
@@ -219,6 +231,7 @@ CityMap.animateBus = function() {
    	 CityMap.busBack.img.y -= Math.sin(60 * Math.PI/180);	  
    	 
    }
+   */
 };
 
 CityMap.animateCarRed = function() {

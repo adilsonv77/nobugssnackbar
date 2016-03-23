@@ -453,7 +453,9 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, c.xptohat, c.xptoclothes, classlevelopen, c.xptospecialskin, c.xptoadd, liberacaodt, classlevelidprerequisite "
+			String s = "select c.classname, classlevelname, qtasmissoes, qtasresolvidas, c.classid, cm.classlevelid, "
+								+ "c.xptohat, c.xptoclothes, classlevelopen, c.xptospecialskin, c.xptoadd, "
+								+ "liberacaodt, classlevelidprerequisite, c.coinstoextra "
 					+ " from classeslevels cl join classes c on (cl.classid = c.classid) join ("
 					+ " select classid, classlevelid, count(*) qtasmissoes from classesmissions where find_in_set (classid, ?) group by classid, classlevelid) cm "
 					+ " on cl.classid = cm.classid and cl.classlevelorder = cm.classlevelid  left outer join ("
@@ -476,7 +478,7 @@ public class GameJdbcDao implements GameDao {
 			List<Object[]> l = new ArrayList<>();
 			rs = ps.executeQuery();
 			
-			int xpToHat = 0, xpToClothes = 0, xpToSpecialSkin = 0, xpToAdd = 0;
+			int xpToHat = 0, xpToClothes = 0, xpToSpecialSkin = 0, xpToAdd = 0, coinsToExtra = 0;
 			
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
@@ -491,6 +493,7 @@ public class GameJdbcDao implements GameDao {
 				xpToClothes = rs.getInt(8);
 				xpToSpecialSkin = rs.getInt(10);
 				xpToAdd = rs.getInt(11);
+				coinsToExtra = rs.getInt(14);
 				
 				if (rs.getString(9).equals("T")) { // open level
 					li[7] = new ArrayList<Integer>();
@@ -558,6 +561,7 @@ public class GameJdbcDao implements GameDao {
 			res.put("xpToClothes", xpToClothes);
 			res.put("xpToSpecialSkin", xpToSpecialSkin);
 			res.put("xpToAdd", xpToAdd);
+			res.put("coinsToExtra", coinsToExtra);
 
 		} finally {
 			if (bdCon != null)
@@ -1335,10 +1339,16 @@ public class GameJdbcDao implements GameDao {
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 			lret = new ArrayList<Object[]>();
+			
+			boolean foundExtra = false;
+			String skinColor = "#F39C7A";
+			
 			while (rs.next()) {
 				Object[] l = new Object[4];
 				l[0] = rs.getString("avatarparttype");
 				l[1] = rs.getString("avatarpartvalue");
+				
+				foundExtra = foundExtra || l[0].equals("extra");
 				
 				String colors = rs.getString("avatarpartcolor");
 				if (colors.indexOf("-") > -1) {
@@ -1347,6 +1357,8 @@ public class GameJdbcDao implements GameDao {
 				} else
 					l[2] = "#" + colors;
 					
+				if (l[0].equals("skin"))
+					skinColor = (String)l[2];
 					
 				lret.add(l);
 			}
@@ -1364,6 +1376,9 @@ public class GameJdbcDao implements GameDao {
 				lret.add(new Object[]{"mouth", ""});
 				lret.add(new Object[]{"add", "", "#000000"});
 			}
+			
+			if (!foundExtra)
+				lret.add(new Object[]{"extra", "", skinColor});
 			
 		} finally {
 			if (bdCon != null)

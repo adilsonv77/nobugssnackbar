@@ -159,7 +159,7 @@ Game.init = function() {
     	
 		if (ret[0]) {
 			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12]);
+			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12], ret[13]);
 			
 		} else {
 			window.removeEventListener('beforeunload', Game.unload);
@@ -226,7 +226,7 @@ Game.login = function() {
 	  			
 	  			error.innerHTML = "";
 	  			
-  				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8]);
+  				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9]);
 	  			
 	  				  			
 	  		} else {
@@ -236,7 +236,9 @@ Game.login = function() {
     );
 };
 
-Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, xpToHat, xpToClothes, xpToSpecialSkin, xpToAdd, clazzId, levelId, missionIdx, missionView) {
+Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, 
+									avatar, xpToHat, xpToClothes, xpToSpecialSkin, xpToAdd, coinsToExtra, 
+									clazzId, levelId, missionIdx, missionView) {
 	/*
 	 * missionsHistorical [...][n], where n are 
 	 *   0 - class name
@@ -263,7 +265,7 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard, avatar, 
 	 */
 	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes),
-					     xpToSpecialSkin:parseInt(xpToSpecialSkin), xpToAdd:parseInt(xpToAdd) };
+					     xpToSpecialSkin:parseInt(xpToSpecialSkin), xpToAdd:parseInt(xpToAdd), coinsToExtra:parseInt(coinsToExtra) };
 	
 	AvatarImgMaker.configGender(Game.loginData.userLogged.sex);
 	
@@ -494,7 +496,8 @@ Game.drawMiniAvatar = function() {
 
 Game.openAvatarEditor = function(event, fAfterClose) {
 	
-	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", hat = "", hatColor = "", add = "", addColor = "";
+	var clothes = "", coatColor = "", scarfColor = "", eyes = "", skin = "", 
+	     hat = "", hatColor = "", add = "", addColor = "", extra = "";
 	
 	Game.loginData.avatar.forEach(function(entry) {
 		
@@ -520,21 +523,27 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 				break;
 			case "mouth":
 				break;
-			
+			case "extra":
+				extra = entry[1];
+				break;
+				
 			default:
 				eyes = entry[2];
 		}
 	});
 	
 	var myXp = parseInt(document.getElementById("yourXP").innerHTML);
+	var myCoins = parseInt(document.getElementById("yourCash").innerHTML);
 	
 	var sHat = (myXp < Game.loginData.xpToHat? "blocked:"+Game.loginData.xpToHat+":" : "") + hat;
 	var sClothes = (myXp < Game.loginData.xpToClothes? "blocked:"+Game.loginData.xpToClothes+":" : "") + clothes;
 	var sSkin = (myXp < Game.loginData.xpToSpecialSkin? "blocked:"+Game.loginData.xpToSpecialSkin+":" : "") + skin; 
 	
 	var sAdd = (myXp < Game.loginData.xpToAdd ? "blocked:"+Game.loginData.xpToAdd+":" : "") + add;
+	
+	var sExtra = (myCoins < Game.loginData.coinsToExtra ? "blocked:"+Game.loginData.coinsToExtra+":" : "") + extra;
 
-	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, fAfterClose);
+	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, sExtra, fAfterClose);
 };
 
 Game.openProfileEditor = function() {

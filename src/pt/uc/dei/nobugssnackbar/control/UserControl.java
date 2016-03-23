@@ -94,6 +94,7 @@ public class UserControl {
 	private boolean achievedMission;
 	private int xpToSpecialSkin;
 	private int xpToAdd;
+	private int coinsToExtra;
 
 	public User getUser() {
 		return user;
@@ -111,6 +112,7 @@ public class UserControl {
 			this.xpToClothes = 0;
 			this.xpToSpecialSkin = 0;
 			this.xpToAdd = 0;
+			this.coinsToExtra = 0;
 			
 		}
 		else {
@@ -122,11 +124,13 @@ public class UserControl {
 			this.xpToClothes = (int) m.get("xpToClothes");
 			this.xpToSpecialSkin = (int) m.get("xpToSpecialSkin");
 			this.xpToAdd = (int) m.get("xpToAdd");
+			this.coinsToExtra = (int) m.get("coinsToExtra");
 			
 		}
 		return new Object[] { user != null, this.user, this.missions,
 				(user == null ? null : retrieveLeaderBoard()), this.avatar, 
 				this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd,
+				this.coinsToExtra,
 				this.classid, this.levelid, this.missionidx, this.achievedMission,
 				 };
 	}
@@ -161,6 +165,7 @@ public class UserControl {
 			this.xpToClothes = (int) m.get("xpToClothes");
 			this.xpToSpecialSkin = (int) m.get("xpToSpecialSkin");
 			this.xpToAdd = (int) m.get("xpToAdd");
+			this.coinsToExtra = (int) m.get("coinsToExtra");
 
 			this.avatar = retrieveAvatarParts();
 
@@ -169,7 +174,7 @@ public class UserControl {
 			ctx.getSession().setAttribute("userid", this.user.getId());
 			
 			return new Object[] { null, this.user, this.missions, 
-					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd }; // no errors
+					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd, this.coinsToExtra }; // no errors
 
 		} catch (Exception e) {
 			e.printStackTrace();

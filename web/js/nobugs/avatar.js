@@ -259,6 +259,29 @@ PreloadImgs.put("3#0.mini-platter", "images/platter-r0.png", false);
 PreloadImgs.put("3#1.mini-platter", "images/platter-r0.png", false);
 PreloadImgs.put("3#2.mini-platter", "images/platter-r0.png", false);
 
+/* ******************************************************************** */
+/*                                Extras                               */
+/* ******************************************************************** */
+
+PreloadImgs.put("extra-1", "images/cooker-extra-1.png", false);
+PreloadImgs.put("extra-1-hand", "images/cooker-extra-1-hand.png", false);
+PreloadImgs.put("extra-1-back", "images/cooker-extra-1-back.png", false);
+
+//PreloadImgs.put("extra-2", "images/cooker-extra-2.png", false);
+
+PreloadImgs.put("extra-3", "images/cooker-extra-3.png", false);
+PreloadImgs.put("extra-3-hand", "images/cooker-extra-3-hand.png", false);
+PreloadImgs.put("extra-3-back", "images/cooker-extra-3-back.png", false);
+
+PreloadImgs.put("mini-extra-1", "images/mini-cooker-extra-1.png", false);
+PreloadImgs.put("mini-extra-1-hand", "images/mini-cooker-extra-1-hand.png", false);
+PreloadImgs.put("mini-extra-1-back", "images/mini-cooker-extra-1-back.png", false);
+
+//PreloadImgs.put("mini-extra-2", "images/mini-cooker-extra-2.png", false);
+PreloadImgs.put("mini-extra-3", "images/mini-cooker-extra-3.png", false);
+PreloadImgs.put("mini-extra-3-hand", "images/mini-cooker-extra-3-hand.png", false);
+PreloadImgs.put("mini-extra-3-back", "images/mini-cooker-extra-3-back.png", false);
+
 var AvatarEditor = {};
 var AvatarImgMaker = {};
 var ae_Width = 288, ae_Height = 401, ae_TopHead = 118;
@@ -384,6 +407,18 @@ CreateItems.platter = function(id) {
 	
 };
 
+CreateItems.extra = function (prefix, id, colorBody) {
+
+	var r = {id: id, img: (id === ""?id:PreloadImgs.get(prefix + id)), x: 0, y: 0, width: ae_Width, height: ae_Height,
+		baseColor: {r:255, g: 255, b: 0}, color: colorBody};
+
+	r.extraImg = (id === ""?id:PreloadImgs.get(prefix + id+"-hand" )); 
+	r.imgBack = (id === ""?id:PreloadImgs.get(prefix + id+"-back" ));
+		
+	return r;
+
+};
+
 /****************************************************************************************/
 /**                                  Avatar Img Maker                                  **/             
 /****************************************************************************************/
@@ -413,6 +448,7 @@ AvatarImgMaker.init = function() {
 	AvatarImgMaker.keys.push("mouth");
 	AvatarImgMaker.keys.push("add");
 	AvatarImgMaker.keys.push("hat");
+	AvatarImgMaker.keys.push("extra");
 
 };
 
@@ -642,6 +678,11 @@ AvatarImgMaker.createItems = function(config, prefix) {
 			case "hat":
 				e = CreateItems[entry[0]](prefix, entry[1], hexToRgb(entry[2]));
 				break;
+				
+			case "extra":
+				e = CreateItems.extra(prefix, entry[1], AvatarImgMaker.items["body"].color);
+				break;
+				
 			default:
 				e = CreateItems[entry[0]](prefix + entry[1], hexToRgb(entry[2]));
 		}
@@ -667,6 +708,8 @@ AvatarImgMaker._draw = function(canvasDest, x, y, w, h, p, keys, items) {
 		var eh = h; //(entry.height/p) + 1;
 		
 		var eimg = entry.img;
+		if (entry.extraImg !== undefined)
+			eimg = entry.extraImg;
 		
 		if (eimg.currentSrc === "")
 			return;
@@ -823,6 +866,8 @@ AvatarEditor.init = function() {
 			$('#cpCoat').trigger("change.color", [null, AvatarEditor.coatColor]);
 	});
 
+	AvatarEditor.drawTab("#tab-extras");
+	
 	BlocklyApps.bindClick('avatarEditorOK', AvatarEditor.okClick);
     BlocklyApps.bindClick('avatarEditorCancel', AvatarEditor.cancelClick);
 
@@ -859,6 +904,7 @@ AvatarEditor.okClick = function() {
 	avatar[3] = ["clothes", AvatarEditor.clothes, rgbToHex(AvatarEditor.coatColor), rgbToHex(AvatarEditor.scarfColor)]; 
 	avatar[4] = ["mouth", ""];
 	avatar[5] = ["add", AvatarEditor.add, rgbToHex(AvatarEditor.addColor)];
+	avatar[6] = ["extra", AvatarEditor.extra];
 	
 	AvatarEditor.cancelClick();
 	
@@ -867,7 +913,7 @@ AvatarEditor.okClick = function() {
 	UserControl.saveAvatar(document.getElementById("avatarPlayer").toDataURL(), Game.loginData.avatar, Game.createsLeaderboard);
 };
 
-AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor, add, addColor, afterCloseFunc) {
+AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, hatColor, add, addColor, extra, afterCloseFunc) {
 	
 	$("#cpAdd-F").css("display", "none");
 	$("#cpAdd-M").css("display", "none");
@@ -910,10 +956,18 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 		pointsAdd = add.split(":")[1];
 		add = add.split(":")[2];
 	}
+	
+	var pointsExtra = "";
+	if (extra.indexOf("blocked") == 0) {
+		pointsExtra = extra.split(":")[1];
+		extra = extra.split(":")[2];
+	}
+	
 
 	AvatarEditor.clothes = clothes;
 	AvatarEditor.hat = hat;
 	AvatarEditor.add = add;
+	AvatarEditor.extra = extra;
 	
 	/* initialize the main appearance of the cooker */
 	AvatarEditor.keys.push("body");
@@ -937,6 +991,8 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 	AvatarEditor.changeColor(AvatarEditor.hatColor, '#tab-hats',{r: 255, g: 255, b: 255} );
 	AvatarEditor.selectHat(hat);
 	
+	AvatarEditor.selectextra(extra);
+	
 	$('#avatar-tabs').bind('easytabs:after', function(evt, clicked, targetPanel) {
        
        $( targetPanel.selector ).trigger( "click" );
@@ -954,16 +1010,19 @@ AvatarEditor.show = function(clothes, cloatColor, scarfColor, skin, eyes, hat, h
 
 	// here is better because all the components have their size (height and width)
 	if (pointsHat !== "")
-		AvatarEditor.blockElement(pointsHat, "notab-hats", "420px", "435px", "-7px", true );
+		AvatarEditor.blockElement(pointsHat, "notab-hats", "420px", "435px", "-7px", true, "xp" );
 	
 	if (pointsClothes !== "")
-		AvatarEditor.blockElement(pointsClothes, "notab-clothes", "420px", "435px", "-7px", true);
+		AvatarEditor.blockElement(pointsClothes, "notab-clothes", "420px", "435px", "-7px", true, "xp" );
 	
 	if (pointsSkin !== "")
-		AvatarEditor.blockElement(pointsSkin, "skinSpecial", "50px", "210px", "-15px", false);
+		AvatarEditor.blockElement(pointsSkin, "skinSpecial", "50px", "210px", "-15px", false, "xp" );
 	
 	if (pointsAdd !== "") 
-		AvatarEditor.blockElement(pointsAdd, "notab-adds", "300px", "435px", "-7px", true);
+		AvatarEditor.blockElement(pointsAdd, "notab-adds", "300px", "435px", "-7px", true, "xp" );
+	
+	if (pointsExtra !== "") 
+		AvatarEditor.blockElement(pointsExtra, "notab-extras", "300px", "435px", "-7px", true, "coins" );	
 	
 	$("#tab-body").click(); // configure the correct color for the mustache/hair
 };
@@ -981,27 +1040,33 @@ AvatarEditor.createBlock = function(id, h, w, mt) {
 };
 
 
-AvatarEditor.createWarn = function(points, id, completeInfo) {
+AvatarEditor.createWarn = function(points, id, completeInfo, type) {
 	
 	var table = $("<table width='100%' height='100%'>").append($("<tr>").append($("<td align='center' id='avatar_info_"+id+"'>")));
 	$("#block"+id).append(table);
 
-	$("#avatar_info_" + id).append($("<span>").html((completeInfo?BlocklyApps.getMsg("Avatar_EnableByXp"):"") + points + "<img style='vertical-align: middle;' src='images/xp.png'/>")
+	var typeId = "";
+	if (type === "xp")
+		typeId = "<img style='vertical-align: middle;' src='images/xp.png'/>";
+	else
+		typeId = "<img style='vertical-align: middle;' src='images/coin2.png'/>";
+	
+	$("#avatar_info_" + id).append($("<span>").html((completeInfo?BlocklyApps.getMsg("Avatar_EnableByXp"):"") + points + typeId)
 										.addClass("nobugs_font"));
 	
 };
 
-AvatarEditor.blockTab = function(points, id) {
+AvatarEditor.blockTab = function(points, id, type) {
 	
 	AvatarEditor.createBlock(id, "450px", "272px",  "-7px").prependTo("#tab-"+id);
 	
-	AvatarEditor.createWarn(points, id, true);
+	AvatarEditor.createWarn(points, id, true, type);
 };
 
 
-AvatarEditor.blockElement = function(points, id, h, w, mt, completInfo) {
+AvatarEditor.blockElement = function(points, id, h, w, mt, completInfo, type) {
 	AvatarEditor.createBlock(id, h, w, mt).prependTo("#" + id);
-	AvatarEditor.createWarn(points, id, completInfo);
+	AvatarEditor.createWarn(points, id, completInfo, type);
 };
 
 AvatarEditor.removeColorLines = function(divId) {
@@ -1095,6 +1160,21 @@ AvatarEditor.selectAdd = function(id) {
 	
 };
  
+AvatarEditor.selectextra = function(id) {
+	
+	if (id === "")
+		return;
+	
+	if (AvatarEditor.keys.indexOf("extra") == -1) {
+		AvatarEditor.keys.push("extra");
+	}
+	
+	AvatarEditor.extra = id;
+	AvatarEditor.items["extra"] = CreateItems.extra("", id, AvatarEditor.skinColor);
+	AvatarEditor.miniItems["extra"] = CreateItems.extra("mini-", id, AvatarEditor.skinColor);
+		
+};
+
 
 AvatarEditor.selectSkin = function(color) {
 
@@ -1106,8 +1186,14 @@ AvatarEditor.selectSkin = function(color) {
 	AvatarEditor.miniItems["head"] = CreateItems.head("mini-head", AvatarEditor.skinColor);
 	AvatarEditor.miniItems["body"] = CreateItems.body("mini-body", AvatarEditor.skinColor);
 
-};
+	if (AvatarEditor.extra !== undefined) {
+		
+		AvatarEditor.items["extra"] = CreateItems.extra("", AvatarEditor.extra, AvatarEditor.skinColor);
+		AvatarEditor.miniItems["extra"] = CreateItems.extra("mini-", AvatarEditor.extra, AvatarEditor.skinColor);
 
+	}
+
+};
 
 AvatarEditor.drawTab = function(id, clearPreviousImg, id2, filter, findColor, newColor) {
 
@@ -1119,6 +1205,7 @@ AvatarEditor.drawTab = function(id, clearPreviousImg, id2, filter, findColor, ne
    
 	   var ctx = canvases[i].getContext('2d');
 	   var imgTop = canvases[i].getAttribute("imgTop");
+	   var imgLeft = canvases[i].getAttribute("imgLeft");
 	   var imgHeight = canvases[i].getAttribute("imgHeight");
 	   var imgWidth = canvases[i].getAttribute("imgWidth");
 
@@ -1128,7 +1215,7 @@ AvatarEditor.drawTab = function(id, clearPreviousImg, id2, filter, findColor, ne
 	   AvatarEditor.canvasTemp2.height = canvases[i].height;
 	   AvatarEditor.canvasTemp2Ctx.clearRect(0, 0, canvases[i].width, canvases[i].height);
 	   if (imgTop != undefined) 
-		   AvatarEditor.canvasTemp2Ctx.drawImage(img, 0, -parseInt(imgTop));
+		   AvatarEditor.canvasTemp2Ctx.drawImage(img, (imgLeft != undefined?-parseInt(imgLeft):0), -parseInt(imgTop));
 	   else
 		   if (imgHeight != undefined) {
 			   AvatarEditor.canvasTemp2Ctx.drawImage(img, 0, 0, parseInt(imgWidth), parseInt(imgHeight), 0, 0, canvases[i].width, canvases[i].height);
