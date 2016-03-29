@@ -300,6 +300,16 @@ Blockly.Blocks['logic_compare'].init = function() {
 	
 };
 
+Blockly.Blocks['controls_for'].oldControlsForInit = Blockly.Blocks['controls_for'].init;
+Blockly.Blocks['controls_for'].init = function() {
+	
+
+	this.oldControlsForInit();
+	// I can't do this... if 
+	//	initBasedOnMissionConfig(this, 0);
+    
+};
+
 /* 
  * I changed the default behaviour because always is an increment.
  */

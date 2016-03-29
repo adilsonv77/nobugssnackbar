@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160323;
+Game.version = 20160328;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
