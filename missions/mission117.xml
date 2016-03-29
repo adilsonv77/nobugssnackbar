@@ -1,0 +1,184 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+		Os clientes podem querer cachorros e/ou sorvetes: vais acabar com a fome deles entregando ambos os tipos de produtos.<br/><br/>
+		Como <imghex id="m3_1">89504E470D0A1A0A0000000D49484452000000700000001F0802000000B020DE93000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA8640000037A494441546843ED98C16B134114C6FDF7F4D08B974A452F82E0255605098828A495C4D8520BB504A234B5B6415B434B893475B5141642030DA464A14B43082CC4846D17B2340C0D8C6F6637C9669BD9249BC18BF3F82EFB75F6F9F6D737F3A6DEC022B88600CA3906007DF3F36BF4F77721969EED7CB449B563005078676A2D2AE4A19BA1C7362C1A02E8B81240394B00E52C0194B398401F24DF83225F3ED9CF3404D081EA0F746E6B0D6E00D68A7B6B73D1F03C980B4BCB5C8116348CB5339729159155424F9855A9779987C6CFC052DF82DDEA0F74762FF968F38373DDC3E4A2F391879840C7FBF8F133B03406D0994CF2FEFA9C6B296FFD4F40DFFEDA72AD1B52C16355435756128C9B17F57C98F8B17859375B2ED3519F942F238C1A6A3CE58963774F369AF68646FAD1F10AF5214FB35CD5A96FC83F7C6460FA81C3BC7A697DCE554DD36ABE8186A54DD7BAA194218C2E3429948A4EA536121503529595E8D4B18670533DD90800715981B26AE58D2ED02E4D48E281239DBF84AFD5D2873148BE5D35E17753CC814FF280BFBE1B0D1EEE84FC6460F8A9ACDAC2C8509677A3814C16D242F804FA22BDEA5AE74729C28E54A0FC8112D54E3BD8A2402B94A6A12C129A2082C31D4681FC285731EDEFB74428A07AD6CAE320387A06964FCAD60FECC2ACD7FF718782A0314FD5E2B9AE359A88EE7152414ACA37E8C669356BF5D27E8EB4AADD593400077540ECFE3AD3C9E7399CEDFA1525D5EE74DB1F3D03C34F549B1855125DDFF50FF517D733949E80B8656AF5927C968D4B8AB382A09C3D806388B60F3ACF05687DC828C4C9C9000D12A3CB46C0913EB75ACF3F503B03C3E7097466CFD79427951972678F9CC0D1D9A78230D93AFA7EB73EEB08B34A67E3F0DCF24301F5B3E58DA34CDB974B17BE815EBF874EAE849D8FFD659D9564F8C4423985E0A415044E895FA44309E6E95103E386127282A0C713A5C0C66173EF3F948602CACCC0F2492A322DE950CAD371EF13E8BBCDCF9DBF94EEAC4626E683B06E72E165E73586BEA5AB863D1290592E17C894244DB4B2AE19ED6B13368D525A82C53D20C8FEC2665EF6C0D173B9413DD7A62181B232B07D2957B44E7F726DAAF8BF3641DC4D4400E5EDA557B7669F4CBC9EB6CCA7DB71D7FB422E3181420047D0F4F473FB59FCE7C810F2027A3D04D0811240394B00E52C0194B346032AA6FC408D0614025E10F2964D8AC660A022460A01947308A05C03E3BF045571A81CDC63580000000049454E44AE426082</imghex>
+		retorna os cachorros e gelados que o cliente quer, voc&#234; deve comparar se o que ele pediu &#233; um cachorro.
+		J&#225; deixei essa compara&#231;&#227;o pronta na &#225;rea de trabalho. <br/><br/>
+		Os clientes podem pedir de 0 a 3 itens para comer, que podem ser cachorros e gelados.<br/><br/>
+		Ter&#225;s que utilizar pelo menos um bloco <span style="color:white; background-color: rgb(91,165,140); padding: 3px">para</span>  e
+		um bloco <span style="color:white; background-color: rgb(91,165,140); padding: 3px">repita-enquanto</span>.
+		]]> 
+		</page>
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	
+	<help>
+		<line>para [i] de 1 at&#233; [3] com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">repita enquanto [tem fome] fa&#231;a</line>
+		<line indent="2">Pergunta o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">se [pedido] for igual a [hotdog] ent&#227;o</line>
+		<line indent="3">V&#225; at&#233; o mostrador</line>
+		<line indent="3">Pegue o cachorro [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">sen&#227;o</line>
+		<line indent="3">V&#225; para a m&#225;quina de sorvetes</line>
+		<line indent="3">Prepare e pegue um sorvete de [pedido] e guarde na vari&#225;vel [pedido] </line>
+		<line indent="2">V&#225; at&#233; o cliente [i]</line>
+		<line indent="2">Entregue [pedido]</line>
+	</help>
+	
+	<commands>
+		
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="askHasHunger" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="icecream" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.hotdog" show="true" />
+		
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		<category name="whileUntil" show="true" />
+	</commands>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="50" xpFinal="10" xpTotalRun="6" commQtd="15" maxCommands="11" maxCommandsRewardCoins="2">
+		<objective pos="1" place="counter">deliver</objective>
+		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
+		<objective block="repita-enquanto" type="controls_whileUntil" times="1">callTimes</objective>
+		<objective block="para" type="controls_for" times="1">callTimes</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set" x="100" y="100">
+			<field name="VAR">pedido</field>
+			<value name="VALUE">
+				<block type="ask_askForFood"></block>
+			</value>
+			<next>
+				<block type="controls_if">
+					<mutation else="1"></mutation>
+					<value name="IF0">
+						<block type="logic_compare">
+							<field name="OP">EQ</field>
+							<value name="A">
+								<block type="variables_get">
+									<field name="VAR">pedido</field>
+								</block>
+							</value>
+							<value name="B">
+								<block type="const_hotdog"></block>
+							</value>
+						</block>
+					</value>
+					<statement name="DO0">
+						<block type="move_goToDisplay">
+							<next>
+								<block type="variables_set">
+									<field name="VAR">pedido</field>
+									<value name="VALUE">
+										<block type="prepare_pickUpHotDog">
+											<value name="VALUE">
+												<block type="variables_get">
+													<field name="VAR">pedido</field>
+												</block>
+											</value>
+										</block>
+									</value>
+								</block>
+							</next>
+						</block>
+					</statement>
+					<statement name="ELSE">
+						<block type="move_goToIceCreamMachine">
+							<next>
+								<block type="variables_set">
+									<field name="VAR">pedido</field>
+									<value name="VALUE">
+										<block type="prepare_pickUpIceCream">
+											<value name="VALUE">
+												<block type="variables_get">
+													<field name="VAR">pedido</field>
+												</block>
+											</value>
+										</block>
+									</value>
+								</block>
+							</next>
+						</block>
+					</statement>
+				</block>
+			</next>
+		</block>
+	</xml>
+	
+</mission>

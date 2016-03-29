@@ -1,0 +1,291 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Em miss&#245;es passadas tivestes que resolver v&#225;rias vezes com blocos 
+  <span style="color:white; background-color: rgb(91,165,140); padding: 3px">para</span> 
+  aninhados, e at&#233; blocos 
+  <span style="color:white; background-color: rgb(91,165,140); padding: 3px">se-ent&#227;o</span> 
+  dentro de blocos <span style="color:white; background-color: rgb(91,165,140); padding: 3px">para</span>. 
+  Blocos podem ser aninhados dentro uns dos outros conforme a necessidade do problema. Ent&#227;o, j&#225; 
+  vimos tr&#234;s tipos de blocos que aceitam outros dentro deles: 
+  <span style="color:white; background-color: rgb(91,165,140); padding: 3px">se-ent&#227;o</span>, 
+  <span style="color:white; background-color: rgb(91,165,140); padding: 3px">para</span> e 
+  <span style="color:white; background-color: rgb(91,165,140); padding: 3px">repita-enquanto</span>. 
+  Tamb&#233;m podemos cham&#225;-los como blocos de controle, pois eles controlam em que situa&#231;&#227;o 
+  outros blocos dentro deles s&#227;o executados.
+		<br/><br/>
+Assim, podes usar blocos de ciclo dentro do condicional, ou blocos de ciclo dentro de blocos de ciclo 
+  (n&#227;o importa se &#233; <span style="color:white; background-color: rgb(91,165,140); padding: 3px">para</span> 
+  ou <span style="color:white; background-color: rgb(91,165,140); padding: 3px">repita-enquanto</span>). 
+  Enfim, use-os aninhados conforme precisa na sua solu&#231;&#227;o.
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+		Nessa miss&#227;o vais atender (entregar o pedido) os tr&#234;s cliente por completo. Por&#233;m, se tiver j&#225; atendido 5 cachorros, termine de 
+		atender o cliente, mas n&#227;o atendas nenhum novo cliente.<br/><br/>
+		Os clientes vem com fome. &#201; garantido que a soma dos cachorros entre os tr&#234;s clientes sempre atingir&#225; no m&#237;nimo 5.<br/><br/>
+		Essa miss&#227;o &#233; daquelas em que precisas corrigir erros. Nessa faltam alguns blocos para completar os objetivos.
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="totalDelivered1">2</var>
+			<var name="totalDelivered2">1</var>
+			<var name="totalDelivered3">2</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">3</var>
+			<var name="totalDelivered2">2</var>
+			<var name="totalDelivered3">0</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">1</var>
+			<var name="totalDelivered2">3</var>
+			<var name="totalDelivered3">2</var>
+		</test>
+	</testsvars>
+		
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="5" xpFinal="5" xpTotalRun="3" missionType="fixBugs" >
+		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
+		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>
+	</objectives>
+	<xml>
+		<block deletable="false" type="variables_set" x="44" y="19">
+			<field name="VAR">cliente</field>
+			<value name="VALUE">
+				<block deletable="false" type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<next>
+				<block deletable="false" type="variables_set">
+					<field name="VAR">totalCachorros</field>
+					<value name="VALUE">
+						<block deletable="false" type="math_number">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block deletable="false" type="controls_whileUntil">
+							<value name="BOOL">
+								<block deletable="false" type="logic_compare">
+									<field name="OP">LT</field>
+									<value name="A">
+										<block deletable="false" type="variables_get">
+											<field name="VAR">totalCachorros</field>
+										</block>
+									</value>
+									<value name="B">
+										<block deletable="false" type="math_number">
+											<field name="NUM">5</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO">
+								<block deletable="false" type="move_goToBarCounter">
+									<value name="VALUE">
+										<block deletable="false" type="variables_get">
+											<field name="VAR">cliente</field>
+										</block>
+									</value>
+									<next>
+										<block deletable="false" type="variables_set">
+											<field name="VAR">cachorrosPedidos</field>
+											<value name="VALUE">
+												<block deletable="false" type="ask_askWantHowManyFoods"></block>
+											</value>
+											<next>
+												<block deletable="false" type="controls_for">
+													<field name="VAR">i</field>
+													<value name="FROM">
+														<block deletable="false" type="math_number">
+															<field name="NUM">1</field>
+														</block>
+													</value>
+													<value name="TO">
+														<block deletable="false" type="variables_get">
+															<field name="VAR">cachorrosPedidos</field>
+														</block>
+													</value>
+													<value name="BY">
+														<block deletable="false" type="math_number">
+															<field name="NUM">1</field>
+														</block>
+													</value>
+													<statement name="DO">
+														<block deletable="false" type="variables_set">
+															<field name="VAR">pedido</field>
+															<value name="VALUE">
+																<block deletable="false" type="ask_askForFood"></block>
+															</value>
+															<next>
+																<block deletable="false" type="move_goToDisplay">
+																	<next>
+																		<block deletable="false" type="variables_set">
+																			<field name="VAR">pedido</field>
+																			<value name="VALUE">
+																				<block deletable="false" type="prepare_pickUpHotDog">
+																					<value name="VALUE">
+																						<block deletable="false" type="variables_get">
+																							<field name="VAR">pedido</field>
+																						</block>
+																					</value>
+																				</block>
+																			</value>
+																			<next>
+																				<block deletable="false" type="move_goToBarCounter">
+																					<value name="VALUE">
+																						<block deletable="false" type="variables_get">
+																							<field name="VAR">cliente</field>
+																						</block>
+																					</value>
+																					<next>
+																						<block deletable="false" type="do_deliver">
+																							<value name="VALUE">
+																								<block deletable="false" type="variables_get">
+																									<field name="VAR">pedido</field>
+																								</block>
+																							</value>
+																						</block>
+																					</next>
+																				</block>
+																			</next>
+																		</block>
+																	</next>
+																</block>
+															</next>
+														</block>
+													</statement>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</statement>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>

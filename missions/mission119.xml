@@ -1,0 +1,159 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" open="true" >
+	<explanation hasInstruction="false">
+		
+		<page type="goal">
+		<![CDATA[
+		Os clientes vem SOMENTE com vontade de cachorros. Pare quando tiver alcan&#231;ado a entrega de 8 cachorros. Entretanto,
+		atenda o cliente por completo, ou seja, ele precisa sair satisfeito da esplanada. Depois, n&#227;o atenda
+		mais cliente algum.<br/><br/>
+		Aten&#231;&#227;o: para evitar que fiques focado em atender somente uma das posi&#231;&#245;es, tens que fazer
+		entregas em cada uma das tr&#234;s posi&#231;&#245;es do balc&#227;o. <br/><br/>
+		]]>
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>[1] e guarde na vari&#225;vel [cliente]</line>
+		<line>[0] e guarde na vari&#225;vel [totalCachorros]</line>
+		<line>repita enquanto [totalCachorros for menor que 8] fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="1">se [tem cliente] ent&#227;o</line>
+		<line indent="2">Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+
+		<line indent="2">para [i] de 1 at&#233; [qtosCachorros] com incremento 1 fa&#231;a</line>
+		
+		<line indent="3">Pergunta o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">V&#225; at&#233; o mostrador</line>
+		<line indent="3">Pegue o cachorro [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">V&#225; at&#233; o cliente [cliente]</line>
+		<line indent="3">Entregue [pedido]</line>
+		
+		<line indent="2">Some [totalCachorros] com [qtosCachorros] e guarde na vari&#225;vel [totalCachorros]</line>
+		
+		<line indent="1">Some [cliente] com [1] e guarde na vari&#225;vel [cliente]</line>
+		<line indent="1">se [cliente for igual a 4] ent&#227;o</line>
+		<line indent="2">[1] e guarde na vari&#225;vel [cliente]</line>
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForFood" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+		<category name="isThereACustomer" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_trueFalse" show="true" />
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>door</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>door</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>door</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" commQtd="20">
+		<objective condition="CustomerManager.totalOfFoodDelivered() &gt;= 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
+		          text="Entregar PELO MENOS 8 cachorros no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
+	</objectives>
+	<xml>
+
+	</xml>
+</mission>
