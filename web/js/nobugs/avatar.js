@@ -670,6 +670,7 @@ AvatarImgMaker.createItems = function(config, prefix) {
 				AvatarImgMaker.items["head"] = CreateItems.head(prefix + "head", hexToRgb(entry[2]));
 				e = CreateItems.body(prefix + "body", hexToRgb(entry[2]));
 				entry[0] = "body";
+				
 				break;
 			case "clothes":
 				AvatarImgMaker.items["scarf"] = CreateItems.scarf(prefix, entry[1], hexToRgb(entry[3]));
@@ -680,7 +681,7 @@ AvatarImgMaker.createItems = function(config, prefix) {
 				break;
 				
 			case "extra":
-				e = CreateItems.extra(prefix, entry[1], AvatarImgMaker.items["body"].color);
+				e = CreateItems.extra(prefix, entry[1], hexToRgb(entry[2]));
 				break;
 				
 			default:
@@ -904,7 +905,7 @@ AvatarEditor.okClick = function() {
 	avatar[3] = ["clothes", AvatarEditor.clothes, rgbToHex(AvatarEditor.coatColor), rgbToHex(AvatarEditor.scarfColor)]; 
 	avatar[4] = ["mouth", ""];
 	avatar[5] = ["add", AvatarEditor.add, rgbToHex(AvatarEditor.addColor)];
-	avatar[6] = ["extra", AvatarEditor.extra];
+	avatar[6] = ["extra", AvatarEditor.extra, rgbToHex(AvatarEditor.skinColor)];
 	
 	AvatarEditor.cancelClick();
 	
