@@ -1,5 +1,5 @@
-.levels, .levels_disabled {position: absolute; width: 34px; height: 25px; background-repeat: no-repeat; }
-.levels_explain {position: absolute; background-repeat: no-repeat; display: none}
+.levels, .levels_disabled {z-index: 3; position: absolute; width: 34px; height: 25px; background-repeat: no-repeat; }
+.levels_explain {position: absolute; background-repeat: no-repeat; display: none; z-index: 1}
 .level_dificulty {position: absolute;}
 
 #level_1 {top: 267px; left: 70px }
