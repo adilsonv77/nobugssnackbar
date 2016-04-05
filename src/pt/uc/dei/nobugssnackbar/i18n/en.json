@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-03-28 11:50:33.036000",
+		"lastupdated": "2016-04-04 15:55:54.304000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -160,6 +160,8 @@
 	"Error.stillHaveCoffee": "TODO",
 	"Error.doesntHaveCoffee": "TODO",
 	"Error.onlyPickUpCoffee": "TODO",
+	"Error.rangeErrorDrinkByIndex": "TODO",
+	"Error.noExistsThisDrinkWish": "TODO",
 	"NoBugs.unloadWarning": "Leaving this page will result in the loss of your work.",
 	"NoBugs.goalAchieved": "New Goal Achieved",
 	"NoBugs.achieved": "Achieved",

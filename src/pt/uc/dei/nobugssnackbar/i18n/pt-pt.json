@@ -191,6 +191,9 @@
 	"Error.doesntHaveCoffee" : "N&#227;o existe caf&#233; pronto na m&#225;quina.",
 	"Error.onlyPickUpCoffee" : "Aqui o cozinheiro somente consegue obter caf&#233;.",
 	
+	"Error.rangeErrorDrinkByIndex" : "O par&#226;metro precisa estar entre 1 e 3.",
+	"Error.noExistsThisDrinkWish"  : "N&#227;o existe uma vontade de beber com esse &#237;ndice.",
+	
 	"Single.Counter" : "do balc&#227;o",
 	"Single.counter" : "Balc&#227;o",
 	"Single.table" : "Mesa",

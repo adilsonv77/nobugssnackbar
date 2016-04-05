@@ -625,6 +625,33 @@ SnackMan.prototype.askForDrink = function() {
 	return drink;
 };
 
+SnackMan.prototype.askForDrinkByIndex = function(n) {
+	
+	if (n < 1 || n > 3) {
+		BlocklyApps.log.push(["fail", "Error_rangeErrorDrinkByIndex"]);
+		throw false;
+	}
+	
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var drink = found.askForDrinkByIndex(n);
+	if (drink == null) {
+		BlocklyApps.log.push(["fail", "Error_isntThirsty"]);
+		throw false;
+	}
+	
+	this.update('XX'); // reset any speech bubble
+	
+	this.update('IM', 0);  // turn to front
+	
+	return drink;
+};
+
 SnackMan.prototype.pickUpDrink = function(order) {
 
 	// is he in front of the cooler ?

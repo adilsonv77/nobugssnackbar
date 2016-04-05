@@ -811,6 +811,14 @@
 		  {if $ij.enabled['askWantHowManyDrinks']}<block type="ask_askWantHowManyDrinks"> </block>{/if}
 	      {if $ij.enabled['askHasThirsty']}<block type="ask_askHasThirsty"> </block>{/if}
 	      {if $ij.enabled['askForDrink']}<block type="ask_askForDrink"> </block>{/if}
+	      {if $ij.enabled['askForDrinkByIndex']}
+	      	<block type="ask_askForDrinkByIndex">
+	      		 <value name="VALUE">
+	      		 	<block type="math_number">
+							<field name="NUM">1</field>
+				 	</block>
+	      		 </value> 
+	      	</block>{/if}
 		  {if $ij.enabled['isTypeOfDrink']}<block type="compare_isTypeOfDrink"> </block>{/if}
 	      
 	      {if $ij.enabled['goToCooler']}<block type="move_goToCooler"> </block>{/if}

@@ -479,6 +479,25 @@ Blockly.JavaScript['ask_askForDrink'] = function(block) {
 	return ['askForDrink( )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+Blockly.Blocks['ask_askForDrinkByIndex'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true, "DrinkOrder");
+			 
+			 this.appendValueInput("VALUE")
+		        .setCheck("Number")
+		        .appendField('askForDrinkByIndex');
+			 
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askForDrinkTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askForDrinkByIndex'] = function(block) {
+	 var value = Blockly.JavaScript.valueToCode(block, 'VALUE',
+		      Blockly.JavaScript.ORDER_NONE) || 'null';
+	 return ['askForDrinkByIndex( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 Blockly.Blocks['ask_askHasThirsty'] = {
 		  init: function() {
 		    this.setColour(160);

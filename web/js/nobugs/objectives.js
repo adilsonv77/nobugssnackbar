@@ -73,7 +73,7 @@ Objective.verifyObjectives = function(key, options) {
 					if ((key === "deliver" || key === "giveTheWholeChange" || 
 							key === "giveSomeChange" || key === "conditional" || 
 							key === "customDeliver" || key === "callTimes" || 
-							key === "deliverGifts")
+							key === "deliverGifts" || key === "talk")
 							&& options.allCustomers) {
 						ret = true;
 					} else
@@ -894,21 +894,33 @@ Objective.Talk.prototype.init = function(elem) {
 	p.text = elem.getAttribute("text");
 	p.value = elem.getAttribute("value");
 	p.type = elem.getAttribute("type");
+	p.condition = elem.getAttribute("condition");
 	return p;
 };
 
 Objective.Talk.prototype.checkObjective = function(options, objective)  {
 
+	if (objective.condition != null) {
+		if (!eval(objective.condition)) // if it's not necessary to talk
+			return options.allCustomers;
+	}
+	
 	var value = eval(objective.value);
 	
 	if (objective.type !== null) {
+		if (objective.type === "functionCompare")
+			return value;
+		
 		if (Array.isArray(options.data) && objective.type === "array") {
 			if (value.indexOf("##") > -1) {
 				
 				value = value.split("##");
 				if (value.length !== options.data.length)
 					return false;
+			} else {
+				value = [value];
 			}
+				
 			
 			for (var i = 0; i<options.data.length; i++) {
 				if (JSON.stringify(options.data[i]) !== value[i]+"")

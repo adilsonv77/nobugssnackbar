@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160328;
+Game.version = 20160404;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -2840,6 +2840,7 @@ Game.verifyVictory = function() {
     hero.verifyObjectives("cashIn", {allCustomers:true});
     hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
     hero.verifyObjectives("giveSomeChange", {allCustomers:true});
+    hero.verifyObjectives("talk", {allCustomers:true});
     hero.verifyObjectives("countTalk", {allCustomers:true});
     hero.verifyObjectives("conditional", {allCustomers:true});
     hero.verifyObjectives("callTimes", {allCustomers:true});
@@ -3242,6 +3243,13 @@ Game.initApi = function(interpreter, scope) {
     interpreter.setProperty(scope, 'askForDrink',
       interpreter.createNativeFunction(wrapper));
     
+    wrapper = function(n) {
+	      return interpreter.createPrimitive(hero.askForDrinkByIndex(n));
+	    };
+	    
+  interpreter.setProperty(scope, 'askForDrinkByIndex',
+    interpreter.createNativeFunction(wrapper));
+  
     // about juice
     wrapper = function() {
 	      return interpreter.createPrimitive(hero.goToBoxOfFruits());
@@ -3625,6 +3633,38 @@ Game.readVariableTest = function(variableName) {
 			return vars[i].textContent.trim(); 
 	
 	return null;
+	
+};
+
+Game.compareObjects = function(variableName, objects) {
+	
+	if (objects === undefined)
+		return false;
+	
+	var objVar = Game.readVariableTest(variableName);
+	if (objVar.indexOf("##") > -1) {
+		objVar = objVar.split("##");
+	} else {
+		objVar = [objVar];
+	}
+	
+	for (var j = 0; j < objects.length; j++) {
+		var sobj = JSON.stringify(objects[j]);
+		var found = -1;
+		for (var i = 0; i < objVar.length; i++) {
+			if (objVar[i] === sobj) {
+				found = i;
+				break;
+			}
+		}
+		
+		if (found == -1) {
+			return false;
+		}
+		
+	}
+	
+	return true;
 	
 };
 

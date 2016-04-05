@@ -552,6 +552,26 @@ Customer.prototype.askForDrink = function() {
 	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink", source: this.currentNode.id, sourceType: this.placeType};
 };
 
+Customer.prototype.askForDrinkByIndex = function(n) {
+	if (this.dUnfulfilled >= this.drinks.length)
+		return null;
+	
+	var d = null, count = 1;
+	for (var i=0; i<this.drinks.length; i++)
+		if (!this.drinks[i].delivered) {
+			if (count == n) {
+				d = this.drinks[i];
+				break;
+			}
+			count++;
+		}
+
+	if (d == null)
+		BlocklyApps.log.push(["fail", "Error_noExistsThisDrinkWish"]);
+		
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink", source: this.currentNode.id, sourceType: this.placeType};
+};
+
 Customer.prototype.hasThirsty = function() {
 	return (this.dUnfulfilled < this.drinks.length);
 };
