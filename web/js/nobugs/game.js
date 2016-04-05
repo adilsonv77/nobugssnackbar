@@ -543,7 +543,8 @@ Game.openAvatarEditor = function(event, fAfterClose) {
 	
 	var sExtra = (myCoins < Game.loginData.coinsToExtra ? "blocked:"+Game.loginData.coinsToExtra+":" : "") + extra;
 
-	AvatarEditor.show(sClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, sExtra, fAfterClose);
+	var sSpecialClothes = (myCoins >= 30 && myXp >= 3000 ? "" : "3000;30"); // xp;coins
+	AvatarEditor.show(sClothes, sSpecialClothes , coatColor, scarfColor, sSkin, eyes, sHat, hatColor, sAdd, addColor, sExtra, fAfterClose);
 };
 
 Game.openProfileEditor = function() {
@@ -3647,6 +3648,9 @@ Game.compareObjects = function(variableName, objects) {
 	} else {
 		objVar = [objVar];
 	}
+	
+	if (objects.length != objVar.length)
+		return false;
 	
 	for (var j = 0; j < objects.length; j++) {
 		var sobj = JSON.stringify(objects[j]);
