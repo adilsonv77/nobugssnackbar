@@ -1,0 +1,180 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" gameVersion="20160404">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Cada cliente tem sede de pelo menos uma bebida: refrigerante ou caf&#233;. Anote os
+   pedidos em um <i>array</i> e fale esse <i>array</i>.<br/><br/>
+Em seguida, iterando por esse array, prepare e pegue a bebida conforme o pedido. 
+   Fale esse <i>array</i>.
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>Criar um array de tamanho [3] e guarde em [pedidos]</line>
+
+		<line>para [i] de 1 at&#233; [3] com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">[askForDrink] e guardar no &#237;ndice [i-1] do array [pedidos]</line>
+		<line>Falar [pedidos]</line>
+		
+		<line>[0] e guarde na vari&#225;vel [qtosCafes]</line>
+		<line>para [i] de 0 at&#233; [2] com incremento 1 fa&#231;a</line>
+		<line indent="1">[do array [pedidos] obt&#233;m o elemento no &#237;ndice [i]] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">se [pedido] for igual a [softDrink] ent&#227;o</line>
+		<line indent="2">V&#225; at&#233; a geladeira</line>
+		<line indent="2">Pegue a bebida [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">sen&#227;o</line> 
+		<line indent="2">V&#225; at&#233; a m&#225;quina de caf&#233;</line>
+		<line indent="2">se [qtosCafes] for igual a [0] ent&#227;o</line>
+		<line indent="3">Prepare o caf&#233;</line>
+		<line indent="3">[1] e guarde na vari&#225;vel [qtosCafes]</line>
+		<line indent="2">sen&#227;o</line> 
+		<line indent="3">[0] e guarde na vari&#225;vel [qtosCafes]</line>
+		<line indent="2">Pegue o caf&#233; [pedido] e guarde na vari&#225;vel [pedido]</line> 
+		<line indent="1">[pedido] e guardar no &#237;ndice [i] do array [pedidos]</line>
+		<line>Falar [pedidos]</line>
+	</help>
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askWantHowManyDrinks" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+		<category name="coffee" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="const" show="true" />
+		<category name="const.softDrink" show="true" />
+		<category name="const.coffee" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+		<category name="text" show="true" />
+
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>2</tests>
+	<testsvars>
+		<test>
+			<var name="pedidos">
+			{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coffee","drinkOrFood":"drink","source":"n109","sourceType":"counter"}
+			</var>
+			<var name="pedidosbeb">
+			{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"item","descr":"$$coffee","drinkOrFood":"drink","source":"n109","sourceType":"counter"}
+			</var>
+		</test>
+		
+		<test>
+			<var name="pedidos">
+			{"type":"order","descr":"$$coffee","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coffee","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coffee","drinkOrFood":"drink","source":"n109","sourceType":"counter"}
+			</var>
+			<var name="pedidosbeb">
+			{"type":"item","descr":"$$coffee","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$coffee","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"item","descr":"$$coffee","drinkOrFood":"drink","source":"n109","sourceType":"counter"}
+			</var>
+		</test>
+	</testsvars>
+	<customers>
+
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="15" xpFinal="10" xpTotalRun="9" maxCommands="20" maxCommandsRewardCoins="1">
+
+		<objective text="o array com os pedidos de bebidas" type="array"
+			value="Game.readVariableTest('pedidos')">talk</objective>
+		<objective text="o array com as bebidas" type="array"
+			value="Game.readVariableTest('pedidosbeb')">talk</objective>
+	</objectives>
+
+	<xml>
+	</xml>
+	
+</mission>

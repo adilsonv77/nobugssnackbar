@@ -1,0 +1,148 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation>
+
+		<page type="goal">
+		<![CDATA[
+Cada cliente tem sede de um refrigerante e fome de um cachorro-quente. Anote os
+   pedidos em um <i>array</i> e fale esse <i>array</i>.<br/><br/>
+
+Em seguida, iterando por esse array, prepare e pegue a bebida e tamb&#233;m
+   a comida conforme o pedido. Por fim, fale esse <i>array</i>.
+   
+Para acelerar teu processo, trago a solu&#231;&#227;o da tua &#250;ltima miss&#227;o.
+		]]>
+		</page>
+
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<help>
+		<line>Criar um array de tamanho [6] e guarde em [pedidos]</line>
+
+		<line>para [i] de 1 at&#233; [3] com incremento 1 fa&#231;a</line>
+		<line indent="1">V&#225; at&#233; o cliente [i]</line>
+		<line indent="1">[askForDrink] e guardar no &#237;ndice [(i-1)*2] do array [pedidos]</line>
+		<line indent="1">[askForFood] e guardar no &#237;ndice [((i-1)*2)+1] do array [pedidos]</line>
+		<line>Falar [pedidos]</line>
+		
+		<line>para [i] de 0 at&#233; [5] com incremento 2 fa&#231;a</line>
+		<line indent="1">[do array [pedidos] obt&#233;m o elemento no &#237;ndice [i]] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; a geladeira</line>
+		<line indent="1">Pegue a bebida [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">[pedido] e guardar no &#237;ndice [i] do array [pedidos]</line>
+
+		<line indent="1">[do array [pedidos] obt&#233;m o elemento no &#237;ndice [i+1]] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">V&#225; at&#233; o mostrador</line>
+		<line indent="1">Pegue o cachorro [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="1">[pedido] e guardar no &#237;ndice [i+1] do array [pedidos]</line>
+
+		<line>Falar [pedidos]</line>
+	</help>
+	
+	<commands>
+
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+
+		<category name="askForFood" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="pickUpHotDog" show="true" />
+
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+
+		<category name="vars" show="true" />
+
+		<category name="logic" show="true" />
+		<category name="logic_operation" show="true" />
+		<category name="logic_trueFalse" show="true" />
+
+		<category name="math" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="whileUntil" show="true" />
+		<category name="for" show="true" />
+
+		<category name="text" show="true" />
+
+		<category name="array" show="true" />
+
+	</commands>
+	<cooker>initial</cooker>
+	<tests>1</tests>
+	<testsvars>
+		<test>
+			<var name="pedidos">{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$hotdog","drinkOrFood":"food","source":"n49","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$hotdog","drinkOrFood":"food","source":"n79","sourceType":"counter"}##{"type":"order","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##{"type":"order","descr":"$$hotdog","drinkOrFood":"food","source":"n109","sourceType":"counter"}</var>
+			<var name="pedidosprontos">{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$hotdog","drinkOrFood":"food","source":"n49","sourceType":"counter"}##{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n79","sourceType":"counter"}##{"type":"item","descr":"$$hotdog","drinkOrFood":"food","source":"n79","sourceType":"counter"}##{"type":"item","descr":"$$coke","drinkOrFood":"drink","source":"n109","sourceType":"counter"}##{"type":"item","descr":"$$hotdog","drinkOrFood":"food","source":"n109","sourceType":"counter"}</var>
+		</test>
+	</testsvars>
+	<customers>
+
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" maxCommands="18" maxCommandsRewardCoins="2" >
+		<objective text="o array com os pedidos" type="functionCompare"
+			value="Game.compareObjects('pedidos', options.data)">talk</objective>
+		<objective text="o array com as comidas e bebidas prontas para entregar" type="functionCompare"
+			value="Game.compareObjects('pedidosprontos', options.data)">talk</objective>
+	</objectives>
+
+	<xml preload="68">
+	</xml>
+
+</mission>

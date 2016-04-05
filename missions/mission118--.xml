@@ -1,0 +1,414 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+Em missões de duas fases anteriores praticastes a descoberta dos maiores valores. Mas somente um cliente
+  podia ter o maior valor. Agora mais de um cliente pode ter o maior valor monetário do pedido. <br/><br/>
+  
+Aten&#231;&#227;o: os clientes podem ter pedidos diferentes (quantidades e produtos), entretanto o valor
+	monetário pode ser o mesmo. <br/><br/>
+
+Vais precisar falar o valor monetário do maior pedido, e quantos clientes pediram esse maior valor.<br/><br/>
+
+		]]> 
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+		
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyDrinks" show="true" />
+		<category name="askWantHowManyIceCream" show="true" />
+
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+
+		<category name="logic" show="true" />
+
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		 
+	</commands>
+	<cooker>initial</cooker>
+	<tests>7</tests>
+	<testsvars>
+		<test>
+			<var name="qtosClientes">1</var>
+			<var name="maiorValor">8</var>
+		</test>
+		<test>
+			<var name="qtosClientes">1</var>
+			<var name="maiorValor">6</var>
+		</test>
+		<test>
+			<var name="qtosClientes">1</var>
+			<var name="maiorValor">3</var>
+		</test>
+		<test>
+			<var name="qtosClientes">2</var>
+			<var name="maiorValor">6</var>
+		</test>
+		<test>
+			<var name="qtosClientes">2</var>
+			<var name="maiorValor">4</var>
+		</test>
+		<test>
+			<var name="qtosClientes">2</var>
+			<var name="maiorValor">6</var>
+		</test>
+		<test>
+			<var name="qtosClientes">3</var>
+			<var name="maiorValor">6</var>
+		</test>
+		
+	</testsvars>
+	<menu coke="3" juice="3" hotdog="2" icecream="1"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				
+				<order> <!-- 4 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order> <!-- 5 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order> <!-- 6 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order> <!-- 7 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				
+				<order> <!-- 4 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				
+				<order> <!-- 5 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order> <!-- 6 -->
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order> <!-- 7 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				
+				
+				<order> <!-- 4 -->
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order> <!-- 5 -->
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				
+				<order> <!-- 6 -->
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order> <!-- 7 -->
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="50" xpFinal="10" xpTotalRun="9">
+		<objective text="o valor do maior pedido" value="parseInt(Game.readVariableTest('maiorValor'))">talk</objective>
+		<objective text="a quantidade de clientes que pediram igual ao maior valor" value="parseInt(Game.readVariableTest('qtosClientes'))">talk</objective>
+	</objectives>
+	<xml>
+		<block type="variables_set" x="49" y="30">
+			<field name="VAR">maior</field>
+			<value name="VALUE">
+				<block type="math_number">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<next>
+				<block type="controls_for">
+					<field name="VAR">i</field>
+					<value name="FROM">
+						<block type="math_number">
+							<field name="NUM">1</field>
+						</block>
+					</value>
+					<value name="TO">
+						<block type="math_number">
+							<field name="NUM">3</field>
+						</block>
+					</value>
+					<value name="BY">
+						<block type="math_number">
+							<field name="NUM">1</field>
+						</block>
+					</value>
+					<statement name="DO">
+						<block type="move_goToBarCounter">
+							<value name="VALUE">
+								<block type="variables_get">
+									<field name="VAR">i</field>
+								</block>
+							</value>
+							<next>
+								<block type="variables_set">
+									<field name="VAR">b</field>
+									<value name="VALUE">
+										<block type="math_arithmetic">
+											<field name="OP">MULTIPLY</field>
+											<value name="A">
+												<block type="ask_askWantHowManyDrinks"></block>
+											</value>
+											<value name="B">
+												<block type="math_number">
+													<field name="NUM">3</field>
+												</block>
+											</value>
+										</block>
+									</value>
+									<next>
+										<block type="variables_set">
+											<field name="VAR">s</field>
+											<value name="VALUE">
+												<block type="ask_askWantHowManyIceCream"></block>
+											</value>
+											<next>
+												<block type="variables_set">
+													<field name="VAR">c</field>
+													<value name="VALUE">
+														<block type="math_arithmetic">
+															<field name="OP">MULTIPLY</field>
+															<value name="A">
+																<block type="math_arithmetic">
+																	<field name="OP">MINUS</field>
+																	<value name="A">
+																		<block type="ask_askWantHowManyFoods"></block>
+																	</value>
+																	<value name="B">
+																		<block type="variables_get">
+																			<field name="VAR">s</field>
+																		</block>
+																	</value>
+																</block>
+															</value>
+															<value name="B">
+																<block type="math_number">
+																	<field name="NUM">2</field>
+																</block>
+															</value>
+														</block>
+													</value>
+													<next>
+														<block type="variables_set">
+															<field name="VAR">t</field>
+															<value name="VALUE">
+																<block type="math_arithmetic">
+																	<field name="OP">ADD</field>
+																	<value name="A">
+																		<block type="variables_get">
+																			<field name="VAR">c</field>
+																		</block>
+																	</value>
+																	<value name="B">
+																		<block type="math_arithmetic">
+																			<field name="OP">ADD</field>
+																			<value name="A">
+																				<block type="variables_get">
+																					<field name="VAR">b</field>
+																				</block>
+																			</value>
+																			<value name="B">
+																				<block type="variables_get">
+																					<field name="VAR">s</field>
+																				</block>
+																			</value>
+																		</block>
+																	</value>
+																</block>
+															</value>
+															<next>
+																<block type="controls_if">
+																	<value name="IF0">
+																		<block type="logic_compare">
+																			<field name="OP">GT</field>
+																		</block>
+																	</value>
+																</block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</statement>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>
