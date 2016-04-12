@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160404;
+Game.version = 20160407;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -3665,6 +3665,8 @@ Game.compareObjects = function(variableName, objects) {
 		if (found == -1) {
 			return false;
 		}
+		
+		objVar.splice(found, 1);
 		
 	}
 	

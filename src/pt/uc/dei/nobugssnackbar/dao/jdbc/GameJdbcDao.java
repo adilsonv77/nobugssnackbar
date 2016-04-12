@@ -478,7 +478,7 @@ public class GameJdbcDao implements GameDao {
 			List<Object[]> l = new ArrayList<>();
 			rs = ps.executeQuery();
 			
-			int xpToHat = 0, xpToClothes = 0, xpToSpecialSkin = 0, xpToAdd = 0, coinsToExtra = 0;
+			int xpToHat = 10000, xpToClothes = 10000, xpToSpecialSkin = 10000, xpToAdd = 10000, coinsToExtra = 10000;
 			
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
