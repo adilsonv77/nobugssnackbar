@@ -5,7 +5,7 @@
 		<page type="goal">
 		<![CDATA[
 Pergunte a cada cliente quanto ele deseja comer e no final fale a quantidade total.<br/><br/>
-Essa &#233; mais uma miss&#227;o para corrigir erros. Falta o conjunto de blocos para somar.
+Essa &#233; mais uma miss&#227;o para corrigir erros. <span style="color:red">Falta o conjunto de blocos para somar.</span>
 		]]>
 		</page>
 

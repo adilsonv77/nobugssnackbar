@@ -134,7 +134,7 @@ Aten&#231;&#227;o: No jogo, as divis&#245;es sempre resultam com a parte inteira
 				  value="Math.floor((CustomerManager.customerMoneyGave(1)-CustomerManager.customerMoneyIfSell(1))/3)">talk</objective>
 		
 		<objective pos="3" place="counter">askWantHowManyFoods</objective>
-		<objective text="a quantidade de refrigerantes que consegue fornecer com a troco para o cliente 3" 
+		<objective text="a quantidade de refrigerantes que consegue fornecer com o troco para o cliente 3" 
 				  value="Math.floor((CustomerManager.customerMoneyGave(3)-CustomerManager.customerMoneyIfSell(3))/3)">talk</objective>
 		
 	</objectives>
