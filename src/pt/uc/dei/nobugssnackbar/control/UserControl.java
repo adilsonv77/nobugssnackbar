@@ -136,12 +136,15 @@ public class UserControl {
 	}
 
 	@RemoteMethod
-	public void logoff() throws Exception { // int timeSpend, long execution, String answer)
+	public void logoff() throws Exception { 
 
 		log.info("logoff");
 
 		WebContext ctx = WebContextFactory.get();
+		LoginAdmin.logoff(ctx.getServletContext(), this.user.getId());
 		ctx.getSession().removeAttribute("userid");
+		
+		ctx.getSession().invalidate();
 		
 		this.user = null;
 		this.classid = 0;
@@ -171,14 +174,20 @@ public class UserControl {
 
 			// I use this to monitor in Tomcat Manager ;)
 			WebContext ctx = WebContextFactory.get();
+			LoginAdmin.login(ctx.getServletContext(), this.user.getId());
+
 			ctx.getSession().setAttribute("userid", this.user.getId());
 			
 			return new Object[] { null, this.user, this.missions, 
 					retrieveLeaderBoard(), this.avatar, this.xpToHat, this.xpToClothes, this.xpToSpecialSkin, this.xpToAdd, this.coinsToExtra }; // no errors
 
 		} catch (Exception e) {
+			
 			e.printStackTrace();
-			return new Object[] { "Error_login" };
+			Object[] res = new Object[1];
+			res[0] = e.getMessage();
+			return res;
+			
 		}
 
 	}
@@ -567,5 +576,4 @@ public class UserControl {
 		return achievDao.listAchievements(this.user.getId(), this.user.getClassId());
 		
 	}
-	
 }

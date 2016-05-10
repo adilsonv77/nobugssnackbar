@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-04-07 16:59:17.288000",
+		"lastupdated": "2016-05-10 16:35:01.923000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -109,6 +109,8 @@
 	"SnackMan.pickUpCoffeeTooltip": "TODO",
 	"Error.error": "Error",
 	"Error.login": "User not found.",
+	"Error.session_expired": "Your session has expired, please login again.",
+	"Error.user_already_logged": "User already logged in another tab or window.",
 	"Error.infinityLoopDetected": "Infinity loop detected by system.",
 	"Error.doesntExistCounter": "This position is invalid: only between 1 and 3.",
 	"Error.isntCloseToCustomer": "The cooker is not close to any customer.",

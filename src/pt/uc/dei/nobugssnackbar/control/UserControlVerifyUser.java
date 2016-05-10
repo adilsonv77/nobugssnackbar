@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.directwebremoting.AjaxFilter;
 import org.directwebremoting.AjaxFilterChain;
+import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.impl.LoginRequiredException;
 
 
 public class UserControlVerifyUser implements AjaxFilter {
@@ -29,7 +31,9 @@ public class UserControlVerifyUser implements AjaxFilter {
 		if (listExceptions.indexOf(name) == -1) {
 		
 			if (((UserControl)obj).getUser() == null)
-				throw new Exception("User not connected");
+				throw new LoginRequiredException("User not connected");
+			
+			LoginAdmin.update(WebContextFactory.get().getServletContext(), ((UserControl)obj).getUser().getId());
 		}
 		
 		return chain.doFilter(obj, method, params);

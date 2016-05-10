@@ -98,6 +98,7 @@ SelectLevel.levelSelected = function(evt) {
 		missionView = true;
 		loadMission = 1;
 	}
-	
+
 	Game.missionSelected(levelInfo[4], levelInfo[5], loadMission, missionView);
+		
 };

@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160407;
+Game.version = 20160510;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -75,7 +75,39 @@ Game.editor = null;
 Game.clickReseting = false;
 
 Game.generalInit = function() {
-	
+	  
+	  dwr.engine.setErrorHandler(function(message, exception) {
+
+		  if (exception.javaClassName == 'org.directwebremoting.impl.LoginRequiredException') {
+			  sessionStorage.removeItem("logged");
+			  MyBlocklyApps.hideDialog(false);
+			  window.alert(BlocklyApps.getMsg("Error_session_expired"),
+					  function() {document.location.reload();}, {height:"160px"}
+ 					  ); 
+		  } else
+			  document.location.reload();
+		  
+		  
+	  });
+	  
+	  dwr.engine.setPreHook(function() {
+		  if (sessionStorage.logged !== undefined) {
+
+			  var now = (new Date()).getTime();
+			  var last = parseInt(sessionStorage.logged);
+			  if ((now - last)/60000 <= 20)  // 20 minutes : game.js, web.xml and LoginAdmin
+				  sessionStorage.logged = now;
+			  else {
+				  sessionStorage.removeItem("logged");
+				  MyBlocklyApps.hideDialog(false);
+				  window.alert(BlocklyApps.getMsg("Error_session_expired"),
+						  function() {document.location.reload();}, {height:"160px"}
+	 					  ); 
+			  }
+		  }
+	  });
+  
+	  
 	  BlocklyApps.init();
 		
 	  NoBugsJavaScript.redefine();
@@ -157,6 +189,11 @@ Game.init = function() {
 	// if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
     	
+		if (ret[0] && sessionStorage.logged === undefined) { // avoiding multi tabs
+			ret[0] = false; // if it is another tab, then go to login page... there is another avoid system to login twice the same user
+			                // don't call UserControl.logoff() because if the user has two tab, the other tab is ok.
+		}
+    	
 		if (ret[0]) {
 			
 			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12], ret[13]);
@@ -225,6 +262,8 @@ Game.login = function() {
 	  			document.getElementById('loginpassw').value = "";
 	  			
 	  			error.innerHTML = "";
+	  			
+	  			sessionStorage.logged = (new Date().getTime()); // avoiding multi tabs
 	  			
   				Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9]);
 	  			
@@ -478,7 +517,6 @@ Game.cityClick = function() {
 		IntroGame.closeBeforeCity();
 	}
 	SelectLevel.generateBoard();
-	//SelectMission.generateBoard();	
 };
 
 
@@ -1280,7 +1318,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
-	       trashcan: (Game.missionType == "createsFromScratch"),  // TODO: o blockly permite excluir objetos não-deletaveis que estao dentro de blocos deletaveis 
+	       trashcan: (Game.missionType == "createsFromScratch"),  // TODO: o blockly permite excluir objetos nï¿½o-deletaveis que estao dentro de blocos deletaveis 
 	       comments: false,
 	       scrollbars: true,
 	       toolbox: toolbox,
@@ -1497,7 +1535,9 @@ Game.beforeFinishMission = function() {
     Game.stopAlertGoalButton();
     
 	//TODO animar o cooker no final da missao
-
+    LogClick.store("dialogVictory-before");
+    LogClick.save(false);
+    
 	//var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
     var answer = Game.workspaceAnswer(); //Blockly.Xml.domToText(xml);
 
@@ -1976,7 +2016,7 @@ Game.emptyLines = function() {
 };
 
 Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
-	
+
 	Game.editor.hideChaff();
     Blockly.WidgetDiv.hide();
     
@@ -2126,6 +2166,8 @@ Game.logoffButtonClick = function() {
 
 	MyBlocklyApps.hideDialog(false);
 	CityMap.stopAnimation();
+	
+	sessionStorage.removeItem("logged");
 	
 	LogClick.save(false); // store the cache 
 	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff
@@ -2401,14 +2443,32 @@ Game.verifyFunctionTabs = function() {
 	
 };
 
+Game.totBlocks = function(c) {
+	
+	var conta = 0;
+	for (var i = 0; i < c.length; i++) {
+		var block = c[i];
+		conta++;
+		conta += Game.totBlocks(block.childBlocks_);
+	}
+	
+	return conta;
+	
+};
+
 /**
  * Execute the user's code.  Heaven help us...
  */
 Game.execute = function(debug) {
 	
+  if (Game.victory) // if pressed [F8] or [F10]
+	  return;
+  
   Game.showMoveRight = false;
   if (Game.runningStatus === 0) {
 	
+//	  alert(Game.totBlocks(Blockly.mainWorkspace.topBlocks_));
+	  
 	  try {
 		  
      	Game.howManyRuns++;

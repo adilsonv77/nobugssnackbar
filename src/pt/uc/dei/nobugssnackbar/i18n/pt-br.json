@@ -45,7 +45,7 @@
 	"NoBugs.runTooltip" : "Executar o programa [F10].",
 	"NoBugs.debugTooltip" : "Executar somente um passo [F8].",
 	"NoBugs.resetTooltip": "Reinicia a execu&#231;&#227;o [Esc].",
-	"NoBugs.support" : "Em caso de problemas t&#233;cnicos, ou solicitar nova senha, entre em contacto com ",
+	"NoBugs.support" : "Em caso de problemas t&#233;cnicos entre em contacto com ",
 	"NoBugs.buy": "Comprar",
 	"NoBugs.sponsoredBy": "Patroc&#237;nios",
 	"NoBugs.developedBy": "Desenvolvimento",
@@ -139,7 +139,10 @@
 
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado ou senha incorreta",
-	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 3.",
+	"Error.user_already_logged": "Lamento o inconveniente. N&#227;o &#233; permitido abrir mais de uma aba no jogo. Se esse n&#227;o for o caso, voc&#234; deve ter sa&#237;do do jogo sem clicar no bot&#227;o para sair. Aguarde no m&#225;ximo 20 minutos e tente novamente.",
+	"Error.session_expired" : "A sess&#227;o expirou. Voc&#234; ser&#225; redirecionado para a tela de login",
+	"Error.doesntExistCounter": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 3.",	
+
 	"Error.doesntExistTable": "Esta posi&#231;&#227;o &#233; inv&#225;lida: utilize entre 1 e 2.",
 	"Error.isntCloseToCustomer": "N&#227;o est&#225; junto de um cliente. Antes de executar esse bloco, caminhe at&#233; onde est&#225; o cliente.",
 	"Error.infinityLoopDetected": "Ciclo perp&#233;tuo detectado pelo sistema.",

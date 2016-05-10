@@ -50,7 +50,7 @@ public class GameJdbcDao implements GameDao {
 
 			ResultSet rs = ps.executeQuery();
 			if (!rs.next()) {
-				throw new Exception("User not found or not registered.");
+				throw new Exception("Error_login");
 			}
 
 			u = new User();

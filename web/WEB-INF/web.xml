@@ -30,7 +30,7 @@
     <welcome-file>index.jsf</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>60</session-timeout>
+    <session-timeout>20</session-timeout>
   </session-config>
   <listener>
     <listener-class>org.directwebremoting.servlet.DwrListener</listener-class>
@@ -62,7 +62,7 @@
     </init-param>
     <init-param>
       <param-name>debug</param-name>
-      <param-value>true</param-value>
+      <param-value>false</param-value>
     </init-param>
   </servlet>
   <servlet>
