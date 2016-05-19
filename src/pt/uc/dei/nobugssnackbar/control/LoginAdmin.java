@@ -36,8 +36,6 @@ public class LoginAdmin {
 	@SuppressWarnings("unchecked")
 	public static void update(ServletContext ctx, long userid) {
 		
-		System.out.println(userid + " " +  System.currentTimeMillis());
-		
 		Map<Long, Long> list = (Map<Long, Long>) ctx.getAttribute("usersregistered");
 		if (list == null)
 			return;

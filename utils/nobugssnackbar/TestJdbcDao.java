@@ -1,5 +1,8 @@
 package nobugssnackbar;
 
+import java.util.Map;
+
+import pt.uc.dei.nobugssnackbar.dao.jdbc.GameJdbcDao;
 import pt.uc.dei.nobugssnackbar.dao.jdbc.NoBugsConnection;
 
 public class TestJdbcDao {
@@ -7,6 +10,10 @@ public class TestJdbcDao {
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
+		
+		GameJdbcDao gDao = new GameJdbcDao();
+		Map<?, ?> m = gDao.retrieveMissions(6);
+		System.out.println(m);
 		/*
 		
 		CommandJdbcDao cDao = new CommandJdbcDao();

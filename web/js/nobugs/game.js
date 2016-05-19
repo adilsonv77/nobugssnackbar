@@ -756,8 +756,9 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 	var finishedMission = clazzId == undefined;
 	if (finishedMission) {
 		
-		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
-			
+//		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
+		// if the quantity of solve mission is equal to the total number missions
+		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]){
 			Game.goBackToDashboard(null, false);
 			Game.init();
 			
@@ -767,7 +768,26 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 		 
 		clazzId = Game.loginData.clazzId;
 		levelId = Game.loginData.levelId;
-		missionIdx = Game.loginData.missionIdx+1;
+		missionIdx = Game.loginData.missionIdx;
+		Game.loginData.missionHist[levelId-1][7][missionIdx-1] = "T"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
+		
+		// search the next mission. first after the currently... 
+		var found = -1;
+		for (var i=missionIdx; i<Game.loginData.missionHist[Game.loginData.levelId-1][2]; i++)
+			if (Game.loginData.missionHist[levelId-1][7][i] !== "T") {
+				found = i;
+				break;
+			}
+		
+		if (found == -1)
+			// if did not find any, then from the beginning.
+			for (var i = 0; i < missionIdx-1; i++)
+				if (Game.loginData.missionHist[levelId-1][7][i] !== "T") {
+					found = i;
+					break;
+				}
+		
+		missionIdx = i+1;
 		missionView = false;
 		Game.loginData.missionHist[levelId-1][3]++;
 	}
@@ -787,6 +807,9 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 };
 
 Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
+	
+  if (Game.loginData.missionHist[levelId-1][7][missionIdx-1] == null)
+	  Game.loginData.missionHist[levelId-1][7][missionIdx-1] = "F"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
 	
   Game.closeGoalsButtonClick();
   if (Game.previousGoalsAccomplishedWindowPos != undefined) {

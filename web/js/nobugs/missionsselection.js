@@ -16,8 +16,6 @@ MissionSelection = function(level) {
 	this.mouseMoveWrapper = Blockly.bindEvent_(this.canvas, 'mousemove', this, this.mouseMove);
 	this.clickWrapper = Blockly.bindEvent_(this.canvas, 'click', this, this.click);
 	
-	this.circles = [];
-	
 	this.show();
 };
 
@@ -101,13 +99,15 @@ MissionSelection.prototype.show = function() {
 	var raio = 6;
 	var esp = 18;
 	
+	this.circles = [];
+	
 	for (var i = 0; i<this.level[2]; i++) {  
 		ctx.beginPath();
 		ctx.moveTo(ref+(i*esp)+raio, ref);
 		ctx.arc(ref+(i*esp), ref, raio, 0, circ);
-		if (i <= this.level[3]) {
-			
-			this.circles.push({x: ref+(i*esp), y: ref});
+				
+		this.circles.push({x: ref+(i*esp), y: ref});
+		if (this.level[7][i] !== null) {
 			if (i == this.hightlight) 
 				ctx.fillStyle = "#ffd89d";
 			else
@@ -124,13 +124,13 @@ MissionSelection.prototype.show = function() {
 			ctx.stroke();
 			
 		}
-		if (i < this.level[3]) {
+		
+		if (this.level[7][i] === "T") {
 			if (i == this.hightlight) 
 				ctx.drawImage(PreloadImgs.get('mission_selected_high'), (ref/2)+(i*esp), (ref/2)-3);
 			else
 				ctx.drawImage(PreloadImgs.get('mission_selected'), (ref/2)+(i*esp), (ref/2)-3);
 		}
-
 		
 	}
 	ctx.closePath();

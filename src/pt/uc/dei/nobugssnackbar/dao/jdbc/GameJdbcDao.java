@@ -483,7 +483,7 @@ public class GameJdbcDao implements GameDao {
 			while (rs.next()) {
 				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
 						rs.getLong(3), rs.getLong(4), rs.getLong(5),
-						rs.getLong(6), new ArrayList<Integer[]>(), null,
+						rs.getLong(6), new ArrayList<Integer[]>(), new ArrayList<String>(),
 						rs.getString(12), rs.getInt(13)};
 
 				classesId.add(rs.getInt(5));
@@ -503,6 +503,7 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
+			/*
 			ps = bdCon
 					.prepareStatement("select missionorder, freeaccess from classesmissions where classid = ? and classlevelid = ? and (freeaccess = 'T' or freeaccess = 'X') order by missionorder");
 
@@ -528,26 +529,25 @@ public class GameJdbcDao implements GameDao {
 
 			}
 			ps.close();
+			 */
 
+			// which are the missions solved and which are not
 			ps = bdCon
-					.prepareStatement("select achieved from classesmissions left outer join (select * from missionsaccomplished where userid = ?) ma using (classid, missionid) where classlevelid = ? order by missionorder");
+					.prepareStatement("select achieved from classesmissions left outer join (select * from missionsaccomplished where userid = ?) ma using (classid, missionid) where classlevelid = ? and classid = ? order by missionorder");
 			ps.setLong(1, idUser);
 			for (int i = 0; i < l.size(); i++) {
 				Object[] r = l.get(i);
-				if (r[7] != null) {
 					
-					List<Integer> lm = (List<Integer>) r[7];
-					ps.setInt(2, classesLevelId.get(i));	
-					
-					rs = ps.executeQuery();
-					int j = 1;
-					while (rs.next()) {
-						if (rs.getString(1) != null && rs.getString(1).equals("T"))
-							lm.add(j);
-						j++;
-					}
-					rs.close();
+				List<String> lm = (List<String>) r[7];
+				ps.setInt(2, classesLevelId.get(i));
+				ps.setInt(3, classesId.get(i));	
+				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					lm.add(rs.getString(1));
 				}
+				rs.close();
+				
 			}
 			ps.close();
 			
