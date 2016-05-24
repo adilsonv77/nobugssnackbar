@@ -1832,6 +1832,8 @@ public class GameJdbcDao implements GameDao {
 
 	@Override
 	public void saveClicks(long userid, String[][] clicks) throws Exception {
+		log.info("saveClicks");
+		
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();

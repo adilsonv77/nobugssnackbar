@@ -93,11 +93,21 @@ SelectLevel.levelSelected = function(evt) {
 	var levelInfo = Game.loginData.missionHist[levelSelected-1];
 	
 	var missionView = false;
-	var loadMission = levelInfo[3]+1; 
+	var loadMission = 1; 
 	if (levelInfo[2] == levelInfo[3]) {
 		missionView = true;
-		loadMission = 1;
+	} else {
+		for (var i=0; i<levelInfo[7].length; i++)
+			if (levelInfo[7][i] === null || levelInfo[7][i] === "F"){
+				
+				loadMission = i+1;
+				break;
+				
+			}
+		
 	}
+	
+	LogClick.store("mission_"+loadMission+"_view_"+missionView);
 
 	Game.missionSelected(levelInfo[4], levelInfo[5], loadMission, missionView);
 		

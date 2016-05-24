@@ -59,7 +59,7 @@ MissionSelection.prototype.click = function(evt) {
     	}
     	
     	if (nextMission)
-    		Game.nextMission(this.level[4], this.level[5], found+1, found+1<=this.level[3]);
+    		Game.nextMission(this.level[4], this.level[5], found+1, !(this.level[7][found] === null || this.level[7][found] === "F"));
     	
     }
 };

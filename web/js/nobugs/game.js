@@ -852,8 +852,8 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   window.addEventListener('scroll', Game.scrollEvent);  
   window.addEventListener('resize',  Game.resizeWindow);
 
-  window.addEventListener('beforeunload', Game.unload);
- 
+  window.addEventListener('beforeunload', Game.unload, false);
+
   Game.slider = {};
   Game.slider.svg = document.getElementById('slider');
   Game.slider.svg.style.visibility = "hidden";
@@ -2535,6 +2535,8 @@ Game.execute = function(debug) {
 		Game.editor.semanticAnalysis();
 		
   	    var code = Game.editor.getJsCode();
+  	    
+//  	    alert( Game.editor.getJavaCode() );
   	    
   	    code = "var NoBugsJavaScript = {};\n" + code;
   	    Game.code = code;
