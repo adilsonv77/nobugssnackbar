@@ -39,7 +39,7 @@ BlocklyEditor.prototype.cleanCode = function() {
 BlocklyEditor.prototype.initialize = function(cfg, i) {
 	this.editArea.innerHTML = ""; // clean the editor
 	this.ws = Blockly.inject(this.editArea, cfg);
-	this.ws.id = this.id;
+	this.ws.myid = this.id;
 	this.ws.aux = i > 0;
 	this.ws.index = i;
 };
@@ -68,7 +68,7 @@ BlocklyEditor.prototype.zoom = function() {
 BlocklyEditor.prototype.loadCode = function(xmlCode) {
 	
 	var xml = Blockly.Xml.textToDom(xmlCode);
-	Blockly.Xml.domToWorkspace(this.ws, xml);
+	Blockly.Xml.domToWorkspace(xml, this.ws);
 	Game.moveBlocks();
 	
 };
@@ -97,7 +97,7 @@ BlocklyEditor.prototype.getXmlValue = function() {
 
 BlocklyEditor.prototype.verifyFunctionTabs = function() {
 	
-	if (this.id = "blockly")
+	if (this.myid = "blockly")
 		return;
 	
 	var blocks = this.ws.getTopBlocks();
@@ -106,7 +106,7 @@ BlocklyEditor.prototype.verifyFunctionTabs = function() {
 
 		if (b.type.indexOf("procedures_def") == -1) {
 			
-			Game.selectTab(this_.id);
+			Game.selectTab(this_.myid);
 			Blockly.selected = b;
 			throw {isNoBugs: true, msg : "Error_TabOnlyWithFunctions"};
 		} 
@@ -130,6 +130,14 @@ BlocklyEditor.prototype.getJsCode = function() {
 	return code;
 	
 };
+
+BlocklyEditor.prototype.getJavaCode = function() {
+	
+	var code = Game.convertWaits(Blockly.Java.workspaceToCode(this.ws));
+	return code;
+	
+};
+
 
 BlocklyEditor.prototype.getFirstEditArea = function() {
 
@@ -347,7 +355,7 @@ MultiBlockEditor.prototype.changeToFirstTab = function() {
 	
 	Game.changeTab("blockly1");
 	
-	// os outros editores tem esse método em branco
+	// os outros editores tem esse mï¿½todo em branco
 };
 
 MultiBlockEditor.prototype.semanticAnalysis = function() {

@@ -256,7 +256,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	    // Delete or backspace.
 	    try {
 	        Blockly.hideChaff();
-	        
+	        Blockly.Events.setGroup(true);
 	        if (Game.blocksSelected.length == 0) {
 	        	
 	        	if (Blockly.selected && Blockly.selected.isDeletable()) {
@@ -270,9 +270,11 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 						MyBlocklyApps.removeBlock(block);
 				});
 		  		Game.blocksSelected = [];
+		  		Blockly.selected = null;
 	        }
 
 	    } finally {
+	      Blockly.Events.setGroup(false);
 	      // Stop the browser from going back to the previous page.
 	      // Use a finally so that any error in delete code above doesn't disappear
 	      // from the console when the page rolls back.
@@ -290,8 +292,8 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		  
 	  } else
 		  if (e.ctrlKey && !e.shiftKey) {
+  	        Blockly.hideChaff();
 		    if (Blockly.selected ) { // my version allows copy this kind of blocks: && Blockly.selected.isDeletable() && Blockly.selected.isMovable()
-		      Blockly.hideChaff();
 		      if (e.keyCode == 67 || e.keyCode == 88) {
 		    	  
 		    	  if (Game.toolbox !== '<xml id="toolbox" style="display: none"></xml>') {
@@ -325,16 +327,14 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
 		      }
 		    } else
-		    	if (e.keyCode == 90) {
-		    		// 'z' undo the last delete
-		    		// future implementation
-		    		if (Game.lastDeletedBlocks.length > 0) {
-		    			Game.lastDeletedBlocks.forEach(function(block) {
-		    				
-		    			});
-		    			Game.lastDeletedBlocks = [];
-		    		}
-		    	}
+		    	if (e.keyCode == 89) {
+		    		// 'y' redo 
+    		      Blockly.mainWorkspace.undo(true);
+		    	} else
+			    	if (e.keyCode == 90) {
+			    		// 'z' undo 
+	    		      Blockly.mainWorkspace.undo(false);
+			    	}
 		  } else
 			  if (e.ctrlKey && e.shiftKey) {
 				  var xmlBlock = null;
@@ -447,6 +447,8 @@ Blockly.BlockSvg.prototype.select = function() {
 		
 	}
 	
+	var oldId = null;
+	  
 	myIsTargetSvg = false;
     // Unselect any previously selected block.
 	if (!Game.SHIFTPRESSED) {
@@ -528,10 +530,14 @@ Blockly.BlockSvg.prototype.select = function() {
 	}
 	
     	
-    Blockly.selected = this;
+    var event = new Blockly.Events.Ui(null, 'selected', oldId, this.id);
+	event.workspaceId = this.workspace.id;
+	Blockly.Events.fire(event);
+
+	Blockly.selected = this;
     this.addSelect();
 
-    Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
+//    Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
 };
 
 Blockly.BlockSvg.prototype.unselect = function() {
@@ -550,7 +556,11 @@ Blockly.BlockSvg.prototype.unselect = function() {
 	} else
 		Blockly.selected = null;
 	
-	Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
+	var event = new Blockly.Events.Ui(null, 'selected', this.id, null);
+	event.workspaceId = this.workspace.id;
+	Blockly.Events.fire(event);
+	
+//	Blockly.fireUiEvent(this.workspace.getCanvas(), 'blocklySelectChange');
 };
 
 Blockly.copy_ = function(block) {
@@ -600,7 +610,7 @@ Blockly.removeAttributeInAllChilds = function(xmlBlock, attributeName) {
 
 Blockly.littleCopy_ = function(block) {
 	
-	var xmlBlock = Blockly.Xml.blockToDom_(block);
+	var xmlBlock = Blockly.Xml.blockToDom(block);
 	Blockly.Xml.deleteNext(xmlBlock);
 	Blockly.removeAttributeInAllChilds(xmlBlock, "deletable");
 	

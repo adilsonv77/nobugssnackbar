@@ -184,7 +184,6 @@ Game.init = function() {
 	Game.CTRLPRESSED = false;
 	Game.SHIFTPRESSED = false;
 	Game.blocksSelected = [];
-	Game.lastDeletedBlocks = [];
 
 	// if the user's key is stored in cookies, then the system will not show the login dialog
     UserControl.verifyLogged(function(ret) {
@@ -1741,7 +1740,7 @@ Game.doResizeWindow = function(style) {
 		return; // this happens in the select mission dialog
 	
 	Game.resizeWindow(null);
-    Blockly.fireUiEvent(window, 'resize');
+	Blockly.asyncSvgResize(Blockly.mainWorkspace); // Blockly.fireUiEvent(window, 'resize');xixi
 };
 
 Game.scrollEvent =  function() {
@@ -2423,7 +2422,7 @@ Game.showTabs = function(id) {
 	
 	Game.editor.visibleTabs(id);
 	
-    Blockly.fireUiEvent(window, 'resize');
+	Blockly.asyncSvgResize(Blockly.mainWorkspace); //Blockly.fireUiEvent(window, 'resize');
 
 };
 
@@ -2434,7 +2433,7 @@ Game.selectTab = function(id) {
 	Game.selectedTab = id;
 	Game.showTabs(id);
 	$('#multiBlockly').easytabs("select", "#" + (id));
-	Blockly.fireUiEvent(window, 'resize');
+	Blockly.asyncSvgResize(Blockly.mainWorkspace);  // Blockly.fireUiEvent(window, 'resize');
 	
 	if (Game.counterInstruction != null) {
 		Game.counterInstruction.style.display = (id === "blockly1"?"inline":"none");
