@@ -949,13 +949,23 @@ Game.missionLoaded = function(ret){
   }
   
   Game.missionType = mission.getElementsByTagName("objectives")[0].getAttribute("missionType");
+  var previousMCDisplay = $("#MCAnswerBox").css("display");
+  var newMCDisplay = "none";
   if (Game.missionType == null)
 	  Game.missionType = "createsFromScratch";
   else
-	  if (Game.missionType == "fixBugs") {
+	  if (Game.missionType === "fixBugs") {
 		  Game.allowsCreateVars = mission.getElementsByTagName("objectives")[0].getAttribute("allowsCreateVars");
+	  } else {
+		  if (Game.missionType === "multipleChoice") {
+			  newMCDisplay =  "inline";
+		  }
 	  }
   
+  if (previousMCDisplay !== newMCDisplay) {
+	  $("#MCAnswerBox").css("display", newMCDisplay);
+  }
+
   Blockly.Blocks['controls_if'].useMutator = !(mission.childNodes[0].getAttribute("useIfMutator") === "false"); 
 	  
   var t = BlocklyApps.getMsg("_mission");
@@ -1331,7 +1341,7 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
-  Game.resizeWindow("exception"); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
+  var ret = Game.resizeWindow("exception"); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
  
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
@@ -1355,9 +1365,11 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	         }};
 
   Game.selectedTab = "";
-  Game.editor.initialize(cfg); 
+  Game.editor.initialize(ret, cfg); 
   Game.editor.backgroundColor(Game.missionType === "fixBugs"?"#F5DAD4":(Game.missionType === "sort"?"#AFD8C1":"#FFF"));
   Game.editor.addCommands(toolbox);
+  
+  Game.positionMultipleChoice();
 
   Game.editor.zoom();
 
@@ -1740,7 +1752,7 @@ Game.doResizeWindow = function(style) {
 		return; // this happens in the select mission dialog
 	
 	Game.resizeWindow(null);
-	Blockly.asyncSvgResize(Blockly.mainWorkspace); // Blockly.fireUiEvent(window, 'resize');xixi
+	Blockly.asyncSvgResize(Blockly.mainWorkspace);
 };
 
 Game.scrollEvent =  function() {
@@ -1748,16 +1760,43 @@ Game.scrollEvent =  function() {
     Game.doResizeWindow();
 };
   
+Game.positionMultipleChoice = function() {
+	if ($("#MCAnswerBox").css("display") !== "none") {
+		
+		var p = $("#blockly").position();
+		$("#MCAnswerBox").css("left", p.left + "px");
+		$("#MCAnswerBox").css("width", $("#blockly").width()+ "px");
+		$("#MCAnswerBox").css("top", (5+p.top + $("#blockly").height()) + "px");
+	}
+};
+
 Game.resizeWindow = function(e) {
 	
-	if (e !== "exception")
-		Blockly.svgResize(Blockly.getMainWorkspace());
+	var ret = {blocklyH: 0};
+	
+	Game.redimDiv.style.height = Game.redimDiv.clientHeight; 
+	
+	if ($("#MCAnswerBox").css("display") === "none") {
+		Game.redimDiv.style.height = "";
+	} else {
+
+		var h = $("#blockly").height();
+		if (h > 0) {
+			h = window.innerHeight;
+			Game.redimDiv.style.height = (h-200)+"px"; // 100 is the common header
+			Game.optResize.blocklyDivH = Game.redimDiv.style.height;
+		}
+		else
+			ret.blocklyH = 100;
+
+	}
 	
 	var visualization = document.getElementById('visualization'); // the animation area
 	var top = visualization.offsetTop;
 
 	Game.redimDiv.style.top = Math.max(10, top - window.pageYOffset) + 'px';
 	Game.redimDiv.style.left = Game.rtl ? '10px' : '380px';
+	
     var w = window.innerWidth;
     if (Game.variableBox.style.display === "none" && Game.tipBox.style.display === "none") {
         w -= 400;
@@ -1804,6 +1843,10 @@ Game.resizeWindow = function(e) {
 	t = parseInt(t.substr(0, t.length-2));
     
 	Game.editor.resize(t);
+	if (e !== "exception") {
+		Blockly.svgResize(Blockly.getMainWorkspace());
+	}
+	Game.positionMultipleChoice();
     
     var blocklyLock = document.getElementById("blocklyLock");
 	
@@ -1817,8 +1860,9 @@ Game.resizeWindow = function(e) {
     
     if (Game.counterInstruction != null)
     	Game.counterInstruction.style.left = (Game.redimDiv.offsetLeft + Game.redimDiv.offsetWidth - Game.counterInstruction.clientWidth - 15) + "px";
-
- //   $("#tbSelectMission").css("width", ($("#topInfoTable")[0].clientWidth-150) + "px");
+    
+    Game.optResize.blocklyDivH = "90%";
+    return ret;
 };
 
 
@@ -2133,6 +2177,7 @@ Game.closeBlockEditorStuffs = function() {
     Game.unlockBlockly();
 	Hints.stopHints();
     
+	$("#MCAnswerBox").css("display", "none");
     $("#tests").css("display", "none");
 
     Game.stopAlertGoalButton();

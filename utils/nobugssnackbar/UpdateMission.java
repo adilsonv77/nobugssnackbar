@@ -11,13 +11,13 @@ import pt.uc.dei.nobugssnackbar.model.Mission;
 public class UpdateMission {
 
 	public static void main(String[] args) throws Exception {
-		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
+		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugs8", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		MissionJdbcDao mDao = new MissionJdbcDao();
 
 		int j = 0;
-		for (int i = 59; i <= 131; i++) {
+		for (int i = 59; i <= 132; i++) {
 			StringBuffer xml = new StringBuffer();
 			BufferedReader arq = null;
 			try {

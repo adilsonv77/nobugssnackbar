@@ -14,8 +14,22 @@ function resizeOneEditArea(blocklyDiv, t, top) {
 	blocklyDiv.style.left = (top == 0?Game.redimDiv.style.left:"0px"); 
 
 	blocklyDiv.style.width = Game.redimDiv.style.width; 
-	blocklyDiv.style.height = (top == 0?"":(Game.redimDiv.clientHeight - 30)+"px"); 
+	//blocklyDiv.style.height = (top == 0?"":(Game.redimDiv.style.height - 30)+"px");
+	
+	var s = Game.redimDiv.style.height;
+	if (s === "0px")
+		s = "";
+	blocklyDiv.style.height = s;
 
+	/* quando eu descobrir para que substrair 30, preciso repensar isso.
+	 * essa parte mudei, em comparacao ao top==0, quando criei o novo tipo de tarefa: multipleChoice.
+	 * se um dia isso deixar de funcionar, preciso rever para que tinha essa comparacao com top==0
+	s = s.substring(0, s.indexOf("px"));
+	if (parseInt(s) > 0)
+		s = (parseInt(s) - 30)+"px";
+	else
+		s = "";
+	*/
 }
 
 var BlocklyEditor = {};
@@ -36,12 +50,16 @@ BlocklyEditor.prototype.cleanCode = function() {
 	Blockly.getMainWorkspace().clear();
 };
 
-BlocklyEditor.prototype.initialize = function(cfg, i) {
+BlocklyEditor.prototype.initialize = function(cfgSize, cfg, i) {
 	this.editArea.innerHTML = ""; // clean the editor
 	this.ws = Blockly.inject(this.editArea, cfg);
 	this.ws.myid = this.id;
 	this.ws.aux = i > 0;
 	this.ws.index = i;
+	
+	var h = $("#blockly").height();
+	$("#blockly").css("height", h-cfgSize.blocklyH);
+
 };
 
 
@@ -286,13 +304,13 @@ MultiBlockEditor.prototype.cleanCode = function() {
 		this.blocklys[i].cleanCode();
 };
 
-MultiBlockEditor.prototype.initialize = function(cfg) {
+MultiBlockEditor.prototype.initialize = function(cfgSize, cfg) {
 
 	for (var i = 0; i < this.blocklys.length; i++) {
 
 		  var b = this.blocklys[i];
 		  
-		  b.initialize(cfg, i);
+		  b.initialize(cfgSize, cfg, i);
 	}
   
    Game.selectTab(this.blocklys[0].id);
