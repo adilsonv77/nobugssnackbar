@@ -445,3 +445,9 @@ table.mainBodyClass td {border: none}
 .achievement-table-col-position {
 	
 }
+
+// dwr loading message
+#disabledZone {
+	background-color: grey;
+	opacity: 0.3
+}

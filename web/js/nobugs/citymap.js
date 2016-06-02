@@ -1,20 +1,4 @@
-PreloadImgs.put('bus', 'images/bus.png');
-
-PreloadImgs.put('city_map1', 'images/city_map.png');
-PreloadImgs.put('managedSnackBar', 'images/city_map-buildings.png');
-
-PreloadImgs.put('busback', 'images/bus_back.png');
-PreloadImgs.put('middleBuildings', 'images/middleBuildings.png');
-PreloadImgs.put('signs', 'images/signs.png');
-PreloadImgs.put('blinkSchool', 'images/blinkSchool.png');
-PreloadImgs.put('school', 'images/school.png');
-PreloadImgs.put('trees', 'images/trees.png');
-
-PreloadImgs.put('carred', 'images/car_red.png');
-PreloadImgs.put('carredback', 'images/car_red_back.png');
-
-PreloadImgs.put('cargreen', "images/car_green.png");
-PreloadImgs.put('cargreendown', "images/car_green_down.png");
+'use strict';
 
 var CityMap = {};
 

@@ -14,9 +14,21 @@
   <link rel="icon" href="images/fav-icon.ico">
   
   <script src="js/third/pace.min.js"></script>
+  <script src="js/nobugs/preloadimgs.js"></script>
+  <script src="js/nobugs/nobugspreloadimgs.js"></script>
   <script src="js/_soy/soyutils.js"></script>
   <script src="js/commons/common.js"></script>
   <script src="js/nobugs.js"></script>
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/util.js"></script>
+  
+  <script>
+  function initDwr() {
+	  console.log("initDwr");
+	  dwr.util.useLoadingMessage();
+  }
+  </script>
+  
 </head>
 	<!--[if !IE]> -->
 		<body onload="nav.onload()">

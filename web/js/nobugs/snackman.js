@@ -26,25 +26,6 @@
 
 var SnackMan = {};
 
-PreloadImgs.put('cooler', 'images/cooler_new.png');
-PreloadImgs.put('display', 'images/display_new.png');
-PreloadImgs.put('boxoffruits', 'images/boxoffruits.png');
-PreloadImgs.put('juicemachine', 'images/juicemachine.png');
-PreloadImgs.put('icecreammachine', 'images/icecreammachine.png');
-PreloadImgs.put('coffeemachine', 'images/coffeemachine.png');
-
-PreloadImgs.put('mesa', 'images/mesa.png');
-PreloadImgs.put('chair1', 'images/cadeira1.png');
-PreloadImgs.put('chair2', 'images/cadeira2.png');
-
-PreloadImgs.put('menu', 'images/menu.png');
-PreloadImgs.put('menu$1', 'images/menu_1.png');
-PreloadImgs.put('menu$2', 'images/menu_2.png');
-PreloadImgs.put('menu$3', 'images/menu_3.png');
-PreloadImgs.put('menu$4', 'images/menu_4.png');
-PreloadImgs.put('menu$5', 'images/menu_5.png');
-PreloadImgs.put('menu$6', 'images/menu_6.png');
-
 SnackMan = function(hasTable, objectives, mission, avatar) {
 	var position = mission.childNodes[0].getElementsByTagName("cooker")[0].childNodes[0].nodeValue;
 	

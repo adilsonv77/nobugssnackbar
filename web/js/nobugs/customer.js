@@ -44,36 +44,6 @@ CustOpt.door = 'n1';
 
 CustOpt.customerFinalPath = new Array();
 
-PreloadImgs.put('$customer01', 'images/$customer01.png');
-PreloadImgs.put('$customer01_anger', 'images/$customer01_anger.png');
-PreloadImgs.put('$customer02', 'images/$customer02.png');
-PreloadImgs.put('$customer02_anger', 'images/$customer02_anger.png');
-PreloadImgs.put('$customer03', 'images/$customer03.png');
-PreloadImgs.put('$customer03_anger', 'images/$customer03_anger.png');
-PreloadImgs.put('coin', 'images/coin.png');
-PreloadImgs.put('anger', 'images/anger.png');
-PreloadImgs.put('duvida', 'images/duvida.png');
-PreloadImgs.put('heart', 'images/heart.png');
-
-//Candidate Orders
-PreloadImgs.put('$coke', 'images/$$coke.png');
-PreloadImgs.put('$hotdog', 'images/$$hotdog.png');
-PreloadImgs.put('$juiceoforange', 'images/$$juiceoforange.png');
-PreloadImgs.put('$orange', 'images/$$orange.png');
-PreloadImgs.put('$icecreamofchocolate', 'images/$$icecreamofchocolate.png');
-PreloadImgs.put('$icecreamofvanilla', 'images/$$icecreamofvanilla.png');
-PreloadImgs.put('$icecreamofstrawberry', 'images/$$icecreamofstrawberry.png');
-PreloadImgs.put('$coffee', 'images/$$coffee.png');
-
-//Balloons
-PreloadImgs.put('baloon_1', 'images/baloon_1.png');
-PreloadImgs.put('baloonr_1', 'images/baloonr_1.png');
-PreloadImgs.put('baloon_2', 'images/baloon_2.png');
-PreloadImgs.put('baloonr_2', 'images/baloonr_2.png');
-PreloadImgs.put('baloon_3', 'images/baloon_3.png');
-PreloadImgs.put('baloonr_3', 'images/baloonr_3.png');
-
-
 // acts as a state machine
 CustOpt.createCustomerPath = function() {
 	for (var key = 0; key < CustOpt.keynodes.length; key++)
@@ -480,7 +450,7 @@ Customer.prototype.draw = function(ctx) {
 			
 			var ordersUnfulfilled = [];
 			
-			var withDoubt = (CustomerManager.randomization.length > 0)|| (this.hasRandom);
+			var withDoubt = (!CustomerManager.showRandoms) && ((CustomerManager.randomization.length > 0) || (this.hasRandom));
 			
 			var withouDoubt = (!withDoubt) || (Game.runningStatus !== 0) || (Game.victory);
 			if (withouDoubt) {

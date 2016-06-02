@@ -1,7 +1,5 @@
 "use strict";
 
-PreloadImgs.put('run', 'images/run.png');
-PreloadImgs.put('runout', 'images/run_out.png');
 
 var CountXP = {};
 

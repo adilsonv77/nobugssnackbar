@@ -151,7 +151,7 @@
 			<arg line="${js.home}/language.js" />
 			<arg line="${js.home}/slider.js" />
 			<arg line="${js.home}/utils.js" />
-			<arg line="${js.home}/preloadimgs.js" />
+			<!--<arg line="${js.home}/preloadimgs.js" />-->
 			<arg line="${js.home}/logclick.js" />
 			<arg line="${js.home}/game.js" />
 			<arg line="${js.home}/explanation.js" />

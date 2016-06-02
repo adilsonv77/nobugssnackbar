@@ -17,7 +17,7 @@ PreloadImgs.put = function(key, source, loadNow) {
 
 		PreloadImgs.imgs[key].img = new Image();
 		PreloadImgs.imgs[key].img.src = PreloadImgs.imgs[key].src;
-		
+		PreloadImgs.imgs[key].img.class = "preloadimgprogress";
 	} else 
 		if (source !== "")
 			PreloadImgs.totalImgs++;
@@ -45,9 +45,12 @@ PreloadImgs.loadImgs = function(fret) {
 			preloadImgs.style.background = "url(" + preload.src + ")";
 			
 			preload.img = new Image();
+			preload.img.class = "preloadimgprogress";
 			preload.img.onload = function() {
+				
 				loadedImgs++;
 				if (loadedImgs == PreloadImgs.totalImgs) {
+					
 					PreloadImgs.loaded = true;
 					fret();
 				}
@@ -57,4 +60,3 @@ PreloadImgs.loadImgs = function(fret) {
 	}
 	
 };
-

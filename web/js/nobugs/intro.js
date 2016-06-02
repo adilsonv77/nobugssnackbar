@@ -26,9 +26,6 @@
 
 'use strict';
 
-PreloadImgs.put("intro-background-f", "images/mesafamilia-f.png", false);
-PreloadImgs.put("intro-background-m", "images/mesafamilia-m.png", false);
-
 var IntroGame = {};
 
 IntroGame.start = function () {

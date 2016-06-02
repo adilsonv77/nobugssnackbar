@@ -5,6 +5,12 @@
 
 	<allow>
 		<convert converter="exception" match="org.directwebremoting.impl.LoginRequiredException" />
+  	    <!-- 
+  	    <filter class="org.directwebremoting.filter.ExtraLatencyAjaxFilter">
+		    <param name="delay" value="5000"/>
+		</filter>
+		 -->  
 	</allow>
+
 
 </dwr>

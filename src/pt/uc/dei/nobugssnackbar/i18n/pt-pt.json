@@ -40,6 +40,7 @@
 
 	"NoBugs.anArray":"umArray",
 	
+	"NoBugs.submitAnswer": "Enviar a resposta",
 	"NoBugs.unloadWarning": "Deixar essa p&#225;gina resulta em perdas no trabalho.",
 	"NoBugs.runTooltip" : "Executar o programa [F10].",
 	"NoBugs.debugTooltip" : "Executar somente um passo [F8].",

@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160510;
+Game.version = 20160601;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -66,48 +66,14 @@ Game.counterInstruction = null;
 
 Game.callTimes = {};
 
-PreloadImgs.put('fundo', 'images/fundo_new.png');
-PreloadImgs.put('fundo2', 'images/fundo_new2.png');
-PreloadImgs.put('doors', 'images/door_new.png');
-
 Game.useCodeEditor = false;
 Game.editor = null;
 Game.clickReseting = false;
+Game.preHook;
 
 Game.generalInit = function() {
-	  
-	  dwr.engine.setErrorHandler(function(message, exception) {
+	  Game.dwrInitialization();
 
-		  if (exception.javaClassName == 'org.directwebremoting.impl.LoginRequiredException') {
-			  sessionStorage.removeItem("logged");
-			  MyBlocklyApps.hideDialog(false);
-			  window.alert(BlocklyApps.getMsg("Error_session_expired"),
-					  function() {document.location.reload();}, {height:"160px"}
- 					  ); 
-		  } else
-			  document.location.reload();
-		  
-		  
-	  });
-	  
-	  dwr.engine.setPreHook(function() {
-		  if (sessionStorage.logged !== undefined) {
-
-			  var now = (new Date()).getTime();
-			  var last = parseInt(sessionStorage.logged);
-			  if ((now - last)/60000 <= 20)  // 20 minutes : game.js, web.xml and LoginAdmin
-				  sessionStorage.logged = now;
-			  else {
-				  sessionStorage.removeItem("logged");
-				  MyBlocklyApps.hideDialog(false);
-				  window.alert(BlocklyApps.getMsg("Error_session_expired"),
-						  function() {document.location.reload();}, {height:"160px"}
-	 					  ); 
-			  }
-		  }
-	  });
-  
-	  
 	  BlocklyApps.init();
 		
 	  NoBugsJavaScript.redefine();
@@ -144,7 +110,7 @@ Game.generalInit = function() {
 	  
       PreloadImgs.loadImgs(function() {
     	  
-          // It's draw so early because it appears fast after load the mission 
+    	  // It's draw so early because it appears fast after load the mission 
           Game.ctxDisplay = document.getElementById('display').getContext('2d');
           Game.tempDisplay = document.getElementById('displayTemp');
           Game.tempCtxDisplay = Game.tempDisplay.getContext('2d');
@@ -160,6 +126,54 @@ Game.generalInit = function() {
 
       });
 	  
+};
+
+Game.dwrInitialization = function() {
+	  Game.preHook = dwr.engine._preHook;
+	  
+	  if (Game.preHook !== undefined) {
+		  Game.preHook();
+		  $("#disabledZone").css("background-color", "grey");
+		  $("#disabledZone").css("opacity", "0.3");
+		  
+		  dwr.engine._postHook();
+	  }
+	  
+	  dwr.engine.setErrorHandler(function(message, exception) {
+
+		  if (exception.javaClassName == 'org.directwebremoting.impl.LoginRequiredException') {
+			  sessionStorage.removeItem("logged");
+			  MyBlocklyApps.hideDialog(false);
+			  window.alert(BlocklyApps.getMsg("Error_session_expired"),
+					  function() {document.location.reload();}, {height:"160px"}
+ 					  ); 
+		  } else
+			  document.location.reload();
+		  
+		  
+	  });
+	  
+	  dwr.engine.setPreHook(function() {
+		  Game.preHook();
+		  
+		  if (sessionStorage.logged !== undefined) {
+
+			  var now = (new Date()).getTime();
+			  var last = parseInt(sessionStorage.logged);
+			  if ((now - last)/60000 <= 20)  // 20 minutes : game.js, web.xml and LoginAdmin
+				  sessionStorage.logged = now;
+			  else {
+				  sessionStorage.removeItem("logged");
+				  MyBlocklyApps.hideDialog(false);
+				  window.alert(BlocklyApps.getMsg("Error_session_expired"),
+						  function() {document.location.reload();}, {height:"160px"}
+	 					  ); 
+			  }
+		  }
+	  });
+  
+	  
+	
 };
 
 /**
@@ -186,35 +200,39 @@ Game.init = function() {
 	Game.blocksSelected = [];
 
 	// if the user's key is stored in cookies, then the system will not show the login dialog
-    UserControl.verifyLogged(function(ret) {
+    Pace.track(function() {
+
+    	UserControl.verifyLogged(function(ret) {
+        	
+    		if (ret[0] && sessionStorage.logged === undefined) { // avoiding multi tabs
+    			ret[0] = false; // if it is another tab, then go to login page... there is another avoid system to login twice the same user
+    			                // don't call UserControl.logoff() because if the user has two tab, the other tab is ok.
+    		}
+        	
+    		if (ret[0]) {
+    			
+    			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12], ret[13]);
+    			
+    		} else {
+    			window.removeEventListener('beforeunload', Game.unload);
+
+      		    document.getElementById("mainBody").style.display = "none";
+      		    document.getElementById("selectMission").style.display = "none";
+      		    
+
+      		    document.getElementById("initialBackground").style.display = "inline";
+    			
+      		    $('#forgotPassw').click(function() {
+    				Game.startForgetPassw();
+    			});
+
+    		    Game.resizeMainWindow();
+    		    
+    		}
+    	});
+
     	
-		if (ret[0] && sessionStorage.logged === undefined) { // avoiding multi tabs
-			ret[0] = false; // if it is another tab, then go to login page... there is another avoid system to login twice the same user
-			                // don't call UserControl.logoff() because if the user has two tab, the other tab is ok.
-		}
-    	
-		if (ret[0]) {
-			
-			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12], ret[13]);
-			
-		} else {
-			window.removeEventListener('beforeunload', Game.unload);
-
-  		    document.getElementById("mainBody").style.display = "none";
-  		    document.getElementById("selectMission").style.display = "none";
-  		    
-
-  		    document.getElementById("initialBackground").style.display = "inline";
-			
-  		    $('#forgotPassw').click(function() {
-				Game.startForgetPassw();
-			});
-
-		    Game.resizeMainWindow();
-		    
-		}
-	});
-
+    });
 
 };
 
@@ -307,21 +325,23 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard,
 	
 	AvatarImgMaker.configGender(Game.loginData.userLogged.sex);
 	
-	try {
-		UserControl.retrieveQuestionnaire(function(q) {
-			if (q != null) {
-				
-				if (!Game.showQuestionnaire(q))
+	Pace.track(function() {
+		try {
+			UserControl.retrieveQuestionnaire(function(q) {
+				if (q != null) {
+					
+					if (!Game.showQuestionnaire(q))
+						Game.continueLoginProcess();
+					
+				} else {
 					Game.continueLoginProcess();
+				}
 				
-			} else {
-				Game.continueLoginProcess();
-			}
-			
-		});
-	} catch (ex) {
-		Game.init();
-	};
+			});
+		} catch (ex) {
+			Game.init();
+		};
+	});
 };
 
 Game.showQuestionnaire = function(q) {
@@ -357,21 +377,24 @@ Game.finishQuestionnaire = function() {
 };
 
 Game.continueLoginProcess = function() {
-	try {
-		UserControl.loadTests(function(t) {
-			if (t != null) {
-				
-				if (!Game.showTests(t[0], t[1]))
+	Pace.track(function() {
+		
+		try {
+			UserControl.loadTests(function(t) {
+				if (t != null) {
+					
+					if (!Game.showTests(t[0], t[1]))
+						Game.continueLoginProcessEx();
+					
+				} else {
 					Game.continueLoginProcessEx();
+				}
 				
-			} else {
-				Game.continueLoginProcessEx();
-			}
-			
-		});
-	} catch (ex) {
-		Game.init();
-	};
+			});
+		} catch (ex) {
+			Game.init();
+		};
+	});
 	
 };
 
@@ -877,11 +900,13 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 
   Game.missionSelection = new MissionSelection(levelId);
   
-  try {
-	  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
-  } catch (ex) {
-	  Game.init();
-  }
+  Pace.track(function() {
+	  try {
+		  UserControl.loadMission(clazzId, levelId, missionIdx, Game.missionLoaded);
+	  } catch (ex) {
+		  Game.init();
+	  }
+  });
 
 };
 
@@ -917,7 +942,7 @@ Game.saveMission = function() {
 	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;
 	
-	var answer = Game.workspaceAnswer();
+	var answer = (Game.missionType === "multipleChoice"?"":Game.workspaceAnswer());
 	var timeSpent = Game.getTimeSpend();
 	
 	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, (Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), answer,
@@ -1147,9 +1172,11 @@ Game.changeStars = function(starNumber) {
 Game.afterInstallMachines = function(toolbox) {
 
   var mission = Game.mission;
-  if (Game.previousCode != null) // the user try this mission before, than load the previous code
+  if (Game.previousCode != null && Game.previousCode !==  "") // the user try this mission before, than load the previous code
 	  Game.nextPartOfMissionLoaded(false, toolbox, Game.previousCode, mission, Game.timeSpent);
   else {
+	  var firstTime = Game.previousCode == null;
+	  
 	  var sourceXML = mission.childNodes[0].getElementsByTagName("answers")[0];
 	  if (sourceXML == null) {
 		  sourceXML = mission.childNodes[0].getElementsByTagName("xml")[0];
@@ -1157,17 +1184,20 @@ Game.afterInstallMachines = function(toolbox) {
 
 	  var preload = sourceXML.getAttribute("preload");
 	  if (preload != null) {
-		  UserControl.loadAnswer(preload, function (ret) {
-			  if (ret != null)
-				  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission
-			  else
-				  ret = "<xml></xml>";
-			  Game.nextPartOfMissionLoaded(true, toolbox, ret, mission, 0);
+		  Pace.track(function() {
+			  UserControl.loadAnswer(preload, function (ret) {
+				  if (ret != null)
+					  ret = ret.replace(/deletable="false"/g, ""); // remove all deletable attribute from code of previous mission
+				  else
+					  ret = "<xml></xml>";
+				  Game.nextPartOfMissionLoaded(firstTime, toolbox, ret, mission, Game.timeSpent);
+			  });
+			  
 		  });
 	  }
 	  else {
 		  var outerHTML = sourceXML.outerHTML || (new XMLSerializer()).serializeToString(sourceXML);
-		  Game.nextPartOfMissionLoaded(true, toolbox, outerHTML, mission, 0);
+		  Game.nextPartOfMissionLoaded(firstTime, toolbox, outerHTML, mission, Game.timeSpent);
 	  }
   }
   
@@ -1177,43 +1207,47 @@ Game.afterInstallMachines = function(toolbox) {
 };
 
 Game.installMachines = function(toolbox) {
-	UserControl.loadMachinesFromUser(function(ret) {
+	Pace.track(function() {
 
-		for (var i = 0; i < ret.length; i++) {
+		UserControl.loadMachinesFromUser(function(ret) {
+
+			for (var i = 0; i < ret.length; i++) {
+				
+				var k = "machine" + ret[i][0];
+				var imgsrc = "images/" + k + ".png";
+				PreloadImgs.put(k, imgsrc, true);
+				
+				hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], k, ret[i][9], ret[i][10]);
+			}
 			
-			var k = "machine" + ret[i][0];
-			var imgsrc = "images/" + k + ".png";
-			PreloadImgs.put(k, imgsrc, true);
-			
-			hero.installMachine(ret[i][0], ret[i][1], ret[i][2], ret[i][3], ret[i][4], ret[i][5], ret[i][6], ret[i][7], ret[i][8], k, ret[i][9], ret[i][10]);
-		}
-		
-		if (ret.length > 0) {
-			toolbox = Game.loadToolBoxWithMachines(toolbox);
-			var selectedMachines = Game.mission.childNodes[0].getElementsByTagName("selectMachine");
-			if (selectedMachines.length > 0) {
+			if (ret.length > 0) {
+				toolbox = Game.loadToolBoxWithMachines(toolbox);
+				var selectedMachines = Game.mission.childNodes[0].getElementsByTagName("selectMachine");
+				if (selectedMachines.length > 0) {
 
-				var machines = selectedMachines[0].children;
-				if (ret.length == machines.length) {
+					var machines = selectedMachines[0].children;
+					if (ret.length == machines.length) {
 
-					Game.enabledBuy = false;
-					Game.disableButton('buyButton');
+						Game.enabledBuy = false;
+						Game.disableButton('buyButton');
+						
+					}
+					
+					if (hero.installedMachines.length == 1) { // reduce a half the slider capacity
+						Game.speedSlider.setValue(1);
+						Game.speedMultFactor = 125; 
+					}
+					Game.slider.svg.style.visibility = "visible";
 					
 				}
 				
-				if (hero.installedMachines.length == 1) { // reduce a half the slider capacity
-					Game.speedSlider.setValue(1);
-					Game.speedMultFactor = 125; 
-				}
-				Game.slider.svg.style.visibility = "visible";
-				
 			}
-			
-		}
-			
-	    Game.afterInstallMachines(toolbox);
+				
+		    Game.afterInstallMachines(toolbox);
 
-	});	
+		});	
+		
+	});
 };
 
 Game.loadToolBoxWithMachines = function(toolbox) {
@@ -1339,14 +1373,35 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 	
 };
 
+Game.submitMC = function() {
+	
+};
+
+Game.loadMultipleChoice = function(finalFunction) {
+
+	Game.talking = "";
+	Game.finalFunction = finalFunction;
+	
+	Game.execute(3);
+};
+
+Game.finishLoadMultipleChoice = function() {
+	
+	$("#MCoption1txt").html(Game.talking);
+	$("#MCoption2txt").html("OPCAO 2");
+	$("#MCoption3txt").html("OPCAO 3");
+	$("#MCoption4txt").html("OPCAO 4");
+	
+	Game.finalFunction();
+	
+};
+
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
 	
   var ret = Game.resizeWindow("exception"); // this line fixes the blockly size and position. This avoid some "flicks" when reload the page
  
   Game.speedSlider.setValue(0.5);
   Game.speedMultFactor = 0;
-    
-  
   
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
@@ -1403,7 +1458,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  
       CustomerManager.init(Game.openMission.open, Game.tests,
     		  			   data.childNodes[0].getElementsByTagName("customers")[0],
-    		  			   data.childNodes[0].getElementsByTagName("customersSN")[0]);
+    		  			   data.childNodes[0].getElementsByTagName("customersSN")[0],
+    		  			   Game.missionType === "multipleChoice");
       
 	  Game.reset();
 	  
@@ -1443,14 +1499,23 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(BlocklyApps.importPrettify, 1);
 	  
-	  Game.loadingMission = false; /// mission loaded
 	  
-	  if (Game.firstTime) {
-		  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
-	  } else {
-		  Game.verificationsBeforePlaying(!Game.showedWindowRunDisabled);
-			  
+	  var fx = function() {
+		  
+		  Game.loadingMission = false; /// mission loaded
+		  
+		  if (Game.firstTime) {
+			  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
+		  } else {
+			  Game.verificationsBeforePlaying(!Game.showedWindowRunDisabled);
+		  }
 	  }
+
+	  if (Game.missionType === "multipleChoice")
+		  Game.loadMultipleChoice(fx);
+	  else
+		  fx();
+
   };
   
   window.setTimeout(function(){loginLoaded(mission);}, 1); // i believe that this was necessary to load all the images 
@@ -2561,12 +2626,15 @@ Game.execute = function(debug) {
 
 	    Game.emptyLines();
 	  
-	    // Reset the graphic.
-	    Game.reset();
 
 	    Game.runningStatus = debug; // let here because the registration of the status in save mission
 	  
-		Game.saveMission();
+		if (debug != 3) {
+		    // Reset the graphic.
+		    Game.reset();
+
+			Game.saveMission();
+		}
 		
 		if (Blockly.selected != null) {
 			
@@ -2588,9 +2656,10 @@ Game.execute = function(debug) {
 	    Game.jsInterpreter = new NoBugsInterpreter(code, Game.initApi);
 
 		// BlocklyApps.log now contains a transcript of all the user's actions.
-        Game.stepSpeed = (1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor ;
+        Game.stepSpeed = (debug == 3?0:(1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor);
 	    
-        Game.lockBlockly();
+        if (debug != 3)
+        	Game.lockBlockly();
         
 	  } catch (e) {
 		  
@@ -2950,6 +3019,12 @@ Game.nextStep = function() {
 
 Game.verifyVictory = function() {
 	
+	if (Game.runningStatus == 3) {
+		Game.finishLoadMultipleChoice();
+		return;
+	}
+		
+	
 	if (Game.waitFunction) {
 		
 		hero.update('IM', 0);					
@@ -3223,6 +3298,14 @@ Game.removeChangeListeners = function() {
 /**********************************************************************
  *                          Finish block                              *
  **********************************************************************/
+Game.talk = function(t) {
+	
+	if (Game.runningStatus != 3)
+		hero.talk(t);
+	else
+		Game.talking = Game.talking + t + ";";
+	
+};
 
 Game.initApi = function(interpreter, scope) {
     // utilities commands
@@ -3461,7 +3544,7 @@ Game.initApi = function(interpreter, scope) {
       interpreter.createNativeFunction(wrapper));
     
 	wrapper = function(t) {
-	      return interpreter.createPrimitive(hero.talk(t));
+	      return interpreter.createPrimitive(Game.talk(t));
 	    };
 	    
 	interpreter.setProperty(scope, 'talk',
@@ -3588,6 +3671,9 @@ Game.highlightPause = false;
 
 Game.highlightBlock = function(id) {
 	
+	if (Game.runningStatus == 3)
+		return;
+	
 	if (!Blockly.mainWorkspace.traceOn_) // this happens when there was a previous block selected
 		Game.editor.traceOn(true);
 	
@@ -3629,7 +3715,7 @@ Game.animate = function() {
 
 	  // call the next animate when the animation of the last command has finished
 	  //if (Game.runningStatus === 1) 
-	  Game.stepSpeed =  (1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor ;
+	  Game.stepSpeed =  (Game.runningStatus == 3?0:(1000 * Math.pow(1 - Game.speedSlider.getValue(), 3)) + Game.speedMultFactor) ;
 
 	  Game.pidList.push( window.setTimeout(function() {Game.animate();}, Game.stepSpeed) );
    } else {
@@ -3652,10 +3738,13 @@ Game.step = function(command, values) {
   		return false;
 	}
 	
-	hero.animate(command, values);
-	CustomerManager.animation();
-	
-	Game.display();
+	if (Game.runningStatus != 3) { // 3 is when runs the multiple choice to give the answer
+		
+		hero.animate(command, values);
+		CustomerManager.animation();
+		
+		Game.display();
+	}
 	
 	return true;
 

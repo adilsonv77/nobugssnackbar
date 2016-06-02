@@ -26,9 +26,7 @@
 var CustomerManager = {};
 var customers = [];
 
-PreloadImgs.put('banco', 'images/banco.png');
-
-CustomerManager.init = function(openMission, tests, customers, sn) {
+CustomerManager.init = function(openMission, tests, customers, sn, showRandoms) {
 	
     this.banco = PreloadImgs.get("banco");
 
@@ -39,6 +37,7 @@ CustomerManager.init = function(openMission, tests, customers, sn) {
 	
 	this.randomization = [];
 	this.history = [];
+	this.showRandoms = showRandoms;
 
 	if (sn != undefined)
 		this.parseSN(sn);
