@@ -6,37 +6,39 @@ SelectLevel.generateBoard = function(evt) {
 
 	for (var i = 0; i < Game.loginData.missionHist.length; i++) {
 		
-		var levelInfo = Game.loginData.missionHist[i];
-		
-		var sDate = levelInfo[8].split("-");
-		var date = new Date(sDate[0], sDate[1]-1, sDate[2]); // month zero based
-		
-		
-		$("#level_"+(i+1)).removeClass();
-		
-		SelectLevel.drawDate("level_"+(i+1), sDate[2]+"/"+sDate[1]+"/"+sDate[0]);
-		
-		if (Date.now() >= date) {
+		if ($("#level_"+(i+1)).length > 0) {
 			
-			if (levelInfo[2] == levelInfo[3]) {
-				$("#level_"+(i+1)).addClass("levels");
-			} else {
-				if (levelInfo[9] == 0)
-					$("#level_"+(i+1)).addClass("levels").addClass("level_notcompleted");
-				else {
-					
-					var preReq = Game.loginData.missionHist[levelInfo[9]-1];
-					if (preReq[2] ==  preReq[3])
+			var levelInfo = Game.loginData.missionHist[i];
+			
+			var sDate = levelInfo[8].split("-");
+			var date = new Date(sDate[0], sDate[1]-1, sDate[2]); // month zero based
+			
+			$("#level_"+(i+1)).removeClass();
+			
+			SelectLevel.drawDate("level_"+(i+1), sDate[2]+"/"+sDate[1]+"/"+sDate[0]);
+			
+			if (Date.now() >= date) {
+				
+				if (levelInfo[2] == levelInfo[3]) {
+					$("#level_"+(i+1)).addClass("levels");
+				} else {
+					if (levelInfo[9] == 0)
 						$("#level_"+(i+1)).addClass("levels").addClass("level_notcompleted");
-					else
-						$("#level_"+(i+1)).addClass("levels_disabled");
+					else {
+						
+						var preReq = Game.loginData.missionHist[levelInfo[9]-1];
+						if (preReq[2] ==  preReq[3])
+							$("#level_"+(i+1)).addClass("levels").addClass("level_notcompleted");
+						else
+							$("#level_"+(i+1)).addClass("levels_disabled");
+					}
 				}
-			}
+				
+				
+			} else
+				$("#level_"+(i+1)).addClass("levels_disabled");
 			
-			
-		} else
-			$("#level_"+(i+1)).addClass("levels_disabled");
-		
+		}
 	}
 	
 	var fClose = function() {

@@ -136,6 +136,10 @@ BlocklyEditor.prototype.changeToFirstTab = function() {
 	// nothing to do
 };
 
+BlocklyEditor.prototype.selectTab = function(id) {
+	// nothing to do
+};
+
 BlocklyEditor.prototype.semanticAnalysis = function() {
 	Game.countInstructions(this.ws.getTopBlocks(), Game.semanticAnalysis);
 };
@@ -348,6 +352,18 @@ MultiBlockEditor.prototype.visibleTabs = function(id) {
 	this.blocklys.forEach(function(b) {
 		b.visibleTabs(id);
 	});
+};
+
+MultiBlockEditor.prototype.selectTab = function(id) {
+	Game.selectedTab = id;
+	Game.showTabs(id);
+	$('#multiBlockly').easytabs("select", "#" + (id));
+	Blockly.asyncSvgResize(Blockly.mainWorkspace);  // Blockly.fireUiEvent(window, 'resize');
+	
+	if (Game.counterInstruction != null) {
+		Game.counterInstruction.style.display = (id === "blockly1"?"inline":"none");
+		Game.updateCounterInstructions(-1);	
+	}
 };
 
 MultiBlockEditor.prototype.getXmlValue = function() {

@@ -1840,7 +1840,7 @@ public class GameJdbcDao implements GameDao {
 			bdCon.setAutoCommit(false);
 			
 			PreparedStatement ps = bdCon
-					.prepareStatement("insert into logclicks (userid, clickid, clickmoment) values (?, ?, ?)");
+					.prepareStatement("insert into logclicks (userid, clickid, clickmoment, missionid) values (?, ?, ?, ?)");
 			ps.setLong(1, userid);
 			
 			for (String[] click: clicks) {
@@ -1852,7 +1852,10 @@ public class GameJdbcDao implements GameDao {
 					Date d = new Date(l);
 					
 					ps.setString(3, sdf.format(d));
-					//ps.setTimestamp(3, new java.sql.Timestamp(Long.parseLong(click[1])));
+					if (click[2] == null)
+						ps.setNull(4, java.sql.Types.INTEGER);
+					else
+						ps.setInt(4, Integer.parseInt(click[2]));
 					ps.executeUpdate();
 				}
 			}

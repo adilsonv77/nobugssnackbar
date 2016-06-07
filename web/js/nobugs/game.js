@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160601;
+Game.version = 20160602;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -70,6 +70,8 @@ Game.useCodeEditor = false;
 Game.editor = null;
 Game.clickReseting = false;
 Game.preHook;
+
+Game.hdlSaveClicks = 0;
 
 Game.generalInit = function() {
 	  Game.dwrInitialization();
@@ -238,6 +240,14 @@ Game.init = function() {
 
 window.addEventListener('load', Game.generalInit);
 
+Game.saveClicks = function() {
+	window.clearTimeout(Game.hdlSaveClicks);
+	
+	LogClick.save(false);
+	
+	Game.hdlSaveClicks = window.setTimeout(Game.saveClicks, 60000);
+};
+
 Game.resizeMainWindow = function() {
 	/*
 	var lu = document.getElementById("loginuser");
@@ -319,6 +329,10 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard,
 	 *   ----
 	 *   0 - null, means that the user can't see the leaderboard. Then the parameter 1 has the minimum mission accomplished for this user see it.
 	 */
+	
+	window.clearTimeout(Game.hdlSaveClicks);
+	Game.hdlSaveClicks = window.setTimeout(Game.saveClicks, 60000);
+
 	Game.loginData = {userLogged: u, doingLogoff: false, missionHist: missionsHistorical, leaderBoard: leaderBoard, avatar: avatar,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes),
 					     xpToSpecialSkin:parseInt(xpToSpecialSkin), xpToAdd:parseInt(xpToAdd), coinsToExtra:parseInt(coinsToExtra) };
@@ -912,7 +926,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 
 Game.unload = function(e) {
 
-  	LogClick.save(false); // after performs the method, it is allowed to continue
+	Game.saveClicks(); // after performs the method, it is allowed to continue
 
 	Game.saveMission();
 	
@@ -953,6 +967,8 @@ Game.saveMission = function() {
 };
 
 Game.missionLoaded = function(ret){
+  
+  var missionId = parseInt(ret[8]);
   Game.showedWindowRunDisabled = false;
 	  
   Game.howManyRuns = parseInt(ret[4]);
@@ -1108,6 +1124,7 @@ Game.missionLoaded = function(ret){
   
   Game.noXP = objectives.getAttribute("noXP") !== null;
   Game.mission = mission;
+  Game.mission.id = missionId;
 
   Game.assignIngrid(); // I mustn't remove this line. The variable window seems ugly
   
@@ -1635,7 +1652,7 @@ Game.beforeFinishMission = function() {
     
 	//TODO animar o cooker no final da missao
     LogClick.store("dialogVictory-before");
-    LogClick.save(false);
+    Game.saveClicks();
     
 	//var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
     var answer = Game.workspaceAnswer(); //Blockly.Xml.domToText(xml);
@@ -2157,7 +2174,9 @@ Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
     
     Game.editor.dispose();
     Game.missionSelection.dispose();
-	
+    
+    Game.mission = null;
+    
 	if (callExitMission !== false) { // this peace of code runs when the user clicks the logoff button
 		
 		Game.exitMission(ret[0], ret[1]);
@@ -2301,9 +2320,9 @@ Game.logoffButtonClick = function() {
 	
 	sessionStorage.removeItem("logged");
 	
-	LogClick.save(false); // store the cache 
+	Game.saveClicks(); 
 	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff
-	
+	Game.mission = null;
 	// passing callback and async is necessary in FF, because, when unloads the page, it doesnt guarantee the ajax method is called 
 	UserControl.logoff({callback:function(){
 		Game.loginData = null;
@@ -2538,18 +2557,7 @@ Game.showTabs = function(id) {
 
 Game.selectTab = function(id) {
 	
-	if (id === "blockly") return;
-	
-	Game.selectedTab = id;
-	Game.showTabs(id);
-	$('#multiBlockly').easytabs("select", "#" + (id));
-	Blockly.asyncSvgResize(Blockly.mainWorkspace);  // Blockly.fireUiEvent(window, 'resize');
-	
-	if (Game.counterInstruction != null) {
-		Game.counterInstruction.style.display = (id === "blockly1"?"inline":"none");
-		Game.updateCounterInstructions(-1);	
-	}
-	
+	Game.editor.selectTab(id);
 };
 
 Game.changeTab = function(id, f) {
@@ -3904,8 +3912,8 @@ $(document).on('click', function(e) {
 	if (e.target.id !== "ButtonLogin" && (Game.loginData == null || Game.loginData == undefined)) 
 		return;
 	
-	
 	var t = e.target;
+	
 	if (t.nodeName === "svg") {
 		return;
 	}
@@ -3921,14 +3929,15 @@ $(document).on('click', function(e) {
 		if (e.target.nodeName === "image") {
 			var cp = e.target.getAttribute("clip-path");
 			if (cp != null)
-				LogClick.store(cp.substring(5));
+				LogClick.store(cp.substring(5), t);
 			return;
 		}
 		
 		return;
 	}
 	
-	LogClick.store(t.id);
+	
+	LogClick.store(t.id, t);
 });
 
 Game.onObjectiveAccomplished = function(params) {

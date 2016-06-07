@@ -241,7 +241,7 @@ public class UserControl {
 		
 		this.achievedMission = r[0][7].equals( "T" );
 
-		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5], r[0][6], r[0][7], r[0][8] };
+		return new String[] { r[0][1], r[0][2], r[0][3], r[0][4], r[0][5], r[0][6], r[0][7], r[0][8], r[0][0] };
 	}
 
 	@RemoteMethod
