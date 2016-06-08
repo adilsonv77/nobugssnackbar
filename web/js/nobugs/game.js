@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160602;
+Game.version = 20160608;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -793,7 +793,7 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 	if (finishedMission) {
 		
 //		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
-		// if the quantity of solve mission is equal to the total number missions
+		// if the quantity of solved mission is equal to the total number missions
 		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]){
 			Game.goBackToDashboard(null, false);
 			Game.init();
@@ -956,7 +956,7 @@ Game.saveMission = function() {
 	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;
 	
-	var answer = (Game.missionType === "multipleChoice"?"":Game.workspaceAnswer());
+	var answer = (Game.missionType === "multipleChoice"?Game.answerMultipleChoice():Game.workspaceAnswer());
 	var timeSpent = Game.getTimeSpend();
 	
 	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, (Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), answer,
@@ -972,7 +972,6 @@ Game.missionLoaded = function(ret){
   Game.showedWindowRunDisabled = false;
 	  
   Game.howManyRuns = parseInt(ret[4]);
-  Game.previousCode = ret[2];
   Game.zoomLevel = parseFloat(ret[5]);
   Game.missionView = ret[6] === "T"; // it's an achieved mission
 	
@@ -1003,6 +1002,8 @@ Game.missionLoaded = function(ret){
 		  }
 	  }
   
+  Game.previousCode = (Game.missionType === "multipleChoice"&&ret[2]!=null?mission.childNodes[0].getElementsByTagName("xml")[0].outerHTML:ret[2]);
+
   if (previousMCDisplay !== newMCDisplay) {
 	  $("#MCAnswerBox").css("display", newMCDisplay);
   }
@@ -1057,7 +1058,7 @@ Game.missionLoaded = function(ret){
 	  Game.slider.timesBefore = parseInt(slider[0].getAttribute("timesBefore"));
   }
   // if the slider is not loaded in the begin, then the hint show it 
-  if (Game.howManyRuns >= Game.slider.timesBefore) {
+  if (Game.missionType !== "multipleChoice" && Game.howManyRuns >= Game.slider.timesBefore) {
 	  Game.slider.svg.style.visibility = "visible";
   }
   
@@ -1225,7 +1226,7 @@ Game.afterInstallMachines = function(toolbox) {
 
 Game.installMachines = function(toolbox) {
 	Pace.track(function() {
-
+		/* for now this feature doesnt exist 
 		UserControl.loadMachinesFromUser(function(ret) {
 
 			for (var i = 0; i < ret.length; i++) {
@@ -1260,9 +1261,10 @@ Game.installMachines = function(toolbox) {
 				
 			}
 				
-		    Game.afterInstallMachines(toolbox);
 
 		});	
+		*/
+	    Game.afterInstallMachines(toolbox);
 		
 	});
 };
@@ -1392,6 +1394,35 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 
 Game.submitMC = function() {
 	
+	// shows the variable window even it is running
+	Game.talking = "";
+	Game.debug(4);
+	
+};
+
+Game.finishMultipleChoiceRunning = function() {
+	Game.talking = Game.talking.substr(0, Game.talking.length-1);
+	var res = ($("input[name=MCoption]:checked").val() === Game.talking);
+	if (!res) {
+		var content = document.getElementById('dialogError');
+		var container = document.getElementById('dialogErrorText');
+
+		container.innerHTML = BlocklyApps.getMsg("NoBugs_noGoalAchievedVictory");
+		
+		MyBlocklyApps.showDialog(content, null, true, true, true, null, {width: "600px"},
+
+				function(){
+				  
+				  Game.reset();
+				  Game.variableBox.style.display = "none";
+				  Game.loadMultipleChoice(null);
+				  Game.unlockBlockly();
+				  Game.doResizeWindow();
+				}
+		);
+		
+	}
+	return res;
 };
 
 Game.loadMultipleChoice = function(finalFunction) {
@@ -1404,12 +1435,37 @@ Game.loadMultipleChoice = function(finalFunction) {
 
 Game.finishLoadMultipleChoice = function() {
 	
-	$("#MCoption1txt").html(Game.talking);
-	$("#MCoption2txt").html("OPCAO 2");
-	$("#MCoption3txt").html("OPCAO 3");
-	$("#MCoption4txt").html("OPCAO 4");
+	// remove the last ";"
+	Game.talking = Game.talking.substr(0, Game.talking.length-1);
 	
-	Game.finalFunction();
+	var mc = Game.mission.childNodes[0].getElementsByTagName("multipleChoice")[0];
+	
+	var result = mc.getAttribute("result");
+	result = eval(result);
+	
+	var answers = [Game.talking];
+	var ia = mc.getElementsByTagName("answer");
+	for (var i=0; i<ia.length; i++) {
+		var c = ia[i].getAttribute("condition");
+		if (c !== null) {
+			var b = eval(c);
+			if (b)
+				answers.push(eval(ia[i].innerHTML));
+		} else
+			answers.push(eval(ia[i].innerHTML));
+	}
+	
+	// shuffle the array
+	answers.sort(function(){return 0.5 - Math.random()});
+	
+	for (var i=0; i<answers.length; i++) {
+		var id = "#MCoption"+(i+1);
+		$(id+"txt").html(answers[i]);
+		$(id).val(answers[i]);
+	}
+		
+	if (Game.finalFunction != null)
+		Game.finalFunction();
 	
 };
 
@@ -1618,8 +1674,8 @@ Game.moveBlocks = function() {
 };
 
 Game.verifyButtons = function(objectives) {
-	Game.enabledDebug = objectives.getAttribute("buttonDebug") !== "false";
-	Game.enabledRun = objectives.getAttribute("buttonRun") !== "false";
+	Game.enabledDebug = Game.missionType !== "multipleChoice" && objectives.getAttribute("buttonDebug") !== "false";
+	Game.enabledRun = Game.missionType !== "multipleChoice" && objectives.getAttribute("buttonRun") !== "false";
 	Game.qtAttempts = (objectives.getAttribute("buttonRunQtdAttempts"));
 	if (Game.qtAttempts != null) {
 		Game.qtAttempts = parseInt(Game.qtAttempts);
@@ -1654,8 +1710,13 @@ Game.beforeFinishMission = function() {
     LogClick.store("dialogVictory-before");
     Game.saveClicks();
     
-	//var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-    var answer = Game.workspaceAnswer(); //Blockly.Xml.domToText(xml);
+    var answer = "";
+    
+    if (Game.runningStatus < 4)
+    	answer = Game.workspaceAnswer();
+    else {
+    	answer = Game.answerMultipleChoice();
+    }
 
 	var now = new Date().getTime();
 	var timeSpent = Math.floor((now - Game.currTime)/1000);
@@ -1663,6 +1724,18 @@ Game.beforeFinishMission = function() {
 	return {timeSpent: timeSpent, answer: answer};
 	
 };
+
+Game.answerMultipleChoice = function() {
+	var answer = "";
+	
+	var mcoptions = $("input[name=MCoption]");
+	for (var ii=0;ii<mcoptions.length;ii++)
+		answer = answer + mcoptions[ii].value + (ii<mcoptions.length-1?";":"");
+	// answer = falta guardar as configuracoes dos clientes
+	
+	return answer;
+}
+
 
 Game.showDialogVictory = function(out) {
 	
@@ -2436,11 +2509,16 @@ Game.firstClick = true;
  * Click the debug button.  Start the program/go to next line.
  */
 Game.debugButtonClick = function() {
-	 
+	Game.debug(2);
+};
+
+Game.debug = function(status) {
+	
 	Game.disableButton('debugButton');
 	if (Game.runningStatus === 0) {
 		
-		Game.enableButton('resetButton');
+		if (status === 2)
+			Game.enableButton('resetButton');
 
 		if (Game.enabledVarWindow) {
 			Game.closeBoxes();
@@ -2461,8 +2539,9 @@ Game.debugButtonClick = function() {
 		
 	}
 	
-	Game.execute(2);
-};
+	Game.execute(status);
+	
+}
 
 Game.musicControlClick = function() {
 	
@@ -2537,10 +2616,7 @@ Game.resetButtons = function(hideVars) {
 
 Game.finishedRun = function() {
 	
-/*	// if it's in a fix bugs mission, start to count the attempts after the second run
-	if ((Game.missionType !== "fixBugs") || (Game.missionType === "fixBugs" && Game.howManyRuns > 1))
-*/	
-		CountXP.newRun(); // after run, or after an error, then count the runs
+	CountXP.newRun(); // after run, or after an error, then count the runs
 	
 };
 
@@ -2637,7 +2713,7 @@ Game.execute = function(debug) {
 
 	    Game.runningStatus = debug; // let here because the registration of the status in save mission
 	  
-		if (debug != 3) {
+		if (debug < 3) {
 		    // Reset the graphic.
 		    Game.reset();
 
@@ -2897,7 +2973,7 @@ Game.updateVariables = function() {
 				
 		if (found) {
 
-			if (Game.runningStatus == 2) {
+			if (Game.runningStatus == 2 || Game.runningStatus == 4) {
 				
 				// only show the variables in current scope
 				var data = entry.scope.properties[entry.name].data;
@@ -3028,9 +3104,16 @@ Game.nextStep = function() {
 Game.verifyVictory = function() {
 	
 	if (Game.runningStatus == 3) {
+		Game.runningStatus = 0;
 		Game.finishLoadMultipleChoice();
 		return;
-	}
+	} else
+		if (Game.runningStatus == 4) {
+			if (!Game.finishMultipleChoiceRunning()) {
+				Game.runningStatus = 0;
+				return;
+			}
+		}
 		
 	
 	if (Game.waitFunction) {
@@ -3046,18 +3129,23 @@ Game.verifyVictory = function() {
 
     Game.editor.highlightBlock(null);
     
-    hero.verifyObjectives("deliver", {allCustomers:true});
-    hero.verifyObjectives("varQtd", null);
-    hero.verifyObjectives("commQtd", null);
-    hero.verifyObjectives("notExists", null);
-    hero.verifyObjectives("cashIn", {allCustomers:true});
-    hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
-    hero.verifyObjectives("giveSomeChange", {allCustomers:true});
-    hero.verifyObjectives("talk", {allCustomers:true});
-    hero.verifyObjectives("countTalk", {allCustomers:true});
-    hero.verifyObjectives("conditional", {allCustomers:true});
-    hero.verifyObjectives("callTimes", {allCustomers:true});
-    hero.verifyObjectives("ordered", null);
+    if (Game.runningStatus < 4) {
+    	
+        hero.verifyObjectives("deliver", {allCustomers:true});
+        hero.verifyObjectives("varQtd", null);
+        hero.verifyObjectives("commQtd", null);
+        hero.verifyObjectives("notExists", null);
+        hero.verifyObjectives("cashIn", {allCustomers:true});
+        hero.verifyObjectives("giveTheWholeChange", {allCustomers:true});
+        hero.verifyObjectives("giveSomeChange", {allCustomers:true});
+        hero.verifyObjectives("talk", {allCustomers:true});
+        hero.verifyObjectives("countTalk", {allCustomers:true});
+        hero.verifyObjectives("conditional", {allCustomers:true});
+        hero.verifyObjectives("callTimes", {allCustomers:true});
+        hero.verifyObjectives("ordered", null);
+
+    } else
+    	hero.allObjectivesAchieved = true;
     
     Game.lastErrorData.block = null;
     
@@ -3113,68 +3201,73 @@ Game.verifyVictory = function() {
 		}
 		
 
-    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, Game.howManyRuns, Game.missionFinishable, Game.runningStatus, Blockly.getMainWorkspace().scale, r.answer, function(achievements){
-    		
-    		var achievementTitle = BlocklyApps.getMsg("Achievement_Title");
-    		achievements.forEach(function(achievement) {
-    			var title = AchievementWindow.fillFields(BlocklyApps.getMsg(achievement['TITLE']),
-    															achievement);
-    			$.growl($.extend({title:achievementTitle, style: "notice", duration: 5000}, 
-    					         {message : title}));	
-    		});
-    		
-    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
-    		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
-    		
-    		if (reward.totalXP == 0) {
-    			msg = msg.substring(0, msg.indexOf("<br/>"));
-    		}
-    		
-    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2));
-    		if (reward.totalXP > 0)
-    			out = out + "<br/>";
-    		
-    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
+    	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, 
+    			Game.howManyRuns, Game.missionFinishable, Game.runningStatus, 
+    			Blockly.getMainWorkspace().scale, r.answer,
     			
-	    		var out2;
+	    	function(achievements){
 	    		
-	    		if (reward.baseXP != reward.totalXP) {
-	    			
-	    			out2 = "<table border='2px'  class='tableVictory' >";
-		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_XPBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
-		    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
-		    		for (var i=0; i < reward.bonusXP.length; i++) {
-		    			var b = BlocklyApps.getMsg(reward.bonusXP[i].name);
-		    			var s = b.format(reward.bonusXP[i].extraInfo);
-		    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusXP[i].value + "</td></tr>";   
-		    		}
-
-		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalXP + "</td></tr>";
-		    		out = out + out2 + "</table>";
+	    		var achievementTitle = BlocklyApps.getMsg("Achievement_Title");
+	    		achievements.forEach(function(achievement) {
+	    			var title = AchievementWindow.fillFields(BlocklyApps.getMsg(achievement['TITLE']),
+	    															achievement);
+	    			$.growl($.extend({title:achievementTitle, style: "notice", duration: 5000}, 
+	    					         {message : title}));	
+	    		});
+	    		
+	    		var msg = BlocklyApps.getMsg("NoBugs_goalAchievedVictory");
+	    		var xp2 = "<img style='vertical-align: middle; padding-left: 3px' src='images/xp.png'/>";
+	    		
+	    		if (reward.totalXP == 0) {
+	    			msg = msg.substring(0, msg.indexOf("<br/>"));
 	    		}
-
-	    		if (reward.bonusCoins != reward.totalCoins) {
-
-	    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
-	    					                       "<img style='vertical-align: middle; padding-left: 3px' src='images/coin2.png'/>") + "<br/>";
+	    		
+	    		var out = msg.format((reward.totalXP == 0 ? "" : reward.totalXP + xp2));
+	    		if (reward.totalXP > 0)
+	    			out = out + "<br/>";
+	    		
+	    		if (reward.baseXP != reward.totalXP || reward.bonusCoins != reward.totalCoins) {
 	    			
-	    			out2 = out2 + "<table border='2px' class='tableVictory' >";
-	    			
-		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_CoinsBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseCoins + "</td></tr>";
-		    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
-		    		for (var i=0; i < reward.bonusCoins.length; i++) {
-		    			var b = BlocklyApps.getMsg(reward.bonusCoins[i].name);
-		    			var s = b.format(reward.bonusCoins[i].extraInfo);
-		    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusCoins[i].value + "</td></tr>";   
+		    		var out2;
+		    		
+		    		if (reward.baseXP != reward.totalXP) {
+		    			
+		    			out2 = "<table border='2px'  class='tableVictory' >";
+			    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_XPBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseXP + "</td></tr>";
+			    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+			    		for (var i=0; i < reward.bonusXP.length; i++) {
+			    			var b = BlocklyApps.getMsg(reward.bonusXP[i].name);
+			    			var s = b.format(reward.bonusXP[i].extraInfo);
+			    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusXP[i].value + "</td></tr>";   
+			    		}
+	
+			    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalXP + "</td></tr>";
+			    		out = out + out2 + "</table>";
 		    		}
-		    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalCoins + "</td></tr>";
-		    		out = out + out2 + "</table>";
+	
+		    		if (reward.bonusCoins != reward.totalCoins) {
+	
+		    			out2 = BlocklyApps.getMsg("NoBugs_goalAchievedVictoryWithCoins").format(reward.totalCoins + 
+		    					                       "<img style='vertical-align: middle; padding-left: 3px' src='images/coin2.png'/>") + "<br/>";
+		    			
+		    			out2 = out2 + "<table border='2px' class='tableVictory' >";
+		    			
+			    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("Victory_CoinsBaseValue") + " </td><td align='right' style='width: 50px;'> " + reward.baseCoins + "</td></tr>";
+			    		out2 = out2 + "<tr><td colspan='2'>" + BlocklyApps.getMsg("Victory_Bonus") + "</td></tr>" ;
+			    		for (var i=0; i < reward.bonusCoins.length; i++) {
+			    			var b = BlocklyApps.getMsg(reward.bonusCoins[i].name);
+			    			var s = b.format(reward.bonusCoins[i].extraInfo);
+			    			out2 = out2 + "<tr><td> <img src='images/goal_ok.png'/>&nbsp;" + s + "</td> <td align='right' style='width: 50px;'>" + reward.bonusCoins[i].value + "</td></tr>";   
+			    		}
+			    		out2 = out2 + "<tr style='font-weight:bold'><td>" + BlocklyApps.getMsg("total") +"</td><td align='right' >" + reward.totalCoins + "</td></tr>";
+			    		out = out + out2 + "</table>";
+		    		}
+	
 	    		}
-
+	    		
+	    		Game.showDialogVictory(out);
     		}
-    		
-    		Game.showDialogVictory(out);
-    	});
+    	);
     	
     } else {
     	ret = false;
@@ -3308,7 +3401,7 @@ Game.removeChangeListeners = function() {
  **********************************************************************/
 Game.talk = function(t) {
 	
-	if (Game.runningStatus != 3)
+	if (Game.runningStatus < 3)
 		hero.talk(t);
 	else
 		Game.talking = Game.talking + t + ";";
@@ -3763,7 +3856,7 @@ Game.showError = function(iderror) {
 	Game.finishedRun();
 	
 	Hints.stopHintsEx();
-	Game.lastErrorData.iderror = iderror[0];
+	Game.lastErrorData.iderror = iderror[0]; 
 	
 	var content = document.getElementById('dialogError');
 	var container = document.getElementById('dialogErrorText');

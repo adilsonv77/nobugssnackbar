@@ -53,7 +53,9 @@ window.prompt = function(one, two, onclose) {
 	window_prompt_onclose = onclose;
 	window_prompt_second_parameter = two;
 	
-	Blockly.fireUiEventNow(window, 'showWindowPrompt');
+	var event = new CustomEvent("showWindowPrompt");
+	window.dispatchEvent(event);
+	//Blockly.fireUiEventNow(window, 'showWindowPrompt');
 	
 	Hints.stopHints();
 	NoBugsWindowPrompt(one, two, performWindowPrompt, null);

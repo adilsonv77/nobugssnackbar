@@ -98,12 +98,19 @@ Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o se
 		</customer>
 
 	</customers>
-	<objectives missionType="multipleChoice" variableWindow="true" buttonRun="false"
+	<objectives missionType="multipleChoice" variableWindow="true" 
 				xpIndividual="10" xpFinal="5" xpTotalRun="9">
 				
-		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective text="um n&#250;mero" value="CustomerManager.totalOfFood()">talk</objective>
 		
 	</objectives>	
+	
+	<multipleChoice result="CustomerManager.totalOfFood()">
+		<answer>result+1</answer>
+		<answer condition="result &gt; 0">result-1</answer>
+		<answer condition="result === 0">result+3</answer>
+		<answer>result+2</answer>
+	</multipleChoice>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
 		<block type="variables_set" deletable="false" x="50" y="15">

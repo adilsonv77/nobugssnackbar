@@ -41,7 +41,7 @@ Tests.createForm = function (test) {
 	tr.appendChild(td);
 	
 	div.appendChild(table);
-	// TODO adicionar uma nota que a continuação de um teste interrompido
+	// TODO adicionar uma nota que a continuaï¿½ï¿½o de um teste interrompido
 	
 	span = document.createElement("span");
 	
@@ -480,7 +480,7 @@ Tests.hideElements = function() {
 	a.className = "move-down";
 	a.onclick = Tests.showElements;
 	
-	Blockly.fireUiEvent(window, 'resize');
+	Blockly.asyncSvgResize(Blockly.mainWorkspace);  // Blockly.fireUiEvent(window, 'resize');
 };
 
 Tests.showElements = function() {
@@ -495,7 +495,7 @@ Tests.showElements = function() {
 	a.className = "move-up";
 	a.onclick = Tests.hideElements;
 
-	Blockly.fireUiEvent(window, 'resize');
+	Blockly.asyncSvgResize(Blockly.mainWorkspace);  // Blockly.fireUiEvent(window, 'resize');
 };
 
 Tests.closeDrop = function() {

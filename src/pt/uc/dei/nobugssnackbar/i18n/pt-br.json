@@ -72,6 +72,7 @@
 	
 	"NoBugs.goalAchievedVictory" : "Voc&#234; finalizou todos os objetivos da miss&#227;o. \nn \nn Voc&#234; recebeu no total %0.",
 	"NoBugs.goalAchievedFail" : "Voc&#234; n&#227;o concluiu todos os objetivos da miss&#227;o. &#60;br/&#62;&#60;br/&#62; Tente novamente.",
+	"NoBugs.noGoalAchievedVictory" : "Voc&#234; n&#227;o selecionou a resposta correta. \nn \nn Tente novamente.",
 	
 	"NoBugs.noMoreMissions" : "Voc&#234; j&#225; &#233; um expert no assunto. Neste instante, n&#227;o existem mais miss&#245;es para si. Entraremos em contacto quando forem liberadas novas miss&#245;es. Entretanto, voc&#234; pode rever suas miss&#245;es.",
 	"NoBugs.Review" : "Rever",
