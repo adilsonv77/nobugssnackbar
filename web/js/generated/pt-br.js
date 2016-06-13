@@ -122,7 +122,7 @@ if (typeof achievements == 'undefined') { var achievements = {}; }
 
 
 achievements.msgsachievements = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Achievement_Title">Conquistas</span><span id="Achievement_FinishedBeforeFinalDate_Title">Finalizar fase dentro do prazo</span><span id="Achievement_FinishedBeforeFinalDate_Description">Finalize a fase [%FASE%] até [%FINISHDATE%] para receber pontos extras na Prova [%EVALUATION%]</span></div>';
+  return '<div style="display: none"><span id="Achievement_Title">Conquistas</span><span id="Achievement_FinishedBeforeFinalDate_Title">Finalizar fase dentro do prazo</span><span id="Achievement_FinishedBeforeFinalDate_Description">Finalize a fase [%FASE%] até [%FINISHDATE%] para receber pontos extras na Prova [%EVALUATION%]</span><span id="Achievement_FinishedBeforeFinalDate_Description2">Finalize a fase [%FASE%] até [%FINISHDATE%] para receber moedas</span></div>';
 };
 
 

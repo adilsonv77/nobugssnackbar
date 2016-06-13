@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-06-13 16:45:25.800000",
+		"lastupdated": "2016-06-13 19:36:23.363000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -297,6 +297,7 @@
 	"NoBugs.Achievements": "Achievements",
 	"Achievement.FinishedBeforeFinalDate_Title": "NONONO",
 	"Achievement.FinishedBeforeFinalDate_Description": "NONONO",
+	"Achievement.FinishedBeforeFinalDate_Description2": "NONONO",
 	"Avatar.Body": "Body",
 	"Avatar.Hat": "Hat",
 	"Avatar.Clothes": "Clothes",

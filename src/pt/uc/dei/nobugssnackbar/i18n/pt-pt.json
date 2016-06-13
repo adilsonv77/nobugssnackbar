@@ -383,6 +383,7 @@
 
 	"Achievement.FinishedBeforeFinalDate_Title" : "Finalizar fase dentro do prazo",
 	"Achievement.FinishedBeforeFinalDate_Description": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%] para receber pontos extras na Prova [%EVALUATION%]",
+	"Achievement.FinishedBeforeFinalDate_Description2": "Finalize a fase [%FASE%] at&#233; [%FINISHDATE%] para receber moedas",
 
 	"Confirm.Reloadblocks" : "Todo o progresso na sua solu&#231;&#227;o ser&#225; perdida. Confirma recarregar com os blocos iniciais ?",
 

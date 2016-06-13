@@ -274,8 +274,14 @@ public class UserControl {
 		
 		if (achieved) {
 			
-			ret = achievDao.verifyAchievements(this.user.getId(), this.classid);
+			long beforeXP = this.user.getXp();
+			long beforeCoins = this.user.getMoney();
 			
+			ret = achievDao.verifyAchievements(this.user.getId(), this.classid, this.user);
+			
+			if (this.user.getXp() > beforeXP || this.user.getMoney() > beforeCoins) {
+				gameDao.saveUserRewards(user);
+			}
 			// when saveMission is called with achieved = true, this means that
 			// finished the mission
 			this.classid = 0;

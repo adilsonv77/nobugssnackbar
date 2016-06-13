@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.model.Achievement;
+import pt.uc.dei.nobugssnackbar.model.User;
 
 public class AchievementJdbcDao implements AchievementDao {
 
@@ -130,7 +131,7 @@ public class AchievementJdbcDao implements AchievementDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Map<String, String>> verifyAchievements(long userId, long classId)
+	public List<Map<String, String>> verifyAchievements(long userId, long classId, User user)
 			throws SQLException {
 		
 		Connection bdCon = null;
@@ -140,7 +141,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			bdCon = getConnection();
 			List<Object[]> rl = new ArrayList<>();
 			
-			String sql = "select achievementtypeclasseid, title, query from achievementtypes join achievementtypesclasses using (achievementtypeid) "
+			String sql = "select achievementtypeclasseid, title, query, rewardxp, rewardcoins from achievementtypes join achievementtypesclasses using (achievementtypeid) "
 								+ "left outer join (select * from achievements where userid=?) achieveusers using (achievementtypeclasseid) where classid = ? and userid is null";
 			PreparedStatement ps = bdCon.prepareStatement(sql);
 			ps.setLong(1, userId);
@@ -148,7 +149,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				rl.add(new Object[]{Long.parseLong(rs.getString(1)), rs.getString(2), rs.getString(3), new HashMap<String, String>()});
+				rl.add(new Object[]{Long.parseLong(rs.getString(1)), rs.getString(2), rs.getString(3), new HashMap<String, String>(), rs.getLong(4), rs.getLong(5)});
 			}
 			ps.close();
 			
@@ -199,6 +200,15 @@ public class AchievementJdbcDao implements AchievementDao {
 				if (rs.next()) {
 					res.add((Map<String, String>) rl.get(i)[3]);
 					achievs.add((Long) rl.get(i)[0]);
+					if (((Long)rl.get(i)[4]>0) || ((Long)rl.get(i)[5]>0) ) {
+						if ((Long)rl.get(i)[4]>0) { // reward xp
+							user.setXp(user.getXp() + (Long)rl.get(i)[4]);
+						}
+						
+						if ((Long)rl.get(i)[5]>0) { // reward coins
+							user.setMoney(user.getMoney() + (Long)rl.get(i)[5]);
+						}
+					} 
 				}
 				rs.close();
 			}

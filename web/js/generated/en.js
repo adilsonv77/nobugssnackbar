@@ -122,7 +122,7 @@ if (typeof achievements == 'undefined') { var achievements = {}; }
 
 
 achievements.msgsachievements = function(opt_data, opt_ignored, opt_ijData) {
-  return '<div style="display: none"><span id="Achievement_Title">Achievements</span><span id="Achievement_FinishedBeforeFinalDate_Title">NONONO</span><span id="Achievement_FinishedBeforeFinalDate_Description">NONONO</span></div>';
+  return '<div style="display: none"><span id="Achievement_Title">Achievements</span><span id="Achievement_FinishedBeforeFinalDate_Title">NONONO</span><span id="Achievement_FinishedBeforeFinalDate_Description">NONONO</span><span id="Achievement_FinishedBeforeFinalDate_Description2">NONONO</span></div>';
 };
 
 
