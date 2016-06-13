@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160608;
+Game.version = 20160614;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -794,7 +794,7 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 		
 //		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
 		// if the quantity of solved mission is equal to the total number missions
-		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]){
+		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]-1){
 			Game.goBackToDashboard(null, false);
 			Game.init();
 			
@@ -1116,7 +1116,12 @@ Game.missionLoaded = function(ret){
 	  xpIndiv = hero.objective.xpFinal;
 	  cfg.freeWizardConsumed = false;
   }
-  
+
+  if (Game.missionType === "fixBugs" && !Game.missionView) {
+	  $("#restartBlocksButton").css("display", "inline");
+  } else
+	  $("#restartBlocksButton").css("display", "none");
+
   $("#playerRewardMission").css("display", (Game.missionView || !Game.pointsInThisMission?"none":"inline"));
   CountXP.config(byTime, cfg,
 		         xpIndiv, hero.objective.xpFinal,
@@ -1562,12 +1567,6 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  BlocklyApps.bindClick('moveRight', Game.moveRightButtonClick);
 	  BlocklyApps.bindClick('moveRightTipBox', Game.moveRightTipBoxButtonClick);
 
-	  if (Game.missionType === "fixBugs" && !Game.missionView) {
-		  $("#restartBlocksButton").css("display", "inline");
-	  } else
-		  $("#restartBlocksButton").css("display", "none");
-	  
-	  
 	  Game.unlockBlockly();
 	  // Lazy-load the syntax-highlighting.
 	  window.setTimeout(BlocklyApps.importPrettify, 1);
