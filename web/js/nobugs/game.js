@@ -244,6 +244,7 @@ Game.saveClicks = function() {
 	window.clearTimeout(Game.hdlSaveClicks);
 	
 	LogClick.save(false);
+	Game.display();
 	
 	Game.hdlSaveClicks = window.setTimeout(Game.saveClicks, 60000);
 };
@@ -854,6 +855,10 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   }
 	
   Blockly.clipboard_ = [];
+  Blockly.clipboardXml_= null;
+  Game.blocksSelected = [];
+  Blockly.selected = null;
+  
   Game.loadingMission = true;
   
   Game.loginData.clazzId = parseInt(clazzId);
@@ -2681,6 +2686,7 @@ Game.execute = function(debug) {
   
   Game.showMoveRight = false;
   if (Game.runningStatus === 0) {
+	  Game.display();
 	
 //	  alert(Game.totBlocks(Blockly.mainWorkspace.topBlocks_));
 	  

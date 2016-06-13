@@ -987,3 +987,18 @@ Blockly.Variables.procVariables = function(block) {
     
     return variableList;
 };
+
+var prevContextMenuShow = Blockly.ContextMenu.show; 
+Blockly.ContextMenu.show = function(event, menuOptions, RTL) {
+	
+	// for now I remove the Remove blocks option from menu
+	// because window.confirm is a modal function, and in game it isn't
+	for (var i = menuOptions.length-1; i>=0; i--) {
+		if (menuOptions[i].text.startsWith("Remover")) {
+			menuOptions.splice(i, 1);
+			break;
+		}
+	}
+	
+	prevContextMenuShow(event, menuOptions, RTL);
+}
