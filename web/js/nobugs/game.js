@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160614;
+Game.version = 20160615;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -2101,10 +2101,14 @@ Game.killAll = function() {
  */
 Game.display = function() {
 
-	Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
+	if (Game.mission) {
+		
+		Game.ctxDisplay.drawImage( Game.imgBackground, 0 , 0 );
 
-	hero.draw(Game.ctxDisplay);
-	CustomerManager.draw(Game.ctxDisplay);
+		hero.draw(Game.ctxDisplay);
+		CustomerManager.draw(Game.ctxDisplay);
+
+	}
 	
 };
 

@@ -522,12 +522,16 @@ SnackMan.prototype.update = function() {
 
 SnackMan.prototype.goToBarCounter = function(cust) {
 	
-	
 	if (cust < 1 || cust > 3) {
 		BlocklyApps.log.push(["fail", "Error_doesntExistCounter"]);
 		throw false;
 	}
 	
+	if (cust.type === "undefined") {
+		BlocklyApps.log.push(["fail", "Error_noValueInParameter"]);
+		throw false;
+	}
+		
 	this.animateSnackMan( this.counter[cust-1] );
   
 };
@@ -537,6 +541,11 @@ SnackMan.prototype.goToTable = function(cust) {
 	
 	if (cust < 1 || cust > 2) {
 		BlocklyApps.log.push(["fail", "Error_doesntExistTable"]);
+		throw false;
+	}
+	
+	if (cust.type === "undefined") {
+		BlocklyApps.log.push(["fail", "Error_noValueInParameter"]);
 		throw false;
 	}
 	
