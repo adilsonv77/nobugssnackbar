@@ -797,7 +797,7 @@ Hints.lastTalkText = function() {
 
 	var tt = hero.talkText;
 	if (tt != null) 
-		return tt.data;
+		return (tt.data?tt.data:tt);
 	else
 		return null;
 };

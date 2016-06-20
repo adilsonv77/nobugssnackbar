@@ -622,6 +622,11 @@ SnackMan.prototype.askForDrinkByIndex = function(n) {
 		throw false;
 	}
 	
+	if (n.type === "undefined") {
+		BlocklyApps.log.push(["fail", "Error_noValueInParameter"]);
+		throw false;
+	}
+		
 	var found = this.getCustomer();
 	
 	if (!found) {
