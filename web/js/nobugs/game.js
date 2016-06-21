@@ -1500,12 +1500,53 @@ Game.finishLoadMultipleChoice = function() {
 		$(id+"txt").html(answers[i]);
 		$(id).val(answers[i]);
 	}
-		
+	
+	$("input[name=MCoption]")[0].checked = true;
+	
+	Game.mcAnswer = Game.talking;
+	
 	if (Game.finalFunction != null)
 		Game.finalFunction();
 	
 	hero.reset();
 	
+};
+
+Game.answerMultipleChoice = function() {
+	var answer = "";
+	
+	var mcoptions = $("input[name=MCoption]");
+	for (var ii=0;ii<mcoptions.length;ii++) {
+		var value = mcoptions[ii].value;
+		if (Game.mcAnswer === value)
+			value = "{" + value + "}";
+		
+		if (mcoptions[ii].checked)
+			value = "[" + value + "]";
+		
+		answer = answer + value + (ii<mcoptions.length-1?";":"");
+	}
+	
+	answer = answer + " -- ";
+	
+	customers.forEach(function(cust) {
+		answer = answer + "(";
+		
+		var fw = function(w) {
+			answer = answer + w.item + ";";
+		};
+		
+		cust.wishesDrinks.forEach(fw); 
+		
+		answer = answer + " || ";
+		cust.wishesFoods.forEach(fw);
+		
+		answer = answer + ")";
+		
+	});
+	
+	
+	return answer;
 };
 
 Game.getBackgroundColor = function() {
@@ -1773,18 +1814,6 @@ Game.beforeFinishMission = function() {
 	return {timeSpent: timeSpent, answer: answer};
 	
 };
-
-Game.answerMultipleChoice = function() {
-	var answer = "";
-	
-	var mcoptions = $("input[name=MCoption]");
-	for (var ii=0;ii<mcoptions.length;ii++)
-		answer = answer + mcoptions[ii].value + (ii<mcoptions.length-1?";":"");
-	// answer = falta guardar as configuracoes dos clientes
-	
-	return answer;
-}
-
 
 Game.showDialogVictory = function(out) {
 	
@@ -2774,10 +2803,12 @@ Game.execute = function(debug) {
 
 	    Game.runningStatus = debug; // let here because the registration of the status in save mission
 	  
-		if (debug < 3) {
-		    // Reset the graphic.
-		    Game.reset();
-
+		if (debug != 3) {
+			
+			if (debug < 3) {
+			    Game.reset();
+			}
+			
 			Game.saveMission();
 		}
 		
