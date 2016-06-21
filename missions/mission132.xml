@@ -113,69 +113,69 @@ Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o se
 	</multipleChoice>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
-		<block type="variables_set" deletable="false" x="50" y="15">
+		<block type="variables_set" deletable="false" movable="false" x="50" y="15">
 			<field name="VAR">qtaComida1</field>
 			<value name="VALUE">
-				<block type="math_number" deletable="false">
+				<block type="math_number" deletable="false" movable="false">
 					<field name="NUM">0</field>
 				</block>
 			</value>
 			<next>
-				<block type="variables_set" deletable="false">
+				<block type="variables_set" deletable="false" movable="false">
 					<field name="VAR">qtaComida2</field>
 					<value name="VALUE">
-						<block type="math_number" deletable="false">
+						<block type="math_number" deletable="false" movable="false">
 							<field name="NUM">0</field>
 						</block>
 					</value>
 					<next>
-						<block type="move_goToBarCounter" deletable="false">
+						<block type="move_goToBarCounter" deletable="false" movable="false">
 							<value name="VALUE">
-								<block type="math_number" deletable="false">
+								<block type="math_number" deletable="false" movable="false">
 									<field name="NUM">1</field>
 								</block>
 							</value>
 							<next>
-								<block type="variables_set" deletable="false">
+								<block type="variables_set" deletable="false" movable="false">
 									<field name="VAR">qtaComida1</field>
 										<value name="VALUE">
-											<block type="ask_askWantHowManyFoods" deletable="false"></block>
+											<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 										</value>
 										<next>
-											<block type="move_goToBarCounter" deletable="false">
+											<block type="move_goToBarCounter" deletable="false" movable="false">
 												<value name="VALUE">
-													<block type="math_number" deletable="false">
+													<block type="math_number" deletable="false" movable="false">
 														<field name="NUM">3</field>
 													</block>
 												</value>
 												<next>
-													<block type="variables_set" deletable="false">
+													<block type="variables_set" deletable="false" movable="false">
 														<field name="VAR">qtaComida2</field>
 														<value name="VALUE">
-															<block type="ask_askWantHowManyFoods" deletable="false"></block>
+															<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 														</value>
 														<next>
-															<block type="variables_set" deletable="false">
+															<block type="variables_set" deletable="false" movable="false">
 																<field name="VAR">totalComida</field>
 																<value name="VALUE">
-																	<block type="math_arithmetic" deletable="false">
+																	<block type="math_arithmetic" deletable="false" movable="false">
 																		<field name="OP">ADD</field>
 																		<value name="A">
-																			<block type="variables_get" deletable="false">
+																			<block type="variables_get" deletable="false" movable="false">
 																				<field name="VAR">qtaComida1</field>
 																			</block>
 																		</value>
 																		<value name="B">
-																			<block type="variables_get" deletable="false">
+																			<block type="variables_get" deletable="false" movable="false">
 																				<field name="VAR">qtaComida2</field>
 																			</block>
 																		</value>
 																	</block>
 																</value>
 																<next>
-																	<block type="do_talk" deletable="false">
+																	<block type="do_talk" deletable="false" movable="false">
 																		<value name="VALUE">
-																			<block type="variables_get" deletable="false">
+																			<block type="variables_get" deletable="false" movable="false">
 																				<field name="VAR">totalComida</field>
 																			</block>
 																		</value>

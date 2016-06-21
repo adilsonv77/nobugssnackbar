@@ -1404,9 +1404,38 @@ Game.loadMachines = function(selectMachineOpts, idx) {
 
 Game.submitMC = function() {
 	
+	Game.disabledMCOptions(true);
 	// shows the variable window even it is running
 	Game.talking = "";
 	Game.debug(4);
+	
+};
+
+Game.tryAgainMC = function() {
+	
+	  Game.disabledMCOptions(false);
+	  $("#ButtonTryAgainAChoice").attr("disabled", "disabled");
+	  Game.reset();
+	  Game.variableBox.style.display = "none";
+	  Game.loadMultipleChoice(null);
+	  Game.doResizeWindow();
+	  
+};
+
+Game.disabledMCOptions = function(disabled) {
+	var op = ['#ButtonSubmitChoice', '#MCoption1', '#MCoption2', '#MCoption3', '#MCoption4'];
+	
+	op.forEach(function(opt) {
+		if (disabled) 
+			$(opt).attr("disabled", "disabled");
+		else
+			$(opt).removeAttr("disabled");
+	});
+	
+	if (disabled)
+		Game.enableButton("resetButton");
+	else
+		Game.disableButton("resetButton");
 	
 };
 
@@ -1422,12 +1451,10 @@ Game.finishMultipleChoiceRunning = function() {
 		MyBlocklyApps.showDialog(content, null, true, true, true, null, {width: "600px"},
 
 				function(){
-				  
-				  Game.reset();
-				  Game.variableBox.style.display = "none";
-				  Game.loadMultipleChoice(null);
-				  Game.unlockBlockly();
-				  Game.doResizeWindow();
+			  	   Game.unlockBlockly();
+			  	   Game.disableButton("resetButton");
+			  	   $("#ButtonTryAgainAChoice").removeAttr("disabled"); 
+
 				}
 		);
 		
@@ -1477,6 +1504,24 @@ Game.finishLoadMultipleChoice = function() {
 	if (Game.finalFunction != null)
 		Game.finalFunction();
 	
+	hero.reset();
+	
+};
+
+Game.getBackgroundColor = function() {
+	switch (Game.missionType) {
+		case "multipleChoice":
+			return "#A1CAF1";
+			
+		case "fixBugs" : 
+			return "#F5DAD4";
+			
+		case "sort" : 
+			return "#AFD8C1";
+			
+		default : 
+			return "#FFF";
+	}
 };
 
 Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, timeSpent) {
@@ -1504,7 +1549,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 
   Game.selectedTab = "";
   Game.editor.initialize(ret, cfg); 
-  Game.editor.backgroundColor(Game.missionType === "fixBugs"?"#F5DAD4":(Game.missionType === "sort"?"#AFD8C1":"#FFF"));
+  Game.editor.backgroundColor(Game.getBackgroundColor());
   Game.editor.addCommands(toolbox);
   
   Game.positionMultipleChoice();
@@ -2437,17 +2482,19 @@ Game.runButtonClick = function() {
  */
 Game.resetButtonClick = function() {
 	
-    Game.showMoveRight = false;
-	Game.clickReseting = true;
-	Game.finishedRun();
+  var mc = Game.runningStatus == 4;
 	
-   $("#tests_finished").css("display", "none");
+  Game.showMoveRight = false;
+  Game.clickReseting = true;
+  Game.finishedRun();
+	
+  $("#tests_finished").css("display", "none");
  
-   Game.lastErrorData.iderror = 0;
-   Game.lastErrorData.message = "";
-   Game.lastErrorData.block = null;
+  Game.lastErrorData.iderror = 0;
+  Game.lastErrorData.message = "";
+  Game.lastErrorData.block = null;
 
-   Hints.stopHints();
+  Hints.stopHints();
 	
   Game.resetButtons();
   Game.reset(1); // dont reset the CustomerManager
@@ -2461,6 +2508,11 @@ Game.resetButtonClick = function() {
   Game.unlockBlockly();
   Game.stopAlertGoalButton();
   Game.clickReseting = false;
+  
+  if (mc) {
+	  Game.disabledMCOptions(false);
+	  Game.loadMultipleChoice(null);
+  }
 };
 
 Game.enableButton = function(buttonName, className) {
@@ -2696,7 +2748,7 @@ Game.execute = function(debug) {
 	  
 	  try {
 		  
-     	Game.howManyRuns++;
+     	if (debug !== 3) Game.howManyRuns++;
      	Game.callTimes = {};
 
 	    Game.verifyFunctionTabs();

@@ -398,8 +398,11 @@
       			<td><input type="radio" id="MCoption3" name="MCoption" value=""><label id="MCoption3txt" for="MCoption3"></label></input></td>
       			<td><input type="radio" id="MCoption4" name="MCoption" value=""><label id="MCoption4txt" for="MCoption4"></label></input></td>
       			<td>
-	      			<button id="ButtonSubmitChoice" class="nobugs_button" onclick="Game.submitMC()" style="font-size: 16px; margin: 0px 0px 5px; width: 100%; padding: 5px 10px 5px">
+	      			<button id="ButtonSubmitChoice" class="nobugs_button" onclick="Game.submitMC()" style="font-size: 16px; margin: 0px 5px 5px; padding: 5px 10px 5px">
 		      			{{msg meaning="NoBugs.submitAnswer" desc="---"}}Submit Answer{{/msg}}
+		    		</button> 
+	      			<button id="ButtonTryAgainAChoice" disabled="disabled" class="nobugs_button" onclick="Game.tryAgainMC()" style="font-size: 16px; margin: 0px 0px 5px; padding: 5px 10px 5px">
+		      			{{msg meaning="NoBugs.tryAgain" desc="---"}}Try Again{{/msg}}
 		    		</button> 
       			</td>
       			

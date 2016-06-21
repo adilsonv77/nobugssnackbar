@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-06-20 15:16:22.940000",
+		"lastupdated": "2016-06-21 10:59:43.624000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -333,6 +333,7 @@
 	"NoBugs.debugTooltip": "Makes the snack man do what the next block say [F8].",
 	"NoBugs.resetTooltip": "Restarts the execution [Esc].",
 	"NoBugs.submitAnswer": "Submit Answer",
+	"NoBugs.tryAgain": "Try Again",
 	"NoBugs.main": "Main",
 	"NoBugs.variables": "Variables",
 	"NoBugs.missionSolveExplanation": "Explanation",
