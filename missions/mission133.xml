@@ -1,0 +1,159 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Esta &#233; uma miss&#227;o para corrigir erros. Existe apenas um erro nessa solu&#231;&#227;o.<br/><br/>
+ Execute passo-a-passo (com o bot&#227;o <img src="images/icondebug.png"/> ) para aprender 
+ o que os novos blocos fazem e descobrir o erro no programa. <br/><br/>
+Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o ser&#225; contada para receber pontos. 
+		 
+		]]>
+		</page>
+
+	</explanation>
+
+	<hints>
+		<sequence>
+			<hint category="VariableWindow" condition = "Hints.showedHint() == false"/>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="fillInGap" variableWindow="true" 
+				xpIndividual="10" xpFinal="5" xpTotalRun="9">
+				
+		<objective text="um n&#250;mero" value="CustomerManager.totalOfFood()">talk</objective>
+		
+	</objectives>	
+	
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="variables_set" deletable="false" movable="false" x="50" y="15">
+			<field name="VAR">qtaComida1</field>
+			<value name="VALUE">
+				<block type="math_number" deletable="false" movable="false">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set" deletable="false" movable="false">
+					<field name="VAR">qtaComida2</field>
+					<value name="VALUE">
+						<block type="math_number" deletable="false" movable="false">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block type="move_goToBarCounter" deletable="false" movable="false">
+							<value name="VALUE">
+								<block type="math_number" deletable="false" movable="false">
+									<field name="NUM">1</field>
+								</block>
+							</value>
+							<next>
+								<block type="variables_set" deletable="false" movable="false">
+									<field name="VAR">qtaComida1</field>
+										<value name="VALUE">
+											<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
+										</value>
+										<next>
+											<block type="move_goToBarCounter" deletable="false" movable="false">
+												<value name="VALUE">
+													<block type="math_number" deletable="false" movable="false">
+														<field name="NUM">3</field>
+													</block>
+												</value>
+												<next>
+													<block type="variables_set" deletable="false" movable="false">
+														<field name="VAR">qtaComida2</field>
+														<value name="VALUE">
+															<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
+														</value>
+														<next>
+															<block type="variables_set" deletable="false" movable="false">
+																<field name="VAR">totalComida</field>
+																<value name="VALUE">
+																	<block type="math_arithmetic" deletable="false" movable="false">
+																		<field name="OP">ADD</field>
+																		<value name="A">
+																			<block type="variables_get" deletable="false" movable="false">
+																				<field name="VAR">qtaComida1</field>
+																			</block>
+																		</value>
+																		<value name="B">
+																			<block type="variables_get" deletable="false" movable="false">
+																				<field name="VAR">qtaComida2</field>
+																			</block>
+																		</value>
+																	</block>
+																</value>
+																<next>
+																	<block type="fillInGap">
+																		<next>
+																			<block type="do_talk" deletable="false" movable="false">
+																				<value name="VALUE">
+																					<block type="variables_get" deletable="false" movable="false">
+																						<field name="VAR">totalComida</field>
+																					</block>
+																				</value>
+																			</block>
+																		</next>
+																	</block>
+																</next>
+															</block>
+														</next>
+													</block>
+												</next>
+											</block>
+										</next>
+									</block>
+								</next>
+							</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>

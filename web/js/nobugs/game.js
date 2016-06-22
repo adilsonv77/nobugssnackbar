@@ -1560,6 +1560,9 @@ Game.getBackgroundColor = function() {
 		case "sort" : 
 			return "#AFD8C1";
 			
+		case "fillInGap":
+			return "#FFFED7";
+			
 		default : 
 			return "#FFF";
 	}
@@ -2894,7 +2897,7 @@ Game.convertWaits = function(code) {
 Game.semanticAnalysis  = function(block) {
 	
 	block.setWarningText(null);
-	if (Game.hasEmptyInputs(block)) {
+	if (block.type !== "fillInGap" && Game.hasEmptyInputs(block)) {
 		
 		Game.selectTab(block.workspace.id);
 		Blockly.selected = Game.blockWithEmptyInputs;

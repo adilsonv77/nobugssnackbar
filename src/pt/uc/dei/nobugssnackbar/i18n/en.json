@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-06-21 10:59:43.624000",
+		"lastupdated": "2016-06-22 11:43:51.354000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -107,6 +107,7 @@
 	"SnackMan.goToCoffeeMachineTooltip": "TODO",
 	"SnackMan.prepareCoffeeTooltip": "TODO",
 	"SnackMan.pickUpCoffeeTooltip": "TODO",
+	"SnackMan.fillInGap": "Fill in gap",
 	"Error.error": "Error",
 	"Error.login": "User not found.",
 	"Error.session_expired": "Your session has expired, please login again.",

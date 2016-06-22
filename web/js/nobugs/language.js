@@ -768,6 +768,26 @@ Blockly.JavaScript['prepare_pickUpCoffee'] = function(block) {
 	return ['pickUpCoffee( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+/**********************************************************************************/
+/**                       Fill in gap                                            **/
+/**********************************************************************************/
+
+Blockly.Blocks['fillInGap'] = {
+		  // Block for moving to a specific customer in the counter.
+		  init: function() {
+		    this.setColour("#000000");
+			   this.appendDummyInput().appendField(BlocklyApps.getMsg('SnackMan_fillInGap'));
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.appendStatementInput('DO0');
+		  }
+		};
+
+Blockly.JavaScript['fillInGap'] = function(block) {
+	  var branch = Blockly.JavaScript.statementToCode(block, 'DO0');
+	  return '// Fill in gap \n ' + branch + ' \n';
+	};
+
 
 
 /**********************************************************************************/

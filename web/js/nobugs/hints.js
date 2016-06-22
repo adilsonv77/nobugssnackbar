@@ -751,7 +751,7 @@ Hints.hasEmptyInputs  = function() {
 		return false;
 	
 	 
-	if (Game.hasEmptyInputs(Hints.activeBlock)) {
+	if (Hints.activeBlock.type !== "fillInGap" && Game.hasEmptyInputs(Hints.activeBlock)) {
 		Hints.activeBlock = Game.blockWithEmptyInputs;
 		return true;
 	}
