@@ -315,9 +315,10 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard,
 	 *   4 - class id
 	 *   5 - level id
 	 *   6 - missions that can be replayed []
-	 *   7 - 
+	 *   7 - missions that are solved or not (T/F)
 	 *   8 - liberation data
 	 *   9 - pre-requisite level
+	 *   10- types of each mission
 	 */
 	/*
 	 * leaderBoard [...][n], where n are
@@ -1549,17 +1550,21 @@ Game.answerMultipleChoice = function() {
 	return answer;
 };
 
-Game.getBackgroundColor = function() {
-	switch (Game.missionType) {
+Game.getBackgroundColor = function(missionType) {
+	switch (missionType) {
+		case "M": 
 		case "multipleChoice":
 			return "#A1CAF1";
 			
+		case "F": 
 		case "fixBugs" : 
-			return "#F5DAD4";
+			return "#E8CAE7"; //"#F5DAD4";
 			
+		case "S": 
 		case "sort" : 
 			return "#AFD8C1";
 			
+		case "G": 
 		case "fillInGap":
 			return "#FFFED7";
 			
@@ -1593,7 +1598,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 
   Game.selectedTab = "";
   Game.editor.initialize(ret, cfg); 
-  Game.editor.backgroundColor(Game.getBackgroundColor());
+  Game.editor.backgroundColor(Game.getBackgroundColor(Game.missionType));
   Game.editor.addCommands(toolbox);
   
   Game.positionMultipleChoice();

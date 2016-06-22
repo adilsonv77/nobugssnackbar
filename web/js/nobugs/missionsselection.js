@@ -108,7 +108,7 @@ MissionSelection.prototype.show = function() {
 			if (i == this.hightlight) 
 				ctx.fillStyle = "#ffd89d";
 			else
-				ctx.fillStyle = "#fff7eb";
+				ctx.fillStyle = Game.getBackgroundColor(this.level[10][i]); 
 			ctx.fill();
 			
 		}

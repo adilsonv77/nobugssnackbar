@@ -481,10 +481,19 @@ public class GameJdbcDao implements GameDao {
 			int xpToHat = 10000, xpToClothes = 10000, xpToSpecialSkin = 10000, xpToAdd = 10000, coinsToExtra = 10000;
 			
 			while (rs.next()) {
-				Object[] li = new Object[] { rs.getString(1), rs.getString(2),
-						rs.getLong(3), rs.getLong(4), rs.getLong(5),
-						rs.getLong(6), new ArrayList<Integer[]>(), new ArrayList<String>(),
-						rs.getString(12), rs.getInt(13)};
+				Object[] li = new Object[] { 
+						rs.getString(1),            // #0 
+						rs.getString(2),            // #1
+						rs.getLong(3),              // #2
+						rs.getLong(4),              // #3
+						rs.getLong(5),              // #4
+						rs.getLong(6),              // #5
+						new ArrayList<Integer[]>(), // #6
+						new ArrayList<String>(),    // #7 - is the mission achieved ? T or F
+						rs.getString(12),           // #8
+						rs.getInt(13),              // #9
+						new ArrayList<String>()     // #10 - type of mission: M-multiple choice; F-fix bugs; S-sort; G-Fill in gaps; C-create 
+						};
 
 				classesId.add(rs.getInt(5));
 				classesLevelId.add(rs.getInt(6));
@@ -503,48 +512,23 @@ public class GameJdbcDao implements GameDao {
 			}
 			ps.close();
 
-			/*
+			// which are the missions solved and which are not, and the type of each mission
 			ps = bdCon
-					.prepareStatement("select missionorder, freeaccess from classesmissions where classid = ? and classlevelid = ? and (freeaccess = 'T' or freeaccess = 'X') order by missionorder");
-
-			for (int i = 0; i < classesId.size(); i++) {
-
-				ps.setInt(1, classesId.get(i));
-				ps.setInt(2, classesLevelId.get(i));
-
-				List<Integer[]> missions = (List<Integer[]>) l.get(i)[6];
-				long qtasResolvidas = (long) l.get(i)[3];
-
-				rs = ps.executeQuery();
-				int j = 1;
-				while (rs.next()) {
-					int mr = rs.getInt(1);
-					missions.add(new Integer[]{j, (rs.getString(2).equals("X")?1:0)});
-					if (mr <= qtasResolvidas+1)
-						qtasResolvidas++;
-					j++;
-				}
-				rs.close();
-				l.get(i)[3] = qtasResolvidas;
-
-			}
-			ps.close();
-			 */
-
-			// which are the missions solved and which are not
-			ps = bdCon
-					.prepareStatement("select achieved from classesmissions left outer join (select * from missionsaccomplished where userid = ?) ma using (classid, missionid) where classlevelid = ? and classid = ? order by missionorder");
+					.prepareStatement("select achieved, missiontype from classesmissions join missions using (missionid) left outer join (select * from missionsaccomplished where userid = ?) ma using (classid, missionid) where classlevelid = ? and classid = ? order by missionorder");
 			ps.setLong(1, idUser);
 			for (int i = 0; i < l.size(); i++) {
 				Object[] r = l.get(i);
 					
-				List<String> lm = (List<String>) r[7];
 				ps.setInt(2, classesLevelId.get(i));
 				ps.setInt(3, classesId.get(i));	
 				
+				List<String> lm = (List<String>) r[7]; // list that identifies which mission are solved
+				List<String> ltm = (List<String>) r[10]; // list that identifies the type of each mission
+
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					lm.add(rs.getString(1));
+					ltm.add(rs.getString(2));
 				}
 				rs.close();
 				
