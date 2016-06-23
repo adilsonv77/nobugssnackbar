@@ -13,7 +13,7 @@ public interface AchievementDao {
 
 	List<Achievement> listAchievements(long userId, Long classId) throws SQLException;
 
-	List<String[]> loadUsersAchievements(Integer clazzId) throws SQLException;
+	List<String[]> loadUsersAchievements(long clazzId) throws SQLException;
 
 	List<Map<String, String>> verifyAchievements(long userId, long classId, User user) throws SQLException;
 

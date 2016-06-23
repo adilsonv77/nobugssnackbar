@@ -27,7 +27,7 @@ public class UCReportsAchievements implements Serializable {
 		this.achievementDao = achievementDao;
 	}
 	
-	public List<String[]> retrieveStudents(Integer clazzId) throws SQLException {
+	public List<String[]> retrieveStudents(Long clazzId) throws SQLException {
 		return achievementDao.loadUsersAchievements(clazzId);
 	}
 

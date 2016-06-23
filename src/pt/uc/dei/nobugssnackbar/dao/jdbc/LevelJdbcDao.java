@@ -13,7 +13,7 @@ import pt.uc.dei.nobugssnackbar.model.Level;
 public class LevelJdbcDao implements LevelDao {
 
 	@Override
-	public List<Level> list(Integer clazzId) throws Exception {
+	public List<Level> list(Long clazzId) throws Exception {
 		
 		List<Level> ret = null;
 		Connection bdCon = null;
@@ -21,7 +21,7 @@ public class LevelJdbcDao implements LevelDao {
 
 			bdCon = getConnection();
 			PreparedStatement ps = bdCon.prepareStatement("select classlevelorder, classlevelname, liberacaodt from classeslevels where classid = ? order by classlevelorder");
-			ps.setInt(1, clazzId);
+			ps.setLong(1, clazzId);
 			ResultSet rs = ps.executeQuery();
 			ret = new ArrayList<>();
 			while (rs.next()) {

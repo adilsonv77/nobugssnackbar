@@ -240,7 +240,7 @@ public class AchievementJdbcDao implements AchievementDao {
 	}
 
 	@Override
-	public List<String[]> loadUsersAchievements(Integer clazzId)
+	public List<String[]> loadUsersAchievements(long clazzId)
 			throws SQLException {
 
 		Connection bdCon = null;
@@ -253,7 +253,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			List<Long> cods2 = new ArrayList<>();
 			List<String> fases = new ArrayList<>();
 			PreparedStatement ps = bdCon.prepareStatement(sql);
-			ps.setInt(1, clazzId);
+			ps.setLong(1, clazzId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				cods.add(rs.getLong(1));
@@ -270,7 +270,7 @@ public class AchievementJdbcDao implements AchievementDao {
 			sql = "select username, achievementtypeclasseid, achieveddate, userid from users join classesusers using (userid) left outer join achievements using (userid) where classid = ? and userenabled = 'T' order by username";
 			
 			ps = bdCon.prepareStatement(sql);
-			ps.setInt(1, clazzId);
+			ps.setLong(1, clazzId);
 			
 			String lastName = "";
 			
@@ -297,8 +297,8 @@ public class AchievementJdbcDao implements AchievementDao {
 			sql = "select userid, classlevelid ci, count(*) c, (select count(*) from classesmissions where classlevelid = ci and classid = ?) q  from missionsaccomplished  join classesmissions cm using (missionid, classid) where classid = ? and achieved = 'T' group by userid, classlevelid" ;
 			
 			ps = bdCon.prepareStatement(sql);
-			ps.setInt(1, clazzId);
-			ps.setInt(2, clazzId);
+			ps.setLong(1, clazzId);
+			ps.setLong(2, clazzId);
 			
 			rs = ps.executeQuery();
 			

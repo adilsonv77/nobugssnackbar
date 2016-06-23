@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.uc.web.util.ApplicationUtils;
 
-@FacesConverter(forClass=Clazz.class)
+@FacesConverter(value="clazzConverter", forClass=Clazz.class)
 public class ClazzConverter  implements Converter {
 	
 	@Override

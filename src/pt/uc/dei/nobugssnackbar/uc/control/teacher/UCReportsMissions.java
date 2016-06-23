@@ -29,7 +29,7 @@ public class UCReportsMissions implements Serializable {
 		return clazzDao.readByTeacher(user.getId()); 
 	}
 
-	public List<Map<String, String>> loadUsers(int clazzId, int missionId, String[] lu) throws Exception {
+	public List<Map<String, String>> loadUsers(long clazzId, int missionId, String[] lu) throws Exception {
 		return gameDao.loadUsersInTheMission(clazzId, missionId, lu);
 	}
 

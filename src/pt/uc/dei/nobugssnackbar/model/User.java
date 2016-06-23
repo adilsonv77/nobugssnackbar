@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.model;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,12 +14,14 @@ import pt.uc.dei.nobugssnackbar.dao.jdbc.JdbcTable;
 
 @DataTransferObject()
 @JdbcTable(name="users")
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@RemoteProperty
 	@JdbcField(name="userid")
 	@JdbcPk
-	private long id;
+	private Long id;
 	
 	@JdbcField(name="usernick")
 	@RemoteProperty
@@ -27,11 +30,13 @@ public class User {
 	@JdbcField(name="userpassw")
 	private String passw;
 
+	@JdbcField(name="usermoney")
 	private long money;
 
 	private long classId;
 
 	@RemoteProperty
+	@JdbcField(name="usersex")
 	private String sex;
 
 	@JdbcField(name="username")
@@ -42,13 +47,17 @@ public class User {
 	private Time lastTime;
 
 	@RemoteProperty
+	@JdbcField(name="showhint")
 	private boolean showHint;
 	
 	@RemoteProperty
+	@JdbcField(name="showinstructionallearn")
 	private boolean showInstruction;
 
+	@JdbcField(name="userenabled")
 	private boolean enabled;
 
+	@JdbcField(name="userxp")
 	private long xp;
 	
 	@JdbcField(name="userlang")
@@ -59,6 +68,7 @@ public class User {
 	private String mail;
 	
 	@RemoteProperty
+	@JdbcField(name="showsound")
 	private boolean showSound;
 	
 	@RemoteProperty

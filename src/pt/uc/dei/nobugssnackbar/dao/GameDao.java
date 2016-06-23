@@ -88,7 +88,7 @@ public interface GameDao {
 
 	List<String[]> loadStatusMissions(long classid) throws Exception;
 
-	List<Map<String, String>> loadUsersInTheMission(int clazzId, int missionId, String[] listOfUsers) throws Exception;
+	List<Map<String, String>> loadUsersInTheMission(long clazzId, int missionId, String[] listOfUsers) throws Exception;
 
 	List<Map<String, Object>> loadAttemptsFromUser(long userId, int missionId) throws Exception;
 	

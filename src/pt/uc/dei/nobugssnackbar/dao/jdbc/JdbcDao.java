@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,9 +178,12 @@ public class JdbcDao<T> {
 
 			boolean insert = false;
 
+			Field pk = null;
+			
 			for (Field f : pks) {
 				if (f.get(obj) == null || (f.getType() == Integer.class && ((Integer)f.get(obj)) == 0)
 									   || (f.getType() == Long.class && ((Long)f.get(obj)) == 0)) {
+					pk = f;
 					insert = true;
 					break;
 				}
@@ -193,6 +197,12 @@ public class JdbcDao<T> {
 				
 				q.executeUpdate();
 				q.close();
+				
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery("select last_insert_id()");
+				rs.next();
+				pk.set(obj, rs.getLong(1));
+				st.close();
 
 			} else {
 				PreparedStatement q = getQueryUpdate(bdCon);
@@ -268,9 +278,19 @@ public class JdbcDao<T> {
 			if (jdbcField != null) {
 				Object value = rs.getObject(jdbcField.name());
 				if (f.getType() == Boolean.class
-						|| f.getType() == boolean.class)
-					value = ((Integer) value).equals(1);
+						|| f.getType() == boolean.class) {
+					
+					if (value.getClass() == String.class)
+						value = value.toString().equals("T");
+					else					
+						value = ((Integer) value).equals(1);
+				}
+					
 
+				if (value != null && value.getClass() == Integer.class && f.getType() == Long.class) {
+					value = new Long(value.toString());
+				}
+				
 				f.set(obj, value);
 			}
 		}

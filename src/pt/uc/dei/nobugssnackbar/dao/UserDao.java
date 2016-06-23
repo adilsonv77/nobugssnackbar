@@ -10,10 +10,10 @@ public interface UserDao extends Dao<User> {
 
 	User readByNick(String nick) throws Exception;
 
-	List<User> listByClass(Integer classId) throws Exception;
+	List<User> listByClass(Long classId) throws Exception;
 
 	Long findByMail(String mail) throws Exception;
 
 	String createNewPassword(User user) throws Exception;
-	
+
 }

@@ -1895,7 +1895,7 @@ public class GameJdbcDao implements GameDao {
 	}
 
 	@Override
-	public List<Map<String, String>> loadUsersInTheMission(int clazzId,	int missionId, String[] listOfUsers) throws Exception {
+	public List<Map<String, String>> loadUsersInTheMission(long clazzId, int missionId, String[] listOfUsers) throws Exception {
 		List<Map<String, String>> users = new ArrayList<>();
 		Connection bdCon = null;
 		try {

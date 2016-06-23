@@ -6,7 +6,7 @@ import pt.uc.dei.nobugssnackbar.model.Level;
 
 public interface LevelDao {
 
-	List<Level> list(Integer clazzId) throws Exception;
+	List<Level> list(Long clazzId) throws Exception;
 
 	void save(long clazzId, Level l) throws Exception;
 

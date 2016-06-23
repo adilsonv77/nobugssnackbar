@@ -56,7 +56,7 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 	}
 
 	@Override
-	public List<User> listByClass(Integer classId) throws Exception {
+	public List<User> listByClass(Long classId) throws Exception {
 		String query = "select * from users join classesusers using (userid) where classid = ?";
 
 		List<User> ret = new ArrayList<>();
@@ -65,7 +65,7 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 			bdCon = getConnection();
 			
 			PreparedStatement ps = bdCon.prepareStatement(query);
-			ps.setInt(1, classId);
+			ps.setLong(1, classId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ret.add( transformResultSetToObject(rs) );
@@ -150,6 +150,5 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 		int x = r.nextInt(SEED.length()-1) + 1;
 		return SEED.substring(x, x+1);
 	}
-
 
 }

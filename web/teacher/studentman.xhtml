@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+		
+		<p:layout>
+			<p:layoutUnit position="west" size="350" resizable="true">
+
+				<h:form id = "formListStudent">
+	
+			        <p:commandButton value="#{msg['new']}" 	action="#{studentman.newStudent}" update=":formStudent" style="margin-bottom: 5px"
+			           oncomplete="$(function(){PrimeFaces.focus('formStudent:stnick');});"/>
+			        
+					<p:dataTable value="#{studentman.students}" var="student" rows="10"
+						paginator="true">
+					
+				        <p:column headerText="#{msg.user_nick}" filterBy="#{student.nick}" filterMatchMode="contains">
+				            <h:outputText value="#{student.nick}"/>
+				        </p:column>
+
+				        <p:column headerText="#{msg.name}" filterBy="#{student.name}" filterMatchMode="contains">
+				            <h:outputText value="#{student.name}"/>
+				        </p:column>
+				        
+						<p:column width="40">
+					        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}" 
+					        	action="#{studentman.edit(student)}" update=":formStudent"
+					        	oncomplete="$(function(){PrimeFaces.focus('formStudent:stnick');});"/>
+						</p:column>
+					</p:dataTable>
+					
+				</h:form>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+				<h:form id = "formStudent">
+					<h:panelGrid columns="2" >
+						<p:outputLabel value="#{msg.user_nick}"/>
+						<p:inputText id="stnick" value="#{studentman.student.nick}" readonly="#{not studentman.showForm}"/>
+						
+						<p:outputLabel value="#{msg.name}"/>
+						<p:inputText value="#{studentman.student.name}" size="100" readonly="#{not studentman.showForm}"/>
+						
+						<p:outputLabel value="#{msg.user_password}"/>
+						<p:outputLabel value="#{msg.generateNewPassword}" rendered="#{studentman.newStudent}"/>
+						<p:outputLabel value="#{msg.dontChangedPassword}" rendered="#{not studentman.newStudent}"/>
+
+						<p:outputLabel value="#{msg.clazz}"/>
+						<p:selectOneMenu value="#{studentman.clazz}" converter="clazzConverter" disabled="#{not studentman.showForm}">
+							<f:selectItems value="#{studentman.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+							<f:attribute name="dataProvider" value="studentman.classes"/>
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="#{msg.mail}"/>
+						<h:panelGrid columns="2" >
+							<p:inputText id="email" size="40" validatorMessage="#{msg.invalidMail}" value="#{studentman.student.mail}" readonly="#{not studentman.showForm}">
+	
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						
+							</p:inputText>
+							<p:message for="email" />
+						</h:panelGrid>
+						
+						<p:outputLabel value="#{msg.genre}"/>
+						<p:selectOneRadio value="#{studentman.student.sex}">
+				            <f:selectItem itemLabel="M" itemValue="M" />
+				            <f:selectItem itemLabel="F" itemValue="F" />
+				        </p:selectOneRadio>
+						
+						<p:outputLabel value=""/>
+						<p:commandButton value="#{msg['save']}" action="#{studentman.save}" disabled="#{not studentman.showForm}"
+							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>
+						
+					</h:panelGrid>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+			
+	</ui:define>
+
+</ui:composition>
