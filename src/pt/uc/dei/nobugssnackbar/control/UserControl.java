@@ -174,7 +174,7 @@ public class UserControl {
 
 			// I use this to monitor in Tomcat Manager ;)
 			WebContext ctx = WebContextFactory.get();
-			LoginAdmin.login(ctx.getServletContext(), this.user.getId());
+			LoginAdmin.login(ctx.getServletContext(), this.user.getId(), ctx.getSession());
 
 			ctx.getSession().setAttribute("userid", this.user.getId());
 			

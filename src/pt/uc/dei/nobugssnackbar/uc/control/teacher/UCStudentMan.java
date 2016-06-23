@@ -78,5 +78,9 @@ public class UCStudentMan implements Serializable{
 			user.setClassId(clazz.getId());
 		}
 	}
+
+	public User read(Long userId) throws Exception {
+		return userDao.read(userId);
+	}
 	
 }

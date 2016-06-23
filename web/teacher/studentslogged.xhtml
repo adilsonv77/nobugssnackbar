@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+
+		<h:form id = "formStudent">
+				
+	        <p:commandButton value="#{msg['reload']}" action="#{studentlogged.reload}" update=":formStudent" style="margin-bottom: 5px"/>
+	
+			<p:dataTable value="#{studentlogged.students}" var="student" rows="10" paginator="true">
+			
+		        <p:column headerText="#{msg.user_nick}" filterBy="#{student.nick}" filterMatchMode="contains">
+		            <h:outputText value="#{student.nick}"/>
+		        </p:column>
+	
+		        <p:column headerText="#{msg.name}" filterBy="#{student.name}" filterMatchMode="contains">
+		            <h:outputText value="#{student.name}"/>
+		        </p:column>
+		        
+		        <p:column headerText="#{msg.lasttimeconn}">
+		            <h:outputText value="#{student.time}"/>
+		        </p:column>
+				
+				<p:column width="40">
+			        <p:commandButton icon="ui-icon-trash" title="Desconectar" action="#{studentlogged.disconnect(student.id)}" update=":formStudent">
+			         	<p:confirm header="Confirmação" message="Tem certeza que deseja desconectar esse usuário?" icon="ui-icon-alert" />
+			        </p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		   <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
+
+		</h:form>
+					
+	</ui:define>
+
+</ui:composition>

@@ -232,7 +232,11 @@ public class JdbcDao<T> {
 		for (Field f : fields) {
 			JdbcPk pk = f.getAnnotation(JdbcPk.class);
 			if (pk == null || (pk != null && !pk.autoIncrement())) {
-				query.setObject(i, f.get(obj));
+				Object value = f.get(obj);
+				if (f.getType() == boolean.class || f.getType() == Boolean.class) {
+					value = (value.toString().substring(0,1).toUpperCase());
+				}
+				query.setObject(i, value);
 				i++;
 			}
 		}
