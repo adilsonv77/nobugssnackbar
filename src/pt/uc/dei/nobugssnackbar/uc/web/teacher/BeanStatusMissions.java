@@ -75,6 +75,11 @@ public class BeanStatusMissions implements Serializable {
 		
  	}
 	
+	public void loadUserAttemptsEx(long userId, int missionId, String userName) throws Exception {
+		this.selectedUser = userName;
+		this.userAttempts = reportsMissions.loadAttemptsFromUser(userId, missionId);
+	}
+	
 	public void loadAnswer(int row) {
 
 	}

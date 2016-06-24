@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.dao.jdbc;
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
+import pt.uc.dei.nobugssnackbar.dao.EvaluationDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.LevelDao;
@@ -86,5 +87,15 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (achievementDao == null)
 			achievementDao = new AchievementJdbcDao();
 		return achievementDao;
+	}
+	
+	private EvaluationDao evaluationDao;
+
+	@Override
+	public EvaluationDao getEvaluationDao() {
+		if (evaluationDao == null)
+			evaluationDao = new EvaluationJdbcDao();
+		
+		return evaluationDao;
 	}
 }

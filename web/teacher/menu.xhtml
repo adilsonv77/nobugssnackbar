@@ -13,37 +13,40 @@
 		<h:form>
 	       <p:menubar autoDisplay="false" styleClass="menu-sistema">
 
-	            <p:menuitem ajax="false" 
-	                        value="#{msg.releaseLevel}" 
-	                        action="releaselevel"
-	                        rendered="false"
-	                        />
- 
-  				<p:menuitem ajax="false" 
-	                        value="#{msg.managementStudents}" 
-	                        action="studentman"
-	                        />
-	                        
-  				<p:menuitem ajax="false" 
-	                        value="#{msg.studentsLogged}" 
-	                        action="studentslogged"
-	                        />
-	                        
-	            <p:menuitem ajax="false" 
-	                        value="#{msg.statusMissions}" 
-	                        action="statusmissions"
-	                        />
-
-	            <p:menuitem ajax="false" 
-	                        value="#{msg.achievements}" 
-	                        action="statusachievements"
-	                        />
-
-	            <p:menuitem ajax="false" 
-	                        value="#{msg.statusStudents}" 
-	                        action="statusstudents"
-	                        rendered="false"
-	                        />
+	            <p:submenu label="Alunos">
+		            <p:menuitem ajax="false" 
+		                        value="#{msg.releaseLevel}" 
+		                        action="releaselevel"
+		                        rendered="false"
+		                        />
+	 
+	  				<p:menuitem ajax="false" 
+		                        value="#{msg.managementStudents}" 
+		                        action="studentman"
+		                        />
+		                        
+	  				<p:menuitem ajax="false" 
+		                        value="#{msg.studentsLogged}" 
+		                        action="studentslogged"
+		                        />
+				</p:submenu>
+					              
+				<p:submenu label="Relatórios">	                
+		            <p:menuitem ajax="false" 
+		                        value="#{msg.statusMissions}" 
+		                        action="statusmissions"
+		                        />
+	
+		            <p:menuitem ajax="false" 
+		                        value="#{msg.achievements}" 
+		                        action="statusachievements"
+		                        />
+	
+		            <p:menuitem ajax="false" 
+		                        value="#{msg.statusStudents}" 
+		                        action="statusstudents"
+		                        />
+		        </p:submenu>
 	       </p:menubar>
 	 
 	    </h:form>

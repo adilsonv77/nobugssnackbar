@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+               >
+                
+			<p:dialog id="dlgUserStatus" widgetVar="userStatus" modal="true" fitViewport="true" width="90%"
+						header="#{statusMissions.selectedUser}">
+
+				<p:dataTable value="#{statusMissions.userAttempts}" var="ua" rowIndexVar="row" rows="10" paginator="true">
+					<p:column width="50">
+						<h:outputText value="#{row}"/>
+					</p:column>
+					<p:column headerText="Erros">
+						<ul>
+							<ui:repeat var="error" value="#{ua.errors}">
+								<li><h:outputText value="#{error}"/></li>					
+							</ui:repeat>
+						</ul>
+					</p:column>
+					<p:column headerText="Objetivos não cumpridos">
+						<ul>
+							<ui:repeat var="fail" value="#{ua.fails}">
+								<li><h:outputText value="#{fail}"/></li>					
+							</ui:repeat>
+						</ul>
+					</p:column>
+					<p:column>
+			        	<p:commandButton icon="ui-icon-search" title="#{msg.view}"
+			        				rendered="#{ua.answer != null}"
+									actionListener="#{statusMissions.loadAnswer(row)}"
+									oncomplete="showAnswer('#{ua.answer}');"
+									update="frmStatusMissions:dlgUserAnswer"
+									process="@this"
+									>
+	                   </p:commandButton>
+					</p:column>
+				</p:dataTable>
+		        			
+				
+			
+			</p:dialog>
+			
+			<!-- foi corrigido recentemente o maximize dos dialogs mas nao atualizado no primefaces --> 
+			<p:dialog id="dlgUserAnswer" widgetVar="userAnswer" modal="true" 
+					width="800" height="500"
+					maximizable="true" 
+					>
+					
+				<iframe id="editorBlockly" src="#{facesContext.externalContext.requestContextPath}/editor.html"
+					 style="width:100% !important; height:100% !important;">
+				</iframe>
+			</p:dialog>
+			
+			<script>
+
+			function showAnswer(answer) {
+				document.getElementById('editorBlockly').onload = function() {
+					
+					var iframe = document.getElementById("editorBlockly");
+					var iWin = iframe.contentWindow;
+					
+					var WinLoadEditor = iWin.loadEditor;
+					
+					var fAlternative = function() {return answer;};
+					
+					WinLoadEditor(fAlternative, '<xml></xml>', false, false);
+					
+				};
+				
+
+				PF('userAnswer').show();
+				
+			}
+			
+			StatusMissions.initFormStatusMissions();
+			</script>
+
+</ui:composition>

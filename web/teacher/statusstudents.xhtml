@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="body">
+	
+		  <script>
+		  function resizeDataTableHeight() {
+		      
+			  var scrollWidth = jQuery(window).width();
+			  var docHeight = jQuery(window).height(); 
+
+			  var scrollHeight = docHeight - 300;
+			  var scrollBody = jQuery(".ui-datatable-scrollable-body");
+//		      scrollBody.width(scrollWidth);
+		      scrollBody.height(scrollHeight);
+		  }		  
+		  
+		  $(document).ready(function() {
+			  window.addEventListener('resize', resizeDataTableHeight);			  
+		  });
+		  
+		  </script>
+		  
+		<h:form id="frmStatus">
+			<p:panelGrid columns="2"  styleClass="ui-noborder" style="width: 100%" >
+				<p:selectOneMenu value="#{statusStudents.clazz}" widgetVar="clazzTeacher">
+	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+	 				<f:selectItems value="#{statusStudents.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+					<p:ajax event="change" update="usersFromClazz" oncomplete="resizeDataTableHeight()"/>
+					<f:attribute name="dataProvider" value="statusStudents.clazzes"/>
+				</p:selectOneMenu>
+				
+				
+				<table>
+					<tr>
+						<td style="background-color:green;padding:5px">Feito</td>
+						<td style="background-color:red;padding:5px">Outlier feito</td>
+						<td style="background-color:yellow;padding:5px">Outlier fazendo</td>
+						<td style="background-color:white;padding:5px">Fazendo</td>
+					</tr>
+				</table>
+			</p:panelGrid> 
+	
+			<p:dataTable id="usersFromClazz" var="u" value="#{statusStudents.students}" scrollable="true">
+				
+			    <p:columns value="#{statusStudents.colStudents}" var="col" columnIndexVar="colIndex" width="20" 
+			    	style="background-color:#{u[colIndex].split(';')[0] == 'T'?'green': (u[colIndex].split(';')[0] == 'O'?'red':(u[colIndex].split(';')[0] == 'X'?'yellow':'')) };cursor:#{colIndex==0?'pointer':'default'}"
+			    	> 
+			    	
+			    	<c:set var="fazendo" value = "#{u[colIndex].split(';')[0] == 'X' || u[colIndex].split(';')[0] == 'F'}"/>
+			    	
+			    	<f:facet name="header" >
+			    		<h:outputText value="#{colIndex}" rendered="#{colIndex > 0}" />
+					</f:facet>
+					
+			    	<h:outputText id="celula" value="#{u[colIndex].split(';')[1]}" rendered="#{colIndex == 0 || fazendo == false}" />
+			    	
+			    	<p:commandLink rendered="#{colIndex > 0 and fazendo == true}" actionListener="#{statusStudents.loadAttempts(u, colIndex)">
+			    		<h:outputText value="#{u[colIndex].split(';')[1]}"/>
+			    	</p:commandLink>
+			    	
+			    	<p:tooltip for="celula" value="#{u[colIndex].split(';')[0]}" rendered="#{colIndex == 0}" style="font-size: 30px"/>
+			    	
+			    </p:columns>
+		    </p:dataTable>
+
+			<ui:include src="dlguserstatus.xhtml"/>
+			
+		  </h:form>
+		  
+	</ui:define>
+
+</ui:composition>
+
