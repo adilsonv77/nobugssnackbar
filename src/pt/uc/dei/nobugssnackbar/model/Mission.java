@@ -24,7 +24,7 @@ public class Mission implements Serializable {
 	@JdbcField(name="missioncontent")
 	private String content;
 
-	@JdbcField(name="missionrepeatable")
+	@JdbcField(name="missionrepeatable", type="INT")
 	private boolean repeatable;
 	
 	public Integer getId() {

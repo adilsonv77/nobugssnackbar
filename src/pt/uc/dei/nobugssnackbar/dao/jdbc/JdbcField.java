@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface JdbcField {
 
 	String name();
+	String type() default "N/A";
 }

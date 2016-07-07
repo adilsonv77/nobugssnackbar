@@ -234,7 +234,12 @@ public class JdbcDao<T> {
 			if (pk == null || (pk != null && !pk.autoIncrement())) {
 				Object value = f.get(obj);
 				if (f.getType() == boolean.class || f.getType() == Boolean.class) {
-					value = (value.toString().substring(0,1).toUpperCase());
+					
+					JdbcField fan = f.getAnnotation(JdbcField.class);
+					if (!fan.type().equals("N/A")) {
+						// 
+					} else
+						value = (value.toString().substring(0,1).toUpperCase());
 				}
 				query.setObject(i, value);
 				i++;
