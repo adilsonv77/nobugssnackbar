@@ -178,7 +178,7 @@ Blockly.Blocks['controls_whileUntil'].init = function() {
 Blockly.FieldTextInput.prototype.oldShowEditor_ = Blockly.FieldTextInput.prototype.showEditor_;
 
 Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs")
+	if ((Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") || (Game.missionType === "fillInGap" && !this.sourceBlock_.isDeletable()))
 		return;
 	
 	this.oldShowEditor_(opt_quietInput);
@@ -231,8 +231,10 @@ Blockly.Blocks['math_arithmetic'].init = function() {
       };
       return TOOLTIPS[mode];
     });
-	  	
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") {
+}
+
+Blockly.Blocks['math_arithmetic'].validate = function() {
+	if ((Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs")|| (Game.missionType === "fillInGap" && !this.isDeletable())) {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
 		this.inputList[1].fieldRow[0].menuGenerator_ = function() {
@@ -316,8 +318,10 @@ Blockly.Blocks['logic_compare'].init = function() {
 	    return TOOLTIPS[op];
 	  });
 	  this.prevBlocks_ = [null, null];
-	
-	if (Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") {
+}
+
+Blockly.Blocks['logic_compare'].validate = function() {
+	if ((Game.toolbox === '<xml id="toolbox" style="display: none"></xml>' && Game.missionType !== "fixBugs") || (Game.missionType === "fillInGap" && !this.isDeletable())) {
 		
 		this.inputList[1].fieldRow[0].options_ = this.inputList[1].fieldRow[0].menuGenerator_;
 		this.inputList[1].fieldRow[0].menuGenerator_ = function() {

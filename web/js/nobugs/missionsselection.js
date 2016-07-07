@@ -8,6 +8,8 @@ MissionSelection = function(level) {
 	
 	this.level = Game.loginData.missionHist[level-1];
 	this.current = Game.loginData.missionIdx;
+	this.randomAccess = Game.loginData.userLogged.randomAccess; 
+
 	this.hightlight = -1;
 	
 	this.mouseMoveWrapper = Blockly.bindEvent_(this.canvas, 'mousemove', this, this.mouseMove);
@@ -103,8 +105,10 @@ MissionSelection.prototype.show = function() {
 		ctx.moveTo(ref+(i*esp)+raio, ref);
 		ctx.arc(ref+(i*esp), ref, raio, 0, circ);
 				
-		this.circles.push({x: ref+(i*esp), y: ref});
-		if (this.level[7][i] !== null) {
+		if (this.randomAccess || i <= this.level[3])
+			this.circles.push({x: ref+(i*esp), y: ref});
+		
+		if (this.level[7][i] !== null || this.randomAccess) {
 			if (i == this.hightlight) 
 				ctx.fillStyle = "#ffd89d";
 			else
@@ -122,7 +126,7 @@ MissionSelection.prototype.show = function() {
 			
 		}
 		
-		if (this.level[7][i] === "T") {
+		if ((this.randomAccess || i <= this.level[3]) && this.level[7][i] === "T") {
 			if (i == this.hightlight) 
 				ctx.drawImage(PreloadImgs.get('mission_selected_high'), (ref/2)+(i*esp), (ref/2)-3);
 			else

@@ -50,7 +50,7 @@
 						<p:outputLabel value="#{msg.dontChangedPassword}" rendered="#{not studentman.newStudent}"/>
 
 						<p:outputLabel value="#{msg.clazz}"/>
-						<p:selectOneMenu value="#{studentman.clazz}" converter="clazzConverter" disabled="#{not studentman.showForm}">
+						<p:selectOneMenu value="#{studentman.clazz}" disabled="#{not studentman.showForm}">
 							<f:selectItems value="#{studentman.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
 							<f:attribute name="dataProvider" value="studentman.classes"/>
 						</p:selectOneMenu>

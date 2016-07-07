@@ -71,6 +71,10 @@ public class User implements Serializable {
 	@JdbcField(name="showsound")
 	private boolean showSound;
 	
+	@JdbcField(name="userrandomaccess")
+	@RemoteProperty
+	private boolean randomAccess;
+
 	@RemoteProperty
 	private Map<String, String> flags;
 
@@ -204,4 +208,13 @@ public class User implements Serializable {
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
+	
+	public boolean isRandomAccess() {
+		return randomAccess;
+	}
+	
+	public void setRandomAccess(boolean randomAccess) {
+		this.randomAccess = randomAccess;
+	}
+	
 }

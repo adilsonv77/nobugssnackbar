@@ -3,7 +3,6 @@
 var SelectLevel = {};
 
 SelectLevel.generateBoard = function(evt) {
-
 	for (var i = 0; i < Game.loginData.missionHist.length; i++) {
 		
 		if ($("#level_"+(i+1)).length > 0) {

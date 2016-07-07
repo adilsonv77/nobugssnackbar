@@ -109,7 +109,7 @@
 	
 	<xml>
 
-		<block type="move_goToBarCounter" x="10" y = "150" deletable = "false" >
+		<block type="move_goToBarCounter" x="10" y = "150">
 			<value name="VALUE">
 				<block type="math_number" deletable = "false" >
 					<field name="NUM">1</field>
