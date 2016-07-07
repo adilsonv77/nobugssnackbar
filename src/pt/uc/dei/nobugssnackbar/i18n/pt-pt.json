@@ -138,7 +138,7 @@
 	"SnackMan.goToCoffeeMachineTooltip" : "Move o cozinheiro at&#233; a m&#225;quina de caf&#233;s.",
 	"SnackMan.prepareCoffeeTooltip" : "Prepara dois caf&#233;s.",
 	"SnackMan.pickUpCoffeeTooltip" : "Pega um caf&#233;.",
-	"SnackMan.fillInGap": "Coloque a resposta aqui dentro.",
+	"SnackMan.fillInGap": "Coloque a resposta aqui dentro. N&#227;o mexa nos blocos acima e nem abaixo.",
 	
 	"Error.error" : "Erro",
 	"Error.login" : "Usu&#225;rio n&#227;o encontrado ou palavra-passe incorreta",

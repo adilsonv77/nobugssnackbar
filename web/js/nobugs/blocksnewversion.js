@@ -11,6 +11,7 @@ Blockly.Msg.CONTROLS_IF_TOOLTIP_2 = Blockly.Msg.CONTROLS_IF_TOOLTIP_2 + "[Ctrl+S
 Blockly.Msg.CONTROLS_IF_TOOLTIP_3 = Blockly.Msg.CONTROLS_IF_TOOLTIP_3 + "[Ctrl+Shift+4]";
 Blockly.Msg.CONTROLS_IF_TOOLTIP_4 = Blockly.Msg.CONTROLS_IF_TOOLTIP_4 + "[Ctrl+Shift+4]";
 Blockly.Msg.CONTROLS_FOR_TOOLTIP = Blockly.Msg.CONTROLS_FOR_TOOLTIP + "[Ctrl+Shift+5]";
+Blockly.Field.prototype.maxDisplayLength = 100;
 
 Blockly.Blocks['controls_if'].oldControlsIfInit = Blockly.Blocks['controls_if'].init;
 
@@ -40,10 +41,12 @@ function initBasedOnMissionConfig(obj, idx){
 	        		this_.inputList[idx].fieldRow[idx].menuGenerator_ = function() {
 	        	    	return [[this.getText(), this.getText()]];
 	        	    };
-        	} else
-        		disableContextMenu = false;
+        	} else {
+     			disableContextMenu = false;
+        	}
     		
     	}
+
     	if (disableContextMenu) {
     		this_.contextMenuMsg_ = null;
     		this_.contextMenuType_ = null;
@@ -56,6 +59,27 @@ function initBasedOnMissionConfig(obj, idx){
     return !disableContextMenu;
 }
 
+function validateVariable(obj, idx) {
+
+	if (Game.missionType === "fillInGap" && !obj.isDeletable()) {
+		obj.showNewVar = false; 
+		obj.contextMenuMsg_ = null;
+		obj.contextMenuType_ = null;
+	   
+		obj.customContextMenu = null;
+		
+		if (obj.inputList[idx].fieldRow.length > 0)
+    		// changes the context menu of the variable name
+			obj.inputList[idx].fieldRow[idx].menuGenerator_ = function() {
+    	    	return [[this.getText(), this.getText()]];
+    	    };
+
+		
+	}
+
+
+}
+
 Blockly.Blocks['variables_get'].oldVariablesGetInit = Blockly.Blocks['variables_get'].init;
 Blockly.Blocks['variables_get'].init = function() {
 	
@@ -63,6 +87,12 @@ Blockly.Blocks['variables_get'].init = function() {
 	this.oldVariablesGetInit();
 	initBasedOnMissionConfig(this, 0);
     
+};
+
+Blockly.Blocks['variables_get'].validate = function() {
+	
+	validateVariable(this, 0);
+	
 };
 
 Blockly.Blocks['variables_set'].init = function() {
@@ -94,7 +124,12 @@ Blockly.Blocks['variables_set'].init = function() {
     this.contextMenuMsg_ = (useContextMenu?Blockly.Msg.VARIABLES_SET_CREATE_GET:null);
     this.contextMenuType_ = (useContextMenu?'variables_get':null);
   };
-
+  
+ Blockly.Blocks['variables_set'].validate = function() {
+	
+	validateVariable(this, 1);
+	
+};
 
 Blockly.Connection.prototype.checkType_ = function(otherConnection) {
   // Don't split a connection where both sides are immovable.

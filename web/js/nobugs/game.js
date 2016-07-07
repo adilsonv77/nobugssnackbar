@@ -1566,7 +1566,7 @@ Game.getBackgroundColor = function(missionType) {
 			
 		case "G": 
 		case "fillInGap":
-			return "#FFFED7";
+			return "#FFFEA7";
 			
 		default : 
 			return "#FFF";
