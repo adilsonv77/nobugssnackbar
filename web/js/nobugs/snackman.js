@@ -466,7 +466,7 @@ SnackMan.prototype.draw = function(ctx) {
 		this.boxOfFruits.draw(ctx);
 	}
 	
-	if (this.talkText != null) {
+	if (this.talkText !== null) {
 		
 		this.speechBubble(ctx, this.talkText, this.img.x, this.img.y);
 		

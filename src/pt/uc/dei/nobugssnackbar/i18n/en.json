@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-07-07 15:04:48.537000",
+		"lastupdated": "2016-07-07 16:42:30.860000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -16,6 +16,7 @@
 	"Hints.VariableWindow": "Here are the variables created during the game. Please note the variable name is the same as configured in the last command performed.",
 	"Hints.ShowCountInstructions": "Here is showed the quantity of blocks you are using in your program.",
 	"Hints.EmptyInputError": "There are one or more empty inputs in this block. You need insert blocks in these empty slots.",
+	"Hints.TalkUndefinedError": "--",
 	"Hints.SelectCommand": "Drag a block to the workspace.",
 	"Hints.StackTogether": "Stack a couple of this command blocks together to be more closer to reach the goal.",
 	"Apps.subtitle": "a visual programming environment",

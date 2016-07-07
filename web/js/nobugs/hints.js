@@ -107,12 +107,6 @@ Hints.hideChaff = function(b) {
 Hints.addDefaultErrorHints = function() {
 	
 	var hint = {};
-	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
-	hint.time = 0;
-	hint.running = false;
-	hint.category = "DebugProgram";
-	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
-	Hints.hints.whenError.push(hint);
 	/*
 	hint.next = new Object();
 	hint = hint.next;
@@ -126,16 +120,29 @@ Hints.addDefaultErrorHints = function() {
 	*/
 	
 	hint = new Object();
-	
 	hint.category = "TestBlock";
 	hint.content =  document.getElementById("Hints_EmptyInputError").innerHTML;
 	hint.time = 10000;
 	hint.running = false;
 	hint.condition = "Hints.hasEmptyInputs()";
-	
 	Hints.hints.sequence.push(hint);
 	
+	hint = new Object();
+	hint.category = "TestBlock";
+	hint.content =  document.getElementById("Hints_TalkUndefinedError").innerHTML;
+	hint.time = 0;
+	hint.running = false;
+	hint.condition = "Hints.lastTalkText() === undefined";
+	Hints.hints.whenError.push(hint);
 	
+	hint = new Object();
+	hint.content =  document.getElementById("Hints_DebugButtonError").innerHTML;
+	hint.time = 0;
+	hint.running = false;
+	hint.category = "DebugProgram";
+	hint.condition = "Game.howManyRuns > 2" + " && " + Hints.Categories[hint.category].naturalCondition;
+	Hints.hints.whenError.push(hint);
+
 };
 
 Hints.formatCategory = function(hint) {
@@ -796,8 +803,8 @@ Hints.isGoalNotAchieved = function(idxGoal) {
 Hints.lastTalkText = function() {
 
 	var tt = hero.talkText;
-	if (tt != null) 
-		return (tt.data?tt.data:tt);
+	if (tt !== null) 
+		return (tt && tt.data?tt.data:tt);
 	else
 		return null;
 };

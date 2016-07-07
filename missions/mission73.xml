@@ -17,13 +17,6 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 	</explanation>
 	<hints>
 		<errors>
-		   <!-- selected iddle because the type of dialog -->
- 	 	   <hint category="Iddle" time="0" condition="Hints.lastTalkText() === undefined  &amp;&amp; (Hints.isGoalNotAchieved(1)) ">
-		 	<![CDATA[
-		 	Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Resolva isso adicionando logo no come&#231;o do teu programa
-		 	um bloco de vari&#225;vel atribuindo um valor zero a essa vari&#225;vel em que ele falou "undefined".
-		 	]]>
-		   </hint>
 		   <hint category="Iddle" time="0" condition="Hints.isGoalNotAchieved(1)">
 		   No bloco [talk] precisa falar a SOMA das vendas dos cachorros. Ou seja, some todos os cachorros e multiplique pelo seu pre&#231;o. 
 		   Guarde esse total das vendas de lanches numa vari&#225;vel. Ao final fale o valor dessa vari&#225;vel.

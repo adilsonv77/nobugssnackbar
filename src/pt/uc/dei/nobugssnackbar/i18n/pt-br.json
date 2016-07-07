@@ -289,6 +289,7 @@
 	"Hints.ShowCountInstructions" : "Aqui est&#225; a quantidade de blocos que voc&#234; tem em seu programa.", 
 	
 	"Hints.EmptyInputError" : "Existem uma ou mais entradas vazias nesse bloco. Voc&#234; precisa inserir um bloco nessas aberturas vazias.",
+	"Hints.TalkUndefinedError" : "Pela caixa de di&#225;logo da tua personagem, podes notar que alguma vari&#225;vel n&#227;o foi inicializada. Verifique onde gostarias que essa vari&#225;vel recebesse o valor.",
 	
 	"Tooltip.TabMoney"      : "Jogadores ordenados pela experi&#234;ncia (XP) ganha.",
 	"Tooltip.TabTime"       : "Jogadores ordenados pelo seu n&#237;vel e tempo gasto.",
