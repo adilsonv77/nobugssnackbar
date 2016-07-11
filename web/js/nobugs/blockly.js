@@ -240,6 +240,17 @@ MyBlocklyApps.removeBlock = function(root, remove) {
 		root.dispose(true, true);
 };
 
+MyBlocklyApps.verifyObjectivesKeys = function(e) {
+	if (!hero) return;
+	
+	if (hero.verifyObjectives("keyPressed", {key:e.keyCode, ctrlPressed:e.ctrlKey, shiftPressed:e.shiftKey})) {
+		if (hero.allObjectivesAchieved) {
+			Game.verifyVictory();
+		}
+	}
+	
+};
+
 MyBlocklyApps.onKeyDown_ = function(e) {
 	  if (Blockly.isTargetInput_(e)) {
 	    // When focused on an HTML text input widget, don't trap any keys.
@@ -251,6 +262,8 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		  
 	    // Pressing esc closes the context menu.
 	    Blockly.hideChaff();
+	    
+	    MyBlocklyApps.verifyObjectivesKeys(e);
 	    
 	  } else if (e.keyCode == 8 || e.keyCode == 46) {
 	    // Delete or backspace.
@@ -272,6 +285,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		  		Game.blocksSelected = [];
 		  		Blockly.selected = null;
 	        }
+		    MyBlocklyApps.verifyObjectivesKeys(e);
 
 	    } finally {
 	      Blockly.Events.setGroup(false);
@@ -282,13 +296,20 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 	    }
 	  } else if (e.keyCode == 119) {
 		  
-		  if ($("#debugButton").attr("disabled") !== "disabled")
+		  if ($("#debugButton").attr("disabled") !== "disabled") {
+
 			  $("#debugButton").click();
+		      MyBlocklyApps.verifyObjectivesKeys(e);
+			  
+		  }
 		  
 	  } else if (e.keyCode == 121) {
 		  
-		  if ($("#runButton").attr("disabled") !== "disabled")
+		  if ($("#runButton").attr("disabled") !== "disabled") {
+			  
 			  $("#runButton").click();
+			  MyBlocklyApps.verifyObjectivesKeys(e);
+		  }
 		  
 	  } else
 		  if (e.ctrlKey && !e.shiftKey) {
@@ -301,6 +322,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 				      if (e.keyCode == 67) {
 					        // 'c' for copy.
 					        Blockly.copy_(Blockly.selected);
+  						    MyBlocklyApps.verifyObjectivesKeys(e);
 				      } else if (e.keyCode == 88) {
 					        // 'x' for cut.
 					    	
@@ -316,6 +338,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 								});
 						  		Game.blocksSelected = [];
 					    	}
+						    MyBlocklyApps.verifyObjectivesKeys(e);
 					  }
 		    	  }
 		    	  
@@ -325,15 +348,18 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		      // 'v' for paste.
 		      if (Blockly.clipboardXml_) {
 		        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
+  			    MyBlocklyApps.verifyObjectivesKeys(e);
 		      }
 		    } else
 		    	if (e.keyCode == 89) {
 		    		// 'y' redo 
     		      Blockly.mainWorkspace.undo(true);
+    			  MyBlocklyApps.verifyObjectivesKeys(e);
 		    	} else
 			    	if (e.keyCode == 90) {
 			    		// 'z' undo 
 	    		      Blockly.mainWorkspace.undo(false);
+	    			  MyBlocklyApps.verifyObjectivesKeys(e);
 			    	}
 		  } else
 			  if (e.ctrlKey && e.shiftKey) {
@@ -392,6 +418,7 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					  Blockly.hideChaff();
 					  Blockly.Xml.domToBlock(Blockly.mainWorkspace, xmlBlock);
 				  }
+				  MyBlocklyApps.verifyObjectivesKeys(e);
 				  
 			  }
 			  

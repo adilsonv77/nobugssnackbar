@@ -30,7 +30,7 @@ Objective.init = function(elem, trata) {
 	return {objective:elem.childNodes[0].nodeValue, 
 			notExists:elem.getAttribute("notExists"),  
 			achieved:false, achievedOrder: 0,
-			trata:trata};
+			trata:trata, resetable:true};
 };
 
 Objective.verifyObjectives = function(key, options) {
@@ -116,6 +116,9 @@ Objective.notExists = function() {
 };
 
 Objective.reset = function(objective) {
+	
+	if (objective.resetable !== undefined && !objective.resetable) return;
+	
 	objective.achieved = false;
 	
 	var dest = Objective.factory(objective.objective);
@@ -267,6 +270,10 @@ Objective.factory = function(key) {
 
 	case "clickInfo2" : 
 		this.factories[key] = new Objective.ClickInfo(2);
+		break;
+		
+	case "keyPressed" : 
+		this.factories[key] = new Objective.KeyPressed();
 		break;
 	}
 	
@@ -1173,4 +1180,32 @@ Objective.ClickInfo.prototype.createExplanationItem = function(objective) {
 
 Objective.ClickInfo.prototype.checkObjective = function(options, objective)  {
 	return true;
+};
+
+/******************************************************************************
+ *                                  Key Pressed
+ ******************************************************************************/
+
+Objective.KeyPressed = function() {};
+
+Objective.KeyPressed.prototype.init = function(elem) {
+	
+	var p = {objective:"keyPressed", achieved:false, trata:this, achievedOrder: 0};
+	p.key = parseInt(elem.getAttribute("key"));
+	p.ctrlPressed = elem.getAttribute("ctrlKey") === "true";
+	p.shiftPressed = elem.getAttribute("shiftKey") === "true";
+	p.text = elem.getAttribute("text");
+	
+	p.resetable = false;
+	
+	return p;
+};
+
+Objective.KeyPressed.prototype.createExplanationItem = function(objective) {
+	var text = "Utilize as teclas " + objective.text;
+	return text;
+};
+
+Objective.KeyPressed.prototype.checkObjective = function(options, objective)  {
+	return (options.key == objective.key && options.ctrlPressed == objective.ctrlPressed && options.shiftPressed == objective.shiftPressed);
 };

@@ -369,10 +369,13 @@ SnackMan.prototype.reset = function() {
 	
 	this.lastObjectiveAchieved = -1;
 	this.allObjectivesAchieved = false;
-	for (var i=0; i<this.objective.objectives.length; i++)
+	for (var i=0; i<this.objective.objectives.length; i++) {
 		Objective.reset(this.objective.objectives[i]);
+		if (this.objective.objectives[i].achieved)
+			this.lastObjectiveAchieved++;
+	}
 	
-	this.notifyListeners("ObjectiveAccomplished", 0, this.objective.objectives.length);
+	this.notifyListeners("ObjectiveAccomplished", this.lastObjectiveAchieved+1, this.objective.objectives.length);
 	
 	for (var i = 0; i < this.installedMachines.length; i++) 
 		this.installedMachines[i].machineCfg.production = [];
