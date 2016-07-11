@@ -229,7 +229,7 @@ BlocklyEditor.prototype.countInstructions = function(visitor, blocks) {
 
 BlocklyEditor.prototype.addChangeListener = function(evt) {
 	
-	Blockly.mainWorkspace.addChangeListener(evt);
+	return Blockly.mainWorkspace.addChangeListener(evt);
 };
 
 BlocklyEditor.prototype.removeChangeListener = function(evt) {
@@ -318,6 +318,7 @@ MultiBlockEditor.prototype.initialize = function(cfgSize, cfg) {
 	}
   
    Game.selectTab(this.blocklys[0].id);
+   // TODO aqui falta guardar o resultado da amarracao do listener, para gerir depois no hideEvents do Hints
    Blockly.mainWorkspace.addChangeListener(Hints.changeListener);
 		  
 };

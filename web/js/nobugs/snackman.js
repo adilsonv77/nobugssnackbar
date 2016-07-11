@@ -379,7 +379,7 @@ SnackMan.prototype.reset = function() {
 	
 	for (var i = 0; i < this.installedMachines.length; i++) 
 		this.installedMachines[i].machineCfg.production = [];
-
+	
 };
 
 /**

@@ -3399,8 +3399,10 @@ Game.verifyVictory = function() {
 
     	MyBlocklyApps.showDialog(document.getElementById("dialogFail"), null, true, true, true, null, style,
     			function() {
-    				Game.hideHints = true;
+    	    		
+    	    		Game.hideHints = true;
 	    			Hints.showErrorHint();
+	    			
     			}
     	);
     }

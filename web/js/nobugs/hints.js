@@ -454,6 +454,7 @@ Hints.associateHideEvents = function(bindEvent, specialEvent) {
 		Hints.bindEvents.push(Blockly.bindEvent_(Blockly.mainWorkspace.scrollbar.vScroll.svgKnob_, 'mousedown', null, bindEvent));
 	}
 	Hints.bindEvents.push(Blockly.bindEvent_(Game.slider.svg, 'mousedown', null, bindEvent));
+	
 };
 
 Hints.hideHintWithTimer = function () {

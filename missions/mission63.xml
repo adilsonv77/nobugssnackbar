@@ -47,6 +47,14 @@
 		</sequence>
 
 		<errors>
+			<hint category="Iddle" modal="true" condition="Hints.howManyRuns() == 4 ||Hints.howManyRuns() == 5">
+			<![CDATA[
+			Preste aten&#231;&#227;o na sequ&#234;ncia dos blocos se est&#227;o iguais &#224; 
+			sequ&#234;ncia dos objetivos. Clique no bot&#227;o [+i] da caixa que conta os 
+			objetivos cumpridos, e arraste a janela para um local que consigas comparar os
+			objetivos com os teus blocos.
+			]]>
+			</hint>
 		</errors>
 	</hints>
 
