@@ -854,6 +854,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
 	  $("#goalsAccomplishedWindow").css("top", Game.previousGoalsAccomplishedWindowPos.y + "px");
 	  $("#goalsAccomplishedWindow").css("left", Game.previousGoalsAccomplishedWindowPos.x + "px");
   }
+  $("#goalsAccomplishedWindowText").html("");
 	
   Blockly.clipboard_ = [];
   Blockly.clipboardXml_= null;
