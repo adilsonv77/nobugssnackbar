@@ -10,10 +10,11 @@ Chegou o momento de aprenderes a atender os pedidos dos clientes. Para come&#231
 Para fazer essas tarefas vais usar novos blocos:<br/>
 <ul>
   <li><span style="color:white; background-color: rgb(91,165,140); padding: 3px">askForFood</span>, pergunta ao cliente o que ele
-  deseja comer;</li>
+  deseja comer. O cozinheiro precisa estar em frente do cliente (use goToBarCounter);</li><br/>
   <li><span style="color:white; background-color: rgb(91,165,140); padding: 3px">pickUpHotDog</span>, que faz a sua personagem
-  pegar um cachorro-quente do mostrador; </li>
-  <li><span style="color:white; background-color: rgb(91,165,140); padding: 3px">deliver</span>, que faz a entrega do pedido ao cliente.</li>
+  pegar um cachorro-quente do mostrador. O cozinheiro precisa estar em frente ao mostrador (use goToDisplay); </li><br/>
+  <li><span style="color:white; background-color: rgb(91,165,140); padding: 3px">deliver</span>, que faz a entrega do pedido ao cliente. 
+    O cozinheiro precisa estar em frente do cliente (use goToBarCounter).</li>
  </ul>
 
 Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas lig&#225;-los 
@@ -30,28 +31,11 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			Temos aqui um novo bloco de comando, que &#233; usado para retirar um produto quando a sua personagem estiver em frente ao mostrador.
 			</hint>
 		
-			<hint category="LastBlockInserted">
-			<![CDATA[Todos os blocos j&#225; estavam dispon&#237;veis na &#225;rea de trabalho. Logo, reveja com aten&#231;&#227;o a necessidade 
-			desse novo bloco.]]>
-			</hint> 
 			
-			<hint category="BlockDeleted" condition="Hints.countInstructions() &lt; 6">
-			<![CDATA[N&#227;o existem blocos suficientes para resolver o problema. Tente inserir um novo bloco de acordo como aquele que voc&#234; 
-			acabou de excluir.]]>
-			</hint>
+		</sequence>
 
-			<hint category="BlockDeleted" time="5000" condition="Hints.countInstructions() &lt; 6">
-			<![CDATA[N&#227;o existem blocos suficientes para resolver o problema. Resolva inserindo um bloco e pense no que vai resultar
-			na intera&#231;&#227;o do snack man. Execute o programa para comprovar se resultou. Quando tiver vencido esse bloco,
-			tente resolver o pr&#243;ximo. Repita esse processo com calma, at&#233; atingir todos os objetivos da miss&#227;o.]]>
-			</hint>
+		<errors>
 
-			<hint time="3000" category="Iddle" condition = "Hints.showedHint() == false &amp;&amp; Hints.countShowedIddle() &lt; 2 &amp;&amp; Hints.countTopInstructions() > 5">
-			<![CDATA[Organize os blocos disponibilizados pelo jogo. Encaixe-os na ordem para atender os objetivos da miss&#227;o. Todos os 
-			blocos necess&#225;rios est&#227;o a sua disposi&#231;&#227;o. Logo, voc&#234; n&#227;o precisa nem adicionar, e nem 
-			remover blocos.]]>
-			</hint>
-			
 			<hint category="LastError" time="0" condition="Hints.blockTypeLastError() == 'do_deliver'" >
 			<![CDATA[Um erro comum &#233; o uso da vari&#225;vel incorreta: guardou os produtos em uma vari&#225;vel e est&#225; a fazer a entrega 
 			a partir de outra vari&#225;vel. Verifique se os blocos <imghex id="m5_i1">89504E470D0A1A0A0000000D494844520000007D0000002B0806000000555787CF0000000467414D410000B18F0BFC6105000000097048597300000EC200000EC20115284A800000001874455874536F667477617265007061696E742E6E657420342E302E338CE69750000002F749444154785EED994F6B535110C5F3ADC485A0E0C2852E0B8258B04A55548A5A74A1288A7FA2345209A2510B6E6C43891A890B53D12808EAA7BA3A8FDC7032CEDC7BF392D7E6F1E6C08FCE9C997B7DE5581A9F3593C96432994C2693C96432994C265389F4FA4FDF19E56018D974AA0F3A6EEDC707A3440CA3CB2F1FFA83AFDBEE76FFAD31E72CBF7838BBD0AFF636DC89CD8631E7EC3BB360A1570D0BBD8258E8152439F4BB5FDA6EEDFB7B71F9CECE96855E229242A74089E5CEB3ECD0D34177EC107D22DCEDD04992EF89493A33093149678A20CF9F3551E827379F8C0E2E6DAD67071BFF7C1FFAA56E6BECF222897DB3B1F9B4147D7F2A799E233974FA37B87401717ABBE9563EBE12674511FB6663F36929FAFE54F23C4734F497BFFBD94F31FD344B174C03D72473DE73DF7F4D0525CD7007BD5450D29C40497302E57BBE13231A7AEBD7E7427E5F4B0F8B1ED69287B5E4611D83EF4A3D897BD887E0BBBC973CDE4B9E177A2944436FFEECCD3C74ED41D1C75A82CF63BD86B6873ED6214F42DB431F6B047DAC11CD0FB127A17350E8E10E07E758A3A789EF612FF958A3A789EF612FF95823E8638D687E883D0B1D859EB643E233DCC119CE63687BE8631DF224B43DF4B146D0C71AD1FC10C91FE4AE7D7A235E9007ED4135DF83732F6926F51ADA1EFA58873C096D0F7DAC11F4B146343F4472E8B3FCF4AE3DA8E67B708E754AAFA1EDA18F75C893D0F6D0C71A411F6B44F34344432751E8F56F1DF1823C480FEA853DCEB987B5E4611D83EFC67ACDD3E0BBBC973CDE4B9E177A2924874E9C6AAF8F0E1E6B5C77075616DD917B97C72E4C85CB7BB11D9C61CF7DFF351594344BF142A0A4398192E604CAF77C274652E88F07EFB2D0E9DDFBC2C67D777075293B78F6D1ADEC30BD91A30F7AF89AD6985F9242275D693F77876F9E77FBCF1D77872E2EBACD9DDEE820BDA2A5BF14BBF9EEDDC84F72E8A4D566DDB5BAEDFF0ED8FFA7978B8942D764A1970B0BBD8258E815C442AF20167A059949E8240AFDE88D0BD985C6FC338CCD6432994C2693C9547ED56A7F01FC0D2F87478A89060000000049454E44AE426082</imghex> e 
@@ -66,10 +50,6 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 			]]>
 			</hint>
 			
-			
-		</sequence>
-
-		<errors>
 		</errors>
 	</hints>
 
@@ -103,16 +83,16 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		<block type="variables_set" inline="true" x = "300" y = "1" deletable = "false" >
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
-				<block type="ask_askForFood" deletable = "false"  >
+				<block type="ask_askForFood" deletable = "false" movable="false">
 				</block>
 			</value>
 		</block>
 		<block type="variables_set" inline="true" x = "300" y = "50" deletable = "false" >
 			<field name="VAR">comida</field>
 			<value name="VALUE">
-				<block type="prepare_pickUpHotDog" deletable = "false"  >
+				<block type="prepare_pickUpHotDog" deletable = "false" movable="false">
 					<value name="VALUE">
-						<block type="variables_get" deletable = "false  ">
+						<block type="variables_get" deletable = "false" movable="false">
 						   <field name="VAR">pedido</field>
 						</block>
 					</value>
@@ -121,14 +101,14 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		</block>
 		<block type="move_goToBarCounter" x = "300" y = "100" deletable = "false" >
 			<value name="VALUE">
-				<block type="math_number" deletable = "false"  >
+				<block type="math_number" deletable = "false" movable="false">
 					<field name="NUM">2</field>
 				</block>
 			</value>
 		</block>
 		<block type="move_goToBarCounter" x = "300" y = "150" deletable = "false" >
 			<value name="VALUE">
-				<block type="math_number" deletable = "false"  >
+				<block type="math_number" deletable = "false" movable="false">
 					<field name="NUM">2</field>
 				</block>
 			</value>
@@ -137,7 +117,7 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		</block>
 		<block type="do_deliver" x = "300" y = "250" deletable = "false" >
 			<value name="VALUE">
-				<block type="variables_get" deletable = "false"  >
+				<block type="variables_get" deletable = "false" movable="false">
 					<field name="VAR">comida</field>
 				</block>
 			</value>

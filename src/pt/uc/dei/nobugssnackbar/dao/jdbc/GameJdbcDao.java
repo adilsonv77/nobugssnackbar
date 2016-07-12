@@ -1156,7 +1156,7 @@ public class GameJdbcDao implements GameDao {
 			ResultSet rs = st
 					.executeQuery(" select classid, showleaderboardafter, maxmission from "
 							+ " classes left outer join "
-							+ " (select max(missionorder) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where userid = "
+							+ " (select count(*) maxmission, classid from missionsaccomplished join classesmissions using (missionid, classid) where achieved = 'T' and userid = "
 							+ userid
 							+ " group by userid, classid) mu "
 							+ "  using (classid) where classid = "

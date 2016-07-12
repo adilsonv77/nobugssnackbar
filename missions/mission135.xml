@@ -1,0 +1,115 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<page type="goal">
+		<![CDATA[
+Observe que a cor de fundo do ambiente mudou para amarelo. Isso indica que esta 
+ &#233; uma miss&#227;o em que &#233; fornecida a solu&#231;&#227;o parcial para o problema.
+ Existe um ou mais blocos em preto, que permitem incluir outros blocos dentro dele. 
+ Ser&#225; para dentro desses blocos pretos que voc&#234; deve inserir o que falta na solu&#231;&#227;o.<br/><br/>
+ Evite mexer na solu&#231;&#227;o fora desses blocos pretos. 
+ ]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+Veja abaixo a lista de objetivos, e verifique na solu&#231;&#227;o o que falta para cumprir. Insira os blocos
+   faltantes dentro do bloco preto. 
+ ]]>
+		</page>
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToDisplay" show="true" />
+		<category name="goToCooler" show="true" />
+		
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="fillInGap" ordered="true" variableWindow="false" xpFinal="10" noXP="true">
+				
+		<objective pos="3" place="counter">goesTo</objective>
+		<objective>goesToCooler</objective>
+		<objective>goesToDisplay</objective>
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective>goesToDisplay</objective>
+		<objective>goesToCooler</objective>
+		
+	</objectives>	
+	
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="move_goToBarCounter" movable="false"
+			deletable="false" x="263" y="54">
+			<value name="VALUE">
+				<block type="math_number" deletable="false" movable="false">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+			<next>
+				<block type="move_goToCooler" deletable="false" movable="false">
+					<next>
+						<block type="move_goToDisplay"  movable="false"
+							deletable="false">
+							<next>
+								<block type="move_goToBarCounter" movable="false" 
+									deletable="false">
+									<value name="VALUE">
+										<block type="math_number" movable="false" 
+											deletable="false">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<next>
+										<block type="fillInGap" deletable="false" movable="false" >
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+
+	</xml>
+</mission>
