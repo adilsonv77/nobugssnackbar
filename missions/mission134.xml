@@ -1,0 +1,141 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+Observe que a cor de fundo do ambiente mudou para azul. Isso indica que esta 
+ &#233; uma miss&#227;o em que &#233; fornecida a solu&#231;&#227;o para o problema,
+ na parte inferior da janela existe uma pergunta e algumas op&#231;&#245;es de respostas. 
+ Precisas selecionar a resposta que acreditas correta e clicar em [Enviar a resposta].
+ A seguir a solu&#231;&#227;o &#233; executada e se a resposta estiver correta, ganhas a miss&#227;o. 
+ Caso contr&#225;rio, as op&#231;&#245;es de respostas s&#227;o refeitas, e podes tentar novamente. Isso se
+ repete at&#233; selecionar a resposta correta.   
+		]]>
+		</page>
+
+		<page type="goal">
+		<![CDATA[
+Esse tipo de miss&#227;o serve para aprenderes como as coisas funcionam lendo a solu&#231;&#227;o,
+  interpretando os blocos e identificando o comportamento do cozinheiro.<br/><br/>
+A pergunta para essa quest&#227;o, muito simples, &#233; <b>Quantas vezes o cozinheiro vai 
+  para a geladeira, a partir do cliente?</b>
+		]]>
+		</page>
+
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="multipleChoice" variableWindow="true"
+		xpFinal="10" noXP="true">
+
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+
+	</objectives>
+
+	<multipleChoice result="2"
+		question="Quantas vezes o cozinheiro vai para a geladeira, a partir do cliente?">
+		<answer>result-1</answer>
+		<answer>Game.vars['r'] = Math.floor((Math.random() * 3) + 2); if(Game.vars['r'] == 2) Game.vars['r']=3;Game.vars['r']</answer>
+		<answer>Game.vars['r']+1</answer>
+	</multipleChoice>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="move_goToBarCounter"
+			deletable="false" x="263" y="54">
+			<value name="VALUE">
+				<block type="math_number" deletable="false">
+					<field name="NUM">3</field>
+				</block>
+			</value>
+			<next>
+				<block type="move_goToCooler" 
+					deletable="false">
+					<next>
+						<block type="move_goToDisplay" 
+							deletable="false">
+							<next>
+								<block type="move_goToBarCounter" 
+									deletable="false">
+									<value name="VALUE">
+										<block type="math_number" 
+											deletable="false">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<next>
+										<block type="move_goToDisplay"
+											deletable="false">
+											<next>
+												<block type="move_goToCooler" 
+													deletable="false">
+													<next>
+														<block type="move_goToBarCounter"
+															deletable="false">
+															<value name="VALUE">
+																<block type="math_number"
+																	deletable="false">
+																	<field name="NUM">3</field>
+																</block>
+															</value>
+															<next>
+																<block type="move_goToCooler"
+																	deletable="false"></block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>

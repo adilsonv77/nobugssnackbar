@@ -16,7 +16,7 @@ public class Mission implements Serializable {
 	
 	@JdbcField(name="missionid")
 	@JdbcPk
-	private Integer id;
+	private Long id;
 
 	@JdbcField(name="missionname")
 	private String name;
@@ -27,10 +27,10 @@ public class Mission implements Serializable {
 	@JdbcField(name="missionrepeatable", type="INT")
 	private boolean repeatable;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer l) {
+	public void setId(Long l) {
 		this.id = l;
 	}
 	public String getName() {
@@ -56,7 +56,7 @@ public class Mission implements Serializable {
 	public Mission() {
 	}
 
-	public Mission(Integer id, String name, String content,
+	public Mission(Long id, String name, String content,
 			boolean repeatable) {
 		this(name, content, repeatable);
 		this.id = id;

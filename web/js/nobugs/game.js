@@ -1482,6 +1482,16 @@ Game.finishLoadMultipleChoice = function() {
 	var result = mc.getAttribute("result");
 	result = eval(result);
 	
+	if (Game.talking === "")
+		Game.talking = result;
+	
+	var question = mc.getAttribute("question");
+	if (question !== null)
+		$("#MCQuestion").html(question);
+	else
+		$("#MCQuestion").html("");
+	
+	Game.vars = [];
 	var answers = [Game.talking];
 	var ia = mc.getElementsByTagName("answer");
 	for (var i=0; i<ia.length; i++) {
@@ -1511,7 +1521,7 @@ Game.finishLoadMultipleChoice = function() {
 		Game.finalFunction();
 	
 	hero.reset();
-	
+	$("#ButtonSubmitChoice").removeAttr("disabled"); 
 };
 
 Game.answerMultipleChoice = function() {
@@ -1583,7 +1593,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
   
   var cfg = { media: "media/",
 	       rtl: Game.rtl,
-	       trashcan: (Game.missionType == "createsFromScratch"),  // TODO: o blockly permite excluir objetos n�o-deletaveis que estao dentro de blocos deletaveis 
+	       trashcan: (toolbox != '<xml id="toolbox" style="display: none"></xml>'),  // TODO: o blockly permite excluir objetos -deletaveis que estao dentro de blocos deletaveis 
 	       comments: false,
 	       scrollbars: true,
 	       toolbox: toolbox,

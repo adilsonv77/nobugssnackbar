@@ -6,8 +6,8 @@
 		<![CDATA[
 Observe que a cor de fundo do ambiente mudou para vermelho. Isso indica que esta 
  &#233; uma miss&#227;o em que &#233; fornecida uma solu&#231;&#227;o para o problema, mas essa solu&#231;&#227;o
- tem um ou mais erros. Precisas descobrir e consertar o erro. Para corrigir o erro pode ser incluir, remover ou 
- trocar a posi&#231;&#227;o de blocos, ou alterar os par&#226;metros dos blocos.<br/><br/>
+ tem um ou mais erros. Precisas descobrir e consertar o erro. Para corrigir o erro pode ser  
+ trocar a posi&#231;&#227;o de blocos ou alterar os par&#226;metros dos blocos.<br/><br/>
 Nesse tipo de miss&#227;o a primeira execu&#231;&#227;o n&#227;o conta na quantidade de tentativas para ganhar pontos. Aproveite bem essa execu&#231;&#227;o
  para descobrir a maior quantidade poss&#237;vel de erros.<br/><br/>
 Podes chegar num ponto que &#233; melhor recome&#231;ar com a solu&#231;&#227;o original. Utilize o
@@ -37,11 +37,6 @@ A execu&#231;&#227;o &#233; considerada desde o primeiro momento que clicas no b
 	</hints>
 
 	<commands>
-		<category name="snackMan" show="true" />
-
-		<category name="goToBarCounter" show="true" />
-		<category name="goToDisplay" show="true" />
-		<category name="goToCooler" show="true" />
 	</commands>
 
 	<cooker>initial</cooker>
@@ -120,7 +115,7 @@ A execu&#231;&#227;o &#233; considerada desde o primeiro momento que clicas no b
 								</block>
 							</value>
 							<next>
-								<block type="move_goToDisplay" >
+								<block type="move_goToCooler" >
 									<next>
 										<block type="move_goToBarCounter" >
 											<value name="VALUE">
