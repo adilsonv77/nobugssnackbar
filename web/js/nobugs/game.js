@@ -1442,7 +1442,11 @@ Game.disabledMCOptions = function(disabled) {
 };
 
 Game.finishMultipleChoiceRunning = function() {
-	Game.talking = Game.talking.substr(0, Game.talking.length-1);
+	if (Game.talking === "")
+		Game.talking = Game.mcAnswer;
+	else
+		Game.talking = Game.talking.substr(0, Game.talking.length-1);
+	
 	var res = ($("input[name=MCoption]:checked").val() === Game.talking);
 	if (!res) {
 		var content = document.getElementById('dialogError');
@@ -1483,7 +1487,7 @@ Game.finishLoadMultipleChoice = function() {
 	result = eval(result);
 	
 	if (Game.talking === "")
-		Game.talking = result;
+		Game.talking = result+"";
 	
 	var question = mc.getAttribute("question");
 	if (question !== null)

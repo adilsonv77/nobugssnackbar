@@ -67,7 +67,7 @@ A pergunta para essa quest&#227;o, muito simples, &#233; <b>Quantas vezes o cozi
 		</customer>
 
 	</customers>
-	<objectives missionType="multipleChoice" variableWindow="true"
+	<objectives missionType="multipleChoice" variableWindow="false"
 		xpFinal="10" noXP="true">
 
 		<objective pos="1" place="counter">goesTo</objective>
