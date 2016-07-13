@@ -15,6 +15,17 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 		</sequence>
 
 		<errors>
+		
+			<hint category="SourceCode" condition="Hints.howManyRuns() &gt;= 7 &amp;&amp; (Hints.isGoalNotAchieved(1) || Hints.isGoalNotAchieved(2))" >
+			Lembre-se que tens que somar as quantidades de comida em uma vari&#225;vel, <br/>
+			e de bebida em outra vari&#225;vel. Al&#233;m disso,<br/> 
+			pergunte a quantidade de bebida e SOME sempre na mesma vari&#225;vel. Fa&#231;a o mesmo para comida.
+			</hint>
+
+			<hint category="Free" condition="Hints.howManyRuns() &gt;= 4 &amp;&amp; (Hints.isGoalNotAchieved(1) || Hints.isGoalNotAchieved(2))" >
+			Consulte a sua solu&#231;&#227;o da miss&#227;o anterior. Nela voc&#234; j&#225; tinha praticado a soma de vari&#225;veis.
+			</hint>
+		
 		</errors>
 	</hints>
 
@@ -151,7 +162,7 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 		</customer>
 	</customers>
 		
-	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" >
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRunQtdAttempts="5">
 		<objective text="a quantidade total de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
 		<objective text="a quantidade total de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
 	</objectives>

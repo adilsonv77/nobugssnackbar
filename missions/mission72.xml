@@ -4,11 +4,13 @@
 
 		<page type="goal">
 		<![CDATA[
-O &#250;ltimo desafio antes de fechar essa fase. O problema &#233; exatamente o mesmo da miss&#227;o anterior. Tanto que at&#233;
-  trago a tua solu&#231;&#227;o da miss&#227;o anterior.<br/><br/>
+O &#250;ltimo desafio antes de fechar essa fase. O problema &#233; exatamente o mesmo de duas miss&#245;es anteriores. Tanto que at&#233;
+  trago a tua solu&#231;&#227;o dessa miss&#227;o  (caso j&#225; tenha feito aquela miss&#227;o anterior) .<br/><br/>
 Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;ximo duas vari&#225;veis na solu&#231;&#227;o inteira. 
   Reveja o seu c&#243;digo para verificar onde podes enxugar para t&#227;o poucas vari&#225;veis.<br/><br/>
-<span style="color:red">Dica: o que perguntares ao cliente j&#225; pode colocar diretamente dentro de uma soma.</span>  
+<span style="color:red">Dica: o que perguntares ao cliente j&#225; pode colocar diretamente dentro de uma soma. Veja a 
+ miss&#227;o exatamente anterior a esta.
+  </span>  
 		]]>
 		</page>
 	</explanation>
@@ -18,6 +20,9 @@ Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;xim
 		</sequence>
 
 		<errors>
+			<hint category="Free" condition="Hints.howManyRuns() &gt;= 4 &amp;&amp; Hints.howManyRuns() &lt;= 6" >
+			Consulte a a miss&#227;o anterior. Nela voc&#234; j&#225; tinha praticado o reuso de de vari&#225;veis.
+			</hint>
 		</errors>
 	</hints>
 

@@ -172,7 +172,6 @@
 			<arg line="${js.home}/baloon.js" />
 			<arg line="${js.home}/leaderboard.js" />
 			<arg line="${js.home}/citymap.js" />
-			<arg line="${js.home}/selectmission.js" />
 			<arg line="${js.home}/selectlevel.js" />
 			<arg line="${js.home}/nobugsingrid.js" />
 			<arg line="${js.home}/avatar.js" />

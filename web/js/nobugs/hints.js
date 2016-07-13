@@ -255,7 +255,7 @@ Hints.showErrorHint = function() {
 		var hint = hintErrors[i];
 		Hints.hintSelected = hint;
 		
-		if (hint.category === "TestBlock") {
+		if (hint.category.startsWith("TestBlock")) {
 			
 			Hints.foundTestBlock = false;
 			Game.editor.countInstructions(Hints.visitBlocks);
@@ -339,7 +339,7 @@ Hints.runHint = function(hint) {
 	if (Game.runningStatus > 0 && !hint.running)
 		return false;
 
-	if (hint.category === "TestBlock") {
+	if (hint.category.startsWith("TestBlock")) {
 		
 		Hints.foundTestBlock = false;
 		Game.editor.countInstructions(Hints.visitBlocks);

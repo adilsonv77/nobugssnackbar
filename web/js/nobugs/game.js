@@ -145,7 +145,8 @@ Game.dwrInitialization = function() {
 
 		  if (exception.javaClassName == 'org.directwebremoting.impl.LoginRequiredException') {
 			  sessionStorage.removeItem("logged");
-			  MyBlocklyApps.hideDialog(false);
+			  //MyBlocklyApps.hideDialog(false);
+			  Hints.hideHints();
 			  window.alert(BlocklyApps.getMsg("Error_session_expired"),
 					  function() {document.location.reload();}, {height:"160px"}
  					  ); 
@@ -166,7 +167,8 @@ Game.dwrInitialization = function() {
 				  sessionStorage.logged = now;
 			  else {
 				  sessionStorage.removeItem("logged");
-				  MyBlocklyApps.hideDialog(false);
+				  //MyBlocklyApps.hideDialog(false);
+				  Hints.hideHints();
 				  window.alert(BlocklyApps.getMsg("Error_session_expired"),
 						  function() {document.location.reload();}, {height:"160px"}
 	 					  ); 
@@ -1789,7 +1791,7 @@ Game.moveBlocks = function() {
 Game.verifyButtons = function(objectives) {
 	Game.enabledDebug = Game.missionType !== "multipleChoice" && objectives.getAttribute("buttonDebug") !== "false";
 	Game.enabledRun = Game.missionType !== "multipleChoice" && objectives.getAttribute("buttonRun") !== "false";
-	Game.qtAttempts = (objectives.getAttribute("buttonRunQtdAttempts"));
+	Game.qtAttempts = (Game.missionView?null:objectives.getAttribute("buttonRunQtdAttempts"));
 	if (Game.qtAttempts != null) {
 		Game.qtAttempts = parseInt(Game.qtAttempts);
 		Game.enabledRun = Game.enabledRun && Game.howManyRuns <= Game.qtAttempts;
@@ -2589,9 +2591,9 @@ Game.enableButton = function(buttonName, className) {
 				
 				Game.showedWindowRunDisabled = true;
 				
-				var content = $("<div/>")
-					.append(BlocklyApps.getMsg("NoBugs_RunButtonDisabled"));
 				Game.disableButton("runButton");
+				
+				var content = $("<div/>").append(BlocklyApps.getMsg("NoBugs_RunButtonDisabled"));
 				Hints.stopHints();
 				
 				MyBlocklyApps.showDialog(content[0], null, true, true, true, "", {width: "500px"}, null, function(){
