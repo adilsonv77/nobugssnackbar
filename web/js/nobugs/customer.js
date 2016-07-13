@@ -162,17 +162,19 @@ Customer = function(options) {
 	this.idxPattern = options.idxPattern;
 	this.baloonLeft = options.baloonLeft;
 	
+	this.visibleTest = options.visibleTest;
+
+	this.reset();
+};
+
+Customer.prototype.reset = function() {
+	
 	this.amountPaid = 0;
 	this.amountChangeReceived = 0;
 	this.amountChangeExpected = 0;
 	this.changeReceived = [];
 	
 	this.deliveredItems = [];
-	this.visibleTest = options.visibleTest;
-	/*
-	if (this.randomType != null) // I transfered this task to customerman.js
-		this.randomizeFoodAndDrink();
-	 */
 };
 
 Customer.prototype.afterConstruct = function() {

@@ -34,25 +34,22 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 			<init>counter1</init>
 			<dest>counter1</dest>
 			<orders>
-				<order randomType="random" randomMin="1" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
@@ -68,25 +65,20 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 			<init>counter2</init>
 			<dest>counter2</dest>
 			<orders>
-				<order randomType="random" randomMin="1" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
@@ -102,7 +94,7 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 			<init>counter3</init>
 			<dest>counter3</dest>
 			<orders>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
@@ -111,18 +103,15 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
-						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
 					<drinks>
 					</drinks>
 				</order>
-				<order randomType="random" randomMin="0" randomMax="3">
+				<order>
 					<foods>
-						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 						<food qt="1" price="2">hotdog</food>
 					</foods>
@@ -132,92 +121,92 @@ Essa &#233; uma miss&#227;o para descobrir erros. Descubra o erro da solu&#231;&
 			</orders>			
 		</customer>
 	</customers>
-	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="10" xpFinal="5">
+	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="10" xpFinal="5" buttonRun="false">
 		
 		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
 		
 	</objectives>
 	<xml>
-	<block type="move_goToBarCounter" x="74" y="28" deletable="false">
+	<block type="move_goToBarCounter" x="74" y="28" deletable="false" movable="false">
 		<value name="VALUE">
-			<block type="math_number" deletable="false">
+			<block type="math_number" deletable="false" movable="false">
 				<field name="NUM">1</field>
 			</block>
 		</value>
 		<next>
-			<block type="variables_set" deletable="false">
+			<block type="variables_set" deletable="false" movable="false">
 				<field name="VAR">qtaComida</field>
 				<value name="VALUE">
-					<block type="ask_askWantHowManyFoods" deletable="false"></block>
+					<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 				</value>
 				<next>
-					<block type="move_goToBarCounter" deletable="false">
+					<block type="move_goToBarCounter" deletable="false" movable="false">
 						<value name="VALUE">
-							<block type="math_number" deletable="false">
+							<block type="math_number" deletable="false" movable="false">
 								<field name="NUM">2</field>
 							</block>
 						</value>
 						<next>
-							<block type="variables_set" deletable="false">
+							<block type="variables_set" deletable="false" movable="false">
 								<field name="VAR">qtaComida</field>
 								<value name="VALUE">
-									<block type="math_arithmetic" deletable="false">
+									<block type="math_arithmetic" deletable="false" movable="false">
 										<field name="OP">ADD</field>
 										<value name="A">
-											<block type="ask_askWantHowManyFoods" deletable="false"></block>
+											<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 										</value>
 										<value name="B">
-											<block type="variables_get" deletable="false">
+											<block type="variables_get" deletable="false" movable="false">
 												<field name="VAR">qtaComida</field>
 											</block>
 										</value>
 									</block>
 								</value>
 								<next>
-									<block type="move_goToBarCounter" deletable="false">
+									<block type="move_goToBarCounter" deletable="false" movable="false">
 										<value name="VALUE">
-											<block type="math_number" deletable="false">
+											<block type="math_number" deletable="false" movable="false">
 												<field name="NUM">3</field>
 											</block>
 										</value>
 										<next>
-											<block type="variables_set" deletable="false">
+											<block type="variables_set" deletable="false" movable="false">
 												<field name="VAR">qtaComida</field>
 												<value name="VALUE">
-													<block type="math_arithmetic" deletable="false">
+													<block type="math_arithmetic" deletable="false" movable="false">
 														<field name="OP">ADD</field>
 														<value name="A">
-															<block type="ask_askWantHowManyFoods" deletable="false"></block>
+															<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 														</value>
 														<value name="B">
-															<block type="variables_get" deletable="false">
+															<block type="variables_get" deletable="false" movable="false">
 																<field name="VAR">qtaComida</field>
 															</block>
 														</value>
 													</block>
 												</value>
 												<next>
-													<block type="variables_set" deletable="false">
+													<block type="variables_set" deletable="false" movable="false">
 														<field name="VAR">totalVendas</field>
 														<value name="VALUE">
-															<block type="math_arithmetic" deletable="false">
+															<block type="math_arithmetic" deletable="false" movable="false">
 																<field name="OP">MULTIPLY</field>
 																<value name="A">
-																	<block type="variables_get" deletable="false">
+																	<block type="variables_get" deletable="false" movable="false">
 																		<field name="VAR">qtaComida</field>
 																	</block>
 																</value>
 																<value name="B">
-																	<block type="math_number" deletable="false">
+																	<block type="math_number" deletable="false" movable="false">
 																		<field name="NUM">2</field>
 																	</block>
 																</value>
 															</block>
 														</value>
 														<next>
-															<block type="do_talk" deletable="false">
+															<block type="do_talk" deletable="false" movable="false">
 																<value name="VALUE">
-																	<block type="variables_get" deletable="false">
+																	<block type="variables_get" deletable="false" movable="false">
 																		<field name="VAR">qtaComida</field>
 																	</block>
 																</value>

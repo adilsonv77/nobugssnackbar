@@ -1527,6 +1527,8 @@ Game.finishLoadMultipleChoice = function() {
 		Game.finalFunction();
 	
 	hero.reset();
+	customers.forEach(function(cust) { cust.reset(); cust.afterConstruct(); });
+	
 	$("#ButtonSubmitChoice").removeAttr("disabled"); 
 };
 
@@ -3520,10 +3522,12 @@ Game.removeChangeListeners = function() {
  **********************************************************************/
 Game.talk = function(t) {
 	
-	if (Game.runningStatus < 3)
-		hero.talk(t);
-	else
+	if (Game.runningStatus >= 3) {
 		Game.talking = Game.talking + t + ";";
+		hero.talk({data:"Não falo a resposta."}); 
+	}
+	else	
+		hero.talk(t); 
 	
 };
 

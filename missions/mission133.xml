@@ -6,8 +6,7 @@
 Esta &#233; uma miss&#227;o para corrigir erros. Existe apenas um erro nessa solu&#231;&#227;o.<br/><br/>
  Execute passo-a-passo (com o bot&#227;o <img src="images/icondebug.png"/> ) para descobrir o erro no programa. <br/><br/>
 Lembre-se que a primeira execu&#231;&#227;o &#233; um b&#244;nus que n&#227;o ser&#225; contada para receber pontos.  <br/><br/>
-O pre&#231;o do refrigerante &#233; $2. Pergunte a cada cliente quantas bebidas ele quer e no final fale o total do faturamento (quantidade de bebidas multiplicado
-   pelo pre&#231;o da bebida). 
+Pergunte a cada cliente quantas bebidas ele quer e no final fale o total das bebidas a serem vendidas. 
 		]]>
 		</page>
 
@@ -64,7 +63,7 @@ O pre&#231;o do refrigerante &#233; $2. Pergunte a cada cliente quantas bebidas 
 	<objectives missionType="fixBugs" variableWindow="true" buttonRun="false"
 		xpIndividual="10" xpFinal="5" xpTotalRun="3">
 
-		<objective text="o total do faturamento" value="CustomerManager.totalOfDrink()*2">talk</objective>
+		<objective text="o total das bebidas" value="CustomerManager.totalOfDrink()">talk</objective>
 
 	</objectives>
 
@@ -111,18 +110,8 @@ O pre&#231;o do refrigerante &#233; $2. Pergunte a cada cliente quantas bebidas 
 									<next>
 										<block type="do_talk" deletable="false" movable="false">
 											<value name="VALUE">
-												<block type="math_arithmetic" deletable="false" movable="false">
-													<field name="OP">MULTIPLY</field>
-													<value name="A">
-														<block type="variables_get" deletable="false" movable="false">
-															<field name="VAR">qtaBebida</field>
-														</block>
-													</value>
-													<value name="B">
-														<block type="math_number" deletable="false" movable="false">
-															<field name="NUM">2</field>
-														</block>
-													</value>
+												<block type="variables_get" deletable="false" movable="false">
+													<field name="VAR">qtaBebida</field>
 												</block>
 											</value>
 										</block>
