@@ -179,6 +179,7 @@
 	"Error.paramIsNotANumber" : "O par&#226;metro n&#227;o &#233; um n&#250;mero.",
 	"Error.alreadyPaid" : "O cliente j&#225; pagou a refei&#231;&#227;o.",
 	"Error.incorrectAccount" : "A conta est&#225; incorreta. N&#227;o corresponde com o meu pedido.",
+	"Error.didntPaid" : "Voc&#234; est&#225; tentando dar ao cliente troco, mas ele nem te pagou ainda.", 
 	"Error.qtyOfMoneyInvalid" : "O primeiro par&#226;metro precisa ser um n&#250;mero.",
 	"Error.typeOfMoneyInvalid" : "O segundo par&#226;metro precisa ser uma moeda ou nota. ",
 	"Error.changeExceeded" : "Voc&#234; est&#225; tentando dar ao cliente mais troco do que o necess&#225;rio.",

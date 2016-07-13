@@ -880,6 +880,11 @@ Customer.prototype.convertMoney = function(type) {
 
 Customer.prototype.giveChange = function(value, typeOfMoney) {
 	
+	if (!this.isPaid()) {
+		BlocklyApps.log.push(["fail", "Error_didntPaid"]); 
+		throw false;
+	}
+	
 	if (value === undefined || value.data === undefined || isNaN(value.data)) {
 		BlocklyApps.log.push(["fail", "Error_qtyOfMoneyInvalid"]); // primeiro parametro deveria ser um numero
 		throw false;

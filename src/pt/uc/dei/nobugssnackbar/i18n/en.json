@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-07-13 11:26:40.912000",
+		"lastupdated": "2016-07-13 18:59:40.199000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -147,6 +147,7 @@
 	"Error.incorrectAccount": "There is a problem in the account. It does not correspond to my request",
 	"Error.navigatorNotSupported": "Sorry for the inconvenience. This game is not supported by this browser. <x id='BREAK'/>It is recommended to be downloaded and the installation of any of the browsers below:",
 	"Error.incorrectID": "The user's ID, that you are trying to use is incorrect!",
+	"Error.didntPaid": "Your're giving the change before the customer paid.",
 	"Error.qtyOfMoneyInvalid": "The first parameter must be a number.",
 	"Error.typeOfMoneyInvalid": "The second parameter must be a bank note or a coin.",
 	"Error.changeExceeded": "You are trying to give the customer more change than necessary.",

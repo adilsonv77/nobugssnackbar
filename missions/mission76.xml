@@ -9,8 +9,8 @@ Em uma miss&#227;o anterior utilizastes o bloco <imghex id="cashIn">89504E470D0A
 		</page>
 			<page type="goal">
 		<![CDATA[
-Nessa miss&#227;o os clientes vem com fome, vais cobrar o valor dele, e como sempre ele paga com valor maior. <br/><br/>
-Mas agora, vais calcular quantas bebidas podiam ser entregues ao cliente se usasse o troco. Cada cachorro custa $2 e bebida custa $3. <br/><br/>
+Nessa miss&#227;o os clientes vem com fome, vais cobrar o valor dele, e como sempre, ele paga com valor maior. <br/><br/>
+Mas agora, vais calcular e falar quantas bebidas podiam ser entregues ao cliente se usasse o troco. Cada cachorro custa $2 e bebida custa $3. <br/><br/>
 Exemplo: o cliente pediu 3 cachorros e entregou uma nota de $20. O valor do pedido &#233; $6 (= 3 x $2) e o troco &#233; $14 (=$20 - $6). Vais
   falar 4 (=$14 / 3).<br/><br/>
 Aten&#231;&#227;o: No jogo, as divis&#245;es sempre resultam com a parte inteira. Por exemplo, se 5 / 2 resulta em 2.5, no jogo vai resultar em 2.
@@ -24,6 +24,16 @@ Aten&#231;&#227;o: No jogo, as divis&#245;es sempre resultam com a parte inteira
 		</sequence>
 
 		<errors>
+		
+			<hint category="LastError" condition="Hints.containsBlockTypeLastError('money_cashIn')" >
+			Verifique se voc&#234; multiplicou a quantidade com o valor unit&#225;rio do produto.
+			</hint>
+		
+			<hint category="Free" condition="Hints.lastTalkText() != null &amp;&amp; Hints.lastTalkText() &lt;= 0" >
+			Estais errando no c&#225;lculo. Consulte a terceira miss&#227;o, e veja como se fazia o c&#225;lculo da gorjeta.
+			Nesta miss&#227;o aqui, o troco equivale &#224; gorjeta.
+			</hint>
+		
 		</errors>
 	</hints>
 	<help>
@@ -121,7 +131,7 @@ Aten&#231;&#227;o: No jogo, as divis&#245;es sempre resultam com a parte inteira
 			</orders>			
 		</customer>
 	</customers>
-	<objectives xpTotalRun="6" ordered="false" xpIndividual="20" xpFinal="10">
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="20" xpFinal="10">
 		
 		<objective pos="1" place="counter">askWantHowManyFoods</objective>
 		<objective text="a quantidade de refrigerantes que consegue fornecer com o troco para o  cliente 1" 

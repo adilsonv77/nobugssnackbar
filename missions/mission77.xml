@@ -64,17 +64,17 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 			<orders>
 				<order>
 					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
-						<food qt="1" price="3">hotdog</food>
-						<food qt="1" price="3">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -97,18 +97,18 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 					<foods>
 						<food qt="1" price="3">hotdog</food>
 						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
 					<foods>
 						<food qt="1" price="3">hotdog</food>
 						<food qt="1" price="3">hotdog</food>
-						<food qt="1" price="3">hotdog</food>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coke</drink>
 					</drinks>
 				</order>
 				<order>
@@ -125,10 +125,10 @@ Para ti isso j&#225; &#233; um programa f&#225;cil. Mas como &#233; final de fas
 		<objective block="askWantHowManyFoods" type="ask_askWantHowManyFoods" times="2">callTimes</objective>
 		<objective block="askWantHowManyDrinks" type="ask_askWantHowManyDrinks"  times="2">callTimes</objective>
 
-		<objective text="o faturamento" 
+		<objective text="o faturamento (total das vendas)" 
 				  value="(CustomerManager.totalOfFood()+CustomerManager.totalOfDrink())*3">talk</objective>
 		
-		<objective text="o lucro" 
+		<objective text="o lucro (vendas - custo)" 
 				  value="CustomerManager.totalOfFood()+(CustomerManager.totalOfDrink()*2)">talk</objective>
 		
 	</objectives>

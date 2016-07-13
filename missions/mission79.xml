@@ -13,10 +13,10 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 		<![CDATA[
 		Nosso caixa est&#225; um tanto limitado, e dispomos apenas de moedas de $1. 
 		Logo, conseguimos dar o troco para o cliente em moedas de $1.<br/><br/>
-		Pergunte ao cliente quanto eles quer de cachorros e refrigerantes, calcule o valor do pedido, receba o dinheiro 
+		Pergunte ao cliente quanto quer de cachorros e refrigerantes, calcule o valor do pedido, receba o dinheiro 
 		e forne&#231;a o troco em moedas de $1.<br/><br/>
 		O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
-		<span style="color:red">Tens somente tr&#234;s tentativas para ganhar pontos.</span>
+		<span style="color:red">Tens somente seis tentativas para ganhar pontos.</span>
 		]]>
 		</page>
 
@@ -25,6 +25,12 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 		<sequence>
 		
 		</sequence>
+		<errors>
+			<hint category="LastError" condition="Hints.containsBlockTypeLastError('money_cashIn')" >
+			Verifique se voc&#234; multiplicou a quantidade com o valor unit&#225;rio do produto.
+			</hint>
+		
+		</errors>
 	</hints>
 	<commands>
 		<category name="snackMan" show="true"/>
@@ -98,7 +104,7 @@ Agora vais ter um novo comando para dar o troco ao cliente. No menu [Dinheiro] e
 			</orders>			
 		</customer>
 	</customers>
-	<objectives xpTotalRun="3" ordered="false" xpIndividual="30" xpFinal="0">
+	<objectives xpTotalRun="6" ordered="false" xpIndividual="30" xpFinal="0" buttonRunQtdAttempts="15" >
 		
 		<objective pos="2" place="counter">askWantHowManyFoods</objective>
 		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
