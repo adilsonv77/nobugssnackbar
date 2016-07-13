@@ -1172,7 +1172,7 @@ public class GameJdbcDao implements GameDao {
 
 			if (showLB) {
 
-				String query = "select userid, username, sum(xp), sum(timespend), sum(executions), max(missionorder), showleaderboardafter from missionsaccomplished "
+				String query = "select userid, username, sum(xp), sum(timespend), sum(executions), count(*), showleaderboardafter from missionsaccomplished "
 						+ "join classesmissions using (missionid, classid) "
 						+ "join classes using (classid) "
 						+ "join users using (userid) "
