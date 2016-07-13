@@ -5,12 +5,20 @@
 		<![CDATA[
 Temos um problema: somente temos no nosso caixa moedas de $2. Logo, conseguimos dar o troco para o cliente em moedas de $2
 		e o que sobrar ficamos como gorjeta.<br/><br/>
-		Pergunte aos clientes quanto eles querem de cachorro e refrigerantes, calcule o valor do pedido, receba o dinheiro, 
+		Pergunte ao cliente quanto ele quer de cachorro e refrigerantes, calcule o valor do pedido, receba o dinheiro, 
 		forne&#231;a o troco em moedas de $2 e fale quanto sobrou como gorjeta.<br/><br/>
 O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
-		N&#227;o esque&#231;a que, no jogo, as divis&#245;es sempre resultam com a parte inteira. Por exemplo, se 5 / 2 resulta em 2.5, no jogo vai resultar em 2.<br/><br/>
-		<span style="color:red">Tens somente tr&#234;s tentativas para ganhar pontos. Estais limitado em sete blocos.</span>
-		
+		N&#227;o esque&#231;a que, no jogo, as divis&#245;es sempre resultam com a parte inteira. Por exemplo, se 5 / 2 resulta 
+		em 2.5, no jogo vai resultar em 2.<br/><br/>
+		Se voc&#234; quiser saber quanto sobra dessa divis&#227;o, deves utilizar o resultado da divis&#227;o e multiplicar pelo divisor, e por 
+		fim subtrair do dividendo. Por exemplo, resolvendo 5 - ((5/2)*2) passo-a-passo, ficaria 5 - ((2)*2), depois 5 - (4), e o 
+		resultado da sobra de 5/2 &#233; 1.
+		]]>
+		</page>
+		<page type="goal">
+		<![CDATA[
+		<span style="color:red">Tens somente seis tentativas para ganhar pontos. Estais limitado em oito blocos.</span><br/><br/>
+		Para te inspirares, trago-te a solu&#231;&#227;o da miss&#227;o anterior.
  		]]>
 		</page>
 
@@ -95,7 +103,7 @@ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="3" commQtd="7" >
+	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="6" commQtd="8"  buttonRunQtdAttempts="10" >
 		
 		<objective pos="2" place="counter" type='$$$money2' 
 			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">giveSomeChange</objective>
@@ -103,6 +111,6 @@ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
 				  value="(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))-(Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)*2)">talk</objective>
 		
 	</objectives>
-	<xml>
+	<xml preload="21">
 	</xml>
 </mission>
