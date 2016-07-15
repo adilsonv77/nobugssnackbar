@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission>
+<mission useIfMutator="false">
 	<explanation>
 		<page type="goal">
 		<![CDATA[
@@ -192,7 +192,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 	
 		<block deletable="false"  type="move_goToBarCounter" x="0" y="2">
 			<value name="VALUE">
-				<block deletable="false"  type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">2</field>
 				</block>
 			</value>
@@ -200,42 +200,42 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 		<block deletable="false" type="variables_set" x="206" y="1">
 			<field name="VAR">bebida</field>
 			<value name="VALUE">
-				<block deletable="false" type="ask_askWantHowManyDrinks"></block>
+				<block deletable="false" movable="false" type="ask_askWantHowManyDrinks"></block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="6" y="49">
 			<field name="VAR">preco</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_arithmetic">
+				<block deletable="false" movable="false" type="math_arithmetic">
 					<field name="OP">ADD</field>
 					<value name="A">
-						<block deletable="false" type="math_arithmetic">
+						<block deletable="false" movable="false" type="math_arithmetic">
 							<field name="OP">ADD</field>
 							<value name="A">
-								<block deletable="false" type="math_arithmetic">
+								<block deletable="false" movable="false" type="math_arithmetic">
 									<field name="OP">MULTIPLY</field>
 									<value name="A">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">cachorros</field>
 										</block>
 									</value>
 									<value name="B">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">2</field>
 										</block>
 									</value>
 								</block>
 							</value>
 							<value name="B">
-								<block deletable="false" type="math_arithmetic">
+								<block deletable="false" movable="false" type="math_arithmetic">
 									<field name="OP">MULTIPLY</field>
 									<value name="A">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">bebida</field>
 										</block>
 									</value>
 									<value name="B">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">3</field>
 										</block>
 									</value>
@@ -244,7 +244,7 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">sorvetes</field>
 						</block>
 					</value>
@@ -254,21 +254,21 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 		<block deletable="false" type="variables_set" x="7" y="144">
 			<field name="VAR">comida</field>
 			<value name="VALUE">
-				<block deletable="false" type="ask_askWantHowManyFoods"></block>
+				<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="370" y="139">
 			<field name="VAR">cachorros</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_arithmetic">
+				<block deletable="false" movable="false" type="math_arithmetic">
 					<field name="OP">MINUS</field>
 					<value name="A">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">comida</field>
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">sorvetes</field>
 						</block>
 					</value>
@@ -278,13 +278,13 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 		<block deletable="false" type="variables_set" x="2" y="202">
 			<field name="VAR">sorvetes</field>
 			<value name="VALUE">
-				<block deletable="false" type="ask_askWantHowManyIceCream"></block>
+				<block deletable="false" movable="false" type="ask_askWantHowManyIceCream"></block>
 			</value>
 		</block>
 		<block deletable="false" type="variables_set" x="396" y="206">
 			<field name="VAR">preco</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">5</field>
 				</block>
 			</value>
@@ -292,54 +292,54 @@ Basta perguntar quantos cachorros, quantas bebidas e quantos sorvetes o cliente 
 		<block deletable="false" type="controls_if" x="-4" y="279">
 			<mutation else="1"></mutation>
 		</block>
-		<block deletable="false" type="do_talk" x="130" y="281">
+		<block deletable="false" type="do_talk" x="111" y="281">
 			<value name="VALUE">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">preco</field>
 				</block>
 			</value>
 		</block>
-		<block deletable="false" type="logic_operation" x="304" y="280">
+		<block deletable="false" type="logic_operation" x="321" y="280">
 			<field name="OP">OR</field>
 		</block>
-		<block deletable="false" type="logic_operation" x="497" y="282">
+		<block deletable="false" type="logic_operation" x="547" y="282">
 			<field name="OP">AND</field>
 		</block>
-		<block deletable="false" type="logic_compare" x="135" y="338">
+		<block deletable="false" type="logic_compare" x="111" y="338">
 			<field name="OP">EQ</field>
 			<value name="A">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">comida</field>
 				</block>
 			</value>
 			<value name="B">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">0</field>
 				</block>
 			</value>
 		</block>
-		<block deletable="false" type="logic_compare" x="317" y="339">
+		<block deletable="false" type="logic_compare" x="321" y="339">
 			<field name="OP">EQ</field>
 			<value name="A">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">cachorros</field>
 				</block>
 			</value>
 			<value name="B">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">3</field>
 				</block>
 			</value>
 		</block>
-		<block deletable="false" type="logic_compare" x="498" y="339">
+		<block deletable="false" type="logic_compare" x="547" y="339">
 			<field name="OP">EQ</field>
 			<value name="A">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">bebida</field>
 				</block>
 			</value>
 			<value name="B">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">2</field>
 				</block>
 			</value>

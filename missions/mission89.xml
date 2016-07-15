@@ -183,46 +183,46 @@ Por enquanto, o que precisas saber s&#227;o dois comandos:
 
 	<xml>
 
-		<block deletable="false"  type="variables_set" x="0" y="0">
+		<block deletable="false" movable="false"  type="variables_set" x="0" y="0">
 			<field name="VAR">presentesEntregues</field>
 			<value name="VALUE">
-				<block deletable="false"  type="math_number">
+				<block deletable="false" movable="false"  type="math_number">
 					<field name="NUM">0</field>
 				</block>
 			</value>
 			<next>
-				<block deletable="false"  type="move_goToBarCounter">
+				<block deletable="false" movable="false"  type="move_goToBarCounter">
 					<value name="VALUE">
-						<block deletable="false"  type="math_number">
+						<block deletable="false" movable="false"  type="math_number">
 							<field name="NUM">1</field>
 						</block>
 					</value>
 					<next>
-						<block deletable="false"  type="controls_if">
+						<block deletable="false" movable="false"  type="controls_if">
 							<value name="IF0">
-								<block deletable="false"  type="logic_operation">
+								<block deletable="false" movable="false"  type="logic_operation">
 									<field name="OP">OR</field>
 									<value name="A">
-										<block deletable="false"  type="logic_compare">
+										<block deletable="false" movable="false"  type="logic_compare">
 											<field name="OP">EQ</field>
 											<value name="A">
-												<block deletable="false"  type="ask_askWantHowManyFoods"></block>
+												<block deletable="false" movable="false"  type="ask_askWantHowManyFoods"></block>
 											</value>
 											<value name="B">
-												<block deletable="false"  type="math_number">
+												<block deletable="false" movable="false"  type="math_number">
 													<field name="NUM">1</field>
 												</block>
 											</value>
 										</block>
 									</value>
 									<value name="B">
-										<block deletable="false"  type="logic_compare">
+										<block deletable="false" movable="false"  type="logic_compare">
 											<field name="OP">EQ</field>
 											<value name="A">
-												<block deletable="false"  type="ask_askWantHowManyDrinks"></block>
+												<block deletable="false" movable="false"  type="ask_askWantHowManyDrinks"></block>
 											</value>
 											<value name="B">
-												<block deletable="false"  type="math_number">
+												<block deletable="false" movable="false"  type="math_number">
 													<field name="NUM">2</field>
 												</block>
 											</value>
@@ -231,46 +231,46 @@ Por enquanto, o que precisas saber s&#227;o dois comandos:
 								</block>
 							</value>
 							<statement name="DO0">
-								<block deletable="false"  type="variables_set">
+								<block deletable="false" movable="false"  type="variables_set">
 									<field name="VAR">presentesEntregues</field>
 									<value name="VALUE">
-										<block deletable="false"  type="math_arithmetic">
+										<block deletable="false" movable="false"  type="math_arithmetic">
 											<field name="OP">ADD</field>
 											<value name="A">
-												<block deletable="false"  type="variables_get">
+												<block deletable="false" movable="false"  type="variables_get">
 													<field name="VAR">presentesEntregues</field>
 												</block>
 											</value>
 											<value name="B">
-												<block deletable="false"  type="math_number">
+												<block deletable="false" movable="false"  type="math_number">
 													<field name="NUM">1</field>
 												</block>
 											</value>
 										</block>
 									</value>
 									<next>
-										<block deletable="false"  type="move_goToIceCreamMachine">
+										<block deletable="false" movable="false"  type="move_goToIceCreamMachine">
 											<next>
-												<block deletable="false"  type="variables_set">
+												<block deletable="false" movable="false"  type="variables_set">
 													<field name="VAR">presente</field>
 													<value name="VALUE">
-														<block deletable="false"  type="prepare_pickUpIceCream">
+														<block deletable="false" movable="false"  type="prepare_pickUpIceCream">
 															<value name="VALUE">
-																<block deletable="false"  type="const_chocolate"></block>
+																<block deletable="false" movable="false"  type="const_chocolate"></block>
 															</value>
 														</block>
 													</value>
 													<next>
-														<block deletable="false"  type="move_goToBarCounter">
+														<block deletable="false" movable="false"  type="move_goToBarCounter">
 															<value name="VALUE">
-																<block deletable="false"  type="math_number">
+																<block deletable="false" movable="false"  type="math_number">
 																	<field name="NUM">1</field>
 																</block>
 															</value>
 															<next>
-																<block deletable="false"  type="do_deliver">
+																<block deletable="false" movable="false"  type="do_deliver">
 																	<value name="VALUE">
-																		<block deletable="false"  type="variables_get">
+																		<block deletable="false" movable="false"  type="variables_get">
 																			<field name="VAR">presente</field>
 																		</block>
 																	</value>
@@ -285,38 +285,38 @@ Por enquanto, o que precisas saber s&#227;o dois comandos:
 								</block>
 							</statement>
 							<next>
-								<block deletable="false"  type="move_goToBarCounter">
+								<block deletable="false" movable="false"  type="move_goToBarCounter">
 									<value name="VALUE">
-										<block deletable="false"  type="math_number">
+										<block deletable="false" movable="false"  type="math_number">
 											<field name="NUM">3</field>
 										</block>
 									</value>
 									<next>
-										<block deletable="false"  type="controls_if">
+										<block deletable="false" movable="false"  type="controls_if">
 											<value name="IF0">
-												<block deletable="false"  type="logic_operation">
+												<block deletable="false" movable="false"  type="logic_operation">
 													<field name="OP">OR</field>
 													<value name="A">
-														<block deletable="false"  type="logic_compare">
+														<block deletable="false" movable="false"  type="logic_compare">
 															<field name="OP">EQ</field>
 															<value name="A">
-																<block deletable="false"  type="ask_askWantHowManyFoods"></block>
+																<block deletable="false" movable="false"  type="ask_askWantHowManyFoods"></block>
 															</value>
 															<value name="B">
-																<block deletable="false"  type="math_number">
+																<block deletable="false" movable="false"  type="math_number">
 																	<field name="NUM">1</field>
 																</block>
 															</value>
 														</block>
 													</value>
 													<value name="B">
-														<block deletable="false"  type="logic_compare">
+														<block deletable="false" movable="false"  type="logic_compare">
 															<field name="OP">EQ</field>
 															<value name="A">
-																<block deletable="false"  type="ask_askWantHowManyDrinks"></block>
+																<block deletable="false" movable="false"  type="ask_askWantHowManyDrinks"></block>
 															</value>
 															<value name="B">
-																<block deletable="false"  type="math_number">
+																<block deletable="false" movable="false"  type="math_number">
 																	<field name="NUM">2</field>
 																</block>
 															</value>
@@ -325,46 +325,46 @@ Por enquanto, o que precisas saber s&#227;o dois comandos:
 												</block>
 											</value>
 											<statement name="DO0">
-												<block deletable="false"  type="variables_set">
+												<block deletable="false" movable="false"  type="variables_set">
 													<field name="VAR">presentesEntregues</field>
 													<value name="VALUE">
-														<block deletable="false"  type="math_arithmetic">
+														<block deletable="false" movable="false"  type="math_arithmetic">
 															<field name="OP">ADD</field>
 															<value name="A">
-																<block deletable="false"  type="variables_get">
+																<block deletable="false" movable="false"  type="variables_get">
 																	<field name="VAR">presentesEntregues</field>
 																</block>
 															</value>
 															<value name="B">
-																<block deletable="false"  type="math_number">
+																<block deletable="false" movable="false"  type="math_number">
 																	<field name="NUM">1</field>
 																</block>
 															</value>
 														</block>
 													</value>
 													<next>
-														<block deletable="false"  type="move_goToIceCreamMachine">
+														<block deletable="false" movable="false"  type="move_goToIceCreamMachine">
 															<next>
-																<block deletable="false"  type="variables_set">
+																<block deletable="false" movable="false"  type="variables_set">
 																	<field name="VAR">presente</field>
 																	<value name="VALUE">
-																		<block deletable="false"  type="prepare_pickUpIceCream">
+																		<block deletable="false" movable="false"  type="prepare_pickUpIceCream">
 																			<value name="VALUE">
-																				<block deletable="false"  type="const_chocolate"></block>
+																				<block deletable="false" movable="false"  type="const_chocolate"></block>
 																			</value>
 																		</block>
 																	</value>
 																	<next>
-																		<block deletable="false"  type="move_goToBarCounter">
+																		<block deletable="false" movable="false"  type="move_goToBarCounter">
 																			<value name="VALUE">
-																				<block deletable="false"  type="math_number">
+																				<block deletable="false" movable="false"  type="math_number">
 																					<field name="NUM">3</field>
 																				</block>
 																			</value>
 																			<next>
-																				<block deletable="false"  type="do_deliver">
+																				<block deletable="false" movable="false"  type="do_deliver">
 																					<value name="VALUE">
-																						<block deletable="false"  type="variables_get">
+																						<block deletable="false" movable="false"  type="variables_get">
 																							<field name="VAR">presente</field>
 																						</block>
 																					</value>
@@ -379,9 +379,9 @@ Por enquanto, o que precisas saber s&#227;o dois comandos:
 												</block>
 											</statement>
 											<next>
-												<block deletable="false"  type="do_talk">
+												<block deletable="false" movable="false"  type="do_talk">
 													<value name="VALUE">
-														<block deletable="false"  type="variables_get">
+														<block deletable="false" movable="false"  type="variables_get">
 															<field name="VAR">presentesEntregues</field>
 														</block>
 													</value>

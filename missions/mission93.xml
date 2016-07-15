@@ -15,7 +15,17 @@
 		</span>
 		]]>
 		</page>
+<page type="goal">
+		<![CDATA[
+		Outro comando liberado nessa miss&#227;o serve para perguntar o sabor do sorvete que o cliente deseja.<br/><br/>
+		<imghex id="askforicecreamwithflavour">89504E470D0A1A0A0000000D49484452000001430000002E08020000003D4CEC60000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA86400000DC249444154785EED9D6950545716C7FD3CA99A49CD7C48A5327B4DD5D44CCD545249C6385926712671466331718C318B2633D1495C0AA326D13189B8B2888001151151F666B169D9771A1A945516118516085BB3D36CCDD2743738FFF6E2ADE7ED85D7D0D004EEA97F51EF9D77EFB9F735F7D7E7DCD72C2BEE73E3C6EDFB6F9C646EDC96827192B9715B0AC649E6C66D29D80C2437A4D4E4FB48B3DDC2723CC2F3BC24A692BB47A80A5AA65B5B36B4414BA6EF233A1DC97AB8B8B84C94E3163A0DD5A3668DE4A273C9E8796D8F8F748767D44727223F386AAAB8DD5E68531A983EDDC79C955FC9461BB464FA727171CD4227D77E328D96C02C929C752C34DDE51213C292D2BEBE987922C4343993548CAB4C7B2E2EAE59CB06928BFD93C5634C649A9C792AE6E29A0F8925197BE35CCFC8C82D6C7F3142FA05BD443C157371CD87C4925CE01397F4E539A6B315212E976325770F67BE295C4B58F88E4FB32A30332467BB86C5ED3CCD74B622C4F5CABBE6A5B866FCCAB5B072CB89ED2AED4405C47C53B896B0C4928C3778C9D6E34C672B22247F10E9C5E510AD3DB99793BCAC2496645B970527D9B1E2242F37719297A638C9CB4D9CE4A5294EF22C94FA55404544466D5A517DCECD452BCC30E9F3B3CCCCA1B9921CFE9E8BDBBA1D90DF867D38A64E4EB263C549B655C098616631CB14E6B992ECBFF10BF78F0EEC89BBB84DE2EB7AE9E2C52D5FC319F0F601F74D7B39C90ED4F788E4427F997E6CA221B782F12FB02A2233195AC4AB5496FDCA9FFE1CED1BC4F8E74F982D33FFB992ECE5E4EC191E7C2825942CA00F23BC4F1DF53426E45367ED48B27F61EA987E22B7A15AE874CD8E518F69A6E727B09ACE166133EB520DF6418C53A44E66C5DCEE6C1ED7EB30E8E4D454CFC85054A58269E32871926D15838A4D5A7892B10560E63F57923DD7EF3E9E14B93F2148B88CFE1BE98BAF7BE20385CEB9C80AC936716BAA5993EC579088D1BB3583A13773B6C5F87ACAE3943DAA09833EBEA69869E91071926D55BDBC9CA145BC169E64CC9699FF5C4946FF136951BBE32E302BC9BE5A6C2403DD4675678F66F0487A24751E480AEE1CEEEFD20C1C4E8BA04E47490CC9728F707563FB9461F2FED4FD09CD98E9DB3C541498A0E919408349BD018D0D5A1D9063D8139E56C7E58D0D68A626A7B0660C3A7D776D73D281F368A01D1EEDAB57612CB42C094A2ABD924CC3F6D6B7E9C76DEB4EC625327B17644A3D752DF0C08FF8CACCD28EEA060C87D3A1F65EB967843008C4907C2FBB2CCCEBC28BCFAE5CB162C5D3BFFB83C7972EB599C5F06785CA36ADFDE7534F3C29F41392BFDAB96FCDCBABE15FBDEA95AB67831101ED6F25177CB3FBF35FFFEC178FFDE0B10D6BDE447738D17EFDEA3547F71C84FFE5E757154933C8A036683E483E9E19BD3DD68F59496214575D38303682BA14F175067D6D771B600024D79BEE9292953A85240716A50F8D8FAA86FAC26FE65A21D9432E056C86078B02ED31169C8833AC1DABEFEB801F01834A3285247B2BAEB50CF4603EE8A299188FBF5DC4C48133ADF6269C014569A33A6D5EC36DD2910A6F2E100E4C07321B0732FB2290FBADEB51A1252EE0D5C85456567734E9270D386D1F52A30420DD2D694692D38F048125AC69C5996899B34FA3A25237A60548C236D9AEA163EAE1C1D6EEAC9321D7CF4A47D54398A415928B83122746C7DBABEA811FA42A57023020441A005185771466551A9C323E34621A5664F744C1C31E4B7741BA205A796406DA0CAA7AF05DEDAE6BC171852453AFD53517D5D020440CC9A99763563DF37C62A00440E64992FEF6E25F424FFB174B335F7FE9553F170FD00B5D38EE0D14AF5D08272483C9B4CBB175992581AEDF02F2A44B5177D20AB76DDAB2F9CD0D257159687FE61BD7954F3F079849FB77D6BD5599A480D04538346E39ED70209D58E2FEB3661EA7CF07C9A7E4D2AD121F6625CDA8A0E28CD1096D55FB7758B850B9AA01AB1CEB35F14E8956AF4BADBD09A4A32A146873A3B996924C31C61ED54A4E46AA44C2EC1FD30416A723787567B3D6A00733240EC801B45E79B2CF132F53924997AEE181B3D793D0E54E572B864EA8298613E49C51C43BCB02148D3563BA09C491DD2EC481F4D60DE1A0423103F916249A8D63E94520DD7129B23C0F13C30CB110EBBADB702CA950E0F5296AAE6346643423C977530A75A3DAB29054721AB3CD6DB0AD47DDD4411B4058526803F0C8E96D990239CD0AC9E4940AF99C245BD2A0B3E63BE24758305614104F4E6958724A65A9BB5096EE8274692BAF23FEC6FC2A8442401C93B727D3680CC9E0F399DFFF31F952B4D0C9087CBEF4EC4A14D584CC20775FE207993BDEFF0F527446881478E32BF103EC0F37BC7B7CEF21D2DEFBD009E23755B52CEFEA760FCC2AE663D7CAE86CE6AA51F62779C32EBB149340149907AC621D63B7997CB7547895ACEC4A5523306E1DE825352D21797A7E0F8D6069244D3F81AFA43BDAF78E0C297BDB491C21FC946434469A8DAECAA797A094BB65708694659353BCB9B40DF635A9BBD0182917D1684B46CC4096E290532AFA2290EEE56D0DC49FDF58033FAEE258E49E6246929194A65F32810D77A985190FCB1D8B1E4B9F9C5262197485A7C8A5751925A88435DDFD86093D629AB6B714566477A12CDD8531F10ABAE000A78883639124A32ADEB5651B4A6214D8C73EFB5F7E5432A996915AE3032250186FDFFC2150472D4D485EF7DA1BE9C1D3C442A0F4DDF5FF0AF3F207B1B84AFDC078EFBF771092ADEFABAFFB5D956C39A6F08AAACF662F19B5787232842C9451578112B45B33087A310A1631EAC68E21352929EB7B3B22CA73B1EEC9CA7E50F6DEAFE96A8107DDADAC69C4417B2169C018C49238B84AFD9464D32E1052DF83BB7FC490B7F17683C6F49DC254CC4096E2A02830FB2230DD8573B317C9C857D84316F8C6327EA16C25199B4F94CA4892BDCA56655669554C8ED9F696C28AEC2E94A5BB60BAE000A770E25824C94428A7034E78AFFFEBDF7FF2F88F5D9CBFAC4ACAFFC06913B6C10032EE7C684E783C01126462DF4B732F0492D132DCEB02433212B5489295E925B9A725167F4CC5EE241B9F5DCF6A9F0C62D5A3C3C854602C4B59195355205CBB283B919190F7406F635F274E71159BD8B2D67BF4F9B04D242301CE8264CC013B55D4C64227040FFCA6FB644C0C93447DCE0C64298EA51781E92E9C9BBD4846893BA933DC49BCCEF88562AAEBAAE86C834E0F2A400EF8A15BCD8AA82CE44FF88DC03C2C622194BED8E8C2C97085B038A525310D2BB2BB5096EEC25E2453A172C60E39C8DD0FE5348A6AE2C44EF8973FFD39ADAE833DCF13BFC8EADA3AC933C8EE247B39391F4F8BDA2DB3F9D9355627AD1821D49FD822D2B54B55D2AAC476315359415636D9CDF68D0E63415B59D3D6AB6BE1289464B3D53572AF6ED280ADBBD009A12850F6A8301352E75367A3BA73707C147C3203598A63E945580092B1A047FB86C6FA87012AB697D5D25C40AB2A579AB6A18FA68C4F9B1F94BB698703355DFDC89F0AEF28B947F8507B2FF1832B205D9B5A2473F6B9152BD70E8F123FC315096B7C80EC118EB028866DEA2E94A5BB983BC9D2F3212B9F7E0EACA2A846A5BDF3FD8F776FDD2E3D17828A3A31508292010919B99A56D72073F5AA97E1C4A540D76F5F78F064CBFA13AFC545B2FFC62F4C3F4F7E37F494F0D4ACC87E38B5F6A6B32C20F6D675A45F8C82259B7DAF4A6BD0634D030C0FB9B473B81FC5B6A4228FAEECB8EA4274ACEE68B2B2A609F0969E785142204A32E9421F4AC91BAAB57A5D61732DDE351027B8341BF39156DF00EDE52AE3F615F869B463F4F364F4C25E80D60BCC4098AAD938965E840520190287FD2D5DC87B1814C95055790FDB54A60D3224D6FDF4C745CA56F2080AFEF2888CF1010DFC06ADAEA3BA81F8D19D7ED2333132DE56563B3E34825EA628DEF0970D77AA99B0E2BB0B65F62E6643F2A3A800C873473D011E587DEA8927F77FBCABEC5A0EA1F1B7BFFA0DF6CF6FBCF4DAC5936736AC7993E658F229142EAD7DF5F5848B91240EFD14EAF11FFE68E33F9CE8A7507324B92EAD9899FF5C490E7BDFC533F40AFD19AFF7C23D9DCE1CC232DAFCAD0B5D55666504ECE1C72A2313E3656DF543E3A3489B58D395AA4680874127A7A65A077BFD6FA4302B1B1DD1405E7FCBCA9A167EEA33303E028CE164E240946488F9140ADB57506774F6F7200EE683FC89B961E6A43D8600BDBA875315FE8C97E94066E3587A1198EEF344B2AD423D0CC06ECB148C7F69682E3FADB9F0B2FF4F6B42C19FBAEE8A3D0F8637FA1F5DE7B6DFE9D83E8F1D5FBBBFF399BB5CCA2C2FAE05935D4826BBD0C6FC2A94BB28B0D54D1D286591D398664B43CBFD37288882B71E79FBC87EAC9E7DFB0EE2181EC4E5BF41E140D9856494A9285651B26201A0B819EEE84355CCB4594A02CCD86FD7241430D82C1E616E9821E6C9CC1CB20FC9A6E2243B56F3515D732D66892539C73DCCD27F9C302B4EB263C5495E6E124B32764771BB6CFEDB9ACCF2E25A307192979BC4929CEF234DD8EFC774B622C475935F659617D7828993BCDC249664E3FFA0381DC974B622C4ED2AEDC47AE2729438C9CB4A624986E579C5A61F16FB7FA1B0AFC64AE272A0328F5E66BE295C4B5836900C4B3CE07FF513E32F5B7171712D2AD946322CE25377FA3734B9B8B816896C261996E121B9B0E960D03B8738D25C5C8B44B321197637A132C54312B4D3D5F3AD3D082194DBBA1D97361D6486312B344363A63B1717D7EC340DA7C06626D9BAB52A9A22769EB292B171E98C93F12D207CAF371A4F77E3C68D9B5D6DAE24132BBC927579F3570CC31049C548E62561B9D34DB971E3360F661F92614C72E6A9981BB78534BB914C0CB9976EA7792AE6C66DC1CCCE2473E3C6CD21C649E6C6EDFB6FF7EFFF1F6AB667FCC5867CAB0000000049454E44AE426082</imghex>
+		<br/><br/>
+		Assim como os comandos para perguntar o que deseja beber e comer d&#227;o erro quando o cliente n&#227;o
+		tem sede e fome, respectivamente, esse tamb&#233;m p&#225;ra a execu&#231;&#227;o quando o cliente n&#227;o quer sorvete. 
+		]]>
+		</page>
 		
+				
 		<page type="goal">
 		<![CDATA[
 O cliente sempre tem fome: pode ser de cachorros ou sorvetes. &#192;s vezes ele quer 
@@ -116,7 +126,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 			</orders>						
 		</customer>
 	</customers>
-	<objectives missionType="fixBugs" xpIndividual="20" xpFinal="10" xpTotalRun="6" buttonRun="false">
+	<objectives missionType="fixBugs" xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRun="false">
 		<objective text="o pre&#231;o do sorvete" value="parseInt(Game.readVariableTest('priceFood'))">talk</objective>
 		<objective text="o pre&#231;o do cachorro" value="parseInt(Game.readVariableTest('priceIceCream'))">talk</objective>
 	</objectives>
@@ -124,7 +134,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 	
 		<block deletable="false" type="move_goToBarCounter" x="0" y="0">
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">2</field>
 				</block>
 			</value>
@@ -132,27 +142,27 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 				<block deletable="false" type="variables_set">
 					<field name="VAR">comida</field>
 					<value name="VALUE">
-						<block deletable="false" type="ask_askWantHowManyFoods"></block>
+						<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 					</value>
 					<next>
 						<block deletable="false" type="variables_set">
 							<field name="VAR">sorvete</field>
 							<value name="VALUE">
-								<block deletable="false" type="ask_askWantHowManyIceCream"></block>
+								<block deletable="false" movable="false" type="ask_askWantHowManyIceCream"></block>
 							</value>
 							<next>
 								<block deletable="false" type="variables_set">
 									<field name="VAR">cachorros</field>
 									<value name="VALUE">
-										<block deletable="false" type="math_arithmetic">
+										<block deletable="false" movable="false" type="math_arithmetic">
 											<field name="OP">MINUS</field>
 											<value name="A">
-												<block deletable="false" type="variables_get">
+												<block deletable="false" movable="false" type="variables_get">
 													<field name="VAR">comida</field>
 												</block>
 											</value>
 											<value name="B">
-												<block deletable="false" type="variables_get">
+												<block deletable="false" movable="false" type="variables_get">
 													<field name="VAR">sorvete</field>
 												</block>
 											</value>
@@ -162,15 +172,15 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 										<block deletable="false" type="controls_if">
 											<mutation else="1"></mutation>
 											<value name="IF0">
-												<block deletable="false" type="logic_compare">
+												<block deletable="false" movable="false" type="logic_compare">
 													<field name="OP">EQ</field>
 													<value name="A">
-														<block deletable="false" type="variables_get">
+														<block deletable="false" movable="false" type="variables_get">
 															<field name="VAR">cachorros</field>
 														</block>
 													</value>
 													<value name="B">
-														<block deletable="false" type="variables_get">
+														<block deletable="false" movable="false" type="variables_get">
 															<field name="VAR">sorvete</field>
 														</block>
 													</value>
@@ -180,7 +190,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 												<block deletable="false" type="variables_set">
 													<field name="VAR">precoSorvete</field>
 													<value name="VALUE">
-														<block deletable="false" type="math_number">
+														<block deletable="false" movable="false" type="math_number">
 															<field name="NUM">2</field>
 														</block>
 													</value>
@@ -190,7 +200,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 												<block deletable="false" type="variables_set">
 													<field name="VAR">precoCachorro</field>
 													<value name="VALUE">
-														<block deletable="false" type="math_number">
+														<block deletable="false" movable="false" type="math_number">
 															<field name="NUM">5</field>
 														</block>
 													</value>
@@ -198,7 +208,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 														<block deletable="false" type="variables_set">
 															<field name="VAR">precoSorvete</field>
 															<value name="VALUE">
-																<block deletable="false" type="math_number">
+																<block deletable="false" movable="false" type="math_number">
 																	<field name="NUM">1</field>
 																</block>
 															</value>
@@ -210,35 +220,35 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 												<block deletable="false" type="variables_set">
 													<field name="VAR">sabor</field>
 													<value name="VALUE">
-														<block deletable="false" type="ask_askForIceCream"></block>
+														<block deletable="false" movable="false" type="ask_askForIceCream"></block>
 													</value>
 													<next>
 														<block deletable="false" type="controls_if">
 															<mutation else="1"></mutation>
 															<value name="IF0">
-																<block deletable="false" type="logic_operation">
+																<block deletable="false" movable="false" type="logic_operation">
 																	<field name="OP">OR</field>
 																	<value name="A">
-																		<block deletable="false" type="logic_compare">
+																		<block deletable="false" movable="false" type="logic_compare">
 																			<field name="OP">EQ</field>
 																			<value name="A">
-																				<block deletable="false" type="variables_get">
+																				<block deletable="false" movable="false" type="variables_get">
 																					<field name="VAR">sabor</field>
 																				</block>
 																			</value>
 																			<value name="B">
-																				<block deletable="false" type="const_chocolate"></block>
+																				<block deletable="false" movable="false" type="const_chocolate"></block>
 																			</value>
 																		</block>
 																	</value>
 																	<value name="B">
-																		<block deletable="false" type="logic_compare">
+																		<block deletable="false" movable="false" type="logic_compare">
 																			<field name="OP">EQ</field>
 																			<value name="A">
-																				<block deletable="false" type="ask_askHasThirsty"></block>
+																				<block deletable="false" movable="false" type="ask_askHasThirsty"></block>
 																			</value>
 																			<value name="B">
-																				<block deletable="false" type="logic_boolean">
+																				<block deletable="false" movable="false" type="logic_boolean">
 																					<field name="BOOL">TRUE</field>
 																				</block>
 																			</value>
@@ -250,7 +260,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 																<block deletable="false" type="variables_set">
 																	<field name="VAR">precoCachorro</field>
 																	<value name="VALUE">
-																		<block deletable="false" type="math_number">
+																		<block deletable="false" movable="false" type="math_number">
 																			<field name="NUM">4</field>
 																		</block>
 																	</value>
@@ -260,7 +270,7 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 																<block deletable="false" type="variables_set">
 																	<field name="VAR">precoCachorro</field>
 																	<value name="VALUE">
-																		<block deletable="false" type="math_number">
+																		<block deletable="false" movable="false" type="math_number">
 																			<field name="NUM">3</field>
 																		</block>
 																	</value>
@@ -269,14 +279,14 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, po
 															<next>
 																<block deletable="false" type="do_talk">
 																	<value name="VALUE">
-																		<block deletable="false" type="variables_get">
+																		<block deletable="false" movable="false" type="variables_get">
 																			<field name="VAR">precoCachorro</field>
 																		</block>
 																	</value>
 																	<next>
 																		<block deletable="false" type="do_talk">
 																			<value name="VALUE">
-																				<block deletable="false" type="variables_get">
+																				<block deletable="false" movable="false" type="variables_get">
 																					<field name="VAR">precoSorvete</field>
 																				</block>
 																			</value>

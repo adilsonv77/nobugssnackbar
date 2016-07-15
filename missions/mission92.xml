@@ -21,9 +21,7 @@ Agora vais entregar cachorro ou sorvete. O cliente tem sempre fome de um ou dois
 Nessa miss&#227;o tua preocupa&#231;&#227;o &#233; entregar SOMENTE o primeiro produto que ele pedir. Por&#233;m, as combina&#231;&#245;es
   de pedido e a regra &#233; como te expliquei acima. <br/><br/>
 
-J&#225; deixei o come&#231;o e o fim da solu&#231;&#227;o pronta na &#225;rea de trabalho. Falta colocar entre esses dois 
-   conjuntos de blocos, o bloco condicional e os blocos que devem ser executados caso aconte&#231;a uma situa&#231;&#227;o ou outra.<br/><br/>
-Aten&#231;&#227;o: esses blocos iniciais podem ser exclu&#237;dos e voc&#234; pode criar sua solu&#231;&#227;o inovadora.<br/><br/>
+Falta colocar o bloco condicional e os blocos que devem ser executados caso aconte&#231;a uma situa&#231;&#227;o ou outra.<br/><br/>
 Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mostra a solu&#231;&#227;o : <img src="images/help_free.png"/>
 ]]>
 		</page>
@@ -33,9 +31,9 @@ Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mos
 		<line>V&#225; at&#233; o cliente 2</line>
 		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [comida]</line>
 		<line>Pergunte quantos sorvetes ele deseja e guarde na vari&#225;vel [sorvetes]</line>
-		<line>Fa&#231;a a diferen&#231;a entre [comida] e [sorvetes] e guarde na vari&#225;vel [comida]</line>
+		<line>Fa&#231;a a diferen&#231;a entre [comida] e [sorvetes] e guarde na vari&#225;vel [cachorros]</line>
 		<line>Pergunte o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
-		<line>se [comida] for igual a [0]</line>
+		<line>se [cachorros] for igual a [0]</line>
 		<line indent="1">V&#225; at&#233; a m&#225;quina de sorvetes</line>
 		<line indent="1">Prepare e pegue um sorvete de [pedido] e guarde na vari&#225;vel [pedido]</line>
 		<line>sen&#227;o</line>
@@ -47,16 +45,10 @@ Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mos
 	<commands>
 		<category name="snackMan" show="true" />
 
-		<category name="goToBarCounter" show="true" />
-		
-		<category name="askForFood" show="true" />
 		<category name="goToDisplay" show="true" />
 		<category name="pickUpHotDog" show="true" />
 		
-		<category name="askWantHowManyFoods" show="true" />
-		<category name="askWantHowManyIceCream" show="true" />
 		<category name="icecream" show="true" />
-		<category name="deliver" show="true" />
 
 		<category name="vars" show="true" />
 		
@@ -134,54 +126,76 @@ Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mos
 			</orders>						
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="20" xpTotalRun="9">
+	<objectives missionType="fillInGap" ordered="false" xpIndividual="30" xpFinal="20" xpTotalRun="9">
 
 		<objective pos="2" place="counter" value="Game.readVariableTest('deliverCust1')" text="a primeira comida">customDeliver</objective>
 		
 	</objectives>
 	<xml>
-		<block type="move_goToBarCounter" x="66" y="20">
+		<block type="move_goToBarCounter"  deletable="false" movable="false" x="66" y="20">
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" deletable="false" movable="false" >
 					<field name="NUM">2</field>
 				</block>
 			</value>
 			<next>
-				<block type="variables_set">
+				<block type="variables_set" deletable="false" movable="false" >
 					<field name="VAR">comida</field>
 					<value name="VALUE">
-						<block type="ask_askWantHowManyFoods"></block>
+						<block type="ask_askWantHowManyFoods" deletable="false" movable="false" ></block>
 					</value>
 					<next>
-						<block type="variables_set">
+						<block type="variables_set" deletable="false" movable="false" >
 							<field name="VAR">sorvetes</field>
 							<value name="VALUE">
-								<block type="ask_askWantHowManyIceCream"></block>
+								<block type="ask_askWantHowManyIceCream" deletable="false" movable="false" ></block>
 							</value>
 							<next>
-								<block type="variables_set">
+								<block type="variables_set" deletable="false" movable="false" >
 									<field name="VAR">cachorros</field>
 									<value name="VALUE">
-										<block type="math_arithmetic">
+										<block type="math_arithmetic" deletable="false" movable="false" >
 											<field name="OP">MINUS</field>
 											<value name="A">
-												<block type="variables_get">
+												<block type="variables_get" deletable="false" movable="false" >
 													<field name="VAR">comida</field>
 												</block>
 											</value>
 											<value name="B">
-												<block type="variables_get">
+												<block type="variables_get" deletable="false" movable="false" >
 													<field name="VAR">sorvetes</field>
 												</block>
 											</value>
 										</block>
 									</value>
 									<next>
-										<block type="variables_set">
+										<block type="variables_set" deletable="false" movable="false" >
 											<field name="VAR">pedido</field>
 											<value name="VALUE">
-												<block type="ask_askForFood"></block>
+												<block type="ask_askForFood" deletable="false" movable="false" ></block>
 											</value>
+											<next>
+												<block type="fillInGap" deletable="false" movable="false" >
+													<next>
+														<block type="move_goToBarCounter" deletable="false" movable="false" >
+															<value name="VALUE">
+																<block type="math_number" deletable="false" movable="false" >
+																	<field name="NUM">2</field>
+																</block>
+															</value>
+															<next>
+																<block type="do_deliver" deletable="false" movable="false" >
+																	<value name="VALUE">
+																		<block type="variables_get" deletable="false" movable="false" >
+																			<field name="VAR">pedido</field>
+																		</block>
+																	</value>
+																</block>
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
 										</block>
 									</next>
 								</block>
@@ -191,22 +205,7 @@ Lembre-se que voc&#234; sempre tem como &#250;ltimo recurso o bot&#227;o que mos
 				</block>
 			</next>
 		</block>
-		<block type="move_goToBarCounter" x="66" y="231">
-			<value name="VALUE">
-				<block type="math_number">
-					<field name="NUM">2</field>
-				</block>
-			</value>
-			<next>
-				<block type="do_deliver">
-					<value name="VALUE">
-						<block type="variables_get">
-							<field name="VAR">pedido</field>
-						</block>
-					</value>
-				</block>
-			</next>
-		</block>
+		
 	</xml>
 
 </mission>

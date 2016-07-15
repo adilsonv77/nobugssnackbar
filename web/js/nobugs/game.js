@@ -3229,6 +3229,7 @@ Game.verifyVictory = function() {
 	} else
 		if (Game.runningStatus == 4) {
 			if (!Game.finishMultipleChoiceRunning()) {
+				Game.finishedRun();
 				Game.runningStatus = 0;
 				return;
 			}

@@ -251,7 +251,7 @@ Podem haver 1, 2, 3 ou nenhum cliente em quaisquer posi&#231;&#245;es do balc&#2
 		</customer>
 
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" commQtd="13"  varQtd="1" >
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" commQtd="13"  varQtd="1" >
 		<objective value="parseInt(Game.readVariableTest('valor'))" text="quantos clientes tem na lanchonete">talk</objective>
 	</objectives>
 	<xml>

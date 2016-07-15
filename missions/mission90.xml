@@ -15,8 +15,7 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu <span style="background-color:#c7c7c7">3 lanches OU 3 bebidas</span>, ele recebe um sorvete de morango. 
  Por&#233;m, se ele pediu <span style="background-color:#c7c7c7">pelo menos um lanche E pelo menos uma bebida</span> ent&#227;o ele recebe um sorvete de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
  recebe de baunilha.  <br/><br/>   
-			Precisas corrigir erros nessa miss&#227;o. Faltam os condicionais. N&#227;o esque&#231;a que a primeira execu&#231;&#227;o n&#227;o conta
-			para ganhar estrelas.
+Faltam os condicionais na solu&#231;&#227;o.
 
 ]]>
 		</page>
@@ -149,78 +148,58 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 			</orders>						
 		</customer>
 	</customers>
-	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3"  buttonRun="false">
+	<objectives missionType="fillInGap" xpIndividual="10" xpFinal="5" xpTotalRun="3"  buttonRun="true">
 		<objective pos="2" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="o sorvete">deliverGifts</objective>
 	</objectives>
 	<xml>
-		<block deletable="false" type="move_goToBarCounter" x="21" y="4">
+		<block deletable="false" movable="false" type="move_goToBarCounter" x="21" y="4">
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">2</field>
 				</block>
 			</value>
 			<next>
-				<block deletable="false" type="variables_set">
+				<block deletable="false" movable="false" type="variables_set">
 					<field name="VAR">comida</field>
 					<value name="VALUE">
-						<block deletable="false" type="ask_askWantHowManyFoods"></block>
+						<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 					</value>
 					<next>
-						<block deletable="false" type="variables_set">
+						<block deletable="false" movable="false" type="variables_set">
 							<field name="VAR">bebida</field>
 							<value name="VALUE">
-								<block deletable="false" type="ask_askWantHowManyDrinks"></block>
+								<block deletable="false" movable="false" type="ask_askWantHowManyDrinks"></block>
 							</value>
 							<next>
-								<block deletable="false" type="variables_set">
-									<field name="VAR">sabor</field>
-									<value name="VALUE">
-										<block deletable="false" type="const_strawberry"></block>
-									</value>
+								<block type="fillInGap" deletable="false" movable="false" >
 									<next>
-										<block deletable="false" type="variables_set">
-											<field name="VAR">sabor</field>
-											<value name="VALUE">
-												<block deletable="false" type="const_chocolate"></block>
-											</value>
+										<block deletable="false" movable="false" type="move_goToIceCreamMachine">
 											<next>
-												<block deletable="false" type="variables_set">
-													<field name="VAR">sabor</field>
+												<block deletable="false" movable="false" type="variables_set">
+													<field name="VAR">presente</field>
 													<value name="VALUE">
-														<block deletable="false" type="const_vanilla"></block>
+														<block deletable="false" movable="false" type="prepare_pickUpIceCream">
+															<value name="VALUE">
+																<block deletable="false" movable="false" type="variables_get">
+																	<field name="VAR">sabor</field>
+																</block>
+															</value>
+														</block>
 													</value>
 													<next>
-														<block deletable="false" type="move_goToIceCreamMachine">
+														<block deletable="false" movable="false" type="move_goToBarCounter">
+															<value name="VALUE">
+																<block deletable="false" movable="false" type="math_number">
+																	<field name="NUM">2</field>
+																</block>
+															</value>
 															<next>
-																<block deletable="false" type="variables_set">
-																	<field name="VAR">presente</field>
+																<block deletable="false" movable="false" type="do_deliver">
 																	<value name="VALUE">
-																		<block deletable="false" type="prepare_pickUpIceCream">
-																			<value name="VALUE">
-																				<block deletable="false" type="variables_get">
-																					<field name="VAR">sabor</field>
-																				</block>
-																			</value>
+																		<block deletable="false" movable="false" type="variables_get">
+																			<field name="VAR">presente</field>
 																		</block>
 																	</value>
-																	<next>
-																		<block deletable="false" type="move_goToBarCounter">
-																			<value name="VALUE">
-																				<block deletable="false" type="math_number">
-																					<field name="NUM">2</field>
-																				</block>
-																			</value>
-																			<next>
-																				<block deletable="false" type="do_deliver">
-																					<value name="VALUE">
-																						<block deletable="false" type="variables_get">
-																							<field name="VAR">presente</field>
-																						</block>
-																					</value>
-																				</block>
-																			</next>
-																		</block>
-																	</next>
 																</block>
 															</next>
 														</block>
@@ -236,6 +215,28 @@ Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;
 				</block>
 			</next>
 		</block>
+		
+		<block deletable="false" type="variables_set" x="26" y="300">
+			<field name="VAR">sabor</field>
+			<value name="VALUE">
+				<block deletable="false" movable="false" type="const_strawberry"></block>
+			</value>
+		</block>
+		
+		<block deletable="false" type="variables_set" x="26" y="366">
+			<field name="VAR">sabor</field>
+			<value name="VALUE">
+				<block deletable="false" movable="false" type="const_chocolate"></block>
+			</value>
+		</block>
+				
+		<block deletable="false" type="variables_set" x="26" y="424">
+			<field name="VAR">sabor</field>
+			<value name="VALUE">
+				<block deletable="false" movable="false" type="const_vanilla"></block>
+			</value>
+		</block>
+		
 	</xml>
 
 </mission>
