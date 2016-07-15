@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<mission useIfMutator="true">
+<mission>
 	<explanation hasInstruction="false">
 
 		<page type="goal">
@@ -8,10 +8,7 @@ Pergunte ao primeiro cliente a quantidade de lanches que ele deseja. Com base
    nessa quantidade vais entregar sorvetes de presente aos clientes. Se o cliente
    pedir UM lanche vais entregar UM sorvete ao cliente 1. Se ele pedir dois lanches, 
    ent&#227;o vais entregar dois sorvetes: um ao cliente 1 e outro ao cliente 2. Tr&#234;s
-   lanches s&#227;o tr&#234;s sorvetes, um para cada cliente.<br/><br/>
-Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cliente 2
-  de morango e o cliente 3 de baunilha. S&#227;o os sabores dos sorvetes que vais
-  produzir aos clientes.   
+   lanches s&#227;o tr&#234;s sorvetes, um para cada cliente. O sabor do sorvete &#233; chocolate.
 		]]> 
 		</page>
 
@@ -27,16 +24,8 @@ Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cl
 		<line>V&#225; at&#233; o cliente 1</line>
 		<line>Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
 		<line>para [i] de 1 at&#233; [qtosCachorros] com incremento 1 fa&#231;a</line>
-		<line indent="1">V&#225; at&#233; o cliente [i]</line>
-		<line indent="1">se [i] for igual a [1] ent&#227;o</line>
-		<line indent="2">[Chocolate] e guarde na vari&#225;vel [sabor]</line>
-		<line indent="1">sen&#227;o</line>
-		<line indent="2">se [i] for igual a [2] ent&#227;o</line>
-		<line indent="3">[Morango] e guarde na vari&#225;vel [sabor]</line>
-		<line indent="2">sen&#227;o</line>
-		<line indent="3">[Baunilha] e guarde na vari&#225;vel [sabor]</line>
 		<line indent="1">V&#225; para a m&#225;quina de sorvetes</line>
-		<line indent="1">Prepare e pegue um sorvete de [sabor] e guarde na vari&#225;vel [presente] </line>
+		<line indent="1">Prepare e pegue um sorvete de [Chocolate] e guarde na vari&#225;vel [presente] </line>
 		<line indent="1">V&#225; at&#233; o cliente [i]</line>
 		<line indent="1">Entregue o [presente]</line>
 	</help>
@@ -50,12 +39,9 @@ Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cl
 		<category name="icecream" show="true" />
 		<category name="const" show="true" />
 		<category name="const.chocolate" show="true" />
-		<category name="const.strawberry" show="true" />
-		<category name="const.vanilla" show="true" />
 
 		<category name="vars" show="true" />
 
-		<category name="logic" show="true" />
 		<category name="loop" show="true" />
 		<category name="for" show="true" />
 		 
@@ -65,13 +51,13 @@ Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cl
 	<testsvars>
 		<test>
 			<var name="iceGift1">$$icecreamofchocolate</var>
-			<var name="iceGift2">$$icecreamofstrawberry</var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
 			<var name="iceGift3"></var>
 		</test>
 		<test>
 			<var name="iceGift1">$$icecreamofchocolate</var>
-			<var name="iceGift2">$$icecreamofstrawberry</var>
-			<var name="iceGift3">$$icecreamofvanilla</var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3">$$icecreamofchocolate</var>
 		</test>
 		<test>
 			<var name="iceGift1"></var>
@@ -187,10 +173,10 @@ Por&#233;m, cada cliente tem seu sabor preferido: o cliente 1 de chocolate, o cl
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="40" xpFinal="15" commQtd="16" xpTotalRun="9">
-		<objective pos="1" place="counter" value="Game.readVariableTest('iceGift1')" gift="o sorvete de chocolate, se merecer">deliverGifts</objective>
-		<objective pos="2" place="counter" value="Game.readVariableTest('iceGift2')" gift="o sorvete de morango, se merecer">deliverGifts</objective>
-		<objective pos="3" place="counter" value="Game.readVariableTest('iceGift3')" gift="o sorvete de baunilha, se merecer">deliverGifts</objective>
+	<objectives xpIndividual="20" xpFinal="10" commQtd="8" xpTotalRun="6">
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceGift1')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('iceGift2')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceGift3')" gift="o sorvete, se merecer">deliverGifts</objective>
 	</objectives>
 	<xml>
 	</xml>

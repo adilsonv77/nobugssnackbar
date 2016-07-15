@@ -3,7 +3,8 @@
 	<explanation hasInstruction="false">
 		<page type="goal">
 		<![CDATA[
-Essa ser&#225; sua primeira chance de come&#231;ar a colecionar moedas <img style='vertical-align: middle; padding-left: 3px;' src='images/coin2.png'/>. 
+Essa ser&#225; sua primeira chance de come&#231;ar a colecionar moedas <img style='vertical-align: middle; padding-left: 3px;' src='images/coin2.png'/> 
+  dentro das miss&#245;es. 
 Se conseguires concluir essa miss&#227;o com
   8 blocos ou menos, ganhar&#225;s algumas moedas. Mas aten&#231;&#227;o: isso n&#227;o &#233; uma restri&#231;&#227;o, mas um b&#244;nus. <br/><br/>
 As moedas s&#227;o um recurso muito exclusivo que te diferenciar&#225; no ranking.
@@ -18,8 +19,8 @@ A sua tarefa ser&#225; muito parecida com a miss&#227;o anterior.
   deves ir perguntar mais nada a cliente algum. Logo, quando chegar a um cliente, fazes todas as perguntas necess&#225;rias, e 
   calculas o total, como vinhas fazendo. Entretanto, s&#243; vais ao pr&#243;ximo cliente, se o total das vendas ainda n&#227;o tiver atingido $7.
   &#201; garantido que a soma dos pedidos entre os tr&#234;s clientes sempre atingir&#225; no m&#237;nimo $7.<br/><br/>
-J&#225; deixo um peda&#231;o da solu&#231;&#227;o na &#225;rea de trabalho para te dar uma inspira&#231;&#227;o.<br/><br/>
-Entretanto, como estamos aprendendo ciclos, vou te for&#231;ar a resolver com os 
+
+Como estamos aprendendo ciclos, vou te for&#231;ar a resolver com os 
   blocos de repeti&#231;&#227;o, limitando a quantidade de blocos usados na solu&#231;&#227;o.	
  
 		]]>
@@ -182,11 +183,89 @@ Entretanto, como estamos aprendendo ciclos, vou te for&#231;ar a resolver com os
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="15" xpFinal="5" xpTotalRun="6" commQtd="13" maxCommands="8" maxCommandsRewardCoins="2" >
+	<objectives missionType="fillInGap" xpIndividual="15" xpFinal="5" xpTotalRun="6" commQtd="13" maxCommands="8" maxCommandsRewardCoins="2" >
 		<objective text="o total das vendas at&#233; atingir pelo menos $7" value="parseInt(Game.readVariableTest('total'))">talk</objective>
 		<objective type="controls_whileUntil">useBlock</objective>
 	</objectives>
 	<xml>
-		<block type="variables_set" x="2" y="2"><field name="VAR">cliente</field><value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value><next><block type="variables_set"><field name="VAR">totalPedido</field><value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value><next><block type="controls_whileUntil"><value name="BOOL"><block type="logic_compare"><field name="OP">LT</field><value name="A"><block type="variables_get"><field name="VAR">totalPedido</field></block></value><value name="B"><block type="math_number"><field name="NUM">7</field></block></value></block></value><statement name="DO"><block type="move_goToBarCounter"><value name="VALUE"><block type="variables_get"><field name="VAR">cliente</field></block></value><next><block type="variables_set"><field name="VAR">cliente</field><value name="VALUE"><block type="math_arithmetic"><field name="OP">ADD</field><value name="A"><block type="math_number"><field name="NUM">1</field></block></value><value name="B"><block type="variables_get"><field name="VAR">cliente</field></block></value></block></value></block></next></block></statement><next><block type="do_talk"><value name="VALUE"><block type="variables_get"><field name="VAR">totalPedido</field></block></value></block></next></block></next></block></next></block>
+	<block type="variables_set" x="2" y="2" deletable="false" movable="false">
+		<field name="VAR">cliente</field>
+		<value name="VALUE">
+			<block type="math_number" deletable="false" movable="false">
+				<field name="NUM">1</field>
+			</block>
+		</value>
+		<next>
+			<block type="variables_set" deletable="false" movable="false">
+				<field name="VAR">totalPedido</field>
+				<value name="VALUE">
+					<block type="math_number" deletable="false" movable="false">
+						<field name="NUM">0</field>
+					</block>
+				</value>
+				<next>
+					<block type="controls_whileUntil" deletable="false" movable="false">
+						<value name="BOOL">
+							<block type="logic_compare" deletable="false" movable="false">
+								<field name="OP">LT</field>
+								<value name="A">
+									<block type="variables_get" deletable="false" movable="false">
+										<field name="VAR">totalPedido</field>
+									</block>
+								</value>
+								<value name="B">
+									<block type="math_number" deletable="false" movable="false">
+										<field name="NUM">7</field>
+									</block>
+								</value>
+							</block>
+						</value>
+						<statement name="DO">
+							<block type="move_goToBarCounter" deletable="false" movable="false">
+								<value name="VALUE">
+									<block type="variables_get" deletable="false" movable="false">
+										<field name="VAR">cliente</field>
+									</block>
+								</value>
+								<next>
+									<block type="fillInGap" deletable="false" movable="false" >
+										<next>
+											<block type="variables_set" deletable="false" movable="false">
+												<field name="VAR">cliente</field>
+												<value name="VALUE">
+													<block type="math_arithmetic" deletable="false" movable="false">
+														<field name="OP">ADD</field>
+														<value name="A">
+															<block type="math_number" deletable="false" movable="false">
+																<field name="NUM">1</field>
+															</block>
+														</value>
+														<value name="B">
+															<block type="variables_get" deletable="false" movable="false">
+																<field name="VAR">cliente</field>
+															</block>
+														</value>
+													</block>
+												</value>
+											</block>
+										</next>
+									</block>
+								</next>
+							</block>
+						</statement>
+						<next>
+							<block type="do_talk" deletable="false" movable="false">
+								<value name="VALUE">
+									<block type="variables_get" deletable="false" movable="false">
+										<field name="VAR">totalPedido</field>
+									</block>
+								</value>
+							</block>
+						</next>
+					</block>
+				</next>
+			</block>
+		</next>
+	</block>
 	</xml>
 </mission>

@@ -1,0 +1,199 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+		<page type="goal">
+		<![CDATA[
+		A lanchonete tem 3 clientes. Eles tem sede e/ou fome. Mas SOMENTE vais atender toda a sede deles. Ou seja, 
+		vais entregar todos os refrigerantes que eles pedirem. 
+		]]> 
+		</page>
+
+	</explanation>
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="askForDrink" show="true" />
+		<category name="goToCooler" show="true" />
+		<category name="pickUpDrink" show="true" />
+		<category name="deliver" show="true" />
+		
+		<category name="loop" show="true" />
+		<category name="for" show="true" />
+		<category name="vars" show="true" />
+	</commands>
+	<cooker>initial</cooker>
+
+	<tests>3</tests>
+	<testsvars>
+		<test>
+			<var name="totalDelivered1">0</var>
+			<var name="totalDelivered2">1</var>
+			<var name="totalDelivered3">1</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">1</var>
+			<var name="totalDelivered2">3</var>
+			<var name="totalDelivered3">0</var>
+		</test>
+		<test>
+			<var name="totalDelivered1">1</var>
+			<var name="totalDelivered2">0</var>
+			<var name="totalDelivered3">2</var>
+		</test>
+	</testsvars>
+	
+	<menu hotdog="3" coke="2"/>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	
+	</customers>
+	<objectives  missionType="fillInGap" xpIndividual="10" xpFinal="5" xpTotalRun="6" buttonRun="false" >
+		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfDrinkDeliveredCustomer(1) &amp;&amp; Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfDrinkDeliveredCustomer(2) &amp;&amp; Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfDrinkDeliveredCustomer(3)" 
+					text="Entregar aos cliente as bebidas que eles pedirem">conditional</objective>
+	</objectives>
+	
+	<xml>
+		<block deletable="false" movable="false" type="controls_for">
+			<field name="VAR">i</field>
+			<value name="FROM">
+				<block deletable="false" movable="false" type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<value name="TO">
+				<block deletable="false" movable="false" type="math_number">
+					<field name="VAR">3</field>
+				</block>
+			</value>
+			<value name="BY">
+				<block deletable="false" movable="false" type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<statement name="DO">
+				<block deletable="false" movable="false" type="move_goToBarCounter">
+					<value name="VALUE">
+						<block deletable="false" movable="false" type="variables_get">
+							<field name="VAR">i</field>
+						</block>
+					</value>
+					<next>
+						<block deletable="false" movable="false" type="variables_set">
+							<field name="VAR">qtasBebidas</field>
+							<value name="VALUE">
+								<block deletable="false" movable="false" type="ask_askWantHowManyDrinks"></block>
+							</value>
+							<next>
+								<block type="fillInGap" deletable="false" movable="false" >
+								</block>
+								
+							</next>
+						</block>
+					</next>
+				</block>
+			</statement>
+		</block>
+	</xml>
+</mission>

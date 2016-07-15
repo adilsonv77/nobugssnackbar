@@ -2221,7 +2221,8 @@ Game.countInstructions = function(c, f) {
 	var conta = 0;
 	for (var i = 0; i < c.length; i++) {
 		var block = c[i];
-		if (block.nextConnection != null) { // we dont count the blocks that are into other blocks, as parameter, for instance 
+		
+		if (block.type !== "fillInGap" && block.nextConnection != null) { // we dont count the blocks that are into other blocks, as parameter, for instance 
 			conta++;
 		} 	
 		if (f != undefined)

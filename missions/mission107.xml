@@ -44,8 +44,9 @@ Ent&#227;o s&#227;o dois passos necess&#225;rios:
 		<page type="goal">
 		<![CDATA[
 Antes de come&#231;ar um assunto novo, vais aprender como operar essa nova m&#225;quina de caf&#233;. 
-  Essa miss&#227;o &#233; daquelas em que precisas corrigir erros. <br/>
-O objeto &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225; pedindo. 
+  Essa miss&#227;o &#233; daquelas em que precisas corrigir erros. <br/> <br/>
+O objetivo &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225; pedindo. <br/> <br/>
+Aproveite que a primeira execu&#231;&#227;o n&#227;o desconta nas estrelas.
 		
 		]]> 
 		</page>
@@ -102,78 +103,78 @@ O objeto &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225;
 		
 	</objectives>
 	<xml>
-		<block deletable="false" type="variables_set" x="60" y="14">
+		<block deletable="false" movable="false" type="variables_set" x="60" y="14">
 			<field name="VAR">contaCafe</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">0</field>
 				</block>
 			</value>
 			<next>
-			<block deletable="false" type="move_goToBarCounter">
+			<block deletable="false" movable="false" type="move_goToBarCounter">
 							<value name="VALUE">
-								<block deletable="false" type="math_number">
+								<block deletable="false" movable="false" type="math_number">
 									<field name="NUM">2</field>
 								</block>
 							</value>
 							<next>
-				<block deletable="false" type="variables_set">
+				<block deletable="false" movable="false" type="variables_set">
 					<field name="VAR">qtosCafes</field>
 					<value name="VALUE">
-						<block deletable="false" type="ask_askWantHowManyDrinks"></block>
+						<block deletable="false" movable="false" type="ask_askWantHowManyDrinks"></block>
 					</value>
 					<next>
 						
-								<block deletable="false" type="controls_for">
+								<block deletable="false" movable="false" type="controls_for">
 									<field name="VAR">i</field>
 									<value name="FROM">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">1</field>
 										</block>
 									</value>
 									<value name="TO">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">qtosCafes</field>
 										</block>
 									</value>
 									<value name="BY">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">1</field>
 										</block>
 									</value>
 									<statement name="DO">
-										<block deletable="false" type="variables_set">
+										<block deletable="false" movable="false" type="variables_set">
 											<field name="VAR">pedido</field>
 											<value name="VALUE">
-												<block deletable="false" type="ask_askForDrink"></block>
+												<block deletable="false" movable="false" type="ask_askForDrink"></block>
 											</value>
 											<next>
-												<block deletable="false" type="move_goToCoffeeMachine">
+												<block deletable="false" movable="false" type="move_goToCoffeeMachine">
 													<next>
-														<block deletable="false" type="controls_if">
+														<block deletable="false" movable="false" type="controls_if">
 															<mutation else="1"></mutation>
 															<value name="IF0">
-																<block deletable="false" type="logic_compare">
+																<block deletable="false" movable="false" type="logic_compare">
 																	<field name="OP">EQ</field>
 																	<value name="A">
-																		<block deletable="false" type="variables_get">
+																		<block deletable="false" movable="false" type="variables_get">
 																			<field name="VAR">contaCafe</field>
 																		</block>
 																	</value>
 																	<value name="B">
-																		<block deletable="false" type="math_number">
+																		<block deletable="false" movable="false" type="math_number">
 																			<field name="NUM">0</field>
 																		</block>
 																	</value>
 																</block>
 															</value>
 															<statement name="DO0">
-																<block deletable="false" type="prepare_coffee">
+																<block deletable="false" movable="false" type="prepare_coffee">
 																	<next>
-																		<block deletable="false" type="variables_set">
+																		<block deletable="false" movable="false" type="variables_set">
 																			<field name="VAR">contaCafe</field>
 																			<value name="VALUE">
-																				<block deletable="false" type="math_number">
+																				<block deletable="false" movable="false" type="math_number">
 																					<field name="NUM">1</field>
 																				</block>
 																			</value>
@@ -182,18 +183,18 @@ O objeto &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225;
 																</block>
 															</statement>
 															<statement name="ELSE">
-																<block deletable="false" type="variables_set">
+																<block deletable="false" movable="false" type="variables_set">
 																	<field name="VAR">contaCafe</field>
 																	<value name="VALUE">
-																		<block deletable="false" type="math_arithmetic">
+																		<block deletable="false" movable="false" type="math_arithmetic">
 																			<field name="OP">ADD</field>
 																			<value name="A">
-																				<block deletable="false" type="variables_get">
+																				<block deletable="false" movable="false" type="variables_get">
 																					<field name="VAR">contaCafe</field>
 																				</block>
 																			</value>
 																			<value name="B">
-																				<block deletable="false" type="math_number">
+																				<block deletable="false" movable="false" type="math_number">
 																					<field name="NUM">1</field>
 																				</block>
 																			</value>
@@ -202,28 +203,28 @@ O objeto &#233; muito simples: entregar todo o caf&#233; que o cliente est&#225;
 																</block>
 															</statement>
 															<next>
-																<block deletable="false" type="variables_set">
+																<block deletable="false" movable="false" type="variables_set">
 																	<field name="VAR">pedido</field>
 																	<value name="VALUE">
-																		<block deletable="false" type="prepare_pickUpCoffee">
+																		<block deletable="false" movable="false" type="prepare_pickUpCoffee">
 																			<value name="VALUE">
-																				<block deletable="false" type="variables_get">
+																				<block deletable="false" movable="false" type="variables_get">
 																					<field name="VAR">pedido</field>
 																				</block>
 																			</value>
 																		</block>
 																	</value>
 																	<next>
-																		<block deletable="false" type="move_goToBarCounter">
+																		<block deletable="false" movable="false" type="move_goToBarCounter">
 																			<value name="VALUE">
-																				<block deletable="false" type="math_number">
+																				<block deletable="false" movable="false" type="math_number">
 																					<field name="NUM">2</field>
 																				</block>
 																			</value>
 																			<next>
-																				<block deletable="false" type="do_deliver">
+																				<block deletable="false" movable="false" type="do_deliver">
 																					<value name="VALUE">
-																						<block deletable="false" type="variables_get">
+																						<block deletable="false" movable="false" type="variables_get">
 																							<field name="VAR">pedido</field>
 																						</block>
 																					</value>

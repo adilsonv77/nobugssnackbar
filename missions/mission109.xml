@@ -184,15 +184,15 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 	<xml>
 		<block type="controls_whileUntil" deletable="false" x="16" y="2">
 			<value name="BOOL">
-				<block type="logic_compare" deletable="false">
+				<block type="logic_compare" deletable="false" movable="false">
 					<field name="OP">LT</field>
 					<value name="A">
-						<block type="variables_get" deletable="false">
+						<block type="variables_get" deletable="false" movable="false">
 							<field name="VAR">totalCachorros</field>
 						</block>
 					</value>
 					<value name="B">
-						<block type="math_number" deletable="false">
+						<block type="math_number" deletable="false" movable="false">
 							<field name="NUM">4</field>
 						</block>
 					</value>
@@ -202,7 +202,7 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		<block type="variables_set" deletable="false" x="17" y="95">
 			<field name="VAR">totalCachorros</field>
 			<value name="VALUE">
-				<block type="math_number" deletable="false">
+				<block type="math_number" deletable="false" movable="false">
 					<field name="NUM">0</field>
 				</block>
 			</value>
@@ -210,21 +210,21 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		<block type="variables_set" deletable="false" x="305" y="96">
 			<field name="VAR">sorvetes</field>
 			<value name="VALUE">
-				<block type="ask_askWantHowManyIceCream" deletable="false"></block>
+				<block type="ask_askWantHowManyIceCream" deletable="false" movable="false"></block>
 			</value>
 		</block>
 		<block type="variables_set" deletable="false" x="21" y="162">
 			<field name="VAR">totalCachorros</field>
 			<value name="VALUE">
-				<block type="math_arithmetic" deletable="false">
+				<block type="math_arithmetic" deletable="false" movable="false">
 					<field name="OP">ADD</field>
 					<value name="A">
-						<block type="variables_get" deletable="false">
+						<block type="variables_get" deletable="false" movable="false">
 							<field name="VAR">cachorrosDoCliente</field>
 						</block>
 					</value>
 					<value name="B">
-						<block type="variables_get" deletable="false">
+						<block type="variables_get" deletable="false" movable="false">
 							<field name="VAR">totalCachorros</field>
 						</block>
 					</value>
@@ -234,13 +234,13 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		<block type="variables_set" deletable="false" x="22" y="241">
 			<field name="VAR">cachorrosDoCliente</field>
 			<value name="VALUE">
-				<block type="math_arithmetic" deletable="false">
+				<block type="math_arithmetic" deletable="false" movable="false">
 					<field name="OP">MINUS</field>
 					<value name="A">
-						<block type="ask_askWantHowManyFoods" deletable="false"></block>
+						<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
 					</value>
 					<value name="B">
-						<block type="variables_get" deletable="false">
+						<block type="variables_get" deletable="false" movable="false">
 							<field name="VAR">sorvetes</field>
 						</block>
 					</value>
@@ -249,14 +249,14 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		</block>
 		<block type="move_goToBarCounter" deletable="false" x="17" y="321">
 			<value name="VALUE">
-				<block type="variables_get" deletable="false">
+				<block type="variables_get" deletable="false" movable="false">
 					<field name="VAR">cliente</field>
 				</block>
 			</value>
 		</block>
 		<block type="do_talk" deletable="false" x="280" y="320">
 			<value name="VALUE">
-				<block type="variables_get" deletable="false">
+				<block type="variables_get" deletable="false" movable="false">
 					<field name="VAR">totalCachorros</field>
 				</block>
 			</value>
@@ -264,7 +264,7 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		<block type="variables_set" deletable="false" x="19" y="384">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block type="math_number" deletable="false">
+				<block type="math_number" deletable="false" movable="false">
 					<field name="NUM">1</field>
 				</block>
 			</value>
@@ -272,15 +272,15 @@ Por&#233;m, quando essa quantidade tiver pelo menos atingido 4 unidades, n&#227;
 		<block type="variables_set" deletable="false" x="268" y="377">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block type="math_arithmetic" deletable="false">
+				<block type="math_arithmetic" deletable="false" movable="false">
 					<field name="OP">ADD</field>
 					<value name="A">
-						<block type="math_number" deletable="false">
+						<block type="math_number" deletable="false" movable="false">
 							<field name="NUM">1</field>
 						</block>
 					</value>
 					<value name="B">
-						<block type="variables_get" deletable="false">
+						<block type="variables_get" deletable="false" movable="false">
 							<field name="VAR">cliente</field>
 						</block>
 					</value>
