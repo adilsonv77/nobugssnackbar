@@ -92,6 +92,9 @@ Entregue o pedido do cliente.
 					<foods>
 					</foods>
 					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
@@ -115,9 +118,6 @@ Entregue o pedido do cliente.
 					<foods>
 					</foods>
 					<drinks>
-						<drink qt="1" price="3">coffee</drink>
-						<drink qt="1" price="3">coke</drink>
-						<drink qt="1" price="3">juiceoforange</drink>
 					</drinks>
 				</order>
 				<order>
