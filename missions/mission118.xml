@@ -138,7 +138,7 @@
 		<block deletable="false" type="variables_set" x="-55" y="-56">
 			<field name="VAR">clientesAtendidos</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">0</field>
 				</block>
 			</value>
@@ -146,7 +146,7 @@
 		<block deletable="false" type="variables_set" x="247" y="-55">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
@@ -154,7 +154,7 @@
 		<block deletable="false" type="variables_set" x="478" y="-54">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
@@ -162,15 +162,15 @@
 		<block deletable="false" type="variables_set" x="-56" y="9">
 			<field name="VAR">clientesAtendidos</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_arithmetic">
+				<block deletable="false" movable="false" type="math_arithmetic">
 					<field name="OP">ADD</field>
 					<value name="A">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">clientesAtendidos</field>
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="math_number">
+						<block deletable="false" movable="false" type="math_number">
 							<field name="NUM">1</field>
 						</block>
 					</value>
@@ -179,14 +179,14 @@
 		</block>
 		<block deletable="false" type="move_goToBarCounter" x="497" y="2">
 			<value name="VALUE">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">cliente</field>
 				</block>
 			</value>
 		</block>
 		<block deletable="false" type="move_goToBarCounter" x="494" y="51">
 			<value name="VALUE">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">cliente</field>
 				</block>
 			</value>
@@ -194,15 +194,15 @@
 		<block deletable="false" type="variables_set" x="-56" y="81">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_arithmetic">
+				<block deletable="false" movable="false" type="math_arithmetic">
 					<field name="OP">ADD</field>
 					<value name="A">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">cliente</field>
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="math_number">
+						<block deletable="false" movable="false" type="math_number">
 							<field name="NUM">1</field>
 						</block>
 					</value>
@@ -212,7 +212,7 @@
 		<block deletable="false" type="move_goToDisplay" x="357" y="71"></block>
 		<block deletable="false" type="do_deliver" x="377" y="116">
 			<value name="VALUE">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">pedido</field>
 				</block>
 			</value>
@@ -220,9 +220,9 @@
 		<block deletable="false" type="variables_set" x="-54" y="151">
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
-				<block deletable="false" type="prepare_pickUpHotDog">
+				<block deletable="false" movable="false" type="prepare_pickUpHotDog">
 					<value name="VALUE">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">pedido</field>
 						</block>
 					</value>
@@ -232,38 +232,38 @@
 		<block deletable="false" type="variables_set" x="382" y="166">
 			<field name="VAR">pedido</field>
 			<value name="VALUE">
-				<block deletable="false" type="ask_askForFood"></block>
+				<block deletable="false" movable="false" type="ask_askForFood"></block>
 			</value>
 		</block>
 		<block deletable="false" type="controls_for" x="-60" y="212">
 			<field name="VAR">i</field>
 			<value name="FROM">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<value name="TO">
-				<block deletable="false" type="variables_get">
+				<block deletable="false" movable="false" type="variables_get">
 					<field name="VAR">qtos</field>
 				</block>
 			</value>
 			<value name="BY">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 		</block>
 		<block deletable="false" type="controls_if" x="440" y="229">
 			<value name="IF0">
-				<block deletable="false" type="logic_compare">
+				<block deletable="false" movable="false" type="logic_compare">
 					<field name="OP">GT</field>
 					<value name="A">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">cliente</field>
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="math_number">
+						<block deletable="false" movable="false" type="math_number">
 							<field name="NUM">4</field>
 						</block>
 					</value>
@@ -272,15 +272,15 @@
 		</block>
 		<block deletable="false" type="controls_whileUntil" x="-64" y="316">
 			<value name="BOOL">
-				<block deletable="false" type="logic_compare">
+				<block deletable="false" movable="false" type="logic_compare">
 					<field name="OP">LT</field>
 					<value name="A">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">clientesAtendidos</field>
 						</block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="math_number">
+						<block deletable="false" movable="false" type="math_number">
 							<field name="NUM">2</field>
 						</block>
 					</value>
@@ -289,13 +289,13 @@
 		</block>
 		<block deletable="false" type="controls_if" x="330" y="317">
 			<value name="IF0">
-				<block deletable="false" type="logic_compare">
+				<block deletable="false" movable="false" type="logic_compare">
 					<field name="OP">EQ</field>
 					<value name="A">
-						<block deletable="false" type="ask_isThereACustomer"></block>
+						<block deletable="false" movable="false" type="ask_isThereACustomer"></block>
 					</value>
 					<value name="B">
-						<block deletable="false" type="logic_boolean">
+						<block deletable="false" movable="false" type="logic_boolean">
 							<field name="BOOL">TRUE</field>
 						</block>
 					</value>
@@ -305,7 +305,7 @@
 		<block deletable="false" type="variables_set" x="-38" y="417">
 			<field name="VAR">qtos</field>
 			<value name="VALUE">
-				<block deletable="false" type="ask_askWantHowManyFoods"></block>
+				<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 			</value>
 		</block>
 	</xml>

@@ -12,7 +12,6 @@
 		Tome cuidado para n&#227;o entregar um produto que acabe
 		por exceder o valor total das vendas. <br/><br/>
 		<b>Preste aten&#231;&#227;o no comportamento do cliente: assim que ele se sentir satisfeito vai sair imediamente.</b><br/><br/>
-		Deixei prontos alguns blocos como sugest&#227;o. Podes remover os blocos se quiser.
 		]]>
 		</page>
 	</explanation>
@@ -199,102 +198,6 @@
 		text="Entregar EXATAMENTE $26 em vendas, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>
 	<xml>
-		<block type="variables_set" x="13" y="14">
-			<field name="VAR">i</field>
-			<value name="VALUE">
-				<block type="math_number">
-					<field name="NUM">1</field>
-				</block>
-			</value>
-			<next>
-				<block type="variables_set">
-					<field name="VAR">total</field>
-					<value name="VALUE">
-						<block type="math_number">
-							<field name="NUM">0</field>
-						</block>
-					</value>
-					<next>
-						<block type="controls_whileUntil">
-							<value name="BOOL">
-								<block type="logic_compare">
-									<field name="OP">LT</field>
-									<value name="A">
-										<block type="variables_get">
-											<field name="VAR">total</field>
-										</block>
-									</value>
-									<value name="B">
-										<block type="math_number">
-											<field name="NUM">26</field>
-										</block>
-									</value>
-								</block>
-							</value>
-							<statement name="DO">
-								<block type="move_goToBarCounter">
-									<value name="VALUE">
-										<block type="variables_get">
-											<field name="VAR">i</field>
-										</block>
-									</value>
-									<next>
-										<block type="variables_set">
-											<field name="VAR">i</field>
-											<value name="VALUE">
-												<block type="math_arithmetic">
-													<field name="OP">ADD</field>
-													<value name="A">
-														<block type="variables_get">
-															<field name="VAR">i</field>
-														</block>
-													</value>
-													<value name="B">
-														<block type="math_number">
-															<field name="NUM">1</field>
-														</block>
-													</value>
-												</block>
-											</value>
-											<next>
-												<block type="controls_if">
-													<value name="IF0">
-														<block type="logic_compare">
-															<field name="OP">EQ</field>
-															<value name="A">
-																<block type="variables_get">
-																	<field name="VAR">i</field>
-																</block>
-															</value>
-															<value name="B">
-																<block type="math_number">
-																	<field name="NUM">4</field>
-																</block>
-															</value>
-														</block>
-													</value>
-													<statement name="DO0">
-														<block type="variables_set">
-															<field name="VAR">i</field>
-															<value name="VALUE">
-																<block type="math_number">
-																	<field name="NUM">1</field>
-																</block>
-															</value>
-														</block>
-													</statement>
-												</block>
-											</next>
-										</block>
-									</next>
-
-								</block>
-							</statement>
-						</block>
-					</next>
-				</block>
-			</next>
-		</block>
 
 	</xml>
 </mission>

@@ -90,85 +90,85 @@
 	</objectives>
 
 	<xml>
-		<block deletable="false" type="controls_for" x="19" y="38">
+		<block deletable="false" movable="false" type="controls_for" x="19" y="38">
 			<field name="VAR">i</field>
 			<value name="FROM">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<value name="TO">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">3</field>
 				</block>
 			</value>
 			<value name="BY">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<statement name="DO">
-				<block deletable="false" type="move_goToBarCounter">
+				<block deletable="false" movable="false" type="move_goToBarCounter">
 					<value name="VALUE">
-						<block deletable="false" type="variables_get">
+						<block deletable="false" movable="false" type="variables_get">
 							<field name="VAR">i</field>
 						</block>
 					</value>
 					<next>
-						<block deletable="false" type="variables_set">
+						<block deletable="false" movable="false" type="variables_set">
 							<field name="VAR">qtos</field>
 							<value name="VALUE">
-								<block deletable="false" type="ask_askWantHowManyFoods"></block>
+								<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 							</value>
 							<next>
-								<block deletable="false" type="controls_for">
+								<block deletable="false" movable="false" type="controls_for">
 									<field name="VAR">i</field>
 									<value name="FROM">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">1</field>
 										</block>
 									</value>
 									<value name="TO">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">qtos</field>
 										</block>
 									</value>
 									<value name="BY">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">1</field>
 										</block>
 									</value>
 									<statement name="DO">
-										<block deletable="false" type="variables_set">
+										<block deletable="false" movable="false" type="variables_set">
 											<field name="VAR">pedido</field>
 											<value name="VALUE">
-												<block deletable="false" type="ask_askForFood"></block>
+												<block deletable="false" movable="false" type="ask_askForFood"></block>
 											</value>
 											<next>
-												<block deletable="false" type="move_goToDisplay">
+												<block deletable="false" movable="false" type="move_goToDisplay">
 													<next>
-														<block deletable="false" type="variables_set">
+														<block deletable="false" movable="false" type="variables_set">
 															<field name="VAR">pedido</field>
 															<value name="VALUE">
-																<block deletable="false" type="prepare_pickUpHotDog">
+																<block deletable="false" movable="false" type="prepare_pickUpHotDog">
 																	<value name="VALUE">
-																		<block deletable="false" type="variables_get">
+																		<block deletable="false" movable="false" type="variables_get">
 																			<field name="VAR">pedido</field>
 																		</block>
 																	</value>
 																</block>
 															</value>
 															<next>
-																<block deletable="false" type="move_goToBarCounter">
+																<block deletable="false" movable="false" type="move_goToBarCounter">
 																	<value name="VALUE">
-																		<block deletable="false" type="variables_get">
+																		<block deletable="false" movable="false" type="variables_get">
 																			<field name="VAR">j</field>
 																		</block>
 																	</value>
 																	<next>
-																		<block deletable="false" type="do_deliver">
+																		<block deletable="false" movable="false" type="do_deliver">
 																			<value name="VALUE">
-																				<block deletable="false" type="variables_get">
+																				<block deletable="false" movable="false" type="variables_get">
 																					<field name="VAR">pedido</field>
 																				</block>
 																			</value>

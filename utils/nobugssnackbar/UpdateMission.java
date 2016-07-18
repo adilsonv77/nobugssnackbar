@@ -11,7 +11,7 @@ import pt.uc.dei.nobugssnackbar.model.Mission;
 public class UpdateMission {
 
 	public static void main(String[] args) throws Exception {
-		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugs8", 
+		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
 				"com.mysql.jdbc.Driver", "root", "root");
 		
 		MissionJdbcDao mDao = new MissionJdbcDao();

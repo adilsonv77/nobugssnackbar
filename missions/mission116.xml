@@ -28,7 +28,7 @@ Assim, podes usar blocos de ciclo dentro do condicional, ou blocos de ciclo dent
 		Nessa miss&#227;o vais atender (entregar o pedido) os tr&#234;s cliente por completo. Por&#233;m, se tiver j&#225; atendido 5 cachorros, termine de 
 		atender o cliente, mas n&#227;o atendas nenhum novo cliente.<br/><br/>
 		Os clientes vem com fome. &#201; garantido que a soma dos cachorros entre os tr&#234;s clientes sempre atingir&#225; no m&#237;nimo 5.<br/><br/>
-		Essa miss&#227;o &#233; daquelas em que precisas corrigir erros. Nessa faltam alguns blocos para completar os objetivos.
+		Nessa miss&#227;o faltam alguns blocos para completar os objetivos.
 		]]>
 		</page>
 
@@ -163,106 +163,106 @@ Assim, podes usar blocos de ciclo dentro do condicional, ou blocos de ciclo dent
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="5" xpFinal="5" xpTotalRun="3" missionType="fixBugs" >
+	<objectives xpIndividual="5" xpFinal="5" xpTotalRun="3" missionType="fillInGap" >
 		<objective condition="Game.readVariableTest('totalDelivered1') == CustomerManager.totalOfFoodDeliveredCustomer(1)" text="Entregar ao cliente 1 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered2') == CustomerManager.totalOfFoodDeliveredCustomer(2)" text="Entregar ao cliente 2 os cachorros se necess&#225;rio">conditional</objective>
 		<objective condition="Game.readVariableTest('totalDelivered3') == CustomerManager.totalOfFoodDeliveredCustomer(3)" text="Entregar ao cliente 3 os cachorros se necess&#225;rio">conditional</objective>
 	</objectives>
 	<xml>
-		<block deletable="false" type="variables_set" x="44" y="19">
+		<block deletable="false" movable="false" type="variables_set" x="44" y="19">
 			<field name="VAR">cliente</field>
 			<value name="VALUE">
-				<block deletable="false" type="math_number">
+				<block deletable="false" movable="false" type="math_number">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<next>
-				<block deletable="false" type="variables_set">
+				<block deletable="false" movable="false" type="variables_set">
 					<field name="VAR">totalCachorros</field>
 					<value name="VALUE">
-						<block deletable="false" type="math_number">
+						<block deletable="false" movable="false" type="math_number">
 							<field name="NUM">0</field>
 						</block>
 					</value>
 					<next>
-						<block deletable="false" type="controls_whileUntil">
+						<block deletable="false" movable="false" type="controls_whileUntil">
 							<value name="BOOL">
-								<block deletable="false" type="logic_compare">
+								<block deletable="false" movable="false" type="logic_compare">
 									<field name="OP">LT</field>
 									<value name="A">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">totalCachorros</field>
 										</block>
 									</value>
 									<value name="B">
-										<block deletable="false" type="math_number">
+										<block deletable="false" movable="false" type="math_number">
 											<field name="NUM">5</field>
 										</block>
 									</value>
 								</block>
 							</value>
 							<statement name="DO">
-								<block deletable="false" type="move_goToBarCounter">
+								<block deletable="false" movable="false" type="move_goToBarCounter">
 									<value name="VALUE">
-										<block deletable="false" type="variables_get">
+										<block deletable="false" movable="false" type="variables_get">
 											<field name="VAR">cliente</field>
 										</block>
 									</value>
 									<next>
-										<block deletable="false" type="variables_set">
+										<block deletable="false" movable="false" type="variables_set">
 											<field name="VAR">cachorrosPedidos</field>
 											<value name="VALUE">
-												<block deletable="false" type="ask_askWantHowManyFoods"></block>
+												<block deletable="false" movable="false" type="ask_askWantHowManyFoods"></block>
 											</value>
 											<next>
-												<block deletable="false" type="controls_for">
+												<block deletable="false" movable="false" type="controls_for">
 													<field name="VAR">i</field>
 													<value name="FROM">
-														<block deletable="false" type="math_number">
+														<block deletable="false" movable="false" type="math_number">
 															<field name="NUM">1</field>
 														</block>
 													</value>
 													<value name="TO">
-														<block deletable="false" type="variables_get">
+														<block deletable="false" movable="false" type="variables_get">
 															<field name="VAR">cachorrosPedidos</field>
 														</block>
 													</value>
 													<value name="BY">
-														<block deletable="false" type="math_number">
+														<block deletable="false" movable="false" type="math_number">
 															<field name="NUM">1</field>
 														</block>
 													</value>
 													<statement name="DO">
-														<block deletable="false" type="variables_set">
+														<block deletable="false" movable="false" type="variables_set">
 															<field name="VAR">pedido</field>
 															<value name="VALUE">
-																<block deletable="false" type="ask_askForFood"></block>
+																<block deletable="false" movable="false" type="ask_askForFood"></block>
 															</value>
 															<next>
-																<block deletable="false" type="move_goToDisplay">
+																<block deletable="false" movable="false" type="move_goToDisplay">
 																	<next>
-																		<block deletable="false" type="variables_set">
+																		<block deletable="false" movable="false" type="variables_set">
 																			<field name="VAR">pedido</field>
 																			<value name="VALUE">
-																				<block deletable="false" type="prepare_pickUpHotDog">
+																				<block deletable="false" movable="false" type="prepare_pickUpHotDog">
 																					<value name="VALUE">
-																						<block deletable="false" type="variables_get">
+																						<block deletable="false" movable="false" type="variables_get">
 																							<field name="VAR">pedido</field>
 																						</block>
 																					</value>
 																				</block>
 																			</value>
 																			<next>
-																				<block deletable="false" type="move_goToBarCounter">
+																				<block deletable="false" movable="false" type="move_goToBarCounter">
 																					<value name="VALUE">
-																						<block deletable="false" type="variables_get">
+																						<block deletable="false" movable="false" type="variables_get">
 																							<field name="VAR">cliente</field>
 																						</block>
 																					</value>
 																					<next>
-																						<block deletable="false" type="do_deliver">
+																						<block deletable="false" movable="false" type="do_deliver">
 																							<value name="VALUE">
-																								<block deletable="false" type="variables_get">
+																								<block deletable="false" movable="false" type="variables_get">
 																									<field name="VAR">pedido</field>
 																								</block>
 																							</value>
@@ -276,6 +276,10 @@ Assim, podes usar blocos de ciclo dentro do condicional, ou blocos de ciclo dent
 															</next>
 														</block>
 													</statement>
+													<next>
+														<block deletable="false" movable="false" type="fillInGap">
+														</block>
+													</next>
 												</block>
 											</next>
 										</block>

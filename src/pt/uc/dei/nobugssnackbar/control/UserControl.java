@@ -519,8 +519,11 @@ public class UserControl {
 
 	@RemoteMethod
 	public Test[] loadTests() throws Exception {
+	/*
 		Test[] t = gameDao.loadTests(this.user, this.missions);
 		return (t == null || t[0] == null ? null : t); 
+		*/
+		return null;
 	}
 	
 	@RemoteMethod

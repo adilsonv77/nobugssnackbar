@@ -166,97 +166,100 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="30" xpFinal="10" commQtd="20"
+	<objectives  missionType="fillInGap" xpIndividual="30" xpFinal="10" commQtd="20"
 		maxCommands="14" maxCommandsRewardCoins="2" xpTotalRun="9">
 		<objective condition="CustomerManager.totalOfFoodDelivered() == 7  &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3&amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3"
 			text="Entregar EXATAMENTE 7 cachorros no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>
 	<xml>
-
-		<block type="variables_set" x="13" y="14">
+		<block type="variables_set" x="13" y="14" movable="false" deletable="false">
 			<field name="VAR">i</field>
 			<value name="VALUE">
-				<block type="math_number">
+				<block type="math_number" movable="false" deletable="false">
 					<field name="NUM">1</field>
 				</block>
 			</value>
 			<next>
-				<block type="variables_set">
+				<block type="variables_set" movable="false" deletable="false">
 					<field name="VAR">total</field>
 					<value name="VALUE">
-						<block type="math_number">
+						<block type="math_number" movable="false" deletable="false">
 							<field name="NUM">0</field>
 						</block>
 					</value>
 					<next>
-						<block type="controls_whileUntil">
+						<block type="controls_whileUntil" movable="false" deletable="false">
 							<value name="BOOL">
-								<block type="logic_compare">
+								<block type="logic_compare" movable="false" deletable="false">
 									<field name="OP">LT</field>
 									<value name="A">
-										<block type="variables_get">
+										<block type="variables_get" movable="false" deletable="false">
 											<field name="VAR">total</field>
 										</block>
 									</value>
 									<value name="B">
-										<block type="math_number">
+										<block type="math_number" movable="false" deletable="false">
 											<field name="NUM">7</field>
 										</block>
 									</value>
 								</block>
 							</value>
 							<statement name="DO">
-								<block type="move_goToBarCounter">
+								<block type="move_goToBarCounter" movable="false" deletable="false">
 									<value name="VALUE">
-										<block type="variables_get">
+										<block type="variables_get" movable="false" deletable="false">
 											<field name="VAR">i</field>
 										</block>
 									</value>
 									<next>
-										<block type="variables_set">
-											<field name="VAR">i</field>
-											<value name="VALUE">
-												<block type="math_arithmetic">
-													<field name="OP">ADD</field>
-													<value name="A">
-														<block type="variables_get">
-															<field name="VAR">i</field>
-														</block>
-													</value>
-													<value name="B">
-														<block type="math_number">
-															<field name="NUM">1</field>
-														</block>
-													</value>
-												</block>
-											</value>
+										<block type="fillInGap" movable="false" deletable="false">
 											<next>
-												<block type="controls_if">
-													<value name="IF0">
-														<block type="logic_compare">
-															<field name="OP">EQ</field>
+												<block type="variables_set" movable="false" deletable="false">
+													<field name="VAR">i</field>
+													<value name="VALUE">
+														<block type="math_arithmetic" movable="false" deletable="false">
+															<field name="OP">ADD</field>
 															<value name="A">
-																<block type="variables_get">
+																<block type="variables_get" movable="false" deletable="false">
 																	<field name="VAR">i</field>
 																</block>
 															</value>
 															<value name="B">
-																<block type="math_number">
-																	<field name="NUM">4</field>
-																</block>
-															</value>
-														</block>
-													</value>
-													<statement name="DO0">
-														<block type="variables_set">
-															<field name="VAR">i</field>
-															<value name="VALUE">
-																<block type="math_number">
+																<block type="math_number" movable="false" deletable="false">
 																	<field name="NUM">1</field>
 																</block>
 															</value>
 														</block>
-													</statement>
+													</value>
+													<next>
+														<block type="controls_if" movable="false" deletable="false">
+															<value name="IF0">
+																<block type="logic_compare" movable="false" deletable="false">
+																	<field name="OP">EQ</field>
+																	<value name="A">
+																		<block type="variables_get" movable="false" deletable="false">
+																			<field name="VAR">i</field>
+																		</block>
+																	</value>
+																	<value name="B">
+																		<block type="math_number" movable="false" deletable="false">
+																			<field name="NUM">4</field>
+																		</block>
+																	</value>
+																</block>
+															</value>
+															<statement name="DO0">
+																<block type="variables_set" movable="false" deletable="false">
+																	<field name="VAR">i</field>
+																	<value name="VALUE">
+																		<block type="math_number" movable="false" deletable="false">
+																			<field name="NUM">1</field>
+																		</block>
+																	</value>
+																</block>
+															</statement>
+														</block>
+													</next>
 												</block>
 											</next>
 										</block>

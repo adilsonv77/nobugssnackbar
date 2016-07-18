@@ -9,7 +9,7 @@ public class TestJdbcDao {
 
 	public static void main(String[] args) throws Exception {
 		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugssnackbar", 
-				"com.mysql.jdbc.Driver", "root", "root");
+				"com.mysql.jdbc.Driver", "nobugs", "n0bug5v1d4l0k4");
 		
 		GameJdbcDao gDao = new GameJdbcDao();
 		Map<?, ?> m = gDao.retrieveMissions(6);

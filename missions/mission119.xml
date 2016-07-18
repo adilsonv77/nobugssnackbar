@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
-<mission useIfMutator="true" open="true" >
+<mission useIfMutator="true" open="true">
 	<explanation hasInstruction="false">
-		
+
 		<page type="goal">
 		<![CDATA[
 		Os clientes vem SOMENTE com vontade de cachorros. Pare quando tiver alcan&#231;ado a entrega de 8 cachorros. Entretanto,
@@ -23,22 +23,29 @@
 	<help>
 		<line>[1] e guarde na vari&#225;vel [cliente]</line>
 		<line>[0] e guarde na vari&#225;vel [totalCachorros]</line>
-		<line>repita enquanto [totalCachorros for menor que 8] fa&#231;a</line>
+		<line>repita enquanto [totalCachorros for menor que 8] fa&#231;a
+		</line>
 		<line indent="1">V&#225; at&#233; o cliente [cliente]</line>
 		<line indent="1">se [tem cliente] ent&#227;o</line>
-		<line indent="2">Pergunte quantos cachorros ele deseja e guarde na vari&#225;vel [qtosCachorros]</line>
+		<line indent="2">Pergunte quantos cachorros ele deseja e guarde na
+			vari&#225;vel [qtosCachorros]</line>
 
-		<line indent="2">para [i] de 1 at&#233; [qtosCachorros] com incremento 1 fa&#231;a</line>
-		
-		<line indent="3">Pergunta o que ele deseja comer e guarde na vari&#225;vel [pedido]</line>
+		<line indent="2">para [i] de 1 at&#233; [qtosCachorros] com
+			incremento 1 fa&#231;a</line>
+
+		<line indent="3">Pergunta o que ele deseja comer e guarde na
+			vari&#225;vel [pedido]</line>
 		<line indent="3">V&#225; at&#233; o mostrador</line>
-		<line indent="3">Pegue o cachorro [pedido] e guarde na vari&#225;vel [pedido]</line>
+		<line indent="3">Pegue o cachorro [pedido] e guarde na vari&#225;vel
+			[pedido]</line>
 		<line indent="3">V&#225; at&#233; o cliente [cliente]</line>
 		<line indent="3">Entregue [pedido]</line>
-		
-		<line indent="2">Some [totalCachorros] com [qtosCachorros] e guarde na vari&#225;vel [totalCachorros]</line>
-		
-		<line indent="1">Some [cliente] com [1] e guarde na vari&#225;vel [cliente]</line>
+
+		<line indent="2">Some [totalCachorros] com [qtosCachorros] e guarde
+			na vari&#225;vel [totalCachorros]</line>
+
+		<line indent="1">Some [cliente] com [1] e guarde na vari&#225;vel
+			[cliente]</line>
 		<line indent="1">se [cliente for igual a 4] ent&#227;o</line>
 		<line indent="2">[1] e guarde na vari&#225;vel [cliente]</line>
 	</help>
@@ -67,7 +74,7 @@
 
 	</commands>
 	<cooker>initial</cooker>
-	
+
 	<customers>
 		<customer>
 			<id>01</id>
@@ -149,11 +156,113 @@
 			</orders>
 		</customer>
 	</customers>
-	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" commQtd="20">
-		<objective condition="CustomerManager.totalOfFoodDelivered() &gt;= 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3" 
-		          text="Entregar PELO MENOS 8 cachorros no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
+	<objectives missionType="fillInGap" xpIndividual="20" xpFinal="10" xpTotalRun="9"
+		commQtd="20">
+		<objective
+			condition="CustomerManager.totalOfFoodDelivered() &gt;= 8 &amp;&amp; CustomerManager.fullDeliveredCustomers() &gt;= 3 &amp;&amp; CustomerManager.fullDeliveredCustomersHowManyPlaces() == 3"
+			text="Entregar PELO MENOS 8 cachorros no total, atendendo pelo menos um cliente em cada uma das posi&#231;&#245;es do balc&#227;o">conditional</objective>
 	</objectives>
 	<xml>
+		<block type="variables_set" x="13" y="14" movable="false" deletable="false">
+			<field name="VAR">i</field>
+			<value name="VALUE">
+				<block type="math_number" movable="false" deletable="false">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set" movable="false" deletable="false">
+					<field name="VAR">total</field>
+					<value name="VALUE">
+						<block type="math_number" movable="false" deletable="false">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block type="controls_whileUntil" movable="false" deletable="false">
+							<value name="BOOL">
+								<block type="logic_compare" movable="false" deletable="false">
+									<field name="OP">LT</field>
+									<value name="A">
+										<block type="variables_get" movable="false" deletable="false">
+											<field name="VAR">total</field>
+										</block>
+									</value>
+									<value name="B">
+										<block type="math_number" movable="false" deletable="false">
+											<field name="NUM">8</field>
+										</block>
+									</value>
+								</block>
+							</value>
+							<statement name="DO">
+								<block type="move_goToBarCounter" movable="false" deletable="false">
+									<value name="VALUE">
+										<block type="variables_get" movable="false" deletable="false">
+											<field name="VAR">i</field>
+										</block>
+									</value>
+									<next>
+										<block type="fillInGap" movable="false" deletable="false">
+											<next>
+												<block type="variables_set" movable="false" deletable="false">
+													<field name="VAR">i</field>
+													<value name="VALUE">
+														<block type="math_arithmetic" movable="false" deletable="false">
+															<field name="OP">ADD</field>
+															<value name="A">
+																<block type="variables_get" movable="false" deletable="false">
+																	<field name="VAR">i</field>
+																</block>
+															</value>
+															<value name="B">
+																<block type="math_number" movable="false" deletable="false">
+																	<field name="NUM">1</field>
+																</block>
+															</value>
+														</block>
+													</value>
+													<next>
+														<block type="controls_if" movable="false" deletable="false">
+															<value name="IF0">
+																<block type="logic_compare" movable="false" deletable="false">
+																	<field name="OP">EQ</field>
+																	<value name="A">
+																		<block type="variables_get" movable="false" deletable="false">
+																			<field name="VAR">i</field>
+																		</block>
+																	</value>
+																	<value name="B">
+																		<block type="math_number" movable="false" deletable="false">
+																			<field name="NUM">4</field>
+																		</block>
+																	</value>
+																</block>
+															</value>
+															<statement name="DO0">
+																<block type="variables_set" movable="false" deletable="false">
+																	<field name="VAR">i</field>
+																	<value name="VALUE">
+																		<block type="math_number" movable="false" deletable="false">
+																			<field name="NUM">1</field>
+																		</block>
+																	</value>
+																</block>
+															</statement>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+
+								</block>
+							</statement>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
 
 	</xml>
 </mission>
