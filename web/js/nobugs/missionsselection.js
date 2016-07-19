@@ -8,7 +8,7 @@ MissionSelection = function(level) {
 	
 	this.level = Game.loginData.missionHist[level-1];
 	this.current = Game.loginData.missionIdx;
-	this.randomAccess = Game.loginData.userLogged.randomAccess; 
+	this.randomAccess = level > 1 && Game.loginData.userLogged.randomAccess; 
 
 	this.hightlight = -1;
 	
