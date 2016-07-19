@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2016-07-19 09:47:54.280000",
+		"lastupdated": "2016-07-19 12:19:56.274000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -358,6 +358,9 @@
 	"Profile.cancel": "Cancel",
 	"ForgetPassword.willSendANew": "We will send you a new password. Please, inform that same e-mail registered in the game",
 	"ForgetPassword.send": "Send new password",
+	"Wizard.explane": "TODO",
+	"Wizard.byCoins": "Coins",
+	"Wizard.byStars": "No",
 	"SnackMan.catSnackMan": "SnackMan",
 	"NoBugs.order": "order",
 	"SnackMan.catMoney": "Money",

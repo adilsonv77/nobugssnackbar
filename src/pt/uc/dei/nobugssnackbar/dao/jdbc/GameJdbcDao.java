@@ -230,7 +230,7 @@ public class GameJdbcDao implements GameDao {
 			ps.close();
 
 			ps = bdCon
-					.prepareStatement("select timespend, answer, executions, zoomlevel, achieved, freewizardexecutions from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
+					.prepareStatement("select timespend, answer, executions, zoomlevel, achieved, freewizardexecutions, freewizardconsumestars from missionsaccomplished where missionid = ? and classid = ? and userid = ?");
 
 			ps.setLong(1, missionId);
 			ps.setLong(2, clazzId);
@@ -251,7 +251,7 @@ public class GameJdbcDao implements GameDao {
 				zoomLevel = rs.getString(4);
 				achieved = rs.getString(5);
 				
-				freeWizardUsed = (rs.getInt(6) == 0 && rs.wasNull()?"F":"T");
+				freeWizardUsed = (rs.getInt(6) == 0 && rs.wasNull()?"F":(rs.getString(7).equals("T")?"S":"C"));
 			}
 
 			ps.close();
@@ -2086,16 +2086,17 @@ public class GameJdbcDao implements GameDao {
 
 	@Override
 	public void markWizardFreeConsumed(long user, long mission, int attempts,
-			int timeSpend) throws Exception {
+			int timeSpend, boolean consumedStars) throws Exception {
 		Connection bdCon = null;
 		try {
 			bdCon = getConnection();
 			
-			PreparedStatement ps = bdCon.prepareStatement("update missionsaccomplished set freewizardexecutions=?, freewizardtimespend=timespend + ? where userid = ? and missionid = ?");
+			PreparedStatement ps = bdCon.prepareStatement("update missionsaccomplished set freewizardexecutions=?, freewizardtimespend=timespend + ?, freewizardconsumestars=? where userid = ? and missionid = ?");
 			ps.setLong(1, attempts);
 			ps.setLong(2, timeSpend);
-			ps.setLong(3, user);
-			ps.setLong(4, mission);
+			ps.setString(3, (consumedStars?"T":"F"));
+			ps.setLong(4, user);
+			ps.setLong(5, mission);
 			ps.executeUpdate();
 			ps.close();
 			

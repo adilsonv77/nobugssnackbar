@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160718;
+Game.version = 20160719;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -1117,7 +1117,7 @@ Game.missionLoaded = function(ret){
 	  else
 		  cfg.dif = 0;
 	  
-	  cfg.freeWizardConsumed = ret[7] === "T";
+	  cfg.freeWizardConsumed = ret[7] === "S"; // by stars
 	  xpIndiv = hero.objective.xpIndividual;
   } else {
 	  byTime = false;
@@ -1125,6 +1125,7 @@ Game.missionLoaded = function(ret){
 	  xpIndiv = hero.objective.xpFinal;
 	  cfg.freeWizardConsumed = false;
   }
+  Game.missionWizardUsed = ret[7] !== "F"; // by coins or by stars
 
   if (Game.missionType === "fixBugs" && !Game.missionView) {
 	  $("#restartBlocksButton").css("display", "inline");
@@ -2379,53 +2380,67 @@ Game.exitMission = function(timeSpend, answer) {
 };
 
 Game.wizardFreeButtonClick = function() {
-	
-	var fShowTips = function(recordChanges) {
-		
-		Game.closeBoxes();
-		
-		if (recordChanges == 1) {
-			
-			CountXP.setConsumedMaxStars();
-
-			UserControl.askWizardFree(Game.howManyRuns, Game.getTimeSpend());
-			Game.saveMission();
-			
-		}
-		
-		var rows = [];
-		
-		var manyCols = 0;
-		
-		var lines = Game.wizardFreeContent[0].getElementsByTagName("line");
-		for (var i = 0; i < lines.length; i++) {
-			var indent = lines[i].getAttribute("indent");
-			if (indent != null && manyCols < parseInt(indent)) {
-				manyCols = parseInt(indent);
-			}
-			rows.push({text: lines[i].textContent.toString(), indent: (indent==null?0:parseInt(indent))});
-		}
-			
-		
-		InGrid.createNewTipTable(manyCols, rows);
-		
-		Game.tipBox.style.display = "inline";
-		Game.doResizeWindow();
-		
-		Hints.startHints();
-		
-	};
-	
-	if (CountXP.getEnabledStars() > 0) {
+	if (!Game.missionWizardUsed && CountXP.getEnabledStars() > 0) {
 		Hints.stopHints();
-		confirm("Deseja realmente ver a dica para resolver a miss&#227;o ? <br/> "+
-				"Ao confirmar ser&#227;o consumidas todas as estrelas.", 
-				function () { fShowTips(1); },
-				function () { Hints.startHints(); },
-				{"height": "160px"}
-		);
+		
+		MyBlocklyApps.showDialog(document.getElementById("dialogPayWizard"), null, false, true, true, 
+				"Mostrar Explicação Detalhada", {width:"430px"}, null, function(){Hints.startHints();});
+		
+		if (Game.globalMoney > 0)
+			$("#wizardPayByCoins").removeAttr("disabled"); 
+
 	} else
-		fShowTips(0);
+		Game.showTips(0);
+};
+
+Game.showTips = function(recordChanges) {
+	
+	Game.closeBoxes();
+	
+	if (recordChanges > 0) {
+		
+		if (recordChanges == 1)
+			CountXP.setConsumedMaxStars();
+		else {
+			Game.updatesReward([Game.globalXP, Game.globalMoney - 1]);
+		}
+
+		UserControl.askWizardFree(Game.howManyRuns, Game.getTimeSpend(), recordChanges == 1);
+		Game.saveMission();
+		
+	}
+	
+	var rows = [];
+	
+	var manyCols = 0;
+	
+	var lines = Game.wizardFreeContent[0].getElementsByTagName("line");
+	for (var i = 0; i < lines.length; i++) {
+		var indent = lines[i].getAttribute("indent");
+		if (indent != null && manyCols < parseInt(indent)) {
+			manyCols = parseInt(indent);
+		}
+		rows.push({text: lines[i].textContent.toString(), indent: (indent==null?0:parseInt(indent))});
+	}
+		
+	
+	InGrid.createNewTipTable(manyCols, rows);
+	
+	Game.tipBox.style.display = "inline";
+	Game.doResizeWindow();
+	
+	MyBlocklyApps.hideDialog(false);
+	Hints.startHints();
+	
+};
+
+
+Game.payWizardByCoins = function() {
+	Game.showTips(2);
+};
+
+Game.payWizardByStars = function() {
+	Game.showTips(1);
 };
 
 Game.wizardPayButtonClick = function() {

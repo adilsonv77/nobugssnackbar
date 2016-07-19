@@ -84,45 +84,45 @@ A pergunta para essa quest&#227;o, muito simples, &#233; <b>Quantas vezes o cozi
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">
 		<block type="move_goToBarCounter"
-			deletable="false" x="263" y="54">
+			deletable="false" movable="false" x="263" y="54">
 			<value name="VALUE">
-				<block type="math_number" deletable="false">
+				<block type="math_number" deletable="false" movable="false">
 					<field name="NUM">3</field>
 				</block>
 			</value>
 			<next>
 				<block type="move_goToCooler" 
-					deletable="false">
+					deletable="false" movable="false">
 					<next>
 						<block type="move_goToDisplay" 
-							deletable="false">
+							deletable="false" movable="false">
 							<next>
 								<block type="move_goToBarCounter" 
-									deletable="false">
+									deletable="false" movable="false">
 									<value name="VALUE">
 										<block type="math_number" 
-											deletable="false">
+											deletable="false" movable="false">
 											<field name="NUM">1</field>
 										</block>
 									</value>
 									<next>
 										<block type="move_goToDisplay"
-											deletable="false">
+											deletable="false" movable="false">
 											<next>
 												<block type="move_goToCooler" 
-													deletable="false">
+													deletable="false" movable="false">
 													<next>
 														<block type="move_goToBarCounter"
-															deletable="false">
+															deletable="false" movable="false">
 															<value name="VALUE">
 																<block type="math_number"
-																	deletable="false">
+																	deletable="false" movable="false">
 																	<field name="NUM">3</field>
 																</block>
 															</value>
 															<next>
 																<block type="move_goToCooler"
-																	deletable="false"></block>
+																	deletable="false" movable="false"></block>
 															</next>
 														</block>
 													</next>

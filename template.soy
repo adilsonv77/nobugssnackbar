@@ -801,6 +801,17 @@
  		<button id="forget_send" class="nobugs_button" onclick="Game.sendNewPassword()" disabled="disabled">{msg meaning="ForgetPassword.send" desc="--"}Send new password{/msg}</button>
   </div>
   
+  <div id="dialogPayWizard" class="dialogHiddenContent">
+		
+  		{msg meaning="Wizard.explane" desc="--"}TODO{/msg}
+  		
+ 		<div style="text-align: right">
+			<button class="nobugs_button" id="wizardPayByCoins" onclick="Game.payWizardByCoins()" disabled="disabled">{msg meaning="Wizard.byCoins" desc="--"}Coins{/msg}</button>
+			<button class="nobugs_button" onclick="Game.payWizardByStars()">{msg meaning="Wizard.byStars" desc="--"}No{/msg}</button>
+			<button class="nobugs_button" onclick="MyBlocklyApps.hideDialog(false); Hints.startHints();">{msg meaning="Profile.cancel" desc="--"}Cancel{/msg}</button>
+		</div>
+  </div>
+  
 {/template}
 
 /**

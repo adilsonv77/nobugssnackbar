@@ -565,8 +565,15 @@ public class UserControl {
 	}
 	
 	@RemoteMethod
-	public void askWizardFree(int attempts, int timeSpend) throws Exception {
-		gameDao.markWizardFreeConsumed(this.user.getId(), this.mission, attempts, timeSpend);
+	public void askWizardFree(int attempts, int timeSpend, boolean consumeStars) throws Exception {
+		gameDao.markWizardFreeConsumed(this.user.getId(), this.mission, attempts, timeSpend, consumeStars);
+		
+		if (!consumeStars) {
+			
+			this.user.setMoney(this.user.getMoney() - 1);
+			gameDao.saveUserRewards(this.user);
+			
+		}
 	}
 	
 	@RemoteMethod

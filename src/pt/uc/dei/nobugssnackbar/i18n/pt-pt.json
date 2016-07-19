@@ -107,7 +107,7 @@
 	"NoBugs.amountCharged" : "valorPedido",
 	"NoBugs.numberBankNotes" : "quantas",
 
-	"NoBugs.helpFreeTooltip" : "Mostra uma explica&#231;&#227;o detalhada da solu&#231;&#227;o. Se n&#227;o tens mais estrelas para pontuar, n&#227;o existe custo. Do contr&#225;rio, todas as estrelas ser&#227;o consumidas.",
+	"NoBugs.helpFreeTooltip" : "Mostra uma explica&#231;&#227;o detalhada da solu&#231;&#227;o. Se n&#227;o tens mais estrelas para pontuar, n&#227;o existe custo. Do contr&#225;rio, todas as estrelas ser&#227;o consumidas ou pagar uma moeda.",
 	"NoBugs.helpPayTooltip" : "Apaga todos os blocos atuais e substitui pela solu&#231;&#227;o. Ap&#243;s clicar nesse bot&#227;o, ser&#225; exibida uma janela com o custo e a solicitar sua confirma&#231;&#227;o.",
 	
 	"SnackMan.goToBarCounterTooltip": "Move o cozinheiro at&#233; o balc&#227;o. [Ctrl+Shift+1]",
@@ -260,7 +260,11 @@
 	"Explane.SellObjective":"Venda pelo menos $%0 (&#233; computado com base nas cobran&#231;as)",
 	"Explane.CallTimesObjective":"N&#227;o use o bloco %0 mais do que %1 vez(es).",
 	"Explane.Ordered" : "Precisa cumprir os objetivos exatamente nessa ordem.",
-	"Explane.Wizard" : "Quando esse bot&#227;o for vis&#237;vel, indica que o jogo pode lhe mostrar praticamente a solu&#231;&#227;o. Entretanto, isso consumir&#225; todas as estrelas dessa miss&#227;o.",
+	"Explane.Wizard" : "Quando esse bot&#227;o for vis&#237;vel, indica que o jogo pode lhe mostrar praticamente a solu&#231;&#227;o. Entretanto, tem um custo: ou consumir todas as estrelas dessa miss&#227;o ou pagar 1 moeda.",
+	
+	"Wizard.explane" : "Deseja realmente ver a dica para resolver a miss&#227;o ? \nn \nn E como deseja pagar: por uma moeda ou consumir todas as estrelas.",
+	"Wizard.byCoins" : "Moeda",
+	"Wizard.byStars" : "Estrelas",
 	
 	"Explane.UseBlock":"Use o bloco \"%0\" no programa.",
 	
