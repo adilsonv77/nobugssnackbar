@@ -128,7 +128,8 @@ function explainTab(event, clicked, targetPanel, settings) {
 
 function createsLeaderBoard() {
 	
-	UserControl.retrieveContest(continueCreating);
+	//UserControl.retrieveContest(continueCreating);
+	continueCreating([false]);
 }
 
 function continueCreating(ret) {
