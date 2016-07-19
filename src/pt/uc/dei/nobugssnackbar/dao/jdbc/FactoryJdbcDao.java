@@ -5,6 +5,7 @@ import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.EvaluationDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
+import pt.uc.dei.nobugssnackbar.dao.IlsDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.LevelDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
@@ -97,5 +98,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 			evaluationDao = new EvaluationJdbcDao();
 		
 		return evaluationDao;
+	}
+
+	private IlsDao ilsDao;
+
+	@Override
+	public IlsDao getIlsDao() {
+		if (ilsDao == null)
+			ilsDao = new IlsJdbcDao();
+		return ilsDao;
 	}
 }

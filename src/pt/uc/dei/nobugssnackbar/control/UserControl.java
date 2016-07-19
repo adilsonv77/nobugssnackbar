@@ -3,6 +3,7 @@ package pt.uc.dei.nobugssnackbar.control;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import org.directwebremoting.annotations.ScriptScope;
 import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
+import pt.uc.dei.nobugssnackbar.dao.IlsDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
@@ -50,6 +52,7 @@ public class UserControl {
 				.getServletContext().getAttribute("factoryDao");
 		this.gameDao = factoryDao.getGameDao();
 		this.achievDao = factoryDao.getAchievementDao();
+		
 		
 		this.appFolder = ctx.getServletContext().getRealPath("/");
 		this.mail = new SendMail(this.appFolder);
@@ -310,13 +313,25 @@ public class UserControl {
 	@RemoteMethod
 	public void saveQuestionnaire(String[][] answers)
 			throws NumberFormatException, Exception {
+		
+		boolean goDefineRandomAccess = false;
+		
 		for (int i = 0; i < answers.length; i++) {
-
-			gameDao.insertAnswer(Long.parseLong(answers[i][0]),
+			long questionnaireId = Long.parseLong(answers[i][0]);
+			gameDao.insertAnswer(questionnaireId,
 					Long.parseLong(answers[i][1]), this.user.getId(),
 					answers[i][2]);
+			
+			goDefineRandomAccess = goDefineRandomAccess || (questionnaireId == 13); 
 
 		}
+		
+		if (goDefineRandomAccess) {
+			this.user.setRandomAccess( classifyILS() );
+			factoryDao.getUserDao().updateRandomAccess(this.user);
+			
+		}
+			
 	}
 
 	@RemoteMethod
@@ -590,6 +605,24 @@ public class UserControl {
 	public List<Achievement> listAchievements() throws Exception  {
 		
 		return achievDao.listAchievements(this.user.getId(), this.user.getClassId());
+		
+	}
+	
+	/*
+	 *  After fullfill the ILS questionnaire, game classifies if the user belongs to 
+	 *  the group of users that can jump missions or not.
+	 */
+	private boolean classifyILS() throws SQLException {
+
+		IlsDao dao = this.factoryDao.getIlsDao();
+		ILSTest ils = new ILSTest(dao);
+		
+		int seqStyle = dao.classifyUserBySequentialStyle(this.user.getId());
+		int pk = dao.userPreviousKnowledge(this.user.getId());
+
+		boolean randomAccess = ils.classifyUser(this.user.getClassId(), seqStyle, pk);
+		
+		return randomAccess;
 		
 	}
 }

@@ -151,4 +151,25 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 		return SEED.substring(x, x+1);
 	}
 
+	@Override
+	public void updateRandomAccess(User user) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("update users set userrandomaccess = ? where userid = ?");
+			ps.setString(1, user.isRandomAccess()?"T":"F");
+			ps.setLong(2, user.getId());
+			ps.executeUpdate();
+		
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+	}
+
 }

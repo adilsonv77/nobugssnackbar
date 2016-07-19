@@ -16,4 +16,6 @@ public interface UserDao extends Dao<User> {
 
 	String createNewPassword(User user) throws Exception;
 
+	void updateRandomAccess(User user) throws Exception;
+
 }

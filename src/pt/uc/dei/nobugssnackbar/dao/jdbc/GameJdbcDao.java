@@ -66,7 +66,7 @@ public class GameJdbcDao implements GameDao {
 			u.setShowInstruction(rs.getString(10).equals("T"));
 			u.setMail(rs.getString(11));
 			u.setShowSound(rs.getString(12).equals("T"));
-			u.setRandomAccess(rs.getString(13).equals("T"));
+			u.setRandomAccess(rs.getString(13) != null && rs.getString(13).equals("T"));
 			
 
 			ps.close();
