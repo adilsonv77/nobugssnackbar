@@ -70,19 +70,22 @@ public class BeanStatusStudents implements Serializable {
 		return clazz;
 	}
 	
-	public void setClazz(Clazz clazz) {
+	public void setClazz(Clazz clazz) throws Exception {
+		if (this.clazz != null && clazz != null && this.clazz.getId() == clazz.getId())
+			return;
+		
+		System.out.println("setClazz " + clazz);
 		this.clazz = clazz;
 		this.students = null;
 		this.colStudents = null;
+		
+		this.loadStudents();
 	}
 	
-	public void loadAttempts(String[] user, int missionIdx) {
-		// 
-		//statusMissions.loadUserAttemptsEx(userid, missionid, username);
-	}
-	
-	public List<String[]> getStudents() throws Exception {
-		if (students == null && clazz != null) {
+	private void loadStudents() throws Exception {
+		if (clazz != null) {
+			System.out.println("loadStudents");
+			
 			students = reportsStudents.retrieveStudents(this.clazz.getId());
 			colStudents = new ArrayList<BeanStatusStudents.ColumnModel>();
 			
@@ -105,6 +108,9 @@ public class BeanStatusStudents implements Serializable {
 			students.remove(0);
 		}
 			
+	}
+
+	public List<String[]> getStudents() throws Exception {
 		return students;
 	}
 	

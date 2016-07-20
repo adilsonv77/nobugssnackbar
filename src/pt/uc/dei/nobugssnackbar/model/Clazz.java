@@ -27,6 +27,11 @@ public class Clazz implements Serializable {
 	@JdbcField(name="languageid")
 	private Integer language;
 
+	@Override
+	public String toString() {
+		return getId() + "-" + getName();
+	}
+	
 	public Long getId() {
 		return id;
 	}
