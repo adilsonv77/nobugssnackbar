@@ -126,7 +126,7 @@ EditorNoBug.init = function() {
     	if (root.localName === "xml") {
     		
         	var xml = Blockly.Xml.textToDom(answer);
-            Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+            Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
         	
     	} else {
   		  // por enquanto suporta somente um workspace
@@ -136,8 +136,8 @@ EditorNoBug.init = function() {
 			  //var id = parseInt(c.getAttribute("id"));
 			  
 			  var xml = Blockly.Xml.textToDom(c.innerHTML);
-			  Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
-			  Game.moveBlocks();
+			  Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
+			  //Game.moveBlocks();
 			  
 			  c = c.nextElementSibling;
 		    };
@@ -149,7 +149,7 @@ EditorNoBug.init = function() {
     	/*    ask the application which blocks need to read */
         UserControl.loadBlocksToEditor(function (answer) {
             var xml = Blockly.Xml.textToDom(answer);
-            Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml);
+            Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
             
         });
     	

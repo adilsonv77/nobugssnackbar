@@ -28,7 +28,7 @@ public class EvaluationJdbcDao implements EvaluationDao {
 			Map<Long, Integer> overallMissionIndex = new HashMap<>();
 
 			//String q = "select missionid, classlevelid from classesmissions where classid = ? order by missionorder";
-			String q = "select missionid, classlevelid, count(*) from classesmissions left outer join (select * from missionsaccomplished where achieved = 'T') ma using (missionid, classid) where classid = ? group by missionid, classlevelid order by missionorder";
+			String q = "select missionid, classlevelid, count(*) from classesmissions left outer join (select * from missionsaccomplished where achieved = 'T') ma using (missionid, classid) where classid = ? group by missionid, classlevelid order by classlevelid, missionorder";
 			PreparedStatement ps = bdCon.prepareStatement(q);
 			ps.setLong(1, clazzId);
 			ResultSet rs = ps.executeQuery();

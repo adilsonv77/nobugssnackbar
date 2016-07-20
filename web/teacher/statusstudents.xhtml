@@ -8,7 +8,9 @@
 
 	<ui:define name="body">
 	
-		  <script>
+  		<script src="#{facesContext.externalContext.requestContextPath}/dwr/engine.js" type="text/javascript"></script>
+
+  	    <script>
 		  function resizeDataTableHeight() {
 		      
 			  var scrollWidth = jQuery(window).width();
@@ -24,7 +26,7 @@
 			  window.addEventListener('resize', resizeDataTableHeight);			  
 		  });
 		  
-		  </script>
+		</script>
 		  
 		<h:form id="frmStatus">
 			<p:panelGrid columns="2"  styleClass="ui-noborder" style="width: 100%" >
@@ -42,6 +44,7 @@
 						<td style="background-color:red;padding:5px">Outlier feito</td>
 						<td style="background-color:yellow;padding:5px">Outlier fazendo</td>
 						<td style="background-color:white;padding:5px">Fazendo</td>
+						<td>Deixe o mouse repousado sobre o código do aluno para ver o nome dele.</td>
 					</tr>
 				</table>
 			</p:panelGrid> 
@@ -55,16 +58,24 @@
 			    	<c:set var="fazendo" value = "#{u[colIndex].split(';')[0] == 'X' || u[colIndex].split(';')[0] == 'F'}"/>
 			    	
 			    	<f:facet name="header" >
-			    		<h:outputText value="#{colIndex}" rendered="#{colIndex > 0}" />
+			    		<h:outputText style="font-size:10px" value="#{col.level}-#{col.index}" rendered="#{colIndex > 0}" />
 					</f:facet>
 					
-			    	<h:outputText id="celula" value="#{u[colIndex].split(';')[1]}" rendered="#{colIndex == 0 || fazendo == false}" />
+			    	<h:outputText id="celula" value="#{u[0].split(';')[1]}" rendered="#{colIndex == 0}" />
 			    	
-			    	<p:commandLink rendered="#{colIndex > 0 and fazendo == true}" actionListener="#{statusStudents.loadAttempts(u, colIndex)">
+			    	<p:commandLink rendered="#{colIndex > 0}" 
+			    				actionListener="#{missionAttempts.loadUserAttempts()}"
+			    				oncomplete="PF('userStatus').show()"
+			    				update="frmStatus:dlgUserStatus">
 			    		<h:outputText value="#{u[colIndex].split(';')[1]}"/>
+			    		
+			    		<f:param name="userId" value="#{u[0].split(';')[1]}" />
+						<f:param name="userName" value="#{u[0].split(';')[0]}" />
+			    		<f:param name="missionId" value="#{col.mission}" />
+			    		
 			    	</p:commandLink>
 			    	
-			    	<p:tooltip for="celula" value="#{u[colIndex].split(';')[0]}" rendered="#{colIndex == 0}" style="font-size: 30px"/>
+			    	<p:tooltip for="celula" value="#{u[0].split(';')[0]}" rendered="#{colIndex == 0}" style="font-size: 30px"/>
 			    	
 			    </p:columns>
 		    </p:dataTable>

@@ -142,7 +142,7 @@ J&#225; existem uns blocos na &#225;rea de trabalho que com certeza vais usar. M
 
 		<objective pos="3" place="counter">askForFood</objective>
 		<objective pos="3" place="counter">pickUpFood</objective>
-		<objective pos="1" place="counter">askWantHowManyDrinks</objective>
+		<objective pos="3" place="counter">askWantHowManyDrinks</objective>
 		<objective pos="3" place="counter" value="'food#hotdog'" fullText="true" text="Entregue o pedido do cliente do balc&#227;o 3">customDeliver</objective>
 
 		<objective text="a quantidade de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>

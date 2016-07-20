@@ -28,10 +28,6 @@ public class BeanStatusMissions implements Serializable {
 
 	private List<Map<String, String>> usersFromMission;
 	
-	private String selectedUser;
-	
-	private List<Map<String, Object>> userAttempts;
-
 	private int missionId;
 	
 	public void loadUsersFromMission() throws Exception {
@@ -62,28 +58,12 @@ public class BeanStatusMissions implements Serializable {
 			}
 		}
 	}
-	
-	public void loadUserAttempts() throws Exception {
-		
-		// we use this approach because we are saving less state as possible in the client page
-  	    Map<String,String> params = 
-	                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		String userId = params.get("userId");
-		this.selectedUser = params.get("userName");
-		
-		this.userAttempts = reportsMissions.loadAttemptsFromUser(Long.parseLong(userId), missionId);
-		
- 	}
-	
+	/*
 	public void loadUserAttemptsEx(long userId, int missionId, String userName) throws Exception {
 		this.selectedUser = userName;
 		this.userAttempts = reportsMissions.loadAttemptsFromUser(userId, missionId);
 	}
-	
-	public void loadAnswer(int row) {
-
-	}
-	
+	*/
 	public List<Clazz> getClazzes() throws Exception {
 		if (clazzes == null)
 			clazzes = reportsMissions.listClazzes(AuthenticationUtil.getUserFromSession());
@@ -111,11 +91,7 @@ public class BeanStatusMissions implements Serializable {
 		return usersFromMission;
 	}
 	
-	public String getSelectedUser() {
-		return selectedUser;
-	}
-	
-	public List<Map<String, Object>> getUserAttempts() {
-		return userAttempts;
+	public int getMissionId() {
+		return missionId;
 	}
 }

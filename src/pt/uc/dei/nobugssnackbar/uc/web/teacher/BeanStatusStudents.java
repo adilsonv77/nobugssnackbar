@@ -86,13 +86,20 @@ public class BeanStatusStudents implements Serializable {
 			students = reportsStudents.retrieveStudents(this.clazz.getId());
 			colStudents = new ArrayList<BeanStatusStudents.ColumnModel>();
 			
+			int index = 0;
+			String previousLevel = "";
 			String[] cols = students.get(0);
 			for (String col:cols) {
 				if (col != null) {
 					String[] data = col.split(";");
-					colStudents.add(new ColumnModel(Long.parseLong(data[1]), Long.parseLong(data[0])));
+					if (!previousLevel.equals(data[1])) {
+						index = 1;
+						previousLevel = data[1];
+					}
+					colStudents.add(new ColumnModel(index, Long.parseLong(data[1]), Long.parseLong(data[0])));
 				} else
-					colStudents.add(new ColumnModel(0, 0));
+					colStudents.add(new ColumnModel(index, 0, 0));
+				index++;
 			}
 			
 			students.remove(0);
@@ -106,14 +113,22 @@ public class BeanStatusStudents implements Serializable {
 		return this.colStudents;
 	}
 	
-	public static class ColumnModel {
+	public static class ColumnModel implements Serializable {
 		
+		private static final long serialVersionUID = 1L;
+		
+		private int index;
 		private long mission;
 		private long level;
 
-		public ColumnModel(long level, long mission) {
+		public ColumnModel(int index, long level, long mission) {
+			this.index = index;
 			this.level = level;
 			this.mission = mission;
+		}
+		
+		public int getIndex() {
+			return index;
 		}
 		
 		public long getLevel() {

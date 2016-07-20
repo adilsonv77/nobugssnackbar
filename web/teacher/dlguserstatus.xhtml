@@ -5,9 +5,9 @@
                >
                 
 			<p:dialog id="dlgUserStatus" widgetVar="userStatus" modal="true" fitViewport="true" width="90%"
-						header="#{statusMissions.selectedUser}">
+						header="#{missionAttempts.selectedUser}">
 
-				<p:dataTable value="#{statusMissions.userAttempts}" var="ua" rowIndexVar="row" rows="10" paginator="true">
+				<p:dataTable value="#{missionAttempts.userAttempts}" var="ua" rowIndexVar="row" rows="10" paginator="true">
 					<p:column width="50">
 						<h:outputText value="#{row}"/>
 					</p:column>
@@ -28,9 +28,9 @@
 					<p:column>
 			        	<p:commandButton icon="ui-icon-search" title="#{msg.view}"
 			        				rendered="#{ua.answer != null}"
-									actionListener="#{statusMissions.loadAnswer(row)}"
+									actionListener="#{missionAttempts.loadAnswer(row)}"
 									oncomplete="showAnswer('#{ua.answer}');"
-									update="frmStatusMissions:dlgUserAnswer"
+									update="frmStatus:dlgUserAnswer"
 									process="@this"
 									>
 	                   </p:commandButton>
@@ -41,7 +41,6 @@
 			
 			</p:dialog>
 			
-			<!-- foi corrigido recentemente o maximize dos dialogs mas nao atualizado no primefaces --> 
 			<p:dialog id="dlgUserAnswer" widgetVar="userAnswer" modal="true" 
 					width="800" height="500"
 					maximizable="true" 
@@ -73,7 +72,6 @@
 				
 			}
 			
-			StatusMissions.initFormStatusMissions();
 			</script>
 
 </ui:composition>

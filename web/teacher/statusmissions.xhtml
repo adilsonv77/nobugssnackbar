@@ -11,7 +11,7 @@
   	    <h:outputScript name="missionsstatus.js"/>
   	    
   	    
-		<h:form id="frmStatusMissions">
+		<h:form id="frmStatus">
 			<p:panelGrid columns="2"  styleClass="ui-noborder" >
 				<p:selectOneMenu value="#{statusMissions.clazz}" widgetVar="clazzTeacher">
 	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
@@ -43,18 +43,23 @@
 		        
 		        <p:column>
 		        	<p:commandButton icon="ui-icon-search" title="#{msg.view}" rendered="#{user.executions != null}" 
-								actionListener="#{statusMissions.loadUserAttempts()}"
+								actionListener="#{missionAttempts.loadUserAttempts()}"
 								oncomplete="PF('userStatus').show()"
-								update="frmStatusMissions:dlgUserStatus"
+								update="frmStatus:dlgUserStatus"
 								process="@this">
+								
 						<f:param name="userId" value="#{user.id}" />
 						<f:param name="userName" value="#{user.name}" />
+						<f:param name="missionId" value="#{statusMissions.missionId}" />
                    </p:commandButton>
 		        </p:column>
 			</p:dataTable>
 
 			<ui:include src="dlguserstatus.xhtml"/>
 
+			<script>
+			StatusMissions.initFormStatusMissions();
+			</script>
 		</h:form>
 		
 	</ui:define>
