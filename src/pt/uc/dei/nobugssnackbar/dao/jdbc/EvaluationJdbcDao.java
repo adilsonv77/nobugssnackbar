@@ -18,7 +18,13 @@ public class EvaluationJdbcDao implements EvaluationDao {
 	}
 	
 	@Override
-	public List<String[]> loadMissionsFromUsers(Long clazzId) throws Exception {
+	public List<String[]> loadMissionsFromUsers(Long clazzId, String finishDate, int modifier) throws Exception {
+		
+		/*
+		 * Modifier : 0 - by executions
+		 * 			  1 - by time spent
+		 *            2 - qt see explanation
+		 */
 		
 		Connection bdCon = null;
 		List<String[]> ret = new ArrayList<>();
@@ -26,9 +32,13 @@ public class EvaluationJdbcDao implements EvaluationDao {
 			bdCon = getConnection();
 
 			Map<Long, Integer> overallMissionIndex = new HashMap<>();
-
+			
+			String missionsaccomplish = "select * from missionsaccomplished where achieved = 'T'";
+			if (finishDate != null)
+				missionsaccomplish = missionsaccomplish + " and finishdate <= '" + finishDate + "'";
+			
 			//String q = "select missionid, classlevelid from classesmissions where classid = ? order by missionorder";
-			String q = "select missionid, classlevelid, count(*) from classesmissions left outer join (select * from missionsaccomplished where achieved = 'T') ma using (missionid, classid) where classid = ? group by missionid, classlevelid order by classlevelid, missionorder";
+			String q = "select missionid, classlevelid, count(*) from classesmissions left outer join (" + missionsaccomplish + ") ma using (missionid, classid) where classid = ? group by missionid, classlevelid order by classlevelid, missionorder";
 			PreparedStatement ps = bdCon.prepareStatement(q);
 			ps.setLong(1, clazzId);
 			ResultSet rs = ps.executeQuery();
@@ -50,9 +60,26 @@ public class EvaluationJdbcDao implements EvaluationDao {
 			}
 			ret.add(rec);
 			
-			q = "select missionid, userid, username, achieved, executions from missionsaccomplished join users using (userid) where classid = ? order by username";
+			missionsaccomplish = "select * from missionsaccomplished  where classid = ?" ;
+			if (finishDate != null)
+				missionsaccomplish = missionsaccomplish + "  and finishdate <= '" + finishDate + "'";
+			
+			String dataColumn = "";
+			String extraSQL = "";
+			switch (modifier) {
+				case 0: dataColumn = "executions"; break;
+				
+				case 1: dataColumn = "timespend"; break;
+				
+				case 2: dataColumn = "count(*)"; 
+				        extraSQL = "left outer join (select * from logclicks where clickid = 'goalButtonImg') lc using (missionid, userid) group by userid, missionid, achieved";
+						break;
+			}
+			
+			q = "select ma.missionid, userid, username, achieved, " + dataColumn + " from (select * from classesusers join users using (userid) where classid=?) cu left outer join (" + missionsaccomplish + ") ma using (userid) " + extraSQL + " order by username";
 			ps = bdCon.prepareStatement(q);
 			ps.setLong(1, clazzId);
+			ps.setLong(2, clazzId);
 			rs = ps.executeQuery();
 			
 			long lastUserId = 0;
@@ -68,8 +95,14 @@ public class EvaluationJdbcDao implements EvaluationDao {
 					
 				}
 				
-				i = overallMissionIndex.get(rs.getLong(1));
-				rec[i] = rs.getString(4) + ";" + rs.getString(5); 
+				long mId = rs.getLong(1);
+				
+				if (!rs.wasNull()) {
+					
+					i = overallMissionIndex.get(mId);
+					rec[i] = rs.getString(4) + ";" + rs.getString(5);
+
+				}
 				
 			}			
 			

@@ -29,30 +29,54 @@
 		</script>
 		  
 		<h:form id="frmStatus">
-			<p:panelGrid columns="2"  styleClass="ui-noborder" style="width: 100%" >
-				<p:selectOneMenu value="#{statusStudents.clazz}" widgetVar="clazzTeacher">
-	 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
-	 				<f:selectItems value="#{statusStudents.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
-					<p:ajax event="change" update="usersFromClazz" oncomplete="resizeDataTableHeight()"/>
-					<f:attribute name="dataProvider" value="statusStudents.clazzes"/>
-				</p:selectOneMenu>
-				
-				
-				<table>
-					<tr>
-						<td style="background-color:green;padding:5px">Feito</td>
-						<td style="background-color:red;padding:5px">Outlier feito</td>
-						<td style="background-color:yellow;padding:5px">Outlier fazendo</td>
-						<td style="background-color:white;padding:5px">Fazendo</td>
-						<td>Deixe o mouse repousado sobre o código do aluno para ver o nome dele.</td>
-					</tr>
-				</table>
+			<p:panelGrid styleClass="ui-noborder" style="width: 100%" >
+				<p:row>
+					<p:column>
+						<p:selectOneMenu value="#{statusStudents.clazz}" widgetVar="clazzTeacher">
+			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+			 				<f:selectItems value="#{statusStudents.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+							<p:ajax event="change" update="usersFromClazz" oncomplete="resizeDataTableHeight()"/>
+							<f:attribute name="dataProvider" value="statusStudents.clazzes"/>
+						</p:selectOneMenu>
+					</p:column>
+					
+					<p:column>
+						<span>Ordenação : </span>
+						<p:selectOneMenu value="#{statusStudents.order}">
+							<f:selectItem itemLabel="Nome" itemValue="1" />
+							<f:selectItem itemLabel="Tentativas (outlier)" itemValue="2" />
+							<f:selectItem itemLabel="Missões feitas" itemValue="3" />
+							<f:selectItem itemLabel="Tempo consumido (min)" itemValue="4" />
+							<f:selectItem itemLabel="Qtas vezes abriu a explicação" itemValue="5" />
+							<p:ajax event="change" update="usersFromClazz"/>
+						</p:selectOneMenu>
+					</p:column>
+					
+					<p:column>
+						<table>
+							<tr>
+								<td style="background-color:green;padding:5px">Feito</td>
+								<td style="background-color:red;padding:5px">Outlier feito</td>
+								<td style="background-color:yellow;padding:5px">Outlier fazendo</td>
+								<td style="background-color:white;padding:5px">Fazendo</td>
+							</tr>
+						</table>
+					</p:column>
+				</p:row>
+								
+				<p:row >
+
+					<p:column colspan="3">
+						<span class="my-lightbulb"></span>
+						<span>Deixe o mouse repousado sobre o código do aluno para ver o nome dele.</span>
+					</p:column>
+				</p:row>
 			</p:panelGrid> 
 	
 			<p:dataTable id="usersFromClazz" var="u" value="#{statusStudents.students}" scrollable="true">
 				
-			    <p:columns value="#{statusStudents.colStudents}" var="col" columnIndexVar="colIndex" width="20" 
-			    	style="background-color:#{u[colIndex].split(';')[0] == 'T'?'green': (u[colIndex].split(';')[0] == 'O'?'red':(u[colIndex].split(';')[0] == 'X'?'yellow':'')) };cursor:#{colIndex==0?'pointer':'default'}"
+			    <p:columns value="#{statusStudents.colStudents}" var="col" columnIndexVar="colIndex" width="30" 
+			    	style="text-align:center; background-color:#{u[colIndex].split(';')[0] == 'T'?'green': (u[colIndex].split(';')[0] == 'O'?'red':(u[colIndex].split(';')[0] == 'X'?'yellow':'')) };cursor:#{colIndex==0?'pointer':'default'}"
 			    	> 
 			    	
 			    	<c:set var="fazendo" value = "#{u[colIndex].split(';')[0] == 'X' || u[colIndex].split(';')[0] == 'F'}"/>
@@ -66,8 +90,11 @@
 			    	<p:commandLink rendered="#{colIndex > 0}" 
 			    				actionListener="#{missionAttempts.loadUserAttempts()}"
 			    				oncomplete="PF('userStatus').show()"
-			    				update="frmStatus:dlgUserStatus">
-			    		<h:outputText value="#{u[colIndex].split(';')[1]}"/>
+			    				update="frmStatus:dlgUserStatus"
+			    				>
+			    		
+			    		<h:outputText value="#{u[colIndex].split(';')[1]}" rendered="#{statusStudents.order != '4'}"/>
+			    		<h:outputText value="#{u[colIndex].split(';')[1]/60}" rendered="#{u[colIndex].split(';')[1] > 0 and statusStudents.order == '4'}"/>
 			    		
 			    		<f:param name="userId" value="#{u[0].split(';')[1]}" />
 						<f:param name="userName" value="#{u[0].split(';')[0]}" />

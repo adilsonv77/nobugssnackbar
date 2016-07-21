@@ -54,6 +54,8 @@ public class BeanStatusStudents implements Serializable {
 	
 	private Clazz clazz;
 	
+	private String order = "1";
+	
 	private List<Clazz> clazzes;
 
 	private List<String[]> students;
@@ -74,7 +76,6 @@ public class BeanStatusStudents implements Serializable {
 		if (this.clazz != null && clazz != null && this.clazz.getId() == clazz.getId())
 			return;
 		
-		System.out.println("setClazz " + clazz);
 		this.clazz = clazz;
 		this.students = null;
 		this.colStudents = null;
@@ -84,9 +85,16 @@ public class BeanStatusStudents implements Serializable {
 	
 	private void loadStudents() throws Exception {
 		if (clazz != null) {
-			System.out.println("loadStudents");
 			
-			students = reportsStudents.retrieveStudents(this.clazz.getId());
+			int o = Integer.parseInt(order);
+			switch (o) {
+				case 1: students = reportsStudents.listStudentsByName(this.clazz.getId(), null, 0); break;
+				case 2: students = reportsStudents.listStudentsByOutliersInAttempts(this.clazz.getId(), null); break;
+				case 3: students = reportsStudents.listStudentsByMissionsAchieved(this.clazz.getId(), null); break;
+				case 4: students = reportsStudents.listStudentsByTimeSpent(this.clazz.getId(), null); break;
+				case 5: students = reportsStudents.listStudentsByExplanationEntry(this.clazz.getId(), null); break;
+			}
+			
 			colStudents = new ArrayList<BeanStatusStudents.ColumnModel>();
 			
 			int index = 0;
@@ -117,6 +125,18 @@ public class BeanStatusStudents implements Serializable {
 	public List<ColumnModel> getColStudents() {
 					
 		return this.colStudents;
+	}
+	
+	public String getOrder() {
+		return order;
+	}
+	
+	public void setOrder(String order) throws Exception {
+		if (order.equals(this.order))
+			return;
+		
+		this.order = order;
+		this.loadStudents();
 	}
 	
 	public static class ColumnModel implements Serializable {

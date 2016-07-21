@@ -22,14 +22,26 @@
             .ui-grow {
                 left: 43%;
             }
+            .my-lightbulb {
+				display: inline-block;
+				width: 36px;
+				height: 36px;
+				background: transparent url('../images/light-bulb-icon.png') no-repeat local center;
+				background-size: 36px 36px;
+			}
         </style>
 
         <h:body id="body">
-                    <p:growl id="messages" 
-                             showDetail="true"
-                             showSummary="false"
-                             sticky="false"
-                             life="3500"/>
+        	<p:growl id="messages" 
+                     showDetail="true"
+                     showSummary="false"
+                     sticky="false"
+                     life="3500"/>
+
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />	
+			<p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false">
+			    <p:graphicImage value="../images/ajaxLoadingBar.gif" />
+			</p:dialog>
 
             <div id="static">
                 <ui:include  src="header.xhtml"/>

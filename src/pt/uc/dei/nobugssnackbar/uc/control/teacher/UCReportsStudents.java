@@ -3,6 +3,8 @@ package pt.uc.dei.nobugssnackbar.uc.control.teacher;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
@@ -31,8 +33,13 @@ public class UCReportsStudents implements Serializable {
 		this.evaluationDao = evaluationDao;
 	}
 
-	public List<String[]> retrieveStudents(Long clazzId) throws Exception {
-		List<String[]> ret = evaluationDao.loadMissionsFromUsers(clazzId);
+	/*
+	 * Modifier : 0 - by executions
+	 * 			  1 - by time spent
+	 *            2 - qt see explanation
+	 */
+	public List<String[]> listStudentsByName(Long clazzId, String finishDate, int modifier) throws Exception {
+		List<String[]> ret = evaluationDao.loadMissionsFromUsers(clazzId, finishDate, modifier);
 		
 		// calculate who is an outlier
 		String[] missions = ret.get(0);
@@ -72,6 +79,126 @@ public class UCReportsStudents implements Serializable {
 		}
 		
 		return ret;
+	}
+
+	public List<String[]> listStudentsByOutliersInAttempts(Long clazzId, String finishDate) throws Exception {
+		
+		List<String[]> s = listStudentsByName(clazzId, finishDate, 0);
+		Collections.sort(s, new Comparator<String[]>() {
+
+			private float countOutliers(String[] s) {
+				float ret = 0;
+				float howMany = 0;
+				for (String z:s) {
+					if (z != null) {
+						howMany++;
+						String t = z.split(";")[0];
+						if (t.equals("O") || t.equals("X"))
+							ret++;
+					}
+						
+				}
+				if (ret == 0)
+					return 0;
+				
+				return ret/howMany;
+			}
+			
+			@Override
+			public int compare(String[] arg0, String[] arg1) {
+
+				// the first row is unsortable
+				if (arg0[0] == null)
+					return -500;
+				else
+					if (arg1[0] == null)
+						return 500;
+				
+				float c1 = countOutliers(arg0);
+				float c2 = countOutliers(arg1);
+				return (c1 > c2?-1:(c2 > c1?1:0)); // inverse because I want first the biggest 
+				
+			}});
+		
+		return s;
+	}
+
+	public List<String[]> listStudentsByMissionsAchieved(Long clazzId, String finishDate) throws Exception {
+		List<String[]> s = listStudentsByName(clazzId, finishDate, 0);
+		
+		Collections.sort(s, new Comparator<String[]>() {
+
+			@Override
+			public int compare(String[] arg0, String[] arg1) {
+				// the first row is unsortable
+				if (arg0[0] == null)
+					return -500;
+				else
+					if (arg1[0] == null)
+						return 500;
+				
+				int c1 = countMissions(arg0);
+				int c2 = countMissions(arg1);
+				
+				return (c1 - c2); // I want first with less missions finished
+			}
+
+			private int countMissions(String[] s) {
+				int howMany = 0;
+				for (String z:s) {
+					if (z != null) {
+						String t = z.split(";")[0];
+						if (!(t.equals("F") || t.equals("X")))
+							howMany++;
+					}
+						
+				}
+				return howMany;
+			}
+			
+		});
+		
+		return s;
+	}
+
+	public List<String[]> listStudentsByTimeSpent(Long clazzId, String finishDate) throws Exception {
+		
+		List<String[]> s = listStudentsByName(clazzId, finishDate, 1);
+		Collections.sort(s, new Comparator<String[]>() {
+
+			@Override
+			public int compare(String[] o1, String[] o2) {
+				
+				// the first row is unsortable
+				if (o1[0] == null)
+					return -500;
+				else
+					if (o2[0] == null)
+						return 500;
+				int c1 = sumTime(o1);
+				int c2 = sumTime(o2);
+				return (c2 - c1); // inverse because I want first with most time spent
+			}
+
+			private int sumTime(String[] s) {
+				int totTime = 0;
+				for (String z:s) {
+					if (z != null) {
+						String t = z.split(";")[1];
+						totTime += Integer.parseInt(t);
+					}
+						
+				}
+				return totTime;
+			}
+			
+		});
+		return s;
+	}
+
+	public List<String[]> listStudentsByExplanationEntry(Long clazzId, String finishDate) throws Exception {
+		List<String[]> s = listStudentsByName(clazzId, finishDate, 2);
+		return s;
 	}
 
 }
