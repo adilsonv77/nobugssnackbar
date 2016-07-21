@@ -88,11 +88,12 @@ public class BeanStatusStudents implements Serializable {
 			
 			int o = Integer.parseInt(order);
 			switch (o) {
-				case 1: students = reportsStudents.listStudentsByName(this.clazz.getId(), null, 0); break;
+				case 1: students = reportsStudents.listStudents(this.clazz.getId(), null, 0); break;
 				case 2: students = reportsStudents.listStudentsByOutliersInAttempts(this.clazz.getId(), null); break;
 				case 3: students = reportsStudents.listStudentsByMissionsAchieved(this.clazz.getId(), null); break;
 				case 4: students = reportsStudents.listStudentsByTimeSpent(this.clazz.getId(), null); break;
 				case 5: students = reportsStudents.listStudentsByExplanationEntry(this.clazz.getId(), null); break;
+				case 6: students = reportsStudents.listStudentsByExplanationTime(this.clazz.getId(), null); break;
 			}
 			
 			colStudents = new ArrayList<BeanStatusStudents.ColumnModel>();

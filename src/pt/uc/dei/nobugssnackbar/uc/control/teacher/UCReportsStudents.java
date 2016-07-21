@@ -34,11 +34,11 @@ public class UCReportsStudents implements Serializable {
 	}
 
 	/*
-	 * Modifier : 0 - by executions
+	 * Modifier : 0 - by executions - returns ordered by name
 	 * 			  1 - by time spent
 	 *            2 - qt see explanation
 	 */
-	public List<String[]> listStudentsByName(Long clazzId, String finishDate, int modifier) throws Exception {
+	public List<String[]> listStudents(Long clazzId, String finishDate, int modifier) throws Exception {
 		List<String[]> ret = evaluationDao.loadMissionsFromUsers(clazzId, finishDate, modifier);
 		
 		// calculate who is an outlier
@@ -83,7 +83,7 @@ public class UCReportsStudents implements Serializable {
 
 	public List<String[]> listStudentsByOutliersInAttempts(Long clazzId, String finishDate) throws Exception {
 		
-		List<String[]> s = listStudentsByName(clazzId, finishDate, 0);
+		List<String[]> s = listStudents(clazzId, finishDate, 0);
 		Collections.sort(s, new Comparator<String[]>() {
 
 			private float countOutliers(String[] s) {
@@ -124,7 +124,7 @@ public class UCReportsStudents implements Serializable {
 	}
 
 	public List<String[]> listStudentsByMissionsAchieved(Long clazzId, String finishDate) throws Exception {
-		List<String[]> s = listStudentsByName(clazzId, finishDate, 0);
+		List<String[]> s = listStudents(clazzId, finishDate, 0);
 		
 		Collections.sort(s, new Comparator<String[]>() {
 
@@ -163,7 +163,7 @@ public class UCReportsStudents implements Serializable {
 
 	public List<String[]> listStudentsByTimeSpent(Long clazzId, String finishDate) throws Exception {
 		
-		List<String[]> s = listStudentsByName(clazzId, finishDate, 1);
+		List<String[]> s = listStudents(clazzId, finishDate, 1);
 		Collections.sort(s, new Comparator<String[]>() {
 
 			@Override
@@ -197,8 +197,12 @@ public class UCReportsStudents implements Serializable {
 	}
 
 	public List<String[]> listStudentsByExplanationEntry(Long clazzId, String finishDate) throws Exception {
-		List<String[]> s = listStudentsByName(clazzId, finishDate, 2);
+		List<String[]> s = listStudents(clazzId, finishDate, 2);
 		return s;
 	}
 
+	public List<String[]> listStudentsByExplanationTime(Long clazzId, String finishDate) throws Exception {
+		List<String[]> s = listStudents(clazzId, finishDate, 3);
+		return s;
+	}
 }
