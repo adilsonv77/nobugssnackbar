@@ -252,7 +252,7 @@
 	"Explane.VarQtd":"A quantidade m&#225;xima de vari&#225;vel(is) aceita(s) &#233;(s&#227;o) %0.",
 	"Explane.CommsQtd":"A quantidade m&#225;xima de comandos aceitos no programa principal s&#227;o %0.",
 	"Explane.Talk": "Falar %0.",
-	"Explane.CountTalk": "Falar EXATAMENTE %0 vez(es).",
+	"Explane.CountTalk": "Falar EXATAMENTE %0 vez(es) no programa inteiro.",
 	"Explane.AskWantHowManyFoods":"Pergunta ao cliente %0 quantos lanches ele deseja comer.",
 	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
 	"Explane.CashIn":"Cobrar o valor do cliente %0.",

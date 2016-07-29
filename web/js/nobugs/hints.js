@@ -221,6 +221,8 @@ Hints.traverseHints = function(hint, error) {
 	  else
 		  h.modal = h.modal === "true";
 	  
+	  h.text = hint.getAttribute("text");
+	  
 	  hint = hint.nextElementSibling;
 
 	  if (h.category === "BlockDeleted" && Hints.hintBlockDeleted == null) {
@@ -862,6 +864,9 @@ Hints.Categories["SelectCommand"] = {
 		function (param) {
 	
 			var dialog = document.getElementById("SelectCommand");
+			if (Hints.hintSelected.content != null) {
+				document.getElementById("SelectCommandText").innerHTML = Hints.hintSelected.content;
+			}
 			var res = createStylePosition(parseInt(param[0]), parseInt(param[1]), dialog);
 			
 			if (res.length > 0) {

@@ -103,7 +103,7 @@ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
 			</orders>			
 		</customer>
 	</customers>
-	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="6" commQtd="8"  buttonRunQtdAttempts="10" >
+	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="6" commQtd="8"  buttonRunQtdAttempts="3" >
 		
 		<objective pos="2" place="counter" type='$$$money2' 
 			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">giveSomeChange</objective>

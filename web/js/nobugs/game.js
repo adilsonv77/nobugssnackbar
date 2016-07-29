@@ -1473,8 +1473,20 @@ Game.finishMultipleChoiceRunning = function() {
 
 Game.loadMultipleChoice = function(finalFunction) {
 
+	Game.saveFinalFunction = finalFunction;
 	Game.talking = "";
-	Game.finalFunction = finalFunction;
+	Game.finalFunction = function() {
+		if ($("input[name=MCoption]")[0].value.trim().length == 0) {
+			// some rare times this happens. I dont know why !!!!
+			document.location.reload();
+			return;
+		
+		}
+		
+		if (Game.saveFinalFunction != null)
+			Game.saveFinalFunction();
+	} 
+		
 	
 	Game.execute(3);
 };
