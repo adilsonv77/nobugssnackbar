@@ -243,6 +243,9 @@ Game.init = function() {
 window.addEventListener('load', Game.generalInit);
 
 Game.saveClicks = function() {
+	if (arguments.length == 0) // each minute, save the answer. Without this, the user can loose his answer if the server finishes the user's session
+		Game.saveMission();
+
 	window.clearTimeout(Game.hdlSaveClicks);
 	
 	LogClick.save(false);
@@ -937,8 +940,6 @@ Game.unload = function(e) {
 
 	Game.saveClicks(); // after performs the method, it is allowed to continue
 
-	Game.saveMission();
-	
     return null;
 };
 
@@ -962,8 +963,8 @@ Game.getTimeSpend = function() {
 
 Game.saveMission = function() {
 	
-	if (Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
-		return;
+	if (Game.mission == null || Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
+		return;                                           // ... or when the user it is not into the editor 
 	
 	var answer = (Game.missionType === "multipleChoice"?Game.answerMultipleChoice():Game.workspaceAnswer());
 	var timeSpent = Game.getTimeSpend();
@@ -1842,7 +1843,7 @@ Game.beforeFinishMission = function() {
     
 	//TODO animar o cooker no final da missao
     LogClick.store("dialogVictory-before");
-    Game.saveClicks();
+    Game.saveClicks(0);
     
     var answer = "";
     
@@ -2534,7 +2535,7 @@ Game.logoffButtonClick = function() {
 	
 	sessionStorage.removeItem("logged");
 	
-	Game.saveClicks(); 
+	Game.saveClicks(0); 
 	// after performs the method, it is allowed to continue. Instead using save(true) risks that the method runs after logoff
 	Game.mission = null;
 	// passing callback and async is necessary in FF, because, when unloads the page, it doesnt guarantee the ajax method is called 
