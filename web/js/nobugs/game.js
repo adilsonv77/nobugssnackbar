@@ -1473,6 +1473,10 @@ Game.finishMultipleChoiceRunning = function() {
 
 Game.loadMultipleChoice = function(finalFunction) {
 
+	// dont remove these two lines... they're here for security
+	Game.disabledMCOptions(false);
+    $("#ButtonTryAgainAChoice").attr("disabled", "disabled");
+
 	Game.saveFinalFunction = finalFunction;
 	Game.talking = "";
 	Game.finalFunction = function() {
