@@ -22,6 +22,21 @@
 		
 		<page type="goal">
 		<![CDATA[
+		A lista de operadores de compara&#231;&#227;o &#233; a seguinte: <br/><br/>
+		<table>
+			<tr><th>Operador</th><th>Significado</th></tr>
+			<tr><td align="center">==</td><td align="center">Igual</td></tr>
+			<tr><td align="center">!=</td><td align="center">Diferente</td></tr>
+			<tr><td align="center">&lt;</td><td align="center">Menor que</td></tr>
+			<tr><td align="center">&lt;=</td><td align="center">Menor ou igual a</td></tr>
+			<tr><td align="center">&gt;</td><td align="center">Maior que</td></tr>
+			<tr><td align="center">&gt;=</td><td align="center">Maior ou igual a</td></tr>
+		</table>
+		]]>
+		</page>
+		
+		<page type="goal">
+		<![CDATA[
   			<b>Que n&#250;mero o cozinheiro vai falar durante a execu&#231;&#227;o do programa?</b>
 			]]>
 		</page>
