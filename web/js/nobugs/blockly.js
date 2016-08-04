@@ -327,11 +327,13 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 					        // 'x' for cut.
 					    	
 					    	Blockly.copy_(Blockly.selected);
+					    	Blockly.Events.setGroup(true);
 					    	if (Game.blocksSelected.length == 0) {
 					    		if (Blockly.selected.isDeletable() && Blockly.selected.isMovable())
 					    			MyBlocklyApps.removeBlock(Blockly.selected);
 					    		
 					    	} else {
+						        
 						  		Game.blocksSelected.forEach(function(block) {
 									if (block.isDeletable() && block.isMovable())
 						    			MyBlocklyApps.removeBlock(block);
@@ -339,6 +341,9 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 						  		Game.blocksSelected = [];
 					    	}
 						    MyBlocklyApps.verifyObjectivesKeys(e);
+					        Blockly.Events.setGroup(false);
+					        
+					        Blockly.selected = null;
 					  }
 		    	  }
 		    	  
@@ -346,10 +351,12 @@ MyBlocklyApps.onKeyDown_ = function(e) {
 		    }
 		    if (e.keyCode == 86) {
 		      // 'v' for paste.
+		      Blockly.Events.setGroup(true);
 		      if (Blockly.clipboardXml_) {
 		        Blockly.clipboardSource_.paste(Blockly.clipboardXml_);
   			    MyBlocklyApps.verifyObjectivesKeys(e);
 		      }
+		      Blockly.Events.setGroup(false);
 		    } else
 		    	if (e.keyCode == 89) {
 		    		// 'y' redo 

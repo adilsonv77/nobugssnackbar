@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160719;
+Game.version = 20160803;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
@@ -243,8 +243,13 @@ Game.init = function() {
 window.addEventListener('load', Game.generalInit);
 
 Game.saveClicks = function() {
-	if (arguments.length == 0) // each minute, save the answer. Without this, the user can loose his answer if the server finishes the user's session
+   if (arguments.length == 0) // each minute, save the answer. Without this, the user can loose his answer if the server finishes the user's session
+   {
+
+	   // pensei em fazer uma comparacao com a ultima resposta. se forem iguais entao nao salva... mas ai perco o tempo gasto 
 		Game.saveMission();
+	   
+   }	
 
 	window.clearTimeout(Game.hdlSaveClicks);
 	
@@ -962,6 +967,8 @@ Game.getTimeSpend = function() {
 };
 
 Game.saveMission = function() {
+	
+	// pensei em fazer uma comparacao com a ultima resposta. se forem iguais entao nao salva... mas ai perco o tempo gasto 
 	
 	if (Game.mission == null || Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;                                           // ... or when the user it is not into the editor 
