@@ -19,7 +19,7 @@ public class InsertUsers {
 		
 		GameDao dao = new GameJdbcDao();
 		
-		BufferedReader arq = new BufferedReader(new FileReader(new File("D:\\doutoramento\\drive\\tese\\iteracoes\\secao19\\alunos.txt")));
+		BufferedReader arq = new BufferedReader(new FileReader(new File("D:\\doutoramento\\drive\\tese\\iteracoes\\secao21\\alunos.csv")));
 		
 		long [] clazz = new long[]{1};
 		

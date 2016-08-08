@@ -37,7 +37,7 @@ Game.loadingMission = false;
 var hero;
 Game.mission = null;
 
-Game.version = 20160803;
+Game.version = BlocklyApps.version;
 
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
