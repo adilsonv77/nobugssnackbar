@@ -18,7 +18,7 @@ LogClick.store = function(name, elem) {
 	var dateTime = Date.now();
 
 	LogClick.clicks.push([name, dateTime, (Game.mission != null?Game.mission.id:null)]);
-	if (LogClick.clicks.length > 10) {
+	if (LogClick.clicks.length > 30) {
 		LogClick.save(true);
 	}
 	
