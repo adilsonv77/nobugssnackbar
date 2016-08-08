@@ -30,7 +30,7 @@
 		<![CDATA[
 O cliente sempre tem fome: pode ser de cachorros ou sorvetes. &#192;s vezes ele quer 
   dois cachorros. Outras ele quer um cachorro e um sorvete, e ainda pode querer
-  uma coisa ou outra. Ainda tem a chance dele tamb&#233;m ter sede de um refrigerante.<br/><br/>
+  uma coisa ou outra. No m&#225;ximo o cliente pode querer 1 sorvete. Ainda tem a chance dele tamb&#233;m ter sede de um refrigerante.<br/><br/>
 Os nossos pre&#231;os est&#227;o loucos. Eles variam de acordo com o pedido dele:<br/>
 <ul>
   <li>se ele quer a quantidade igual de cachorros e sorvetes, o pre&#231;o do sorvete &#233; $1. Ainda, se o
@@ -41,8 +41,8 @@ Os nossos pre&#231;os est&#227;o loucos. Eles variam de acordo com o pedido dele
       &#233; $2 e do cachorro &#233; $5.</li> 
 </ul>
 
-Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, por&#233;m existem V&#193;RIOS erros. N&#227;o esque&#231;a 
-  que a primeira execu&#231;&#227;o n&#227;o conta	para ganhar estrelas.
+Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, e para resolver os erros, 
+ precisas reposicionar alguns blocos. N&#227;o esque&#231;a que a primeira execu&#231;&#227;o n&#227;o conta	para ganhar estrelas.
 ]]>
 		</page>
 

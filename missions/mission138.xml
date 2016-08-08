@@ -17,7 +17,7 @@ Observe que a vari&#225;vel <i>x</i> jamais recebeu um valor antes de ser envolv
 
 		<page type="goal">
 		<![CDATA[
-Tr&#234; clientes que tem ou n&#227;o fome. <br/><br/>
+Tr&#234;s clientes que tem ou n&#227;o fome. <br/><br/>
 Conte quantos clientes tem fome e no final fale essa quantidade.
 		]]>
 		</page>

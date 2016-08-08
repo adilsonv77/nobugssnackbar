@@ -17,6 +17,16 @@ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
 		</page>
 		<page type="goal">
 		<![CDATA[
+Para te auxiliar, vou explicar um pouco como chegar na gorjeta: <br/>
+<ul>
+<li>troco = dinheiro pago pelo cliente - valor do pedido</li>
+<li>troco em moedas 2 = troco / 2</li>
+<li>gorjeta = troco - (troco em moedas de 2)*2</li>
+</ul>
+ 		]]>
+		</page>
+		<page type="goal">
+		<![CDATA[
 		<span style="color:red">Tens somente seis tentativas para ganhar pontos. Estais limitado em oito blocos.</span><br/><br/>
 		Para te inspirares, trago-te a solu&#231;&#227;o da miss&#227;o anterior.
  		]]>

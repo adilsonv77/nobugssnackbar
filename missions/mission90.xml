@@ -14,7 +14,7 @@ Cada sabor da m&#225;quina de sorvetes corresponde a um bloco em [Constantes]. E
 Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de sorvetes. Agora temos morango, baunilha e chocolate.<br/><br/>
  A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu <span style="background-color:#c7c7c7">3 lanches OU 3 bebidas</span>, ele recebe um sorvete de morango. 
  Por&#233;m, se ele pediu <span style="background-color:#c7c7c7">pelo menos um lanche E pelo menos uma bebida</span> ent&#227;o ele recebe um sorvete de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
- recebe de baunilha.  <br/><br/>   
+ recebe de baunilha. O cliente nunca vai pedir um sorvete: somente lanches e refrigerantes. <br/><br/>   
 Faltam os condicionais na solu&#231;&#227;o.
 
 ]]>
