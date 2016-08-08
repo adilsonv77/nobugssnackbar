@@ -79,7 +79,8 @@ public class BeanStudentsLogged implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		HttpSession session = LoginAdmin.getUserSession((ServletContext) context.getExternalContext().getContext(), userId);
-		session.invalidate();
+		if (session != null)
+			session.invalidate();
 		
 		LoginAdmin.logoff((ServletContext) context.getExternalContext().getContext(), userId);
 		
