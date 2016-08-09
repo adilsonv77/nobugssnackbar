@@ -42,7 +42,7 @@ Game.version = BlocklyApps.version;
 Game.hideHints = true;
 Game.previousGoalsAccomplishedWindowPos = undefined;
 Game.showMoveRight = false;
-
+Game.noSaveMissionWhenLogClick = false;
 /**
  * PID of animation task currently executing.
  */
@@ -247,7 +247,7 @@ Game.saveClicks = function() {
    {
 
 	   // pensei em fazer uma comparacao com a ultima resposta. se forem iguais entao nao salva... mas ai perco o tempo gasto 
-		Game.saveMission();
+	   Game.saveMission();
 	   
    }	
 
@@ -257,6 +257,11 @@ Game.saveClicks = function() {
 	Game.display();
 	
 	Game.hdlSaveClicks = window.setTimeout(Game.saveClicks, 60000);
+};
+
+Game.stopToSaveClicksEachMinute = function() {
+	window.clearTimeout(Game.hdlSaveClicks);
+	LogClick.save(true);
 };
 
 Game.resizeMainWindow = function() {
@@ -807,6 +812,8 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 //		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
 		// if the quantity of solved mission is equal to the total number missions
 		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]-1){
+			Game.noSaveMissionWhenLogClick = false;
+
 			Game.goBackToDashboard(null, false);
 			Game.init();
 			
@@ -973,8 +980,8 @@ Game.saveMission = function() {
 	
 	// pensei em fazer uma comparacao com a ultima resposta. se forem iguais entao nao salva... mas ai perco o tempo gasto 
 	
-	if (Game.mission == null || Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
-		return;                                           // ... or when the user it is not into the editor 
+	if (Game.mission == null || Game.missionView || Game.noSaveMissionWhenLogClick) // it's when the user achieved this mission, but came back to test or see something. 
+		return;                                           // ... or when the user it is not into the editor or when is finishing an achieved mission, and that moment it is not more allowed save that mission
 	
 	var answer = Game.workspaceAnswer();
 	var timeSpent = Game.getTimeSpend();
@@ -1001,7 +1008,8 @@ Game.missionLoaded = function(ret){
   var gameVersion = mission.childNodes[0].getAttribute("gameVersion");
   
   if (gameVersion !== undefined && Game.version < parseInt(gameVersion)) {
-	  
+      Game.noSaveMissionWhenLogClick = false;
+
 	  alert(BlocklyApps.getMsg("Game_VersionObsolete"), Game.logoffButtonClick, {height: "180px"});
 	  
 	  
@@ -1497,7 +1505,7 @@ Game.loadMultipleChoice = function(finalFunction) {
 			return;
 		
 		}
-		
+		Game.saveClicks(); // restart the timer
 		if (Game.saveFinalFunction != null)
 			Game.saveFinalFunction();
 	} 
@@ -1721,6 +1729,7 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 	  var fx = function() {
 		  
 		  Game.loadingMission = false; /// mission loaded
+		  Game.noSaveMissionWhenLogClick = false;
 		  
 		  if (Game.firstTime) {
 			  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
@@ -1877,12 +1886,8 @@ Game.showDialogVictory = function(out) {
 	
 	MyBlocklyApps.showDialog(document.getElementById("dialogVictory"), null, true, true, true, null, {width: "600px"}, 
 			function(){
-		
 				Game.nextMission();
-/*
-				Game.goBackToDashboard(null, false);		
-				Game.init();
-				*/
+
 		});
 
 };
@@ -2389,7 +2394,7 @@ Game.goBackToDashboard = function(evt, callExitMission, callGameInit) {
     Game.mission = null;
     
 	if (callExitMission !== false) { // this peace of code runs when the user clicks the logoff button
-		
+		Game.saveClicks(); // restart the timer
 		Game.exitMission(ret[0], ret[1]);
 		
 		if (callGameInit || callGameInit == undefined) 
@@ -2841,6 +2846,9 @@ Game.execute = function(debug) {
   
   Game.showMoveRight = false;
   if (Game.runningStatus === 0) {
+	  
+	  Game.stopToSaveClicksEachMinute();
+	  
 	  Game.display();
 	
 //	  alert(Game.totBlocks(Blockly.mainWorkspace.topBlocks_));
@@ -3076,6 +3084,7 @@ Game.unlockBlockly = function() {
 		mainBody.removeChild(blocklyLock);
 	}
 	
+	Game.saveClicks(); // restart the save each minute
 };
 
 Game.verifyVariableInitialized = function(verifyVars) {
@@ -3363,7 +3372,8 @@ Game.verifyVictory = function() {
 			reward = {totalXP: 0, totalCoins: 0, baseXP: 0, bonusCoins: 0};
 		}
 		
-
+		Game.noSaveMissionWhenLogClick = true;
+		
     	UserControl.saveMission(reward.totalXP, reward.totalCoins, r.timeSpent, 
     			Game.howManyRuns, Game.missionFinishable, Game.runningStatus, 
     			Blockly.getMainWorkspace().scale, r.answer,
