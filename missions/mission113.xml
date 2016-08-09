@@ -10,8 +10,10 @@ Entregue os pedidos at&#233; quando o total de vendas tiver alcan&#231;ado $12.
   e no meio do atendimento atingiu o total de vendas de $12, deve ser interrompido o 
   atendimento, e o cliente vai ficar na vontade. Por isso, nessa miss&#227;o, quando 
   atingir $12, vai existir um cliente atendido parcialmente. 
-Atenda primeiro a fome depois a sede.<br/><br/>
-A miss&#227;o somente &#233; satisfeita quando for vendido EXATAMENTE $12.<br/><br/>
+Atenda primeiro a fome depois a sede de cada cliente.<br/><br/>
+A miss&#227;o somente &#233; satisfeita quando for vendido EXATAMENTE $12. 
+  &#201; garantido que o pedido dos clientes sempre alcance no m&#237;nimo $12 nas 
+  vendas.<br/><br/>
 O pre&#231;o do sorvete &#233; $1 e refrigerante &#233; $3. 
 		]]>
 		</page>
