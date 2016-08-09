@@ -949,6 +949,9 @@ Game.unload = function(e) {
 };
 
 Game.workspaceAnswer = function() {
+	if (Game.missionType === "multipleChoice")
+		return Game.answerMultipleChoice();
+			
 	var answer = "<xml></xml>";
 	if (Blockly.mainWorkspace != null) {
 		answer = "<answers>" + Game.editor.getXmlValue() + "</answers>";
@@ -973,7 +976,7 @@ Game.saveMission = function() {
 	if (Game.mission == null || Game.missionView) // it's when the user achieved this mission, but came back to test or see something. 
 		return;                                           // ... or when the user it is not into the editor 
 	
-	var answer = (Game.missionType === "multipleChoice"?Game.answerMultipleChoice():Game.workspaceAnswer());
+	var answer = Game.workspaceAnswer();
 	var timeSpent = Game.getTimeSpend();
 	
 	UserControl.saveMission(0, 0, timeSpent, Game.howManyRuns, false, Game.runningStatus, (Blockly.mainWorkspace?Blockly.getMainWorkspace().scale:1), answer,
