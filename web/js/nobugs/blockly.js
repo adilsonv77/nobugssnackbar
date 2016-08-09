@@ -1036,3 +1036,47 @@ Blockly.ContextMenu.show = function(event, menuOptions, RTL) {
 	
 	prevContextMenuShow(event, menuOptions, RTL);
 }
+
+Blockly.BlockSvg.prototype.onMouseUp_ = function(e) {
+	  if (Blockly.dragMode_ != Blockly.DRAG_FREE &&
+	      !Blockly.WidgetDiv.isVisible()) {
+	    Blockly.Events.fire(
+	        new Blockly.Events.Ui(this, 'click', undefined, undefined));
+	  }
+	  Blockly.terminateDrag_();
+	  if (Blockly.selected && Blockly.highlightedConnection_) {
+	    // Connect two blocks together.
+	    Blockly.localConnection_.connect(Blockly.highlightedConnection_);
+	    if (this.rendered) {
+	      // Trigger a connection animation.
+	      // Determine which connection is inferior (lower in the source stack).
+	      var inferiorConnection = Blockly.localConnection_.isSuperior() ?
+	          Blockly.highlightedConnection_ : Blockly.localConnection_;
+	      inferiorConnection.getSourceBlock().connectionUiEffect();
+	    }
+	    if (this.workspace.trashcan) {
+	      // Don't throw an object in the trash can if it just got connected.
+	      this.workspace.trashcan.close();
+	    }
+	  } else if (!this.getParent() && Blockly.selected.isDeletable() &&
+	      this.workspace.isDeleteArea(e)) {
+	    var trashcan = this.workspace.trashcan;
+	    if (trashcan) {
+	      goog.Timer.callOnce(trashcan.close, 100, trashcan);
+	    }
+	    MyBlocklyApps.removeBlock(Blockly.selected, Blockly.selected.isDeletable());
+	    //Blockly.selected.dispose(false, true);
+	    // Dropping a block on the trash can will usually cause the workspace to
+	    // resize to contain the newly positioned block.  Force a second resize
+	    // now that the block has been deleted.
+	    Blockly.asyncSvgResize(this.workspace);
+	  }
+	  if (Blockly.highlightedConnection_) {
+	    Blockly.highlightedConnection_.unhighlight();
+	    Blockly.highlightedConnection_ = null;
+	  }
+	  Blockly.Css.setCursor(Blockly.Css.Cursor.OPEN);
+	  if (!Blockly.WidgetDiv.isVisible()) {
+	    Blockly.Events.setGroup(false);
+	  }
+	};
