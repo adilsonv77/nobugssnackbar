@@ -1731,6 +1731,8 @@ Game.nextPartOfMissionLoaded = function(firstTime, toolbox, answer, mission, tim
 		  Game.loadingMission = false; /// mission loaded
 		  Game.noSaveMissionWhenLogClick = false;
 		  
+		  Blockly.mainWorkspace.clearUndo(); // without this, the missions as fill in gaps, fix bugs and multiple choice, waste their blocks
+		  
 		  if (Game.firstTime) {
 			  Explanation.showInfo(mission.childNodes[0].getElementsByTagName("explanation")[0], true);
 		  } else {
