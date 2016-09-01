@@ -289,10 +289,11 @@ public class JdbcDao<T> {
 				if (f.getType() == Boolean.class
 						|| f.getType() == boolean.class) {
 					
-					if (value.getClass() == String.class)
-						value = value.toString().equals("T");
-					else					
-						value = ((Integer) value).equals(1);
+					if (value != null)
+						if (value.getClass() == String.class)
+							value = value.toString().equals("T");
+						else					
+							value = ((Integer) value).equals(1);
 				}
 					
 

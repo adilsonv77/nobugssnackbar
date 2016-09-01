@@ -58,7 +58,7 @@ public class UCStudentMan implements Serializable{
 	public void insert(User user, Clazz clazz) throws Exception {
 		
 		user.setPassw(UserControl.encrypt(user.getNick()));
-		user.setEnabled(true);
+		user.setEnabled("T");
 		user.setLang("pt-BR");
 		user.setShowHint(true);
 		user.setMoney(0);

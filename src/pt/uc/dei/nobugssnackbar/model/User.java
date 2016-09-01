@@ -55,7 +55,7 @@ public class User implements Serializable {
 	private boolean showInstruction;
 
 	@JdbcField(name="userenabled")
-	private boolean enabled;
+	private String enabled;
 
 	@JdbcField(name="userxp")
 	private long xp;
@@ -73,7 +73,7 @@ public class User implements Serializable {
 	
 	@JdbcField(name="userrandomaccess")
 	@RemoteProperty
-	private boolean randomAccess;
+	private Boolean randomAccess;
 
 	@RemoteProperty
 	private Map<String, String> flags;
@@ -169,11 +169,11 @@ public class User implements Serializable {
 		this.classId = classId;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(String enabled) {
 		this.enabled = enabled;
 		
 	}
-	public boolean isEnabled() {
+	public String isEnabled() {
 		return enabled;
 	}
 

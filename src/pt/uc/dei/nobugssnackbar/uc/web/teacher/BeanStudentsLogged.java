@@ -80,7 +80,11 @@ public class BeanStudentsLogged implements Serializable {
 		
 		HttpSession session = LoginAdmin.getUserSession((ServletContext) context.getExternalContext().getContext(), userId);
 		if (session != null)
+		try {
 			session.invalidate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		
 		LoginAdmin.logoff((ServletContext) context.getExternalContext().getContext(), userId);
 		

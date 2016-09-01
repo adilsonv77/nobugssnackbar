@@ -99,7 +99,12 @@ public class BeanStudents implements Serializable {
 			ucStudentMan.insert(user, clazz);
 		else
 			ucStudentMan.update(user, clazz);
-		
+			
+		this.cancel();
+	}
+	
+	public void cancel() {
+	
 		this.showForm = false;
 		this.user = new User();
 		this.clazz = null;

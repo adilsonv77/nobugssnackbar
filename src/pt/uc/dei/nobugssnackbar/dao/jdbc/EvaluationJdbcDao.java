@@ -85,7 +85,7 @@ public class EvaluationJdbcDao implements EvaluationDao {
 						break;
 			}
 			
-			q = "select ma.missionid, userid, username, achieved, " + dataColumn + " from (select * from classesusers join users using (userid) where classid=? and currently = 'T') cu left outer join (" + missionsaccomplish + ") ma using (userid) " + extraSQL + " order by username";
+			q = "select ma.missionid, userid, username, achieved, usermail, " + dataColumn + " from (select * from classesusers join users using (userid) where classid=? and currently = 'T') cu left outer join (" + missionsaccomplish + ") ma using (userid) " + extraSQL + " order by username";
 			ps = bdCon.prepareStatement(q);
 			ps.setLong(1, clazzId);
 			ps.setLong(2, clazzId);
@@ -98,7 +98,7 @@ public class EvaluationJdbcDao implements EvaluationDao {
 				if (lastUserId != rs.getLong(2)) {
 					
 					rec = new String[totMissions+1];
-					rec[0] = rs.getString(3) + ";" + rs.getString(2);
+					rec[0] = rs.getString(3) +"-"+ rs.getString(5) + ";" + rs.getString(2);
 					ret.add(rec);
 					lastUserId = rs.getLong(2);
 					
@@ -109,7 +109,7 @@ public class EvaluationJdbcDao implements EvaluationDao {
 				if (!rs.wasNull()) {
 					
 					i = overallMissionIndex.get(mId);
-					rec[i] = rs.getString(4) + ";" + rs.getString(5);
+					rec[i] = rs.getString(4) + ";" + rs.getString(6);
 
 				}
 				

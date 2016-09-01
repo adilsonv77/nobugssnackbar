@@ -72,10 +72,12 @@
 				            <f:selectItem itemLabel="F" itemValue="F" />
 				        </p:selectOneRadio>
 						
-						<p:outputLabel value=""/>
+						
 						<p:commandButton value="#{msg['save']}" action="#{studentman.save}" disabled="#{not studentman.showForm}"
 							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>
 						
+						<p:commandButton value="Cancelar" action="#{studentman.cancel}" disabled="#{not studentman.showForm}"
+							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>
 					</h:panelGrid>
 				</h:form>
 			</p:layoutUnit>
