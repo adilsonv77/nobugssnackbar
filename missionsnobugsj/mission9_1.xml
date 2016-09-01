@@ -1,0 +1,54 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false" gameVersion="20160323">
+	<explanation hasInstruction="false">
+
+		<![CDATA[
+Vais aprender como operar essa nova m&#225;quina de caf&#233;: o objetivo &#233; muito simples: entregar todo o caf&#233; 
+  que o cliente est&#225; pedindo. E ele só pede café.
+  <br/> <br/>
+<b>Use a estrutura de controle <i>for</i>.</b> O corpo do método <i>serve</i> deve ficar com 
+  aproximadamente com 15 linhas.
+		]]> 
+		
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coffee</drink>
+						<drink qt="1" price="2">coffee</drink>
+						<drink qt="1" price="2">coffee</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coffee</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives missionType="fixBugs" xpIndividual="10" xpFinal="5" xpTotalRun="3" buttonRun="false">
+	
+		<objective pos="2" place="counter">deliver</objective>
+		
+	</objectives>
+</mission>

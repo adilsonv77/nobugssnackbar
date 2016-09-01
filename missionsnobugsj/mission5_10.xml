@@ -1,0 +1,103 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<![CDATA[
+		A promo&#231;&#227;o foi t&#227;o boa, que agora pensei que pod&#237;amos dar de presente um produto. Vamos fazer o seguinte:
+		se o cliente pedir
+		3 cachorros OU mais do que uma bebida, vais preparar um suco de laranja e entregar de presente ao cliente. N&#227;o precisas
+		entregar o pedido dele, somente esse presente <span style="color:red">quando ele merecer</span>.<br/><br/>
+		N&#227;o esque&#231;a que para preparar um suco precisas ir primeiro &#224; caixa de frutas e pegar as laranjas. 
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>6</tests>
+	<testsvars>
+		<test>
+			<var name="juiceGift"></var>
+		</test>
+		<test>
+			<var name="juiceGift">$$juiceoforange</var>
+		</test>
+		<test>
+			<var name="juiceGift"></var>
+		</test>
+		<test>
+			<var name="juiceGift">$$juiceoforange</var>
+		</test>
+		<test>
+			<var name="juiceGift">$$juiceoforange</var>
+		</test>
+		<test>
+			<var name="juiceGift"></var>
+		</test>
+	</testsvars>
+	
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="3">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>	
+						<food qt="1" price="3">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6">
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('juiceGift')" gift="o suco, se merecer">deliverGifts</objective>
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+

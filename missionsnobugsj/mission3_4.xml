@@ -1,0 +1,117 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+Supondo que tenhas um estoque de 10 cachorros. <br/><br/>Pergunte aos clientes quantos 
+cachorros eles desejam e no final fale quantos cachorros sobrariam no estoque
+  ap&#243;s atend&#234;-los.<br/><br/> 
+		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="20" xpFinal="10" buttonRunQtdAttempts="5" >
+		
+		<objective pos="1" place="counter">askWantHowManyFoods</objective>
+		
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+
+		<objective pos="3" place="counter">askWantHowManyFoods</objective>
+		
+		<objective text="a quantidade de comida que sobrar&#225; em estoque se for atender esses clientes" value="10-CustomerManager.totalOfFood()">talk</objective>
+		
+	</objectives>
+	<xml>
+	
+		
+	</xml>
+</mission>

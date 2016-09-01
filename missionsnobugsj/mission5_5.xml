@@ -1,0 +1,76 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<![CDATA[
+Pergunte aos dois clientes quantos lanches eles querem comer. Se essa quantidade
+  for maior que 3 então o preço do cachorro é $2 senão é $3.<br/><br/>
+No final fale o total das vendas: a quantidade multiplicado pelo preço unitário.
+			]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>2</tests>
+	<testsvars>
+		<test>
+			<var name="total">9</var>
+		</test>
+		<test>
+			<var name="total">8</var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	
+	<objectives missionType="multipleChoice" variableWindow="true"
+		xpIndividual="3"  xpTotalRun="3" xpFinal="0">
+		
+		<objective text="o valor total de vendas" value="parseInt(Game.readVariableTest('total'))">talk</objective>
+		
+	</objectives>
+	
+</mission>
+

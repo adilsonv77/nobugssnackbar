@@ -1,5 +1,35 @@
 'use strict';
 
+Blockly.Blocks['robomaze_recolher'] = {
+		  init: function() {
+		    this.appendDummyInput()
+		    	.appendField("recolherItem");
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setColour(120);
+		    /*
+		    this.setEditable(false);
+		    this.setMovable(false);
+		    this.setDeletable(false);
+		    */
+		   }
+		};
+
+Blockly.Blocks['robomaze_pensar'] = {
+		  init: function() {
+		    this.appendDummyInput()
+		    	.appendField("pensar");
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setColour(120);
+		    /*
+		    this.setEditable(false);
+		    this.setMovable(false);
+		    this.setDeletable(false);
+		    */
+		   }
+		};
+
 Blockly.Blocks['robomaze_andar'] = {
 		  init: function() {
 		    this.appendDummyInput()
@@ -21,6 +51,20 @@ Blockly.Blocks['robomaze_retornar'] = {
 		        .appendField("retornar");
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
+		    this.setColour(120);
+		    /*
+		    this.setEditable(false);
+		    this.setMovable(false);
+		    this.setDeletable(false);
+		    */
+		  }
+		};
+
+Blockly.Blocks['robomaze_parado'] = {
+		  init: function() {
+		    this.appendDummyInput()
+		        .appendField("parado");
+		    this.setOutput(true);
 		    this.setColour(120);
 		    /*
 		    this.setEditable(false);
@@ -120,7 +164,21 @@ Blockly.Blocks['cons_preto'] = {
 Blockly.Blocks['cons_amarelo'] = {
 		  init: function() {
 		    this.appendDummyInput()
-		        .appendField("AMARELO");
+		        .appendField("CINZA");
+		    this.setOutput(true);
+		    this.setColour(65);
+		    /*
+		    this.setEditable(false);
+		    this.setMovable(false);
+		    this.setDeletable(false);
+		    */
+		  }
+		};
+
+Blockly.Blocks['cons_branco'] = {
+		  init: function() {
+		    this.appendDummyInput()
+		        .appendField("BRANCO");
 		    this.setOutput(true);
 		    this.setColour(65);
 		    /*

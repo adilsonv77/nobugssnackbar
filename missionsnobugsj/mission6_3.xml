@@ -1,0 +1,134 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<![CDATA[
+Deu muito certo a promo&#231;&#227;o que decidimos ampliar os sabores da m&#225;quina de sorvetes. Agora temos morango, baunilha e chocolate.<br/><br/>
+ A regra da nossa promo&#231;&#227;o &#233; a seguinte: se o cliente pediu <span style="background-color:#c7c7c7">3 lanches OU 3 bebidas</span>, ele recebe um sorvete de morango. 
+ Por&#233;m, se ele pediu <span style="background-color:#c7c7c7">pelo menos um lanche E pelo menos uma bebida</span> ent&#227;o ele recebe um sorvete de chocolate. Qualquer outra combina&#231;&#227;o de pedido, ele
+ recebe de baunilha. O cliente nunca vai pedir um sorvete: somente lanches e refrigerantes.
+]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>9</tests>
+	<testsvars>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofstrawberry</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+		</test>
+		<test>
+			<var name="iceCreamCust1">$$icecreamofvanilla</var>
+		</test>
+		
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives missionType="fillInGap" xpIndividual="10" xpFinal="5" xpTotalRun="3"  buttonRun="true">
+		<objective pos="2" place="counter">askForIceCream</objective>
+		<objective pos="2" place="counter">askWantHowManyIceCream</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('iceCreamCust1')" gift="o sorvete">deliverGifts</objective>
+	</objectives>
+
+</mission>
+

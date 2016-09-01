@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+		Nosso caixa est&#225; um tanto limitado, e dispomos apenas de moedas de $1. 
+		Logo, conseguimos dar o troco para o cliente em moedas de $1.<br/><br/>
+		Pergunte ao cliente quanto quer de cachorros e refrigerantes, calcule o valor do pedido, receba o dinheiro 
+		e forne&#231;a o troco em moedas de $1.<br/><br/>
+		O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<menu hotdog="2" coke="3"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="6" ordered="false" xpIndividual="30" xpFinal="0" buttonRunQtdAttempts="15" >
+		
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
+		<objective pos="2" place="counter" moneyType='$$$money1' 
+			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2)))">giveSomeChange</objective>
+		
+	</objectives>
+	<xml>
+	
+	</xml>
+</mission>

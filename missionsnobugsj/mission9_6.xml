@@ -1,0 +1,68 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" >
+	<explanation hasInstruction="false">
+		<![CDATA[
+Os clientes vem com vontade de suco. Entregue o pedido completo aos clientes.<br/><br/>
+O enunciado &#233; muito simples. Porém, use a estrutura de controle <i>while</i> <b>UMA ÚNICA VEZ</b>.
+  Não podes usar nem o ciclo <i>for</i>. É claro que vais usar a estrutura <i> if </i>.<br/><br/>
+  Tente resolver em 13 linhas.
+		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" commQtd="20" maxCommands="12" maxCommandsRewardCoins="1">
+		<objective pos="1" place="counter">deliver</objective>
+		<objective pos="2" place="counter">deliver</objective>
+		<objective pos="3" place="counter">deliver</objective>
+	</objectives>
+</mission>

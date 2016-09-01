@@ -1,0 +1,97 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+
+<b>Conceitos de custo, pre&#231;o de venda e lucro:</b>
+O custo de um caf&#233; &#233; $1, e a
+ lanchonete vende a $3 (o pre&#231;o de venda &#233; $3). O lucro da venda &#233; $2 = $3 - $1. Ou seja,
+ a f&#243;rmula do lucro &#233;: lucro = pre&#231;o de venda - custo.<br/><br/>
+ 
+Os clientes tem fome e sede. Aumentamos um pouco o pre&#231;o de venda do cachorro: agora &#233; $3. Do
+  refrigerante continua o mesmo: tamb&#233;m $3. O custo dos produtos &#233; o seguinte: cachorro &#233; $2 e 
+  refrigerante &#233; $1.<br/><br/>
+ 		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<menu hotdog="3" coke="3"/>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="3">hotdog</food>
+						<food qt="1" price="3">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="30" xpFinal="10" varQtd="4" >
+		
+		<objective text="o faturamento (total das vendas)" 
+				  value="(CustomerManager.totalOfFood()+CustomerManager.totalOfDrink())*3">talk</objective>
+		
+		<objective text="o lucro (vendas - custo)" 
+				  value="CustomerManager.totalOfFood()+(CustomerManager.totalOfDrink()*2)">talk</objective>
+		
+	</objectives>
+	<xml>
+	
+		
+	</xml>
+</mission>

@@ -1,0 +1,106 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<![CDATA[
+		Veja a promo&#231;&#227;o louca que eu inventei agora.<br/><br/>
+		O pre&#231;o padr&#227;o do cachorro-quente &#233; $3 e do refrigerante &#233; $4. Mas, se o cliente tiver sede e 
+		fome, independente da quantidade que ele deseja, o pre&#231;o unit&#225;rio de ambos os produtos vai para $1.
+		Por&#233;m, se ele tem somente sede e a quantidade de refrigerantes for maior que 1 o pre&#231;o do
+		refrigerante fica em $3. Finalmente, se o cliente tem somente fome e deseja mais que 1 cachorro, 
+		o pre&#231;o unit&#225;rio do cachorro &#233; $2.<br/><br/>
+		Ao final vais falar o pre&#231;o unit&#225;rio do cachorro-quente e do refrigerante conforme as regras acima.
+		]]>
+	</explanation>
+	<tests>6</tests>
+	<testsvars>
+		<test>
+			<var name="foodPrice">3</var>
+			<var name="drinkPrice">4</var>
+		</test>
+		<test>
+			<var name="foodPrice">1</var>
+			<var name="drinkPrice">1</var>
+		</test>
+		<test>
+			<var name="foodPrice">2</var>
+			<var name="drinkPrice">4</var>
+		</test>
+		<test>
+			<var name="foodPrice">3</var>
+			<var name="drinkPrice">3</var>
+		</test>
+		<test>
+			<var name="foodPrice">3</var>
+			<var name="drinkPrice">4</var>
+		</test>
+		<test>
+			<var name="foodPrice">1</var>
+			<var name="drinkPrice">1</var>
+		</test>
+	</testsvars>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="1">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>	
+						<food qt="1" price="4">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="1">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="1">coke</drink>
+						<drink qt="1" price="1">coke</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" commQtd="14"  varQtd="2" >
+		<objective text="o pre&#231;o do cachorro" value="parseInt(Game.readVariableTest('foodPrice'))">talk</objective>
+		<objective text="o pre&#231;o do refrigerante" value="parseInt(Game.readVariableTest('drinkPrice'))">talk</objective>
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+

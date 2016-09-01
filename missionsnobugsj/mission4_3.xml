@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+		<span style="color:red">Tens somente seis tentativas para ganhar pontos. Estais limitado em oito blocos.</span><br/><br/>
+		Para te inspirares, trago-te a solu&#231;&#227;o da miss&#227;o anterior.
+ 		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<menu hotdog="2" coke="3"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives ordered="false" xpIndividual="30" xpFinal="0" xpTotalRun="6" commQtd="8"  buttonRunQtdAttempts="3" >
+		
+		<objective pos="2" place="counter" type='$$$money2' 
+			qtd="Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)">giveSomeChange</objective>
+		<objective text="a gorjeta" 
+				  value="(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))-(Math.floor((CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))/2)*2)">talk</objective>
+		
+	</objectives>
+</mission>

@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+O cliente ter&#225; sempre sede. Logo, nesta miss&#227;o nem precisas de perguntar se ele tem sede. 
+Come&#231;a logo por perguntar o que deseja beber. Em seguida, se o pedido for um 
+refrigerante (softDrink) vai at&#233; a geladeira e desempenha a tarefa como sempre fizestes.
+ Sen&#227;o, vais &#224; caixa de laranjas, retira as laranjas, de acordo com o pedido,
+ e leva-as at&#233; &#224; m&#225;quina. Prepara o suco e entregue ao cliente.<br/>
+]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>2</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" commQtd="11">
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+
+</mission>
+

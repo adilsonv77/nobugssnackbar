@@ -1,0 +1,91 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+Vais ao cliente, pergunta o que ele 
+ quer comer e beber, e cobra o valor. O cliente vai continuar a te pagar o valor
+ acima do pedido.<br/><br/>
+Vais devolver o troco na <b>&#237;ntegra</b> 
+  ao cliente, e na menor quantidade poss&#237;vel. Para devolver o troco, vais 
+  entregas com notas de $5, moedas de $2 e $1. Esque&#231;a as notas de $10 e $20. <br/><br/> 
+Por exemplo: se tinhas que dar $12 de troco, vais entregar 2 notas de $5, 1 moeda de $2 
+  e nenhuma moeda de $1. Outro exemplo: se tinhas que dar $8 de troco, vais entregar 1
+  nota de $5, 1 moeda de $2 e 1 moeda de $1.<br/><br/>
+As divis&#245;es inteiras sempre resultam com a parte inteira.
+ Por exemplo, se 5 / 2 resulta em 2.5, no jogo vai resultar em 2.<br/><br/>
+ O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
+   
+		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>6</tests>
+	<menu hotdog="2" coke="3"/>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<pay>10</pay>
+			<limitedChanges>5, 2, 1</limitedChanges>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives xpTotalRun="9" ordered="false" xpIndividual="70" xpFinal="20" buttonRunQtdAttempts="3">
+		
+		<objective pos="2" place="counter">giveTheWholeChange</objective>
+
+	</objectives>
+	<xml>
+	</xml>
+</mission>

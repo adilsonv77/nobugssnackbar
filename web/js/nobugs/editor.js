@@ -179,7 +179,7 @@ EditorNoBug.genJS = function() {
 	var code = "var NoBugsJavaScript = {};\n" +  
 	 				js.workspaceToCode(Blockly.mainWorkspace);
 	
-	alert( afterGenJS(code) );
+	console.log( afterGenJS(code) );
 	 
 };
 

@@ -1,0 +1,73 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true" gameVersion="20160323">
+	<explanation hasInstruction="false">
+		<![CDATA[
+Entregue o pedido do cliente.
+   Ele pode ter sede de um ou mais refrigerantes, sucos ou caf&#233;s.
+  &#201; um pequeno enunciado para usares todos os comandos de atendimento de bebidas.<br/><br/>
+<b>Use a estrutura de controle <i>while</i>.</b> O corpo do método <i>serve</i> deve ficar com 
+  aproximadamente com 25 linhas.
+		]]>
+
+
+	</explanation>
+	<cooker>initial</cooker>
+	
+	<tests>5</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coffee</drink>
+						<drink qt="1" price="3">coffee</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" commQtd="30" maxCommands="20" maxCommandsRewardCoins="4" >
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

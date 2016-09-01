@@ -1,0 +1,90 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<![CDATA[
+			Atende os dois clientes perguntando se t&#234;m sede e traz as suas bebidas.
+			<br />
+			<br />
+			Aten&#231;&#227;o: nem todos eles t&#234;m sede.<br/><br/>
+			]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType="fixBugs" ordered="false" buttonRun="false"
+	      xpIndividual="10" xpFinal="5" xpTotalRun="3" >
+		<objective pos="1" place="counter">askHasThirsty</objective>
+		<objective pos="1" place="counter">deliver</objective>
+
+		<objective pos="3" place="counter">askHasThirsty</objective>
+		<objective pos="3" place="counter">deliver</objective>
+	</objectives>
+</mission>
+

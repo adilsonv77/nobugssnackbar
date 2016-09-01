@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<mission>
+	<slider timesBefore="100000"/>
+	<explanation hasInstruction="false">
+
+		<![CDATA[
+		Faça o cozinheiro ir ao cliente na posi&#231;&#227;o 1 e depois ao cliente na posi&#231;&#227;o 3.
+		]]>
+		
+	</explanation>
+	
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="sort" ordered="true" buttonDebug="false" xpFinal="10" noXP="true">
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+	</objectives>
+	
+</mission>

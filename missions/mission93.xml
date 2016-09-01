@@ -127,8 +127,8 @@ Todos os blocos necess&#225;rios j&#225; est&#227;o na &#225;rea de trabalho, e 
 		</customer>
 	</customers>
 	<objectives missionType="fixBugs" xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRun="false">
-		<objective text="o pre&#231;o do sorvete" value="parseInt(Game.readVariableTest('priceFood'))">talk</objective>
-		<objective text="o pre&#231;o do cachorro" value="parseInt(Game.readVariableTest('priceIceCream'))">talk</objective>
+		<objective text="o pre&#231;o do sorvete" value="parseInt(Game.readVariableTest('priceIceCream'))">talk</objective>
+		<objective text="o pre&#231;o do cachorro" value="parseInt(Game.readVariableTest('priceFood'))">talk</objective>
 	</objectives>
 	<xml>
 	

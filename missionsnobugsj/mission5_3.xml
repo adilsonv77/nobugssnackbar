@@ -1,0 +1,56 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<![CDATA[
+			Existe somente um cliente que &#224;s vezes tem somente fome, &#224;s vezes tem somente sede, e ainda &#224;s vezes tem fome e sede.
+			]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>			
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType="fixBugs" ordered="false" buttonRun="false"
+	      xpIndividual="10" xpFinal="5" xpTotalRun="3" >
+	      
+		<objective pos="2" place="counter">askHasThirsty</objective>
+		<objective pos="2" place="counter">askHasHunger</objective>
+
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+</mission>
+

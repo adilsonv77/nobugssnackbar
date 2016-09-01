@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+
+		<![CDATA[
+		
+Voltemos a cobrar o valor do pedido do cliente. Os clientes tem somente fome e o pre&#231;o do cachorro &#233; $2.
+  Pergunte a cada cliente quantos cachorros ele deseja e j&#225; cobre o valor dele. Como sabes, ele te d&#225; 
+  sempre valor a mais. A sobra fica como gorjeta. No final fale a soma total de gorjetas do dia. <br/><br/>
+  
+<b>Para ir para cada cliente use a estrutura de controle <i>for</i>.</b> O corpo do método <i>serve</i> deve ficar com 
+  aproximadamente com 9 linhas.
+
+		]]>
+
+	</explanation>
+	<menu hotdog="2" />
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" commQtd="9"
+		xpTotalRun="9">
+		<objective text="o total de gorjetas do dia"
+			value="((CustomerManager.customerMoneyGave(1)-CustomerManager.customerMoneyIfSell(1))+(CustomerManager.customerMoneyGave(2)-CustomerManager.customerMoneyIfSell(2))+(CustomerManager.customerMoneyGave(3)-CustomerManager.customerMoneyIfSell(3)))">talk</objective>
+	</objectives>
+</mission>

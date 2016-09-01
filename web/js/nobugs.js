@@ -28,7 +28,7 @@
 // Supported languages.
 BlocklyApps.LANGUAGES =  [  'en', 'pt-pt', 'pt-br' ];
 BlocklyApps.LANG = BlocklyApps.getLang();
-BlocklyApps.version = 20160809;
+BlocklyApps.version = 20160810;
 
 var v = Math.floor(Math.random() * 999999);
 document.write('<script type="text/javascript" src="js/generated/' +

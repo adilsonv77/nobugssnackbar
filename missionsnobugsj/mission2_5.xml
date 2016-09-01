@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+<![CDATA[
+J&#225; que consegues anotar tudo e ainda entregar comida ao cliente, ent&#227;o vou te desafiar a 
+  entregar bebida. <br/><br/>
+Tens um &#250;nico cliente com fome e com sede. Pergunte o que ele deseja. V&#225; aos locais para
+  pegar o pedido. Volte ao cliente para fazer <b>as duas entregas</b>: da comida e da bebida.
+  ]]>  
+	</explanation>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRunQtdAttempts="5" >
+		<objective pos="2" place="counter">goesTo</objective>
+
+		<objective pos="2" place="counter">askForFood</objective>
+		<objective pos="2" place="counter">askForDrink</objective>
+
+		<objective>goesToDisplay</objective>
+		<objective pos="2" place="counter">pickUpFood</objective>
+
+		<objective>goesToCooler</objective>
+		<objective pos="2" place="counter">pickUpDrink</objective>
+
+		<objective pos="2" place="counter">deliver</objective>
+	</objectives>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+	</xml>
+</mission>

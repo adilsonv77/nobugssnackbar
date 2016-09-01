@@ -1,0 +1,61 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+Em uma miss&#227;o anterior aprendestes a calcular o valor total das vendas mas n&#227;o cobramos dos clientes. Nessa miss&#227;o o cliente vai te pagar.
+ O pre&#231;o &#233; $2 para cada cachorro. <br/><br/>
+ Entretanto, como o cliente sempre d&#225; uma nota de $10, $20 ou $50, logo o valor recebido pode ser maior que o valor do pedido.
+   Considere essa diferen&#231;a entre o valor recebido e o valor do pedido como gorjeta (gorjeta = valor recebido - valor do pedido). 
+<br/><br/>
+Pergunte a cada cliente o que ele deseja, cobre dele o valor do pedido, ao final fale o total do dinheiro recebido e total das gorjetas.<br/><br/>
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<menu hotdog="2"/>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order randomType="random" randomMin="1" randomMax="3">
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		
+	</customers>
+	<objectives xpTotalRun="3" ordered="false" buttonRunQtdAttempts="5" xpIndividual="10" xpFinal="5" missionType="sort">
+		
+		<objective pos="1" place="counter">cashIn</objective>
+		
+		<objective pos="3" place="counter">cashIn</objective>
+		
+		<objective text="o total do dinheiro recebido" value="CustomerManager.totalOfMoneyGave()">talk</objective>
+		<objective text="o total das gorjetas" value="CustomerManager.totalOfMoneyGave()-CustomerManager.totalOfMoneyIfSell()">talk</objective>
+
+	</objectives>
+</mission>

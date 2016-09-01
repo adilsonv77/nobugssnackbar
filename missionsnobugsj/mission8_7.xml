@@ -1,0 +1,151 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<![CDATA[
+Pergunte ao primeiro cliente a quantidade de lanches que ele deseja. Com base
+   nessa quantidade vais entregar sorvetes de presente aos clientes. Se o cliente
+   pedir UM lanche vais entregar UM sorvete ao cliente 1. Se ele pedir dois lanches, 
+   ent&#227;o vais entregar dois sorvetes: um ao cliente 1 e outro ao cliente 2. Tr&#234;s
+   lanches s&#227;o tr&#234;s sorvetes, um para cada cliente. O sabor do sorvete &#233; chocolate.<br/><br/>
+   
+<b>Use a estrutura de controle <i>for</i>.</b> O corpo do método <i>serve</i> deve ficar com 
+  aproximadamente com 8 linhas. 
+		]]> 
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<testsvars>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3"></var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+	<objectives xpIndividual="20" xpFinal="10" commQtd="8" xpTotalRun="6">
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceGift1')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('iceGift2')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceGift3')" gift="o sorvete, se merecer">deliverGifts</objective>
+	</objectives>
+	<xml>
+	</xml>
+</mission>

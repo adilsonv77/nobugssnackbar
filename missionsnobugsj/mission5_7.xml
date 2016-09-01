@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<![CDATA[
+		A miss&#227;o &#233; muito simples. O cliente tem sede de um suco. V&#225; ao cliente, anote o pedido, prepare o suco e entregue.
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType="sort" xpIndividual="3" xpFinal="0" xpTotalRun="3">
+		
+		<objective pos="2" place="counter">deliver</objective>
+		
+	</objectives>
+	
+</mission>

@@ -14,11 +14,20 @@
   <script src="js/_soy/soyutils.js"></script>
   <script src="js/commons/common.js"></script>
   <script src="js/nobugs/variablenamesvalidate.js"></script>
+  <script src="js/nobugs/window_prompt.js"></script>
    
   <script src="js/nobugs.js"></script>
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/util.js"></script>
 </head>
 		<body onload="fuca()">
 			<script type="text/javascript">
+
+			var Game = {};
+			
+			var Hints = {};
+			Hints.stopHints = function() {};
+			Hints.startHints = function() {};
 			
 			var timer;
 			var fAlternative;
@@ -57,32 +66,50 @@
 			    	 document.body.appendChild(scriptx);
 					*/
 		    		var script = document.createElement('script');
-		    		script.src = "js/tests/esteiralanguage.js"; // URL do seu script aqui
+		    		script.src = "js/tests/prova1.js"; // URL do seu script aqui
+		    		document.body.appendChild(script);
+		    		
+		    		script = document.createElement('script');
+		    		script.src = "js/tests/robomazelanguage.js"; // URL do seu script aqui
 		    		document.body.appendChild(script);
 		    		
 		    		script.onload = function() {
-		    			
+		    			Blockly.Blocks['controls_if'].useMutator = true;
 			    		 var toolbox = nobugspage.toolbox(null, null, 
 			    				  {enabled: {
-			 				  		 "loop": true, 
-	 		 				  		 "logic_operation": true,
-							  		 "logic": true, "math": true, "vars": true, "function": true}}); 
+			 				  		 "loop": true, "whileUntil": true, "for": true,
+	 		 				  		 "logic_operation": true, logic_trueFalse: true,
+							  		 "logic": true, "math": true, "vars": true}}); 
 				    		
+			    		var s = '<category name="Prova1Base"> <block type="read"/> <block type="print"/> </category>';
+			    		 
+		//	    		 toolbox = toolbox.replace('</xml>', s);
+			    		 
+			    		s += '<category name="Prova1"> <block type="robomaze_parado"/> <block type="robomaze_recolher"/> <block type="robomaze_pensar"/> <block type="robomaze_andar"/> <block type="robomaze_retornar"/> <block type="robomaze_qtdadeitens"/> <block type="robomaze_corcelula"/> <block type="robomaze_largaritem"/> <block type="robomaze_viraresquerda"/> <block type="robomaze_virardireita"/> <block type="cons_preto"/> <block type="cons_amarelo"/> <block type="cons_branco"/> </category>';
+			    		 
+			    		 s += '</xml>';
+			    		 toolbox = toolbox.replace('</xml>', s);
+			    		 
+			    		 
+			    		 
 			    		 Blockly.myToolBox = toolbox;
 				    		
 			    		 EditorNoBug.init();
 		    		};
 		    		
 		    		window.setTimeout(fufu, 1000);
-		    		*/
-		    		var blockComFor = '<xml> <block type="controls_for">  <field name="VAR">i</field><value name="FROM"><block type="math_number"><field name="NUM">1</field></block></value><value name="TO"><block type="math_number"><field name="NUM">10</field></block></value><value name="BY"><block type="math_number"><field name="NUM">1</field></block></value></block></xml>';
+		    		
+		    		//var blockComFor = '<xml> <block type="controls_for">  <field name="VAR">i</field><value name="FROM"><block type="math_number"><field name="NUM">1</field></block></value><value name="TO"><block type="math_number"><field name="NUM">10</field></block></value><value name="BY"><block type="math_number"><field name="NUM">1</field></block></value></block></xml>';
 		    		fAlternative = function() {
-		    			 document.getElementById('genJS').style.display = "inline";
+		    			document.getElementById('genJS').style.display = "inline";
 		    			 return  '<xml></xml>';
+		    		//	return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="variables_set" id="EEPnNo87PWg8qGxJw9g8" x="-201" y="-90"><field name="VAR">numero</field><value name="VALUE"><block type="read" id="qIKOVIlgiEVZ7TXYlY2s"></block></value><next><block type="variables_set" id="DbQQCuQg9cWw87gIkaRT"><field name="VAR">numPrimo</field><value name="VALUE"><block type="math_number" id="OuTcKgknn8URSbAVeHZs"><field name="NUM">1</field></block></value><next><block type="controls_for" id="tDmQtoLXOr2yi6EgvRNJ"><field name="VAR">i</field><value name="FROM"><block type="math_number" id="lCArHyAB59Odo7D1lebM"><field name="NUM">2</field></block></value><value name="TO"><block type="math_arithmetic" id="7KnnXsTu5shjzUawL69A"><field name="OP">MINUS</field><value name="A"><block type="variables_get" id="K44hP2OVCFi6eOfmoqdZ"><field name="VAR">fatorial</field></block></value><value name="B"><block type="math_number" id="j34c05Fr9mVuKUXAnHD6"><field name="NUM">1</field></block></value></block></value><value name="BY"><block type="math_number" id="dbXRTmcN8twb10Y13NnI"><field name="NUM">1</field></block></value><statement name="DO"><block type="controls_if" id="H0sl7PtJMNOMtVAmkGJc"><value name="IF0"><block type="logic_compare" id="ZT482YOTpC6WP5RfH6Da"><field name="OP">EQ</field><value name="A"><block type="math_arithmetic" id="aGp27qIOYYhGOH6rm9ud"><field name="OP">MINUS</field><value name="A"><block type="variables_get" id="gfNFOw9cBVRIou4x1sOq"><field name="VAR">numero</field></block></value><value name="B"><block type="math_arithmetic" id="uBPkvlcAfpr3a90apcgC"><field name="OP">MULTIPLY</field><value name="A"><block type="math_arithmetic" id="vuHFtAKBIamdqu58iPXF"><field name="OP">DIVIDE</field><value name="A"><block type="variables_get" id="HlldUxNc9HDf29XeWLdt"><field name="VAR">numero</field></block></value><value name="B"><block type="variables_get" id="BpqbPCseawBG3w0MgtlY"><field name="VAR">i</field></block></value></block></value><value name="B"><block type="variables_get" id="RXPrjb80aDnKfhJUIRbl"><field name="VAR">i</field></block></value></block></value></block></value><value name="B"><block type="math_number" id="egaf64uGpxpSGdaRiEup"><field name="NUM">0</field></block></value></block></value><statement name="DO0"><block type="variables_set" id="WQB0xwFXbHfpeEsIO9Oe"><field name="VAR">numPrimo</field><value name="VALUE"><block type="math_number" id="aimE1UAQCOuTrYPQI4f6"><field name="NUM">0</field></block></value></block></statement></block></statement><next><block type="print" id="8j7nma2pRFO6JVa6liVV"><value name="in"><block type="variables_get" id="1F12A3Yw0vz00h3UEW5O"><field name="VAR">numPrimo</field></block></value></block></next></block></next></block></next></block></xml>';
 
 	            	  //return '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="esteira_entrargarrafa" deletable="false" editable="false" x="380" y="-157"><next><block type="controls_if" deletable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_corgarrafa" deletable="false" editable="false"><value name="ESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></value><value name="B"><block type="cons_amarela" deletable="false" editable="false"></block></value></block></value><statement name="DO0"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value><next><block type="esteira_encherGarrafa" deletable="false" editable="false"><value name="BICO"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></next></block></next></block></statement><statement name="ELSE"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_encherGarrafa" deletable="false" editable="false"><value name="BICO"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value></block></next></block></next></block></statement><next><block type="esteira_colocarTampa" deletable="false" editable="false"><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_colarRotulo" deletable="false" editable="false"><next><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">0</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="controls_if" deletable="false" editable="false"><mutation else="1"></mutation><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_corgarrafa" deletable="false" editable="false"><value name="ESTEIRA"><block type="math_number" deletable="false" editable="false"><field name="NUM">6</field></block></value></block></value><value name="B"><block type="cons_amarela" deletable="false" editable="false"></block></value></block></value><statement name="DO0"><block type="variables_set" deletable="false" editable="false"><field name="VAR">c</field><value name="VALUE"><block type="math_number" deletable="false" editable="false"><field name="NUM">2</field></block></value></block></statement><statement name="ELSE"><block type="variables_set" deletable="false" editable="false"><field name="VAR">c</field><value name="VALUE"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value></block></statement><next><block type="controls_if" deletable="false" editable="false"><value name="IF0"><block type="logic_compare" deletable="false" editable="false"><field name="OP">EQ</field><value name="A"><block type="esteira_qtasGarrafas" deletable="false" editable="false"><value name="CAIXA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></value><value name="B"><block type="math_number" deletable="false" editable="false"><field name="NUM">6</field></block></value></block></value><statement name="DO0"><block type="esteira_andarEsteira" deletable="false" editable="false"><value name="NUMESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value><value name="PASSOS"><block type="math_number" deletable="false" editable="false"><field name="NUM">1</field></block></value><next><block type="esteira_novaCaixa" deletable="false" editable="false"><value name="ESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></next></block></statement><next><block type="esteira_garrafaNaCaixa" deletable="false" editable="false"><value name="ESTEIRA"><block type="variables_get" deletable="false" editable="false"><field name="VAR">c</field></block></value></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>';
 		    		};
-					
+		    		afterGenJS = function(code) { return code; };
+		    		
+					/*
 		    		afterGenJS = function(code) {
 		           		TestRT.initTest()
 		           		for (var g = 1; g <= 7; g++) {
@@ -105,7 +132,7 @@
 		           		                      [[TestRT.liquidos[1], null, null, null, null, null],
 		           		                               [TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1]]] );
 		    		};
-				
+				*/
 			}
 			
 	    		document.write(editor.start({}, null,
@@ -187,7 +214,7 @@
 	           		                               [TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0], TestRT.liquidos[0]]],
 	           		                      [[TestRT.liquidos[1], null, null, null, null, null],
 	           		                               [TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1], TestRT.liquidos[1]]] );
-	           		*//*w
+	           		*//*
 	           		TestRT.initTest();
 	           		for (var g = 1; g <= 3; g++) {
 	           			try {

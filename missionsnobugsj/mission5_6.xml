@@ -1,0 +1,57 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation hasInstruction="false">
+		<![CDATA[
+		O cliente pode vir com sede e pedir um ou mais refrigerantes. O pre&#231;o do refrigerante &#233; $3. Por&#233;m, estamos com 
+		promo&#231;&#227;o: se ele comprar 2 ou mais refrigerantes o pre&#231;o unit&#225;rio fica em $2.<br/><br/>  
+		V&#225; ao cliente, pergunte quantas bebidas ele deseja e de acordo com a quantidade cobre o valor do pedido.<br/><br/>  
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>4</tests>
+	<menu coke="3"/>
+	<customers>
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType="sort" xpIndividual="10" xpFinal="5" xpTotalRun="3" buttonRun="false">
+		
+		<objective pos="2" place="counter">cashIn</objective>
+		
+	</objectives>
+</mission>

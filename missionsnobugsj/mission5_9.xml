@@ -1,0 +1,84 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation>
+		<![CDATA[
+Nessa miss&#227;o vais  perguntar se ele tem sede e fome (&#233; certo que ele no m&#237;nimo tenha uma dessas vontades), e calcular o valor a ser cobrado. N&#227;o precisas nem buscar, preparar e entregar o pedido. Apenas cobrar o valor do pedido.<br/><br/>
+Esse valor do pedido pode variar: $4 se tem sede E fome; sen&#227;o o valor &#233; $3.<br/><br/>
+No final fale o valor total do faturamento com os dois clientes. 
+]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<menu hotdog="3" coke="3" juice="3"/>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>	
+						<food qt="1" price="3">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+		<customer>
+			<id>01</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>	
+						<food qt="1" price="3">hotdog</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="2">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">juiceoforange</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="6" >
+		
+		<objective pos="1" place="counter">cashIn</objective>
+		<objective pos="3" place="counter">cashIn</objective>
+		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
+
+	</objectives>
+	<xml>
+	</xml>
+
+</mission>
+

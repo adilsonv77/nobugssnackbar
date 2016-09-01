@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<![CDATA[
+Em uma miss&#227;o anterior aprendestes a calcular o valor total das vendas mas n&#227;o cobramos dos clientes. 
+  <span style="color:red">Nessa miss&#227;o o cliente vai te entregar sempre uma nota de $10</span>. O pre&#231;o do cachorro &#233; $2. <br/><br/>
+  No final falar o dinheiro entregue pelo cliente.
+		]]>
+
+	</explanation>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<pay>10</pay>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	<objectives missionType="multipleChoice" variableWindow="true"
+		xpIndividual="10"  xpTotalRun="3" xpFinal="5" >
+
+		<objective pos="2" place="counter">cashIn</objective>
+		<objective text="o valor a ser cobrado do cliente" value="10">talk</objective>
+
+	</objectives>
+
+</mission>

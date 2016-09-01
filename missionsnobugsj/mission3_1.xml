@@ -1,0 +1,120 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+		<![CDATA[
+Al&#233;m de nos preocuparmos com a quantidade de comida a ser entregue, 
+  tamb&#233;m precisamos aprender quanto ser&#225; o total das vendas, que &#233; a quantidade vendida multiplicada
+  pelo pre&#231;o do produto.
+  O pre&#231;o unit&#225;rio do cachorro &#233; $2.<br/>
+<br/>
+Pergunte a cada cliente quanto ele quer comer e no final fale o valor total das vendas.<br/>
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<menu hotdog="2" />
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>			
+		</customer>
+	</customers>
+	<objectives missionType = "fixBugs" xpTotalRun="3"  xpIndividual="10" xpFinal="5" buttonRun="false">
+		
+		<objective pos="1" place="counter">askWantHowManyFoods</objective>
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+		<objective pos="3" place="counter">askWantHowManyFoods</objective>
+		
+		<objective text="o total das vendas" value="CustomerManager.totalOfMoneyIfSell()">talk</objective>
+		
+	</objectives>
+	<xml>
+	</xml>
+</mission>

@@ -1,0 +1,133 @@
+<?xml version='1.0'?>
+<mission useIfMutator="true">
+	<explanation hasInstruction="false">
+		<![CDATA[
+Os clientes vem com vontade de sorvetes e refrigerantes. Podem querer mais de uma 
+   unidade de cada tipo.<br/><br/>   
+Entregue os pedidos at&#233; quando o total de vendas tiver alcan&#231;ado $12. 
+  Nem um produto a mais pode ser entregue. Com isso, se estavas atendendo um cliente 
+  e no meio do atendimento atingiu o total de vendas de $12, deve ser interrompido o 
+  atendimento, e o cliente vai ficar na vontade. Por isso, nessa miss&#227;o, quando 
+  atingir $12, vai existir um cliente atendido parcialmente. 
+Atenda primeiro a fome depois a sede de cada cliente.<br/><br/>
+A miss&#227;o somente &#233; satisfeita quando for vendido EXATAMENTE $12. 
+  &#201; garantido que o pedido dos clientes sempre alcance no m&#237;nimo $12 nas 
+  vendas.<br/><br/>
+O pre&#231;o do sorvete &#233; $1 e refrigerante &#233; $3. <br/><br/>
+<b>Use somente a estrutura de controle <i>while</i> quantas vezes precisar.</b> 
+		]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<menu coke="3" icecream="1"/>
+	<tests>3</tests>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>02</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="1">icecreamofchocolate</food>
+						<food qt="1" price="1">icecreamofstrawberry</food>
+						<food qt="1" price="1">icecreamofvanilla</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+	</customers>
+
+	<objectives xpIndividual="40" xpFinal="15" xpTotalRun="9" commQtd="30" maxCommands="20" maxCommandsRewardCoins="3">
+		<objective condition="CustomerManager.totalOfMoneyDelivered() == 12" 
+		text="Entregar EXATAMENTE $12 em vendas">conditional</objective>
+	</objectives>
+</mission>

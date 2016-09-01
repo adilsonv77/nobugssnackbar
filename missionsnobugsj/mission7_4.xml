@@ -1,0 +1,268 @@
+<?xml version='1.0'?>
+<mission gameVersion="20160309">
+	<explanation>
+		<![CDATA[
+Vais entregar de presente um sorvete de chocolate ao cliente que mais pediu cachorros.<br/><br/>
+Tente ser econômico na quantidade de linhas de código: aproximadamente 20 linhas de código dentro
+ do <b>serve</b>.
+		]]>
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>8</tests>
+	<testsvars>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3">$$icecreamofchocolate</var>
+		</test>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1">$$icecreamofchocolate</var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2">$$icecreamofchocolate</var>
+			<var name="iceGift3"></var>
+		</test>
+		<test>
+			<var name="iceGift1"></var>
+			<var name="iceGift2"></var>
+			<var name="iceGift3">$$icecreamofchocolate</var>
+		</test>
+	</testsvars>
+	<customers>
+		<customer>
+			<id>02</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+		<customer>
+			<id>01</id>
+			<init>counter3</init>
+			<dest>counter3</dest>
+			<orders>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="false">
+					<foods>		
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order visible="true">
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+
+	</customers>
+	<objectives xpIndividual="80" xpFinal="20" xpTotalRun="9" commQtd="23">
+		<objective pos="1" place="counter" value="Game.readVariableTest('iceGift1')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="2" place="counter" value="Game.readVariableTest('iceGift2')" gift="o sorvete, se merecer">deliverGifts</objective>
+		<objective pos="3" place="counter" value="Game.readVariableTest('iceGift3')" gift="o sorvete, se merecer">deliverGifts</objective>
+		
+	</objectives>
+	<xml preload = "40">
+	</xml>
+
+</mission>
+

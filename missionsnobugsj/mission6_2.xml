@@ -1,0 +1,104 @@
+<?xml version='1.0'?>
+<mission useIfMutator="false">
+	<explanation>
+		<![CDATA[
+O cliente sempre tem fome: pode ser de cachorros ou sorvetes. &#192;s vezes ele quer 
+  dois cachorros. Outras ele quer um cachorro e um sorvete, e ainda pode querer
+  uma coisa ou outra. No m&#225;ximo o cliente pode querer 1 sorvete. Ainda tem a chance dele tamb&#233;m ter sede de um refrigerante.<br/><br/>
+Os nossos pre&#231;os est&#227;o loucos. Eles variam de acordo com o pedido dele:<br/>
+<ul>
+  <li>se ele quer a quantidade igual de cachorros e sorvetes, o pre&#231;o do sorvete &#233; $1. Ainda, se o
+      sorvete que ele pedir for de chocolate e ele tem sede, o pre&#231;o do cachorro fica em $3. Sen&#227;o,
+      o pre&#231;o do cachorro &#233; $4.</li>
+  
+  <li>se a quantidade for diferente do desejo dele entre cachorros e sorvetes, o pre&#231;o do sorvete
+      &#233; $2 e do cachorro &#233; $5.</li> 
+</ul>
+
+]]>
+
+	</explanation>
+	<cooker>initial</cooker>
+	<tests>5</tests>
+	<testsvars>
+		<test>
+			<var name="priceFood">4</var>
+			<var name="priceIceCream">1</var>
+		</test>
+		<test>
+			<var name="priceFood">5</var>
+			<var name="priceIceCream">2</var>
+		</test>
+		<test>
+			<var name="priceFood">5</var>
+			<var name="priceIceCream">2</var>
+		</test>
+		<test>
+			<var name="priceFood">4</var>
+			<var name="priceIceCream">1</var>
+		</test>
+		<test>
+			<var name="priceFood">3</var>
+			<var name="priceIceCream">1</var>
+		</test>
+	</testsvars>
+	
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>	
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofchocolate</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="0">icecreamofstrawberry</food>	
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>		
+						<food qt="1" price="0">icecreamofchocolate</food>	
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="3">coke</drink>
+					</drinks>
+				</order>
+			</orders>						
+		</customer>
+	</customers>
+	<objectives missionType="fixBugs" xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRun="false">
+		<objective typeConv="int" text="o pre&#231;o do sorvete" value="parseInt(Game.readVariableTest('priceIceCream'))">talk</objective>
+		<objective typeConv="int" text="o pre&#231;o do cachorro" value="parseInt(Game.readVariableTest('priceFood'))">talk</objective>
+	</objectives>
+
+</mission>
+
