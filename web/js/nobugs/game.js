@@ -566,6 +566,9 @@ Game.updatesReward = function(ret) {
 };
 
 Game.cityClick = function() {
+	if (Game.loginData.missionHist.length == 0) // there is any levels
+		return;
+	
 	if (Game.loginData.userLogged.lastTime == null) {
 		IntroGame.closeBeforeCity();
 	}

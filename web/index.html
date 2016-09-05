@@ -18,22 +18,25 @@
   <script src="js/nobugs/nobugspreloadimgs.js"></script>
   <script src="js/_soy/soyutils.js"></script>
   <script src="js/commons/common.js"></script>
-  <script src="js/nobugs.js"></script>
+  <script>
+  
+  var v = Math.floor(Math.random() * 999999);
+  var s = 'src="js/nobugs.js?v='+v+'"';
+  var t = 'type="text/javascript"';
+  var fcar = "/";
+  var fscript = "<" + fcar + "script>";
+  document.write("<script "+t+" " + s + "> "+fscript);
+  
+  </script>
+
   <script type="text/javascript" src="dwr/engine.js"></script>
   <script type="text/javascript" src="dwr/util.js"></script>
   
-  <script>
-  function initDwr() {
-	  console.log("initDwr");
-	  dwr.util.useLoadingMessage();
-  }
-  </script>
-  
 </head>
 	<!--[if !IE]> -->
-		<body onload="nav.onload()">
+		<body onload="nav.onload();">
 			<script type="text/javascript">
-	    		document.write(nobugspage.start({}, null,
+			document.write(nobugspage.start({}, null,
 	        		{lang: BlocklyApps.LANG,
 	         		langSrc: BlocklyApps.languagePack()}));
 	  		</script>
