@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +122,8 @@ public class EvaluationJdbcDao implements EvaluationDao {
 				try {
 					bdCon.close();
 				} catch (SQLException ignore) {
+					ignore.printStackTrace();
+				
 				}
 			
 		}
@@ -227,6 +230,42 @@ public class EvaluationJdbcDao implements EvaluationDao {
 		}
 		ps.close();
 		
+	}
+
+	@Override
+	public List<String[]> listStudentsAndAnswers(Long clazzId, Integer[] questionnaireClazzesId) throws Exception {
+		Connection bdCon = null;
+		List<String[]> ret = new ArrayList<>();
+		try {
+			bdCon = getConnection();
+			
+			String sql = "select userid, username, count(*), currently, (select classid from classesusers where us.userid = userid and classid <> 1) "
+					+ "from (select * from users join classesusers using (userid) where classid = ? and userenabled <> 'X') us left outer join (select * from questionnaireanswer where find_in_set (questionnaireclassid, ?)) qa using (userid)  group by userid order by username";
+			
+			PreparedStatement ps = bdCon.prepareStatement(sql);
+			ps.setLong(1, clazzId);
+			ps.setString(2, Arrays.toString(questionnaireClazzesId).replace("[", "")
+					.replace("]", "").replace(" ", ""));
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				ret.add(new String[]{rs.getString(1), rs.getString(2), (rs.getLong(3) == 1?"F":"T"), rs.getString(4), rs.getString(5)});
+			}
+			
+			
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+					ignore.printStackTrace();
+				}
+			
+		}
+		
+		return ret;
 	}
 		
 

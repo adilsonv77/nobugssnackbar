@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="body">
+		<style>
+.ui-datatable-odd {
+    background: #ffffff;
+}
+
+.ui-datatable-even {
+    background: #F2F5F9;
+}
+		</style>
+	
+  		<script src="#{facesContext.externalContext.requestContextPath}/dwr/engine.js" type="text/javascript"></script>
+
+		<h:form id="frmStatus">
+			<p:panelGrid styleClass="ui-noborder" style="width: 100%" >
+				<p:row>
+					<p:column>
+						<p:selectOneMenu value="#{statusAnswer.clazz}" widgetVar="clazzTeacher">
+			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+			 				<f:selectItems value="#{statusAnswer.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+							<f:attribute name="dataProvider" value="statusAnswer.clazzes"/>
+							<p:ajax event="change" update="usersFromClazz"/>
+						</p:selectOneMenu>
+					</p:column>
+					
+					<p:column>
+						<img src="../images/goal_ok.png" width="20px"/> Já respondeu e está liberado no jogo<br/>
+						 
+						<img src="../images/goal_cancel.png" width="20px"/> Ainda não respondeu<br/>
+					</p:column>
+					
+				</p:row>
+								
+			</p:panelGrid> 
+	
+			<p:dataTable id="usersFromClazz" var="u" value="#{statusAnswer.students}" scrollable="true">
+				
+				<p:column>
+					<f:facet name="header" >
+						<h:outputText value="Alunos"/>
+					</f:facet>
+					<h:outputText value="#{u[1]}"/>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header" >
+						<h:outputText value="Grupo"/>
+					</f:facet>
+					
+					<h:outputText value="#{u[4] - 3}"/>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header" >
+						<h:outputText value="Situação"/>
+					</f:facet>
+					<p:graphicImage value="../images/goal_ok.png" width="20px" rendered="#{u[2] == 'T' and u[3] == 'T'}"/>
+					<p:graphicImage value="../images/goal_cancel.png" width="20px" rendered="#{u[2] == 'F'}"/>
+					<p:commandButton value="Liberar" action="#{statusAnswer.liberar(u[0])}" update="usersFromClazz" rendered="#{u[2] == 'T' and u[3] == 'F'}"/>
+				</p:column>
+				
+		    </p:dataTable>
+
+		  	<p:idleMonitor timeout="5000">
+		  		<p:ajax event="idle" listener="#{statusAnswer.loadStudents}" update="usersFromClazz" />
+		  	</p:idleMonitor>
+		  </h:form>
+		  
+	</ui:define>
+
+</ui:composition>
+

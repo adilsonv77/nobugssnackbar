@@ -205,4 +205,8 @@ public class UCReportsStudents implements Serializable {
 		List<String[]> s = listStudents(clazzId, finishDate, 3);
 		return s;
 	}
+	
+	public List<String[]> listStudentsAndAnswers(Long clazzId, Integer[] questionnaireClazzesId) throws Exception {
+		return evaluationDao.listStudentsAndAnswers(clazzId, questionnaireClazzesId);
+	}
 }

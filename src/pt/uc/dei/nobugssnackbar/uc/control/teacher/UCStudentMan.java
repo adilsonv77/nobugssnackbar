@@ -82,5 +82,17 @@ public class UCStudentMan implements Serializable{
 	public User read(Long userId) throws Exception {
 		return userDao.read(userId);
 	}
+
+	public void changeCurrentlyClasse(Long userId, Long newClazz) throws Exception {
+		
+		User user = userDao.read(userId);
+		Clazz clazz = getActiveClazz(user);
+		user.setClassId(clazz.getId());
+		clazzDao.deleteFromUser(user);
+		
+		clazz = clazzDao.read(newClazz);
+		clazzDao.mapsToUser(clazz, user);
+		
+	}
 	
 }

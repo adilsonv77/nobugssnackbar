@@ -6,4 +6,6 @@ public interface EvaluationDao {
 
 	List<String[]> loadMissionsFromUsers(Long clazzId, String finishDate,  int typeModifier) throws Exception;
 
+	List<String[]> listStudentsAndAnswers(Long clazzId, Integer[] questionnaireClazzesId) throws Exception;
+
 }
