@@ -475,8 +475,11 @@ Game.continueLoginProcessEx = function() {
 
 Game.logged = function() {
 	
+	var aname = Game.loginData.userLogged.name.split(" ");
 	
-	$("#playerNameInMission").html(Game.loginData.userLogged.name);
+	var shortName = aname[0] + " " + aname[1] + " " + (aname.length>2?aname[aname.length-1]:"");
+	
+	$("#playerNameInMission").html(shortName);
 
 	if (Game.loginData.clazzId == undefined || Game.loginData.clazzId == 0) {
 
@@ -484,8 +487,8 @@ Game.logged = function() {
 
 		UserControl.retrieveReward(Game.updatesReward);
 
-		$("#playerName").html(Game.loginData.userLogged.name);
-		$("#avatarEditor_playerName").html(Game.loginData.userLogged.name);
+		$("#playerName").html(shortName);
+		$("#avatarEditor_playerName").html(shortName);
 		
 		Game.drawMiniAvatar();
 		UserControl.updateUserLastTime();

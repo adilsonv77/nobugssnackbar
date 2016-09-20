@@ -71,20 +71,27 @@ function createTable(table) {
 
 function populateLBTables(table, data) {
 	
+	  
 	  var tBody = $("<tbody/>");
 	  var contaRow = 1;
+	  var showWholeName = data.length == 1;
 	  
 	  data.forEach(function(entry) {
 		  
-		  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
-		  
-		  tr.append($("<td>").html((entry.pos !== undefined?entry.pos:contaRow)));
-		  // the version i use to force the server give another photo
-		  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + entry.id + "&v=" + version + "'/>"));
-		  tr.append($("<td>").html(entry.name + "<br/>" + entry.value));
-		 
-		  tBody.append(tr);
-		  
+		  if (contaRow <= 10 || Game.loginData.userLogged.id == entry.id) {
+			  
+			  var aname = (showWholeName?[entry.name, ""]:entry.name.split(" "));
+			  
+			  var tr = $("<tr id = " + table + "_" + entry.id + "/>");
+			  
+			  tr.append($("<td>").html((entry.pos !== undefined?entry.pos:contaRow)));
+			  // the version i use to force the server give another photo
+			  tr.append($("<td>").html("<img height='64px' src='userPhoto?u=" + entry.id + "&v=" + version + "'/>"));
+			  tr.append($("<td>").html(aname[0] + " " + (aname[1].length==2?aname[aname.length-1]:aname[1])+ "<br/>" + entry.value));
+			  
+			  tBody.append(tr);
+			  
+		  }
 		  contaRow++;
 
 	  });

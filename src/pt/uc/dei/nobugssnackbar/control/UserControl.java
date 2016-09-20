@@ -325,13 +325,13 @@ public class UserControl {
 			goDefineRandomAccess = goDefineRandomAccess || (questionnaireId == 13); 
 
 		}
-		
+		/*
 		if (goDefineRandomAccess) {
 			this.user.setRandomAccess( classifyILS() );
 			factoryDao.getUserDao().updateRandomAccess(this.user);
 			
 		}
-			
+			*/
 	}
 
 	@RemoteMethod

@@ -69,7 +69,7 @@
 				
 		    </p:dataTable>
 
-		  	<p:idleMonitor timeout="5000">
+		  	<p:idleMonitor timeout="10000">
 		  		<p:ajax event="idle" listener="#{statusAnswer.loadStudents}" update="usersFromClazz" />
 		  	</p:idleMonitor>
 		  </h:form>
