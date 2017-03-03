@@ -213,12 +213,14 @@ Game.init = function() {
     			                // don't call UserControl.logoff() because if the user has two tab, the other tab is ok.
     		}
         	
+  		    document.getElementById("loadinggame").style.display = "none";
     		if (ret[0]) {
     			
     			Game.renderQuestionnaire(ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8], ret[9], ret[10], ret[11], ret[12], ret[13]);
     			
     		} else {
-    			window.removeEventListener('beforeunload', Game.unload);
+
+      		    window.removeEventListener('beforeunload', Game.unload);
 
       		    document.getElementById("mainBody").style.display = "none";
       		    document.getElementById("selectMission").style.display = "none";
