@@ -624,13 +624,20 @@ AvatarEditor.init = function() {
 	AvatarEditor.initialized = true;
 };
 
-AvatarEditor.cancelClick = function() {
-	$('#avatar-tabs').unbind('easytabs:after');
+AvatarEditor.removeBlocks = function() {
 	
 	$("#blocknotab-hats").remove();
 	$("#blocknotab-clothes").remove();
 	$("#blockskinSpecial").remove();
 	$("#blocknotab-adds").remove();
+	$("#blocknotab-extras").remove();
+
+};
+
+AvatarEditor.cancelClick = function() {
+	$('#avatar-tabs').unbind('easytabs:after');
+	
+	AvatarEditor.removeBlocks();
 	
 	MyBlocklyApps.hideDialog(true); 
 	
@@ -663,7 +670,8 @@ AvatarEditor.show = function(clothes, specialClothes, cloatColor, scarfColor, sk
 	$("#cpAdd-M").css("display", "none");
 
 	$("#cpAdd-?".replace("?", AvatarImgMaker.gender)).css("display", "block");
-	
+
+	AvatarEditor.removeBlocks();
 
 	AvatarEditor.itemColor = {r: 0, g: 0, b: 0};
 	AvatarEditor.items = [];
