@@ -71,6 +71,7 @@ Explanation.showInfo = function(explanation, withHint, afterclosed, instruction,
 		Explanation.createDialog(Explanation.lastStatement, afterclosed);
 	}
 		
+    LogClick.store("startexplanation");
 };
 
 Explanation.nextStatement = function() {
