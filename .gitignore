@@ -47,3 +47,11 @@ blocks/
 
 snackman2.txt
 /missionscripto/
+
+2017-1-x.csv
+*.csv
+web/js/nobugs-min.js
+web/js/generated/en.js
+web/js/generated/pt-pt.js
+*.json
+web/js/generated/pt-br.js

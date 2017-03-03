@@ -25,11 +25,11 @@
  */
 'use strict';
 
-BlocklyApps.version = 20160920;
+BlocklyApps.version = 20170304;
 	
 // Supported languages.
 BlocklyApps.LANGUAGES =  [  'en', 'pt-pt', 'pt-br' ];
-BlocklyApps.LANG = BlocklyApps.getLang();
+BlocklyApps.LANG =  BlocklyApps.getLang();
 
 var v = BlocklyApps.version; // Math.floor(Math.random() * 999999);
 document.write('<script type="text/javascript" src="js/generated/' +

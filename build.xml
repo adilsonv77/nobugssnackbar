@@ -222,7 +222,7 @@
 	    		<include name="js/msg/json/pt-br.json" />
 	    		<include name="js/msg/json/pt-pt.json" />
 	    		<include name="js/msg/messages.js" />
-	    		<include name="js/nobugs/nobugs-min.js" />
+	    		<include name="js/nobugs-min.js" />
 	    		
 	    		<!-- temporariamente por causa do questionario que pode ser aplicado em outro momento -->
 	    		<!--
