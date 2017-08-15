@@ -479,9 +479,10 @@ public class UserControl {
 		
 		String newPassw = uDao.createNewPassword(user);
 		String content = String.format(m.getString("forgetPasswordContent"), 
-				user.getNick(), newPassw, "<a href='http://nobugssnackbar.dei.uc.pt'>", "</a>");
+				user.getNick(), newPassw, "<a href='http://nobugs.ceavi.udesc.br'>", "</a>"); //"<a href='http://nobugssnackbar.dei.uc.pt'>", "</a>");
 		content = content + "<br/>"+
-				"<img src='http://nobugssnackbar.dei.uc.pt/images/logotipo-home.png'/>"; 
+				"<img src='http://nobugs.ceavi.udesc.br/images/logotipo-home.png'/>"; 
+				//"<img src='http://nobugssnackbar.dei.uc.pt/images/logotipo-home.png'/>"; 
 		this.mail.sendOneMail(mail, m.getString("forgetPasswordSubject"), content);
 		return true;
 	}

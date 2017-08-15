@@ -25,7 +25,31 @@ Essa &#233; mais uma miss&#227;o para completar com blocos faltantes. <span styl
 	</commands>
 
 	<cooker>initial</cooker>
-	<tests>3</tests>
+	<tests>3</tests>7
+	<testsvars>
+		<test>
+		<var name="qtdComida1">2</var>
+		<var name="qtdComida2">0</var>
+		<var name="qtdComida3">2</var>
+		<var name="somaCom1Com2" >2</var>
+		<var name="totalComida">4</var>
+		</test>
+		<test>
+		<var name="qtdComida1">1</var>
+		<var name="qtdComida2">1</var>
+		<var name="qtdComida3">1</var>
+		<var name="somaCom1Com2" >2</var>
+		<var name="totalComida">3</var>
+		</test>
+		<test>
+		<var name="qtdComida1">3</var>
+		<var name="qtdComida2">1</var>
+		<var name="qtdComida3">0</var>
+		<var name="somaCom1Com2" >4</var>
+		<var name="totalComida">4</var>
+		</test>
+	
+	</testsvars>
 	<customers>
 		<customer>
 			<id>01</id>
@@ -120,10 +144,13 @@ Essa &#233; mais uma miss&#227;o para completar com blocos faltantes. <span styl
 
 	</customers>
 	
-	<objectives missionType="fillInGap" variableWindow="true" buttonRun="false"
+	<objectives  missionType="fillInGap" variableWindow="true" buttonRun="false"
 				xpIndividual="10" xpFinal="5" xpTotalRun="9">
-				
-		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective level="M" text="Somar a quantidade de do primeiro cliente com o segundo e guardar em uma variavel total" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdComida1'))" arg1="parseInt(Game.readVariableTest('qtdComida2'))">useMath</objective>
+		<objective level="M" text="somar a quantidade dos dois primeiros com o pedido do cliente 3 " operator="+" 
+		           arg0="parseInt(Game.readVariableTest('somaCom1Com2'))" arg1="parseInt(Game.readVariableTest('qtdComida3'))">useMath</objective>
+		<objective level="H" text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
 		
 	</objectives>	
 

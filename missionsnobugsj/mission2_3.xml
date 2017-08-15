@@ -107,7 +107,7 @@ Pergunte a cada cliente quanto ele deseja comer e no final fale a quantidade tot
 	<objectives missionType="fillInGap" variableWindow="true" buttonRun="false"
 				xpIndividual="10" xpFinal="5" xpTotalRun="9">
 				
-		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective text="the desired quantity of food" value="CustomerManager.totalOfFood()">talk</objective>
 		
 	</objectives>	
 

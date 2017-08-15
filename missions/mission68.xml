@@ -74,9 +74,13 @@ Todos os comandos necess&#225;rios est&#227;o na &#225;rea de trabalho. Precisas
 		</customer>
 	</customers>
 	<objectives missionType="sort" xpIndividual="10" xpFinal="5" xpTotalRun="6" buttonRun="false">
-		<objective pos="2" place="counter">askForFood</objective>
-		<objective pos="2" place="counter">pickUpFood</objective>
-		<objective pos="2" place="counter">deliver</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">askForFood</objective>
+		<objective level="M" >goesToDisplay</objective>
+		<objective level="M" pos="2" place="counter">pickUpFood</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">deliver</objective>
+	
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">

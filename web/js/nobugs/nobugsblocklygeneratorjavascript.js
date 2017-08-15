@@ -135,6 +135,9 @@ function nobugsMathArith(arg0, arg1, operator) {
 		if (operator === NoBugsJavaScript.ARITH_OPERATORS['DIVIDE'][0]) {
 			return eval ('Math.floor(' +arg0 + ' / ' + arg1+')');
 		}
+
+	if (hero !== null && hero !== undefined)
+		hero.verifyObjectives("useMath", {arg0:arg0, op:operator.trim(), arg1:arg1});
 	
 	return  eval(arg0 + ' ' + operator + ' ' + arg1);
 };

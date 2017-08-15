@@ -29,6 +29,7 @@ var Objective = {
 Objective.init = function(elem, trata) {
 	return {objective:elem.childNodes[0].nodeValue, 
 			notExists:elem.getAttribute("notExists"),  
+			level:elem.getAttribute("level"),
 			achieved:false, achievedOrder: 0,
 			trata:trata, resetable:true};
 };
@@ -275,6 +276,11 @@ Objective.factory = function(key) {
 	case "keyPressed" : 
 		this.factories[key] = new Objective.KeyPressed();
 		break;
+	
+	case "useMath":
+		this.factories[key] = new Objective.UseMath();
+		break;
+		
 	}
 	
 	
@@ -321,7 +327,7 @@ Objective.Counter.prototype.createExplanationItem = function(objective) {
 
 Objective.GoesToDisplay = function() {};
 Objective.GoesToDisplay.prototype.init = function(elem) {
-	var p = {objective:"goesToDisplay", achieved:false, trata:this};
+	var p = {objective:"goesToDisplay", achieved:false, level:elem.getAttribute("level"), trata:this};
 	return p;
 };
 
@@ -346,7 +352,7 @@ Objective.GoesToDisplay.prototype.createExplanationItem = function(objective) {
 
 Objective.GoesToCooler = function() {};
 Objective.GoesToCooler.prototype.init = function(elem) {
-	var p = {objective:"goesToCooler", achieved:false, trata:this};
+	var p = {objective:"goesToCooler", achieved:false, level:elem.getAttribute("level"), trata:this};
 	return p;
 };
 
@@ -1208,4 +1214,38 @@ Objective.KeyPressed.prototype.createExplanationItem = function(objective) {
 
 Objective.KeyPressed.prototype.checkObjective = function(options, objective)  {
 	return (options.key == objective.key && options.ctrlPressed == objective.ctrlPressed && options.shiftPressed == objective.shiftPressed);
+};
+
+/******************************************************************************
+ *                                UseMath
+ ******************************************************************************/
+
+Objective.UseMath = function() {};
+
+// read from XML
+Objective.UseMath.prototype.init = function(elem) {
+	var p = Objective.init(elem, this);
+	
+	p.op = elem.getAttribute("operator");
+	p.arg0 = elem.getAttribute("arg0");
+	p.arg1 = elem.getAttribute("arg1");
+	p.text = elem.getAttribute("text");
+	
+	return p;
+};
+
+Objective.UseMath.prototype.checkObjective = function(options, objective)  {
+	
+	console.log("Deu");
+	
+	var arg0 = eval(objective.arg0);
+	var arg1 = eval(objective.arg1);
+	
+	return (objective.op === options.op && ((arg0 == options.arg0.data && arg1 == options.arg1.data) || (arg0 == options.arg1.data && arg1 == options.arg0.data)));
+	
+};
+
+Objective.UseMath.prototype.createExplanationItem = function(objective)  {
+	return objective.text;
+
 };

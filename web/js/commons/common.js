@@ -105,7 +105,7 @@ BlocklyApps.getNumberParamFromUrl = function(name, minValue, maxValue) {
  */
 BlocklyApps.getLang = function() {
 	
-  return 'pt-br'; //;'en'
+  return 'en'; //'pt-br'; 
   /*
   // First choice: The URL specified language.
   var lang = BlocklyApps.getStringParamFromUrl('lang', '').toLowerCase();

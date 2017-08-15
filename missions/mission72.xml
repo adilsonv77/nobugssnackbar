@@ -44,12 +44,12 @@ Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;xim
 		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [com1]</line>
 		
 		<line>V&#225; at&#233; o cliente 2</line>
-		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
 		<line>Some [com1] com [Pergunte quanta comida ele deseja] e guarde na vari&#225;vel [com1]</line>
+		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
 
 		<line>V&#225; at&#233; o cliente 3</line>
-		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
 		<line>Some [com1] com [Pergunte quanta comida ele deseja] e guarde na vari&#225;vel [com1]</line>
+		<line>Some [beb1] com [Pergunte quantas bebidas ele deseja] e guarde na vari&#225;vel [beb1]</line>
 		
 		<line>Fale [com1]</line>
 		<line>Fale [beb1]</line>
@@ -70,6 +70,50 @@ Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;xim
 
 	<cooker>initial</cooker>
 	<tests>3</tests>
+	<testsvars>
+	
+		<test>
+		<var name="qtdComida1">1</var>
+		<var name="qtdBebida1">1</var>
+		<var name="qtdComida2">3</var>
+		<var name="qtdBebida2">0</var>
+		<var name="qtdComida3">2</var>
+		<var name="qtdBebida3">1</var>		
+		<var name="somacom1com2">4</var>
+		<var name="somabeb1beb2">1</var>
+		<var name="totalComida">6</var>
+		<var name="totalBebida">2</var>
+		</test>
+		
+		<test>
+		<var name="qtdComida1">0</var>
+		<var name="qtdBebida1">1</var>
+		<var name="qtdComida2">0</var>
+		<var name="qtdBebida2">2</var>
+		<var name="qtdComida3">0</var>
+		<var name="qtdBebida3">0</var>
+		<var name="somacom1com2">0</var>
+		<var name="somabeb1beb2">3</var>
+		<var name="totalComida">0</var>
+		<var name="totalBebida">3</var>		
+		</test>
+		
+		<test>
+		<var name="qtdComida1">1</var>
+		<var name="qtdBebida1">0</var>
+		<var name="qtdComida2">0</var>
+		<var name="qtdBebida2">3</var>
+		<var name="qtdComida3">1</var>
+		<var name="qtdBebida3">2</var>
+		<var name="somacom1com2">1</var>
+		<var name="somabeb1beb2">3</var>
+		<var name="totalComida">2</var>
+		<var name="totalBebida">5</var>
+		</test>
+	
+	</testsvars>
+	
+	
 	<customers>
 		<customer>
 			<id>03</id>
@@ -169,8 +213,25 @@ Mas agora, vou colocar um limite para resolver: somente podes usar no m&#225;xim
 	</customers>
 		
 	<objectives xpIndividual="30" xpFinal="10" xpTotalRun="9" varQtd="2" >
-		<objective text="a quantidade de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
-		<objective text="a quantidade de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
+	<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="1" place="counter">askWantHowManyFoods</objective>
+		<objective pos="1" place="counter">askWantHowManyDrinks</objective>
+		<objective pos="2" place="counter">goesTo</objective>
+		<objective pos="2" place="counter">askWantHowManyFoods</objective>
+		<objective pos="2" place="counter">askWantHowManyDrinks</objective>
+		<objective text="Somar a quantidade de comida anterior com a que foi pedida " operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdComida1'))" arg1="parseInt(Game.readVariableTest('qtdComida2'))">useMath</objective>
+		<objective text="Somar a quantidade de bebida anterior com a que foi pedida " operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdBebida1'))" arg1="parseInt(Game.readVariableTest('qtdBebida2'))">useMath</objective>
+		<objective pos="3" place="counter">goesTo</objective>
+		<objective pos="3" place="counter">askWantHowManyFoods</objective>
+0		<objective pos="3" place="counter">askWantHowManyDrinks</objective>
+		<objective text="Somar a quantidade de comida anterior com a que foi pedida " operator="+" 
+		           arg0="parseInt(Game.readVariableTest('somacom1com2'))" arg1="parseInt(Game.readVariableTest('qtdComida3'))">useMath</objective>
+		<objective text="Somar a quantidade de bebida anterior com a que foi pedida " operator="+" 
+		           arg0="parseInt(Game.readVariableTest('somabeb1beb2'))" arg1="parseInt(Game.readVariableTest('qtdBebida3'))">useMath</objective>
+		<objective text="a quantidade total de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
+		<objective text="a quantidade total de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
 	</objectives>
 
 	<xml preload="13">

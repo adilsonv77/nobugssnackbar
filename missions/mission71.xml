@@ -4,8 +4,8 @@
 
 		<page type="goal">
 		<![CDATA[
-Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No final fale
-  a quantidade total de comida e bebida desejada pelos clientes.
+		Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No final fale
+ 		a quantidade total de comida e bebida desejada pelos clientes.
 		]]>
 		</page>
 	</explanation>
@@ -35,18 +35,20 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [com1]</line>
 		
 		<line>V&#225; at&#233; o cliente 2</line>
-		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [beb2]</line>
 		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [com2]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [beb2]</line>
 
 		<line>V&#225; at&#233; o cliente 3</line>
-		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [beb3]</line>
 		<line>Pergunte quanta comida ele deseja e guarde na vari&#225;vel [com3]</line>
+		<line>Pergunte quantas bebidas ele deseja e guarde na vari&#225;vel [beb3]</line>
 		
-		<line>Some [beb1] com [beb2] e com [beb3] e guarde na vari&#225;vel [totalBeb]</line>
-		<line>Fale [totalBeb]</line>
-
-		<line>Some [com1] com [com2] e com [com3] e guarde na vari&#225;vel [totalCom]</line>
+		<line>Some [beb1] com [beb2] e guarde na vari&#225;vel [totalBeb]</line>
+		<line>Some [TotalBeb] com [beb3] e guarde na vari&#225;vel [totalBeb]</line>
+		<line>Some [com1] com [com2] e guarde na vari&#225;vel [totalCom]</line>
+		<line>Some [totalCom] com [com3] e guarde na vari&#225;vel [totalCom]</line>
+		
 		<line>Fale [totalCom]</line>
+		<line>Fale [totalBeb]</line>
 	</help>
 	
 	<commands>
@@ -64,6 +66,49 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 
 	<cooker>initial</cooker>
 	<tests>3</tests>
+	<testsvars>
+	
+		<test>
+		<var name="qtdComida1">1</var>
+		<var name="qtdBebida1">1</var>
+		<var name="qtdComida2">3</var>
+		<var name="qtdBebida2">0</var>
+		<var name="qtdComida3">2</var>
+		<var name="qtdBebida3">1</var>		
+		<var name="somacom1com2">4</var>
+		<var name="somabeb1beb2">1</var>
+		<var name="totalComida">6</var>
+		<var name="totalBebida">2</var>
+		</test>
+		
+		<test>
+		<var name="qtdComida1">0</var>
+		<var name="qtdBebida1">1</var>
+		<var name="qtdComida2">0</var>
+		<var name="qtdBebida2">2</var>
+		<var name="qtdComida3">0</var>
+		<var name="qtdBebida3">0</var>
+		<var name="somacom1com2">0</var>
+		<var name="somabeb1beb2">3</var>
+		<var name="totalComida">0</var>
+		<var name="totalBebida">3</var>		
+		</test>
+		
+		<test>
+		<var name="qtdComida1">1</var>
+		<var name="qtdBebida1">0</var>
+		<var name="qtdComida2">0</var>
+		<var name="qtdBebida2">3</var>
+		<var name="qtdComida3">1</var>
+		<var name="qtdBebida3">2</var>
+		<var name="somacom1com2">1</var>
+		<var name="somabeb1beb2">3</var>
+		<var name="totalComida">2</var>
+		<var name="totalBebida">5</var>
+		</test>
+	
+	</testsvars>
+	
 	<customers>
 		<customer>
 			<id>03</id>
@@ -163,8 +208,28 @@ Pergunte a cada cliente quanto ele deseja comer e quanto ele deseja beber. No fi
 	</customers>
 		
 	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRunQtdAttempts="5">
-		<objective text="a quantidade total de comida desejada" value="CustomerManager.totalOfFood()">talk</objective>
-		<objective text="a quantidade total de bebida desejada" value="CustomerManager.totalOfDrink()">talk</objective>
+		
+		<objective level="E" pos="1" place="counter">goesTo</objective>
+		<objective level="E" pos="1" place="counter">askWantHowManyFoods</objective>
+		<objective level="E" pos="1" place="counter">askWantHowManyDrinks</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="E" pos="2" place="counter">askWantHowManyFoods</objective>
+		<objective level="E" pos="2" place="counter">askWantHowManyDrinks</objective>
+		<objective level="E" pos="3" place="counter">goesTo</objective>
+		<objective level="E" pos="3" place="counter">askWantHowManyFoods</objective>
+		<objective level="E" pos="3" place="counter">askWantHowManyDrinks</objective>
+		<objective level="M" text="Somar a quantidade de comida do primeiro cliente com o segundo e guardar em uma variavel totalComida" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdComida1'))" arg1="parseInt(Game.readVariableTest('qtdComida2'))">useMath</objective>
+		<objective level="M" text="Somar a quantidade de comida do totalComida e somar com a quantidade de comida do cliente 3 e guradar no total" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('somacom1com2'))" arg1="parseInt(Game.readVariableTest('qtdComida3'))">useMath</objective>
+		
+		<objective level="M" text="Somar a quantidade de bebida do primeiro cliente com o segundo e guardar em uma variavel totalbebida" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdBebida1'))" arg1="parseInt(Game.readVariableTest('qtdBebida2'))">useMath</objective>
+		<objective level="M" text="Somar a quantidade de Bebida do totalBebida e somar com a quantidade de Bebida do cliente 3 e guradar no totalBebida" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('somabeb1beb2'))" arg1="parseInt(Game.readVariableTest('qtdBebida3'))">useMath</objective>           		           
+		
+		<objective level="H" text="a quantidade total de comida desejada" value="parseInt(Game.readVariableTest('totalComida'))">talk</objective>
+		<objective level="H" text="a quantidade total de bebida desejada" value="parseInt(Game.readVariableTest('totalBebida'))">talk</objective>
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">

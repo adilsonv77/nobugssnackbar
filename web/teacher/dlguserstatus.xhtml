@@ -4,8 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                >
                 
-			<p:dialog id="dlgUserStatus" widgetVar="userStatus" modal="true" fitViewport="true" width="90%"
-						header="#{missionAttempts.selectedUser}">
+			<p:dialog id="dlgUserStatus" widgetVar="userStatus" modal="true" fitViewport="true" width="90%">
+						<!-- header="#{missionAttempts.selectedUser}"  -->
 
 				<p:dataTable value="#{missionAttempts.userAttempts}" var="ua" rowIndexVar="row" rows="10" paginator="true">
 					<p:column width="50">

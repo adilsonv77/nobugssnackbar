@@ -12,7 +12,7 @@ import pt.uc.dei.nobugssnackbar.model.Mission;
 public class PopulateMissions {
 
 	public static void main(String[] args) throws Exception {
-		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugs8", 
+		NoBugsConnection.buildConnection("jdbc:mysql://localhost:3306/nobugsexp4", 
 				"com.mysql.jdbc.Driver", "root", "root");
 	//	String titles[] = {"Teste"}; //{"Movimentar cozinheiro", "Perguntar ao cliente e criar variáveis"};
 		StringBuffer xml; 
@@ -20,7 +20,7 @@ public class PopulateMissions {
 		
 		MissionDao mDao = new MissionJdbcDao();
 		
-		for (int i = 142; i <= 142; i++) {
+		for (int i = 143; i <= 143; i++) {
 			
 			xml = new StringBuffer();
 			arq = new BufferedReader(new FileReader(new File("missions/mission"+(i<10?"0"+i:i)+".xml")));

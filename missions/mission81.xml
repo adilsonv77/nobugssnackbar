@@ -12,20 +12,17 @@ Por exemplo, no bloco acima est&#225;s devolvendo notas de 5. A quantidade de no
 		</page>
 		<page type="goal">
 		<![CDATA[
-Vais proceder como na miss&#227;o anterior: vais ao cliente, pergunta o que ele 
- quer comer e beber, e cobra o valor. O cliente vai continuar a te pagar o valor
- acima do pedido. Na miss&#227;o anterior devolvias o troco em moedas de $2, e 
- se sobrasse ficava contigo como gorjeta.<br/><br/>
-Esque&#231;a as gorjetas nessa miss&#227;o: vais devolver o troco na <b>&#237;ntegra</b> 
-  ao cliente, e na menor quantidade poss&#237;vel. Para devolver o troco, vais 
-  entregas com notas de $5, moedas de $2 e $1. Esque&#231;a as notas de $10 e $20. <br/><br/> 
-Por exemplo: se tinhas que dar $12 de troco, vais entregar 2 notas de $5, 1 moeda de $2 
-  e nenhuma moeda de $1. Outro exemplo: se tinhas que dar $8 de troco, vais entregar 1
-  nota de $5, 1 moeda de $2 e 1 moeda de $1.<br/><br/>
-N&#227;o esque&#231;a que, no jogo, as divis&#245;es sempre resultam com a parte inteira.
- Por exemplo, se 5 / 2 resulta em 2.5, no jogo vai resultar em 2.<br/><br/>
- O pre&#231;o do cachorro &#233; $2 e do refrigerante &#233; $3.<br/><br/>
-Nessa miss&#227;o n&#227;o h&#225; quaisquer limita&#231;&#245;es.	
+You will proceed as in the previous mission: you go to the client, ask him what he wants to eat and drink, and get the value. The customer will continue to pay you the amount above the order. On the previous mission you returned the change in $ 2 coins, and if it was left, it would be with you as a tip.
+<br/><br/>
+Forget the tips on this mission: you will return the change in full to the client, and in the smallest amount possible. To return the change, you'll be delivering $ 5 bills, $ 2 and $ 1 coins. Forget the $ 10 and $ 20 bills.
+<br/><br/>
+For example, if you had to give $ 12 in exchange, you will give away two $ 5 bills, one $ 2 coin and one $ 1 coin. Another example: if you had to give $ 8 in exchange, you will deliver 1 $ 5 bill, 1 $ 2 coin, and 1 $ 1 coin.
+<br/><br/>
+Do not forget that in the game, the divisions always result with the whole part. For example, if 5/2 results in 2.5, the game will result in 2.
+<br/><br/>
+The price of the hot dog is $ 2 and the soda is $ 3.
+<br/><br/>
+There are no limitations in this mission.
    
 		]]>
 		</page>

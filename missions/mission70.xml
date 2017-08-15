@@ -4,12 +4,12 @@
 
 		<page type="goal">
 		<![CDATA[
-J&#225; que consegues anotar tudo e ainda entregar comida ao cliente, ent&#227;o vou te desafiar a 
+  J&#225; que consegues anotar tudo e ainda entregar comida ao cliente, ent&#227;o vou te desafiar a 
   entregar bebida. No menu existe um novo bloco para perguntar o que deseja beber e outro bloco 
   para pegar a bebida na geladeira. Esse
   bloco segue o mesmo princ&#237;pio para pegar o cachorro-quente no mostrador. Vejamos se 
   consegues desenrascar desse problema. <br/><br/>
-Tens um &#250;nico cliente com fome e com sede. Pergunte o que ele deseja. V&#225; aos locais para
+  Tens um &#250;nico cliente com fome e com sede. Pergunte o que ele deseja. V&#225; aos locais para
   pegar o pedido. Volte ao cliente para fazer <b>as duas entregas</b>: da comida e da bebida.  
 		]]>
 		</page>
@@ -95,13 +95,17 @@ Tens um &#250;nico cliente com fome e com sede. Pergunte o que ele deseja. V&#22
 	</customers>
 	
 	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRunQtdAttempts="5" >
-		<objective pos="2" place="counter">askForFood</objective>
-		<objective pos="2" place="counter">askForDrink</objective>
-
-		<objective pos="2" place="counter">pickUpFood</objective>
-		<objective pos="2" place="counter">pickUpDrink</objective>
-
-		<objective pos="2" place="counter">deliver</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">askForFood</objective>
+		<objective level="M">goesToDisplay</objective>
+		<objective level="M" pos="2" place="counter">pickUpFood</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">deliver</objective>
+		<objective level="H" pos="2" place="counter">askForDrink</objective>
+		<objective level="M" >goesToCooler</objective>
+		<objective level="M" pos="2" place="counter">pickUpDrink</objective>
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">deliver</objective>
 	</objectives>
 
 	<xml xmlns="http://www.w3.org/1999/xhtml">

@@ -1,0 +1,199 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+		O cliente um e o cliente dois querem receber a conta junto Some seus pedidos e fale a quantidade.<br/><br/>
+		Essa &#233; uma miss&#227;o para completar com blocos faltantes. <span style="color:red">Falta o conjunto de blocos para somar.</span>
+		]]>
+		</page>
+
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+	</commands>
+
+	<cooker>initial</cooker>
+	<tests>3</tests>7
+	<testsvars>
+		<test>
+		<var name="qtdComida1">2</var>
+		<var name="qtdComida2">3</var>
+		<var name="totalComida">2</var>
+		</test>
+		<test>
+		<var name="qtdComida1">3</var>
+		<var name="qtdComida2">2</var>
+		<var name="totalComida">2</var>
+		</test>
+		<test>
+		<var name="qtdComida1">0</var>
+		<var name="qtdComida2">1</var>
+		<var name="totalComida">4</var>
+		</test>
+	
+	</testsvars>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+						
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+		<customer>
+			<id>03</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+					<food qt="1" price="2">hotdog</food>
+					<food qt="1" price="2">hotdog</food>
+					<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+				<order>
+					<foods>
+						<food qt="1" price="2">hotdog</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives missionType="fillInGap" variableWindow="true" buttonRun="false"
+				xpIndividual="10" xpFinal="5" xpTotalRun="9">
+		<objective text="Somar a quantidade de do primeiro cliente com o segundo e guardar em uma variavel total" operator="+" 
+		           arg0="parseInt(Game.readVariableTest('qtdComida1'))" arg1="parseInt(Game.readVariableTest('qtdComida2'))">useMath</objective>
+		<objective text="a quantidade de comida desejada" value="parseInt(Game.readVariableTest('totalComida'))">talk</objective>
+		
+	</objectives>	
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+		<block type="variables_set" deletable="false" movable="false" x="8" y="10">
+			<field name="VAR">qtaComida1</field>
+			<value name="VALUE">
+				<block type="math_number" deletable="false" movable="false">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<next>
+				<block type="variables_set" deletable="false" movable="false">
+					<field name="VAR">qtaComida2</field>
+					<value name="VALUE">
+						<block type="math_number" deletable="false" movable="false">
+							<field name="NUM">0</field>
+						</block>
+					</value>
+					<next>
+						<block type="variables_set" deletable = "false"  movable="false">
+							<field name="VAR">totalComida</field>
+							<value name="VALUE">
+								<block type="math_number" deletable="false" movable="false">
+									<field name="NUM">0</field>
+								</block>
+							</value>
+							<next>
+								<block type="move_goToBarCounter" deletable="false" movable="false">
+									<value name="VALUE">
+										<block type="math_number" deletable="false" movable="false">
+											<field name="NUM">1</field>
+										</block>
+									</value>
+									<next>
+										<block type="variables_set" deletable="false" movable="false">
+											<field name="VAR">qtaComida1</field>
+											<value name="VALUE">
+												<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
+											</value>
+											<next>
+												<block type="move_goToBarCounter" deletable = "false"  movable="false">
+													<value name="VALUE">
+														<block type="math_number" deletable = "false"  movable="false"><field name="NUM">2</field></block>
+													</value>
+													<next>
+														<block type="variables_set" deletable = "false"  movable="false">
+															<field name="VAR">qtaComida2</field>
+															<value name="VALUE">
+																<block type="ask_askWantHowManyFoods" deletable="false" movable="false"></block>
+															</value>
+															<next>																		
+																<block type="fillInGap" deletable="false" movable="false" >
+																	<next>
+																		<block type="do_talk" deletable="false" movable="false">
+																			<value name="VALUE">
+																				<block type="variables_get" deletable="false" movable="false">
+																					<field name="VAR">totalComida</field>
+																				</block>
+																			</value>
+																		</block>
+																	</next>
+																</block>																		
+															</next>
+														</block>
+													</next>
+												</block>
+											</next>
+										</block>
+									</next>
+								</block>
+							</next>
+						</block>
+					</next>
+				</block>
+			</next>
+		</block>
+	</xml>
+</mission>
