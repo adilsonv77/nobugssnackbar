@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+		
+		<p:layout>
+			<p:layoutUnit position="west" resizable="true">
+
+				<h:form id = "formListLevels">
+					<h:panelGrid columns="2" > 
+						
+								<p:selectOneMenu value="#{levelman.clazz}" widgetVar="clazzLevel">
+					 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+					 				<f:selectItems value="#{levelman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+									<p:ajax event="change" update="levelslist"/>
+									<f:attribute name="dataProvider" value="levelman.classes"/>
+								</p:selectOneMenu>
+								<p:commandButton value="#{msg['new']}" 	action="#{levelman.newLevel}" update=":formLevel" style="margin-bottom: 5px"
+						           oncomplete="$(function(){PrimeFaces.focus('formLevel:levelorder');});"/>
+		
+					</h:panelGrid>			        
+					<p:dataTable id="levelslist" value="#{levelman.levels}" var="level" rows="10"
+						paginator="true">
+					
+				        <p:column headerText="#{msg.name}" filterBy="#{level.name}" filterMatchMode="contains">
+				            <h:outputText value="#{level.name}"/>
+				        </p:column>
+
+				        <p:column headerText="#{msg.releaseDate}">
+				            <h:outputText value="#{level.release}">
+				            	<f:convertDateTime pattern="dd/MM/yyyy" />
+				            </h:outputText>
+				        </p:column>
+				        
+						<p:column width="40">
+					        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}" 
+					        	action="#{levelman.edit(level)}" update=":formLevel"
+					        	oncomplete="$(function(){PrimeFaces.focus('formLevel:stnick');});"/>
+						</p:column>
+					</p:dataTable>
+					
+				</h:form>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+				<h:form id = "formLevel">
+					<h:panelGrid columns="2" >
+						
+						<p:commandButton value="#{msg['save']}" action="#{levelman.save}" disabled="#{not levelman.showForm}"
+							 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+						
+						<p:commandButton value="Cancelar" action="#{levelman.cancel}" disabled="#{not levelman.showForm}"
+							 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+					</h:panelGrid>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+			
+	</ui:define>
+
+</ui:composition>
