@@ -12,21 +12,18 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
 
-import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.Level;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReleaseLevel;
 
 @ManagedBean(name="releaselevel")
 @ViewScoped
-public class BeanReleaseLevel implements Serializable{
+public class BeanReleaseLevel extends BeanBase implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@ManagedProperty(value="#{ucreleaselevel}")
     private UCReleaseLevel ucReleaseLevel;
 	
-	private Clazz clazz;
-
 	private List<Level> levels;
 
 	private boolean enableSave;
@@ -34,7 +31,7 @@ public class BeanReleaseLevel implements Serializable{
 	private Map<Integer, Level> saveLevels = new HashMap<>();  
 	
 	public void updateLevels() throws Exception {
-		this.levels = ucReleaseLevel.listLevels(this.clazz);
+		this.levels = ucReleaseLevel.listLevels(this.getClazz());
 		this.enableSave = false;
 		saveLevels.clear();
 	}
@@ -73,16 +70,9 @@ public class BeanReleaseLevel implements Serializable{
 	
 	public void setUcReleaseLevel(UCReleaseLevel ucReleaseLevel) {
 		this.ucReleaseLevel = ucReleaseLevel;
+		setUcBase(ucReleaseLevel);
 	}
 
-	public Clazz getClazz() {
-		return clazz;
-	}
-	
-	public void setClazz(Clazz clazz) {
-		this.clazz = clazz;
-	}
-	
 	public List<Level> getLevels() {
 		return levels;
 	}

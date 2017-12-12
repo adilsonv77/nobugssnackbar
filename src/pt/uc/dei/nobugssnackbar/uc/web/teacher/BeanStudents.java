@@ -1,9 +1,7 @@
 package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
-import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -14,7 +12,7 @@ import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCStudentMan;
 
 @ManagedBean(name="studentman")
 @ViewScoped
-public class BeanStudents implements Serializable {
+public class BeanStudents extends BeanBase {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,93 +27,55 @@ public class BeanStudents implements Serializable {
 	
 	public void setUcStudentMan(UCStudentMan ucStudentMan) {
 		this.ucStudentMan = ucStudentMan;
-	}
-	
-	@PostConstruct
-	public void init() {
-		try {
-			classes = ucStudentMan.listClasses();
-		} catch (Exception ex) {
-			
-		}
+		setUcBase(ucStudentMan);
 	}
 	
 	public List<User> getStudents() throws Exception {
 		return ucStudentMan.listStudents();
 	}
 
-	public List<Clazz> getClasses() throws Exception {
-		return classes;
-	}
-	
-	
 	private User user = new User();
-
-	private boolean newStudent;
-
-	private Clazz clazz;
-
-	private boolean showForm = false;
 
 	public User getStudent() {
 		return user;
 	}
 	
-	public boolean isNewStudent() {
-		return this.newStudent;
-	}
-	
-	public boolean isShowForm() {
-		return showForm ;
-	}
-	
-	public void newStudent() {
-		this.showForm = true;
-		this.newStudent = true;
+	public void newStudent() throws Exception {
+		super.newElement();
+		this.setClazz(null);
 		this.user = new User();
-		this.clazz = null;
 	}
 	
 	public void edit(User user) throws Exception {
-		this.showForm = true;
-		this.newStudent = false;
+		super.editElement();
 		this.user = user;
 		
 		Clazz curClazz = ucStudentMan.getActiveClazz(user);
 		if (curClazz == null)
-			this.clazz = null;
+			this.setClazz(null);
 		else {
 			for (Clazz c:classes)
 				if (c.getId().longValue() == curClazz.getId().longValue()) {
-					this.clazz = c;
+					this.setClazz(c);
 					break;
 				}
-			this.user.setClassId(this.clazz.getId());
+			this.user.setClassId(this.getClazz().getId());
 		}
 	}
 
 	public void save() throws Exception {
-		if (this.newStudent)
-			ucStudentMan.insert(user, clazz);
+		if (this.isNewElem())
+			ucStudentMan.insert(user, this.getClazz());
 		else
-			ucStudentMan.update(user, clazz);
+			ucStudentMan.update(user, this.getClazz());
 			
 		this.cancel();
 	}
 	
-	public void cancel() {
-	
-		this.showForm = false;
+	public void cancel() throws Exception {
+		super.cancelEdit();
 		this.user = new User();
-		this.clazz = null;
-	}
-	
-	public Clazz getClazz() {
-		return this.clazz;
-	}
-	
-	public void setClazz(Clazz clazz) {
-		this.clazz = clazz;
+		this.setClazz(null);
 	}
 	
 }

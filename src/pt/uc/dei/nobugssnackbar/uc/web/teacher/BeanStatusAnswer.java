@@ -1,6 +1,5 @@
 package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -11,11 +10,10 @@ import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsMissions;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsStudents;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCStudentMan;
-import pt.uc.dei.nobugssnackbar.uc.web.util.AuthenticationUtil;
 
 @ManagedBean(name="statusAnswer")
 @ViewScoped
-public class BeanStatusAnswer implements Serializable {
+public class BeanStatusAnswer extends BeanBase {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,6 +37,7 @@ public class BeanStatusAnswer implements Serializable {
 	
 	public void setReportsMissions(UCReportsMissions reportsMissions) {
 		this.reportsMissions = reportsMissions;
+		setUcBase(reportsMissions);
 	}
 	
 	@ManagedProperty(value="#{ucstudentman}")
@@ -52,35 +51,21 @@ public class BeanStatusAnswer implements Serializable {
 		this.ucStudentMan = ucStudentMan;
 	}
 
-	private Clazz clazz;
-	
-	private List<Clazz> clazzes;
-
 	private List<String[]> students;
 
-	public List<Clazz> getClazzes() throws Exception {
-		if (clazzes == null)
-			clazzes = reportsMissions.listClasses(AuthenticationUtil.getUserFromSession());
-		return clazzes;
-	}
-	
-	public Clazz getClazz() {
-		return clazz;
-	}
-	
 	public void setClazz(Clazz clazz) throws Exception {
-		if (this.clazz != null && clazz != null && this.clazz.getId() == clazz.getId())
+		if (this.getClazz() != null && clazz != null && this.getClazz().getId() == clazz.getId())
 			return;
 		
-		this.clazz = clazz;
+		super.setClazz(clazz);
 		this.students = null;
 		
 		this.loadStudents();
 	}
 	
 	public void loadStudents() throws Exception {
-		if (clazz != null) {
-			this.students = reportsStudents.listStudentsAndAnswers(clazz.getId(), new Integer[]{5,6,7,8,9});
+		if (getClazz() != null) {
+			this.students = reportsStudents.listStudentsAndAnswers(getClazz().getId(), new Integer[]{5,6,7,8,9});
 		}
 			
 	}

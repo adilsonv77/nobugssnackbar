@@ -11,11 +11,10 @@ import javax.faces.bean.ViewScoped;
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsMissions;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsStudents;
-import pt.uc.dei.nobugssnackbar.uc.web.util.AuthenticationUtil;
 
 @ManagedBean(name="statusStudents")
 @ViewScoped
-public class BeanStatusStudents implements Serializable {
+public class BeanStatusStudents extends BeanBase {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,6 +38,7 @@ public class BeanStatusStudents implements Serializable {
 	
 	public void setReportsMissions(UCReportsMissions reportsMissions) {
 		this.reportsMissions = reportsMissions;
+		setUcBase(reportsMissions);
 	}
 	
 	@ManagedProperty(value="#{statusMissions}")
@@ -52,31 +52,17 @@ public class BeanStatusStudents implements Serializable {
 		this.statusMissions = statusMissions;
 	}
 	
-	private Clazz clazz;
-	
 	private String order = "1";
 	
-	private List<Clazz> clazzes;
-
 	private List<String[]> students;
 
 	private List<ColumnModel> colStudents;
 
-	public List<Clazz> getClazzes() throws Exception {
-		if (clazzes == null)
-			clazzes = reportsMissions.listClasses(AuthenticationUtil.getUserFromSession());
-		return clazzes;
-	}
-	
-	public Clazz getClazz() {
-		return clazz;
-	}
-	
 	public void setClazz(Clazz clazz) throws Exception {
-		if (this.clazz != null && clazz != null && this.clazz.getId() == clazz.getId())
+		if (this.getClazz() != null && clazz != null && this.getClazz().getId() == clazz.getId())
 			return;
 		
-		this.clazz = clazz;
+		super.setClazz(clazz);
 		this.students = null;
 		this.colStudents = null;
 		
@@ -84,16 +70,16 @@ public class BeanStatusStudents implements Serializable {
 	}
 	
 	private void loadStudents() throws Exception {
-		if (clazz != null) {
+		if (getClazz() != null) {
 			
 			int o = Integer.parseInt(order);
 			switch (o) {
-				case 1: students = reportsStudents.listStudents(this.clazz.getId(), null, 0); break;
-				case 2: students = reportsStudents.listStudentsByOutliersInAttempts(this.clazz.getId(), null); break;
-				case 3: students = reportsStudents.listStudentsByMissionsAchieved(this.clazz.getId(), null); break;
-				case 4: students = reportsStudents.listStudentsByTimeSpent(this.clazz.getId(), null); break;
-				case 5: students = reportsStudents.listStudentsByExplanationEntry(this.clazz.getId(), null); break;
-				case 6: students = reportsStudents.listStudentsByExplanationTime(this.clazz.getId(), null); break;
+				case 1: students = reportsStudents.listStudents(this.getClazz().getId(), null, 0); break;
+				case 2: students = reportsStudents.listStudentsByOutliersInAttempts(this.getClazz().getId(), null); break;
+				case 3: students = reportsStudents.listStudentsByMissionsAchieved(this.getClazz().getId(), null); break;
+				case 4: students = reportsStudents.listStudentsByTimeSpent(this.getClazz().getId(), null); break;
+				case 5: students = reportsStudents.listStudentsByExplanationEntry(this.getClazz().getId(), null); break;
+				case 6: students = reportsStudents.listStudentsByExplanationTime(this.getClazz().getId(), null); break;
 			}
 			
 			colStudents = new ArrayList<BeanStatusStudents.ColumnModel>();

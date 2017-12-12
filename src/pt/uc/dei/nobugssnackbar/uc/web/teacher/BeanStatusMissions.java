@@ -1,6 +1,5 @@
 package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,21 +10,16 @@ import javax.faces.context.FacesContext;
 
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsMissions;
-import pt.uc.dei.nobugssnackbar.uc.web.util.AuthenticationUtil;
 
 @ManagedBean(name="statusMissions")
 @ViewScoped
-public class BeanStatusMissions implements Serializable {
+public class BeanStatusMissions extends BeanBase {
 
 	private static final long serialVersionUID = 1L;
 	
 	@ManagedProperty(value="#{ucreportsmissions}")
 	private UCReportsMissions reportsMissions;
 	
-	private Clazz clazz;
-	
-	private List<Clazz> clazzes;
-
 	private List<Map<String, String>> usersFromMission;
 	
 	private int missionId;
@@ -40,7 +34,7 @@ public class BeanStatusMissions implements Serializable {
 		
 		this.missionId = Integer.parseInt(mission);
 		
-		this.usersFromMission = reportsMissions.loadUsers(clazz.getId(), missionId, lu);
+		this.usersFromMission = reportsMissions.loadUsers(getClazz().getId(), missionId, lu);
 		
 		for (Map<String, String> u: this.usersFromMission) {
 			String time = u.get("timespend");
@@ -64,26 +58,17 @@ public class BeanStatusMissions implements Serializable {
 		this.userAttempts = reportsMissions.loadAttemptsFromUser(userId, missionId);
 	}
 	*/
-	public List<Clazz> getClazzes() throws Exception {
-		if (clazzes == null)
-			clazzes = reportsMissions.listClasses(AuthenticationUtil.getUserFromSession());
-		return clazzes;
-	}
-	
 	public UCReportsMissions getReportsMissions() {
 		return reportsMissions;
 	}
 	
 	public void setReportsMissions(UCReportsMissions reportsMissions) {
 		this.reportsMissions = reportsMissions;
+		setUcBase(reportsMissions);
 	}
 	
-	public Clazz getClazz() {
-		return clazz;
-	}
-	
-	public void setClazz(Clazz clazz) {
-		this.clazz = clazz;
+	public void setClazz(Clazz clazz) throws Exception {
+		super.setClazz(clazz);;
 		this.usersFromMission = null;
 	}
 	

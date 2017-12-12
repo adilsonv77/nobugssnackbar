@@ -46,8 +46,8 @@
 						<p:inputText value="#{studentman.student.name}" size="100" readonly="#{not studentman.showForm}"/>
 						
 						<p:outputLabel value="#{msg.user_password}"/>
-						<p:outputLabel value="#{msg.generateNewPassword}" rendered="#{studentman.newStudent}"/>
-						<p:outputLabel value="#{msg.dontChangedPassword}" rendered="#{not studentman.newStudent}"/>
+						<p:outputLabel value="#{msg.generateNewPassword}" rendered="#{studentman.newElem}"/>
+						<p:outputLabel value="#{msg.dontChangedPassword}" rendered="#{not studentman.newElem}"/>
 
 						<p:outputLabel value="#{msg.clazz}"/>
 						<p:selectOneMenu value="#{studentman.clazz}" disabled="#{not studentman.showForm}">

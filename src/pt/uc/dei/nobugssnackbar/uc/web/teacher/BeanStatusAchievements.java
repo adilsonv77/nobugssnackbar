@@ -1,6 +1,5 @@
 package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +11,10 @@ import javax.faces.bean.ViewScoped;
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsAchievements;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCReportsMissions;
-import pt.uc.dei.nobugssnackbar.uc.web.util.AuthenticationUtil;
 
 @ManagedBean(name="statusAchievements")
 @ViewScoped
-public class BeanStatusAchievements implements Serializable {
+public class BeanStatusAchievements extends BeanBase {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -40,35 +38,22 @@ public class BeanStatusAchievements implements Serializable {
 	
 	public void setReportsMissions(UCReportsMissions reportsMissions) {
 		this.reportsMissions = reportsMissions;
+		setUcBase(reportsMissions);
 	}
 	
-	private Clazz clazz;
-	
-	private List<Clazz> clazzes;
-
 	private List<String[]> students;
 
 	private List<ColumnModel> colStudents;
 
-	public List<Clazz> getClazzes() throws Exception {
-		if (clazzes == null)
-			clazzes = reportsMissions.listClasses(AuthenticationUtil.getUserFromSession());
-		return clazzes;
-	}
-	
-	public Clazz getClazz() {
-		return clazz;
-	}
-	
-	public void setClazz(Clazz clazz) {
-		this.clazz = clazz;
+	public void setClazz(Clazz clazz) throws Exception {
+		super.setClazz(clazz);
 		this.students = null;
 		this.colStudents = null;
 	}
 	
 	public List<String[]> getStudents() throws SQLException {
-		if (students == null && clazz != null) {
-			students = reportsAchievements.retrieveStudents(this.clazz.getId());
+		if (students == null && getClazz() != null) {
+			students = reportsAchievements.retrieveStudents(this.getClazz().getId());
 			colStudents = new ArrayList<BeanStatusAchievements.ColumnModel>();
 			
 			String[] cols = students.get(0);
