@@ -66,7 +66,7 @@ public class BeanLogin implements Serializable {
 		
 		if (clazzes == null) {
 			
-			clazzes = ucReleaseLevel.list(AuthenticationUtil.getUserFromSession());
+			clazzes = ucReleaseLevel.listClasses(AuthenticationUtil.getUserFromSession());
 		}
 			
 		return clazzes;

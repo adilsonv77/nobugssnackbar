@@ -6,34 +6,18 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.LevelDao;
-import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.Level;
 
 @ManagedBean(name = "uclevelman")
 @ApplicationScoped
-public class UCLevelMan {
+public class UCLevelMan extends UCBase {
 	
-	@ManagedProperty(value = "#{factoryDao.clazzDao}")
-	private transient ClazzDao clazzDao;
-
+	private static final long serialVersionUID = 1L;
+	
 	@ManagedProperty(value = "#{factoryDao.levelDao}")
 	private transient LevelDao levelDao;
 	
-	public ClazzDao getClazzDao() {
-		return clazzDao;
-	}
-	
-	public void setClazzDao(ClazzDao clazzDao) {
-		this.clazzDao = clazzDao;
-	}
-	
-	public List<Clazz> listClasses() throws Exception {
-
-		return clazzDao.list();
-	}
-
 	public LevelDao getLevelDao() {
 		return levelDao;
 	}

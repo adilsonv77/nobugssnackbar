@@ -64,7 +64,7 @@ public class BeanStatusStudents implements Serializable {
 
 	public List<Clazz> getClazzes() throws Exception {
 		if (clazzes == null)
-			clazzes = reportsMissions.listClazzes(AuthenticationUtil.getUserFromSession());
+			clazzes = reportsMissions.listClasses(AuthenticationUtil.getUserFromSession());
 		return clazzes;
 	}
 	
