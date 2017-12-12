@@ -34,8 +34,8 @@ public class UCReleaseLevel implements Serializable {
 		return levelDao.list(clazz.getId());
 	}
 
-	public void saveLevel(Clazz c, Level l) throws Exception{
-		levelDao.save(c.getId(), l);
+	public void saveLevel(Level l) throws Exception{
+		levelDao.update(l);
 	}
 	
 	public ClazzDao getClazzDao() {

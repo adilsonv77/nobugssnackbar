@@ -45,5 +45,14 @@ public class UCLevelMan {
 	public List<Level> listLevels(Long clazzId) throws Exception {
 		return levelDao.list(clazzId);
 	}
+
+	public void insert(Level level) throws Exception {
+		this.levelDao.insert(level);
+	}
+
+	public void update(Level level) throws Exception {
+		this.levelDao.update(level);
+	}
+
 	
 }

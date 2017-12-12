@@ -53,7 +53,7 @@ public class BeanReleaseLevel implements Serializable{
 	public void releaseLevels() throws Exception {
 		
 		for (Level l:saveLevels.values()) {
-			ucReleaseLevel.saveLevel(this.clazz, l);
+			ucReleaseLevel.saveLevel(l);
 		}
 		
 		this.updateLevels();

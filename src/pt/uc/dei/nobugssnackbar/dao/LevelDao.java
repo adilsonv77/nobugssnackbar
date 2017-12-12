@@ -8,6 +8,8 @@ public interface LevelDao {
 
 	List<Level> list(Long clazzId) throws Exception;
 
-	void save(long clazzId, Level l) throws Exception;
+	void insert(Level level) throws Exception;
+
+	void update(Level level) throws Exception;
 
 }

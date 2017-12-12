@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import pt.uc.dei.nobugssnackbar.model.Clazz;
 import pt.uc.dei.nobugssnackbar.model.Level;
+import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.uc.control.teacher.UCLevelMan;
 
 @ManagedBean(name="levelman")
@@ -75,9 +76,37 @@ public class BeanLevels implements Serializable  {
 		this.clazz = clazz;
 	}
 	
-	public void newStudent() {
+	public Level getLevel() {
+		return level;
+	}
+	
+	public void newLevel() {
 		this.showForm = true;
 		this.newLevel = true;
 		this.level = new Level();
 	}
+	
+	public void cancel() {
+		
+		this.showForm = false;
+		this.level = null;
+
+	}
+	
+	public void edit(Level level) throws Exception {
+		this.showForm = true;
+		this.newLevel = false;
+		this.level = level;
+	}
+	
+	public void save() throws Exception {
+		this.level.setClassId(this.clazz.getId());
+		if (newLevel)
+			ucLevelMan.insert(level);
+		else
+			ucLevelMan.update(level);
+		
+		this.cancel();
+	}
+
 }

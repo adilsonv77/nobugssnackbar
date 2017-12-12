@@ -8,19 +8,22 @@
 	<ui:define name="body">
 		
 		<p:layout>
-			<p:layoutUnit position="west" resizable="true">
+			<p:layoutUnit position="west" size="350" resizable="true">
 
 				<h:form id = "formListLevels">
 					<h:panelGrid columns="2" > 
 						
-								<p:selectOneMenu value="#{levelman.clazz}" widgetVar="clazzLevel">
-					 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
-					 				<f:selectItems value="#{levelman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
-									<p:ajax event="change" update="levelslist"/>
-									<f:attribute name="dataProvider" value="levelman.classes"/>
-								</p:selectOneMenu>
-								<p:commandButton value="#{msg['new']}" 	action="#{levelman.newLevel}" update=":formLevel" style="margin-bottom: 5px"
-						           oncomplete="$(function(){PrimeFaces.focus('formLevel:levelorder');});"/>
+						<p:selectOneMenu value="#{levelman.clazz}" widgetVar="clazzLevel">
+			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+			 				<f:selectItems value="#{levelman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+							<p:ajax event="change" update="levelslist bNew"/>
+							<f:attribute name="dataProvider" value="levelman.classes"/>
+						</p:selectOneMenu>
+						<p:commandButton 
+						   id="bNew"
+						   value="#{msg['new']}" action="#{levelman.newLevel}" update=":formLevel" style="margin-bottom: 5px"
+				           oncomplete="$(function(){PrimeFaces.focus('formLevel:levelorder');});"
+				           disabled="#{levelman.clazz == null}"/>
 		
 					</h:panelGrid>			        
 					<p:dataTable id="levelslist" value="#{levelman.levels}" var="level" rows="10"
@@ -50,12 +53,31 @@
 				<h:form id = "formLevel">
 					<h:panelGrid columns="2" >
 						
-						<p:commandButton value="#{msg['save']}" action="#{levelman.save}" disabled="#{not levelman.showForm}"
-							 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+						<p:outputLabel value="#{msg.name}"/>
+						<p:inputText id="lvname" value="#{levelman.level.name}" readonly="#{not levelman.showForm}"/>
 						
-						<p:commandButton value="Cancelar" action="#{levelman.cancel}" disabled="#{not levelman.showForm}"
-							 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+						<p:outputLabel value="#{msg.subject}"/>
+						<p:inputText id="lvsubject" value="#{levelman.level.subject}" readonly="#{not levelman.showForm}"/>
+
+						<p:outputLabel value="#{msg.releaseDate}"/>
+						<p:calendar 
+						  id="lvdate" 
+						  value="#{levelman.level.release}"
+						  pattern="dd/MM/yyyy"
+						  readonly="#{not levelman.showForm}"/>
+						
+						<p:outputLabel value="#{msg.order}"/>
+						<p:inputNumber id="lvorder" value="#{levelman.level.order}" decimalPlaces="0" readonly="#{not levelman.showForm}"/>
+						<p:outputLabel/>
+						
 					</h:panelGrid>
+					
+							<p:commandButton value="#{msg['save']}" action="#{levelman.save}" disabled="#{not levelman.showForm}"
+								 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+							
+							<p:commandButton value="Cancelar" action="#{levelman.cancel}" disabled="#{not levelman.showForm}"
+								 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+					
 				</h:form>
 			</p:layoutUnit>
 		</p:layout>
