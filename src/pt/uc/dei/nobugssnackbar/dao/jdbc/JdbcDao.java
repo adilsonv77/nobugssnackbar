@@ -33,7 +33,6 @@ public class JdbcDao<T> {
 		this.pks = new ArrayList<>();
 		this.fields = new ArrayList<>();
 
-		Field[] declFields = persistentClass.getDeclaredFields();
 
 		String columns = "";
 		String insertColumns = "";
@@ -41,31 +40,35 @@ public class JdbcDao<T> {
 		String pkColumns = "";
 		
 		int qtdInsert = 0;
-		
-		for (Field f : declFields) {
-			JdbcField jdbcField = f.getAnnotation(JdbcField.class);
-			if (jdbcField != null) {
-				f.setAccessible(true);
-				fields.add(f);
-
-				columns = columns + jdbcField.name() + ",";
-
-				JdbcPk pk = f.getAnnotation(JdbcPk.class);
-				boolean insertColumn = true;
-				if (pk != null) {
-					pkColumns = pkColumns + "  " + jdbcField.name() + " = ? and";
-					pks.add(f);
-					if (pk.autoIncrement())
-						insertColumn = false;
-				} else 
-					updateColumns = updateColumns + jdbcField.name() + " = ?,";
-
-				if (insertColumn) {
-					insertColumns = insertColumns + jdbcField.name() + ",";
-					qtdInsert++;
+		Class clazz = persistentClass;
+		do {
+			Field[] declFields = clazz.getDeclaredFields();
+			for (Field f : declFields) {
+				JdbcField jdbcField = f.getAnnotation(JdbcField.class);
+				if (jdbcField != null) {
+					f.setAccessible(true);
+					fields.add(f);
+	
+					columns = columns + jdbcField.name() + ",";
+	
+					JdbcPk pk = f.getAnnotation(JdbcPk.class);
+					boolean insertColumn = true;
+					if (pk != null) {
+						pkColumns = pkColumns + "  " + jdbcField.name() + " = ? and";
+						pks.add(f);
+						if (pk.autoIncrement())
+							insertColumn = false;
+					} else 
+						updateColumns = updateColumns + jdbcField.name() + " = ?,";
+	
+					if (insertColumn) {
+						insertColumns = insertColumns + jdbcField.name() + ",";
+						qtdInsert++;
+					}
 				}
 			}
-		}
+			clazz = clazz.getSuperclass();
+		} while (clazz != Object.class);
 
 		this.columns = columns.substring(0, columns.length() - 1);
 		this.insertColumns = insertColumns.substring(0, insertColumns.length() - 1);

@@ -67,7 +67,7 @@
 						</h:panelGrid>
 						
 						<p:outputLabel value="#{msg.genre}"/>
-						<p:selectOneRadio value="#{studentman.student.sex}">
+						<p:selectOneRadio value="#{studentman.student.sex}" disabled="#{not studentman.showForm}">
 				            <f:selectItem itemLabel="M" itemValue="M" />
 				            <f:selectItem itemLabel="F" itemValue="F" />
 				        </p:selectOneRadio>

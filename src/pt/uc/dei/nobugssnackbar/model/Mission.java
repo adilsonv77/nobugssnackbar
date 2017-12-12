@@ -27,6 +27,9 @@ public class Mission implements Serializable {
 	@JdbcField(name="missionrepeatable", type="INT")
 	private boolean repeatable;
 	
+	@JdbcField(name="missiontype")
+	private String type;
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,6 +55,13 @@ public class Mission implements Serializable {
 		this.repeatable = repeatable;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	public Mission() {
 	}

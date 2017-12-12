@@ -12,24 +12,38 @@
 
 				<h:form id = "formListMission">
 	
-			        <p:commandButton value="#{msg['new']}" 	action="#{studentman.newStudent}" update=":formStudent" style="margin-bottom: 5px"
-			           oncomplete="$(function(){PrimeFaces.focus('formStudent:stnick');});"/>
+					<h:panelGrid columns="2" > 
+						
+						<p:selectOneMenu value="#{missionman.clazz}" widgetVar="clazzLevel">
+			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+			 				<f:selectItems value="#{missionman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+							<p:ajax event="change" update="missionslist bNew"/>
+							<f:attribute name="dataProvider" value="missionman.classes"/>
+						</p:selectOneMenu>
+				        <p:commandButton 
+						   id="bNew"
+				           value="#{msg['new']}" action="#{missionman.newMission}"
+				           update=":formMission" style="margin-bottom: 5px"
+				           oncomplete="$(function(){PrimeFaces.focus('formMission:stname');});"
+  			               disabled="#{missionman.clazz == null}"/>
+		
+					</h:panelGrid>			        
 			        
-					<p:dataTable value="#{studentman.students}" var="student" rows="10"
+					<p:dataTable id="missionslist" value="#{missionman.missions}" var="mission" rows="10"
 						paginator="true">
 					
-				        <p:column headerText="#{msg.user_nick}" filterBy="#{student.nick}" filterMatchMode="contains">
-				            <h:outputText value="#{student.nick}"/>
+				        <p:column headerText="#{msg.order}" filterBy="#{mission.order}" filterMatchMode="contains">
+				            <h:outputText value="#{mission.order}"/>
 				        </p:column>
 
-				        <p:column headerText="#{msg.name}" filterBy="#{student.name}" filterMatchMode="contains">
-				            <h:outputText value="#{student.name}"/>
+				        <p:column headerText="#{msg.level}" filterBy="#{mission.classLevelId}" filterMatchMode="contains">
+				            <h:outputText value="#{mission.classLevelId}"/>
 				        </p:column>
-				        
+
 						<p:column width="40">
 					        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}" 
-					        	action="#{studentman.edit(student)}" update=":formStudent"
-					        	oncomplete="$(function(){PrimeFaces.focus('formStudent:stnick');});"/>
+					        	action="#{missionman.edit(mission)}" update=":formMission"
+					        	oncomplete="$(function(){PrimeFaces.focus('formMission:stname');});"/>
 						</p:column>
 					</p:dataTable>
 					
@@ -37,47 +51,37 @@
 			</p:layoutUnit>
 			
 			<p:layoutUnit position="center">
-				<h:form id = "formStudent">
+				<h:form id = "formMission" enctype="multipart/form-data" >
 					<h:panelGrid columns="2" >
-						<p:outputLabel value="#{msg.user_nick}"/>
-						<p:inputText id="stnick" value="#{studentman.student.nick}" readonly="#{not studentman.showForm}"/>
-						
 						<p:outputLabel value="#{msg.name}"/>
-						<p:inputText value="#{studentman.student.name}" size="100" readonly="#{not studentman.showForm}"/>
+						<p:inputText id="stname"  value="#{missionman.mission.name}" size="100" readonly="#{not missionman.showForm}"/>
 						
-						<p:outputLabel value="#{msg.user_password}"/>
-						<p:outputLabel value="#{msg.generateNewPassword}" rendered="#{studentman.newStudent}"/>
-						<p:outputLabel value="#{msg.dontChangedPassword}" rendered="#{not studentman.newStudent}"/>
-
-						<p:outputLabel value="#{msg.clazz}"/>
-						<p:selectOneMenu value="#{studentman.clazz}" disabled="#{not studentman.showForm}">
-							<f:selectItems value="#{studentman.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
-							<f:attribute name="dataProvider" value="studentman.classes"/>
-						</p:selectOneMenu>
+						<p:outputLabel value="#{msg.order}"/>
+						<p:inputNumber id="missionorder" value="#{missionman.mission.order}" decimalPlaces="0" readonly="#{not missionman.showForm}"/>
 						
-						<p:outputLabel value="#{msg.mail}"/>
-						<h:panelGrid columns="2" >
-							<p:inputText id="email" size="40" validatorMessage="#{msg.invalidMail}" value="#{studentman.student.mail}" readonly="#{not studentman.showForm}">
-	
-								<f:validateRegex
-									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						<p:outputLabel value="#{msg.level}"/>
+						<p:inputNumber id="missionlevel"  value="#{missionman.mission.classLevelId}" decimalPlaces="0" readonly="#{not missionman.showForm}"/>
 						
-							</p:inputText>
-							<p:message for="email" />
-						</h:panelGrid>
-						
-						<p:outputLabel value="#{msg.genre}"/>
-						<p:selectOneRadio value="#{studentman.student.sex}">
-				            <f:selectItem itemLabel="M" itemValue="M" />
-				            <f:selectItem itemLabel="F" itemValue="F" />
+						<p:outputLabel value="#{msg.type}"/>
+						<p:selectOneRadio value="#{missionman.mission.type}" disabled="#{not missionman.showForm}">
+				            <f:selectItem itemLabel="Questão Múltipla" itemValue="M" />
+				            <f:selectItem itemLabel="Corrigir Erros" itemValue="F" />
+				            <f:selectItem itemLabel="Completar" itemValue="G" />
+				            <f:selectItem itemLabel="Organizar Blocos" itemValue="S" />
+				            <f:selectItem itemLabel="Criar Solução" itemValue="C" />
 				        </p:selectOneRadio>
+				        
+				        <p:outputLabel value="#{msg.content}"/>
+				        <p:fileUpload fileUploadListener="#{missionman.upload}" mode="advanced" skinSimple="true" 
+				              disabled="#{not missionman.showForm}"
+				              label="#{msg.choose}"
+				              allowTypes="/(\.|\/)(xml)$/"/>
 						
+						<p:commandButton value="#{msg['save']}" action="#{missionman.save}" disabled="#{not missionman.showForm}"
+							 update=":formMission :formListMission" style="margin-bottom: 5px"/>
 						
-						<p:commandButton value="#{msg['save']}" action="#{studentman.save}" disabled="#{not studentman.showForm}"
-							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>
-						
-						<p:commandButton value="Cancelar" action="#{studentman.cancel}" disabled="#{not studentman.showForm}"
-							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>
+						<p:commandButton value="Cancelar" action="#{missionman.cancel}" disabled="#{not missionman.showForm}"
+							 update=":formMission :formListMission" style="margin-bottom: 5px"/>
 					</h:panelGrid>
 				</h:form>
 			</p:layoutUnit>

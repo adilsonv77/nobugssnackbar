@@ -10,6 +10,7 @@ import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
 import pt.uc.dei.nobugssnackbar.dao.LevelDao;
 import pt.uc.dei.nobugssnackbar.dao.MessageDao;
 import pt.uc.dei.nobugssnackbar.dao.MissionDao;
+import pt.uc.dei.nobugssnackbar.dao.MissionFromLevelDao;
 import pt.uc.dei.nobugssnackbar.dao.UserDao;
 
 public class FactoryJdbcDao implements AbstractFactoryDao {
@@ -107,5 +108,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (ilsDao == null)
 			ilsDao = new IlsJdbcDao();
 		return ilsDao;
+	}
+	
+	private MissionFromLevelDao missionFromLevelDao; 
+
+	@Override
+	public MissionFromLevelDao getMissionFromLevelDao() {
+		if (missionFromLevelDao == null)
+			missionFromLevelDao = new MissionFromLevelJdbcDao();
+		return missionFromLevelDao;
 	}
 }

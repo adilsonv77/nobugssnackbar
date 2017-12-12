@@ -5,6 +5,7 @@ public interface AbstractFactoryDao {
 	GameDao getGameDao();
 	
 	MissionDao getMissionDao();
+	MissionFromLevelDao getMissionFromLevelDao();
 	ClazzDao getClazzDao();
 	LanguageDao getLanguageDao();
 	MessageDao getMessageDao();
