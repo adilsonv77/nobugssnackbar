@@ -29,5 +29,13 @@ public class UCMissionMan extends UCBase {
 	public List<MissionFromLevel> listMissions(Long clazzId) throws Exception {
 		return missionFromLevelDao.list(clazzId);
 	}
+
+	public void insert(MissionFromLevel missionFromlevel) throws Exception {
+		this.missionFromLevelDao.insert(missionFromlevel);
+	}
+
+	public void update(MissionFromLevel missionFromlevel) throws Exception {
+		this.missionFromLevelDao.update(missionFromlevel);
+	}
 	
 }

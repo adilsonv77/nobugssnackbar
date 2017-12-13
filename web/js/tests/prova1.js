@@ -31,3 +31,13 @@ Blockly.JavaScript['print'] = function(block) {
 		      Blockly.JavaScript.ORDER_NONE);
 	return 'print('+value+')';
 };
+
+Blockly.Blocks['cons_pularLinha'] = {
+		  init: function() {
+		    this.appendDummyInput()
+		        .appendField("PRÓXIMA LINHA");
+		    this.setOutput(true);
+		    this.setColour(65);
+		  
+		  }
+		};

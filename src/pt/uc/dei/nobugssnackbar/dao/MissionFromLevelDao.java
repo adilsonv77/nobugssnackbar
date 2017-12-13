@@ -6,6 +6,10 @@ import pt.uc.dei.nobugssnackbar.model.MissionFromLevel;
 
 public interface MissionFromLevelDao {
 
+	void insert(MissionFromLevel missionFromlevel) throws Exception;
+
+	void update(MissionFromLevel missionFromlevel) throws Exception;
+	
 	List<MissionFromLevel> list(Long clazzId) throws Exception;
 	
 }

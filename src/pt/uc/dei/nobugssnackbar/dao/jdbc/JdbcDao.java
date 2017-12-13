@@ -191,34 +191,9 @@ public class JdbcDao<T> {
 					break;
 				}
 			}
+			
+			doSave(insert, bdCon, obj, pk);
 
-			if (insert) {
-
-				PreparedStatement q = getQueryInsert(bdCon);
-				
-				addFieldsQuery(q, obj);
-				
-				q.executeUpdate();
-				q.close();
-				
-				Statement st = bdCon.createStatement();
-				ResultSet rs = st.executeQuery("select last_insert_id()");
-				rs.next();
-				pk.set(obj, rs.getLong(1));
-				st.close();
-
-			} else {
-				PreparedStatement q = getQueryUpdate(bdCon);
-				int qtos = addFieldsQuery(q, obj);
-				for (Field f : pks) {
-					q.setObject(qtos, f.get(obj));
-					qtos++;
-				}
-
-				q.executeUpdate();
-				q.close();
-
-			}
 
 		} finally {
 			if (bdCon != null)
@@ -230,6 +205,39 @@ public class JdbcDao<T> {
 
 	}
 
+	protected void doSave(boolean insert, Connection bdCon, T obj, Field pk) throws Exception {
+		if (insert) {
+
+			PreparedStatement q = getQueryInsert(bdCon);
+			
+			addFieldsQuery(q, obj);
+			
+			q.executeUpdate();
+			q.close();
+			
+			if (pk != null) {
+				Statement st = bdCon.createStatement();
+				ResultSet rs = st.executeQuery("select last_insert_id()");
+				rs.next();
+				pk.set(obj, rs.getLong(1));
+				st.close();
+			}
+
+		} else {
+			PreparedStatement q = getQueryUpdate(bdCon);
+			int qtos = addFieldsQuery(q, obj);
+			for (Field f : pks) {
+				q.setObject(qtos, f.get(obj));
+				qtos++;
+			}
+
+			q.executeUpdate();
+			q.close();
+
+		}
+		
+	}
+	
 	private int addFieldsQuery(PreparedStatement query, T obj) throws Exception {
 		int i = 1;
 		for (Field f : fields) {

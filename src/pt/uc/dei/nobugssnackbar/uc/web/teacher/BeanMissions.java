@@ -58,19 +58,20 @@ public class BeanMissions extends BeanBase  {
 	}
 	
 	public void save() throws Exception {
-		/*
+		
 		this.mission.setClassId(this.getClazz().getId());
 		if (isNewElem())
-			ucLevelMan.insert(level);
+			ucMissionMan.insert(this.mission);
 		else
-			ucLevelMan.update(level);
+			ucMissionMan.update(this.mission);
 		
-		*/
+		
 		this.cancel();
 	}
 	
 	public void upload(FileUploadEvent event) {
 		UploadedFile uploadedFile = event.getFile();
-		System.out.println(uploadedFile); 
+		byte[] xml = uploadedFile.getContents();
+		this.mission.setContent(new String(xml));
 	}
 }

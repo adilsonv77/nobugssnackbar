@@ -45,10 +45,22 @@ Blockly.Blocks['robomaze_recolheritem'] = {
 		  }
 		};
 
+Blockly.Blocks['robomaze_virar'] = {
+		  init: function() {
+		    this.appendValueInput('in')
+		        .appendField("virar");
+		    this.setInputsInline(true);
+		    this.setPreviousStatement(true);
+		    this.setNextStatement(true);
+		    this.setColour(120);
+		  }
+		};
+
 Blockly.Blocks['robomaze_virarabaixo'] = {
 		  init: function() {
 		    this.appendDummyInput()
 		        .appendField("virarAbaixo");
+		    
 		    this.setPreviousStatement(true);
 		    this.setNextStatement(true);
 		    this.setColour(120);
