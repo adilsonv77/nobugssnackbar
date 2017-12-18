@@ -1,0 +1,57 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+ NONONON
+		]]>
+		</page>
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="frenchfries" show="true" />
+		<category name="goToBoxOfFruits" show="true" />
+		<category name="goToJuiceMachine" show="true" />
+
+		<category name="vars" show="true" />
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter2</init>
+			<dest>counter2</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">frenchfries</food>
+					</foods>
+					<drinks>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+	</customers>
+	
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" buttonRunQtdAttempts="5" >
+		<objective level="E" pos="2" place="counter">goesTo</objective>
+		<objective level="H" pos="2" place="counter">askForFood</objective>
+		<objective level="H" pos="2" place="counter">deliver</objective>
+	</objectives>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+	</xml>
+</mission>

@@ -384,10 +384,14 @@ Hints.showHint = function(hint) {
 
 Hints.launchTimer = function(time) {
 	
-	if (Hints.hndlTimer == 0 && !Hints.noHints) {
+	if (Game.loginData.userLogged.showHint) {
+
+		if (Hints.hndlTimer == 0 && !Hints.noHints) {
+			
+	    	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, time);
+	    	Hints.lastTimeSpent = time;
+		}
 		
-    	Hints.hndlTimer = window.setTimeout(Hints.timeIsUp, time);
-    	Hints.lastTimeSpent = time;
 	}
 	
 };

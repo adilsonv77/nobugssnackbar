@@ -768,6 +768,54 @@ Blockly.JavaScript['prepare_pickUpCoffee'] = function(block) {
 	return ['pickUpCoffee( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+/******************************************************************************
+ *                              French fryer Machine
+ ******************************************************************************/	
+
+Blockly.Blocks['move_goToFrenchFryer'] = {
+		 init: function() {
+			this.setColour(160);
+			this.appendDummyInput().appendField('goToFrenchFryer');
+			this.setPreviousStatement(true);
+			this.setNextStatement(true);
+			this.setTooltip(BlocklyApps.getMsg('SnackMan_goToFrenchFryerTooltip'));
+		 }
+};
+
+Blockly.JavaScript['move_goToFrenchFryer'] = function(block) {
+	return "goToFrenchFryer(); \n";
+};
+
+Blockly.Blocks['prepare_FrenchFries'] = {
+		 init: function() {
+		   this.setColour(160); 
+		   
+		   this.appendDummyInput().appendField('prepareFrenchFries');
+		   this.setPreviousStatement(true);
+		   this.setNextStatement(true);
+		   
+		   this.setTooltip(BlocklyApps.getMsg('SnackMan_prepareFrenchFriesTooltip'));
+		 }
+};
+
+Blockly.JavaScript['prepare_FrenchFries'] = function(block) {
+	return "prepareFrenchFries(); \n";
+};
+
+Blockly.Blocks['prepare_pickUpFrenchFries'] = {
+		 init: function() {
+		   this.setColour(160); 
+		   this.setOutput(true, "Foods");
+		   this.appendValueInput("VALUE").setCheck("FoodOrder").appendField('pickUpFrenchFries');
+		   this.setTooltip(BlocklyApps.getMsg('SnackMan_pickUpFrenchFriesTooltip'));
+		 }
+};
+
+Blockly.JavaScript['prepare_pickUpFrenchFries'] = function(block) {
+	var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || 'null'; 
+	return ['pickUpFrenchFries( ' + value + ' )', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 /**********************************************************************************/
 /**                       Fill in gap                                            **/
 /**********************************************************************************/

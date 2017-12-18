@@ -363,6 +363,7 @@ PreloadImgs.put('$icecreamofchocolate', 'images/$$icecreamofchocolate.png');
 PreloadImgs.put('$icecreamofvanilla', 'images/$$icecreamofvanilla.png');
 PreloadImgs.put('$icecreamofstrawberry', 'images/$$icecreamofstrawberry.png');
 PreloadImgs.put('$coffee', 'images/$$coffee.png');
+PreloadImgs.put('$frenchfries', 'images/$$frenchfries.png');
 
 //Balloons
 PreloadImgs.put('baloon_1', 'images/baloon_1.png');
@@ -399,7 +400,7 @@ PreloadImgs.put('display', 'images/display_new.png');
 PreloadImgs.put('boxoffruits', 'images/boxoffruits.png');
 PreloadImgs.put('juicemachine', 'images/juicemachine.png');
 PreloadImgs.put('icecreammachine', 'images/icecreammachine.png');
-PreloadImgs.put('coffeemachine', 'images/coffeemachine.png');
+PreloadImgs.put('frenchfryer', 'images/frenchfryer.png');
 
 PreloadImgs.put('mesa', 'images/mesa.png');
 PreloadImgs.put('chair1', 'images/cadeira1.png');

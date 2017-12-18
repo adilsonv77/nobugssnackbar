@@ -41,7 +41,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 					nCoffee:{id: "nCoffee", x:152, y:240}, nCoffee3:{id:"nCoffee3", x:164,y:240}, nCoffee2:{id:"nCoffee2",x:176,y:240}, nCoffee1:{id:"nCoffee1",x:188,y:240}			
 	};
 	
-	this.keynodes = ['n1', 'n11', 'n21', 'n31', 'n69', 'n79', 'n106', 'n127', 'nIceCream', 'n168', 'n178', 'nCoffee' ];
+	this.keynodes = ['n1', 'n11', 'n21', 'n31', 'n69', 'n79', 'n106', 'n127', 'nIceCream', 'n168', 'n178', 'nCoffee', 'n132' ];
 	
 	
 	this.snackManFinalPath = new Array();
@@ -59,6 +59,7 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	this.juiceMachineNode = this.snackManFinalPath[7];
 	this.iceCreamMachineNode = this.snackManFinalPath[8];
 	this.coffeeMachineNode = this.snackManFinalPath[11];
+	this.frenchFryerNode = this.snackManFinalPath[12];
 	
 	this.heightCooker = 91;
 	
@@ -218,7 +219,31 @@ SnackMan = function(hasTable, objectives, mission, avatar) {
 	} else
 		this.coffeeMachine = null;
 	
-   if (hasTable){
+	var frenchFries = mission.evaluate("count(//mission/commands/category[@name='frenchfries'])", mission, null,  XPathResult.ANY_TYPE, null);
+	this.showFrenchFryer = frenchFries.numberValue > 0; 
+	if (!this.showFrenchFryer) {
+		frenchFries = mission.evaluate("count(//mission/xml//block[@type='move_goToFrenchFryer'])", mission, null,  XPathResult.ANY_TYPE, null);
+		this.showFrenchFryer = frenchFries.numberValue > 0; 
+	}
+	
+	if (this.showFrenchFryer) {
+		this.showFrenchFryer = new Sprite({
+			ticksPerFrame: 0,
+			numberOfFrames: 2,
+			horzSeq: false,
+			x: 329,
+			y: 250,
+			width: 32,
+			height: 64,
+			sourceX: 0,
+			sourceY: 0,
+			img : PreloadImgs.get("frenchfryer")
+		});
+		
+	} else
+		this.showFrenchFryer = null;
+	
+    if (hasTable){
     	
     	this.mesa = PreloadImgs.get("mesa");
     	this.cad1 = PreloadImgs.get("chair1");
@@ -469,6 +494,10 @@ SnackMan.prototype.draw = function(ctx) {
 
 	if (this.showJuice) {
 		this.boxOfFruits.draw(ctx);
+	}
+	
+	if (this.showFrenchFryer) {
+		this.showFrenchFryer.draw(ctx);
 	}
 	
 	if (this.talkText !== null) {
@@ -1333,6 +1362,15 @@ SnackMan.prototype.askForIceCream = function() {
 	
 	return iceCream;
 	
+};
+
+/**********************************************************/
+/**                    French Fryer                       */
+/**********************************************************/
+
+SnackMan.prototype.goToFrenchFryer = function() {
+	
+	this.animateSnackMan( this.frenchFryerNode );  
 };
 
 /**********************************************************/

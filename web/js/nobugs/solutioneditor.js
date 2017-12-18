@@ -2,7 +2,7 @@
 
 function showOneEditArea(id) {
 
-	Hints.noHints = false;
+	Hints.noHints = !Game.loginData.userLogged.showHint;
 	$("#multiBlockly").css("display", "none");
 	$("#"+id).css("display", "inline");
 	
