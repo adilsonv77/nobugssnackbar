@@ -21,7 +21,7 @@ public abstract class BeanBase implements Serializable{
 	
 	private List<Clazz> classes;
 
-	public List<Clazz> getClasses() throws Exception {
+	public List<Clazz> getClazzes() throws Exception {
 		return classes;
 	}
 

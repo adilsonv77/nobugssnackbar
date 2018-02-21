@@ -15,9 +15,9 @@
 						
 						<p:selectOneMenu value="#{levelman.clazz}" widgetVar="clazzLevel">
 			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
-			 				<f:selectItems value="#{levelman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+			 				<f:selectItems value="#{levelman.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
 							<p:ajax event="change" update="levelslist bNew"/>
-							<f:attribute name="dataProvider" value="levelman.classes"/>
+							<f:attribute name="dataProvider" value="levelman.clazzes"/>
 						</p:selectOneMenu>
 						<p:commandButton 
 						   id="bNew"

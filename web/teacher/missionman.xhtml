@@ -16,9 +16,9 @@
 						
 						<p:selectOneMenu value="#{missionman.clazz}" widgetVar="clazzLevel">
 			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
-			 				<f:selectItems value="#{missionman.classes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+			 				<f:selectItems value="#{missionman.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
 							<p:ajax event="change" update="missionslist bNew"/>
-							<f:attribute name="dataProvider" value="missionman.classes"/>
+							<f:attribute name="dataProvider" value="missionman.clazzes"/>
 						</p:selectOneMenu>
 				        <p:commandButton 
 						   id="bNew"
