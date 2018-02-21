@@ -9,8 +9,10 @@ CityMap.init = function(options) {
 	CityMap.flagCarGreenDir = false;
 	
 	CityMap.onclick = options.onclick;
+	CityMap.onClickWinner = options.onclickwinner;
 	
 	CityMap.blinkSchool = false;
+	CityMap.blinkWinner = false;
 	
 	CityMap.bus = {left: 0, top: 100};
 	CityMap.bus.img = new Sprite({
@@ -120,11 +122,19 @@ CityMap.init = function(options) {
 CityMap.mouseMove = function(evt) {
     var mousePos = CityMap.getMousePos(evt);
     CityMap.blinkSchool = CityMap.testMouseOver(mousePos.x, mousePos.y);
+    if (!CityMap.blinkSchool) {
+    	CityMap.blinkWinner = CityMap.testMouseOverFaseExtra(mousePos.x, mousePos.y);
+    	console.log(mousePos.x + ", " + mousePos.y);
+    }
 };
   
 CityMap.click = function(evt) {
       if (CityMap.blinkSchool) 
       	CityMap.onclick(evt);
+      else
+    	  if (CityMap.blinkWinner)
+    		  CityMap.onClickWinner(evt);
+      
 };
   
 CityMap.getMousePos = function(evt) {
@@ -140,6 +150,16 @@ CityMap.testMouseOver = function(x, y) {
    var ys = [163,187,228,233,262,250,238,232,241,229,216,178];
    
    return CityMap.pnpoly(xs.length, xs, ys, x, y);
+};
+
+CityMap.testMouseOverFaseExtra = function(x, y) {
+	/*  
+	var xs = [321, 414, 474, 477, 382, 322];
+	var ys = [62,  3  ,  42, 130, 184, 154];
+	*/
+	   var xs = [206, 161, 159, 187, 235];
+	   var ys = [1, 30, 74, 90, 62];
+	   return CityMap.pnpoly(xs.length, xs, ys, x, y);
 };
 
 CityMap.pnpoly = function( nvert, vertx, verty, testx, testy ) {
@@ -165,7 +185,7 @@ CityMap.stopAnimation = function() {
 CityMap.animateMap = function() {
 	if (!CityMap.animate) return;
 	
-	CityMap.canvas.style.cursor = (CityMap.blinkSchool?"pointer":"default");
+	CityMap.canvas.style.cursor = (CityMap.blinkSchool||CityMap.blinkWinner?"pointer":"default");
 	
 	CityMap.canvasCtx.drawImage((CityMap.map1), 0, 0, 400, 300);
 	

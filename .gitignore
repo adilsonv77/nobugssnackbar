@@ -56,3 +56,5 @@ web/js/generated/pt-pt.js
 *.json
 web/js/generated/pt-br.js
 web/js/nobugs/nobugs-min.js
+utils/nobugssnackbar/InsertUsers.java
+web/testeditorx.html
