@@ -4,6 +4,7 @@ import pt.uc.dei.nobugssnackbar.dao.AbstractFactoryDao;
 import pt.uc.dei.nobugssnackbar.dao.AchievementDao;
 import pt.uc.dei.nobugssnackbar.dao.ClazzDao;
 import pt.uc.dei.nobugssnackbar.dao.EvaluationDao;
+import pt.uc.dei.nobugssnackbar.dao.ExtraLevelDao;
 import pt.uc.dei.nobugssnackbar.dao.GameDao;
 import pt.uc.dei.nobugssnackbar.dao.IlsDao;
 import pt.uc.dei.nobugssnackbar.dao.LanguageDao;
@@ -117,5 +118,14 @@ public class FactoryJdbcDao implements AbstractFactoryDao {
 		if (missionFromLevelDao == null)
 			missionFromLevelDao = new MissionFromLevelJdbcDao();
 		return missionFromLevelDao;
+	}
+	
+	private ExtraLevelDao extraLevelDao;
+
+	@Override
+	public ExtraLevelDao getExtraLevelDao() {
+		if (extraLevelDao == null)
+			extraLevelDao = new ExtraLevelJdbcDao();
+		return extraLevelDao;
 	}
 }

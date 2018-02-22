@@ -11,6 +11,7 @@ public interface AbstractFactoryDao {
 	MessageDao getMessageDao();
 	UserDao getUserDao();
 	LevelDao getLevelDao();
+	ExtraLevelDao getExtraLevelDao();
 	AchievementDao getAchievementDao();
 	EvaluationDao getEvaluationDao();
 
