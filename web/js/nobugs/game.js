@@ -356,6 +356,13 @@ Game.renderQuestionnaire = function(u, missionsHistorical, leaderBoard,
 					     clazzId: clazzId, levelId:levelId , missionIdx:missionIdx, missionView: missionView, xpToHat:parseInt(xpToHat), xpToClothes:parseInt(xpToClothes),
 					     xpToSpecialSkin:parseInt(xpToSpecialSkin), xpToAdd:parseInt(xpToAdd), coinsToExtra:parseInt(coinsToExtra) };
 	
+	Game.loginData.levelIdx = -1;
+	for (var i=0;i<Game.loginData.missionHist.length;i++)
+		if (Game.loginData.missionHist[i][5] == Game.loginData.levelId) {
+			Game.loginData.levelIdx = i;
+			break;
+		}
+	
 	AvatarImgMaker.configGender(Game.loginData.userLogged.sex);
 	
 	Pace.track(function() {
@@ -534,7 +541,8 @@ Game.logged = function() {
 	    		Game.openProfileEditor();
 	    	}
 	} else {
-		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.missionIdx, Game.loginData.missionView);
+		Game.missionSelected(Game.loginData.clazzId, Game.loginData.levelId, Game.loginData.levelIdx, 
+				             Game.loginData.missionIdx, Game.loginData.missionView);
 	}
 };
 
@@ -581,7 +589,9 @@ Game.cityClick = function() {
 };
 
 Game.cityWinnerClick = function() {
+	var levelIdx = Game.loginData.missionHist.length-1;
 
+	Game.missionSelected(1, Game.loginData.missionHist[levelIdx][5], levelIdx, 1, false);
 };
 
 Game.drawMiniAvatar = function() {
@@ -816,13 +826,13 @@ Game.stopPlaying = function() {
 };
 
 
-Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
+Game.nextMission = function(clazzId, levelId, levelIdx, missionIdx, missionView) {
 	var finishedMission = clazzId == undefined;
 	if (finishedMission) {
 		
 //		if (Game.loginData.missionIdx == Game.loginData.missionHist[Game.loginData.levelId-1][2]) {
 		// if the quantity of solved mission is equal to the total number missions
-		if (Game.loginData.missionHist[Game.loginData.levelId-1][3] == Game.loginData.missionHist[Game.loginData.levelId-1][2]-1){
+		if (Game.loginData.missionHist[Game.loginData.levelIdx][3] == Game.loginData.missionHist[Game.loginData.levelIdx][2]-1){
 			Game.noSaveMissionWhenLogClick = false;
 
 			Game.goBackToDashboard(null, false);
@@ -834,13 +844,14 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 		 
 		clazzId = Game.loginData.clazzId;
 		levelId = Game.loginData.levelId;
+		levelIdx = Game.loginData.levelIdx;
 		missionIdx = Game.loginData.missionIdx;
-		Game.loginData.missionHist[levelId-1][7][missionIdx-1] = "T"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
+		Game.loginData.missionHist[levelIdx][7][missionIdx-1] = "T"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
 		
 		// search the next mission. first after the currently... 
 		var found = -1;
-		for (var i=missionIdx; i<Game.loginData.missionHist[Game.loginData.levelId-1][2]; i++)
-			if (Game.loginData.missionHist[levelId-1][7][i] !== "T") {
+		for (var i=missionIdx; i<Game.loginData.missionHist[levelIdx][2]; i++)
+			if (Game.loginData.missionHist[levelIdx][7][i] !== "T") {
 				found = i;
 				break;
 			}
@@ -848,14 +859,14 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 		if (found == -1)
 			// if did not find any, then from the beginning.
 			for (var i = 0; i < missionIdx-1; i++)
-				if (Game.loginData.missionHist[levelId-1][7][i] !== "T") {
+				if (Game.loginData.missionHist[levelIdx][7][i] !== "T") {
 					found = i;
 					break;
 				}
 		
 		missionIdx = i+1;
 		missionView = false;
-		Game.loginData.missionHist[levelId-1][3]++;
+		Game.loginData.missionHist[levelIdx][3]++;
 	}
 	
     Game.stopPlaying();
@@ -868,14 +879,15 @@ Game.nextMission = function(clazzId, levelId, missionIdx, missionView) {
 	if (!finishedMission)
 		Game.exitMission(ret[0], ret[1]);
 	
-	Game.missionSelected(clazzId, levelId, missionIdx, missionView);
+	Game.missionSelected(clazzId, levelId, levelIdx, missionIdx, missionView);
 
 };
 
-Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
+Game.missionSelected = function(clazzId, levelId, levelIdx, missionIdx, missionView) {
 	
-  if (Game.loginData.missionHist[levelId-1][7][missionIdx-1] == null)
-	  Game.loginData.missionHist[levelId-1][7][missionIdx-1] = "F"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
+  levelIdx = parseInt(levelIdx);
+  if (Game.loginData.missionHist[levelIdx][7][missionIdx-1] == null)
+	  Game.loginData.missionHist[levelIdx][7][missionIdx-1] = "F"; // because is not reloaded from server, and this information is used to draw the circles in missionselection
 	
   Game.closeGoalsButtonClick();
   if (Game.previousGoalsAccomplishedWindowPos != undefined) {
@@ -893,6 +905,7 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   
   Game.loginData.clazzId = parseInt(clazzId);
   Game.loginData.levelId = parseInt(levelId);
+  Game.loginData.levelIdx = levelIdx;
   Game.loginData.missionIdx = parseInt(missionIdx);
 
   document.getElementById("initialBackground").style.display = "none";
@@ -945,9 +958,9 @@ Game.missionSelected = function(clazzId, levelId, missionIdx, missionView) {
   Game.lastErrorData.block = null;
   
 //  var mid = BlocklyApps.getMsg("_mission") + " " + levelId + "/" + missionIdx;
-  $("#missionIdentification").html(Game.loginData.missionHist[parseInt(levelId)-1][1]);
+  $("#missionIdentification").html(Game.loginData.missionHist[levelIdx][1]);
 
-  Game.missionSelection = new MissionSelection(levelId);
+  Game.missionSelection = new MissionSelection(levelIdx); 
   
   Pace.track(function() {
 	  try {

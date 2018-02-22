@@ -6,9 +6,10 @@ MissionSelection = function(level) {
 	this.canvas = document.getElementById("mission_level");
 	this.canvasCtx = this.canvas.getContext('2d');
 	
-	this.level = Game.loginData.missionHist[level-1];
+	this.level = Game.loginData.missionHist[level];
+	this.levelIdx = level;
 	this.current = Game.loginData.missionIdx;
-	this.randomAccess = level > 1 && Game.loginData.userLogged.randomAccess; 
+	this.randomAccess = level > 0 && Game.loginData.userLogged.randomAccess; 
 
 	this.hightlight = -1;
 	
@@ -58,7 +59,7 @@ MissionSelection.prototype.click = function(evt) {
     	}
     	
     	if (nextMission)
-    		Game.nextMission(this.level[4], this.level[5], found+1, !(this.level[7][found] === null || this.level[7][found] === "F"));
+    		Game.nextMission(this.level[4], this.level[5], this.levelIdx, found+1, !(this.level[7][found] === null || this.level[7][found] === "F"));
     	
     }
 };

@@ -123,8 +123,7 @@ CityMap.mouseMove = function(evt) {
     var mousePos = CityMap.getMousePos(evt);
     CityMap.blinkSchool = CityMap.testMouseOver(mousePos.x, mousePos.y);
     if (!CityMap.blinkSchool) {
-    	CityMap.blinkWinner = CityMap.testMouseOverFaseExtra(mousePos.x, mousePos.y);
-    	console.log(mousePos.x + ", " + mousePos.y);
+    	CityMap.blinkWinner = (Game.loginData.missionHist.length > 10) && (CityMap.testMouseOverFaseExtra(mousePos.x, mousePos.y));
     }
 };
   

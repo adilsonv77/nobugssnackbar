@@ -513,6 +513,40 @@ public class GameJdbcDao implements GameDao {
 				l.add(li);
 			}
 			ps.close();
+			
+			// extra levels
+			s = "select classid, classlevelid, " +
+				   "(select count(*) from classesmissions where classid = t_extra.classid and classlevelid = t_extra.classlevelid) qtasmissoes,"+
+				   "(select count(*) from missionsaccomplished join classesmissions using (missionid, classid) where classid = t_extra.classid and classlevelid = t_extra.classlevelid and achieved = 'T') qtasresolvidas,"+
+				   " dtaplicacao " +
+				   "    from (select classid, classlevelid, dtaplicacao from levelsextrausers join levelsextra using (levelsextraid) "+ 
+				   "                            where userid = ? and dtaplicacao = date(now()) " +
+				   "								  and time(now()) between hrinicio and hrfim) t_extra";
+			ps = bdCon.prepareStatement(s);
+			ps.setLong(1, idUser);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Object[] li = new Object[] { 
+						"",                         // #0 - class name
+						"Fase Extra",               // #1 - level name
+						rs.getLong(3),              // #2 - how many missions in this level
+						rs.getLong(4),              // #3 - how many missions solved
+						rs.getLong(1),              // #4 - class id
+						rs.getLong(2),              // #5 - class level id
+						new ArrayList<Integer[]>(), // #6
+						new ArrayList<String>(),    // #7 - is the mission achieved ? T or F
+						rs.getString(5),            // #8 - release date
+						0,              			// #9
+						new ArrayList<String>()     // #10 - type of mission: M-multiple choice; F-fix bugs; S-sort; G-Fill in gaps; C-create 
+						};
+
+				classesId.add(rs.getInt(1));
+				classesLevelId.add(rs.getInt(2));
+
+				l.add(li);
+			}
+			ps.close();
+			
 
 			// which are the missions solved and which are not, and the type of each mission
 			ps = bdCon

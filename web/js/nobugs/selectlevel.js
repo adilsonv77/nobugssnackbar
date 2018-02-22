@@ -110,6 +110,6 @@ SelectLevel.levelSelected = function(evt) {
 	
 	LogClick.store("mission_"+loadMission+"_view_"+missionView);
 
-	Game.missionSelected(levelInfo[4], levelInfo[5], loadMission, missionView);
+	Game.missionSelected(levelInfo[4], levelInfo[5], levelSelected-1, loadMission, missionView);
 		
 };
