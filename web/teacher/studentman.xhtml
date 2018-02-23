@@ -51,8 +51,8 @@
 
 						<p:outputLabel value="#{msg.clazz}"/>
 						<p:selectOneMenu value="#{studentman.clazz}" disabled="#{not studentman.showForm}">
-							<f:selectItems value="#{studentman.classes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
-							<f:attribute name="dataProvider" value="studentman.classes"/>
+							<f:selectItems value="#{studentman.clazzes}" var="c" itemLabel="#{c.name}" itemValue="#{c}" />
+							<f:attribute name="dataProvider" value="studentman.clazzes"/>
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="#{msg.mail}"/>

@@ -1,5 +1,6 @@
 package pt.uc.dei.nobugssnackbar.uc.web.teacher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -64,5 +65,24 @@ public class BeanExtraLevel extends BeanBase {
 		
 		this.cancel();
 	}
+	
+	private String txt;
+	
+	public String getTxt() {
+		return txt;
+	}
+	
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+	
+	private List<String> students = new ArrayList<>();
+	
+	public List<String> getStudents() {
+		return students;
+	}
 
+	public void reinit() {
+		this.txt = null;
+	}
 }

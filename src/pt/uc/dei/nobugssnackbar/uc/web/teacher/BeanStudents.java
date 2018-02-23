@@ -19,8 +19,6 @@ public class BeanStudents extends BeanBase {
 	@ManagedProperty(value="#{ucstudentman}")
 	private UCStudentMan ucStudentMan;
 
-	private List<Clazz> classes;
-
 	public UCStudentMan getUcStudentMan() {
 		return ucStudentMan;
 	}
@@ -48,13 +46,14 @@ public class BeanStudents extends BeanBase {
 	
 	public void edit(User user) throws Exception {
 		super.editElement();
+		
 		this.user = user;
 		
 		Clazz curClazz = ucStudentMan.getActiveClazz(user);
 		if (curClazz == null)
 			this.setClazz(null);
 		else {
-			for (Clazz c:classes)
+			for (Clazz c:getClazzes())
 				if (c.getId().longValue() == curClazz.getId().longValue()) {
 					this.setClazz(c);
 					break;
