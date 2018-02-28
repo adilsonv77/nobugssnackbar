@@ -252,6 +252,7 @@
 	"Explane.CountTalk": "Falar EXATAMENTE %0 vez(es) no programa inteiro.",
 	"Explane.AskWantHowManyFoods":"Pergunta ao cliente %0 quantos lanches ele deseja comer.",
 	"Explane.AskWantHowManyDrinks":"Pergunta ao cliente %0 quantas bebidas ele deseja.",
+	"Explane.AskWantHowManyFoodsToTravel":"Pergunta ao cliente %0 quantos lanches ele deseja levar para viagem.",
 	"Explane.CashIn":"Cobrar o valor do cliente %0.",
 	"Explane.GiveTheWholeChange":"Devolva ao cliente %0 o troco integral e com o m&#237;nimo de notas e moedas.",
 	"Explane.GiveSomeChange" :"Devolva ao cliente %0 o troco em %1 de %2.",

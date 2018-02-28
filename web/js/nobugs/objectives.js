@@ -177,6 +177,10 @@ Objective.factory = function(key) {
 		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyFoods");
 		break;
 		
+	case "askWantHowManyFoodsToTravel":
+		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyFoodsToTravel");
+		break;
+		
 	case "askWantHowManyDrinks":
 		this.factories[key] = new Objective.AskSomething("explanation_askWantHowManyDrinks");
 		break;

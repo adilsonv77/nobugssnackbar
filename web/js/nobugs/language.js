@@ -371,7 +371,23 @@ Blockly.Snippets['ask_askWantHowManyFoods'] = {
 	        meta: "snackman",
 	        type: "snackman"
 	    }
-};		
+};
+
+Blockly.Blocks['ask_askWantHowManyFoodsToTravel'] = {
+		  init: function() {
+		    this.setColour(160);
+		    this.setOutput(true);
+		    this.appendDummyInput()
+		        .appendField('askWantHowManyFoodsToTravel');
+		    this.setTooltip(BlocklyApps.getMsg('SnackMan_askWantHowManyFoodsToTravelTooltip'));
+		  }
+		};
+
+Blockly.JavaScript['ask_askWantHowManyFoodsToTravel'] = function(block) {
+	  return ['askWantHowManyFoodsToTravel()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+	};
+	
+
 		
 /******************************************************************************
  *                          Snackman Drinks

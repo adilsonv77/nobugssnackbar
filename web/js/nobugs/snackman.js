@@ -801,6 +801,22 @@ SnackMan.prototype.askWantHowManyFoods = function() {
 	
 };
 
+SnackMan.prototype.askWantHowManyFoodsToTravel= function() {
+	var found = this.getCustomer();
+	
+	if (!found) {
+		BlocklyApps.log.push(["fail", "Error_thereIsntCustomer"]);
+		throw false;
+	}
+	
+	var qtd = found.askWantHowManyFoodsToTravel();
+	
+	this.verifyObjectives("askWantHowManyFoodsToTravel", found);
+	
+	return qtd;
+	
+};
+
 SnackMan.prototype.hasHunger = function() {
 	var found = this.getCustomer();
 	
@@ -1766,7 +1782,7 @@ SnackMan.prototype.installMachine = function(idmachine, machinename, machinex, m
 SnackMan.prototype.hasMachineFor = function(product) {
 	
 	if (product === "hotdog" || product === "coke" || product === "juiceoforange" || 
-			product === "coffee" || product.indexOf("icecreamof") == 0)
+			product === "coffee" || product.indexOf("icecreamof") == 0 || product === "hotdogtotravel")
 		return true;
 	
 	for( var i= 0; i < this.installedMachines.length; i++ ) {

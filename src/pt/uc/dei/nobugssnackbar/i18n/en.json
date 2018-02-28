@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Ellen Spertus <ellen.spertus@gmail.com>",
-		"lastupdated": "2017-12-15 19:28:22.807000",
+		"lastupdated": "2018-02-27 23:17:56.527000",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -90,6 +90,7 @@
 	"SnackMan.askHasHungerTooltip": "Asks the customer if he wants to eat something.",
 	"SnackMan.askWantHowManyFoodsTooltip": "Asks the customer how many snacks he wants to eat. This value is the initial wish. It never changes.",
 	"SnackMan.askWantHowManyDrinksTooltip": "Asks the customer how many drinks he wants. This value is the initial wish. It never changes.",
+	"SnackMan.askWantHowManyFoodsToTravelTooltip": "Asks the customer how many snacks he wants to take to travel. This value is the initial wish. It never changes.",
 	"SnackMan.goToCoolerTooltip": "Moves the snack man to the cooler.",
 	"SnackMan.askForDrinkTooltip": "Asks the customer about what he wants to drink.",
 	"SnackMan.catchDrinkTooltip": "Catches the drink from the cooler and put it on a platter ready will deliver to the customer.",
@@ -104,7 +105,8 @@
 	"SnackMan.giveChangeTooltip": "Returns part of the change: the quantity of some kind of coin or bank note.",
 	"SnackMan.goToIceCreamMachineTooltip": "Moves the snack man to the ice cream machine.",
 	"SnackMan.pickUpIceCreamTooltip": "Pick up the ice cream from the machine.",
-	"SnackMan.askForIceCreamTooltip": "TODO",
+	"SnackMan.askForIceCreamTooltip": "Asks the customer about what he wants to eat for icecream.",
+	"SnackMan.askWantHowManyIceCreamTooltip": "Asks the customer how many icecream he wants to eat. This value is the initial wish. It never changes.",
 	"SnackMan.goToCoffeeMachineTooltip": "TODO",
 	"SnackMan.prepareCoffeeTooltip": "TODO",
 	"SnackMan.pickUpCoffeeTooltip": "TODO",
@@ -210,6 +212,7 @@
 	"Explane.CountTalk": "Talk no more than %0 time(s).",
 	"Explane.AskWantHowManyFoods": "Ask the customer %0 how many foods he wants to eat.",
 	"Explane.AskWantHowManyDrinks": "Ask the customer %0 how many drinks he wants. ",
+	"Explane.AskWantHowManyFoodsToTravel": "Ask the customer %0 how many foods he wants take to travel.",
 	"Explane.UseBlock": "Use the block %0 in the program.",
 	"Explane.AskForIceCream": "Ask the customer %0 the flavor of the ice cream.",
 	"Explane.AskWantHowManyIceCream": "Ask the customer %0 how many ice cream he wants.",

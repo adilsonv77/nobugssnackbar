@@ -3747,6 +3747,13 @@ Game.initApi = function(interpreter, scope) {
          interpreter.createNativeFunction(wrapper));
 
     wrapper = function() {
+        return interpreter.createPrimitive(hero.askWantHowManyFoodsToTravel());
+    };
+    
+    interpreter.setProperty(scope, 'askWantHowManyFoodsToTravel',
+         interpreter.createNativeFunction(wrapper));
+    
+    wrapper = function() {
 	      return interpreter.createPrimitive(hero.hasThirsty());
 	    };
 		    

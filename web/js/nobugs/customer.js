@@ -490,6 +490,14 @@ Customer.prototype.askWantHowManyFoods = function() {
 	return this.wishesFoods.length;
 };
 
+Customer.prototype.askWantHowManyFoodsToTravel = function() {
+	var c = 0;
+	for (var i=0; i<this.wishesFoods.length; i++)
+		if (this.wishesFoods[i].item.indexOf("hotdogtotravel") === 0)
+			c++;
+	return c;
+};
+
 Customer.prototype.askHowMuchInFoodsIfSell = function() {
 	var ret = 0;
 	for (var i = 0; i < this.wishesFoods.length; i++)

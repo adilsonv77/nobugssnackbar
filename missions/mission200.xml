@@ -1,0 +1,68 @@
+<?xml version='1.0'?>
+<mission>
+	<explanation hasInstruction="false">
+
+		<page type="goal">
+		<![CDATA[
+Teste de askWantHowManyFoodsToTravel.
+		]]>
+		</page>
+	</explanation>
+
+	<hints>
+		<sequence>
+		</sequence>
+
+		<errors>
+		</errors>
+	</hints>
+
+	<commands>
+		<category name="snackMan" show="true" />
+
+		<category name="goToBarCounter" show="true" />
+		<category name="goToDisplay" show="true" />
+		<category name="askForFood" show="true" />
+
+		<category name="pickUpHotDog" show="true" />
+		<category name="deliver" show="true" />
+
+		<category name="askWantHowManyFoods" show="true" />
+		<category name="askWantHowManyFoodsToTravel" show="true" />
+	
+		<category name="vars" show="true" />
+		<category name="math" show="true" />
+		<category name="text" show="true" />
+	</commands>
+
+	<cooker>initial</cooker>
+	<customers>
+		<customer>
+			<id>01</id>
+			<init>counter1</init>
+			<dest>counter1</dest>
+			<orders>
+				<order>
+					<foods>
+						<food qt="1" price="0">hotdogtotravel</food>
+						<food qt="1" price="0">hotdog</food>
+					</foods>
+					<drinks>
+						<drink qt="1" price="0">coke</drink>
+					</drinks>
+				</order>
+			</orders>
+		</customer>
+
+
+
+	</customers>
+	
+	<objectives xpIndividual="20" xpFinal="10" xpTotalRun="9" >
+		<objective pos="1" place="counter">goesTo</objective>
+		<objective pos="1" place="counter">askWantHowManyFoodsToTravel</objective>
+	</objectives>
+
+	<xml xmlns="http://www.w3.org/1999/xhtml">
+	</xml>
+</mission>
