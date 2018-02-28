@@ -175,6 +175,13 @@ Customer.prototype.reset = function() {
 	this.changeReceived = [];
 	
 	this.deliveredItems = [];
+	
+	for (var i=0; i<this.foods.length; i++)
+		this.foods[i].changeTo = this.foods[i].changes;
+
+	for (var i=0; i<this.drinks.length; i++)
+		this.drinks[i].changeTo = this.drinks[i].changes;
+
 };
 
 Customer.prototype.afterConstruct = function() {
@@ -457,12 +464,12 @@ Customer.prototype.draw = function(ctx) {
 			var withouDoubt = (!withDoubt) || (Game.runningStatus !== 0) || (Game.victory);
 			if (withouDoubt) {
 				for (var i = 0;i < this.foods.length;i++) {
-					if (!this.foods[i].delivered)
+					if (!this.foods[i].delivered && this.foods[i].changeTo == 0)
 						ordersUnfulfilled.push(PreloadImgs.get('$' + this.foods[i].item));
 				}
 				
 				for (var i = 0;i < this.drinks.length;i++) {
-					if (!this.drinks[i].delivered)
+					if (!this.drinks[i].delivered && this.drinks[i].changeTo == 0)
 						ordersUnfulfilled.push(PreloadImgs.get('$' + this.drinks[i].item));
 				}
 				
@@ -487,33 +494,110 @@ Customer.prototype.draw = function(ctx) {
 };
 
 Customer.prototype.askWantHowManyFoods = function() {
-	return this.wishesFoods.length;
+	var c = 0;
+	for (var i=0; i<this.wishesFoods.length; i++)
+		if (this.wishesFoods[i].changeTo == 0)
+			c++;
+	this.changeWishesForFood();
+	return c;
 };
 
 Customer.prototype.askWantHowManyFoodsToTravel = function() {
 	var c = 0;
 	for (var i=0; i<this.wishesFoods.length; i++)
-		if (this.wishesFoods[i].item.indexOf("hotdogtotravel") === 0)
+		if (this.wishesFoods[i].changeTo == 0 && this.wishesFoods[i].item.indexOf("hotdogtotravel") === 0)
 			c++;
+	this.changeWishesForFood();
 	return c;
 };
 
 Customer.prototype.askHowMuchInFoodsIfSell = function() {
 	var ret = 0;
 	for (var i = 0; i < this.wishesFoods.length; i++)
-		ret += this.wishesFoods[i].price;
+		ret += (this.wishesFoods[i].changeTo == 0?this.wishesFoods[i].price:0);
 	
+	this.changeWishesForFood();
 	return ret;
 };
 
+Customer.prototype.askForFood = function() {
+	if (this.fUnfulfilled >= this.foods.length)
+		return null;
+	
+	var d = null;
+	for (var i=0; i<this.foods.length; i++)
+		if (!this.foods[i].delivered && this.foods[i].changeTo == 0) {
+			d = this.foods[i];
+			break;
+		}
+	
+	this.changeWishesForFood();
+	
+	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
+};
+
+Customer.prototype.changeWishesForFood = function() {
+	for (var i=0; i<this.foods.length; i++)
+		if (!this.foods[i].delivered && this.foods[i].changeTo > 0) {
+			this.foods[i].changeTo--;
+		}
+}
+
+Customer.prototype.hasHunger = function() {
+	return (this.fUnfulfilled < this.foods.length);
+};
+
+Customer.prototype.askForIceCream = function() {
+	if (this.fUnfulfilled >= this.foods.length)
+		return null;
+	
+	var iceasked = null
+	for (var i = this.fUnfulfilled; i < this.foods.length; i++) {
+		var d = this.foods[i];
+		if (d.item.indexOf("icecreamof") == 0 && d.changeTo == 0) {
+			
+			iceasked = {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
+			break;
+		}
+	}
+
+	this.changeWishesForFood();
+	
+	return iceasked;
+};
+
+Customer.prototype.askWantHowManyIceCream = function() {
+	var c = 0;
+	for (var i=0; i<this.wishesFoods.length; i++)
+		if (this.wishesFoods[i].item.indexOf("icecreamof") === 0 && this.wishesFoods[i].item.changeTo == 0)
+			c++;
+	this.changeWishesForFood();
+	return c;
+};
+
+Customer.prototype.changeWishesForDrinks = function() {
+	for (var i=0; i<this.drinks.length; i++)
+		if (!this.drinks[i].delivered && this.drinks[i].changeTo > 0) {
+			this.drinks[i].changeTo--;
+		}
+}
+
 Customer.prototype.askWantHowManyDrinks = function() {
-	return this.wishesDrinks.length;
+	var c = 0;
+	for (var i=0; i<this.wishesDrinks.length; i++)
+		if (this.wishesDrinks[i].changeTo == 0)
+			c++;
+	this.changeWishesForDrinks();
+	return c;
 };
 
 Customer.prototype.askHowMuchInDrinksIfSell = function() {
 	var ret = 0;
+	
 	for (var i = 0; i < this.wishesDrinks.length; i++)
-		ret += this.wishesDrinks[i].price;
+		ret += (this.wishesDrinks[i].changeTo == 0?this.wishesDrinks[i].price:0);
+
+	this.changeWishesForFood();
 	
 	return ret;
 };
@@ -524,11 +608,13 @@ Customer.prototype.askForDrink = function() {
 	
 	var d = null;
 	for (var i=0; i<this.drinks.length; i++)
-		if (!this.drinks[i].delivered) {
+		if (!this.drinks[i].delivered && this.drinks[i].changeTo == 0) {
 			d = this.drinks[i];
 			break;
 		}
 
+	this.changeWishesForDrinks();
+	
 	return {type: "order", descr:"$$" + d.item, drinkOrFood: "drink", source: this.currentNode.id, sourceType: this.placeType};
 };
 
@@ -538,7 +624,7 @@ Customer.prototype.askForDrinkByIndex = function(n) {
 	
 	var d = null, count = 1;
 	for (var i=0; i<this.drinks.length; i++)
-		if (!this.drinks[i].delivered) {
+		if (!this.drinks[i].delivered && this.drinks[i].changeTo == 0) {
 			if (count == n) {
 				d = this.drinks[i];
 				break;
@@ -554,48 +640,6 @@ Customer.prototype.askForDrinkByIndex = function(n) {
 
 Customer.prototype.hasThirsty = function() {
 	return (this.dUnfulfilled < this.drinks.length);
-};
-
-Customer.prototype.askForFood = function() {
-	if (this.fUnfulfilled >= this.foods.length)
-		return null;
-	
-	var d = null;
-	for (var i=0; i<this.foods.length; i++)
-		if (!this.foods[i].delivered) {
-			d = this.foods[i];
-			break;
-		}
-
-	return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
-};
-
-Customer.prototype.hasHunger = function() {
-	return (this.fUnfulfilled < this.foods.length);
-};
-
-Customer.prototype.askForIceCream = function() {
-	if (this.fUnfulfilled >= this.foods.length)
-		return null;
-	
-	
-	for (var i = this.fUnfulfilled; i < this.foods.length; i++) {
-		var d = this.foods[i];
-		if (d.item.indexOf("icecreamof") == 0) {
-			
-			return {type: "order", descr:"$$" + d.item, drinkOrFood: "food", source: this.currentNode.id, sourceType: this.placeType};
-		}
-	}
-	
-	return null;
-};
-
-Customer.prototype.askWantHowManyIceCream = function() {
-	var c = 0;
-	for (var i=0; i<this.wishesFoods.length; i++)
-		if (this.wishesFoods[i].item.indexOf("icecreamof") === 0)
-			c++;
-	return c;
 };
 
 Customer.DELIVERED_BAD = 0;

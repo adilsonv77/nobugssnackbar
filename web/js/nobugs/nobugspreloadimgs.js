@@ -1,4 +1,5 @@
 'use strict';
+// ATENCAO: qualquer nova imagem coloque em arquivos que já são carregados no jogo
 
 // avatar.js
 
@@ -357,7 +358,6 @@ PreloadImgs.put('heart', 'images/heart.png');
 //Candidate Orders
 PreloadImgs.put('$coke', 'images/$$coke.png');
 PreloadImgs.put('$hotdog', 'images/$$hotdog.png');
-PreloadImgs.put('$hotdogtotravel', 'images/$$hotdogtotravel.png');
 PreloadImgs.put('$juiceoforange', 'images/$$juiceoforange.png');
 PreloadImgs.put('$orange', 'images/$$orange.png');
 PreloadImgs.put('$icecreamofchocolate', 'images/$$icecreamofchocolate.png');

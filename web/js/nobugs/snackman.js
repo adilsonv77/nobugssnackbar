@@ -24,6 +24,8 @@
 
 'use strict';
 
+PreloadImgs.put('$hotdogtotravel', 'images/$$hotdogtotravel.png');
+
 var SnackMan = {};
 
 SnackMan = function(hasTable, objectives, mission, avatar) {

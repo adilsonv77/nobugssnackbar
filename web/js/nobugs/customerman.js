@@ -400,7 +400,10 @@ CustomerManager.extractItems = function(key, list, foodsLen, randomType) {
 		
 		if (hero.hasMachineFor(theItem)) {
 			var thePrice = parseInt(item.getAttribute("price"));
-			items.push({item: theItem, price: thePrice});
+			var changeTo = 0;
+			if (item.getAttribute("changeTo") === "true")
+				changeTo = 1;
+			items.push({item: theItem, price: thePrice, changeTo: changeTo, changes:changeTo});
 		}
 		
 	} 
