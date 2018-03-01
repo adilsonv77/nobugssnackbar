@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+		
+		<p:layout>
+			<p:layoutUnit position="west" size="350" resizable="true">
+
+				<h:form id = "formListLevels">
+					<h:panelGrid columns="2" > 
+						
+						<p:selectOneMenu value="#{extralevelman.clazz}" widgetVar="clazzLevel">
+			 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+			 				<f:selectItems value="#{extralevelman.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+							<p:ajax event="change" update="levelslist bNew"/>
+							<f:attribute name="dataProvider" value="extralevelman.clazzes"/>
+						</p:selectOneMenu>
+						<p:commandButton 
+						   id="bNew"
+						   value="#{msg['new']}" action="#{extralevelman.newLevel}" update=":formLevel" style="margin-bottom: 5px"
+				           oncomplete="$(function(){PrimeFaces.focus('formLevel:levelorder');});"
+				           disabled="#{extralevelman.clazz == null}"/>
+		
+					</h:panelGrid>			        
+					<p:dataTable id="levelslist" value="#{extralevelman.levels}" var="level" rows="10"
+						paginator="true">
+					
+				        <p:column headerText="#{msg.name}" filterBy="#{level.nome}" filterMatchMode="contains">
+				            <h:outputText value="#{level.nome}"/>
+				        </p:column>
+					        
+						<p:column width="40">
+					        <p:commandButton icon="ui-icon-pencil" title="#{msg['edit']}" 
+					        	action="#{extralevelman.edit(level)}" update=":formLevel"
+					        	oncomplete="$(function(){PrimeFaces.focus('formLevel:stnick');});"/>
+						</p:column>
+					</p:dataTable>
+					
+				</h:form>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center">
+				<h:form id = "formLevel">
+					<h:panelGrid columns="2" >
+					
+						<p:outputLabel value="#{msg.order} da Fase"/>
+						<p:inputNumber id="lvid" value="#{extralevelman.level.levelId}" decimalPlaces="0" readonly="#{not extralevelman.showForm}"/>
+						
+						<p:outputLabel value="Data da Aplicação"/>
+						<p:calendar 
+						  id="lvdate" 
+						  value="#{extralevelman.level.dtAplicacao}"
+						  pattern="dd/MM/yyyy"
+						  readonly="#{not extralevelman.showForm}"/>
+						
+						
+						<p:outputLabel value="Hora de Início"/>
+						<pe:timePicker id="hrinicio" value="#{extralevelman.level.hrInicio}" 
+								  readonly="#{not extralevelman.showForm}"
+						/>  
+						
+						<p:outputLabel value="Hora Fim"/>
+						<pe:timePicker id="hrfim" value="#{extralevelman.level.hrFim}" 
+								  readonly="#{not extralevelman.showForm}"
+						/>  
+						
+					</h:panelGrid>
+					
+					<p:panel id = "pnalunos" header="Adicione usuários na fase" style="margin-bottom:20px">
+					
+          				<p:selectOneMenu value="#{extralevelman.stringToAdd}">
+	 						<f:selectItem itemLabel="Selecione um aluno" itemValue="" />
+	 						<f:selectItems value="#{extralevelman.stringsToAdd}" var="c" itemValue="#{c}" itemLabel="#{c}" />
+							
+						</p:selectOneMenu>
+
+						<p:commandButton id="btn_add2" value="Add" update="@parent" action="#{extralevelman.reinitstring}" >
+                			<p:collector value="#{extralevelman.stringToAdd}" addTo="#{extralevelman.stringsAdded}" unique="true"/>
+            			</p:commandButton>
+            			
+            			<p:dataTable value="#{extralevelman.stringsAdded}" var="string_" id="students">
+            				
+            				<p:column headerText="#{msg.name}">
+            					<h:outputText value="#{string_}"/>
+            				</p:column>
+
+				            <p:column headerText="Action">
+				                <p:commandLink value="Remove" update=":formLevel:pnalunos" action="#{extralevelman.removestring(string_)}">
+				                    <p:collector value="#{string_}" removeFrom="#{extralevelman.stringsAdded}" unique="true"/>
+				                </p:commandLink>
+				            </p:column>
+            			</p:dataTable>
+            			
+ 					</p:panel>
+					
+					<p:commandButton value="#{msg['save']}" action="#{extralevelman.save}" disabled="#{not extralevelman.showForm}"
+						 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+					
+					<p:commandButton value="Cancelar" action="#{extralevelman.cancel}" disabled="#{not extralevelman.showForm}"
+						 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>
+					
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+			
+	</ui:define>
+
+</ui:composition>

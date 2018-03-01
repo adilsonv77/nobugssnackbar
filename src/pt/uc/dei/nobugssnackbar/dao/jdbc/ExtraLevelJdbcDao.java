@@ -9,6 +9,7 @@ import java.util.List;
 
 import pt.uc.dei.nobugssnackbar.dao.ExtraLevelDao;
 import pt.uc.dei.nobugssnackbar.model.ExtraLevel;
+import pt.uc.dei.nobugssnackbar.model.User;
 
 public class ExtraLevelJdbcDao implements ExtraLevelDao {
 
@@ -93,6 +94,77 @@ public class ExtraLevelJdbcDao implements ExtraLevelDao {
 	@Override
 	public void update(ExtraLevel level) throws Exception {
 		save(level, "update levelsextra set classlevelid=?, classid=?, dtaplicacao=?, hrinicio=?, hrfim=? where levelsextraid = ?");
+	}
+
+	@Override
+	public void removeStudents(ExtraLevel level) {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps = bdCon.prepareStatement("delete from levelsextrausers where levelsextraid = ?");
+			ps.setLong(1, level.getId());
+			ps.executeUpdate();
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+	
+	}
+
+	@Override
+	public void addStudents(ExtraLevel level, List<User> studentsAdded) {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps = bdCon.prepareStatement("insert into levelsextrausers (levelsextraid, userid) values (?, ?)");
+			ps.setLong(1, level.getId());
+			for (User user: studentsAdded) {
+				ps.setLong(2, user.getId());
+				ps.executeUpdate();
+			}
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+	
+		
+	}
+
+	@Override
+	public List<Long> listUsersByLevelId(long levelId) {
+		
+		List<Long> ret = new ArrayList<>();
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			PreparedStatement ps = bdCon.prepareStatement("select userid from levelsextrausers join users using(userid) where levelsextraid = ?");
+			ps.setLong(1, levelId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ret.add(rs.getLong(1));
+			}
+			
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		
+		return ret;
 	}
 	
 }

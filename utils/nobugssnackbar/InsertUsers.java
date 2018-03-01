@@ -22,7 +22,7 @@ public class InsertUsers {
 		
 		GameDao dao = new GameJdbcDao();
 		
-		BufferedReader arq = new BufferedReader(new FileReader(new File("alunos-2018-1.csv")));
+		BufferedReader arq = new BufferedReader(new FileReader(new File("alunos-2018-1_lote2.csv")));
 		
 		long [] clazz = new long[]{1};
 		

@@ -72,26 +72,20 @@
 					</h:panelGrid>
 					
 					<p:panel id = "pnalunos" header="Adicione usuários na fase" style="margin-bottom:20px">
-					
-						<p:inputText id="fase_aluno" value="#{extralevelman.txt}"/>
-						<p:commandButton id="btn_add" value="Add" update="@parent" action="#{extralevelman.reinit}" >
-                			<p:collector value="#{extralevelman.txt}" addTo="#{extralevelman.students}" unique="true"/>
-            			</p:commandButton>
-            			
-            			<p:dataTable value="#{extralevelman.students}" var="student" id="students">
-            				
-            				<p:column headerText="#{msg.name}">
-                				<h:outputText value="#{student}" />
-            				</p:column>
-
+           			
+						<p:selectManyMenu id="advanced" value="#{extralevelman.studentsAdded}" style="width: 500px"
+				                          var="s" filter="true" filterMatchMode="contains" showCheckbox="true"
+				                          readonly="#{not extralevelman.showForm}"
+				                          converter="userConverter">
+				            <f:selectItems value="#{extralevelman.studentsToAdd}" var="student" itemLabel="#{student.name}" itemValue="#{student}" />
+							<f:attribute name="dataProvider" value="extralevelman.studentsToAdd"/>
+				 
 				            <p:column>
-				                <p:commandLink value="Remove" update=":formLevel:students">
-				                    <p:collector value="#{student}" removeFrom="#{extralevelman.students}" unique="true"/>
-				                </p:commandLink>
+				                <h:outputText value="#{s.name}" />
 				            </p:column>
-            			
-            			</p:dataTable>
-					</p:panel>
+				        </p:selectManyMenu>
+
+  					</p:panel>
 					
 					<p:commandButton value="#{msg['save']}" action="#{extralevelman.save}" disabled="#{not extralevelman.showForm}"
 						 update=":formLevel :formListLevels" style="margin-bottom: 5px"/>

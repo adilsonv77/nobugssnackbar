@@ -84,7 +84,16 @@ public class User implements Serializable {
 		return flags;
 	}
 	
+	public User() {
+	}
+	
+	public User(long id) {
+		this.id = id;
+	}
+	
 	public long getId() {
+		if (id == null)
+			return 0;
 		return id;
 	}
 
