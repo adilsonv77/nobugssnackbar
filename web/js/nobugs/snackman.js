@@ -25,6 +25,7 @@
 'use strict';
 
 PreloadImgs.put('$hotdogtotravel', 'images/$$hotdogtotravel.png');
+PreloadImgs.put('coffeemachine', 'images/coffeemachine.png');
 
 var SnackMan = {};
 

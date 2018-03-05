@@ -524,7 +524,7 @@ Game.logged = function() {
 	    BlocklyApps.bindClick('achievementsButton', Game.openAchievementList);
 	    BlocklyApps.bindClick('infotabButton', Game.openInfoTab);
 	    
-	    CityMap.init({onclick: Game.cityClick, onclickwinner: Game.cityWinnerClick});
+	    CityMap.init({onclick: Game.cityClick, onclickevaluation: Game.cityEvaluationClick});
 	    
 	    Game.createsLeaderboard();
 	    
@@ -588,7 +588,7 @@ Game.cityClick = function() {
 	SelectLevel.generateBoard();
 };
 
-Game.cityWinnerClick = function() {
+Game.cityEvaluationClick = function() {
 	var levelIdx = Game.loginData.missionHist.length-1;
 
 	Game.missionSelected(1, Game.loginData.missionHist[levelIdx][5], levelIdx, 1, false);
