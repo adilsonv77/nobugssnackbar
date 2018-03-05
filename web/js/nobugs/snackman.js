@@ -24,6 +24,8 @@
 
 'use strict';
 
+PreloadImgs.put('coffeemachine', 'images/coffeemachine.png');
+
 var SnackMan = {};
 
 SnackMan = function(hasTable, objectives, mission, avatar) {

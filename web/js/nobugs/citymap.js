@@ -1,5 +1,8 @@
 'use strict';
 
+PreloadImgs.put("extralevel", "images/extra_level.png", false);
+PreloadImgs.put("extralevelblink", "images/extra_level_blink.png", false);
+
 var CityMap = {};
 
 CityMap.init = function(options) {
@@ -9,10 +12,10 @@ CityMap.init = function(options) {
 	CityMap.flagCarGreenDir = false;
 	
 	CityMap.onclick = options.onclick;
-	CityMap.onClickWinner = options.onclickwinner;
+	CityMap.onClickEvaluation = options.onclickevaluation;
 	
 	CityMap.blinkSchool = false;
-	CityMap.blinkWinner = false;
+	CityMap.blinkEvaluation = false;
 	
 	CityMap.bus = {left: 0, top: 100};
 	CityMap.bus.img = new Sprite({
@@ -106,8 +109,10 @@ CityMap.init = function(options) {
 	CityMap.school = PreloadImgs.get("school");
 	
 	CityMap.trees = PreloadImgs.get("trees");
-
 	
+	CityMap.evaluation = PreloadImgs.get("extralevel");
+	CityMap.evaluation_hoover = PreloadImgs.get("extralevelblink");
+
 	CityMap.canvas = document.getElementById('city_map');
 	CityMap.canvasCtx = CityMap.canvas.getContext('2d');
 
@@ -117,13 +122,15 @@ CityMap.init = function(options) {
 	CityMap.canvas.addEventListener('mousemove', CityMap.mouseMove, false);
 		  
 	CityMap.canvas.addEventListener('click', CityMap.click, false);
+	
+	CityMap.releaseEvaluation = (Game.loginData.missionHist.length > 10);
 };
 
 CityMap.mouseMove = function(evt) {
     var mousePos = CityMap.getMousePos(evt);
     CityMap.blinkSchool = CityMap.testMouseOver(mousePos.x, mousePos.y);
     if (!CityMap.blinkSchool) {
-    	CityMap.blinkWinner = (Game.loginData.missionHist.length > 10) && (CityMap.testMouseOverFaseExtra(mousePos.x, mousePos.y));
+    	CityMap.blinkEvaluation = (CityMap.releaseEvaluation) && (CityMap.testMouseOverFaseExtra(mousePos.x, mousePos.y));
     }
 };
   
@@ -131,8 +138,8 @@ CityMap.click = function(evt) {
       if (CityMap.blinkSchool) 
       	CityMap.onclick(evt);
       else
-    	  if (CityMap.blinkWinner)
-    		  CityMap.onClickWinner(evt);
+    	  if (CityMap.blinkEvaluation)
+    		  CityMap.onClickEvaluation(evt);
       
 };
   
@@ -184,7 +191,7 @@ CityMap.stopAnimation = function() {
 CityMap.animateMap = function() {
 	if (!CityMap.animate) return;
 	
-	CityMap.canvas.style.cursor = (CityMap.blinkSchool||CityMap.blinkWinner?"pointer":"default");
+	CityMap.canvas.style.cursor = (CityMap.blinkSchool||CityMap.blinkEvaluation?"pointer":"default");
 	
 	CityMap.canvasCtx.drawImage((CityMap.map1), 0, 0, 400, 300);
 	
@@ -198,6 +205,8 @@ CityMap.animateMap = function() {
 	CityMap.canvasCtx.drawImage((CityMap.managedSnackBar), 0, 0, 400, 300);
 	
 	CityMap.canvasCtx.drawImage((CityMap.blinkSchool?CityMap.school_hoover:CityMap.school), 0, 0, 400, 300);
+	if (CityMap.releaseEvaluation)
+		CityMap.canvasCtx.drawImage((CityMap.blinkEvaluation?CityMap.evaluation_hoover:CityMap.evaluation), 0, 0, 400, 300);
 
 	window.setTimeout(CityMap.animateMap, 75);
 };
