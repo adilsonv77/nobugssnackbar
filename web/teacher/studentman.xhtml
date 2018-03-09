@@ -72,6 +72,8 @@
 				            <f:selectItem itemLabel="F" itemValue="F" />
 				        </p:selectOneRadio>
 						
+						<p:selectBooleanCheckbox value="#{studentman.student.habilitado}" disabled="#{not studentman.showForm}"/>
+						<p:outputLabel value="Habilitado para login"/>
 						
 						<p:commandButton value="#{msg['save']}" action="#{studentman.save}" disabled="#{not studentman.showForm}"
 							 update=":formStudent :formListStudent" style="margin-bottom: 5px"/>

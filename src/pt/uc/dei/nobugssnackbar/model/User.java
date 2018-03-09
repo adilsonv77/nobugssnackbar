@@ -182,8 +182,16 @@ public class User implements Serializable {
 		this.enabled = enabled;
 		
 	}
-	public String isEnabled() {
+	public String getEnabled() {
 		return enabled;
+	}
+	
+	public boolean isHabilitado() {
+		return (enabled != null && enabled.equals("T"));
+	}
+	
+	public void setHabilitado(boolean habilitado) {
+		this.enabled = (habilitado?"T":"F");
 	}
 
 	public boolean isShowInstruction() {

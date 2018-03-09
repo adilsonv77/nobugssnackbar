@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+                
+	<ui:define name="body">
+		
+		<h:form id = "formProva">
+
+			<p:selectOneMenu value="#{provaman.clazz}" widgetVar="clazzLevel">
+ 				<f:selectItem itemLabel="Selecione uma classe" itemValue="" />
+ 				<f:selectItems value="#{provaman.clazzes}" var="c" itemValue="#{c}" itemLabel="#{c.name}" />
+				<p:ajax event="change" update="extralevels"/>
+				<f:attribute name="dataProvider" value="provaman.clazzes"/>
+			</p:selectOneMenu>
+
+	        <p:commandButton title="Preparar para prova" 
+					         action="#{provaman.preparar}" update=":formProva"
+					        	/>
+		
+			<p:selectManyMenu id="extralevels" value="#{provaman.extraLevelsAdded}" style="width: 500px"
+	                          var="s" filter="true" filterMatchMode="contains" showCheckbox="true">
+	                          
+	            <f:selectItems value="#{provaman.extraLevelsToAdd}" var="extralevel" itemLabel="#{extralevel.nome}" itemValue="#{extralevel}" />
+				<f:attribute name="dataProvider" value="provaman.extraLevelsToAdd"/>
+	
+	            <p:column>
+	                <h:outputText value="#{s.nome}" />
+	            </p:column>
+	        </p:selectManyMenu>
+	        
+	        <p:dataTable id="arquivos" value="#{provaman.downloadFiles}" var="file">
+	        	<p:column>
+	        		<p:commandLink ajax="false">
+	        			<p:fileDownload value="#{file}" />
+	        		</p:commandLink>
+	        	</p:column>
+	        </p:dataTable>
+	        
+	        <p:commandButton title="Habilitar usuários" 
+					         actionListener="#{provaman.preparar}" update=":formProva"
+					        	/>
+		</h:form>
+
+			
+	</ui:define>
+
+</ui:composition>

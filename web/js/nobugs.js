@@ -25,7 +25,7 @@
  */
 'use strict';
 
-BlocklyApps.version = 20180229;
+BlocklyApps.version = 20180305;
 	
 // Supported languages.
 BlocklyApps.LANGUAGES =  [  'en', 'pt-pt', 'pt-br' ];

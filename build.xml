@@ -196,6 +196,7 @@
 	    	<fileset dir="${web.home}" >
 
 	    		<exclude name="admin/**/**/*.*" />
+	    		<!--<exclude name="js/nobugs/**/**/*.*" />-->
 	    		
 	    		<include name="teacher/**/**/*.*" />
 	    		<include name="resources/**/**/*.*" />

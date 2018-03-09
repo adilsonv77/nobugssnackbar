@@ -172,4 +172,24 @@ public class UserJdbcDao extends JdbcDao<User> implements UserDao {
 		
 	}
 
+	@Override
+	public void disableUsers(Long clazzId) throws Exception {
+		Connection bdCon = null;
+		try {
+			bdCon = getConnection();
+			
+			PreparedStatement ps = bdCon.prepareStatement("update users u, classesusers c set userenabled = 'F' where u.userid = c.userid and c.classid = ?");
+			ps.setLong(1, clazzId);
+			ps.executeUpdate();
+			
+		} finally {
+			if (bdCon != null)
+				try {
+					bdCon.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		//;
+	}
+
 }

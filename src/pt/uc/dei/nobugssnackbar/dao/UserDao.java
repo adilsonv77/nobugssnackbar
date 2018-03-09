@@ -18,4 +18,6 @@ public interface UserDao extends Dao<User> {
 
 	void updateRandomAccess(User user) throws Exception;
 
+	void disableUsers(Long clazzId) throws Exception;
+
 }

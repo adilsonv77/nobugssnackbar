@@ -75,8 +75,7 @@
            			
 						<p:selectManyMenu id="advanced" value="#{extralevelman.studentsAdded}" style="width: 500px"
 				                          var="s" filter="true" filterMatchMode="contains" showCheckbox="true"
-				                          readonly="#{not extralevelman.showForm}"
-				                          converter="userConverter">
+				                          readonly="#{not extralevelman.showForm}">
 				            <f:selectItems value="#{extralevelman.studentsToAdd}" var="student" itemLabel="#{student.name}" itemValue="#{student}" />
 							<f:attribute name="dataProvider" value="extralevelman.studentsToAdd"/>
 				 
