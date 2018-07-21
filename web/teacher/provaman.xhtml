@@ -16,12 +16,9 @@
 				<f:attribute name="dataProvider" value="provaman.clazzes"/>
 			</p:selectOneMenu>
 
-	        <p:commandButton title="Preparar para prova" 
-					         action="#{provaman.preparar}" update=":formProva"
-					        	/>
-		
 			<p:selectManyMenu id="extralevels" value="#{provaman.extraLevelsAdded}" style="width: 500px"
-	                          var="s" filter="true" filterMatchMode="contains" showCheckbox="true">
+	                          var="s" filter="true" filterMatchMode="contains" showCheckbox="true" 
+	                          converter="extraLevelsConverter">
 	                          
 	            <f:selectItems value="#{provaman.extraLevelsToAdd}" var="extralevel" itemLabel="#{extralevel.nome}" itemValue="#{extralevel}" />
 				<f:attribute name="dataProvider" value="provaman.extraLevelsToAdd"/>
@@ -30,7 +27,11 @@
 	                <h:outputText value="#{s.nome}" />
 	            </p:column>
 	        </p:selectManyMenu>
-	        
+	        <p:commandButton value="Preparar para prova" 
+					         actionListener="#{provaman.preparar}"
+					          style="margin-bottom: 5px"
+					        	/>
+		
 	        <p:dataTable id="arquivos" value="#{provaman.downloadFiles}" var="file">
 	        	<p:column>
 	        		<p:commandLink ajax="false">
@@ -39,7 +40,7 @@
 	        	</p:column>
 	        </p:dataTable>
 	        
-	        <p:commandButton title="Habilitar usuários" 
+	        <p:commandButton value="Habilitar usuários" 
 					         actionListener="#{provaman.preparar}" update=":formProva"
 					        	/>
 		</h:form>

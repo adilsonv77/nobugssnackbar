@@ -81,7 +81,7 @@
 				<arg line="--outputFile src/pt/uc/dei/nobugssnackbar/i18n/extracted_msgs.xlf --srcs @{fileimport},hints.soy,common.soy,messages.soy,commonheader.soy,editor.soy,avatareditor.soy,achievements.soy,template.soy"/>
 			</java>
 		
-			<exec executable="C:/Users/6515711/Python27/python">
+			<exec executable="python">
 				<arg value="i18n\xliff_to_json.py"/>
 				<arg value="--output_dir"/>
 				<arg value="src/pt/uc/dei/nobugssnackbar/i18n"/>
@@ -99,7 +99,7 @@
 				<arg value="template.soy"/>
 			</exec>
 			
-			<exec executable="C:/Users/6515711/Python27/python">
+			<exec executable="python">
 				<arg value="i18n\json_to_js.py"/>
 				<arg value="--key_file=src/pt/uc/dei/nobugssnackbar/i18n/keys.json"/>
 				<arg value="--path_to_jar=.\_soy"/>

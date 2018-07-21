@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
 import pt.uc.dei.nobugssnackbar.model.ExtraLevel;
 import pt.uc.dei.nobugssnackbar.uc.web.util.ApplicationUtils;
 
-@FacesConverter(forClass=ExtraLevel.class)
+@FacesConverter(forClass=ExtraLevel.class, value="extraLevelsConverter")
 public class ExtraLevelConverter implements Converter {
 
 	@Override

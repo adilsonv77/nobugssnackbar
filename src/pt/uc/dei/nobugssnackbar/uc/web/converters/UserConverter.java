@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
 import pt.uc.dei.nobugssnackbar.model.User;
 import pt.uc.dei.nobugssnackbar.uc.web.util.ApplicationUtils;
 
-@FacesConverter(forClass=User.class, value="userConverter")
+@FacesConverter(forClass=User.class, value="usersConverter")
 public class UserConverter  implements Converter {
 	
 	@Override

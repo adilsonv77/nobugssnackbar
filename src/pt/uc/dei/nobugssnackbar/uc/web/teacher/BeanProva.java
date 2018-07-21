@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -65,7 +66,8 @@ public class BeanProva extends BeanBase {
 		return ucExtraLevelMan.listLevels(getClazz().getId());
 	}
 	
-	public void preparar() throws Exception {
+	public void preparar(ActionEvent actionEvent) throws Exception {
+		System.out.println("teste");
 		// desabilitar todos os alunos
 		ucProvaMan.disabledAllUsers(getClazz().getId());
 		

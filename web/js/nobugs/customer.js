@@ -569,7 +569,7 @@ Customer.prototype.askForIceCream = function() {
 Customer.prototype.askWantHowManyIceCream = function() {
 	var c = 0;
 	for (var i=0; i<this.wishesFoods.length; i++)
-		if (this.wishesFoods[i].item.indexOf("icecreamof") === 0 && this.wishesFoods[i].item.changeTo == 0)
+		if (this.wishesFoods[i].item.indexOf("icecreamof") === 0 && this.wishesFoods[i].changeTo == 0)
 			c++;
 	this.changeWishesForFood();
 	return c;
